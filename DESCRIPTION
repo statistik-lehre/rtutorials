@@ -1,12 +1,13 @@
 Package: tutor
-Title: What the Package Does (One Line, Title Case)
+Title: Interactive R Tutorials for Engineering students with real-life data.
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+    person("Lukas", "Bruelheide", , "lukas.bruelheide@student.uni-kassel.de", role = c("aut", "cre"))
+Description: This package provides interactive tutorials to learn R and is 
+    directed at engineering students in Germany. Furthermore, it contains real-life engineering datasets for good learning.
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.1
+Imports: 
+    learnr
