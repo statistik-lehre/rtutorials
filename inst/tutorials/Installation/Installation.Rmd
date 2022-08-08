@@ -1,0 +1,50 @@
+---
+title: "Tutorial"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Willkommen
+
+## Warum R?
+
+## Programmiersprachen
+Wie in anderen Sprachen auch gibt es in, denn es gibt Grammatik, Vokabular 
+und Stil. 
+
+Programmiersprachen bilden die 
+Brücke zwischen menschlichem Sprachverständnis und der mathematisch exakten Logik 
+eines Computers. Sie sind menschlich verständlich, und gleichzeitig eindeutig 
+genug, um exakte Logik abzubilden. Während sich die Verarbeitung logischer Inhalte 
+für Menschen kognitiv sehr belastend anfühlt, kann ein Computer mühelos mit 
+logischen Ausdrücken umgehen. Das liegt in der elektronischen Natur d
+
+
+
+## Aufbau
+R ist der Motor, R-Studio das Cockpit.
+
+
+## Installation R
+
+### Windows
+
+### Mac
+
+### Linux
+
+## Installation RStudio
+
+### Windows
+
+### Mac
+
+
+### Linux
+
+
