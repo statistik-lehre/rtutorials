@@ -1,10 +1,12 @@
 Package: tutor
-Title: Interactive R Tutorials for Engineering students with real-life data.
+Title: Interactive statistics tutorials with real data
 Version: 0.0.0.9000
 Authors@R: 
-    person("Lukas", "Bruelheide", , "lukas.bruelheide@student.uni-kassel.de", role = c("aut", "cre"))
-Description: This package provides interactive tutorials to learn R and is 
-    directed at engineering students in Germany. Furthermore, it contains real-life engineering datasets for good learning.
+    person("Lukas", "Bruelheide", , "lukas.bruelheide@student.uni-kassel.de", 
+    role = c("aut", "cre"))
+Description: This package provides interactive tutorials to learn statistics with 
+  R and is directed at engineering students in Germany. Furthermore, it contains 
+  real-life engineering datasets. Language = german.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
