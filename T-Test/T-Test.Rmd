@@ -1,0 +1,14 @@
+---
+title: "Tutorial"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Statistik
+Denn der Wunsch, Antworten auf Fragen aus der echten Welt zu finden, ist der eigentlich motivierende Faktor hinter der Statistik. Das zeigt sich auch daran, dass Statistik sich als mathematische Disziplin sehr stark von anderen unterscheidet. 
+Während in den meisten Disziplinen Herleitungen und Beweise geführt werden können, welche die Wahrheit oder Falschheit einer mathematischen Aussage belegen können, gibt es für statistische Modelle keine derart absoluten Referenzpunkte, sondern sie können sich nur daran messen, wie gut sie die Wirklichkeit abbilden. Gegebenenfalls muss das Verfahren dann an die Realität angepasst werden. 

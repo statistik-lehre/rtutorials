@@ -1,0 +1,13 @@
+---
+title: "Tutorial"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+Hannah Arendt in vita activa, s. 43: 
+Aus der unbestreitbaren Gültigkeit statistischer Gesetze im Bereich großer Zahlen folgt leider für die Welt, in der wir leben, nur dass jede Zunahme der Bevölkerung diesen Gesetzen eine erhöhte  Geltung verleiht, der gegenüber die „Abweichungen“ immer gegenstandsloser werden. 

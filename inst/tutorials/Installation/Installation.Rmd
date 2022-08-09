@@ -83,11 +83,7 @@ Um R auf eurem Computer zu benutzen, braucht es zwei Komponenten.
 
 ### Installation R
 Ohne Triebwerke fliegt das Flugzeug nicht.
-
-::: callout-tip
-## Reihenfolge
 **Tip:** Wichtig ist, dass ihr **R** als erstes installiert, und erst danach **R-Studio**.
-
 Wir können R beim "Comprehensive R Archive Network" herunterladen, kurz **CRAN**.
 
 1. Besucht https://www.r-project.org/.
@@ -98,7 +94,7 @@ Wir können R beim "Comprehensive R Archive Network" herunterladen, kurz **CRAN*
 #### Windows
 5. Klickt auf [Install R for the first time](https://ftp.gwdg.de/pub/misc/cran/bin/windows/base/)
 6. Installer herunterladen (z.B. von https://ftp.gwdg.de/pub/misc/cran/bin/windows/base/R-4.2.1-win.exe)
-6. heruntergeladene Datei ausführen. Dabei unbedingt die Standardeinstellungen bei der Installation beibehalten und nicht irgendwelche benutzerdefinierten Verzeichnisse angeben :)
+6. heruntergeladene Datei ausführen. Dabei unbedingt die Standardeinstellungen bei der Installation beibehalten und nicht in irgendwelche benutzerdefinierten Verzeichnisse installieren :)
 
 #### Mac
 
