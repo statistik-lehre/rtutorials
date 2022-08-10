@@ -1,7 +1,12 @@
 ---
 title: "Tutorial"
-output: learnr::tutorial
+output: 
+  learnr::tutorial:
+    language: "fr"
+    theme: "yeti"
 runtime: shiny_prerendered
+description: "Einleitung in die Datenanalyse, Installation von R und R-Studio"
+
 ---
 
 ```{r setup, include=FALSE}
@@ -79,11 +84,18 @@ Es gibt sehr viele verschiedene Programmiersprachen, doch einige tun sich hervor
 ## Installation
   
 Um R auf eurem Computer zu benutzen, braucht es zwei Komponenten. 
-**R** sind die Triebwerke, und **R-Studio** ist das Cockpit, von wo aus das Flugzeug komfortabel gesteuert werden kann, mit vielen hilfreichen Features wie Autopilot und GPS.
+
+1. **R**
+2. **R-Studio**
+Wenn R ein Airbus wäre, wäre R-Studio das Cockpit, von wo aus das Flugzeug komfortabel gesteuert werden kann, mit vielen hilfreichen Features wie Autopilot und GPS.
 
 ### Installation R
+
+<div class = "infobox">
+  **Tip:** Wichtig ist, dass ihr **R** als erstes installiert, und erst danach **R-Studio**.
+</div>
 Ohne Triebwerke fliegt das Flugzeug nicht.
-**Tip:** Wichtig ist, dass ihr **R** als erstes installiert, und erst danach **R-Studio**.
+
 Wir können R beim "Comprehensive R Archive Network" herunterladen, kurz **CRAN**.
 
 1. Besucht https://www.r-project.org/.
