@@ -1,0 +1,143 @@
+---
+title: "Tutorial"
+output: 
+  learnr::tutorial:
+    language: "fr"
+    theme: "yeti"
+runtime: shiny_prerendered
+description: "Einleitung in die Datenanalyse, Installation von R und R-Studio"
+
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Willkommen
+Liebe Studierende, herzlich willkommen zur R-Übung der Statistik-Vorlesung.  
+Ich freue mich, dass Sie den Weg hierher gefunden haben. 
+  
+Wir haben uns für dieses Format des interaktiven Tutorials entschieden, da es die Vorteile von Online-Lehre beibehält und sehr praxisnahes Lernen ermöglicht.   Nichtsdestotrotz ist es mir ein Anliegen, Sie bei allen Schritten persönlich unterstützen zu können, weswegen es ein Tutorium geben wird, an dem ich Sie einlade teilzunehmen.   
+Außerdem bin ich für alle Fragen gerne über meine email-Adresse erreichbar:  
+lukas.bruelheide@student.uni-kassel.de
+
+Viel Freude beim Lernen!  
+Lukas Bruelheide
+
+## Weshalb Datenanalyse?
+Daten spielen für jede Form der Beantwortung von Fragen eine essentielle Rolle.   Seien es alltägliche Fragen, wissenschaftliche oder philosophische: Allen gemein ist das Beobachten und Ableiten von Informationen aus den Beobachtungen, um letztendlich Entscheidungen zu treffen. Der Wunsch, Antworten auf Fragen aus der echten Welt zu finden, ist der eigentlich motivierende Faktor hinter der Statistik. Diesen Fokus möchte ich im Verlauf des Tutorials immer wieder herstellen, auch wenn wir uns zeitweise mit sehr theoretischen Inhalten beschäftigen.  
+Datenanalyse steht an einer interessanten Schnittstelle zwischen der eindeutigen Welt mathematischer Logik und der Komplexität unserer echten Welt. Die Statistik beschäftigt sich damit, wie die reale Welt in Zahlen übersetzt werden kann, und die Programmiersprache R ist unser Werkzeug, um mit diesen Zahlen umzugehen. Diese Übung hat zum Ziel, euch beides gemeinsam näherzubringen. 
+
+Verschiedene Wege führen an das Ziel, aus konkreten Beobachtungen Informationen zu gewinnen, und dabei geht es immer um einen Kompromiss zwischen Komplexität und Vereinfachung. In einem kurzen psychologischen Exkurs möchte ich die beiden Wege zumindest kurz vorstellen: 
+
+### Weg 1 - Heuristiken (alltägliche Datenanalyse)
+
+Im Alltag müssen wir basierend auf unseren Beobachtungen unzählige Entscheidungen treffen. Logisches Denken ist für Menschen anstrengend und langsam, deswegen vermeiden wir es an den meisten Stellen. Würden wir jede Alltagsentscheidung durch rationale Überlegungen lösen, könnte es Jahre dauern, bis wir das Nachdenken abgeschlossen haben und uns das erste Mal vom Fleck bewegt haben. Das könnte in gewissen Alltagssituationen sogar lebensbedrohlich werden, wo schnelles und pragmatisches Handeln sehr wichtig ist. Deswegen gibt es eingebaute Überlebensmechanismen, die uns davor bewahren, zu viel nachzudenken, wenn wir vor komplexen Situationen stehen.  
+
+Diese Handlungsschemata heißen auch Heuristiken und machen unser Leben leichter, indem sie ermöglichen, unsere Umwelt pragmatisch und schnell einzuschätzen, ohne alle rationalen Überlegungen abgeschlossen zu haben.   
+Zugunsten von Schnelligkeit und zulasten von Komplexität manövrieren uns Heuristiken mehr oder weniger erfolgreich durch den Alltag. Sie sind allerdings oft verallgemeinernd und fehlerbehaftet, wenn es um neue und komplexe Situationen geht - was sehr häufig im Leben der Fall ist. Insbesondere bei der wissenschaftlichen Forschung, wo wir etwas Neues herausfinden könnten, stehen uns Heuristiken im Weg.  
+Zudem sind sie der Inbegriff von Vorurteilen.  
+
+Deswegen brauchen wir eine weitere Form der Datenanalyse, die uns unvoreingenommene und robuste Informationen aus Beobachtungen ableiten lässt.  
+
+### Weg 2 - die Unbestechlickeit mathematischer Logik
+
+Bei wissenschaftlichen Fragestellungen geht es nicht um Schnelligkeit, sondern um logische Richtigkeit. Logisches Denken ist für das menschliche Gehirn sehr viel aufwändiger und langsamer als die Anwendung von schnellen Heuristiken.
+Zum Glück gibt es Computer, die mühelos mit Logik hantieren können (dafür aber mit dem heuristischen Alltagsverstand von Menschen nicht klarkommen).  
+Um unser Gehirn nicht mehr als nötig anstrengen zu müssen, lernen wir in diesem Tutorial, wie wir über eine Programmiersprache (**R**) mit einem Rechner kommunizieren können. Ehrlich gesagt müssen wir trotzdem noch ein ganzes Stück weit auf die Maschine zugehen, und deswegen auch noch weiterhin eine ganze Menge logisch denken, da Programmiersprachen keine menschlich intuitiven Sprachen sind, sondern formale Sprachen. 
+
+### Programmiersprachen
+
+Programmiersprachen ermöglichen es, Computern Anweisungen zu erteilen, die menschlich verständlich sind. Sie bilden die 
+Brücke zwischen zwei Welten - dem menschlichen Sprachverständnis voller Mehrdeutigkeiten und der mathematisch eindeutigen Sprache eines Computers.  
+
+Dabei haben Programmiersprachen genau wie echte Sprachen auch **Vokabeln** und **Grammatik**.
+
+Schauen Sie sich den folgenden Code an. Die Vokabel `sqrt` ist angelehnt an das englische Wort "square root", was "Quadratwurzel" bedeutet.
+Grammatisch fallen die Klammern auf. Sie enthalten das Objekt, auf welches die Vokabel `sqrt` angewendet werden soll.  
+Lautsprachlich können die Klammern als ein "von" gelesen werden: "Quadratwurzel von neun". 
+
+```{r code, exercise = T}
+sqrt(9)
+```
+
+
+Zur Aufmunterung möchte ich noch ein kleines Zitat von Hannah Arendt beifügen:
+
+## Warum R?
+Es gibt sehr viele verschiedene Programmiersprachen, doch einige tun sich hervor.  Hier sind einige Gründe, die dafür sprechen R zu lernen:
+
+##### Vorteile
+
+* open-source (das heißt, der Quellcode ist frei verfügbar)
+  - kostenfrei
+  - wird kollektiv gepflegt und verbessert von enthusiastischen Menschen
+  - modular erweiterbar mit Paketen aus der Community
+  - alle können mitwirken
+  - sehr viel gut strukturierts frei verfügbares Wissen in Online-Büchern, Dokumentationen und Online-Foren
+* übertragbare Fähigkeiten:
+  - Kenntnisse in R erleichtern es, andere Programmiersprachen zu lernen
+  (z.B. für dieses Tutorial musste ich mir ein bisschen `HTML` aneignen und war überrascht, wie niedrig die Hürde war)
+  - nicht-proprietäre Software kann auch nach der Uni genutzt werden
+  - ist mehr Menschen zugänglich (eine SPSS-Lizenz für Privatpersonen kostet zur Zeit 1200€ im Jahr)
+* weit verbreitet und akzeptiert sowohl in Wissenschaft und Wirtschaft (z.B. Google und AirBnB nutzen R für Datenanalyse-Aufgaben)
+
+##### Nachteile
+* die Steuerung durch getippte Befehle in einer Kommandozeile ist gewöhnungsbedürftig und kann abschreckend wirken für Menschen, die bisher nur Benutzeroberflächen mit der Maus bedient haben. 
+
+
+## Installation
+  
+Um R auf eurem Computer zu benutzen, braucht es zwei Komponenten. 
+
+1. **R** --- das Kernprogramm
+2. **R-Studio** --- eine visuelle Oberfläche
+
+Stellt euch R als einen Airbus vor, und R-Studio als das Cockpit.  
+Von dort aus kann das Flugzeug komfortabel gesteuert werden, mit vielen hilfreichen Features wie Autopilot und GPS.
+
+<div class = "infobox">
+  **Tip:** Wichtig ist, dass ihr **R** als erstes installiert, und erst danach **R-Studio**.
+</div>
+
+### Installation R
+
+Wir können R beim "Comprehensive R Archive Network" herunterladen, kurz **CRAN**.
+
+1. Besucht https://www.r-project.org/.
+2. Geht auf "Download R" (bei **Getting started**)
+3. Scrollt in der Liste der angezeigten CRAN-Server bis zum Abschnitt **Germany** und wählt einen der Links aus. 
+  - (Ich nehme den [nächstgelegenen Server](https://ftp.gwdg.de/pub/misc/cran/), in diesem Fall die Uni Göttingen)
+4. Wählt euer System aus
+
+#### Windows
+5. Klickt auf [Install R for the first time](https://ftp.gwdg.de/pub/misc/cran/bin/windows/base/)
+6. [Installer herunterladen](https://ftp.gwdg.de/pub/misc/cran/bin/windows/base/R-4.2.1-win.exe)
+6. heruntergeladene Datei ausführen. Dabei unbedingt die Standardeinstellungen bei der Installation beibehalten und nicht in irgendwelche benutzerdefinierten Verzeichnisse installieren :)
+7. Fertig! Jetzt fehlt noch R-Studio.
+
+#### Mac
+5. 
+#### Linux
+
+
+
+###Installation RStudio
+
+### Windows
+
+### Mac
+
+
+### Linux
+
+### Cloud
+Für alle, die z. B. mit einem Tablet teilnehmen, keinen Computer haben, oder auf deren Computer sich kein R installieren lässt, gibt es auch eine web-basierte Anwendung, die sich im Browser öffnen lässt.
+
+1. https://rstudio.cloud/plans/free aufrufen
+2. **Sign up**
+3. Account erstellen
+4. ein neues Projekt erstellen
+
+mit der Cloud-Version sind grundsätzlich alle Dinge möglich, die auch mit der Desktop Version möglich sind.  Ein weiterer Vorteil ist, dass ihr nicht vorher R installieren müsst. 
