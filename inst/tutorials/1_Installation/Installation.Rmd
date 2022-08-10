@@ -2,8 +2,7 @@
 title: "Tutorial"
 output: 
   learnr::tutorial:
-    language: "fr"
-    theme: "yeti"
+    language: "de"
 runtime: shiny_prerendered
 description: "Einleitung in die Datenanalyse, Installation von R und R-Studio"
 
@@ -16,14 +15,37 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Willkommen
 Liebe Studierende, herzlich willkommen zur R-Übung der Statistik-Vorlesung.  
-Ich freue mich, dass Sie den Weg hierher gefunden haben. 
-  
-Wir haben uns für dieses Format des interaktiven Tutorials entschieden, da es die Vorteile von Online-Lehre beibehält und sehr praxisnahes Lernen ermöglicht.   Nichtsdestotrotz ist es mir ein Anliegen, Sie bei allen Schritten persönlich unterstützen zu können, weswegen es ein Tutorium geben wird, an dem ich Sie einlade teilzunehmen.   
+Ich freue mich, dass Sie den Weg hierher gefunden haben. Da Sie das bereits geschafft haben, bin ich zuversichtlich, dass Sie auch die weiteren Herausforderungen gut meistern werden.  
+Lassen Sie sich deswegen bitte nicht abschrecken, wenn es jetzt gleich um Dinge geht, die sich außerhalb ihrer bisherigen Erfahrungssphäre befinden -- zum Beispiel Programmiersprachen.  Für alle, die bis jetzt mit Computern noch nicht so viel am Hut hatten, mag der Begriff zunächst respekteinflößend sein, und das ist auch vollkommen in Ordnung. Aber Sie werden bald merken, wie die Dinge ihren Schrecken verlieren, wenn Sie mit dieser Übung fortschreiten. Ich werde mir beste Mühe geben, Ihnen auf diesem Weg behilflich zu sein. 
+
+Wir haben uns für dieses Format des interaktiven Tutorials entschieden, da es die Vorteile von Online-Lehre beibehält und sehr praxisnahes Lernen ermöglicht. Nichtsdestotrotz ist es mir ein Anliegen, Sie bei allen Schritten persönlich unterstützen zu können, weswegen es ein Tutorium geben wird, an dem ich Sie einlade teilzunehmen.   
 Außerdem bin ich für alle Fragen gerne über meine email-Adresse erreichbar:  
 lukas.bruelheide@student.uni-kassel.de
 
 Viel Freude beim Lernen!  
 Lukas Bruelheide
+
+---
+
+**Voraussetzungen**  
+grundständige Computerkenntnisse (Umgang mit Dateien, Programme installieren) 
+
+---
+
+**Ziel**  
+Motivation für Datenanalyse und Programmiersprachen bekommen.   
+R und R-Studio auf eurem System installieren. 
+
+---
+
+**Codeblöcke**  
+Innerhalb der Tutorials wird es interaktive Code-Blöcke geben, deren Inhalt veränderbar ist. So könnt ihr mit neu gelernten Konzepten direkt experimentieren.  
+Hier ein kleines Beispiel:  
+Probieren Sie, `1 + 1` zu addieren:
+```{r first, exercise = T}
+
+```
+Das war tatsächlich bereits euer erster Code. Sobald ihr ihn ausführt, sollte das richtige Ergebnis ausgegeben werden.
 
 ## Weshalb Datenanalyse?
 Daten spielen für jede Form der Beantwortung von Fragen eine essentielle Rolle.   Seien es alltägliche Fragen, wissenschaftliche oder philosophische: Allen gemein ist das Beobachten und Ableiten von Informationen aus den Beobachtungen, um letztendlich Entscheidungen zu treffen. Der Wunsch, Antworten auf Fragen aus der echten Welt zu finden, ist der eigentlich motivierende Faktor hinter der Statistik. Diesen Fokus möchte ich im Verlauf des Tutorials immer wieder herstellen, auch wenn wir uns zeitweise mit sehr theoretischen Inhalten beschäftigen.  
@@ -45,7 +67,7 @@ Deswegen brauchen wir eine weitere Form der Datenanalyse, die uns unvoreingenomm
 
 Bei wissenschaftlichen Fragestellungen geht es nicht um Schnelligkeit, sondern um logische Richtigkeit. Logisches Denken ist für das menschliche Gehirn sehr viel aufwändiger und langsamer als die Anwendung von schnellen Heuristiken.
 Zum Glück gibt es Computer, die mühelos mit Logik hantieren können (dafür aber mit dem heuristischen Alltagsverstand von Menschen nicht klarkommen).  
-Um unser Gehirn nicht mehr als nötig anstrengen zu müssen, lernen wir in diesem Tutorial, wie wir über eine Programmiersprache (**R**) mit einem Rechner kommunizieren können. Ehrlich gesagt müssen wir trotzdem noch ein ganzes Stück weit auf die Maschine zugehen, und deswegen auch noch weiterhin eine ganze Menge logisch denken, da Programmiersprachen keine menschlich intuitiven Sprachen sind, sondern formale Sprachen. 
+Um unser Gehirn nicht mehr als nötig anstrengen zu müssen, lernen wir in diesem Tutorial, wie wir über eine Programmiersprache (**R**) mit einem Rechner kommunizieren können. Ehrlich gesagt müssen wir trotzdem noch ein ganzes Stück weit auf die Maschine zugehen, und deswegen auch noch weiterhin eine ganze Menge logisch denken, da Programmiersprachen ziemlich formal sind, auch wenn sie sich Mühe geben, intuitiv zu wirken.
 
 ### Programmiersprachen
 
@@ -101,7 +123,7 @@ Von dort aus kann das Flugzeug komfortabel gesteuert werden, mit vielen hilfreic
   **Tip:** Wichtig ist, dass ihr **R** als erstes installiert, und erst danach **R-Studio**.
 </div>
 
-### Installation R
+#### R
 
 Wir können R beim "Comprehensive R Archive Network" herunterladen, kurz **CRAN**.
 
@@ -111,19 +133,19 @@ Wir können R beim "Comprehensive R Archive Network" herunterladen, kurz **CRAN*
   - (Ich nehme den [nächstgelegenen Server](https://ftp.gwdg.de/pub/misc/cran/), in diesem Fall die Uni Göttingen)
 4. Wählt euer System aus
 
-#### Windows
+##### Windows
 5. Klickt auf [Install R for the first time](https://ftp.gwdg.de/pub/misc/cran/bin/windows/base/)
 6. [Installer herunterladen](https://ftp.gwdg.de/pub/misc/cran/bin/windows/base/R-4.2.1-win.exe)
 6. heruntergeladene Datei ausführen. Dabei unbedingt die Standardeinstellungen bei der Installation beibehalten und nicht in irgendwelche benutzerdefinierten Verzeichnisse installieren :)
 7. Fertig! Jetzt fehlt noch R-Studio.
 
-#### Mac
+##### Mac
 5. 
-#### Linux
+##### Linux
 
 
 
-###Installation RStudio
+#### RStudio
 
 ### Windows
 
