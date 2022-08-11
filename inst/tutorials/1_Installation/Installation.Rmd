@@ -117,6 +117,8 @@ Um R auf eurem Computer zu benutzen, braucht es zwei Komponenten.
 
 Stellt euch R als einen Airbus vor, und R-Studio als das Cockpit.\
 Von dort aus kann das Flugzeug komfortabel gesteuert werden, mit vielen hilfreichen Features wie Autopilot und GPS.
+![Airbus mit R-Logo](images/rplane.png){width="50%"}
+![Cockpit mit R-Studio-Logo](images/cockpit.png){width="50%"}
 
 <div class="infobox">
 <p>
@@ -147,11 +149,10 @@ Wir können R beim "Comprehensive R Archive Network" herunterladen, kurz **CRAN*
   ![Bild der Infobox "Über diesen Mac", enthält Version und Prozessortyp](images/macVersion1.png)  
   (Die allermeisten Macs haben einen Intel-Prozessor. Modelle ab 2020 können einen AppleSilicon-Prozessor haben.)
 5.  Im Abschnitt `Latest release` die passende Version finden.  
-  In meinem Fall wäre das diejenige für Intel-Prozessoren.  
   ![Bild des Abschnitts latest release, zeigt Kompatibilität ab macOS 10.13 und für Intel-Prozessoren](images/macVersion2.png)   
+   In meinem Fall wäre das diese Version für Intel-Prozessoren.
   Mein macOS 10.14 wird gerade so noch unterstützt.  
-  Für ältere Mac-Versionen werden auf der Website frühere R-Versionen zur Verfügung gestellt.  
-  
+  Für ältere Macs werden aber auch frühere R-Versionen zur Verfügung gestellt.  
 6. Die [.pkg](https://ftp.gwdg.de/pub/misc/cran/bin/macosx/base/R-4.2.1.pkg)-Datei herunterladen und ausführen.  
 7. Während der Installation alle Standardeinstellungen beibehalten. Bitte keine benutzerdefinierten Verzeichnisse angeben!
 
