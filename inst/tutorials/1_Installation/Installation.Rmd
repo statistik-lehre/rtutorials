@@ -3,6 +3,7 @@ title: "Tutorial"
 output: 
   learnr::tutorial:
     language: "de"
+    css: "/css/boxes.css"
 runtime: shiny_prerendered
 description: "Einleitung in die Datenanalyse, Installation von R und R-Studio"
 ---
@@ -16,7 +17,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 Liebe Studierende, herzlich willkommen zur R-Übung der Statistik-Vorlesung.\
 Ich freue mich, dass Sie den Weg hierher gefunden haben. Da Sie das bereits geschafft haben, bin ich zuversichtlich, dass Sie auch die weiteren Herausforderungen gut meistern werden.\
-Lassen Sie sich deswegen bitte nicht abschrecken, wenn es jetzt gleich um Dinge geht, die sich außerhalb ihrer bisherigen Erfahrungssphäre befinden -- zum Beispiel Programmiersprachen. Für alle, die bis jetzt mit Computern noch nicht so viel am Hut hatten, mag der Begriff zunächst respekteinflößend sein, und das ist auch vollkommen in Ordnung. Aber Sie werden bald merken, wie die Dinge ihren Schrecken verlieren, wenn Sie mit dieser Übung fortschreiten. Ich werde mir beste Mühe geben, Ihnen auf diesem Weg behilflich zu sein.
+Lassen Sie sich deswegen bitte nicht abschrecken, wenn es jetzt gleich um Dinge geht, die sich außerhalb ihrer bisherigen Erfahrungssphäre befinden -- zum Beispiel Programmiersprachen. Für alle, die bis jetzt mit Computern noch nicht so viel am Hut hatten, mag der Begriff zunächst respekteinflößend sein, und das ist auch vollkommen in Ordnung. Mit dem Fortschreiten des Tutorials werden Sie aber besser verstehen, dass es keine Grenzen dessen gibt, was Sie leSss
 
 Wir haben uns für dieses Format des interaktiven Tutorials entschieden, da es die Vorteile von Online-Lehre beibehält und sehr praxisnahes Lernen ermöglicht. Nichtsdestotrotz ist es mir ein Anliegen, Sie bei allen Schritten persönlich unterstützen zu können, weswegen es ein Tutorium geben wird, an dem ich Sie einlade teilzunehmen.\
 Außerdem bin ich für alle Fragen gerne über meine email-Adresse erreichbar:\
@@ -25,18 +26,13 @@ Außerdem bin ich für alle Fragen gerne über meine email-Adresse erreichbar:\
 Viel Freude beim Lernen!\
 Lukas Bruelheide
 
-------------------------------------------------------------------------
 
-**Voraussetzungen**\
-grundständige Computerkenntnisse (Umgang mit Dateien, Programme installieren)
 
-------------------------------------------------------------------------
+|**Voraussetzungen** | grundständige Computerkenntnisse (Umgang mit Dateien, Programme installieren)|
+|:---|:---|
+|**Ziel** | Motivation für Datenanalyse und Programmiersprachen bekommen.  
+R und R-Studio auf eurem System installieren. |
 
-**Ziel**\
-Motivation für Datenanalyse und Programmiersprachen bekommen.\
-R und R-Studio auf eurem System installieren.
-
-------------------------------------------------------------------------
 
 **Codeblöcke**\
 Innerhalb der Tutorials wird es interaktive Code-Blöcke geben, deren Inhalt veränderbar ist. So könnt ihr mit neu gelernten Konzepten direkt experimentieren.\
@@ -122,24 +118,11 @@ Um R auf eurem Computer zu benutzen, braucht es zwei Komponenten.
 Stellt euch R als einen Airbus vor, und R-Studio als das Cockpit.\
 Von dort aus kann das Flugzeug komfortabel gesteuert werden, mit vielen hilfreichen Features wie Autopilot und GPS.
 
-::: {.infobox style="background-color:  #e5efdc ; border-left: solid  #bed7a8   4px; border-radius: 4px; padding:0.7em;"}
-<span>
-
-<p style="margin-top:1em; text-align:left">
-
-<b>💡 Tip:</b>
-
+<div class="infobox">
+<p>
+Wichtig ist, dass zuerst **R** installiert wird, und danach **R-Studio**.
 </p>
-
-<p style="margin-left:1em;">
-
-**Tip:** Wichtig ist, dass ihr **R** als erstes installiert, und erst danach **R-Studio**.
-
-</p>
-
-</span>
-:::
-
+</div>
 
 ---
 
@@ -147,44 +130,72 @@ Von dort aus kann das Flugzeug komfortabel gesteuert werden, mit vielen hilfreic
 
 Wir können R beim "Comprehensive R Archive Network" herunterladen, kurz **CRAN**.
 
-1.  Besucht <https://www.r-project.org/>.
-2.  Geht auf "Download R" (bei **Getting started**)
-3.  Scrollt in der Liste der angezeigten CRAN-Server bis zum Abschnitt **Germany** und wählt einen der Links aus.
+  1.  https://cran.rstudio.com/ besuchen  
+  2.  Betriebssystem auswählen  
 
--   (Ich nehme den [nächstgelegenen Server](https://ftp.gwdg.de/pub/misc/cran/), in diesem Fall die Uni Göttingen)
+#### Windows
 
-4.  Wählt euer System aus
+  3.  [Install R for the first time](https://ftp.gwdg.de/pub/misc/cran/bin/windows/base/) anklicken  
+  4.  [Installer herunterladen](https://ftp.gwdg.de/pub/misc/cran/bin/windows/base/R-4.2.1-win.exe) und ausführen.  
+5. Bei der Installation bitte die Standardeinstellungen beibehalten und nicht in     benutzerdefinierte Verzeichnisse installieren.
 
-##### Windows
+#### Mac
 
-5.  Klickt auf [Install R for the first time](https://ftp.gwdg.de/pub/misc/cran/bin/windows/base/)
-6.  [Installer herunterladen](https://ftp.gwdg.de/pub/misc/cran/bin/windows/base/R-4.2.1-win.exe)
-7.  heruntergeladene Datei ausführen. Dabei unbedingt die Standardeinstellungen bei der Installation beibehalten und nicht in irgendwelche benutzerdefinierten Verzeichnisse installieren :)
-8.  Fertig! Jetzt fehlt noch R-Studio.
+3. Die eigene MacOS-Version und den Typ des Prozessors herausfinden:  
+    ![Bild des Mauszeigers schwebend über dem Apple-Menü-Eintrag "Über diesen Mac"](images/macVersion.png)   
+4. Version und Prozessortyp ablesen (in meinem Fall macOS 10.14 und Intel-Prozessor)  
+  ![Bild der Infobox "Über diesen Mac", enthält Version und Prozessortyp](images/macVersion1.png)  
+  (Die allermeisten Macs haben einen Intel-Prozessor. Modelle ab 2020 können einen AppleSilicon-Prozessor haben.)
+5.  Im Abschnitt `Latest release` die passende Version finden.  
+  In meinem Fall wäre das diejenige für Intel-Prozessoren.  
+  ![Bild des Abschnitts latest release, zeigt Kompatibilität ab macOS 10.13 und für Intel-Prozessoren](images/macVersion2.png)   
+  Mein macOS 10.14 wird gerade so noch unterstützt.  
+  Für ältere Mac-Versionen werden auf der Website frühere R-Versionen zur Verfügung gestellt.  
+  
+6. Die [.pkg](https://ftp.gwdg.de/pub/misc/cran/bin/macosx/base/R-4.2.1.pkg)-Datei herunterladen und ausführen.  
+7. Während der Installation alle Standardeinstellungen beibehalten. Bitte keine benutzerdefinierten Verzeichnisse angeben!
 
-##### Mac
+#### Linux
 
-5.  Wissen erlangen über macOS-Version und den Typ eures Prozessors:
-
-##### Linux
+- Linux-Distribution auswählen und den gut dokumentierten Installationsanweisungen folgen
 
 ---
 
 ### 2. <img src="https://www.rstudio.com/wp-content/uploads/2018/10/RStudio-Logo-Flat.png" alt="R-Studio Logo" width="15%" height="15%" />
 
-### Windows
+1. https://www.rstudio.com/products/rstudio/download/#download besuchen.  
+  Die richtige Version sollte automatisch vorgeschlagen werden.
+2. Laden Sie den Installer herunter und folgen Sie den Installationsanweisungen.
 
-### Mac
+#### ältere Versionen
+[R-Studio für ältere Betriebssysteme](https://www.rstudio.com/products/rstudio/older-versions/#rstudio-desktop)
 
-### Linux
+Version |	Windows |	MacOS |	Ubuntu 	|RedHat |	Architektur
+|----|----|----|----|----|----|
+0.98 |	XP+ |	10.6+ |	10 - 14 |	6+ |	x86, x64
+0.99 |	7+ 	|10.6+ |	12 - 14 |	6+ |	x86, x64
+1.0 |	7+ 	|10.6+ |	12 - 14 |	7+ |	x86, x64
+1.1 |	7+ |	10.6+ |	12+ |	7+ |	x86, x64
+1.2 |	7+ 	|10.11+ |	14+ |	7+ |	x64
+[1.4](https://www.rstudio.com/products/rstudio/older-versions/#141743) | 7+ | 10.12+ | 14 - 20| 7+ | x64
+[2021.09.2](https://dailies.rstudio.com/version/2021.09.2+382.pro1/)| 10+ |10.13+ | 18 - 20| 7+|  x64
 
-### Cloud
+### Tablets
 
 Für alle, die z. B. mit einem Tablet teilnehmen, keinen Computer haben, oder auf deren Computer sich kein R installieren lässt, gibt es auch eine web-basierte Anwendung, die sich im Browser öffnen lässt.
 
 1.  <https://rstudio.cloud/plans/free> aufrufen
-2.  **Sign up**
+2.  **Sign up** anklicken
 3.  Account erstellen
 4.  ein neues Projekt erstellen
 
-mit der Cloud-Version sind grundsätzlich alle Dinge möglich, die auch mit der Desktop Version möglich sind. Ein weiterer Vorteil ist, dass ihr nicht vorher R installieren müsst.
+### Hat alles geklappt?
+
+ - R-Studio öffnen  
+ Hat R-Studio die Installation von R erkannt?  
+ Wenn alles geklappt hat, sollte es in etwas so aussehen:  
+ ![R-Konsole](images/console.png)
+Sollte eine Fehlermeldung erscheinen, hat etwas nicht funktioniert. Ich bin gerne behilflich bei der Lösung, machen Sie dafür bitte einen Screenshot und wenden sich an mich per Email (lukas.bruelheide@student.uni-kassel.de)!
+
+
+
