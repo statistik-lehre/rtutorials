@@ -172,7 +172,7 @@ Basic | Komfort
 </div>  
 
 
-In Wahrheit funktioniert R auch ohne R-Studio. Aber das ist etwas für Puristen.
+In Wahrheit funktioniert R auch ohne R-Studio. Aber das ist etwas unkomfortabel.
 
 Stellen Sie sich R als einen Airbus vor, und R-Studio als das Cockpit.\
 Aus dem Cockpit kann das Flugzeug komfortabel gesteuert werden, mit vielen hilfreichen Features wie Autopilot und GPS.  
