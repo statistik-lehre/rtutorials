@@ -249,7 +249,8 @@ Wir können R beim "Comprehensive R Archive Network" herunterladen, kurz **CRAN*
   Die richtige Version sollte automatisch vorgeschlagen werden.
 2. Laden Sie den Installer herunter und folgen Sie den Installationsanweisungen.
 
-#### Für alle mit alten PCs
+<details>
+  <summary> Für alle mit alten PCs </summary>
 [R-Studio für ältere Betriebssysteme](https://www.rstudio.com/products/rstudio/older-versions/#rstudio-desktop)
 
 Version |	Windows |	MacOS |	Ubuntu 	|RedHat |	Architektur
@@ -261,8 +262,7 @@ Version |	Windows |	MacOS |	Ubuntu 	|RedHat |	Architektur
 1.2 |	7+ 	|10.11+ |	14+ |	7+ |	x64
 [1.4](https://www.rstudio.com/products/rstudio/older-versions/#141743) | 7+ | 10.12+ | 14 - 20| 7+ | x64
 [2021.09.2](https://dailies.rstudio.com/version/2021.09.2+382.pro1/)| 10+ |10.13+ | 18 - 20| 7+|  x64
-
-
+</details>
 
 ---
 
