@@ -10,40 +10,55 @@ description: "Einleitung in die Datenanalyse, Installation von R und R-Studio"
 
 ```{r setup, include=FALSE}
 library(learnr)
+library(binaryLogic)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
 ## Willkommen
 
 Liebe Studierende, herzlich willkommen zur R-Übung der Statistik-Vorlesung.\
-Ich freue mich, dass Sie den Weg hierher gefunden haben. Da Sie das bereits geschafft haben, bin ich zuversichtlich, dass Sie auch die weiteren Herausforderungen gut meistern werden.\
-Lassen Sie sich deswegen bitte nicht abschrecken, wenn es jetzt gleich um Dinge geht, die sich außerhalb ihrer bisherigen Erfahrungssphäre befinden -- zum Beispiel Programmiersprachen. Für alle, die bis jetzt mit Computern noch nicht so viel am Hut hatten, mag der Begriff zunächst respekteinflößend sein, und das ist auch vollkommen in Ordnung. Mit dem Fortschreiten des Tutorials werden Sie aber besser verstehen, dass es keine Grenzen dessen gibt, was Sie leSss
+<!-- Ich freue mich, dass Sie den Weg hierher gefunden haben. Da Sie das bereits geschafft haben, bin ich zuversichtlich, dass Sie auch die weiteren Herausforderungen gut meistern werden.\ -->
+<!-- Lassen Sie sich deswegen bitte nicht abschrecken, wenn es jetzt gleich um Dinge geht, die sich außerhalb ihrer bisherigen Erfahrungssphäre befinden -- zum Beispiel Programmiersprachen. Für alle, die bis jetzt mit Computern noch nicht so viel am Hut hatten, mag der Begriff zunächst respekteinflößend sein, und das ist auch vollkommen in Ordnung. Mit dem Fortschreiten des Tutorials werden Sie aber -->
 
-Wir haben uns für dieses Format des interaktiven Tutorials entschieden, da es die Vorteile von Online-Lehre beibehält und sehr praxisnahes Lernen ermöglicht. Nichtsdestotrotz ist es mir ein Anliegen, Sie bei allen Schritten persönlich unterstützen zu können, weswegen es ein Tutorium geben wird, an dem ich Sie einlade teilzunehmen.\
-Außerdem bin ich für alle Fragen gerne über meine email-Adresse erreichbar:\
-[lukas.bruelheide\@student.uni-kassel.de](mailto:lukas.bruelheide@student.uni-kassel.de){.email}
+Wir haben uns für dieses Format des interaktiven Tutorials entschieden, da es die Vorteile von Online-Lehre beibehält.
 
-Viel Freude beim Lernen!\
-Lukas Bruelheide
+<div class="vorteile">
+* eigenes Lerntempo
+* Material immer wieder ansehen können
+* sehr praxisnah
+* mit echten Daten
+</div>
+\
+Nichtsdestotrotz ist es mir ein Anliegen, Sie bei allen Schritten persönlich unterstützen zu können.  
+Es gibt ein Tutorium, wo wir gemeinsam mit R experimentieren können. Ich lade Sie herzlich ein, daran teilzunehmen.  
+Zudem bin ich für alle Fragen über meine Email-Adresse erreichbar:  
+[lukas.bruelheide\@student.uni-kassel.de](mailto:lukas.bruelheide@student.uni-kassel.de){.email}  
 
-
-
-|**Voraussetzungen** | grundständige Computerkenntnisse (Umgang mit Dateien, Programme installieren)|
-|:---|:---|
-|**Ziel** | Motivation für Datenanalyse und Programmiersprachen bekommen.  
-R und R-Studio auf eurem System installieren. |
-
-
-**Codeblöcke**\
+### Codeblöcke
 Innerhalb der Tutorials wird es interaktive Code-Blöcke geben, deren Inhalt veränderbar ist. So könnt ihr mit neu gelernten Konzepten direkt experimentieren.\
 Hier ein kleines Beispiel:\
 Probieren Sie, `1 + 1` zu addieren:
 
-```{r first, exercise = T}
+<div id="first-hint">
+**Tip** Die Programmiersprache R kann wie ein Taschenrechner benutzt werden
+</div>
+
+```{r first-solution, eval=FALSE}
+1 + 1
+```
+
+```{r first, exercise = TRUE}
 
 ```
 
+
 Das war tatsächlich bereits euer erster Code. Sobald ihr ihn ausführt, sollte das richtige Ergebnis ausgegeben werden.
+
+
+Voraussetzungen | Ziele
+|---|---|
+Grundkenntnisse im Umgang mit Computern | * Wozu Datenanalyse und Programmiersprachen?\
+* R installieren |
 
 ## Weshalb Datenanalyse?
 
@@ -73,6 +88,12 @@ Programmiersprachen ermöglichen es, Computern Anweisungen zu erteilen, die mens
 
 Dabei haben Programmiersprachen genau wie echte Sprachen auch **Vokabeln** und **Grammatik**.
 
+Sie sind Übersetzer zwischen Maschinensprache und Code. 
+Maschinensprache ist das fundamentale Ende von Formalität: Es gibt nur noch zwei Zeichen, 0 und 1. Diese lassen sich elektronisch umsetzen durch "niedrige Spannung" und "hohe Spannung" und somit ist die Brücke zur Hardware geschaffen. 
+
+```{r exercise = T}
+as.binary("Hello World")
+```
 Schauen Sie sich den folgenden Code an. Die Vokabel `sqrt` ist angelehnt an das englische Wort "square root", was "Quadratwurzel" bedeutet. Grammatisch fallen die Klammern auf. Sie enthalten das Objekt, auf welches die Vokabel `sqrt` angewendet werden soll.\
 Lautsprachlich können die Klammern als ein "von" gelesen werden: "Quadratwurzel von neun".
 
@@ -84,41 +105,53 @@ Zur Aufmunterung möchte ich noch ein kleines Zitat von Hannah Arendt beifügen:
 
 ## Warum R?
 
-Es gibt sehr viele verschiedene Programmiersprachen, doch einige tun sich hervor. Hier sind einige Gründe, die dafür sprechen R zu lernen:
+Hier sind einige Gründe, die dafür sprechen R zu lernen:
 
 ##### Vorteile
-
+<div class="vorteile">
 -   open-source (das heißt, der Quellcode ist frei verfügbar)
-
     -   kostenfrei
-    -   wird kollektiv gepflegt und verbessert von enthusiastischen Menschen
+    -   wird kollektiv gepflegt und weiterentwickelt von enthusiastischen Menschen
     -   modular erweiterbar mit Paketen aus der Community
     -   alle können mitwirken
-    -   sehr viel gut strukturierts frei verfügbares Wissen in Online-Büchern, Dokumentationen und Online-Foren
-
+    -   sehr viel gut strukturiertes frei verfügbares Wissen in  Dokumentationen, Foren und Büchern  
 -   übertragbare Fähigkeiten:
-
-    -   Kenntnisse in R erleichtern es, andere Programmiersprachen zu lernen (z.B. für dieses Tutorial musste ich mir ein bisschen `HTML` aneignen und war überrascht, wie niedrig die Hürde war)
+    -   Kenntnisse in R erleichtern es, andere Programmiersprachen zu lernen
     -   nicht-proprietäre Software kann auch nach der Uni genutzt werden
-    -   ist mehr Menschen zugänglich (eine SPSS-Lizenz für Privatpersonen kostet zur Zeit 1200€ im Jahr)
-
--   weit verbreitet und akzeptiert sowohl in Wissenschaft und Wirtschaft (z.B. Google und AirBnB nutzen R für Datenanalyse-Aufgaben)
+    -   ist mehr Menschen zugänglich  
+        (eine SPSS-Lizenz für Privatpersonen kostet zur Zeit 1200€ im Jahr)
+    -   Standard sowohl in Wissenschaft und Wirtschaft  
+        (z.B. Google und AirBnB nutzen R für Datenanalyse)
+</div>
 
 ##### Nachteile
 
--   die Steuerung durch getippte Befehle in einer Kommandozeile ist gewöhnungsbedürftig und kann abschreckend wirken für Menschen, die bisher nur Benutzeroberflächen mit der Maus bedient haben.
+<div class="rot">
+- Benutzeroberfläche: Das Erlernen von Code kann abschreckend wirken für Menschen, die bisher noch keine Erfahrung mit Programmieren haben.  
+  R-Studio bietet aber eine gute visuelle Oberfläche an, was diesen Punkt etwas mildert. 
+</div>
 
 ## Installation
 
 Um R auf eurem Computer zu benutzen, braucht es zwei Komponenten.
 
-1.  **R** --- das Kernprogramm
-2.  **R-Studio** --- eine visuelle Oberfläche
+1.  **R** 
+2.  **R-Studio**
+
+R | R-Studio
+---|---
+Kernprogramm | visuelle Oberfläche
+Maschine | Steuerung
+Sprache | Editor
+
 
 Stellt euch R als einen Airbus vor, und R-Studio als das Cockpit.\
-Von dort aus kann das Flugzeug komfortabel gesteuert werden, mit vielen hilfreichen Features wie Autopilot und GPS.
+Aus dem Cockpit kann das Flugzeug komfortabel gesteuert werden, mit vielen hilfreichen Features wie Autopilot und GPS.  
+R ist die Maschine, die Turbinen, das Innere, und R Studio ist eine visuelle Umgebung, für die Kommunikation mit Menschen konzipiert, von wo aus wir R ansteuern können. 
+
 ![Airbus mit R-Logo](images/rplane.png){width="50%"}
-![Cockpit mit R-Studio-Logo](images/cockpit.png){width="50%"}
+![Cockpit mit R-Studio-Logo](images/cockpit.png){width="50%"}  
+
 
 <div class="infobox">
 <p>
@@ -196,7 +229,8 @@ Für alle, die z. B. mit einem Tablet teilnehmen, keinen Computer haben, oder au
  Hat R-Studio die Installation von R erkannt?  
  Wenn alles geklappt hat, sollte es in etwas so aussehen:  
  ![R-Konsole](images/console.png)
-Sollte eine Fehlermeldung erscheinen, hat etwas nicht funktioniert. Ich bin gerne behilflich bei der Lösung, machen Sie dafür bitte einen Screenshot und wenden sich an mich per Email (lukas.bruelheide@student.uni-kassel.de)!
+
+Sollte eine Fehlermeldung erscheinen, hat etwas nicht funktioniert. Ich bin gerne behilflich bei der Lösung, machen Sie dafür bitte einen Screenshot und wenden sich an mich per [Email](mailto:lukas.bruelheide@student.uni-kassel.de){.email}.  
 
 
 
