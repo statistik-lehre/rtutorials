@@ -1,0 +1,14 @@
+---
+title: "2 R-Studio"
+output: 
+  learnr::tutorial:
+    language: "de"
+    css: "/css/boxes.css"
+runtime: shiny_prerendered
+description: "Erste Schritte in R-Studio"
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```
