@@ -1,0 +1,25 @@
+[
+    {
+        "author": [
+            {
+                "family": "Arendt",
+                "given": "Hannah"
+            }
+        ],
+        "id": "arendt1960",
+        "issued": {
+            "date-parts": [
+                [
+                    1960
+                ]
+            ]
+        },
+        "key": "UWRXUYNZ",
+        "libraryid": "1",
+        "providerkey": "Zotero",
+        "publisher": "Kohlhammer",
+        "publisher-place": "Stuttgart",
+        "title": "Vita activa oder vom tätigen Leben",
+        "type": "book"
+    }
+]
