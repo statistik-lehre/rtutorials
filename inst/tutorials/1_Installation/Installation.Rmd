@@ -4,6 +4,7 @@ output:
   learnr::tutorial:
     language: "de"
     css: "/css/boxes.css"
+    fig_caption: FALSE
 runtime: shiny_prerendered
 description: "Einleitung in die Datenanalyse, Installation von R und R-Studio"
 ---
@@ -177,8 +178,13 @@ Stellen Sie sich R als einen Airbus vor, und R-Studio als das Cockpit.\
 Aus dem Cockpit kann das Flugzeug komfortabel gesteuert werden, mit vielen hilfreichen Features wie Autopilot und GPS.  
 R ist die Maschine, die Turbinen, das Innere, und R Studio ist eine visuelle Umgebung, für die Kommunikation mit Menschen konzipiert, von wo aus wir R ansteuern können. 
 
-![Airbus mit R-Logo](images/rplane.png){width="50%"}
-![Cockpit mit R-Studio-Logo](images/cockpit.png){width="50%"}  
+<p align="center">
+  <img alt="Airbus mit R-Logo" src="images/rplane.png" width="45%">
+&nbsp; &nbsp; &nbsp; &nbsp;
+  <img alt="Cockpit mit R-Studio-Logo" src="images/cockpit.png" width="45%">
+</p>
+
+ <!-- ![Airbus mit R-Logo](images/rplane.png){width="50%"}  ![Cockpit mit R-Studio-Logo](images/cockpit.png){width="50%"} -->
 
 
 <div class="infobox">
@@ -189,7 +195,7 @@ Wichtig ist, dass zuerst **R** installiert wird, und danach **R-Studio**.
 
 ---
 
-### 1. <img src="https://www.r-project.org/logo/Rlogo.png" alt="R Logo" width="6%" height="6%" />
+### 1. <img src="https://www.r-project.org/logo/Rlogo.png" alt="R Logo" width="6%" height="6%" /> {.tabset .tabset-fade }
 
 Wir können R beim "Comprehensive R Archive Network" herunterladen, kurz **CRAN**.
 
@@ -198,24 +204,38 @@ Wir können R beim "Comprehensive R Archive Network" herunterladen, kurz **CRAN*
 
 #### Windows
 
+
   3.  [Install R for the first time](https://ftp.gwdg.de/pub/misc/cran/bin/windows/base/) anklicken  
   4.  [Installer herunterladen](https://ftp.gwdg.de/pub/misc/cran/bin/windows/base/R-4.2.1-win.exe) und ausführen.  
 5. Bei der Installation bitte die Standardeinstellungen beibehalten und nicht in     benutzerdefinierte Verzeichnisse installieren.
 
+---
+
 #### Mac
 
+
 3. Die eigene MacOS-Version und den Typ des Prozessors herausfinden:  
-    ![Bild des Mauszeigers schwebend über dem Apple-Menü-Eintrag "Über diesen Mac"](images/macVersion.png)   
-4. Version und Prozessortyp ablesen (in meinem Fall macOS 10.14 und Intel-Prozessor)  
-  ![Bild der Infobox "Über diesen Mac", enthält Version und Prozessortyp](images/macVersion1.png)  
-  (Die allermeisten Macs haben einen Intel-Prozessor. Modelle ab 2020 können einen AppleSilicon-Prozessor haben.)
-5.  Im Abschnitt `Latest release` die passende Version finden.  
-  ![Bild des Abschnitts latest release, zeigt Kompatibilität ab macOS 10.13 und für Intel-Prozessoren](images/macVersion2.png)   
-   In meinem Fall wäre das diese Version für Intel-Prozessoren.
-  Mein macOS 10.14 wird gerade so noch unterstützt.  
-  Für ältere Macs werden aber auch frühere R-Versionen zur Verfügung gestellt.  
-6. Die [.pkg](https://ftp.gwdg.de/pub/misc/cran/bin/macosx/base/R-4.2.1.pkg)-Datei herunterladen und ausführen.  
-7. Während der Installation alle Standardeinstellungen beibehalten. Bitte keine benutzerdefinierten Verzeichnisse angeben!
+
+   ![Bild des Mauszeigers schwebend über dem Apple-Menü-Eintrag "Über diesen         Mac"](images/macVersion.png)  
+    
+    Version und Prozessortyp ablesen (in meinem Fall macOS 10.14 und Intel-Prozessor)  
+
+   ![Bild der Infobox "Über diesen Mac", enthält Version und Prozessortyp](images/macVersion1.png)  
+  
+    (Die allermeisten Macs haben einen Intel-Prozessor. Modelle ab 2020 können einen AppleSilicon-Prozessor haben.)
+  
+4. Im Abschnitt `Latest release` die passende Version finden.  
+
+    In meinem Fall wäre das die oberste Version für Intel-Prozessoren.  
+    Mein macOS 10.14 wird gerade so noch unterstützt.   
+    Für ältere Macs werden aber auch frühere R-Versionen zur Verfügung gestellt.  
+   ![Bild des Abschnitts latest release, zeigt Kompatibilität ab macOS 10.13 und für Intel-Prozessoren](images/macVersion2.png)  
+    
+5. Die [.pkg](https://ftp.gwdg.de/pub/misc/cran/bin/macosx/base/R-4.2.1.pkg)-Datei    herunterladen und ausführen.  
+6. Während der Installation alle Standardeinstellungen beibehalten. Bitte keine      benutzerdefinierten Verzeichnisse angeben.
+7. Fertig, jetzt nur noch R-Studio installieren, siehe nächster Abschnitt.
+
+---
 
 #### Linux
 
@@ -241,6 +261,8 @@ Version |	Windows |	MacOS |	Ubuntu 	|RedHat |	Architektur
 1.2 |	7+ 	|10.11+ |	14+ |	7+ |	x64
 [1.4](https://www.rstudio.com/products/rstudio/older-versions/#141743) | 7+ | 10.12+ | 14 - 20| 7+ | x64
 [2021.09.2](https://dailies.rstudio.com/version/2021.09.2+382.pro1/)| 10+ |10.13+ | 18 - 20| 7+|  x64
+
+
 
 ---
 
