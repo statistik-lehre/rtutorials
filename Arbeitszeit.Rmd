@@ -1,0 +1,12 @@
+---
+title: "Arbeitszeit"
+author: "Lukas Bruelheide"
+date: "8/12/2022"
+output: html_document
+---
+date      | hours
+----------|-------
+8/09/2022 | 6.5
+8/10/2022 | 6
+8/11/2022 | 10
+8/12/2022 | 6
