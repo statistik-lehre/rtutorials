@@ -7,7 +7,7 @@ Authors@R:
 Description: This package provides interactive tutorials to learn statistics with 
   R and is directed at engineering students in Germany. Furthermore, it contains 
   real-life engineering datasets. Language = german.
-License: MIT + file LICENSE
+License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.1
