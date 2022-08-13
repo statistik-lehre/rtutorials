@@ -16,4 +16,12 @@ knitr::opts_chunk$set(echo = FALSE)
 > [@arendt1960, S. 43]
 >
 
+<div class="panel panel-info">
+  <div class="panel-heading">Panel heading without title</div>
+  <div class="panel-body">
+    hah
+  </div>
+</div>
+
+
 # Literaturverzeichnis
