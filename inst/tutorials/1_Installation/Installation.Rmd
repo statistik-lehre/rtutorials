@@ -118,9 +118,6 @@ Dabei haben Programmiersprachen genau wie echte Sprachen auch **Vokabeln** und *
 Sie sind Übersetzer zwischen Maschinensprache und Code. 
 Maschinensprache ist das fundamentale Ende von Vereinfachung: Es gibt nur noch zwei Zeichen, 0 und 1. Diese lassen sich elektronisch umsetzen durch "niedrige Spannung" und "hohe Spannung" und somit ist die Brücke zur Hardware geschaffen. 
 
-```{r binary, exercise = T}
-# insert as.binary example
-```
 Schauen Sie sich den folgenden Code an. Die Vokabel `sqrt` ist angelehnt an das englische Wort "square root", was "Quadratwurzel" bedeutet. Grammatisch fallen die Klammern auf. Sie enthalten das Objekt, auf welches die Vokabel `sqrt` angewendet werden soll.\
 Lautsprachlich können die Klammern als ein "von" gelesen werden: "Quadratwurzel von neun".
 
