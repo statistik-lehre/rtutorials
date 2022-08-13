@@ -37,6 +37,6 @@ to select from different tutorials and start them.
 Feedback and
 contributions are welcome! Use the discussion tab
 
-# License
+## License
 Feel free to reuse, remix, translate and adapt the contents of this package,
 as long as you mention the source and distribute it under the same license.
