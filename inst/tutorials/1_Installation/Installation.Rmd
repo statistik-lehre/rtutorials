@@ -68,7 +68,7 @@ Das Komma `,` ist für Aufzählungen reserviert, dazu kommen wir im nächsten Tu
 1 / 0.5
 ```
 
-<div class="infobox">
+:::{class="infobox"}
 
 **Guter Stil**  
 Es gilt als guter Stil:  
@@ -76,7 +76,7 @@ Es gilt als guter Stil:
 * Operatoren wie `+`, `-`, `=` auf beiden Seiten mit Leerzeichen zu umgeben.
     + z.B. `5 + 5`
     
-</div>
+:::
 
 ### Voraussetzungen und Ziele
 
@@ -84,15 +84,23 @@ Es gilt als guter Stil:
 
 Voraussetzungen | Ziele
 |---|---|
-Grundkenntnisse im Umgang mit Computern | * Wozu Datenanalyse und Programmiersprachen?\
-* R installieren |
+Grundkenntnisse im Umgang mit Computern | • Wozu Datenanalyse und Programmiersprachen?\
+• R installieren |
 
 </div>
 
 ## Weshalb Datenanalyse?
 
-Daten spielen für jede Form der Beantwortung von Fragen eine essentielle Rolle. Seien es alltägliche Fragen, wissenschaftliche oder philosophische: Allen gemein ist das Beobachten und Ableiten von Informationen aus den Beobachtungen, um letztendlich Entscheidungen zu treffen. Der Wunsch, Antworten auf Fragen aus der echten Welt zu finden, ist der eigentlich motivierende Faktor hinter der Statistik. Diesen Fokus möchte ich im Verlauf des Tutorials immer wieder herstellen, auch wenn wir uns zeitweise mit sehr theoretischen Inhalten beschäftigen.\
-Datenanalyse steht an einer interessanten Schnittstelle zwischen der eindeutigen Welt mathematischer Logik und der Komplexität unserer echten Welt. Die Statistik beschäftigt sich damit, wie die reale Welt in Zahlen übersetzt werden kann, und die Programmiersprache R ist unser Werkzeug, um mit diesen Zahlen umzugehen. Diese Übung hat zum Ziel, euch beides gemeinsam näherzubringen.
+Der Wunsch, Antworten auf Fragen aus der echten Welt zu finden, ist der eigentlich motivierende Faktor hinter Statistik. Ich möchte aber gleich vorwegnehmen, um eventuellen Enttäuschungen vorzubeugen: So etwas wie definitive Wahrheiten für die echte Welt finden wir mit Statistik nicht. Damit die Werkzeuge der Statistik angewandt werden können, müssen Beobachtungen immer zunächst in Zahlen transformiert werden. Oder codiert werden in Kategorien. Wo ist die Grenze einer Kategorie? Was fällt hinein, und was nicht mehr? Bei allen statistischen Datenerhebungen gibt es Stellen, an denen diese Willkür und Potenzial zu (unbewusster) Einflussnahme besteht und wir damit sehr weit davon entfernt sind, eine Methode zu haben, die tatsächlich Wahrheitsanspruch stellen kann. 
+qwerden Alleine diese Umwandlung enthält schon sehr viel Potenzial, sich zu irren - mit diesen Fragen beschäftigen wir uns in Kapitel 3. 
+Aber gehen wir einmal davon aus, dass die Daten mit denen wir arbeiten, nach bester wissenschaftlichen Methode erhoben wurden, und lassen das Streben nach Objektivität beiseite.
+Wir befinden uns in einem Kosmos, in dem uns ein großer Werkzeugkasten an anwendbaren Methoden beiseite steht. Und das hat tatsächlich etwas beruhigendes. 
+Letztlich geht es immer darum, Situationen einzuschätzen, um Handlungsmöglichkeiten abzuleiten. Die Mathematik hält dafür eine ganze Reihe von Werkzeugen bereit. Nur müssen die Daten dafür zunächst einmal überhaupt mathematisch verarbeitbar sein.  
+Willkommen in der Welt des Messens, Quantifizierens, Zählens und Wiegens. 
+
+Die Statistik ist Werkzeug von Dabei Mithilfe von Zahlen können wir logisch und vermeintlich objektive Urteile ziehen aus 
+Diesen Fokus möchte ich im Verlauf des Tutorials immer wieder herstellen, auch wenn wir uns zeitweise mit sehr theoretischen Inhalten beschäftigen.\
+Datenanalyse steht an einer interessanten Schnittstelle zwischen der eindeutigen Welt mathematischer Logik und der Komplexität unserer echten Welt. Die Statistik beschäftigt sich damit, wie die reale Welt in Zahlen übersetzt werden kann, und die Programmiersprache R ist unser Werkzeug, um mit diesen Zahlen umzugehen. Diese Übung hat zum Ziel, euch beides gemeinsam näher zu bringen.
 
 Verschiedene Wege führen an das Ziel, aus konkreten Beobachtungen Informationen zu gewinnen, und dabei geht es immer um einen Kompromiss zwischen Komplexität und Vereinfachung. In einem kurzen psychologischen Exkurs möchte ich die beiden Wege zumindest kurz vorstellen:
 
@@ -108,7 +116,7 @@ Deswegen brauchen wir eine weitere Form der Datenanalyse, die uns unvoreingenomm
 
 ### Weg 2 - die Unbestechlickeit mathematischer Logik
 
-Bei wissenschaftlichen Fragestellungen geht es nicht um Schnelligkeit, sondern um logische Richtigkeit. Logisches Denken ist für das menschliche Gehirn sehr viel aufwändiger und langsamer als die Anwendung von schnellen Heuristiken. Zum Glück gibt es Computer, die mühelos mit Logik hantieren können (dafür aber mit dem heuristischen Alltagsverstand von Menschen nicht klarkommen).\
+Bei wissenschaftlichen Fragestellungen geht es nicht um Schnelligkeit, sondern um logische Richtigkeit. Logisches Denken ist für das menschliche Gehirn sehr viel aufwändiger und langsamer als die Anwendung von schnellen Heuristiken. Zum Glück gibt es Computer, die mühelos mit Logik umgehen können (dafür aber mit dem heuristischen Alltagsverstand von Menschen nicht klarkommen).\
 Um unser Gehirn nicht mehr als nötig anstrengen zu müssen, lernen wir in diesem Tutorial, wie wir über eine Programmiersprache (**R**) mit einem Rechner kommunizieren können. Ehrlich gesagt müssen wir trotzdem noch ein ganzes Stück weit auf die Maschine zugehen, und deswegen auch noch weiterhin eine ganze Menge logisch denken, da Programmiersprachen ziemlich formal sind, auch wenn sie sich Mühe geben, intuitiv zu wirken.
 
 ### Programmiersprachen
@@ -248,7 +256,7 @@ Wir können R beim "Comprehensive R Archive Network" herunterladen, kurz **CRAN*
 2. Laden Sie den Installer herunter und folgen Sie den Installationsanweisungen.
 
 <details>
-  <summary> Für alle mit alten PCs </summary>
+  <summary> Für alle mit alten PCs: hier klicken </summary>
 [R-Studio für ältere Betriebssysteme](https://www.rstudio.com/products/rstudio/older-versions/#rstudio-desktop)
 
 Version |	Windows |	MacOS |	Ubuntu 	|RedHat |	Architektur
