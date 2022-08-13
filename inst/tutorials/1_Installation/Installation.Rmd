@@ -2,7 +2,7 @@
 title: "1 Einleitung und Installation"
 output: 
   learnr::tutorial:
-    language: "de"
+    language: de
     css: "/css/boxes.css"
     fig_caption: FALSE
 runtime: shiny_prerendered
@@ -17,8 +17,7 @@ knitr::opts_chunk$set(echo = FALSE)
 ## Willkommen
 
 Liebe Studierende, herzlich willkommen zur R-Übung der Statistik-Vorlesung.\
-<!-- Ich freue mich, dass Sie den Weg hierher gefunden haben. Da Sie das bereits geschafft haben, bin ich zuversichtlich, dass Sie auch die weiteren Herausforderungen gut meistern werden.\ -->
-<!-- Lassen Sie sich deswegen bitte nicht abschrecken, wenn es jetzt gleich um Dinge geht, die sich außerhalb ihrer bisherigen Erfahrungssphäre befinden -- zum Beispiel Programmiersprachen. Für alle, die bis jetzt mit Computern noch nicht so viel am Hut hatten, mag der Begriff zunächst respekteinflößend sein, und das ist auch vollkommen in Ordnung. Mit dem Fortschreiten des Tutorials werden Sie aber -->
+Ich freue mich, dass Sie den Weg hierher gefunden haben.
 
 Wir haben uns für dieses Format des interaktiven Tutorials entschieden, da es einige der Vorteile von Online-Lehre beibehält.
 
