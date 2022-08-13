@@ -39,8 +39,8 @@ Innerhalb der Tutorials wird es interaktive Code-Blöcke geben. So könnt ihr mi
 
 Hier ein kleines Beispiel:\
 Probieren Sie, den Computer ein paar Rechenaufgaben lösen zu lassen!  
-Schreiben Sie in das Codefeld und führen Sie den Code aus mit `▶ Run code`.  
-Es gibt zu jeder Aufgabe auch Tips. Klicken Sie dafür auf den Button `💡 Hint`
+Schreiben Sie in das Codefeld und führen Sie den Code aus mit `▶ Code ausführen`.  
+Es gibt zu jeder Aufgabe auch Tipps. Klicken Sie dafür auf den Button `💡 Tipp`
 
 <div id="first-hint">
 
