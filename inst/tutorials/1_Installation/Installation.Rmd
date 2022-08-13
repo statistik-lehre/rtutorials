@@ -1,12 +1,14 @@
 ---
 title: "1 Einleitung und Installation"
-output: 
+output:
   learnr::tutorial:
     language: de
-    css: "/css/boxes.css"
-    fig_caption: FALSE
+    css: css/boxes.css
+    fig_caption: no
 runtime: shiny_prerendered
-description: "Einleitung in die Datenanalyse, Installation von R und R-Studio"
+description: Einleitung in die Datenanalyse, Installation von R und R-Studio
+resource_files:
+- css/boxes.css
 ---
 
 ```{r setup, include=FALSE}
@@ -121,7 +123,7 @@ Maschinensprache ist das fundamentale Ende von Vereinfachung: Es gibt nur noch z
 Schauen Sie sich den folgenden Code an. Die Vokabel `sqrt` ist angelehnt an das englische Wort "square root", was "Quadratwurzel" bedeutet. Grammatisch fallen die Klammern auf. Sie enthalten das Objekt, auf welches die Vokabel `sqrt` angewendet werden soll.\
 Lautsprachlich können die Klammern als ein "von" gelesen werden: "Quadratwurzel von neun".
 
-```{r code, exercise = T}
+```{r code, exercise = TRUE}
 sqrt(9)
 ```
 
