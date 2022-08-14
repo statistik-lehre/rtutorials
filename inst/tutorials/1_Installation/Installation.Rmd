@@ -6,6 +6,8 @@ output:
     css: css/boxes.css
     fig_caption: no
 runtime: shiny_prerendered
+bibliography: ref.json
+link-citations: TRUE
 description: Einleitung in die Datenanalyse, Installation von R und R-Studio
 resource_files:
 - css/boxes.css
@@ -23,39 +25,40 @@ Ich freue mich, dass Sie den Weg hierher gefunden haben.
 
 Wir haben uns für dieses Format des interaktiven Tutorials entschieden, da es einige der Vorteile von Online-Lehre beibehält.
 
-<div class="vorteile">
-* eigenes Lerntempo
-* Material immer wieder ansehen können
-* praktisches Lernen mit interaktiven Codeblöcken
-</div>
+::: vorteile
+-   eigenes Lerntempo
+-   Material immer wieder ansehen können
+-   praktisches Lernen mit interaktiven Codeblöcken
+:::
+
 \
-Nichtsdestotrotz ist es mir ein Anliegen, Sie bei allen Schritten persönlich unterstützen zu können.  
-Es gibt ein Tutorium, wo wir gemeinsam mit R experimentieren können. Ich lade Sie herzlich ein, daran teilzunehmen.  
-Zudem bin ich für alle Fragen über meine Email-Adresse erreichbar:  
-[lukas.bruelheide\@student.uni-kassel.de](mailto:lukas.bruelheide@student.uni-kassel.de){.email}  
+Nichtsdestotrotz ist es mir ein Anliegen, Sie bei allen Schritten persönlich unterstützen zu können.\
+Es gibt ein Tutorium, wo wir gemeinsam mit R experimentieren können. Ich lade Sie herzlich ein, daran teilzunehmen.\
+Zudem bin ich für alle Fragen über meine Email-Adresse erreichbar:\
+[lukas.bruelheide\@student.uni-kassel.de](mailto:lukas.bruelheide@student.uni-kassel.de){.email}
 
 ### Codeblöcke
+
 Innerhalb der Tutorials wird es interaktive Code-Blöcke geben. So könnt ihr mit neu gelernten Konzepten direkt experimentieren.
 
 Hier ein kleines Beispiel:\
-Probieren Sie, den Computer ein paar Rechenaufgaben lösen zu lassen!  
-Schreiben Sie in das Codefeld und führen Sie den Code aus mit `▶ Code ausführen`.  
-Es gibt zu jeder Aufgabe auch Tipps. Klicken Sie dafür auf den Button `💡 Tipp`
+Probieren Sie, den Computer ein paar Rechenaufgaben lösen zu lassen!\
+Schreiben Sie in das Codefeld und führen Sie den Code aus mit `▶ Code ausführen`.\
+Es gibt zu jeder Aufgabe auch Tipps. Klicken Sie dafür auf den Button 💡`Tipp`
 
-<div id="first-hint">
-
-**Tip**  
+::: {#first-hint}
+**Tip**\
 Die Programmiersprache R kann wie ein Taschenrechner benutzt werden.
 
-* `*` Multiplikation
-* `/` Division
-* `+`  Addition
-* `-`  Subtraktion
+-   `*` Multiplikation
+-   `/` Division
+-   `+` Addition
+-   `-` Subtraktion
 
-**Syntax**  
-Als Dezimaltrennzeichen akzeptiert R nur den Punkt `.`  
-Das Komma `,` ist für Aufzählungen reserviert, dazu kommen wir im nächsten Tutorial. 
-</div>
+**Syntax**\
+Als Dezimaltrennzeichen akzeptiert R nur den Punkt `.`\
+Das Komma `,` ist für Aufzählungen reserviert, dazu kommen wir im nächsten Tutorial.
+:::
 
 ```{r first-solution}
 5 * 5   # Multiplikation
@@ -68,43 +71,70 @@ Das Komma `,` ist für Aufzählungen reserviert, dazu kommen wir im nächsten Tu
 1 / 0.5
 ```
 
-:::{class="infobox"}
+::: infobox
+**Guter Stil**\
+Es gilt als guter Stil:
 
-**Guter Stil**  
-Es gilt als guter Stil:  
+-   Operatoren wie `+`, `-`, `=` auf beiden Seiten mit Leerzeichen zu umgeben.
 
-* Operatoren wie `+`, `-`, `=` auf beiden Seiten mit Leerzeichen zu umgeben.
-    + z.B. `5 + 5`
-    
+    -   z.B. `5 + 5`
 :::
 
 ### Voraussetzungen und Ziele
 
-<div class="grau-nb">
+::: grau-nb
++-----------------------------------------+-----------------------------------------------+
+| Voraussetzungen                         | Ziele                                         |
++=========================================+===============================================+
+| Grundkenntnisse im Umgang mit Computern | • Wozu Datenanalyse und Programmiersprachen?\ |
+|                                         | • R installieren                              |
++-----------------------------------------+-----------------------------------------------+
+:::
 
-Voraussetzungen | Ziele
-|---|---|
-Grundkenntnisse im Umgang mit Computern | • Wozu Datenanalyse und Programmiersprachen?\
-• R installieren |
+## Motivationstext Statistik und Programmiersprachen (Work in Progress)
 
-</div>
+### Statistik und Objektivität
 
-## Weshalb Datenanalyse?
+Wenn ich Sie fragen würde, warum brauchen wir Statistik? dann wäre die Antwort vermutlich, dass Statistik uns Objektivität bietet, die wir sonst nicht erreichen können. Dass Statistik uns Methoden bietet, Sinn aus Datenmengen zu ziehen, die unseren Verstand übersteigen.
 
-Der Wunsch, Antworten auf Fragen aus der echten Welt zu finden, ist der eigentlich motivierende Faktor hinter Statistik. Ich möchte aber gleich vorwegnehmen, um eventuellen Enttäuschungen vorzubeugen: So etwas wie definitive Wahrheiten für die echte Welt finden wir mit Statistik nicht. Damit die Werkzeuge der Statistik angewandt werden können, müssen Beobachtungen immer zunächst in Zahlen transformiert werden. Oder codiert werden in Kategorien. Wo ist die Grenze einer Kategorie? Was fällt hinein, und was nicht mehr? Bei allen statistischen Datenerhebungen gibt es Stellen, an denen diese Willkür und Potenzial zu (unbewusster) Einflussnahme besteht und wir damit sehr weit davon entfernt sind, eine Methode zu haben, die tatsächlich Wahrheitsanspruch stellen kann. 
-qwerden Alleine diese Umwandlung enthält schon sehr viel Potenzial, sich zu irren - mit diesen Fragen beschäftigen wir uns in Kapitel 3. 
-Aber gehen wir einmal davon aus, dass die Daten mit denen wir arbeiten, nach bester wissenschaftlichen Methode erhoben wurden, und lassen das Streben nach Objektivität beiseite.
-Wir befinden uns in einem Kosmos, in dem uns ein großer Werkzeugkasten an anwendbaren Methoden beiseite steht. Und das hat tatsächlich etwas beruhigendes. 
-Letztlich geht es immer darum, Situationen einzuschätzen, um Handlungsmöglichkeiten abzuleiten. Die Mathematik hält dafür eine ganze Reihe von Werkzeugen bereit. Nur müssen die Daten dafür zunächst einmal überhaupt mathematisch verarbeitbar sein.  
-Willkommen in der Welt des Messens, Quantifizierens, Zählens und Wiegens. 
+Es geht darum, eine Situation möglichst gut einzuschätzen, um möglichst gute Handlungen ableiten zu können. Wir tun das im Alltag basierend auf unserer direkten Wahrnehmung und sind dabei zahlreichen kognitiven Verzerrungen unterworfen. (Siehe zur Vertiefung: Heuristiken)
 
-Die Statistik ist Werkzeug von Dabei Mithilfe von Zahlen können wir logisch und vermeintlich objektive Urteile ziehen aus 
-Diesen Fokus möchte ich im Verlauf des Tutorials immer wieder herstellen, auch wenn wir uns zeitweise mit sehr theoretischen Inhalten beschäftigen.\
+Für größere Fragen, die unsere direkte Wahrnehmung überschreiten, haben wir bessere Werkzeuge. Beispielsweise lässt sich die Frage nach dem Klimawandel viel besser mit statistischen Methoden überprüfen als mit individuellem Empfinden. \
+Die Frage nach dem Klimawandel ist letztlich eine Verwaltungsfrage - wie gehen wir mit unseren Ressourcen um? \
+Die Statistik ist gemeinsam mit der Aufgabe, größere Gesellschaften zu organisieren, entstanden. Ansätze davon finden sich bereits auf mesopotamischen Schrifttafeln des vierten Jahrtausends vor Christus [@damerow1988, S. 74], auf denen wirtschaftliche Transaktionen mit Mengenangaben und Personenbezeichnungen dokumentiert werden.
+
+Nicht umsonst haben die meisten heutigen Staaten eine Behörde für Statistik (in Deutschland das Statistische Bundesamt, kurz Destatis).
+
+Die Verwaltung von Gütern ist politischer Natur, und deswegen ist es die Statistik auch.
+
+Probleme mit der Objektivität von Statistik passieren eigentlich nie auf der Ebene der Statistik selbst, sondern beim Übersetzen von Beobachtungen in Zahlen. Dabei findet immer eine Auswahl statt, genau wie ein Wort schon eine Verallgemeinerung der echten Welt darstellt. Dabei ist Sprache aber wenigstens noch mehrdeutig. Mathematische Kategorien sind eindeutig, und das müssen sie auch sein, damit wir damit rechnen können.\
+Denken Sie an das Wort *erzählen*. Es enthält das Wort *zählen*. Diese Verwandtschaft findet sich auch in anderen Sprachen: Italienisch (*contare / raccontare*), Französisch (*compter / raconter*) und im Spanischen noch eindrucksvoller (*contar / contar*).
+
+Um etwas über die Welt zu sagen, sind wir also gezwungen, zu verallgemeinern. Auf dem Prinzip der Vereinfachung basiert auch Wahrnehmung. Schließlich geht es letztlich darum, handlungsfähig zu werden, und nicht angesichts der Komplexität das Handtuch zu werfen. Glücklicherweise trifft unser Gehirn diese Entscheidungen für uns unbewusst.
+
+Wenn wir aber wissenschaftliche Aussagen treffen wollen, müssen wir uns sehr genau bewusst machen, welche Entscheidungen wir im Verlauf der statistischen Analyse treffen, und was das für das Ergebnis bedeutet. Um das zu veranschaulichen, lesen Sie, was Oliver Schlaudt zum statistischen Modell des Bruttoinlandprodukts zu sagen hat:
+
+> „So haben wir es auch beim BIP mit solchen prinzipiellen Problemen zu tun, die sich aus seiner Definition ergeben. Atomunfälle, terroristische Anschläge und umweltschädlicher Konsum können allesamt im BIP positiv zu Buche schlagen. Wer das Auto nimmt, trägt mehr zum BIP bei, als wer Fahrrad fährt. Wer sein Auto gar auf dem Nachhauseweg zu Schrott fährt, ist ein Held des BIP. Wie kann diese Zahl also mit dem Wohlergehen zusammenhängen?"
+>
+> --- @schlaudt2018, S. 10
+
+Auf Ebene der Statistik funktioniert alles sehr gut und objektiv. Es steht uns ein eindrucksvolles Inventar an verfügbaren Analysen und Regeln zur Verfügung. Die Herausforderung der Statistik sind die Übersetzungen.
+
+Zunächst müssen Beobachtungen der echten Welt in Zahlen transformiert werden. Oder codiert werden in Kategorien. Wo ist die Grenze einer Kategorie? Was fällt hinein, und was nicht mehr?
+
+Und wenn wir all das mehr oder weniger willkürlich entschieden haben, was bedeuten die Ergebnisse eigentlich, die wir errungen haben?
+
+- mit diesen Fragen beschäftigen wir uns in Kapitel 3. \
+\
+Aber gehen wir einmal davon aus, dass die Daten mit denen wir arbeiten, nach bester wissenschaftlichen Methode erhoben wurden, und lassen das Streben nach Objektivität beiseite. Wir befinden uns nun auf einmal in einem Kosmos voller mögliche mathematischer Operationen, in dem uns ein großer Werkzeugkasten an anwendbaren Methoden beiseite steht. Und das hat tatsächlich etwas beruhigendes. Letztlich geht es immer darum, Situationen einzuschätzen, um Handlungsmöglichkeiten abzuleiten. Die Mathematik hält dafür eine ganze Reihe von Werkzeugen bereit. Nur müssen die Daten dafür zunächst einmal überhaupt mathematisch verarbeitbar sein.\
+Willkommen in der Welt des Messens, Quantifizierens, Zählens und Wiegens.
+
+Die Statistik ist Werkzeug von Dabei Mithilfe von Zahlen können wir logisch und vermeintlich objektive Urteile ziehen aus Diesen Fokus möchte ich im Verlauf des Tutorials immer wieder herstellen, auch wenn wir uns zeitweise mit sehr theoretischen Inhalten beschäftigen.\
 Datenanalyse steht an einer interessanten Schnittstelle zwischen der eindeutigen Welt mathematischer Logik und der Komplexität unserer echten Welt. Die Statistik beschäftigt sich damit, wie die reale Welt in Zahlen übersetzt werden kann, und die Programmiersprache R ist unser Werkzeug, um mit diesen Zahlen umzugehen. Diese Übung hat zum Ziel, euch beides gemeinsam näher zu bringen.
 
 Verschiedene Wege führen an das Ziel, aus konkreten Beobachtungen Informationen zu gewinnen, und dabei geht es immer um einen Kompromiss zwischen Komplexität und Vereinfachung. In einem kurzen psychologischen Exkurs möchte ich die beiden Wege zumindest kurz vorstellen:
 
-### Weg 1 - Heuristiken (alltägliche Datenanalyse)
+### Weg 1 - Heuristiken (alltägliche Datenanalyse) {#heuristiken}
 
 Im Alltag müssen wir basierend auf unseren Beobachtungen unzählige Entscheidungen treffen. Logisches Denken ist für Menschen anstrengend und langsam, deswegen vermeiden wir es an den meisten Stellen. Würden wir jede Alltagsentscheidung durch rationale Überlegungen lösen, könnte es Jahre dauern, bis wir das Nachdenken abgeschlossen haben und uns das erste Mal vom Fleck bewegt haben. Das könnte in gewissen Alltagssituationen sogar lebensbedrohlich werden, wo schnelles und pragmatisches Handeln sehr wichtig ist. Deswegen gibt es eingebaute Überlebensmechanismen, die uns davor bewahren, zu viel nachzudenken, wenn wir vor komplexen Situationen stehen.
 
@@ -125,8 +155,7 @@ Programmiersprachen ermöglichen es, Computern Anweisungen zu erteilen, die mens
 
 Dabei haben Programmiersprachen genau wie echte Sprachen auch **Vokabeln** und **Grammatik**.
 
-Sie sind Übersetzer zwischen Maschinensprache und Code. 
-Maschinensprache ist das fundamentale Ende von Vereinfachung: Es gibt nur noch zwei Zeichen, 0 und 1. Diese lassen sich elektronisch umsetzen durch "niedrige Spannung" und "hohe Spannung" und somit ist die Brücke zur Hardware geschaffen. 
+Sie sind Übersetzer zwischen Maschinensprache und Code. Maschinensprache ist das fundamentale Ende von Vereinfachung: Es gibt nur noch zwei Zeichen, 0 und 1. Diese lassen sich elektronisch umsetzen durch "niedrige Spannung" und "hohe Spannung" und somit ist die Brücke zur Hardware geschaffen.
 
 Schauen Sie sich den folgenden Code an. Die Vokabel `sqrt` ist angelehnt an das englische Wort "square root", was "Quadratwurzel" bedeutet. Grammatisch fallen die Klammern auf. Sie enthalten das Objekt, auf welches die Vokabel `sqrt` angewendet werden soll.\
 Lautsprachlich können die Klammern als ein "von" gelesen werden: "Quadratwurzel von neun".
@@ -142,135 +171,146 @@ Zur Aufmunterung möchte ich noch ein kleines Zitat von Hannah Arendt beifügen:
 Hier sind einige Gründe, die dafür sprechen R zu lernen:
 
 ##### Vorteile
-<div class="vorteile">
+
+::: vorteile
 -   open-source (das heißt, der Quellcode ist frei verfügbar)
+
     -   kostenfrei
     -   wird kollektiv gepflegt und weiterentwickelt von enthusiastischen Menschen
     -   modular erweiterbar mit Paketen aus der Community
     -   alle können mitwirken
-    -   sehr viel gut strukturiertes frei verfügbares Wissen in  Dokumentationen, Foren und Büchern  
+    -   sehr viel gut strukturiertes frei verfügbares Wissen in Dokumentationen, Foren und Büchern\
+
 -   übertragbare Fähigkeiten:
+
     -   Kenntnisse in R erleichtern es, andere Programmiersprachen zu lernen
     -   nicht-proprietäre Software kann auch nach der Uni genutzt werden
-    -   ist mehr Menschen zugänglich  
+    -   ist mehr Menschen zugänglich\
         (eine SPSS-Lizenz für Privatpersonen kostet zur Zeit 1200€ im Jahr)
-    -   Standard in Wissenschaft und Wirtschaft  
+    -   Standard in Wissenschaft und Wirtschaft\
         (z.B. Google und AirBnB nutzen R für Datenanalyse)
-</div>
+:::
 
 ##### Nachteile
 
-<div class="rot">
-- Benutzeroberfläche: Das Erlernen von Code kann abschreckend wirken für Menschen, die bisher noch keine Erfahrung damit haben.  
-  R-Studio bietet aber eine gute visuelle Oberfläche an, was diesen Punkt etwas mildert. 
-</div>
+::: rot
+-   Benutzeroberfläche: Das Erlernen von Code kann abschreckend wirken für Menschen, die bisher noch keine Erfahrung damit haben.\
+    R-Studio bietet aber eine gute visuelle Oberfläche an, was diesen Punkt etwas mildert.
+:::
 
 ## Installation
 
 Um R auf eurem Computer zu benutzen, braucht es zwei Komponenten.
- 
-<div class="grau-nb">
-![R](images/Rlogo_small.png) | ![R-Studio](images/RStudio-Logo-small.png)
----|---
-Kernprogramm | visuelle Oberfläche
-Maschine | Steuerung
-Basic | Komfort
-</div>  
 
+::: grau-nb
+| ![R](images/Rlogo_small.png) | ![R-Studio](images/RStudio-Logo-small.png) |
+|------------------------------|--------------------------------------------|
+| Kernprogramm                 | visuelle Oberfläche                        |
+| Maschine                     | Steuerung                                  |
+| Basic                        | Komfort                                    |
+:::
 
 In Wahrheit funktioniert R auch ohne R-Studio. Aber das ist etwas unkomfortabel.
 
 Stellen Sie sich R als einen Airbus vor, und R-Studio als das Cockpit.\
-Aus dem Cockpit kann das Flugzeug komfortabel gesteuert werden, mit vielen hilfreichen Features wie Autopilot und GPS.  
-R ist die Maschine, die Turbinen, das Innere, und R Studio ist eine visuelle Umgebung, für die Kommunikation mit Menschen konzipiert, von wo aus wir R ansteuern können. 
+Aus dem Cockpit kann das Flugzeug komfortabel gesteuert werden, mit vielen hilfreichen Features wie Autopilot und GPS.\
+R ist die Maschine, die Turbinen, das Innere, und R Studio ist eine visuelle Umgebung, für die Kommunikation mit Menschen konzipiert, von wo aus wir R ansteuern können.
 
 <p align="center">
-  <img alt="Airbus mit R-Logo" src="images/rplane.png" width="45%">
-&nbsp; &nbsp; &nbsp; &nbsp;
-  <img alt="Cockpit mit R-Studio-Logo" src="images/cockpit.png" width="45%">
+
+<img src="images/rplane.png" alt="Airbus mit R-Logo" width="45%"/>         <img src="images/cockpit.png" alt="Cockpit mit R-Studio-Logo" width="45%"/>
+
 </p>
 
- <!-- ![Airbus mit R-Logo](images/rplane.png){width="50%"}  ![Cockpit mit R-Studio-Logo](images/cockpit.png){width="50%"} -->
+<!-- ![Airbus mit R-Logo](images/rplane.png){width="50%"}  ![Cockpit mit R-Studio-Logo](images/cockpit.png){width="50%"} -->
 
-
-<div class="infobox">
+::: infobox
 <p>
+
 Wichtig ist, dass zuerst **R** installiert wird, und danach **R-Studio**.
+
 </p>
-</div>
+:::
 
----
+------------------------------------------------------------------------
 
-### 1. <img src="https://www.r-project.org/logo/Rlogo.png" alt="R Logo" width="6%" height="6%" /> {.tabset .tabset-fade }
+### 1. <img src="https://www.r-project.org/logo/Rlogo.png" alt="R Logo" width="6%" height="6%"/> {.tabset .tabset-fade}
 
 Wir können R beim "Comprehensive R Archive Network" herunterladen, kurz **CRAN**.
 
-  1.  https://cran.rstudio.com/ besuchen  
-  2.  Betriebssystem auswählen  
+1.  <https://cran.rstudio.com/> besuchen\
+2.  Betriebssystem auswählen
 
 #### Windows
 
+3.  [Install R for the first time](https://ftp.gwdg.de/pub/misc/cran/bin/windows/base/) anklicken\
+4.  [Installer herunterladen](https://ftp.gwdg.de/pub/misc/cran/bin/windows/base/R-4.2.1-win.exe) und ausführen.\
+5.  Bei der Installation bitte die Standardeinstellungen beibehalten und nicht in benutzerdefinierte Verzeichnisse installieren.
 
-  3.  [Install R for the first time](https://ftp.gwdg.de/pub/misc/cran/bin/windows/base/) anklicken  
-  4.  [Installer herunterladen](https://ftp.gwdg.de/pub/misc/cran/bin/windows/base/R-4.2.1-win.exe) und ausführen.  
-5. Bei der Installation bitte die Standardeinstellungen beibehalten und nicht in     benutzerdefinierte Verzeichnisse installieren.
-
----
+------------------------------------------------------------------------
 
 #### Mac
 
+3.  Die eigene MacOS-Version und den Typ des Prozessors herausfinden:
 
-3. Die eigene MacOS-Version und den Typ des Prozessors herausfinden:  
+    ![Bild des Mauszeigers schwebend über dem Apple-Menü-Eintrag "Über diesen Mac"](images/macVersion.png)
 
-   ![Bild des Mauszeigers schwebend über dem Apple-Menü-Eintrag "Über diesen         Mac"](images/macVersion.png)  
-    
-    Version und Prozessortyp ablesen (in meinem Fall macOS 10.14 und Intel-Prozessor)  
+    Version und Prozessortyp ablesen (in meinem Fall macOS 10.14 und Intel-Prozessor)
 
-   ![Bild der Infobox "Über diesen Mac", enthält Version und Prozessortyp](images/macVersion1.png)  
-  
+    ![Bild der Infobox "Über diesen Mac", enthält Version und Prozessortyp](images/macVersion1.png)
+
     (Die allermeisten Macs haben einen Intel-Prozessor. Modelle ab 2020 können einen AppleSilicon-Prozessor haben.)
-  
-4. Im Abschnitt `Latest release` die passende Version finden.  
 
-    In meinem Fall wäre das die oberste Version für Intel-Prozessoren.  
-    Mein macOS 10.14 wird gerade so noch unterstützt.   
-    Für ältere Macs werden aber auch frühere R-Versionen zur Verfügung gestellt.  
-   ![Bild des Abschnitts latest release, zeigt Kompatibilität ab macOS 10.13 und für Intel-Prozessoren](images/macVersion2.png)  
-    
-5. Die [.pkg](https://ftp.gwdg.de/pub/misc/cran/bin/macosx/base/R-4.2.1.pkg)-Datei    herunterladen und ausführen.  
-6. Während der Installation alle Standardeinstellungen beibehalten. Bitte keine      benutzerdefinierten Verzeichnisse angeben.
-7. Fertig, jetzt nur noch R-Studio installieren, siehe nächster Abschnitt.
+4.  Im Abschnitt `Latest release` die passende Version finden.
 
----
+    In meinem Fall wäre das die oberste Version für Intel-Prozessoren.\
+    Mein macOS 10.14 wird gerade so noch unterstützt.\
+    Für ältere Macs werden aber auch frühere R-Versionen zur Verfügung gestellt.\
+    ![Bild des Abschnitts latest release, zeigt Kompatibilität ab macOS 10.13 und für Intel-Prozessoren](images/macVersion2.png)
+
+5.  Die [.pkg](https://ftp.gwdg.de/pub/misc/cran/bin/macosx/base/R-4.2.1.pkg)-Datei herunterladen und ausführen.\
+
+6.  Während der Installation alle Standardeinstellungen beibehalten. Bitte keine benutzerdefinierten Verzeichnisse angeben.
+
+7.  Fertig, jetzt nur noch R-Studio installieren, siehe nächster Abschnitt.
+
+------------------------------------------------------------------------
 
 #### Linux
 
-- Linux-Distribution auswählen und den gut dokumentierten Installationsanweisungen folgen
+-   Linux-Distribution auswählen und den gut dokumentierten Installationsanweisungen folgen
 
----
+------------------------------------------------------------------------
 
-### 2. <img src="https://www.rstudio.com/wp-content/uploads/2018/10/RStudio-Logo-Flat.png" alt="R-Studio Logo" width="15%" height="15%" />
+### 2. <img src="https://www.rstudio.com/wp-content/uploads/2018/10/RStudio-Logo-Flat.png" alt="R-Studio Logo" width="15%" height="15%"/>
 
-1. https://www.rstudio.com/products/rstudio/download/#download besuchen.  
-  Die richtige Version sollte automatisch vorgeschlagen werden.
-2. Laden Sie den Installer herunter und folgen Sie den Installationsanweisungen.
+1.  <https://www.rstudio.com/products/rstudio/download/#download> besuchen.\
+    Die richtige Version sollte automatisch vorgeschlagen werden.
+2.  Laden Sie den Installer herunter und folgen Sie den Installationsanweisungen.
 
 <details>
-  <summary> Für alle mit alten PCs: hier klicken </summary>
+
+<summary>
+
+Für alle mit alten PCs: hier klicken
+
+</summary>
+
 [R-Studio für ältere Betriebssysteme](https://www.rstudio.com/products/rstudio/older-versions/#rstudio-desktop)
 
-Version |	Windows |	MacOS |	Ubuntu 	|RedHat |	Architektur
-|----|----|----|----|----|----|
-0.98 |	XP+ |	10.6+ |	10 - 14 |	6+ |	x86, x64
-0.99 |	7+ 	|10.6+ |	12 - 14 |	6+ |	x86, x64
-1.0 |	7+ 	|10.6+ |	12 - 14 |	7+ |	x86, x64
-1.1 |	7+ |	10.6+ |	12+ |	7+ |	x86, x64
-1.2 |	7+ 	|10.11+ |	14+ |	7+ |	x64
-[1.4](https://www.rstudio.com/products/rstudio/older-versions/#141743) | 7+ | 10.12+ | 14 - 20| 7+ | x64
-[2021.09.2](https://dailies.rstudio.com/version/2021.09.2+382.pro1/)| 10+ |10.13+ | 18 - 20| 7+|  x64
+| Version                                                                | Windows | MacOS  | Ubuntu  | RedHat | Architektur |
+|------------------------------------------------------------------------|---------|--------|---------|--------|-------------|
+| 0.98                                                                   | XP+     | 10.6+  | 10 - 14 | 6+     | x86, x64    |
+| 0.99                                                                   | 7+      | 10.6+  | 12 - 14 | 6+     | x86, x64    |
+| 1.0                                                                    | 7+      | 10.6+  | 12 - 14 | 7+     | x86, x64    |
+| 1.1                                                                    | 7+      | 10.6+  | 12+     | 7+     | x86, x64    |
+| 1.2                                                                    | 7+      | 10.11+ | 14+     | 7+     | x64         |
+| [1.4](https://www.rstudio.com/products/rstudio/older-versions/#141743) | 7+      | 10.12+ | 14 - 20 | 7+     | x64         |
+| [2021.09.2](https://dailies.rstudio.com/version/2021.09.2+382.pro1/)   | 10+     | 10.13+ | 18 - 20 | 7+     | x64         |
+
 </details>
 
----
+------------------------------------------------------------------------
 
 ### Tablets
 
@@ -285,19 +325,19 @@ Für alle, die z. B. mit einem Tablet teilnehmen, keinen Computer haben, oder au
 
 ### Hat bei der Installation alles geklappt?
 
- Öfnen Sie R-Studio.   
- Vielleicht fühlt es sich jetzt wirklich an, als seien Sie im Cockpit eines Airbus. Viele Knöpfe unbekannter Funktion, Panels, Menüs und Symbole.  
- 
- Hat R-Studio die Installation von R erkannt?  Besser gesagt, gibt es auch wirklich einen Airbus hinter Ihrem Cockpit?  
- Wenn ja, erkennt R-Studio dass eine R-Version installiert ist. 
- Das sollte es in etwas so aussehen:  
- ![R-Konsole](images/console.png)  
+Öfnen Sie R-Studio.\
+Vielleicht fühlt es sich jetzt wirklich an, als seien Sie im Cockpit eines Airbus. Viele Knöpfe unbekannter Funktion, Panels, Menüs und Symbole.
+
+Hat R-Studio die Installation von R erkannt? Besser gesagt, gibt es auch wirklich einen Airbus hinter Ihrem Cockpit?\
+Wenn ja, erkennt R-Studio dass eine R-Version installiert ist. Das sollte es in etwas so aussehen:\
+![R-Konsole](images/console.png)\
 Probieren Sie ein paar Rechenaufgaben, um zu testen ob alles klappt!
 
-Sollte R nicht erkannt werden oder eine sonstige Fehlermeldung erscheinen, bin ich gerne behilflich bei der Lösung. Machen Sie dafür bitte einen Screenshot und wenden sich an mich per [Email](mailto:lukas.bruelheide@student.uni-kassel.de){.email}.  
+Sollte R nicht erkannt werden oder eine sonstige Fehlermeldung erscheinen, bin ich gerne behilflich bei der Lösung. Machen Sie dafür bitte einen Screenshot und wenden sich an mich per [Email](mailto:lukas.bruelheide@student.uni-kassel.de){.email}.
 
 ### Ausblick nächstes Thema
-Im nächsten Tutorial geht es in R-Studio weiter. 
+
+Im nächsten Tutorial geht es in R-Studio weiter.
 
 ```{r, eval=FALSE}
 install.packages("remotes")
@@ -305,3 +345,4 @@ remotes::install_github("statistik-lehre/tutor")
 library(tutor)
 ```
 
+### Literaturverzeichnis
