@@ -248,7 +248,7 @@ Für alle, die z. B. mit einem Tablet teilnehmen, keinen Computer haben, oder au
 3.  Account erstellen
 4.  ein neues Projekt erstellen
 
-## R-Studio verstehen
+## R-Studio testen
 
 ### Hat bei der Installation alles geklappt?
 
