@@ -262,7 +262,7 @@ Probieren Sie ein paar Rechenaufgaben, um zu testen ob alles klappt!
 
 Sollte R nicht erkannt werden oder eine sonstige Fehlermeldung erscheinen, bin ich gerne behilflich bei der Lösung. Machen Sie dafür bitte einen Screenshot und wenden sich an mich per [Email](mailto:lukas.bruelheide@student.uni-kassel.de){.email}.
 
-### Ausblick nächstes Thema
+### Vorbereitung nächstes Thema
 
 Im nächsten Tutorial geht es in R-Studio weiter.
 

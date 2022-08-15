@@ -1,10 +1,13 @@
 ---
 title: "2 R-Studio"
-output: 
+output:
   learnr::tutorial:
-    language: "de"
-    css: "/css/boxes.css"
+    language: de
+    css: css/boxes.css
+    fig_caption: no
 runtime: shiny_prerendered
+bibliography: ref.json
+link-citations: TRUE
 description: "Erste Schritte in R-Studio"
 ---
 
@@ -12,3 +15,12 @@ description: "Erste Schritte in R-Studio"
 library(learnr)
 knitr::opts_chunk$set(echo = FALSE)
 ```
+
+
+
+
+
+
+
+
+### Literaturverzeichnis
