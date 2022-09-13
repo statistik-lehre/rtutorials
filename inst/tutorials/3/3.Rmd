@@ -1,0 +1,32 @@
+---
+title: "3 - Maße der zentralen Tendenz"
+output:
+  learnr::tutorial:
+    language: de
+    css: css/boxes.css
+    fig_caption: no
+runtime: shiny_prerendered
+bibliography: ref.json
+link-citations: TRUE
+description: 
+resource_files:
+- css/boxes.css
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Maße der zentralen Tendenz
+
+R kann den Mittelwert mit `mean()` berechnen. 
+
+Wir benötigen ein Objekt, dessen Mittelwert ausgerechnet werden kann. 
+Erstellen Sie einen Vektor, der verschiedene Zahlen enthält. 
+
+Benutzen Sie `c()`, um einen Vektor zu erstellen. 
+Benutzen Sie den Zuweisungspfeil `<-`, um dem Vektor einen Namen zu geben und ihn im Environment zu hinterlegen. 
+
+```
+
