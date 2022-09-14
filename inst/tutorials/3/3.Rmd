@@ -11,6 +11,9 @@ link-citations: TRUE
 description: 
 resource_files:
 - css/boxes.css
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 ```{r setup, include=FALSE}
@@ -20,13 +23,144 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Maße der zentralen Tendenz
 
-R kann den Mittelwert mit `mean()` berechnen. 
+Wir befassen uns in diesem Tutorial mit grundlegenden Vokabeln der
+Programmiersprache R.
 
-Wir benötigen ein Objekt, dessen Mittelwert ausgerechnet werden kann. 
-Erstellen Sie einen Vektor, der verschiedene Zahlen enthält. 
+::: grau-nb
++-----------------------------------+------------------------------+
+| Voraussetzungen                   | Ziele                        |
++===================================+==============================+
+| Verständnis von R-Studios         | • Objekte und Funktionen     |
+| Benutzeroberfläche                | verstehen\                   |
+|                                   |                              |
+|                                   | • Maße der zentralen Tendenz |
+|                                   | mit R berechnen              |
++-----------------------------------+------------------------------+
+:::
 
-Benutzen Sie `c()`, um einen Vektor zu erstellen. 
-Benutzen Sie den Zuweisungspfeil `<-`, um dem Vektor einen Namen zu geben und ihn im Environment zu hinterlegen. 
+Sie haben in der Vorlesung folgende Maße der zentralen Tendenz kennen
+gelernt:
 
+-   Mittelwert
+-   Median
+-   Modus
+
+Die Umsetzung in R ist ziemlich straight forward:\
+\
+R kann den Mittelwert mit `mean()` berechnen.
+
+## Objekte und Funktionen
+
+> Everything that happens is a **function call**.\
+> Everything that exists is an **object**.
+
+#### Funktionen
+
+Funktionen sind der fundamentale Baustein für alles, was in R passiert.
+\
+Beispielsweise ist `mean()` eine Funktion, um den Mittelwert zu
+errechnen, aber auch ganz grundlegende Operatoren wie `+` und `-` sind
+Funktionen.\
+\
+Der Grund, weswegen R bei Wissenschaftler:innen so beliebt ist: Gleich
+einer Sprache, in welcher beliebig neue Wörter und Sätze gebildet werden
+können, können mit der Sprache R beliebig neue aufeinander aufbauende
+Funktionen geschrieben werden. All dies basiert auf einem
+Grundwortschatz von 185 "fest verbauten" Vokabeln -- sog. **primitiven
+Funktionen**.\
+\
+Am deutlichsten wird das am Beispiel der Funktion `mean()`. \
+Wir wissen, dass der Mittelwert folgendermaßen errechnet werden kann:\
+
+$\bar{x} = \frac{\sum_{i=1}^{n}{x_i}}{n}$\
+Wie funktioniert die Funktion `mean()`? \
+Es muss einen Prozess im Computer geben, der die Summe $\sum$ bildet.
+Und einen Prozess, der die Anzahl $n$ zählen kann.\
+\
+Diese Anweisungen des Zählens oder Summierens sind so essentiell, dass
+sie nicht mit R geschrieben werden können - denn R selbst basiert ja
+darauf. Es ist, wie ein Werkzeug herstellen zu wollen, für dessen
+Herstellung aber eben jenes Werkzeug benötigt wird.\
+Wir haben eine Henne-oder-Ei-Situation, oder auf Englisch ein
+Bootstrapping-Problem (abgeleitet vom Sprichwort *to pull oneself up by
+one's bootstraps*). \
+\
+Das Problem wird dadurch gelöst, dass grundlegende Funktionen wie
+Zählen, Addition oder Summierung in der maschinennahen Sprache C
+geschrieben wurden und nicht in R.\
+\
+Insgesamt gibt es derzeit 185 solcher **primitiven Funktionen**, welche
+den Grundwortschatz bilden für alle weiteren sprachlichen Entwicklungen.
+Unter diesen Vokabeln ist auch die Funktion `sum()`, um die Summe $\sum$
+zu bilden und `length()`, um die Anzahl $n$ zu bestimmen. \
+\
+Irgendwann hat jemand die Funktion `mean(x)` aus den primitiven
+Funktionen `sum(x) / length(x)` definiert, um Ihnen zu ersparen, jedes
+Mal die lange Formel eintippen zu müssen.
+
+```{r mean, exercise = TRUE}
+x <- c(1, 7)       # Erstellen eines Objektes x
+sum(x) / length(x) # Mittelwert mit primitiven Funktionen
+mean(x)            # Mittelwert mit interner Funktion
 ```
 
+\
+Funktionen folgen immer der selben Struktur (Syntax):\
+`f(x)`\
+Dabei ist `f` die Funktion. In den Klammern stehen wiederum die
+Argumente. In diesem Fall das Objekt `x`, auf welches die Funktion
+angewendet werden soll.\
+Kompliziertere Funktionen lassen auch mehrere Argumente zu.\
+\
+Eine Ausnahme dieser Regel bilden die mathematischen Operatoren `+`, `-`
+& Co.\
+Sie können ohne Klammern benutzt werden, zwischen den Argumenten
+stehend. Das macht die Benutzung von R intuitiver.
+
+```{r plus1, exercise=TRUE}
+5 + 5
+```
+
+Sie können aber genau wie alle anderen Funktionen auch mit der
+Klammerschreibweise aufgerufen werden.
+
+```{r plus2, exercise=TRUE}
+`+`(5, 5)
+```
+
+Wir müssen R mit Backticks `` ` `` signalisieren, dass das `+`
+ausnahmsweise "wörtlich" gelesen wird, da es ansonsten ein reserviertes
+Zeichen ist, das schon alleine und ohne Klammern eine Funktion
+darstellt.\
+
+```{r func, exercise = TRUE}
+function()
+```
+
+\
+\
+
+Damit
+
+Wir benötigen ein Objekt, dessen Mittelwert ausgerechnet werden kann.
+Erstellen Sie einen Vektor, der verschiedene Zahlen enthält.
+
+Benutzen Sie `c()`, um einen Vektor zu erstellen. Benutzen Sie den
+Zuweisungspfeil `<-`, um dem Vektor einen Namen zu geben und ihn im
+Environment zu hinterlegen.
+
+\
+\
+## neu erlernte Befehle\
+
+|                         |                                 |
+|-------------------------|---------------------------------|
+| `mean()`                | Mittelwert                      |
+| `sum()`                 | entspricht $\sum$               |
+| `` `+`() ``             | `+` in klassischer Schreibweise |
+| `length()`              | entspricht $n$                  |
+| `median()`              | Median                          |
+| `table()`               | Häufigkeitstabelle              |
+| `install.packages(" ")` | Paket installieren              |
+| `library()`             | Paket laden                     |
+| `modeest::mfv`          | Modus / Modi anzeigen           |

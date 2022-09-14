@@ -1,5 +1,5 @@
 ---
-title: "2 R-Studio"
+title: "4 - Dispersionsmaße"
 output:
   learnr::tutorial:
     language: de
@@ -8,7 +8,9 @@ output:
 runtime: shiny_prerendered
 bibliography: ref.json
 link-citations: TRUE
-description: "Erste Schritte in R-Studio"
+description: 
+resource_files:
+- css/boxes.css
 ---
 
 ```{r setup, include=FALSE}
@@ -16,12 +18,3 @@ library(learnr)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## einige wichtige Einstellungen 
-
-
-
-
-
-
-
-### Literaturverzeichnis
