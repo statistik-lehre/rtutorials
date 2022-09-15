@@ -1,5 +1,5 @@
 ---
-title: "2 R-Studio"
+title: "2 - Erste Schritte mit R"
 output:
   learnr::tutorial:
     language: de
@@ -16,12 +16,105 @@ library(learnr)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## einige wichtige Einstellungen 
+## Erste Schritte
 
+::: grau-nb
++-----------------------------+-------------------------------------------+
+| Voraussetzungen             | Ziele                                     |
++=============================+===========================================+
+| R und R-Studio installiert\ | -   Benutzeroberfläche verstehen          |
+|                             |                                           |
+|                             | <!-- -->                                  |
+|                             |                                           |
+|                             | -   grundlegende Funktionsweise verstehen |
++-----------------------------+-------------------------------------------+
+:::
 
+## R Studios Benutzeroberfläche Tutorial 1
 
+-   Installation
 
+-   R Studio Benutzeroberfläche (Fokus auf Console und Environment)
 
+-   Taschenrechner
 
+-   Hello World
 
-### Literaturverzeichnis
+-   Pakete installieren
+
+-   Tutorials starten
+
+```{r hello}
+print("Hello World")
+```
+
+## R Studio
+
+Nun sitzen Sie im Cockpit eines Airbus und sind eventuell überwältigt von den vielen Knöpfen und Anzeigen.\
+Glücklicherweise sind drei Viertel davon nur funktionale Extras. Wir fokussieren uns auf das Herzstück: Die **Console**.\
+Diese ist unser Fenster zum Maschinenraum.\
+Darüber können dem Computer mit der Sprache R Anweisungen erteilt werden und dort werden Ergebnisse ausgegeben.\
+
+### Die ersten Anweisungen in der Konsole
+
+\
+Geben Sie dem Computer eine Rechenaufgabe. Z.B. `5023 / 64`.\
+Enter schickt einen Befehl ab.\
+\
+(to be continued)\
+\
+
+### Hello World
+
+Traditionell ist es üblich, beim Lernen einer neuen Programmiersprache ein Programm zu schreiben, welches die Welt begrüßt. Geben Sie dazu in die Konsole ein:
+
+`print("Hello World")`
+
+### Arbeiten mit dem Skript
+
+In der Konsole verschwinden alle Anweisungen wieder, sobald sie abgeschickt wurden. Es gibt die Möglichkeit, vorher eingegeben Anweisungen aufzurufen durch das Drücken Pfeiltaste nach oben. Das ist sehr praktisch beim Arbeiten mit der Konsole.\
+\
+Es gibt aber auch die Möglichkeit, Anweisungen in "Skripten" zu speichern. Dafür ist das Fenster "Source" zuständig, was sich oben rechts befindet.
+
+### Kommentare
+
+Alles, was in einem Skript steht, wird vom Computer gelesen und ausgeführt.\
+Um zu signalisieren, dass die nachfolgende Zeile nicht als Code interpretiert werden soll, gibt es das Zeichen `#`. So kann das Skript zum Beispiel Anmerkungen enthalten, oder Code, der nicht ausgeführt werden soll.
+
+### Variablen & Environment
+
+R kann mit Variablen rechnen.\
+Um einer Variablen einen Wert zuzuweisen, verwenden Sie `<-`, den "Assignment Operator".
+
+```{r}
+x <- 5
+```
+
+`<-` erstellt ein Objekt im Arbeitsspeicher und weist ihm den Wert zu. \
+Diese Notation ist etwas umständlich zu schreiben, und stammt aus grauen Vorzeiten, in denen Tastaturen noch einen richtigen Pfeil besaßen.
+
+::: {#shortcuts .infobox}
+**Shortcuts für den Assignment Operator `<-`:**\
+Mac: `Alt` + `-`\
+Windows:\
+Linux:
+:::
+
+Die Variablen werden als Objekte im Environment gespeichert. "Environment" könnte mit "Arbeitsumgebung" übersetzt werden. Daten in der Arbeitsumgebung sind für R zum Rechnen verfügbar. \
+Sie können sehen, welche Objekte sich zur Zeit im Environment befinden: Im oberen rechten Fenster befindet sich ein Tab, der "Environment" heißt.
+
+::: grau
+**guter Stil für Objektnamen:**
+
+-   kurz
+
+-   klar
+
+-   eindeutig
+
+-   ausschließlich Kleinschreibung
+
+-   keine Umlaute, da diese auf anderen Computern evt. falsch angezeigt werden\
+:::
+
+## einige wichtige Einstellungen

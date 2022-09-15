@@ -27,15 +27,15 @@ Wir befassen uns in diesem Tutorial mit grundlegenden Vokabeln der
 Programmiersprache R.
 
 ::: grau-nb
-+-----------------------------------+------------------------------+
-| Voraussetzungen                   | Ziele                        |
-+===================================+==============================+
-| Verständnis von R-Studios         | • Objekte und Funktionen     |
-| Benutzeroberfläche                | verstehen\                   |
-|                                   |                              |
-|                                   | • Maße der zentralen Tendenz |
-|                                   | mit R berechnen              |
-+-----------------------------------+------------------------------+
++-----------------------------------+---------------------------+
+| Voraussetzungen                   | Ziele                     |
++===================================+===========================+
+| Verständnis von R-Studios         | • Objekte und Funktionen  |
+| Benutzeroberfläche                | verstehen\                |
+|                                   |                           |
+|                                   | • Maße der zentralen      |
+|                                   | Tendenz mit R berechnen   |
++-----------------------------------+---------------------------+
 :::
 
 Sie haben in der Vorlesung folgende Maße der zentralen Tendenz kennen
@@ -56,8 +56,7 @@ R kann den Mittelwert mit `mean()` berechnen.
 
 #### Funktionen
 
-Funktionen sind der fundamentale Baustein für alles, was in R passiert.
-\
+Funktionen sind der fundamentale Baustein für alles, was in R passiert.\
 Beispielsweise ist `mean()` eine Funktion, um den Mittelwert zu
 errechnen, aber auch ganz grundlegende Operatoren wie `+` und `-` sind
 Funktionen.\
@@ -69,11 +68,11 @@ Funktionen geschrieben werden. All dies basiert auf einem
 Grundwortschatz von 185 "fest verbauten" Vokabeln -- sog. **primitiven
 Funktionen**.\
 \
-Am deutlichsten wird das am Beispiel der Funktion `mean()`. \
+Am deutlichsten wird das am Beispiel der Funktion `mean()`.\
 Wir wissen, dass der Mittelwert folgendermaßen errechnet werden kann:\
 
 $\bar{x} = \frac{\sum_{i=1}^{n}{x_i}}{n}$\
-Wie funktioniert die Funktion `mean()`? \
+Wie funktioniert die Funktion `mean()`?\
 Es muss einen Prozess im Computer geben, der die Summe $\sum$ bildet.
 Und einen Prozess, der die Anzahl $n$ zählen kann.\
 \
@@ -83,7 +82,7 @@ darauf. Es ist, wie ein Werkzeug herstellen zu wollen, für dessen
 Herstellung aber eben jenes Werkzeug benötigt wird.\
 Wir haben eine Henne-oder-Ei-Situation, oder auf Englisch ein
 Bootstrapping-Problem (abgeleitet vom Sprichwort *to pull oneself up by
-one's bootstraps*). \
+one's bootstraps*).\
 \
 Das Problem wird dadurch gelöst, dass grundlegende Funktionen wie
 Zählen, Addition oder Summierung in der maschinennahen Sprache C
@@ -92,14 +91,14 @@ geschrieben wurden und nicht in R.\
 Insgesamt gibt es derzeit 185 solcher **primitiven Funktionen**, welche
 den Grundwortschatz bilden für alle weiteren sprachlichen Entwicklungen.
 Unter diesen Vokabeln ist auch die Funktion `sum()`, um die Summe $\sum$
-zu bilden und `length()`, um die Anzahl $n$ zu bestimmen. \
+zu bilden und `length()`, um die Anzahl $n$ zu bestimmen.\
 \
 Irgendwann hat jemand die Funktion `mean(x)` aus den primitiven
 Funktionen `sum(x) / length(x)` definiert, um Ihnen zu ersparen, jedes
 Mal die lange Formel eintippen zu müssen.
 
 ```{r mean, exercise = TRUE}
-x <- c(1, 7)       # Erstellen eines Objektes x
+x <- c(1, 5)       # Erstellen eines Objektes x
 sum(x) / length(x) # Mittelwert mit primitiven Funktionen
 mean(x)            # Mittelwert mit interner Funktion
 ```
@@ -110,7 +109,6 @@ Funktionen folgen immer der selben Struktur (Syntax):\
 Dabei ist `f` die Funktion. In den Klammern stehen wiederum die
 Argumente. In diesem Fall das Objekt `x`, auf welches die Funktion
 angewendet werden soll.\
-Kompliziertere Funktionen lassen auch mehrere Argumente zu.\
 \
 Eine Ausnahme dieser Regel bilden die mathematischen Operatoren `+`, `-`
 & Co.\
@@ -131,27 +129,100 @@ Klammerschreibweise aufgerufen werden.
 Wir müssen R mit Backticks `` ` `` signalisieren, dass das `+`
 ausnahmsweise "wörtlich" gelesen wird, da es ansonsten ein reserviertes
 Zeichen ist, das schon alleine und ohne Klammern eine Funktion
-darstellt.\
+darstellt.
 
-```{r func, exercise = TRUE}
-function()
+## Mittelwert
+
+::: grau-nb
+$$
+\sum_{i=1}^n{(x_i - \bar{x})} = 0
+$$
+:::
+
+Die Summe aller Abweichungen vom Mittelwert ist immer 0.\
+Das liegt daran, dass alle positiven und negativen Abweichungen sich
+exakt ausgleichen. Nur dann ist es ein Mittelwert.\
+Diese Eigenschaft des Mittelwerts wird für weitere Formeln in der
+Statistik von großer Bedeutung sein, deswegen ist es wichtig, sie zu
+verstehen.\
+
+```{r mean1, exercise = TRUE}
+x <- c(1, 5)     # Definieren eines Vektors x mit den Zahlen 1 und 5
+x                # Ausgeben des Vektors x
+mean(x)          # (1 + 5) / 2 = 3
+x - mean(x)      # zieht 3 von jedem Wert im Vektor x ab
+sum(x - mean(x)) # summiert gleichen sich die Abweichungen aus
 ```
 
-\
-\
+Anders gesprochen, der Mittelwert ist der Wert, der die geringste
+Abweichung zu allen Werten aufweist. Wenn alle Abweichungen vom
+Mittelwert summiert werden, gleichen sich positive und negative
+Abweichungen genau aus.\
+Um anstatt eine $0$ zu erhalten, eine aussagekräftigere Zahl über die
+Abweichungen vom Mittelwert zu erhalten, können diese vor dem Summieren
+quadriert werden - so ist das Vorzeichen immer positiv, und negative und
+positive Abweichungen gleichen sich nicht weiter aus. \
+Die Summe der qaudrierten Abweichungen vom Mittelwert wird auch als
+Quadratsumme $QS$ bezeichnet.
 
-Damit
+::: grau-nb
+$$
+QS = \sum_{i=1}^n{(x_i - \bar{x})^2} = min
+$$
+:::
 
-Wir benötigen ein Objekt, dessen Mittelwert ausgerechnet werden kann.
-Erstellen Sie einen Vektor, der verschiedene Zahlen enthält.
+```{r qs, exercise = TRUE}
+(x <- c(1, 5))
+x - mean(x)          # Abweichungen vom Mittelwert
+(x - mean(x))^2      # Quadrierte Abweichungen sind immer positiv
+sum((x - mean(x))^2) # Quadratsumme: -2² + 2² = 8
+```
 
-Benutzen Sie `c()`, um einen Vektor zu erstellen. Benutzen Sie den
-Zuweisungspfeil `<-`, um dem Vektor einen Namen zu geben und ihn im
-Environment zu hinterlegen.
+## Median
+
+## Modus 
+
+Es gibt keine eingebaute Formel für den Modus / die Modi. Allerdings
+lässt sich dieses Maß der zentralen Tendenz sehr einfach über eine
+Häufigkeitstabelle bestimmen.
+
+Was ist eine Häufigkeitstabelle?\
+Eine Tabelle, die angibt, wie oft jeder Wert in der Urliste vorkommt.
+
+Um eine solche Tabelle zu erstellen, gibt es den Befehl `table()`.
+
+```{r table, exercise = TRUE}
+x <- c(1, 1, 1, 3, 3, 2)
+table(x)
+```
+
+Der Modus läge hier eindeutig bei 1, da dieser Wert mit 3 mal am
+häufigsten auftritt.
+
+Für größere Urlisten können Sie ein Paket namens `modeest` (Mode
+Estimation) verwenden, welches eine Funktion zum Berechnen des Modus
+bereitstellt.
+
+Zunächst installieren Sie das Paket mit dem Befehl
+`install.packages("modeest")` .
 
 \
-\
-## neu erlernte Befehle\
+Danach brauchen Sie nur eine Funktion aus dem Paket, nämlich `mfv()`
+(Most Frequent Value). \
+Nur für eine Funktion lohnt es nicht, das gesamte Paket zu laden und
+`library(modeest)` tippen zu müssen. Anstattdessen können Sie folgende
+Schreibweise verwenden, um R zu signalisieren wo die Funktion `mfv()` zu
+finden ist:
+
+```{r}
+
+modeest::mfv(x)  # Paket::Funktion
+
+```
+
+Diese Schreibweise wird Ihnen auch in Zukunft noch öfter begegnen.
+
+## neu erlernte Befehle
 
 |                         |                                 |
 |-------------------------|---------------------------------|
