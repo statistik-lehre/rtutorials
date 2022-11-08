@@ -50,10 +50,13 @@ print("Hello World")
 
 ## R Studio
 
-Nun sitzen Sie im Cockpit eines Airbus und sind eventuell überwältigt von den vielen Knöpfen und Anzeigen.\
-Glücklicherweise sind drei Viertel davon nur funktionale Extras. Wir fokussieren uns auf das Herzstück: Die **Console**.\
-Diese ist unser Fenster zum Maschinenraum.\
+Nun sitzen Sie im Cockpit Ihres neuen Airbus und sind eventuell überwältigt von den vielen Knöpfen und Anzeigen.\
+Glücklicherweise sind drei Viertel davon nur funktionale Extras. Wir fokussieren uns auf das Herzstück: Die **Konsole**.\
+Diese ist unser Kommunikationsfenster zum Maschinenraum.\
 Darüber können dem Computer mit der Sprache R Anweisungen erteilt werden und dort werden Ergebnisse ausgegeben.\
+![Bild der Benutzeroberfläche von RStudio](images/RStudio.png)\
+\
+Auf die Bedeutung der anderen drei Fenster, Skript, Environment und Hilfe, werden wir im weiteren Verlauf zu sprechen kommen.\
 
 ### Die ersten Anweisungen in der Konsole
 
@@ -90,7 +93,7 @@ Um einer Variablen einen Wert zuzuweisen, verwenden Sie `<-`, den "Assignment Op
 x <- 5
 ```
 
-`<-` erstellt ein Objekt im Arbeitsspeicher und weist ihm den Wert zu. \
+`<-` erstellt ein Objekt im Arbeitsspeicher und weist ihm den Wert zu.\
 Diese Notation ist etwas umständlich zu schreiben, und stammt aus grauen Vorzeiten, in denen Tastaturen noch einen richtigen Pfeil besaßen.
 
 ::: {#shortcuts .infobox}
@@ -100,7 +103,7 @@ Windows:\
 Linux:
 :::
 
-Die Variablen werden als Objekte im Environment gespeichert. "Environment" könnte mit "Arbeitsumgebung" übersetzt werden. Daten in der Arbeitsumgebung sind für R zum Rechnen verfügbar. \
+Die Variablen werden als Objekte im Environment gespeichert. "Environment" könnte mit "Arbeitsumgebung" übersetzt werden. Daten in der Arbeitsumgebung sind für R zum Rechnen verfügbar.\
 Sie können sehen, welche Objekte sich zur Zeit im Environment befinden: Im oberen rechten Fenster befindet sich ein Tab, der "Environment" heißt.
 
 ::: grau
