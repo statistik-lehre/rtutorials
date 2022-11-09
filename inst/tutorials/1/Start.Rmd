@@ -74,7 +74,7 @@ Mathematische Kategorien sind eindeutig, und das müssen sie auch sein, damit wi
 
 Um etwas über die Welt zu sagen, sind wir gezwungen, an irgendeinem Punkt zu verallgemeinern. Auf diesem Prinzip basiert auch Wahrnehmung. Das Gehirn verallgemeinert automatisch, ergänzt Informationen - zum Beispiel beim blinden Fleck: An dem Ort, wo der Sehnerv die Netzhaut verlässt, gibt es keine Sehzellen. Trotzdem sehen wir ein vollständiges Bild,
 
-Wenn wir aber wissenschaftliche Aussagen treffen wollen, müssen wir uns sehr genau bewusst machen, welche Entscheidungen wir im Verlauf der statistischen Analyse treffen, und was das für das Ergebnis bedeutet. \
+Wenn wir aber wissenschaftliche Aussagen treffen wollen, müssen wir uns sehr genau bewusst machen, welche Entscheidungen wir im Verlauf der statistischen Analyse treffen, und was das für das Ergebnis bedeutet.\
 Außerdem müssen wir vorsichtig damit umgehen, wenn wir Schlüsse über die echte Welt aus statistischen Modellen ziehen. Um das zu veranschaulichen, lesen Sie, was Oliver Schlaudt zum statistischen Modell des Bruttoinlandprodukts zu sagen hat:
 
 „*So haben wir es auch beim BIP mit solchen prinzipiellen Problemen zu tun, die sich aus seiner Definition ergeben. Atomunfälle, terroristische Anschläge und umweltschädlicher Konsum können allesamt im BIP positiv zu Buche schlagen. Wer das Auto nimmt, trägt mehr zum BIP bei, als wer Fahrrad fährt. Wer sein Auto gar auf dem Nachhauseweg zu Schrott fährt, ist ein Held des BIP. Wie kann diese Zahl also mit dem Wohlergehen zusammenhängen?*"
@@ -135,17 +135,23 @@ Fehlermeldungen sind beim Programmieren an der Tagesordnung, da es ein formales 
 Es sind also jede Menge Übersetzungsleistungen auf dem Weg von der Idee zur statistischen Analyse notwendig:\
 Zunächst müssen wir [Hypothese](https://moodle.uni-kassel.de/mod/glossary/showentry.php?eid=3057&displayformat=dictionary "Begriffe: Hypothese")n in ein Experiment übersetzen (Operationalisierung), um sie überprüfbar zu machen.\
 Dann muss unsere Beobachtung in Zahlen übersetzt werden (Messung).\
-Bei der Auswertung müssen wir unsere Gedanken so formalisieren, dass mit den in R verfügbaren Formeln (Befehlen) ausgedrückt werden können.\
+Bei der Auswertung müssen wir unsere Gedanken so formalisieren, dass sie mit den in R verfügbaren Formeln (Befehlen) ausgedrückt werden können.\
 Und schließlich muss R diese Anweisungen erfolgreich in Maschinensprache übersetzen, damit der Prozessor sie auch ausführen kann.\
 Wir könnten auch sagen, der Computer "interpretiert" unseren Code. Je nachdem, ob die Anweisungen sinnvoll lesbar sind oder nicht, bekommen wir ein Ergebnis oder eine Fehlermeldung.
 
 So steht die Programmiersprache mehr oder weniger in der Mitte zwischen Mensch und Maschine. Es gibt Programmiersprachen wie C, die eher maschinennah sind, und Sprachen, die näher beim menschlichen Sprachverständnis ansetzen. R lässt sich eher auf der letzteren Seite ansiedeln.
 
-### Die Programmiersprache R
+## Die Programmiersprache R
 
-Steckbrief:
+##### Steckbrief
 
-## Pakete
+|                      |                              |
+|----------------------|------------------------------|
+| Erstmals erschienen: | 1993                         |
+| Gegründet von        | Ross Ihaka, Robert Gentleman |
+| Beeinflusst von      | S, Lisp, Scheme              |
+
+### Pakete
 
 Wie bereits erwähnt, ist eine große Stärke von R, dass alle Menschen Pakete erstellen und teilen können (sogar ich, obwohl ich gar kein Wissenschaftler bin). So entsteht eine große Menge frei verfügbares Wissen.\
 \
