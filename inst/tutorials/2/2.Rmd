@@ -1,5 +1,5 @@
 ---
-title: "3 - Maße der zentralen Tendenz"
+title: "2 - Maße der zentralen Tendenz"
 output:
   learnr::tutorial:
     language: de
