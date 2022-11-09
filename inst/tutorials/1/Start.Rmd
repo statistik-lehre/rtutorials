@@ -187,18 +187,22 @@ So steht die Programmiersprache mehr oder weniger in der Mitte zwischen Mensch u
 
 ##### Steckbrief
 
-+---------------------------------+--------------------------------+
-| Erstmals erschienen:            | 1993                           |
-+---------------------------------+--------------------------------+
-| Gegründet von                   | Ross Ihaka, Robert Gentleman   |
-+---------------------------------+--------------------------------+
-| Beeinflusst von                 | S, Lisp, Scheme                |
-+---------------------------------+--------------------------------+
++-----------------------------+------------------------------+
+| Erstmals erschienen:        | 1993                         |
++-----------------------------+------------------------------+
+| Gegründet von               | Ross Ihaka, Robert Gentleman |
++-----------------------------+------------------------------+
+| Beeinflusst von             | S, Lisp, Scheme              |
++-----------------------------+------------------------------+
 
-::: infobox
-Der Name **R** leitet sich aus dem Anfangsbuchstaben der beiden Gründer Ross und Robert ab, und ist eine Referenz auf den einbuchstabigen Namen der Programmiersprache **S**, welche das Fundament für R bietet.
+\
+\
+
+::: infobox 
+Der Name **R** leitet sich aus dem Anfangsbuchstaben der beiden Gründer Ross und Robert ab, und ist eine Referenz auf den einbuchstabigen Namen der Programmiersprache **S**, welche das Fundament für R bietet. 
 :::
 
+\
 Hier sind einige Gründe, die dafür sprechen R zu lernen:
 
 ##### Vorteile
@@ -229,8 +233,7 @@ Hier sind einige Gründe, die dafür sprechen R zu lernen:
     R-Studio bietet aber eine gute visuelle Oberfläche an, was diesen Punkt etwas mildert.
 :::
 
-
-### Pakete
+## Pakete
 
 Es ist eine große Stärke von R, dass alle Menschen Pakete erstellen und teilen können (sogar ich, obwohl ich gar kein Wissenschaftler bin). Darin liegt die Mächtigkeit und Popularität von R begründet.\
 \
