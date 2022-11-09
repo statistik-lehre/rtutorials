@@ -183,7 +183,7 @@ Wir könnten auch sagen, der Computer "interpretiert" unseren Code. Je nachdem, 
 
 So steht die Programmiersprache mehr oder weniger in der Mitte zwischen Mensch und Maschine. Es gibt Programmiersprachen wie C, die eher maschinennah sind, und Sprachen, die näher beim menschlichen Sprachverständnis ansetzen. R lässt sich eher auf der letzteren Seite ansiedeln.
 
-## Die Programmiersprache R
+## Warum R?
 
 ##### Steckbrief
 
@@ -198,6 +198,37 @@ So steht die Programmiersprache mehr oder weniger in der Mitte zwischen Mensch u
 ::: infobox
 Der Name **R** leitet sich aus dem Anfangsbuchstaben der beiden Gründer Ross und Robert ab, und ist eine Referenz auf den einbuchstabigen Namen der Programmiersprache **S**, welche das Fundament für R bietet.
 :::
+
+Hier sind einige Gründe, die dafür sprechen R zu lernen:
+
+##### Vorteile
+
+::: vorteile
+-   open-source (das heißt, der Quellcode ist frei verfügbar)
+
+    -   kostenfrei
+    -   wird kollektiv gepflegt und weiterentwickelt von enthusiastischen Menschen
+    -   modular erweiterbar mit Paketen aus der Community
+    -   alle können mitwirken
+    -   sehr viel gut strukturiertes frei verfügbares Wissen in Dokumentationen, Foren und Büchern\
+
+-   übertragbare Fähigkeiten:
+
+    -   Kenntnisse in R erleichtern es, andere Programmiersprachen zu lernen
+    -   nicht-proprietäre Software kann auch nach der Uni genutzt werden
+    -   ist mehr Menschen zugänglich\
+        (eine SPSS-Lizenz für Privatpersonen kostet zur Zeit 1200€ im Jahr)
+    -   Standard in Wissenschaft und Wirtschaft\
+        (z.B. Google und AirBnB nutzen R für Datenanalyse)
+:::
+
+##### Nachteile
+
+::: rot
+-   Benutzeroberfläche: Das Erlernen von Code kann abschreckend wirken für Menschen, die bisher noch keine Erfahrung damit haben.\
+    R-Studio bietet aber eine gute visuelle Oberfläche an, was diesen Punkt etwas mildert.
+:::
+
 
 ### Pakete
 
