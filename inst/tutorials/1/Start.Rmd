@@ -21,22 +21,69 @@ knitr::opts_chunk$set(echo = FALSE)
 ## Willkommen
 
 ::: grau-nb
-+-----------------------------+-------------------------------------------+
-| Voraussetzungen             | Ziele                                     |
-+=============================+===========================================+
-| R und R-Studio installiert\ | -   Benutzeroberfläche verstehen          |
-|                             |                                           |
-|                             | <!-- -->                                  |
-|                             |                                           |
-|                             | -   grundlegende Funktionsweise verstehen |
-+-----------------------------+-------------------------------------------+
++-----------------------------+---------------------------------------------------------+
+| Voraussetzungen             | Ziele                                                   |
++=============================+=========================================================+
+| R und R-Studio installiert\ | -   Sprachverständnis von Programmiersprachen begreifen |
+|                             | -   Verstehen, warum wir Statistik brauchen             |
+|                             | -   Installation von Paketen verstehen                  |
++-----------------------------+---------------------------------------------------------+
 :::
 
-Willkommen zum ersten interaktiven Tutorial!
+Willkommen zum ersten interaktiven Tutorial! Schön, dass Sie den Weg hier her gefunden haben. Offensichtlich haben Sie erfolgreich das Paket installiert, geladen und das erste Tutorial gestartet! Falls Sie neugierig sind, was die Befehle eigentlich bedeutet haben, die Sie soeben per Copy-Paste verwendet haben: Diese Erklärung möchte ich Ihnen nicht schuldig bleiben. Sie finden sie am Ende des Kapitels.
 
-Diese Form wird Sie nun das restliche Semester begleiten. Kombiniert mit ein paar Abgaben auf Moodle hoffe ich, mit Ihnen in einen guten Workflow zu kommen.
+Die Form des interaktiven Tutorials wird Sie nun das restliche Semester begleiten.
 
-## Warum brachen wir Statistik
+#### Codeblöcke
+
+Innerhalb der Tutorials wird es interaktive Code-Blöcke geben. So könnt ihr mit neu gelernten Konzepten direkt experimentieren.
+
+Hier ein kleines Beispiel:\
+Probieren Sie, den Computer ein paar Rechenaufgaben lösen zu lassen!\
+Schreiben Sie in das Codefeld und führen Sie den Code aus mit `Strg + Enter` oder dem Knopf `▶ Code ausführen`.\
+Es gibt zu jeder Aufgabe auch Tipps. Klicken Sie dafür auf den Button 💡`Tipp`
+
+::: {#first-hint}
+**Tip**\
+Die Programmiersprache R kann wie ein Taschenrechner benutzt werden.
+
+-   `*` Multiplikation
+-   `/` Division
+-   `+` Addition
+-   `-` Subtraktion
+
+**Syntax**\
+Als Dezimaltrennzeichen akzeptiert R nur den Punkt `.`\
+Das Komma `,` ist für Aufzählungen reserviert, dazu kommen wir im nächsten Tutorial.
+:::
+
+```{r first-solution}
+5 * 5   # Multiplikation
+1 / 0.5 # Division
+1 + 1   # Addition
+2 - 2   # Subtraktion
+```
+
+```{r first, exercise = TRUE}
+
+```
+
+::: infobox
+**Guter Stil**\
+Es gilt als guter Stil:
+
+-   Operatoren wie `+`, `-`, `=` auf beiden Seiten mit Leerzeichen zu umgeben.
+
+    -   z.B. `5 + 5`
+
+Noch sieht alles sehr übersichtlich aus, aber später trägt das erheblich zur Lesbarkeit bei.
+:::
+
+> "Code is miserable to read on a good day, so giveyoureyesabreak and use spaces."
+>
+> \- Hadley Wickham, [R for Data Science](https://r4ds.had.co.nz/workflow-basics.html)
+
+## Warum brachen wir Statistik?
 
 Die Antwort ist vermutlich, dass Statistik uns Objektivität bietet, die wir sonst nicht erreichen können. Sie bietet Methoden, Sinn aus Datenmengen zu ziehen, die unseren Verstand oder die direkte Wahrnehmung übersteigen.
 
@@ -45,12 +92,7 @@ Beispielsweise lässt sich die Frage nach dem Klimawandel viel besser mit statis
 Diese beiden Beispiele sind letztlich Verwaltungsfragen - wie gehen wir mit unseren Ressourcen um?
 
 Die Statistik ist gemeinsam mit der Aufgabe, größere Gesellschaften zu organisieren, entstanden. Ansätze davon finden sich bereits auf mesopotamischen Schrifttafeln des vierten Jahrtausends vor Christus, auf denen wirtschaftliche Transaktionen mit Mengenangaben und Personenbezeichnungen dokumentiert werden. (Damerow et al., 1988, S. 74)\
-Nicht umsonst haben viele Staaten auch heute eine Behörde für Statistik (in Deutschland das[Statistische Bundesamt](https://www.destatis.de/DE/Home/_inhalt.html)) - denn die Verwaltung von Gütern ist eine politische Aufgabe, und so ist auch Statistik immer ein Stück weit politisch. (Schlaudt, 2018)
-
-Wenn wir im Alltag Entscheidungen treffen müssen, haben wir entweder zu wenig Daten, oder unübersichtlich viel.
-
-Wir wenden auch keine statistischen Verfahren auf unsere Sinneserfahrungen an, aus denen wir dann Schlüsse ziehen - auch wenn die Datenlage unklar ist. Menschen greifen lieber auf bewährte Vereinfachungsprinzipien zurück und sind dabei zahlreichen kognitiven Verzerrungen unterworfen. Trotzdem sind diese "Heuristiken" genannten Schemata sehr intelligent, da sie uns die meiste Zeit der Fälle erfolgreich durch den Alltag navigieren, ohne dass wir es merken.\
-Erst anhand der Unfähigkeit von Computern oder Robotern im Alltag mit "gesunden Menschenverstand" zu navigieren, wird ersichtlich, welchen Dienst uns die Heuristiken erweisen.
+Nicht umsonst haben viele Staaten auch heute eine Behörde für Statistik (in Deutschland das [Statistische Bundesamt](https://www.destatis.de/DE/Home/_inhalt.html)) - denn die Verwaltung von Gütern ist eine politische Aufgabe, und so ist auch Statistik immer ein Stück weit politisch. (Schlaudt, 2018)
 
 ### Exkurs: Heuristiken
 
@@ -60,7 +102,7 @@ Diese Handlungsschemata heißen auch Heuristiken und machen unser Leben leichter
 \
 Zugunsten von Schnelligkeit und zulasten von tiefgehender Analyse manövrieren uns Heuristiken mehr oder weniger erfolgreich durch den Alltag. Sie sind allerdings oft verallgemeinernd und fehlerbehaftet, wenn es um neue und komplexe Situationen geht - was sehr häufig im Leben der Fall ist. Insbesondere bei der wissenschaftlichen Forschung, wo wir etwas Neues herausfinden könnten, stehen uns Heuristiken im Weg.\
 \
-Deswegen brauchen wir eine weitere Form der Datenanalyse, die uns unvoreingenommene und robuste Informationen aus Beobachtungen ableiten lässt. Da kommen die empirische Beobachtung und statistische Auswertung ins Spiel.
+Erst anhand der Unfähigkeit von Computern oder Robotern im Alltag mit "gesunden Menschenverstand" zu navigieren, wird ersichtlich, welchen Dienst uns die Heuristiken trotz allem erweisen.
 
 ### Lost in Translation
 
@@ -72,7 +114,7 @@ Diese sprachliche Einordnung als Baum ist bereits eine Verallgemeinerung der ech
 
 Mathematische Kategorien sind eindeutig, und das müssen sie auch sein, damit wir damit rechnen können. Dabei ergibt sich schon das erste Übersetzungsproblem, aus etwas Vieldeutigem ein konkretes Merkmal zu isolieren. Hiermit beschäftigt sich die Operationalisierung.
 
-Um etwas über die Welt zu sagen, sind wir gezwungen, an irgendeinem Punkt zu verallgemeinern. Auf diesem Prinzip basiert auch Wahrnehmung. Das Gehirn verallgemeinert automatisch, ergänzt Informationen - zum Beispiel beim blinden Fleck: An dem Ort, wo der Sehnerv die Netzhaut verlässt, gibt es keine Sehzellen. Trotzdem sehen wir ein vollständiges Bild,
+Um etwas über die Welt zu sagen, sind wir gezwungen, an irgendeinem Punkt zu verallgemeinern. Auf diesem Prinzip basiert auch Wahrnehmung. Das Gehirn selektiert, verstärkt oder ergänzt Informationen automatisch - zum Beispiel beim blinden Fleck: An dem Ort, wo der Sehnerv die Netzhaut verlässt, gibt es keine Sehzellen. Trotzdem sehen wir ein vollständiges Bild,
 
 Wenn wir aber wissenschaftliche Aussagen treffen wollen, müssen wir uns sehr genau bewusst machen, welche Entscheidungen wir im Verlauf der statistischen Analyse treffen, und was das für das Ergebnis bedeutet.\
 Außerdem müssen wir vorsichtig damit umgehen, wenn wir Schlüsse über die echte Welt aus statistischen Modellen ziehen. Um das zu veranschaulichen, lesen Sie, was Oliver Schlaudt zum statistischen Modell des Bruttoinlandprodukts zu sagen hat:
@@ -145,22 +187,27 @@ So steht die Programmiersprache mehr oder weniger in der Mitte zwischen Mensch u
 
 ##### Steckbrief
 
-|                      |                              |
-|----------------------|------------------------------|
-| Erstmals erschienen: | 1993                         |
-| Gegründet von        | Ross Ihaka, Robert Gentleman |
-| Beeinflusst von      | S, Lisp, Scheme              |
++---------------------------------+--------------------------------+
+| Erstmals erschienen:            | 1993                           |
++---------------------------------+--------------------------------+
+| Gegründet von                   | Ross Ihaka, Robert Gentleman   |
++---------------------------------+--------------------------------+
+| Beeinflusst von                 | S, Lisp, Scheme                |
++---------------------------------+--------------------------------+
+
+::: infobox
+Der Name **R** leitet sich aus dem Anfangsbuchstaben der beiden Gründer Ross und Robert ab, und ist eine Referenz auf den einbuchstabigen Namen der Programmiersprache **S**, welche das Fundament für R bietet.
+:::
 
 ### Pakete
 
-Wie bereits erwähnt, ist eine große Stärke von R, dass alle Menschen Pakete erstellen und teilen können (sogar ich, obwohl ich gar kein Wissenschaftler bin). So entsteht eine große Menge frei verfügbares Wissen.\
+Es ist eine große Stärke von R, dass alle Menschen Pakete erstellen und teilen können (sogar ich, obwohl ich gar kein Wissenschaftler bin). Darin liegt die Mächtigkeit und Popularität von R begründet.\
 \
-Diese Funktionalität machen wir uns in der Lehre zunutze, um die Lerninhalte direkt in RStudio anzeigen zu können. Wir haben für Sie ein Tutorial-Paket namens `tutor` erstellt. Gratulation, dass Sie es offensichtlich geschafft haben, das Paket zu installieren, zu laden und das erste Tutorial zu starten!
+Diese Funktionalität machen wir uns in der Lehre zunutze, um die Lerninhalte direkt in RStudio anzeigen zu können. Wir haben für Sie ein Tutorial-Paket namens `tutor` erstellt.
 
 Ich bin Ihnen aber noch eine Erklärung schuldig, was genau passiert ist in den Befehlen, die Sie kopiert haben. Dafür sind vielleicht einige generelle Worte über Pakete nötig.
 
-Die besten Pakete werden auf offiziellen R-Servern wie z.B. CRAN (Comprehensive R Archive Network) gespeichert. Derzeit [Nov 22] gibt es dort mehr als 18 000 offiziell geprüfte Erweiterungen, und darin liegt auch die Stärke und Flexibilität von R begründet.\
-Pakete von CRAN können mit dem Befehl `install.packages("Paket")` installiert werden. Dabei ist sehr wichtig, dass Sie die Anführungszeichen um den Paketnamen nicht vergessen!\
+Die besten Pakete werden auf offiziellen R-Servern wie z.B. CRAN (Comprehensive R Archive Network) gespeichert. Derzeit [Nov 22] gibt es dort mehr als 18 000 offiziell geprüfte Erweiterungen. Pakete von CRAN können mit dem Befehl `install.packages("Paket")` installiert werden. Dabei ist sehr wichtig, dass Sie die Anführungszeichen um den Paketnamen nicht vergessen!\
 \
 Da unser Tutorial-Paket weder fertig noch essentiell für die Wissenschaftscommunity ist, wird es nicht auf bei CRAN gespeichert, sondern auf einem entlegenen Github-Server. Deswegen können Sie es nicht mit dem offiziellen `install.packages()` Befehl installieren.\
 Aber, wir können einen kleinen Trick anwenden und noch ein Paket namens `remotes` installieren, was wiederum einen Befehl zur Verfügung stellt, um Pakete von Github zu installieren.
