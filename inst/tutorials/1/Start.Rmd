@@ -133,7 +133,7 @@ Eine solche Datenbank haben wir nicht zur Verfügung, R muss unsere Eingaben ohn
 Fehlermeldungen sind beim Programmieren an der Tagesordnung, da es ein formales System ist, dem wir mit unserer normalen Denkweise niemals ganz gerecht werden können.
 
 Es sind also jede Menge Übersetzungsleistungen auf dem Weg von der Idee zur statistischen Analyse notwendig:\
-Zunächst müssen wir [Hypothese](https://moodle.uni-kassel.de/mod/glossary/showentry.php?eid=3057&displayformat=dictionary "Begriffe: Hypothese")n in ein Experiment übersetzen (Operationalisierung), um sie überprüfbar zu machen.\
+Zunächst müssen wir [Hypothesen](https://moodle.uni-kassel.de/mod/glossary/showentry.php?eid=3057&displayformat=dictionary "Begriffe: Hypothese") in ein Experiment übersetzen (Operationalisierung), um sie überprüfbar zu machen.\
 Dann muss unsere Beobachtung in Zahlen übersetzt werden (Messung).\
 Bei der Auswertung müssen wir unsere Gedanken so formalisieren, dass sie mit den in R verfügbaren Formeln (Befehlen) ausgedrückt werden können.\
 Und schließlich muss R diese Anweisungen erfolgreich in Maschinensprache übersetzen, damit der Prozessor sie auch ausführen kann.\
