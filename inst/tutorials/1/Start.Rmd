@@ -1,5 +1,5 @@
 ---
-title: "1 - Objekte und Funktionen"
+title: "1 - Pakete"
 output:
   learnr::tutorial:
     language: de
