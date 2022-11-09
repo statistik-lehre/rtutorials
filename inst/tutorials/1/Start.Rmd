@@ -34,19 +34,129 @@ knitr::opts_chunk$set(echo = FALSE)
 
 Willkommen zum ersten interaktiven Tutorial!
 
-Diese Form wird Sie nun das restliche Semester begleiten. Kombiniert mit ein paar Abgaben auf Moodle hoffe ich, mit Ihnen in einen guten Workflow zu kommen. \
-Wie bereits erwähnt, ist eine große Stärke von R, dass alle Menschen Pakete erstellen und teilen können (sogar ich, obwohl ich gar kein Wissenschaftler bin). So entsteht eine große Menge frei verfügbares Wissen. \
+Diese Form wird Sie nun das restliche Semester begleiten. Kombiniert mit ein paar Abgaben auf Moodle hoffe ich, mit Ihnen in einen guten Workflow zu kommen.
+
+## Warum brachen wir Statistik
+
+Die Antwort ist vermutlich, dass Statistik uns Objektivität bietet, die wir sonst nicht erreichen können. Sie bietet Methoden, Sinn aus Datenmengen zu ziehen, die unseren Verstand oder die direkte Wahrnehmung übersteigen.
+
+Beispielsweise lässt sich die Frage nach dem Klimawandel viel besser mit statistischen Methoden überprüfen als mit individuellem Empfinden. Auch die Frage, ob und wie das 9€-Ticket gewirkt hat, ist zwar aus der eigenen Erfahrung beantwortbar, aber deutschlandweite Aussagen erfordern mehr Daten und mathematische Auswertungen.  
+
+Diese beiden Beispiele sind letztlich Verwaltungsfragen - wie gehen wir mit unseren Ressourcen um?
+
+Die Statistik ist gemeinsam mit der Aufgabe, größere Gesellschaften zu organisieren, entstanden. Ansätze davon finden sich bereits auf mesopotamischen Schrifttafeln des vierten Jahrtausends vor Christus, auf denen wirtschaftliche Transaktionen mit Mengenangaben und Personenbezeichnungen dokumentiert werden. (Damerow et al., 1988, S. 74)\
+Nicht umsonst haben viele Staaten auch heute eine Behörde für Statistik (in Deutschland das[Statistische Bundesamt](https://www.destatis.de/DE/Home/_inhalt.html)) - denn die Verwaltung von Gütern ist eine politische Aufgabe, und so ist auch Statistik immer ein Stück weit politisch. (Schlaudt, 2018)
+
+Wenn wir im Alltag Entscheidungen treffen müssen, haben wir entweder zu wenig Daten, oder unübersichtlich viel.
+
+Wir wenden auch keine statistischen Verfahren auf unsere Sinneserfahrungen an, aus denen wir dann Schlüsse ziehen - auch wenn die Datenlage unklar ist. Menschen greifen lieber auf bewährte Vereinfachungsprinzipien zurück und sind dabei zahlreichen kognitiven Verzerrungen unterworfen. Trotzdem sind diese "Heuristiken" genannten Schemata sehr intelligent, da sie uns die meiste Zeit der Fälle erfolgreich durch den Alltag navigieren, ohne dass wir es merken.\
+Erst anhand der Unfähigkeit von Computern oder Robotern im Alltag mit "gesunden Menschenverstand" zu navigieren, wird ersichtlich, welchen Dienst uns die Heuristiken erweisen.
+
+### Exkurs: Heuristiken
+
+Logisches Denken ist für Menschen anstrengend und langsam, deswegen vermeiden wir es an den meisten Stellen. Würden wir jede Alltagsentscheidung durch rationale Überlegungen lösen, könnte es Jahre dauern, bis wir das Nachdenken abgeschlossen haben und uns das erste Mal vom Fleck bewegt haben. Das könnte in Alltagssituationen sogar lebensbedrohlich werden, wo schnelles und pragmatisches Handeln sehr wichtig ist. Deswegen gibt es eingebaute Überlebensmechanismen, die uns davor bewahren, zu viel nachzudenken, wenn wir vor komplexen Situationen stehen.
+
+Diese Handlungsschemata heißen auch Heuristiken und machen unser Leben leichter, indem sie ermöglichen, unsere Umwelt pragmatisch und schnell einzuschätzen, ohne alle rationalen Überlegungen abgeschlossen zu haben.\
+\
+Zugunsten von Schnelligkeit und zulasten von tiefgehender Analyse manövrieren uns Heuristiken mehr oder weniger erfolgreich durch den Alltag. Sie sind allerdings oft verallgemeinernd und fehlerbehaftet, wenn es um neue und komplexe Situationen geht - was sehr häufig im Leben der Fall ist. Insbesondere bei der wissenschaftlichen Forschung, wo wir etwas Neues herausfinden könnten, stehen uns Heuristiken im Weg.\
+\
+Deswegen brauchen wir eine weitere Form der Datenanalyse, die uns unvoreingenommene und robuste Informationen aus Beobachtungen ableiten lässt. Da kommen die empirische Beobachtung und statistische Auswertung ins Spiel.
+
+### Lost in Translation
+
+Probleme mit der Objektivität von Statistik passieren eigentlich nie auf der Ebene der Statistik selbst, sondern beim Übersetzen der Welt in mathematische Konzepte. Dabei findet immer eine Auswahl statt, eine Kategorisierung und Verallgemeinerung.
+
+Dieser Prozess liegt eigentlich aller Interaktion mit der Welt zu Grunde, da sie zu groß ist, um sie in allen Details wahrzunehmen. Allein, wenn wir einen Baum ansehen, können wir gar nicht alle Blätter einzeln anschauen -- müssen wir auch nicht, denn unsere Heuristiken sagen uns, dass es sich um einen Baum handelt.
+
+Diese sprachliche Einordnung als Baum ist bereits eine Verallgemeinerung der echten Welt. Der Baum könnte gar keine Blätter haben, oder tausende, diese Information ist im Übersetzungsprozess bereits verlorengegangen. Es könnte ein junger Sprössling oder ein Mammutbaum sein und alles dazwischen. Aber wenigstens enthält das Wort „Baum" in menschlicher Sprache noch alle Möglichkeiten, d.h. es ist mehrdeutig. Das wiederum würde es zu einem schlechten mathematischen Wort machen.
+
+Mathematische Kategorien sind eindeutig, und das müssen sie auch sein, damit wir damit rechnen können. Dabei ergibt sich schon das erste Übersetzungsproblem, aus etwas Vieldeutigem ein konkretes Merkmal zu isolieren. Hiermit beschäftigt sich die Operationalisierung.
+
+Um etwas über die Welt zu sagen, sind wir gezwungen, an irgendeinem Punkt zu verallgemeinern. Auf diesem Prinzip basiert auch Wahrnehmung. Das Gehirn verallgemeinert automatisch, ergänzt Informationen - zum Beispiel beim blinden Fleck: An dem Ort, wo der Sehnerv die Netzhaut verlässt, gibt es keine Sehzellen. Trotzdem sehen wir ein vollständiges Bild,
+
+Wenn wir aber wissenschaftliche Aussagen treffen wollen, müssen wir uns sehr genau bewusst machen, welche Entscheidungen wir im Verlauf der statistischen Analyse treffen, und was das für das Ergebnis bedeutet. \
+Außerdem müssen wir vorsichtig damit umgehen, wenn wir Schlüsse über die echte Welt aus statistischen Modellen ziehen. Um das zu veranschaulichen, lesen Sie, was Oliver Schlaudt zum statistischen Modell des Bruttoinlandprodukts zu sagen hat:
+
+„*So haben wir es auch beim BIP mit solchen prinzipiellen Problemen zu tun, die sich aus seiner Definition ergeben. Atomunfälle, terroristische Anschläge und umweltschädlicher Konsum können allesamt im BIP positiv zu Buche schlagen. Wer das Auto nimmt, trägt mehr zum BIP bei, als wer Fahrrad fährt. Wer sein Auto gar auf dem Nachhauseweg zu Schrott fährt, ist ein Held des BIP. Wie kann diese Zahl also mit dem Wohlergehen zusammenhängen?*"
+
+(Schlaudt, 2018, S. 10)
+
+Auf Ebene der Statistik funktioniert alles sehr gut und objektiv. Es steht uns ein eindrucksvolles Inventar an verfügbaren Analysen und Regeln zur Verfügung. Die Herausforderung der Statistik sind die Übersetzungen.
+
+Zunächst müssen Beobachtungen der echten Welt in Zahlen transformiert werden. Oder codiert werden in Kategorien. Wo ist die Grenze einer Kategorie? Was fällt hinein, und was nicht mehr?
+
+Und wenn wir all das mehr oder weniger willkürlich entschieden haben, was bedeuten die Ergebnisse eigentlich, die wir errungen haben?
+
+Solche Fragen werden uns im weiteren Verlauf der Übung noch beschäftigen.
+
+Aber gehen wir einmal davon aus, dass die Daten mit denen wir arbeiten, nach bester wissenschaftlichen Methode erhoben wurden, und lassen das Streben nach Objektivität beiseite. Wir befinden uns nun auf einmal in einem Kosmos voller möglicher mathematischer Operationen, in dem uns ein großer Werkzeugkasten an anwendbaren Methoden beiseite steht, um die Wirklichkeit zu analysieren und zu begreifen. Und das hat tatsächlich etwas Beruhigendes. Letztlich geht es immer darum, Situationen einzuschätzen, um Handlungsmöglichkeiten abzuleiten. Die Mathematik hält dafür eine ganze Reihe von Werkzeugen bereit, die Sie im Laufe des Semesters hoffentlich auch Ihrem eigenen Werkzeugkasten hinzufügen werden.
+
+## Programmiersprachen
+
+Bei wissenschaftlichen Fragestellungen geht es nicht um Schnelligkeit, sondern um logische Richtigkeit. Wie bereits erwähnt, ist logisches Denken für das menschliche Gehirn sehr viel mühsamer und langsamer als die Anwendung von schnellen Heuristiken. Zum Glück gibt es Computer, die mühelos mit Logik umgehen können (dafür aber jeglichem heuristischen Alltagsverstand entbehren).
+
+Um unser Gehirn nicht mehr als nötig anstrengen zu müssen, lernen wir in diesem Tutorial, wie wir über eine Programmiersprache (**R**) mit einem Rechner kommunizieren können.\
+Wir müssen allerdings auch noch weiterhin eine ganze Menge logisch denken, zum einen, um unsere eigenen Heuristiken zu umgehen, und zum anderen, um uns in das formale System der Programmiersprache einzudenken.
+
+### Sprachverständnisse
+
+##### Mehrdeutigkeit - Eindeutigkeit
+
+Programmiersprachen ermöglichen es, Computern Anweisungen zu erteilen, die menschlich verständlich sind. Sie bilden die Brücke zwischen zwei Welten - dem menschlichen Sprachverständnis voller Mehrdeutigkeiten und der mathematisch eindeutigen Sprache eines Computers.\
+\
+Unsere Alltagssprache ist zutiefst ambivalent. Um ein Beispiel zu nennen:\
+Nehmen Sie an, 99,99% der Schwäne in Ihrem Datensatz sind weiß. Ein Computer würde auf die Frage, ob alle Schwäne weiß sind, immer mit "falsch" antworten, da "alle" mathematisch verwendet nur zutrifft, wenn es "absolut alle" sind. Wir benutzen "alle" und "\`keine" sehr gern alltagssprachlich, wenn wir eigentlich "die meisten" oder "die wenigsten" meinen.\
+\
+Programmiersprachen haben genau wie echte Sprachen auch **Vokabeln** und **Grammatik**. Diese werden wir gemeinsam lernen in diesem Kurs.\
+Ein wichtiges Wort, was auch oft fällt, ist der Begriff **Syntax**. Das ist im Programmierkontext ein Satz von Regeln für Grammatik und Rechtschreibung.
+
+##### Maschinensprache
+
+Maschinensprache ist das fundamentale Ende von Vereinfachung: Es gibt nur noch zwei Zeichen, 0 und 1. Diese lassen sich elektronisch umsetzen durch "niedrige Spannung" und "hohe Spannung" und somit ist die Brücke zur Hardware geschaffen. Der Prozessor Ihres Gerätes selbst kann nur Anweisungen in Maschinensprache entgegennehmen.\
+Diese Anweisungen werden codiert (dargestellt) durch lange Ketten von 0 und 1.\
+Diese Art von Codierung heißt übrigens Binärcode.\
+**(Bi**när, weil es **zwei** Zeichen gibt - 0 und 1).
+
+##### Code
+
+Maschinensprache ist für uns so gut wie nicht lesbar. Deswegen gibt es Programme, die lange Ketten von 0 und 1 in lesbare Wörter übersetzen (und umgedreht)
+
+Auch R ist so ein Programm. Wir können Wörter und Symbole eingeben, und diese werden intern in Maschinensprache übersetzt und an den Prozessor gesandt.
+
+All das ist für uns letztlich nicht sichtbar, aber wichtig um zu verstehen, was mit unseren Eingaben passiert, und warum wir Fehlermeldungen bekommen.\
+R kann unsere Eingaben nicht wirklich übersetzen, sondern kann nur mit den vorher einprogrammierten Übersetzungsregeln umgehen. Deswegen reagiert R sehr empfindlich darauf, wenn wir uns nicht an die vorgegebenen Regeln halten - wie zum Beispiel Text in Anführungszeichen zu setzen - und kann auf einmal gar nichts mehr mit dem Befehl anfangen, obwohl wir nur ein " vergessen haben.
+
+Ein Mensch würde den Code an dieser Stelle trotzdem verstehen - aufgrund des Alltagsverstandes, mit dessen Hilfe wir fehlende Informationen einfach ergänzen können. Diesen Verstand besitzen Computer nicht - es sei denn, wir speisen riesige Datenmengen ein, aus denen sie Muster ableiten können.\
+Ein Beispiel dafür ist die KI-gestützte Textübersetzung [Deepl](https://www.deepl.com/translator). Gespeist aus unzähligen frei verfügbaren Übersetzungen aus dem Internet kann Deepl erstaunlich akkurate Vorhersagen darüber treffen, welche Textbausteine dem Kontext angemessen sind.\
+Eine solche Datenbank haben wir nicht zur Verfügung, R muss unsere Eingaben ohne Kontext interpretieren. Deswegen müssen alle Formalien eingehalten werden, das ist der einzige Weg, erfolgreich mit dem Computer zu "sprechen".
+
+Fehlermeldungen sind beim Programmieren an der Tagesordnung, da es ein formales System ist, dem wir mit unserer normalen Denkweise niemals ganz gerecht werden können.
+
+Es sind also jede Menge Übersetzungsleistungen auf dem Weg von der Idee zur statistischen Analyse notwendig:\
+Zunächst müssen wir [Hypothese](https://moodle.uni-kassel.de/mod/glossary/showentry.php?eid=3057&displayformat=dictionary "Begriffe: Hypothese")n in ein Experiment übersetzen (Operationalisierung), um sie überprüfbar zu machen.\
+Dann muss unsere Beobachtung in Zahlen übersetzt werden (Messung).\
+Bei der Auswertung müssen wir unsere Gedanken so formalisieren, dass mit den in R verfügbaren Formeln (Befehlen) ausgedrückt werden können.\
+Und schließlich muss R diese Anweisungen erfolgreich in Maschinensprache übersetzen, damit der Prozessor sie auch ausführen kann.\
+Wir könnten auch sagen, der Computer "interpretiert" unseren Code. Je nachdem, ob die Anweisungen sinnvoll lesbar sind oder nicht, bekommen wir ein Ergebnis oder eine Fehlermeldung.
+
+So steht die Programmiersprache mehr oder weniger in der Mitte zwischen Mensch und Maschine. Es gibt Programmiersprachen wie C, die eher maschinennah sind, und Sprachen, die näher beim menschlichen Sprachverständnis ansetzen. R lässt sich eher auf der letzteren Seite ansiedeln.
+
+### Die Programmiersprache R
+
+Steckbrief:
+
+## Pakete
+
+Wie bereits erwähnt, ist eine große Stärke von R, dass alle Menschen Pakete erstellen und teilen können (sogar ich, obwohl ich gar kein Wissenschaftler bin). So entsteht eine große Menge frei verfügbares Wissen.\
 \
 Diese Funktionalität machen wir uns in der Lehre zunutze, um die Lerninhalte direkt in RStudio anzeigen zu können. Wir haben für Sie ein Tutorial-Paket namens `tutor` erstellt. Gratulation, dass Sie es offensichtlich geschafft haben, das Paket zu installieren, zu laden und das erste Tutorial zu starten!
 
 Ich bin Ihnen aber noch eine Erklärung schuldig, was genau passiert ist in den Befehlen, die Sie kopiert haben. Dafür sind vielleicht einige generelle Worte über Pakete nötig.
 
-## Pakete
-
-Die besten Pakete werden auf offiziellen R-Servern wie z.B. CRAN (Comprehensive R Archive Network) gespeichert. Derzeit [Nov 22] gibt es dort mehr als 18 000 offiziell geprüfte Erweiterungen, und darin liegt auch die Stärke und Flexibilität von R begründet. \
+Die besten Pakete werden auf offiziellen R-Servern wie z.B. CRAN (Comprehensive R Archive Network) gespeichert. Derzeit [Nov 22] gibt es dort mehr als 18 000 offiziell geprüfte Erweiterungen, und darin liegt auch die Stärke und Flexibilität von R begründet.\
 Pakete von CRAN können mit dem Befehl `install.packages("Paket")` installiert werden. Dabei ist sehr wichtig, dass Sie die Anführungszeichen um den Paketnamen nicht vergessen!\
 \
-Da unser Tutorial-Paket weder fertig noch essentiell für die Wissenschaftscommunity ist, wird es nicht auf bei CRAN gespeichert, sondern auf einem entlegenen Github-Server. Deswegen können Sie es nicht mit dem offiziellen `install.packages()` Befehl installieren. \
+Da unser Tutorial-Paket weder fertig noch essentiell für die Wissenschaftscommunity ist, wird es nicht auf bei CRAN gespeichert, sondern auf einem entlegenen Github-Server. Deswegen können Sie es nicht mit dem offiziellen `install.packages()` Befehl installieren.\
 Aber, wir können einen kleinen Trick anwenden und noch ein Paket namens `remotes` installieren, was wiederum einen Befehl zur Verfügung stellt, um Pakete von Github zu installieren.
 
 Das sieht dann so aus als Befehl:
@@ -56,12 +166,12 @@ install.packages("remotes")
 remotes::install_github("statistik-lehre/tutor")
 ```
 
-Wenn ein Paket einmal installiert ist, steht es aber noch nicht zur Verfügung. Als letzten Schritt müssen Sie das Paket in den Arbeitsspeicher laden, damit es "aktiviert" ist. \
+Wenn ein Paket einmal installiert ist, steht es aber noch nicht zur Verfügung. Als letzten Schritt müssen Sie das Paket in den Arbeitsspeicher laden, damit es "aktiviert" ist.\
 Dazu nutzen wir den Befehl `library(Paket)`, welcher kurioserweise ohne Anführungsstriche um den Paketnamen auskommt (eine der kleinen Inkonsistenzen, die es in R auch gibt).
 
-Vom Paket `remotes` brauchten wir nur eine Funktion - es wäre mühsam, dafür noch `library(remotes)` vorher tippen zu müssen. Anstattdessen können wir mit der Schreibweise `Paket::Funktion()` angeben, in welchem Paket R suchen muss, um die Funktion zu finden. In unserem Fall also `remotes::install_github()`, um ein Paket von github zu installieren. \
+Vom Paket `remotes` brauchten wir nur eine Funktion - es wäre mühsam, dafür noch `library(remotes)` vorher tippen zu müssen. Anstattdessen können wir mit der Schreibweise `Paket::Funktion()` angeben, in welchem Paket R suchen muss, um die Funktion zu finden. In unserem Fall also `remotes::install_github()`, um ein Paket von github zu installieren.\
 \
-Da die Tutorials im Zusammenspiel mit der VL erstellt werden, müssen Sie das Paket "Tutor" regelmäßig updaten, um auch die neueren Tutorials zu erhalten. Jede Woche am Mittwoch wird das nächste Tutorial hochgeladen. \
+Da die Tutorials im Zusammenspiel mit der VL erstellt werden, müssen Sie das Paket "Tutor" regelmäßig updaten, um auch die neueren Tutorials zu erhalten. Jede Woche am Mittwoch wird das nächste Tutorial hochgeladen.\
 \
 Um das Update durchzuführen, verwenden Sie folgende Befehle:
 
@@ -72,3 +182,9 @@ library(tutor)
 ```
 
 Der Befehl `.rs.restartR.` bewirkt einen Neustart von R, nach welchem die neuen Tutorials auch tatsächlich angezeigt werden im Tutorials-Tab.
+
+## Literaturverzeichnis
+
+Damerow, P., Nissen, H. J., & Englund, R. K. (1988). Die Entstehung der Schrift. *Spektrum der Wissenschaft*, *2*, 74--85.
+
+Schlaudt, O. (2018). *Die politischen Zahlen: Über Quantifizierung im Neoliberalismus* (Originalausgabe). Vittorio Klostermann.
