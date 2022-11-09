@@ -1,0 +1,72 @@
+---
+title: "1 - Objekte und Funktionen"
+output:
+  learnr::tutorial:
+    language: de
+    css: css/boxes.css
+    fig_caption: no
+runtime: shiny_prerendered
+bibliography: ref.json
+link-citations: TRUE
+description: 
+resource_files:
+- css/boxes.css
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## RStudio verstehen
+
+::: grau-nb
++-----------------------------+-------------------------------------------+
+| Voraussetzungen             | Ziele                                     |
++=============================+===========================================+
+| R und R-Studio installiert\ | -   Benutzeroberfläche verstehen          |
+|                             |                                           |
+|                             | <!-- -->                                  |
+|                             |                                           |
+|                             | -   grundlegende Funktionsweise verstehen |
++-----------------------------+-------------------------------------------+
+:::
+
+Willkommen zum ersten interaktiven Tutorial!
+
+Diese Form wird Sie nun das restliche Semester begleiten. Kombiniert mit ein paar Abgaben auf Moodle hoffe ich, mit Ihnen in einen guten Workflow zu kommen. \
+Wie bereits erwähnt, ist eine große Stärke von R, dass alle Menschen Pakete erstellen und teilen können (sogar ich, obwohl ich gar kein Wissenschaftler bin). So entsteht eine große Menge frei verfügbares Wissen. \
+\
+Diese Funktionalität machen wir uns in der Lehre zunutze, um die Lerninhalte direkt in RStudio anzeigen zu können. Wir haben für Sie ein Tutorial-Paket namens `tutor` erstellt. Gratulation, dass Sie es offensichtlich geschafft haben, das Paket zu installieren, zu laden und das erste Tutorial zu starten!
+
+Ich bin Ihnen aber noch eine Erklärung schuldig, was genau passiert ist in den Befehlen, die Sie kopiert haben. Dafür sind vielleicht einige generelle Worte über Pakete nötig.
+
+Die besten Pakete werden auf offiziellen R-Servern wie z.B. CRAN (Comprehensive R Archive Network) gespeichert. Derzeit [Nov 22] gibt es dort mehr als 18 000 offiziell geprüfte Erweiterungen, und darin liegt auch die Stärke und Flexibilität von R begründet. \
+Pakete von CRAN können mit dem Befehl `install.packages("Paket")` installiert werden. Dabei ist sehr wichtig, dass Sie die Anführungszeichen um den Paketnamen nicht vergessen!\
+\
+Da unser Tutorial-Paket weder fertig noch essentiell für die Wissenschaftscommunity ist, wird es nicht auf bei CRAN gespeichert, sondern auf einem entlegenen Github-Server. Deswegen können Sie es nicht mit dem offiziellen `install.packages()` Befehl installieren. \
+Aber, wir können einen kleinen Trick anwenden und noch ein Paket namens `remotes` installieren, was wiederum einen Befehl zur Verfügung stellt, um Pakete von Github zu installieren.
+
+Das sieht dann so aus als Befehl:
+
+```{r echo=TRUE, eval = F}
+install.packages("remotes")
+remotes::install_github("statistik-lehre/tutor")
+```
+
+Wenn ein Paket einmal installiert ist, steht es aber noch nicht zur Verfügung. Als letzten Schritt müssen Sie das Paket in den Arbeitsspeicher laden, damit es "aktiviert" ist. \
+Dazu nutzen wir den Befehl `library(Paket)`, welcher kurioserweise ohne Anführungsstriche um den Paketnamen auskommt (eine der kleinen Inkonsistenzen, die es in R auch gibt).
+
+Vom Paket `remotes` brauchten wir nur eine Funktion - es wäre mühsam, dafür noch `library(remotes)` vorher tippen zu müssen. Anstattdessen können wir mit der Schreibweise `Paket::Funktion()` angeben, in welchem Paket R suchen muss, um die Funktion zu finden. In unserem Fall also `remotes::install_github()`, um ein Paket von github zu installieren. \
+\
+Da die Tutorials im Zusammenspiel mit der VL erstellt werden, müssen Sie das Paket "Tutor" regelmäßig updaten, um auch die neueren Tutorials zu erhalten. Jede Woche am Mittwoch wird das nächste Tutorial hochgeladen. \
+\
+Um das Update durchzuführen, verwenden Sie folgende Befehle:
+
+```{r echo=TRUE, eval = F}
+remotes::install_github("statistik-lehre/tutor")
+library(tutor)
+.rs.restartR()
+```
+
+Der Befehl `.rs.restartR.` bewirkt einen Neustart von R, nach welchem die neuen Tutorials auch tatsächlich angezeigt werden im Tutorials-Tab.

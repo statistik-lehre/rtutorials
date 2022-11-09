@@ -18,13 +18,14 @@ library(learnr)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-Nutzen Sie ihr Wissen über die primitiven Funktionen `sum()` und `length()` und transformieren Sie die Formel für Varianz in R-Code!
+Nutzen Sie ihr Wissen über die primitiven Funktionen `sum()` und `length()` und transformieren Sie die Formel für Varianz in R-Code! 
 
 \
-${\LARGE s^2 = {\frac{\sum{(x_i-\bar{x})^2}}{n}}}$
+${\LARGE s^2 = {\frac{\sum{(x_i-\bar{x})^2}}{n-1}}}$
 
 ```{r var, exercise = TRUE}
 x <- c(1,2,3,4,5)
-s2 <- sum((x - mean(x))^2) / length(x)
+s2 <- sum((x - mean(x))^2) / (length(x) - 1)
 
 ```
+Vergleichen Sie die Ergebnisse Ihrer Funktion mit denen der eingebauten Funktion `var(x)`.
