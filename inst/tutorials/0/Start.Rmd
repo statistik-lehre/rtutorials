@@ -108,13 +108,17 @@ Erst anhand der Unfähigkeit von Computern oder Robotern im Alltag mit "gesunden
 
 Probleme mit der Objektivität von Statistik passieren eigentlich nie auf der Ebene der Statistik selbst, sondern beim Übersetzen der Welt in mathematische Konzepte. Dabei findet immer eine Auswahl statt, eine Kategorisierung und Verallgemeinerung.
 
-Dieser Prozess liegt eigentlich aller Interaktion mit der Welt zu Grunde, da sie zu groß ist, um sie in allen Details wahrzunehmen. Allein, wenn wir einen Baum ansehen, können wir gar nicht alle Blätter einzeln anschauen -- müssen wir auch nicht, denn unsere Heuristiken sagen uns, dass es sich um einen Baum handelt.
+Es können eigentlich nie alle Details mit erfasst werden. Allein, wenn wir einen Baum ansehen, können wir gar nicht alle Blätter einzeln anschauen -- müssen wir auch nicht, denn unsere Heuristiken sagen uns, dass es sich um einen Baum handelt.
 
-Diese sprachliche Einordnung als Baum ist bereits eine Verallgemeinerung der echten Welt. Der Baum könnte gar keine Blätter haben, oder tausende, diese Information ist im Übersetzungsprozess bereits verlorengegangen. Es könnte ein junger Sprössling oder ein Mammutbaum sein und alles dazwischen. Aber wenigstens enthält das Wort „Baum" in menschlicher Sprache noch alle Möglichkeiten, d.h. es ist mehrdeutig. Das wiederum würde es zu einem schlechten mathematischen Wort machen.
+Die sprachliche Einordnung als Baum ist bereits eine Verallgemeinerung der echten Welt. Der Baum könnte gar keine Blätter haben, oder tausende, diese Information ist im Übersetzungsprozess bereits verlorengegangen. Es könnte ein junger Sprössling oder ein Mammutbaum sein und alles dazwischen.
 
 Mathematische Kategorien sind eindeutig, und das müssen sie auch sein, damit wir damit rechnen können. Dabei ergibt sich schon das erste Übersetzungsproblem, aus etwas Vieldeutigem ein konkretes Merkmal zu isolieren. Hiermit beschäftigt sich die Operationalisierung.
 
-Um etwas über die Welt zu sagen, sind wir gezwungen, an irgendeinem Punkt zu verallgemeinern. Auf diesem Prinzip basiert auch Wahrnehmung. Das Gehirn selektiert, verstärkt oder ergänzt Informationen automatisch - zum Beispiel beim blinden Fleck: An dem Ort, wo der Sehnerv die Netzhaut verlässt, gibt es keine Sehzellen. Trotzdem sehen wir ein vollständiges Bild,
+Um etwas über die Welt zu sagen, sind wir gezwungen, an irgendeinem Punkt zu verallgemeinern. Auf diesem Prinzip basiert auch Wahrnehmung. Das Gehirn selektiert, verstärkt oder ergänzt Informationen automatisch - zum Beispiel beim blinden Fleck: An dem Ort, wo der Sehnerv die Netzhaut verlässt, gibt es keine Sehzellen. Trotzdem sehen wir ein vollständiges Bild.
+
+![cross and circle to test blind spot](images/blindspot.jpg)
+
+*Zum selbst testen: Schließen Sie das linke Auge, schauen Sie auf das Kreuz und bewegen Sie die Nase mittig zwischen Kreuz und Kreis auf den Bildschirm zu.*
 
 Wenn wir aber wissenschaftliche Aussagen treffen wollen, müssen wir uns sehr genau bewusst machen, welche Entscheidungen wir im Verlauf der statistischen Analyse treffen, und was das für das Ergebnis bedeutet.\
 Außerdem müssen wir vorsichtig damit umgehen, wenn wir Schlüsse über die echte Welt aus statistischen Modellen ziehen. Um das zu veranschaulichen, lesen Sie, was Oliver Schlaudt zum statistischen Modell des Bruttoinlandprodukts zu sagen hat:
@@ -152,6 +156,8 @@ Nehmen Sie an, 99,99% der Schwäne in Ihrem Datensatz sind weiß. Ein Computer w
 Programmiersprachen haben genau wie echte Sprachen auch **Vokabeln** und **Grammatik**. Diese werden wir gemeinsam lernen in diesem Kurs.\
 Ein wichtiges Wort, was auch oft fällt, ist der Begriff **Syntax**. Das ist im Programmierkontext ein Satz von Regeln für Grammatik und Rechtschreibung.
 
+Wirklich sprechen im menschlichen Sinne geht aber eigentlich nicht. Deswegen ist der Begriff Sprache missverständlich. Programmiersprachen sind vielmehr ein Satz von Routinen, die miteinander kombiniert werden können. (Siehe dieses Programm im Deutschlandfunk: [Geschichte der Programmiersprachen: Alles nur Routinen!](https://www.deutschlandfunkkultur.de/geschichte-der-programmiersprachen-100.html))
+
 ##### Maschinensprache
 
 Maschinensprache ist das fundamentale Ende von Vereinfachung: Es gibt nur noch zwei Zeichen, 0 und 1. Diese lassen sich elektronisch umsetzen durch "niedrige Spannung" und "hohe Spannung" und somit ist die Brücke zur Hardware geschaffen. Der Prozessor Ihres Gerätes selbst kann nur Anweisungen in Maschinensprache entgegennehmen.\
@@ -159,14 +165,16 @@ Diese Anweisungen werden codiert (dargestellt) durch lange Ketten von 0 und 1.\
 Diese Art von Codierung heißt übrigens Binärcode.\
 **(Bi**när, weil es **zwei** Zeichen gibt - 0 und 1).
 
+(Für technisch sehr interessierte Menschen: [How do CPUs read machine code?](https://www.youtube.com/watch?v=yl8vPW5hydQ&list=PLowKtXNTBypFbtuVMUVXNR0z1mu7dp7eH&index=2))
+
 ##### Code
 
-Maschinensprache ist für uns so gut wie nicht lesbar. Deswegen gibt es Programme, die lange Ketten von 0 und 1 in lesbare Wörter übersetzen (und umgedreht)
+Maschinensprache ist für uns so gut wie nicht lesbar. Deswegen gibt es Programme, die lange Ketten von 0 und 1 in lesbarere Programmiersprache übersetzen (und umgedreht)
 
 Auch R ist so ein Programm. Wir können Wörter und Symbole eingeben, und diese werden intern in Maschinensprache übersetzt und an den Prozessor gesandt.
 
 All das ist für uns letztlich nicht sichtbar, aber wichtig um zu verstehen, was mit unseren Eingaben passiert, und warum wir Fehlermeldungen bekommen.\
-R kann unsere Eingaben nicht wirklich übersetzen, sondern kann nur mit den vorher einprogrammierten Übersetzungsregeln umgehen. Deswegen reagiert R sehr empfindlich darauf, wenn wir uns nicht an die vorgegebenen Regeln halten - wie zum Beispiel Text in Anführungszeichen zu setzen - und kann auf einmal gar nichts mehr mit dem Befehl anfangen, obwohl wir nur ein " vergessen haben.
+R kann unsere Eingaben nicht wirklich übersetzen, sondern kann nur mit den vorher einprogrammierten Übersetzungsroutinen umgehen. Deswegen reagiert R sehr empfindlich darauf, wenn wir uns nicht an die vorgegebenen Regeln halten - wie zum Beispiel Text in Anführungszeichen zu setzen - und kann auf einmal gar nichts mehr mit dem Befehl anfangen, obwohl wir nur ein " vergessen haben.
 
 Ein Mensch würde den Code an dieser Stelle trotzdem verstehen - aufgrund des Alltagsverstandes, mit dessen Hilfe wir fehlende Informationen einfach ergänzen können. Diesen Verstand besitzen Computer nicht - es sei denn, wir speisen riesige Datenmengen ein, aus denen sie Muster ableiten können.\
 Ein Beispiel dafür ist die KI-gestützte Textübersetzung [Deepl](https://www.deepl.com/translator). Gespeist aus unzähligen frei verfügbaren Übersetzungen aus dem Internet kann Deepl erstaunlich akkurate Vorhersagen darüber treffen, welche Textbausteine dem Kontext angemessen sind.\
@@ -187,19 +195,19 @@ So steht die Programmiersprache mehr oder weniger in der Mitte zwischen Mensch u
 
 ##### Steckbrief
 
-+-----------------------------+------------------------------+
-| Erstmals erschienen:        | 1993                         |
-+-----------------------------+------------------------------+
-| Gegründet von               | Ross Ihaka, Robert Gentleman |
-+-----------------------------+------------------------------+
-| Beeinflusst von             | S, Lisp, Scheme              |
-+-----------------------------+------------------------------+
++----------------------------+------------------------------+
+| Erstmals erschienen:       | 1993                         |
++----------------------------+------------------------------+
+| Gegründet von              | Ross Ihaka, Robert Gentleman |
++----------------------------+------------------------------+
+| Beeinflusst von            | S, Lisp, Scheme              |
++----------------------------+------------------------------+
 
 \
 \
 
-::: infobox 
-Der Name **R** leitet sich aus dem Anfangsbuchstaben der beiden Gründer Ross und Robert ab, und ist eine Referenz auf den einbuchstabigen Namen der Programmiersprache **S**, welche das Fundament für R bietet. 
+::: infobox
+Der Name **R** leitet sich aus dem Anfangsbuchstaben der beiden Gründer Ross und Robert ab, und ist eine Referenz auf den einbuchstabigen Namen der Programmiersprache **S**, welche das Fundament für R bietet.
 :::
 
 \
@@ -239,9 +247,11 @@ Es ist eine große Stärke von R, dass alle Menschen Pakete erstellen und teilen
 \
 Diese Funktionalität machen wir uns in der Lehre zunutze, um die Lerninhalte direkt in RStudio anzeigen zu können. Wir haben für Sie ein Tutorial-Paket namens `tutor` erstellt.
 
-Ich bin Ihnen aber noch eine Erklärung schuldig, was genau passiert ist in den Befehlen, die Sie kopiert haben. Dafür sind vielleicht einige generelle Worte über Pakete nötig.
+Ich bin Ihnen aber noch eine Erklärung schuldig, was genau passiert ist in den Befehlen, die Sie kopiert haben. In den nachfolgenden Tutorials werden wir aber bei den Grundlagen anfangen, machen Sie sich also keine Sorgen, wenn Sie etwas nicht verstehen - es wird alles noch einmal genau wiederholt und in Kontext eingebettet.
 
-Die besten Pakete werden auf offiziellen R-Servern wie z.B. CRAN (Comprehensive R Archive Network) gespeichert. Derzeit [Nov 22] gibt es dort mehr als 18 000 offiziell geprüfte Erweiterungen. Pakete von CRAN können mit dem Befehl `install.packages("Paket")` installiert werden. Dabei ist sehr wichtig, dass Sie die Anführungszeichen um den Paketnamen nicht vergessen!\
+Pakete werden auf offiziellen R-Servern wie z.B. CRAN (Comprehensive R Archive Network) veröffentlicht. Derzeit [Nov 22] gibt es dort mehr als 18 000 offiziell geprüfte Erweiterungen.
+
+Pakete von CRAN können mit dem Befehl `install.packages("Paket")` installiert werden. Dabei ist sehr wichtig, dass Sie die Anführungszeichen um den Paketnamen nicht vergessen!\
 \
 Da unser Tutorial-Paket weder fertig noch essentiell für die Wissenschaftscommunity ist, wird es nicht auf bei CRAN gespeichert, sondern auf einem entlegenen Github-Server. Deswegen können Sie es nicht mit dem offiziellen `install.packages()` Befehl installieren.\
 Aber, wir können einen kleinen Trick anwenden und noch ein Paket namens `remotes` installieren, was wiederum einen Befehl zur Verfügung stellt, um Pakete von Github zu installieren.
