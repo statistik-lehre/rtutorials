@@ -375,7 +375,7 @@ y
 Hinweis: Dass beim Wert von `y` ein `L` dahinter steht, ist völlig normal. Das `L` steht für *Long* und bezeichnet einen Datentyp.
 :::
 
-## $n$ Länge eines Vektors
+## Länge eines Vektors
 
 Um $n$ zu ermitteln, gibt es die Funktion `length()`. Sie gibt die Anzahl der Elemente eines Vektors aus.
 
