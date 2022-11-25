@@ -457,9 +457,11 @@ tbl
 
 ```
 
-Die Häufigkeitstabelle ist leider aber etwas unübersichtlich, so dass der häufigste Wert nicht direkt ins Auge springt. Wir können sie aber umsortieren mit dem Befehl `sort()`.
+### Sortieren mit `sort()`
 
-Um zu erreichen, dass der häufigste Wert ganz vorne steht, spezifizieren Sie in der Funktion `sort()` das Argument `decreasing = TRUE.`
+Die Häufigkeitstabelle ist unübersichtlich, so dass der häufigste Wert nicht direkt ins Auge springt. Wir können sie aber umsortieren mit dem Befehl `sort()`.
+
+Um eine absteigende Sortierung zu erhalten, und zu erreichen, dass der häufigste Wert ganz vorne steht, spezifizieren Sie in der Funktion `sort()` das Argument `decreasing = TRUE`.
 
 ```{r sortsetup}
 animals <- c("cat", "dog", "cow", "eagle", "frog", "worm", "bear", "snake", "fish", "kangaroo", "honey badger", "wolf", "mouse", "sheep", "goat", "squirrel", "fish", "frog", "woodpecker", "mouse", "elephant", "dog", "human", "fly", "mole", "honeyguide", "duck", "goat", "goose", "hen", "horse", "pig", "bull", "rooster", "bat", "reindeer", "deer", "fox", "bunny", "lynx", "otter", "weasel", "wild boar", "blackbird", "blackbird", "falcon", "owl", "sparrow", "sparrow", "sparrow", "swan", "swallow", "trout", "lizard", "viper", "salamander", "ant", "bee", "beetle", "dragonfly", "sparrow", "blackbird", "fly", "flea", "glow worm")
@@ -484,9 +486,44 @@ Die Funktion `mfv()` (most frequent value) gibt die häufigsten Werte zurück.
 modeest::mfv(animals)
 ```
 
-## $\sum$ Summen bilden
+::: grau-nb
+Rückblick:\
+Die Schreibweise `Paket::Funktion()` erlaubt, Funktionen aus Paketen zu verwenden, die aktuell nicht über `library()` ins Environment geladen sind.
 
-Um die Summe eines Vektors auszurechnen, gibt es die Funktion `sum()`.
+Zwischen den Doppelpunkten darf kein Leerzeichen sein.
+:::
+
+## Median
+
+```{r medi, echo=FALSE}
+question("Ab welchem Skalenniveau ist die Berechnung des Medians sinnvoll?",
+         answer("Nominal"),
+         answer("Ordinal", correct = TRUE),
+         answer("Intervall"),
+         answer("Verhältnis"),
+         answer("Absolut")
+         )
+```
+
+Zur Erinnerung: Der Median ist der Wert, vor dem 50% der Werte liegen und nach dem die anderen 50% der Werte kommen. Es geht nicht um die Werte selbst, sondern lediglich um ihre Position auf einer geordneten Liste.
+
+In R wird der Median mit `median()` berechnet.
+
+Berechnen Sie den Median von `m`!
+
+```{r medex-solution}
+median(m)
+```
+
+```{r medex, exercise=TRUE}
+m <- c(6, 3, 5, 2, 1)
+```
+
+## Summen bilden
+
+Eine essentielle Funktion bei der Berechnung statistischer Kennwerte ist die Summe $\sum$.
+
+Um die Summe aller Elemente eines Vektors zu bestimmen, gibt es die Funktion `sum()`.
 
 ```{r, echo=TRUE}
 x <- c(1, 2, 3, 4, 5)
@@ -496,7 +533,7 @@ sum(x)
 ### Anwendung
 
 $$
-\sum_{i=1}^{100}i= 5050
+{\large \sum_{i=1}^{100}i= 5050}
 $$
 
 Setzen Sie die obige mathematische Formel in R-Code um!
@@ -516,7 +553,7 @@ sum(1:100)
 ## Das arithmetische Mittel
 
 $$
-\bar{x} = \frac{\sum_{i=1}^{n}{x_i}}{n}
+{\large \bar{x} = \frac{\sum_{i=1}^{n}{x_i}}{n}}
 $$
 
 ### Selber nachdenken
@@ -585,17 +622,36 @@ Da es sich um eine Ja / Nein - Frage handelt, gibt R entweder `TRUE` oder `FALSE
 
 Achtung! `==` gibt `FALSE` aus, wenn auch nur die kleinste Unterschiedlichkeit vorhanden ist.
 
+## Fehlende Werte `NA`
+
+`NA` bedeutet *not available* und signalisiert R, dass der betreffende Wert fehlt. Alle fehlenden Werte sollten so und nicht anders codiert werden, damit R adäquat damit umgehen kann.
+
+Das Ergebnis von Berechnungen, die `NA`s enthalten, ist eigentlich immer `NA`.
+
+```{r echo=TRUE}
+alter <- c(20, 22, NA)
+mean(alter)
+```
+
+Das hat auch einen guten Grund: Wenn ein Wert in Wirklichkeit alles mögliche sein könnte, kann auch das Ergebnis alles mögliche sein.
+
+Um trotzdem zu einem Ergebnis zu kommen, können Sie bei vielen Funktionen das Argument `na.rm = TRUE` spezifizieren. Das steht für *NA Remove*.
+
+```{r echo=TRUE}
+mean(alter, na.rm = TRUE)
+```
+
 ## Abweichungen vom Mittelwert
 
-Die Abweichungen vom Mittelwert sind die zugrunde liegende Genialität für die Berechnung von Streuungen. Deswegen gehen wir im Folgenden Schritt für Schritt durch ihre Berechnung in R.
+Die Abweichungen vom Mittelwert liegen der Berechnung von Streuungen zugrunde. Das zugrunde liegende (geniale) Konzept, Streuung durch die Abweichungen von einem Zentrum darzustellen ist das Fundament für Varianz, Standardabweichung, und alle darauf basierenden Verfahren wie Korrelation und Regression. Deswegen gehen wir im Folgenden Schritt für Schritt durch die Berechnung der Abweichungen vom Mittelwert in R.
 
 ![Diagramm mit rot eingezeichneten Abweichungen vom Mittelwert.](images/dev.png){width="50%"}
 
-$$
-\sum_{i=1}^{n}{(x_i - \bar{x})}=0
-$$
-
 Wir können postulieren, dass die Summe der Abweichungen vom Mittelwert immer 0 beträgt.
+
+$$
+{\large \sum_{i=1}^{n}{(x_i - \bar{x})}=0}
+$$
 
 Konkret gerechnet für die obenstehende Verteilung:
 
@@ -698,12 +754,67 @@ sum(x - mean(x)) == 0
 
 ## Quadratsummen
 
-Da die Abweichungen vom Mittelwert immer 0 ergeben, eignen sie sich sehr schlecht, um als Maß für die Streuung zu fungieren - mit 0 können wir schwerlich rechnen.
+Da die Abweichungen vom Mittelwert summiert immer 0 ergeben, geht ihr Informationsgehalt über die Streuung leider verloren. Um ein Maß für die Streuung (auch Dispersion genannt) zu erhalten, müssen noch zwei weitere Schritte geschehen:
 
 Um zu verhindern, dass sich positive und negative Abweichungen aufheben, werden die einzelnen Abweichungen von Mittelwert quadriert. Das bringt den Vorteil mit sich, dass am Ende eine substantielle Kennzahl für die Streuung steht, aber auch den Nachteil, dass Extremwerte durch die Quadrierung sehr stark ins Gewicht fallen.\
 Die Summe der quadrierten Abweichungen vom Mittelwert heißt Quadratsumme.
 
-Da die Quadratsumme eines langen Vektors sehr viel höher ist, als diejenige eines kurzen, müssen wir noch durch $n$ (die Anzahl der Elemente im Vektor) teilen, um den Einfluss der Länge des Vektors herauszurechnen. Es hat sich ergeben, dass das Teilen durch $n - 1$ noch akkuratere Ergebnisse liefert - eine genaue Erklärung dazu führt hier aber zu weit.
+$$
+{\large \sum{(x_i-\bar{x})^2}}
+$$
+
+![Diagramm mit rot eingezeichneten Abweichungen vom Mittelwert](images/dev.png){width="40%"}
+
+|                     |     |     |     |     |     |
+|---------------------|----:|----:|----:|----:|----:|
+| $x_i - \bar{x}$     |  -3 |  -3 |   5 |  -1 |   2 |
+| $(x_i - \bar{x})^2$ |   9 |   9 |  25 |   1 |   4 |
+
+: Quadrierte Abweichungen vom Mittelwert
+
+$QS = 9 + 9+25+1+4=48$
+
+Die Quadratsumme in unserem Beispiel beträgt 48. Mehr als die Hälfte dieses Werts (25) wurde durch einen einzigen Ausreißer verursacht.
+
+Um daraus tatsächlich ein Maß der Streuung zu machen, müssen wir noch durch $n$ (die Anzahl der Elemente im Vektor) teilen, um den Einfluss der Stichprobengröße herauszurechnen. Es hat sich gezeigt, dass das Teilen durch $n - 1$ akkuratere Schätzungen liefert - eine genaue Erklärung dazu führt hier aber zu weit.
+
+Damit haben wir die Formel der Varianz:
+
+$$
+{\large s^2 = {\frac{\sum{(x_i-\bar{x})^2}}{n-1}} }
+$$
+
+Die Formel für die Varianz des Beispiels würde so aussehen:
+
+$$
+{\large s^2 = {\frac{48}{4}}=12 }
+$$
+
+### Standardabweichung
+
+Die Standardabweichung $s$ ist die Quadratwurzel der Varianz $s^2$.
+
+$$
+{\large s = \sqrt{s^2}}
+$$
+
+Die Standardabweichung ist lediglich eine andere Maßeinheit für die Streuung, aber das zugrundeliegende Messinstrument ist das selbe. Deswegen wird auch die Empfindlichkeit gegenüber Ausreißern, die der Quadratsumme eingeschrieben ist, wird durch das Ziehen der Wurzel nicht rückgängig gemacht, auch wenn es vielleicht auf den ersten Blick so scheint.
+
+## Hausaufgabe
+
+Ihre Hausaufgabe ist es, die Formeln der Varianz und Standabweichung als R Code umzusetzen. Vergleichen Sie Ihre Ergebnisse mit den Ergebnissen der eingebauten Funktionen `var()` und `sd()`. Nutzen Sie dafür die Gleichheitsbedingung `==`.
+
+Speichern Sie die fertigen Formeln als Skript und laden Sie dieses als Abgabe auf Moodle hoch.
+
+::: grau-nb
+**Tipps**:
+
+-   Die Quadratwurzel wird mit `sqrt()` (*square root*) gebildet.
+
+-   Quadrieren mit `^2`
+
+-   Auf die Klammersetzung achten: tendenziell verlangt R mehr Klammern als die normale mathematische Notation
+:::
 
 ## Überblick deskriptivstatistische Kennwerte
 
@@ -711,7 +822,7 @@ Die Berechnung vieler statistischer Kennwerte ist in R ziemlich straight forward
 
 Sie kennen nun bereits `mean()`, außerdem gibt es `median()` für den Median, `var()` für die Varianz, `sd()` für die Standardabweichung, und so weiter. Es gibt noch viele mehr, und es geht nicht darum, sich alles zu merken, sondern zu wissen, wo Sie die passende Funktion für das gewünschte Maß finden. Oft reicht dafür eine kurze Suche im Internet.\
 \
-Alle diese Funktionen nehmen als erstes Argument einen Vektor, der die Werte enthält, mit denen gerechnet werden soll. Deswegen haben Sie im ersten Teil gelernt, wie Sie Vektoren erstellen und speichern.
+Alle diese Funktionen sind sich ähnlich: Sie nehmen als erstes Argument einen Vektor, der die Werte enthält, mit denen gerechnet werden soll. Deswegen haben Sie im ersten Teil gelernt, wie Sie Vektoren erstellen und speichern.
 
 Hier nochmal eine Übersicht über deskriptivstatistische Kennwerte mit ihren eingebauten Funktionen:
 
@@ -740,3 +851,54 @@ Hier nochmal eine Übersicht über deskriptivstatistische Kennwerte mit ihren ei
 +-----------------------+---------------------------+----------------+
 
 : Übersicht: Maße der zentralen Tendenz und Maße der Streuung in R
+
+Hilfreich ist auch der Befehl `summary()`, der automatisch eine Zusammenfassung der wichtigen deskriptivstatistischen Kennwerte erstellt.
+
+```{r test, exercise=TRUE, exercise.caption="Zum Ausprobieren"}
+
+```
+
+## Learnings heute
+
+### neue Konzepte
+
+-   Assignment `<-`
+
+-   Environment
+
+-   Vektoren
+
+-   Recycling und Vektorisierung
+
+-   Fehlende Werte
+
+-   Zahlenreihen mit `:`
+
+-   Indizierung mit `[]`
+
+-   nötige Skalenniveaus für Modus, Median und Mittelwert
+
+-   Sinn von Abweichungen vom Mittelwert und Quadratsummen
+
+-   Die Formel für die Varianz
+
+### neue Funktionen
+
+| Code               | Beschreibung                    |
+|--------------------|---------------------------------|
+| `c()`              | combine                         |
+| `<-`               | assignment operator             |
+| `[]`               | index operator                  |
+| `==`               | Gleichheitsprüfung              |
+| `:`                | colon operator                  |
+| `length()`         | Länge eines Vektors             |
+| `sum()`            | Summe eines Vektors             |
+| `unique()`         | Entfernen von Duplikaten        |
+| `length(unique())` | Anzahl der versch. Ausprägungen |
+| `table()`          | Häufigkeitstabelle              |
+| `sort()`           | Sortieren                       |
+| `modeest::mfv()`   | most frequent value (Modus)     |
+| `median()`         | Median                          |
+| `mean()`           | arithmetisches Mittel           |
+| `var()`            | variance                        |
+| `sd()`             | standard deviation              |
