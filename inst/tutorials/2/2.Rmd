@@ -730,11 +730,8 @@ Um die Abweichungen vom Mittelwert ( $x_i - \bar{x}$ ) zu berechnen, wird der Mi
 
 Als Ergebnis entsteht ein neuer Vektor mit den Abweichungen vom Mittelwert.
 
-```{r deviation-setup}
-x <- c(1, 1, 9, 3, 6)
-```
-
 ```{r, echo=TRUE}
+x <- c(1, 1, 9, 3, 6)
 x - mean(x)
 ```
 
@@ -743,6 +740,10 @@ x - mean(x)
 Jetzt sind Sie selber gefragt! Prüfen Sie die Hypothese, dass die Summe aller Abweichungen vom Mittelwert 0 beträgt.
 
 Übersetzen Sie dazu die Formel $\sum{(x_i - \bar{x})}=0$ in R Code!
+
+```{r deviation-setup}
+x <- c(1, 1, 9, 3, 6)
+```
 
 ```{r deviation-solution}
 sum(x - mean(x)) == 0
@@ -769,11 +770,11 @@ $$
 
 ![Diagramm mit rot eingezeichneten Abweichungen vom Mittelwert](images/dev.png){width="50%"}
 
-+---------------------+----------:+----------:+----------:+----------:+----------:+
-| $x_i - \bar{x}$     | -3        | -3        | 5         | -1        | 2         |
-+---------------------+-----------+-----------+-----------+-----------+-----------+
-| $(x_i - \bar{x})^2$ | 9         | 9         | 25        | 1         | 4         |
-+---------------------+-----------+-----------+-----------+-----------+-----------+
++---------------------+---------:+---------:+---------:+---------:+---------:+
+| $x_i - \bar{x}$     | -3       | -3       | 5        | -1       | 2        |
++---------------------+----------+----------+----------+----------+----------+
+| $(x_i - \bar{x})^2$ | 9        | 9        | 25       | 1        | 4        |
++---------------------+----------+----------+----------+----------+----------+
 
 : Quadrierte Abweichungen vom Mittelwert
 
