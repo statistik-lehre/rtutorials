@@ -482,6 +482,10 @@ Am einfachsten ist die Verwendung des Pakets `modeest` (mode estimation).
 
 Die Funktion `mfv()` (most frequent value) gibt die häufigsten Werte zurück.
 
+```{r modesetup}
+animals <- c("cat", "dog", "cow", "eagle", "frog", "worm", "bear", "snake", "fish", "kangaroo", "honey badger", "wolf", "mouse", "sheep", "goat", "squirrel", "fish", "frog", "woodpecker", "mouse", "elephant", "dog", "human", "fly", "mole", "honeyguide", "duck", "goat", "goose", "hen", "horse", "pig", "bull", "rooster", "bat", "reindeer", "deer", "fox", "bunny", "lynx", "otter", "weasel", "wild boar", "blackbird", "blackbird", "falcon", "owl", "sparrow", "sparrow", "sparrow", "swan", "swallow", "trout", "lizard", "viper", "salamander", "ant", "bee", "beetle", "dragonfly", "sparrow", "blackbird", "fly", "flea", "glow worm")
+```
+
 ```{r, echo=TRUE}
 modeest::mfv(animals)
 ```
@@ -726,6 +730,10 @@ Um die Abweichungen vom Mittelwert ( $x_i - \bar{x}$ ) zu berechnen, wird der Mi
 
 Als Ergebnis entsteht ein neuer Vektor mit den Abweichungen vom Mittelwert.
 
+```{r deviation-setup}
+x <- c(1, 1, 9, 3, 6)
+```
+
 ```{r, echo=TRUE}
 x - mean(x)
 ```
@@ -735,10 +743,6 @@ x - mean(x)
 Jetzt sind Sie selber gefragt! Prüfen Sie die Hypothese, dass die Summe aller Abweichungen vom Mittelwert 0 beträgt.
 
 Übersetzen Sie dazu die Formel $\sum{(x_i - \bar{x})}=0$ in R Code!
-
-```{r deviation-setup}
-x <- c(1, 1, 9, 3, 6)
-```
 
 ```{r deviation-solution}
 sum(x - mean(x)) == 0
@@ -760,15 +764,16 @@ Um zu verhindern, dass sich positive und negative Abweichungen aufheben, werden 
 Die Summe der quadrierten Abweichungen vom Mittelwert heißt Quadratsumme.
 
 $$
-{\large \sum{(x_i-\bar{x})^2}}
+{\large QS=\sum{(x_i-\bar{x})^2}}
 $$
 
-![Diagramm mit rot eingezeichneten Abweichungen vom Mittelwert](images/dev.png){width="40%"}
+![Diagramm mit rot eingezeichneten Abweichungen vom Mittelwert](images/dev.png){width="50%"}
 
-|                     |     |     |     |     |     |
-|---------------------|----:|----:|----:|----:|----:|
-| $x_i - \bar{x}$     |  -3 |  -3 |   5 |  -1 |   2 |
-| $(x_i - \bar{x})^2$ |   9 |   9 |  25 |   1 |   4 |
++---------------------+----------:+----------:+----------:+----------:+----------:+
+| $x_i - \bar{x}$     | -3        | -3        | 5         | -1        | 2         |
++---------------------+-----------+-----------+-----------+-----------+-----------+
+| $(x_i - \bar{x})^2$ | 9         | 9         | 25        | 1         | 4         |
++---------------------+-----------+-----------+-----------+-----------+-----------+
 
 : Quadrierte Abweichungen vom Mittelwert
 
@@ -820,7 +825,7 @@ Speichern Sie die fertigen Formeln als Skript und laden Sie dieses als Abgabe au
 
 Die Berechnung vieler statistischer Kennwerte ist in R ziemlich straight forward: Es gibt dafür oft eingebaute Funktionen, und wenn nicht, gibt es Pakete, die Funktionen enthalten. Immerhin wurde R entworfen mit dem Ziel, statistische Berechnungen zu ermöglichen.
 
-Sie kennen nun bereits `mean()`, außerdem gibt es `median()` für den Median, `var()` für die Varianz, `sd()` für die Standardabweichung, und so weiter. Es gibt noch viele mehr, und es geht nicht darum, sich alles zu merken, sondern zu wissen, wo Sie die passende Funktion für das gewünschte Maß finden. Oft reicht dafür eine kurze Suche im Internet.\
+Sie kennen nun bereits einige statistische Kennwerte. Es gibt noch viele mehr, und es geht nicht darum, sich alles zu merken, sondern zu wissen, wo Sie die passende Funktion für das gewünschte Maß finden. Oft reicht dafür eine kurze Suche im Internet.\
 \
 Alle diese Funktionen sind sich ähnlich: Sie nehmen als erstes Argument einen Vektor, der die Werte enthält, mit denen gerechnet werden soll. Deswegen haben Sie im ersten Teil gelernt, wie Sie Vektoren erstellen und speichern.
 
