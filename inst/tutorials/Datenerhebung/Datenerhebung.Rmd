@@ -47,7 +47,7 @@ Variablen sind die unterschiedlichen Fragen, die wir gestellt haben. Zum Beispie
 
 -   Wie weit war Ihr Weg in km? -> Variable: Weg
 
-##### Beobachtungen 
+##### Beobachtungen
 
 Beobachtungen sind hier die einzelnen Personen, denen die Fragen gestellt wurden. Eine Person ist dabei eine Beobachtung.
 
