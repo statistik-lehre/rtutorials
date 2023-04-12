@@ -1,5 +1,5 @@
 ---
-title: "0 - Start"
+title: "Einleitung"
 output:
   learnr::tutorial:
     language: de
@@ -8,7 +8,7 @@ output:
 runtime: shiny_prerendered
 bibliography: ref.json
 link-citations: TRUE
-description: 
+description: "Warum Statistik? Und warum R?"
 resource_files:
 - css/boxes.css
 ---
@@ -38,19 +38,31 @@ Die Form des interaktiven Tutorials wird Sie nun das restliche Semester begleite
 
 Innerhalb der Tutorials wird es interaktive Code-Blöcke geben. So könnt ihr mit neu gelernten Konzepten direkt experimentieren.
 
-Hier ein kleines Beispiel:\
-Probieren Sie, den Computer ein paar Rechenaufgaben lösen zu lassen!\
-Schreiben Sie in das Codefeld und führen Sie den Code aus mit `Strg + Enter` oder dem Knopf `▶ Code ausführen`.\
-Es gibt zu jeder Aufgabe auch Tipps. Klicken Sie dafür auf den Button 💡`Tipp`
+Schreiben Sie ihren Code hinein und führen Sie ihn aus mit `Strg + Enter` oder dem Knopf `▶ Code ausführen`.\
+Es gibt zu jeder Aufgabe auch Tipps oder Lösungen. Klicken Sie dafür auf den Button 💡`Tipp` oder `Lösung`. 
+
+```{r template, exercise = TRUE}
+
+```
+
+Im nächsten Abschnitt erwartet Sie ein Beispiel zum Auszuprobieren.  
+
+## R als Taschenrechner
+
+Probieren Sie, den Computer ein paar Rechenaufgaben lösen zu lassen! 
+
+Nutzen Sie den Tipp-Knopf für Informationen und achten Sie auch auf guten Stil (siehe Infobox unten).
 
 ::: {#first-hint}
-**Tip**\
+**Tipp**\
 Die Programmiersprache R kann wie ein Taschenrechner benutzt werden.
 
 -   `*` Multiplikation
 -   `/` Division
 -   `+` Addition
 -   `-` Subtraktion
+
+(… und es gibt noch mehr)
 
 **Syntax**\
 Als Dezimaltrennzeichen akzeptiert R nur den Punkt `.`\
@@ -68,6 +80,9 @@ Das Komma `,` ist für Aufzählungen reserviert, dazu kommen wir im nächsten Tu
 
 ```
 
+
+
+
 ::: infobox
 **Guter Stil**\
 Es gilt als guter Stil:
@@ -77,7 +92,9 @@ Es gilt als guter Stil:
     -   z.B. `5 + 5`
 
 Noch sieht alles sehr übersichtlich aus, aber später trägt das erheblich zur Lesbarkeit bei.
+
 :::
+
 
 > "Code is miserable to read on a good day, so giveyoureyesabreak and use spaces."
 >
