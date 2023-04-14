@@ -1,5 +1,5 @@
 ---
-title: "1 - Funktionen erkunden"
+title: "Funktionen erkunden"
 output:
   learnr::tutorial:
     language: de
