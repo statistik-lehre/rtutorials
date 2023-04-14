@@ -1,5 +1,5 @@
 ---
-title: "2 - Vektoren"
+title: "Vektoren"
 output:
   learnr::tutorial:
     language: de
