@@ -1,0 +1,102 @@
+---
+title: "Von der Datenerhebung zur Analyse"
+output:
+  learnr::tutorial:
+    language: de
+    css: css/boxes.css
+    fig_caption: no
+runtime: shiny_prerendered
+bibliography: ref.json
+link-citations: TRUE
+description: empty
+resource_files:
+- css/boxes.css
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(tidyverse)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Von der Datenerhebung zur Analyse
+
+Es klingt banal, aber wenn die Daten aufgeräumt sind, ist bereits die größte Hürde geschafft. Einen Großteil der Zeit von Datenanalyse verbringen Forschende damit, Daten in die richtige Form zu bringen. Die Auswertung selbst geht dann oft sehr schnell.
+
+Deswegen wird Ihnen hier gezeigt, was die optimale Form von Daten für die Nutzung in R ist.
+
+## Datenerhebung
+
+Wir beginnen damit, Daten zu erheben. Im Wintersemester 2022/23 haben 8 Studierende sich vor Bioläden in und um Kassel gestellt und den Kund_innen Fragen gestellt - zum Beispiel zum Lieblingsessen, wie oft sie selbst kochen und wie weit der Weg bis zum Laden war.
+
+Die Antworten wurden mitgeschrieben und später in Excel oder OpenOffice eingetippt. Damit die Analyse in R später gut funktioniert, müssen die Daten in einer speziellen Form eingegeben werden:
+
+```{r}
+knitr::include_graphics(path = "images/clean.png")
+```
+
+::: grau-nb
+Merke: Beobachtungen sind immer die Zeilen, und Variablen immer die Spalten.
+:::
+
+##### Variablen
+
+Variablen sind die unterschiedlichen Fragen, die wir gestellt haben. Zum Beispiel:
+
+-   Wie alt sind Sie? -> Variable: Alter
+
+-   Wie weit war Ihr Weg in km? -> Variable: Weg
+
+##### Beobachtungen
+
+Beobachtungen sind hier die einzelnen Personen, denen die Fragen gestellt wurden. Eine Person ist dabei eine Beobachtung.
+
+##### tidy data
+
+Das oben vorgestellte Konzept wurde unter dem Namen "*tidy data"* formalisiert.
+
+Hier sind drei wichtige Grundregeln für *tidy data* nach @wickham2016:
+
+<div>
+
+> 1.  Jede Variable braucht ihre eigene Spalte.
+>
+> 2.  Jede Beobachtung braucht ihre eigene Zeile.
+>
+> 3.  Jeder Wert braucht seine eigene Zelle.
+
+</div>
+
+Mit diesen drei Grundregeln werden Sie weniger Kopfschmerzen bei der Analyse von Daten mit R bekommen.
+
+Schauen Sie sich im nächsten Abschnitt an, wie Sie einen mitgelieferten Datensatz aufrufen können!
+
+## Beispieldatensätze
+
+R enthält einige vorinstallierte Datensätze. Außerdem können Beispieldatensätze in Paketen, die Sie laden bereitgestellt werden.
+
+Der von den Studierenden erhobene Datensatz befindet sich in diesem Tutorialpaket und heißt `einkaufen`. Um darauf zuzugreifen, rufen Sie ihn beim Namen:
+
+```{r beispieldaten, exercise = TRUE}
+einkaufen
+
+```
+
+::: grau-nb
+Der obige Code funktioniert nicht. Das liegt daran, dass der Datensatz aus dem Paket `tutor` stammt, dieses Paket im Tutorial-Codeblock aber nicht geladen ist - eine gute Übung für die Praxis, wo es ständig passiert, das Pakete nicht geladen sind. Die Fehlermeldung: "Object not found" ist häufig ein Hinweis darauf, und kann auf zwei Arten gelöst werden:
+
+**Die zwei Schreibweisen, um auf Inhalte aus Paketen zuzugreifen**
+
+-   Um alle Inhalte des Pakets für die aktuelle Sitzung verfügbar zu machen, verwenden Sie `library(Paketname)`. Dann können Sie die Objekte (z.B. Beispieldatensätze) direkt beim Namen aufrufen:\
+    \
+    `library(tutor)`
+
+    `einkaufen`
+
+-   Um nur ein einziges Objekt aus dem Paket aufzurufen, ohne vorher das gesamte Paket zu laden, verwenden Sie `Paketname::Objektname`. Beispiel:\
+    `tutor::einkaufen`
+:::
+
+Warum sind Beispieldatensätze wichtig?
+
+## Literatur
