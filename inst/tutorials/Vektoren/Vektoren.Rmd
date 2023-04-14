@@ -508,67 +508,6 @@ z <- 1:1000
 z
 ```
 
-## Indizierung
-
-![](images/honeyguide.jpg "indicator indicator, by Wilferd Duckitt (CC BY 2.0)"){width="50%"}
-
-###### Foto: Wilferd Duckitt (CC BY 2.0)
-
-Der *Honeyguide* hat seinen lateinischen Namen *indicator indicator* nicht ohne Grund: Er ist ein Indikator, d.h. **Anzeiger** für den Ort von Bienennestern.
-
-Er kennt sehr viele dieser Nester, und führt aktiv Menschen dorthin, damit diese den Honig herausholen und er dabei auch etwas abbekommt. ([Hier mehr dazu](https://en.wikipedia.org/wiki/Greater_honeyguide))
-
-### *index operator* `[]`
-
-Um gezielt auf einzelne Werte innerhalb eines Vektors zuzugreifen, können wir mit `[]` die Stellen angeben, an denen die Werte stehen.
-
-`[]` zeigt also auch einen bestimmten Ort an.
-
-```{r, echo=TRUE}
-animals <- c("cat", "cow", "dog")
-animals
-animals[2]      # Lies: "An der Stelle 2"
-animals[2:3]    # Lies: "An der Stelle 2 bis 3"
-```
-
-Um eine bestimmte Stelle einer Zahlenreihe anzugeben, sind Klammern nötig:
-
-```{r, echo=TRUE}
-(5:10)[5]       # "Gib die 5. Zahl der Zahlenreihe aus"
-```
-
-Die Konsole nutzt auch die Index-Schreibweise, um langen Output zu strukturieren: Zu Beginn jeder neuen Zeile ist die Nummer des ersten Elements der Zeile in eckigen Klammern angegeben.
-
-```{r, echo=TRUE}
-1:100
-```
-
-### Anwendungsaufgaben
-
-1.  Erstellen Sie eine absteigende Zahlenreihe von 100 bis 1. Geben Sie der Reihe den Namen x.
-
-2.  Addieren Sie das dritte und siebte Element des Vektors x! Benennen Sie das Ergebnis mit y.
-
-3.  Lassen Sie sich y ausgeben.
-
-```{r anw-hint}
-# Zahlenreihen rückwärts: die höhere Zahl nach vorne stellen.
-# Addieren ganz simpel mit +
-```
-
-```{r anw-solution}
-x <- 100:1
-y <- x[3] + x[7]
-y
-```
-
-```{r anw, exercise = TRUE, exercise.caption = "Indizierung"}
-
-```
-
-::: grau-nb
-Hinweis: Dass beim Wert von `y` ein `L` dahinter steht, ist völlig normal. Das `L` steht für *Long* und bezeichnet einen Datentyp.
-:::
 
 ## Länge eines Vektors
 
