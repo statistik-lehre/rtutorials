@@ -68,26 +68,66 @@ Außerdem:
 
 -   R Notebook = gut lesbare Mischung aus Code, Erläuterungen und Ergebnissen
 
-## Ein Objekt erstellen
+## R als Taschenrechner
 
-Wir beginnen damit, dass Sie ihr erstes eigenes Objekt erstellen. Mithilfe einer speziellen Funktion, dem *assignment operator* `<-`, weisen Sie einem Namen einen Wert zu.
+Fangen wir einfach an.
 
-``` r
-x <- 5
-# Name <- Wert
+Berechnen Sie 2 + 3 im Codeblock!
+
+```{r rechner, exercise = TRUE}
+
 ```
 
-Der obige Befehl erstellt ein Objekt namens x mit dem Wert 5.
+```{r rechner-solution}
+2 + 3
+```
 
+Das Ergebnis wird nicht gespeichert, sondern einfach nur ausgegeben
+ - es ist *printed and lost*.
+
+
+Aber wie lässt sich das Ergebnis speichern, um damit im weiteren Verlauf 
+zu arbeiten?
+
+```{r assignment_x, exercise = TRUE}
+x <- 2 + 3
+```
+
+Wie Sie sehen, wird beim Ausführen dieses Mal nichts ausgegeben. 
+Das liegt daran, dass der Wert von `2 + 3` in der Variable `x` gespeichert wurde.
+
+Um zu sehen, was die Variable `x` enthält, tippen Sie einfach `x`:
+
+```{r x_print, exercise = TRUE}
+
+```
+```{r x_print-solution}
+x
+```
+
+Sehr gut! Aber wie funktioniert das Speichern mit diesem `<-` Pfeil 
+eigentlich?
+
+## Assignment
+
+Mithilfe des *assignment operators* `<-`
+bekommt ein Name einen Wert zugewiesen. 
+So können Variablen erstellt werden.
+
+``` r
+x <- 2 + 3
+# Name <- Wert
+```
+Oft ist es hilfreich, Code zu verbalisieren. 
 Hier sind einige Möglichkeiten, wie der Pfeil ausgesprochen werden kann:
 
 Lesen Sie in Ihrem Kopf:
 
--   `x` *wird definiert als* `5`
+-   `x` *bekommt den Wert von* `2 + 3`
 
--   `x` *bekommt den Wert* `5`
-
--   etc...
+-  und von rechts nach links, in der Pfeilrichtung:
+ 
+   `2 + 3` wird auf `x` geschrieben.
 
 Das Objekt `x` erscheint im Environment, nachdem es erstellt wurde:
 
