@@ -15,9 +15,17 @@ resource_files:
 
 ```{r setup, include=FALSE}
 library(learnr)
-library(tidyverse)
+# library(gradethis)
+set.seed(123)
 knitr::opts_chunk$set(echo = FALSE)
 ```
+
+::: grau-nb
+**Hinweis**
+Dieses Tutorial ist stark angelehnt an die `swirl`-Lektion 
+[Subsetting Vectors](https://github.com/swirldev/swirl_courses/tree/master/R_Programming/Subsetting_Vectors)
+innerhalb des Kurses "R Programming". 
+:::
 
 ## Indizierung
 
@@ -29,36 +37,296 @@ Der *Honeyguide* hat seinen lateinischen Namen *indicator indicator* aus guten
 Grund: Er ist ein Indikator, d.h. **Anzeiger** für den Ort von Bienennestern.
 
 Dieser in Afrika vorkommende Vogel kennt sich gut aus und führt aktiv Menschen zu den 
-Nestern der Bienen. Die Menschen ernten den Honig und der Vogel profitiert davon ebenfalls. 
-([Hier mehr dazu](https://en.wikipedia.org/wiki/Greater_honeyguide))
+Nestern der Bienen. Die Menschen ernten den Honig und der *Honeyguide* bekommt eventuell
+etwas ab.
+([wikipedia](https://en.wikipedia.org/wiki/Greater_honeyguide))
 
 In diesem Tutorial geht es auch um das Anzeigen einer bestimmten Stelle, 
 sogenanntes *Indizieren*.
 
-### *index operator* `[]`
+### verschiedene Arten der Indizierung
 
-Um gezielt auf bestimmte Werte innerhalb eines Vektors zuzugreifen, können wir mit `[]` die Stellen angeben, an denen die Werte stehen.
+Es gibt insgesamt 3 verschiedene Arten:
 
-`[]` zeigt also auch einen bestimmten Ort an.
+1. Indizierung mit ganzzahligen Vektoren
+2. Indizierung mit logischen Vektoren
+3. Indizierung mit Textvektoren
 
-```{r, echo=TRUE}
-animals <- c("cat", "cow", "dog")
-animals
-animals[2]      # Lies: "An der Stelle 2"
-animals[2:3]    # Lies: "An der Stelle 2 bis 3"
+Der nächste Abschnitt demonstriert das Konzept zunächst mit ganzzahligen Vektoren.
+
+## Indizieren mit ganzzahligen Vektoren
+
+### Anwendungsbeispiel
+Der Vektor `x` enthält 30 (hypothetische) Messungen einer Wetterstation. 
+Lassen Sie sich `x` anzeigen!
+
+
+```{r ex}
+x <- c(22, 25, 23, 19, 20, 23, 25, 27, 29, 24, rep(1000, 20))
 ```
 
-Um eine bestimmte Stelle einer Zahlenreihe anzugeben, sind Klammern nötig:
+```{r x, exercise = TRUE}
 
-```{r, echo=TRUE}
-(5:10)[5]       # "Gib die 5. Zahl der Zahlenreihe aus"
 ```
 
-Die Konsole nutzt auch die Index-Schreibweise, um langen Output zu strukturieren: Zu Beginn jeder neuen Zeile ist die Nummer des ersten Elements der Zeile in eckigen Klammern angegeben.
+Sie sehen bereits das Problem: Die letzten 20 Werte sind fehlerhaft, weil das
+Messinstrument nicht richtig funktioniert hat.
+Wie können wir also nur die ersten 10 Werte auswählen?
+
+Dafür benötigen wir eine neue Funktion, den sogenannten *index operator* `[]`.
+
+```{r ex2, exercise = TRUE, exercise.caption = "Index Operator", exercise.setup = "ex"}
+x[1:10]
+```
+
+Innerhalb der eckigen Klammern wird ein Vektor angegeben. In diesem Fall 
+die Zahlenreihe `1:10`, um die ersten 10 Elemente auszuwählen.
+
+Jetzt sind Sie gefragt: Wählen Sie nur die 9. Messung aus! 
+
+```{r choose-solution}
+x[9]
+```
+
+```{r choose, exercise = TRUE, exercise.setup = "ex"}
+x[]
+```
+
+::: infobox
+#### Verbalisierung
+
+`[]` kann gelesen werden als: "*An der Stelle…*".
+
+Beispiele:\
+`x[9]` = `x` *an der Stelle* 9 
+
+`x[1:10]` = `x` *an den Stellen* 1 bis 10
+:::
+
+#### noch ein Anwendungsbeispiel
+
+Lassen Sie sich nur die Messung von Tag 5 und Tag 2 ausgeben!
+
+```{r selective, exercise = TRUE, exercise.setup = "ex"}
+x[]
+```
+
+<div id=selective-hint>
+Innerhalb von `[]` kann ein Vektor stehen, der die Positionen der auszuwählenden 
+Elemente enthält.
+
+Mehrere Zahlen werden mit `c()` zu einem Vektor verknüpft.
+</div>
+
+```{r selective-solution}
+x[c(5, 2)]
+```
+### Sonderfall: mit negativen Zahlen
+
+Ein weitere hilfreiche Eigenschaft beim Subsetting mit ganzzahligen Vektoren:
+Mit negativen Zahlen können bestimmte Elemente ausgeschlossen werden. 
+
+```{r neg, exercise = TRUE, exercise.setup = "ex"}
+x[-(11:30)]   # schließt Messung 11 bis 30 aus. 
+```
+
+### noch mehr Beispiele
+```{r indexing, exercise = TRUE}
+# Definieren eines Vektors 'abc'
+abc <- c("a", "b", "c")
+
+# Indizierung:
+abc[3:1]      
+
+```
+
+In diesem Fall werden drei Elemente ausgewählt. 
+Zu erst die dritte Stelle von `abc`, welche "c"
+lautet, dann die zweite ("b") und dann die erste ("a").
+
+So langsam haben Sie vermutlich verstanden, wie es funktioniert. Hier sind noch
+ein paar Übungsaufgaben:
+
+#### Anwendungsaufgabe:
+
+Lassen Sie sich das zweite und das dritte Element von `abc` ausgeben!
+
+```{r application-setup}
+abc <- c("a", "b", "c")
+```
+
+```{r application, exercise = TRUE}
+abc[]
+```
+
+<div id=application-hint>
+Innerhalb von `[]` kann ein Vektor stehen, der die Positionen der auszuwählenden 
+Elemente enthält.
+
+Mehrere Zahlen werden mit `c()` zu einem Vektor verknüpft.
+</div>
+
+
+```{r application-solution}
+abc[c(2, 3)]
+```
+
+Wählen Sie nur das erste Element des Vektors `abc` aus und speichern Sie das Ergebnis in 
+einem neuen Vektor `a`! Lassen Sie sich `a` ausgeben, um zu sehen ob es
+funktioniert hat.
+
+```{r a-setup}
+abc <- c("a", "b", "c")
+```
+
+```{r a-solution}
+a <- abc[1]
+a
+```
+```{r a, exercise = TRUE}
+abc[]
+```
+
+### Exkurs: One-based-counting
+
+Viele Programmiersprachen basieren auf *zero-based-counting*, das heißt, das 
+Zählen der Elemente beginnt bei 0. Falls Sie bereits Erfahrung mit einer solchen 
+Sprache haben, müssen Sie sich nun umgewöhnen, denn R hingegen verwendet
+*one-based-counting*. Dabei bekommt das erste Element auch tatsächlich die
+Nummer 1. 
+
+::: gelb
+### Gut zu wissen
+
+Die Konsole nutzt auch die Index-Schreibweise, um langen Output zu strukturieren: 
+Zu Beginn jeder neuen Zeile ist die Nummer des ersten Elements der Zeile in 
+eckigen Klammern angegeben.
 
 ```{r, echo=TRUE}
-1:100
+1:60
 ```
+
+:::
+
+
+### Zusammenfassung
+Sehr gut! In diesem Abschnitt haben Sie gelernt, wie Indizierung mit
+Zahlenvektoren funktioniert. Das ist nur einer von drei möglichen Wegen. 
+Im nächsten Abschnitten werden Sie lernen, mittels logischer Vektoren zu 
+indizieren.
+
+
+
+
+## Indizierung mit logischen Vektoren
+
+Bisher haben Sie Textvektoren und Zahlenvektoren kennengelernt. Ein logischer
+Vektor sieht so aus:
+
+```{r logidemo, exercise = TRUE}
+c(TRUE, FALSE, TRUE)
+```
+
+Die Indizierung mit logischen Vektoren sieht so aus:
+
+```{r logindex-setup}
+abc <- c("a", "b", "c")
+```
+
+```{r logindex, exercise = TRUE}
+abc[c(TRUE, FALSE, TRUE)]
+```
+
+
+
+```{r logiquestion}
+question("Was können Sie daraus ableiten?",
+  answer("Überall dort, wo FALSE steht, wird ein Element ausgewählt"),
+  answer("An allen Positionen, wo TRUE steht, wird ein Element ausgewählt", 
+    correct = TRUE),
+  answer("Indizierung mit logischen Vektoren ist unlogisch")
+)
+```
+
+### Bedingungsprüfungen
+Logische Vektoren entstehen bei **Bedingungsprüfungen**. 
+
+Beispielsweise könnten wir prüfen, welche Wettermessungen in `x` *nicht* den 
+fehlerhaften Wert 1000 enthalten. 
+
+```{r condi, exercise = TRUE, exercise.setup = "ex"}
+x != 1000
+```
+
+Dieser Code prüft für jedes Element von `x`, ob es der Bedingung
+"ungleich 1000" entspricht. Das Ergebnis wird als logischer Vektor ausgegeben.
+Nur die ersten 10 Elemente sind TRUE, während die letzten 20 Elemente FALSE sind. 
+
+Wir möchten nun alle Elemente von `x` auswählen, die ungleich 1000 sind.
+
+```{r neq, exercise = TRUE, exercise.setup = "ex"}
+x[x != 1000]  # Indizieren mit Bedingungsprüfung
+```
+
+Lies: `x[x != 1000]` = `x` *an der Stelle wo* "`x` ungleich 1000"
+
+Hinter den Kulissen wird zuerst die Bedingungsprüfung `x != 1000` evaluiert, denn
+Code wird immer von innen nach außen ausgeführt. 
+
+Das Ergebnis der Prüfung ist ein logischer Vektor (wie im oberen Codeblock demonstriert).
+Dann findet die Indizierung mittels dieses logischen Vektors statt. 
+
+Als Ergebnis erhalten wir alle Elemente von `x`, die ungleich 1000 sind. 
+
+### Übungsaufgaben
+
+Jetzt sind Sie dran:
+
+Lassen Sie sich die Messungen in `x` ausgeben, die kleiner als 20 sind!
+
+```{r filter, exercise = TRUE, exercise.setup = "ex"}
+x[]
+```
+
+```{r filter-solution}
+x[x < 20]
+```
+
+### Anwendungsaufgabe
+
+Mit der Funktion `rnorm()` können wir $n$ zufällige Ziehungen aus einer
+Standardnormalverteilung simulieren. 
+
+```{r rnorm-solution}
+x        # Anzeigen
+x[x > 0] # Nur Werte > 0 anzeigen
+```
+
+```{r rnorm, exercise = TRUE}
+x <- rnorm(100)  # Ziehung von 100 Werten
+```
+
+1. Lassen Sie sich x anzeigen!
+
+2. Lassen Sie sich nur die Elemente anzeigen, die größer als 0 sind.
+
+
+
+### EDIT
+
+`<` und `>` sind nur zwei Vertreter der (*conditionals*).
+
+Weitere sind: `==` für Gleichheit, `!=` für Ungleichheit, `<=` kleiner gleich,
+`>=` größer gleich, 
+
+
+
+## Indizierung mit Textvektoren
+
+Um diese Art des Subsettings zu verstehen, müssen wir uns zunächst mit 
+Attributen beschäftigen.
+
+…… to be continued. 
 
 ### Anwendungsaufgaben
 
