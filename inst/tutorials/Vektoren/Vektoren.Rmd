@@ -96,7 +96,11 @@ x <- 2 + 3
 Wie Sie sehen, wird beim Ausführen dieses Mal nichts ausgegeben. 
 Das liegt daran, dass der Wert von `2 + 3` in der Variable `x` gespeichert wurde.
 
-Um zu sehen, was die Variable `x` enthält, tippen Sie einfach `x`:
+Um zu sehen, was die Variable `x` nun enthält, tippen Sie einfach `x`:
+
+```{r x_print-setup}
+x <- 2 + 3
+```
 
 ```{r x_print, exercise = TRUE}
 
@@ -105,8 +109,7 @@ Um zu sehen, was die Variable `x` enthält, tippen Sie einfach `x`:
 x
 ```
 
-Sehr gut! Aber wie funktioniert das Speichern mit diesem `<-` Pfeil 
-eigentlich?
+Sehr gut! Im nächsten Abschnitt erfahren Sie mehr über die Zuweisung mit `<-`.
 
 ## Assignment
 
@@ -127,22 +130,25 @@ Lesen Sie in Ihrem Kopf:
 
 -  und von rechts nach links, in der Pfeilrichtung:
  
-   `2 + 3` wird auf `x` geschrieben.
+   `2 + 3` *wird auf* `x` *geschrieben*.
 
-Das Objekt `x` erscheint im Environment, nachdem es erstellt wurde:
+
+Wenn Sie sich nicht gerade in einem learnr-Tutorial befinden, 
+erscheint das Objekt `x` im Environment, nachdem es erstellt wurde:
 
 ![](images/environment.png)
 
+Auf Variablen, die sich im Environment befinden, 
+kann in weiteren Berechnungen Bezug genommen werden.
+
+Multiplizieren Sie nun `x` mit 2!
+```{r y_creation, exercise = TRUE, setup.chunk = x_print-setup}
+x * 2
+```
+
+
 ### Der *assignment operator* `<-`
 
-Assignment bedeutet Zuweisung. Hier noch mal einige Erklärungen um zu verstehen, was auf welcher Seite des Pfeils steht:
-
-Dem Wert wird ein Name zugewiesen oder anders gesagt:\
-Der Wert bekommt einen Namen.\
-Deswegen zeigt der Pfeil **immer vom Wert zum Namen.**
-
-Eine lautsprachliche Eselsbrücke könnte vielleicht sein:\
-Lin**ks** = **x**
 
 **Tipp**: Nutzen Sie die Tastenkombination `Alt` + `-`\
 Das hat den Vorteil, dass der Pfeil automatisch von Leerzeichen umgeben wird und Sie sich nicht vertippen können.
