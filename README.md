@@ -94,9 +94,9 @@ If you spot a typo, some incorrect content or see just a better way to
 do it, you are welcome to collaborate. Either report it as an issue or
 even better, fix it yourself!
 
-The git part of collab involves clone the repository to your machine,
-create a new development branch and afterwards, create a pull request to
-integrate the changes.
+The git part of collab involves cloning the repository to your machine,
+creating a new development branch and afterwards, creating a pull
+request to integrate the changes.
 
 The content part involves going to `inst/tutorials/…/….Rmd` and editing
 it.
