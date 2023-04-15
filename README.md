@@ -104,7 +104,7 @@ it.
 ## Licensing
 
 All rights are currently reserved to Kassel University. However, we are
-currently working for a way to make it freely accessible to the public.
+currently looking for a way to make it freely accessible to the public.
 
 ## Funding
 
