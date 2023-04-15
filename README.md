@@ -37,7 +37,13 @@ restart until the tutorials appear.
 Alternatively, to list all available tutorials, run
 
 ``` r
-learnr::available_tutorials(package = "tutor")`
+learnr::available_tutorials(package = "tutor")
+```
+
+And to run the first tutorial:
+
+``` r
+learnr::run_tutorial("Einleitung", package = "tutor")
 ```
 
 ## Contents
