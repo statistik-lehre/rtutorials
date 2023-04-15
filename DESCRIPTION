@@ -1,5 +1,5 @@
 Package: tutor
-Title: Interactive statistics tutorials with real data
+Title: Interactive statistics tutorials in german
 Version: 0.0.0.9000
 Authors@R: 
     person("Lukas", "Bruelheide", , "lukas.bruelheide@student.uni-kassel.de", 
@@ -7,7 +7,7 @@ Authors@R:
 Description: This package provides interactive tutorials to learn statistics with 
   R and is directed at engineering students in Germany. Furthermore, it contains 
   real-life engineering datasets. Language = german.
-License: GPL (>= 3)
+License: file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.1
