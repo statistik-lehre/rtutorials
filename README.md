@@ -6,37 +6,106 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-This R package provides interactive statistics tutorials, aiming to
-learn statistics in sync with the `R` programming language.  
-It is tailored for third semester environmental and civil engineering
-students of Kassel university in Germany, and therefore the content is
-in German.
-
-Another feature of this package is that it comes with real-life
-engineering datasets instead of the fictious data, that many R courses
-provide.  
-This wants to facilitate a hands-on approach to data science with R that
-is connected to real life and therefore preserving the joy of answering
-real life questions.
+This R package is currently under development. It provides interactive
+`learnr` statistics tutorials, aiming to teach statistics along with the
+basics of the R programming language.  
+It is in German and written for students of environmental and civil
+engineering, to accompany their first statistics lecture.
 
 ## Installation
 
-If you have not installed R and R-Studio, visit the first tutorial [here](https://pcijs6-el-be.shinyapps.io/1-Installation/).
-
-Once your R workplace is set up:  
-Install the package by executing the following code in your `R` console:
+You can install the `tutor` package from [GitHub](https://github.com/)
+with the help of the `remotes` package, which you need to install first.
+Copy the following code into your R console and hit Enter.
 
 ``` r
 install.packages("remotes")
 remotes::install_github("statistik-lehre/tutor")
 ```
 
+Running this tutorial requires the `learnr` package, which you can
+install from CRAN with
+
+``` r
+install.packages("learnr")
+```
+
 In RStudio, you will see the tutorials pane on the top left. Click there
-to select from different tutorials and start them. 
+to select from different tutorials and start them. It might require a R
+restart until the tutorials appear.
 
-Feedback and
-contributions are welcome! Use the discussion tab
+Alternatively, to list all available tutorials, run
 
-## License
-Feel free to reuse, remix, translate and adapt the contents of this package,
-as long as you mention the source and distribute it under the same license.
+``` r
+learnr::available_tutorials(package = "tutor")`
+```
+
+## Contents
+
+Currently, there are 4 tutorials:
+
+1.  Einleitung
+    -   why do we need statistics, why programming languages
+    -   fist examples of R as a calculator
+2.  Funktionen erkunden
+    -   installing and loading packages
+    -   what is a script? what is a R notebook?
+    -   playfully learn the structure of function calls with
+        `cowsay::say()`
+3.  Vektoren
+    -   Learn how to assign content to a variable
+    -   how to find your variable in the environment
+    -   what is a vector?
+    -   combining vectors with `c()`
+    -   vector based calculations
+    -   vectorised nature of R
+    -   Using the colon operator `:`
+4.  Indizierung
+    -   What is indexing (subsetting)?
+    -   Subsetting with integer vectors
+    -   … with logical vectors
+    -   … with character vectors
+    -   Using your first conditional statements
+5.  Maße der zentralen Tendenz
+    -   writing your own functions
+    -   `sum()` and `length()`
+    -   mode, median, mean
+
+#### tutorials to come:
+
+-   eigene Funktionen schreiben / Maße der zentralen Tendenz
+-   Datenimport
+-   Objekte in R verstehen
+-   Data Wrangling
+-   Visualisierung
+-   t-Tests
+-   Warum Effektstärke wichtig ist
+-   Power berechnen
+-   Ab wann sind Daten normalverteilt
+-   Chi-Square-Test
+-   Korrelation
+-   einfache lineare Regression
+
+## Contributing
+
+Feedback and contributions are welcome!
+
+If you spot a typo, some incorrect content or see just a better way to
+do it, you are welcome to collaborate. Either report it as an issue or
+even better, fix it yourself!
+
+The git part of collab involves clone the repository to your machine,
+create a new development branch and afterwards, create a pull request to
+integrate the changes.
+
+The content part involves going to `inst/tutorials/…/….Rmd` and editing
+it.
+
+## Licensing
+
+All rights are currently reserved to Kassel University. However, we are
+currently working on a way to make it freely accessible to the public.
+
+## Funding
+
+Kassel University, …
