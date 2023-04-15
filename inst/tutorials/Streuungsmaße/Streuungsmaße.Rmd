@@ -1,0 +1,210 @@
+---
+title: "eigene Funktionen schreiben"
+output:
+  learnr::tutorial:
+    language: de
+    css: css/boxes.css
+    fig_caption: no
+runtime: shiny_prerendered
+bibliography: ref.json
+link-citations: TRUE
+description: Maße der zentralen Tendenz
+resource_files:
+- css/boxes.css
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+## Abweichungen vom Mittelwert
+
+Die Abweichungen vom Mittelwert liegen der Berechnung von Streuungen zugrunde. Das zugrunde liegende (geniale) Konzept, Streuung durch die Abweichungen von einem Zentrum darzustellen ist das Fundament für Varianz, Standardabweichung, und alle darauf basierenden Verfahren wie Korrelation und Regression. Deswegen gehen wir im Folgenden Schritt für Schritt durch die Berechnung der Abweichungen vom Mittelwert in R.
+
+![Diagramm mit rot eingezeichneten Abweichungen vom Mittelwert.](images/dev.png){width="50%"}
+
+Wir können postulieren, dass die Summe der Abweichungen vom Mittelwert immer 0 beträgt.
+
+$$
+{\large \sum_{i=1}^{n}{(x_i - \bar{x})}=0}
+$$
+
+Konkret gerechnet für die obenstehende Verteilung:
+
++-----------------+----------+----------+----------+----------+----------+
+| $x_i$           | 1        | 1        | 3        | 6        | 9        |
++=================+=========:+=========:+=========:+=========:+=========:+
+| $\bar{x}$       | 4        | 4        | 4        | 4        | 4        |
++-----------------+----------+----------+----------+----------+----------+
+| $x_i - \bar{x}$ | -3       | -3       | -1       | 2        | 5        |
++-----------------+----------+----------+----------+----------+----------+
+
+: Abweichungen vom Mittelwert
+
+Die Werte in der letzten Zeile stellen die Abweichungen vom Mittelwert dar. Wenn alle Werte der letzten Zeile addiert werden, kommt tatsächlich 0 heraus.
+
+Das liegt an der Definition des Mittelwertes: Er liegt immer so, dass die negativen und die positiven Abweichungen sich gegenseitig aufheben.
+
+Wie sähe eine mögliche Prüfung dieser Hypothese in R aus?
+
+Um die Abweichung eines Vektors vom Mittelwert zu berechnen, benötigen wir zunächst noch etwas mehr Kenntnisse über das Rechnen mit Vektoren.
+
+
+## Umsetzung
+
+Um die Abweichungen vom Mittelwert ( $x_i - \bar{x}$ ) zu berechnen, wird der Mittelwert `mean(x)` von jedem einzelnen Wert des Vektors `x` abgezogen. Das entspricht dem Konzept Vektor und Konstante.
+
+Als Ergebnis entsteht ein neuer Vektor mit den Abweichungen vom Mittelwert.
+
+```{r, echo=TRUE}
+x <- c(1, 1, 9, 3, 6)
+x - mean(x)
+```
+
+### Anwendung
+
+Jetzt sind Sie selber gefragt! Prüfen Sie die Hypothese, dass die Summe aller Abweichungen vom Mittelwert 0 beträgt.
+
+Übersetzen Sie dazu die Formel $\sum{(x_i - \bar{x})}=0$ in R Code!
+
+```{r deviation-setup}
+x <- c(1, 1, 9, 3, 6)
+```
+
+```{r deviation-solution}
+sum(x - mean(x)) == 0
+```
+
+```{r deviation-hint}
+# Verwenden Sie sum() für die Formel und für die Überprüfung == 0 
+```
+
+```{r deviation, exercise=TRUE, exercise.setup = "deviation-setup", exercise.caption = "Abweichungen vom Mittelwert"}
+
+```
+
+## Quadratsummen
+
+Da die Abweichungen vom Mittelwert summiert immer 0 ergeben, geht ihr Informationsgehalt über die Streuung leider verloren. Um ein Maß für die Streuung (auch Dispersion genannt) zu erhalten, müssen noch zwei weitere Schritte geschehen:
+
+Um zu verhindern, dass sich positive und negative Abweichungen aufheben, werden die einzelnen Abweichungen von Mittelwert quadriert. Das bringt den Vorteil mit sich, dass am Ende eine substantielle Kennzahl für die Streuung steht, aber auch den Nachteil, dass Extremwerte durch die Quadrierung sehr stark ins Gewicht fallen.\
+Die Summe der quadrierten Abweichungen vom Mittelwert heißt Quadratsumme.
+
+$$
+{\large QS=\sum{(x_i-\bar{x})^2}}
+$$
+
+![Diagramm mit rot eingezeichneten Abweichungen vom Mittelwert](images/dev.png){width="50%"}
+
++---------------------+---------:+---------:+---------:+---------:+---------:+
+| $x_i - \bar{x}$     | -3       | -3       | 5        | -1       | 2        |
++---------------------+----------+----------+----------+----------+----------+
+| $(x_i - \bar{x})^2$ | 9        | 9        | 25       | 1        | 4        |
++---------------------+----------+----------+----------+----------+----------+
+
+: Quadrierte Abweichungen vom Mittelwert
+
+$QS = 9 + 9+25+1+4=48$
+
+Die Quadratsumme in unserem Beispiel beträgt 48. Mehr als die Hälfte dieses Werts (25) wurde durch einen einzigen Ausreißer verursacht.
+
+Um daraus tatsächlich ein Maß der Streuung zu machen, müssen wir noch durch $n$ (die Anzahl der Elemente im Vektor) teilen, um den Einfluss der Stichprobengröße herauszurechnen. Es hat sich gezeigt, dass das Teilen durch $n - 1$ akkuratere Schätzungen liefert - eine genaue Erklärung dazu führt hier aber zu weit.
+
+Damit haben wir die Formel der Varianz:
+
+$$
+{\large s^2 = {\frac{\sum{(x_i-\bar{x})^2}}{n-1}} }
+$$
+
+Die Formel für die Varianz des Beispiels würde so aussehen:
+
+$$
+{\large s^2 = {\frac{48}{4}}=12 }
+$$
+
+### Standardabweichung
+
+Die Standardabweichung $s$ ist die Quadratwurzel der Varianz $s^2$.
+
+$$
+{\large s = \sqrt{s^2}}
+$$
+
+Die Standardabweichung ist lediglich eine andere Maßeinheit für die Streuung, aber das zugrundeliegende Messinstrument ist das selbe. Deswegen wird auch die Empfindlichkeit gegenüber Ausreißern, die der Quadratsumme eingeschrieben ist, wird durch das Ziehen der Wurzel nicht rückgängig gemacht, auch wenn es vielleicht auf den ersten Blick so scheint.
+
+## Hausaufgabe
+
+Ihre Hausaufgabe ist es, die Formeln der Varianz und Standabweichung als R Code umzusetzen. Vergleichen Sie Ihre Ergebnisse mit den Ergebnissen der eingebauten Funktionen `var()` und `sd()`. Nutzen Sie dafür die Gleichheitsbedingung `==`.
+
+Speichern Sie die fertigen Formeln als Skript und laden Sie dieses als Abgabe auf Moodle hoch.
+
+::: grau-nb
+**Tipps**:
+
+-   Die Quadratwurzel wird mit `sqrt()` (*square root*) gebildet.
+
+-   Quadrieren mit `^2`
+
+-   Auf die Klammersetzung achten: tendenziell verlangt R mehr Klammern als die normale mathematische Notation
+:::
+
+## Überblick deskriptivstatistische Kennwerte
+
+Die Berechnung vieler statistischer Kennwerte ist in R ziemlich straight forward: Es gibt dafür oft eingebaute Funktionen, und wenn nicht, gibt es Pakete, die Funktionen enthalten. Immerhin wurde R entworfen mit dem Ziel, statistische Berechnungen zu ermöglichen.
+
+Sie kennen nun bereits einige statistische Kennwerte. Es gibt noch viele mehr, und es geht nicht darum, sich alles zu merken, sondern zu wissen, wo Sie die passende Funktion für das gewünschte Maß finden. Oft reicht dafür eine kurze Suche im Internet.\
+\
+Alle diese Funktionen sind sich ähnlich: Sie nehmen als erstes Argument einen Vektor, der die Werte enthält, mit denen gerechnet werden soll. Deswegen haben Sie im ersten Teil gelernt, wie Sie Vektoren erstellen und speichern.
+
+Hier nochmal eine Übersicht über deskriptivstatistische Kennwerte mit ihren eingebauten Funktionen:
+
++-----------------------+---------------------------+----------------+
+| Name                  | Code                      | Skalenniveau   |
++=======================+===========================+================+
+| arithmetisches Mittel | `mean()`                  | Intervall      |
++-----------------------+---------------------------+----------------+
+| Median                | `median()`                | Ordinal        |
++-----------------------+---------------------------+----------------+
+| Modus                 | `table()`\                | Nominal        |
+|                       | oder mit externem Paket:\ |                |
+|                       | `modeest::mfv()`          |                |
++-----------------------+---------------------------+----------------+
+| Minimum und Maximum   | `range()`                 | Ordinal        |
++-----------------------+---------------------------+----------------+
+| Spannweite            | `diff(range())`           | Intervall      |
++-----------------------+---------------------------+----------------+
+| Quantile              | `quantile()`              | Ordinal        |
++-----------------------+---------------------------+----------------+
+| Interquartilsabstand  | `IQR()`                   | Intervall      |
++-----------------------+---------------------------+----------------+
+| Varianz               | `var()`                   | Intervall      |
++-----------------------+---------------------------+----------------+
+| Standardabweichung    | `sd()`                    | Intervall      |
++-----------------------+---------------------------+----------------+
+
+: Übersicht: Maße der zentralen Tendenz und Maße der Streuung in R
+
+Hilfreich ist auch der Befehl `summary()`, der automatisch eine Zusammenfassung der wichtigen deskriptivstatistischen Kennwerte erstellt.
+
+```{r test, exercise=TRUE, exercise.caption="Zum Ausprobieren"}
+
+```
+
+## Learnings
+
+### neue Konzepte
+
+-   nötige Skalenniveaus für Modus, Median und Mittelwert
+
+-   Sinn von Abweichungen vom Mittelwert und Quadratsummen
+
+-   Die Formel für die Varianz
+
+### neue Funktionen
+
+| Code               | Beschreibung                    |
+|--------------------|---------------------------------|
+| `var()`            | variance                        |
+| `sd()`             | standard deviation              |

@@ -15,9 +15,15 @@ resource_files:
 
 ```{r setup, include=FALSE}
 library(learnr)
-library(tidyverse)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
+## Inhalt 
+
+## Lernziele
+
+## Abschlussquiz
+
+## Learnings
 
 
