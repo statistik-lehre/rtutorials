@@ -120,7 +120,7 @@ The content part involves going to `inst/tutorials/…/….Rmd` and editing it.
 ## Licensing
 
 All rights are currently reserved to Kassel University. However, we are currently
-working on a way to make it freely accessible to the public. 
+working for a way to make it freely accessible to the public. 
 
 ## Funding
 
