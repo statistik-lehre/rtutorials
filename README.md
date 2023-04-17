@@ -6,9 +6,9 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-This R package is currently under development. It provides interactive
-`learnr` statistics tutorials, aiming to teach statistics along with the
-basics of the R programming language.  
+This R package is currently under active development. It provides
+interactive `learnr` statistics tutorials, aiming to teach statistics
+along with the basics of the R programming language.  
 It is in German and written for students of environmental and civil
 engineering, to accompany their first statistics lecture.
 
@@ -41,7 +41,9 @@ Alternatively, to list all available tutorials, run
 learnr::available_tutorials(package = "rtutorials")
 ```
 
-And to run the individual tutorials: \### Einleitung
+And to run the individual tutorials:
+
+### Einleitung
 
 ``` r
 learnr::run_tutorial("Einleitung", package = "rtutorials")
@@ -127,9 +129,10 @@ it.
 
 ## Licensing
 
-All rights are currently reserved to Kassel University. However, we are
-currently looking for a way to make it freely accessible to the public.
+All rights are currently reserved to Kassel University, because they are
+my employers. However, we are striving to license it with an open source
+license.
 
 ## Funding
 
-Kassel University, …
+Kassel University, HessenHub
