@@ -19,4 +19,25 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 
 
+## `NA`
+Fehlende Messwerte werden in R mit `NA` repräsentiert. Das ist eine Abkürzung 
+für *not available*. 
+Hier ein praktisches Beispiel, wo `NA`s in den Daten enthalten sind:
+
+```{r ozone}
+ozon <- airquality$Ozone
+```
+
+```{r block1, exercise = TRUE, exercise.setup = "ozone"}
+ozon
+```
+
+Der obige Vektor stammt aus dem Beispieldatensatz `airquality`.
+Dieser enthält echte Messungen der Luftqualität in New York, 
+von Mai bis September 1973, unter anderem den mittleren täglichen Ozongehalt
+zwischen 13:00 und 15:00
+Wir interessieren uns insbesondere für den Ozongehalt. Die Hilfeseite zu
+`airquality` sagt uns:
+
+> Mean ozone in parts per billion from 1300 to 1500 hours at Roosevelt Island
 
