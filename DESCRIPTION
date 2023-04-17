@@ -1,12 +1,10 @@
-Package: tutor
-Title: Interactive statistics tutorials in german
+Package: rtutorials
+Title: Learnr Tutorials To Learn R in German
 Version: 0.0.0.9000
 Authors@R: 
     person("Lukas", "Bruelheide", , "lukas.bruelheide@student.uni-kassel.de", 
-    role = c("aut", "cre"))
-Description: This package provides interactive tutorials to learn statistics with 
-  R and is directed at engineering students in Germany. Furthermore, it contains 
-  real-life engineering datasets. Language = german.
+    role = c("aut", "cre", "cph"))
+Description: contains lessons for basic fluency in R and some classical statistics applications
 License: file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
