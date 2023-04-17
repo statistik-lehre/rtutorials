@@ -4,7 +4,7 @@ Version: 0.0.0.9000
 Authors@R: 
     person("Lukas", "Bruelheide", , "lukas.bruelheide@student.uni-kassel.de", 
     role = c("aut", "cre", "cph"))
-Description: contains lessons for basic fluency in R and some classical statistics applications
+Description: Lessons for basic R fluency and some classical statistics applications. Aiming to accompany entry level statistics courses in german universities. 
 License: file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
