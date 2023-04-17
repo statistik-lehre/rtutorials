@@ -68,7 +68,7 @@ learnr::run_tutorial("Einleitung", package = "rtutorials")
 ### Funktionen erkunden
 
 ```r
-learnr::run_tutorial("Funktionen erkunden", package = "rtutorials")
+learnr::run_tutorial("Funktionen_erkunden", package = "rtutorials")
 ```
 
    - installing and loading packages
@@ -102,19 +102,9 @@ learnr::run_tutorial("Indizierung", package = "rtutorials")
    - … with character vectors
    - Using your first conditional statements
 
-### Maße der zentralen Tendenz
-
-```r
-learnr::run_tutorial("Maße der zentralen Tendenz", package = "rtutorials")
-```
-
-   - writing your own functions
-   - `sum()` and `length()`
-   - mode, median, mean
-
-
 #### tutorials to come:
 
+- writing your own functions
 - Datenimport
 - Objekte in R verstehen 
 - Data Wrangling
