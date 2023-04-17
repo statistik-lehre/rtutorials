@@ -262,7 +262,7 @@ Hier sind einige Gründe, die dafür sprechen R zu lernen:
 
 Es ist eine große Stärke von R, dass alle Menschen Pakete erstellen und teilen können (sogar ich, obwohl ich gar kein Wissenschaftler bin). Darin liegt die Mächtigkeit und Popularität von R begründet.\
 \
-Diese Funktionalität machen wir uns in der Lehre zunutze, um die Lerninhalte direkt in RStudio anzeigen zu können. Wir haben für Sie ein Tutorial-Paket namens `tutor` erstellt.
+Diese Funktionalität machen wir uns in der Lehre zunutze, um die Lerninhalte direkt in RStudio anzeigen zu können. Wir haben für Sie ein Tutorial-Paket namens `rtutorials` erstellt.
 
 Ich bin Ihnen aber noch eine Erklärung schuldig, was genau passiert ist in den Befehlen, die Sie kopiert haben. In den nachfolgenden Tutorials werden wir aber bei den Grundlagen anfangen, machen Sie sich also keine Sorgen, wenn Sie etwas nicht verstehen - es wird alles noch einmal genau wiederholt und in Kontext eingebettet.
 
@@ -277,7 +277,7 @@ Das sieht dann so aus als Befehl:
 
 ```{r echo=TRUE, eval = F}
 install.packages("remotes")
-remotes::install_github("statistik-lehre/tutor")
+remotes::install_github("statistik-lehre/rtutorials")
 ```
 
 Wenn ein Paket einmal installiert ist, steht es aber noch nicht zur Verfügung. Als letzten Schritt müssen Sie das Paket in den Arbeitsspeicher laden, damit es "aktiviert" ist.\
@@ -290,8 +290,8 @@ Da die Tutorials im Zusammenspiel mit der VL erstellt werden, müssen Sie das Pa
 Um das Update durchzuführen, verwenden Sie folgende Befehle:
 
 ```{r echo=TRUE, eval = F}
-remotes::install_github("statistik-lehre/tutor")
-library(tutor)
+remotes::install_github("statistik-lehre/rtutorials")
+library(rtutorials)
 .rs.restartR()
 ```
 

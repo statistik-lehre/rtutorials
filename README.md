@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# tutor: interactive statistics tutorials
+# rtutorials: interactive statistics tutorials
 
 <!-- badges: start -->
 <!-- badges: end -->
@@ -14,13 +14,14 @@ engineering, to accompany their first statistics lecture.
 
 ## Installation
 
-You can install the `tutor` package from [GitHub](https://github.com/)
-with the help of the `remotes` package, which you need to install first.
-Copy the following code into your R console and hit Enter.
+You can install the `rtutorials` package from
+[GitHub](https://github.com/) with the help of the `remotes` package,
+which you need to install first. Copy the following code into your R
+console and hit Enter.
 
 ``` r
 install.packages("remotes")
-remotes::install_github("statistik-lehre/tutor")
+remotes::install_github("statistik-lehre/rtutorials")
 ```
 
 Running this tutorial requires the `learnr` package, which you can
@@ -37,49 +38,66 @@ restart until the tutorials appear.
 Alternatively, to list all available tutorials, run
 
 ``` r
-learnr::available_tutorials(package = "tutor")
+learnr::available_tutorials(package = "rtutorials")
 ```
 
-And to run the first tutorial:
+And to run the individual tutorials: \### Einleitung
 
 ``` r
-learnr::run_tutorial("Einleitung", package = "tutor")
+learnr::run_tutorial("Einleitung", package = "rtutorials")
 ```
 
-## Contents
+-   why do we need statistics, why programming languages
+-   fist examples of R as a calculator
 
-Currently, there are 4 tutorials:
+### Funktionen erkunden
 
-1.  Einleitung
-    -   why do we need statistics, why programming languages
-    -   fist examples of R as a calculator
-2.  Funktionen erkunden
-    -   installing and loading packages
-    -   what is a script? what is a R notebook?
-    -   playfully learn the structure of function calls with
-        `cowsay::say()`
-3.  Vektoren
-    -   Learn how to assign content to a variable
-    -   how to find your variable in the environment
-    -   what is a vector?
-    -   combining vectors with `c()`
-    -   vector based calculations
-    -   vectorised nature of R
-    -   Using the colon operator `:`
-4.  Indizierung
-    -   What is indexing (subsetting)?
-    -   Subsetting with integer vectors
-    -   … with logical vectors
-    -   … with character vectors
-    -   Using your first conditional statements
-5.  Maße der zentralen Tendenz
-    -   writing your own functions
-    -   `sum()` and `length()`
-    -   mode, median, mean
+``` r
+learnr::run_tutorial("Funktionen erkunden", package = "rtutorials")
+```
+
+-   installing and loading packages
+-   what is a script? what is a R notebook?
+-   playfully learn the structure of function calls with `cowsay::say()`
+
+### Vektoren
+
+``` r
+learnr::run_tutorial("Vektoren", package = "rtutorials")
+```
+
+-   Learn how to assign content to a variable
+-   how to find your variable in the environment
+-   what is a vector?
+-   combining vectors with `c()`
+-   vector based calculations
+-   vectorised nature of R
+-   Using the colon operator `:`
+
+### Indizierung
+
+``` r
+learnr::run_tutorial("Indizierung", package = "rtutorials")
+```
+
+-   What is indexing (subsetting)?
+-   Subsetting with integer vectors
+-   … with logical vectors
+-   … with character vectors
+-   Using your first conditional statements
+
+### Maße der zentralen Tendenz
+
+``` r
+learnr::run_tutorial("Maße der zentralen Tendenz", package = "rtutorials")
+```
+
+-   writing your own functions
+-   `sum()` and `length()`
+-   mode, median, mean
 
 #### tutorials to come:
 
--   eigene Funktionen schreiben / Maße der zentralen Tendenz
 -   Datenimport
 -   Objekte in R verstehen
 -   Data Wrangling

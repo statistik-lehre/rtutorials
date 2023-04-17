@@ -83,18 +83,18 @@ einkaufen
 ```
 
 ::: grau-nb
-Der obige Code funktioniert nicht. Das liegt daran, dass der Datensatz aus dem Paket `tutor` stammt, dieses Paket im Tutorial-Codeblock aber nicht geladen ist - eine gute Übung für die Praxis, wo es ständig passiert, das Pakete nicht geladen sind. Die Fehlermeldung: "Object not found" ist häufig ein Hinweis darauf, und kann auf zwei Arten gelöst werden:
+Der obige Code funktioniert nicht. Das liegt daran, dass der Datensatz aus dem Paket `rtutorials` stammt, dieses Paket im Tutorial-Codeblock aber nicht geladen ist - eine gute Übung für die Praxis, wo es ständig passiert, das Pakete nicht geladen sind. Die Fehlermeldung: "Object not found" ist häufig ein Hinweis darauf, und kann auf zwei Arten gelöst werden:
 
 **Die zwei Schreibweisen, um auf Inhalte aus Paketen zuzugreifen**
 
 -   Um alle Inhalte des Pakets für die aktuelle Sitzung verfügbar zu machen, verwenden Sie `library(Paketname)`. Dann können Sie die Objekte (z.B. Beispieldatensätze) direkt beim Namen aufrufen:\
     \
-    `library(tutor)`
+    `library(rtutorials)`
 
     `einkaufen`
 
 -   Um nur ein einziges Objekt aus dem Paket aufzurufen, ohne vorher das gesamte Paket zu laden, verwenden Sie `Paketname::Objektname`. Beispiel:\
-    `tutor::einkaufen`
+    `rtutorials::einkaufen`
 :::
 
 Warum sind Beispieldatensätze wichtig?
