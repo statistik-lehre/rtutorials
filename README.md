@@ -111,18 +111,16 @@ If you spot a typo, some incorrect content or see just a better way to
 do it, you are welcome to collaborate. Either report it as an issue or
 even better, fix it yourself!
 
-The git part of collab involves cloning the repository to your machine,
-creating a new development branch and afterwards, creating a pull
-request to integrate the changes.
-
-The content part involves going to `inst/tutorials/…/….Rmd` and editing
-it.
+Either fork the repo or create a new branch. After your contribution,
+please submit it with a pull request. The content of the tutorials is
+found at `inst/tutorials/…/….Rmd`. For more in depth guidelines, check
+out the [`learnr`](https://rstudio.github.io/learnr/) documentation.
 
 ## Licensing
 
 All rights are currently reserved to Kassel University, because they are
-my employers. However, we are striving to license it with an open source
-license.
+our employers. However, we are striving to license this project with an
+open source license in the near future.
 
 ## Funding
 
