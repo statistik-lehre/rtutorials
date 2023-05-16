@@ -43,9 +43,9 @@ Merke: Beobachtungen sind immer die Zeilen, und Variablen immer die Spalten.
 
 Variablen sind die unterschiedlichen Fragen, die wir gestellt haben. Zum Beispiel:
 
--   Wie alt sind Sie? -> Variable: Alter
+-   Wie alt sind Sie? -\> Variable: Alter
 
--   Wie weit war Ihr Weg in km? -> Variable: Weg
+-   Wie weit war Ihr Weg in km? -\> Variable: Weg
 
 ##### Beobachtungen
 
@@ -97,6 +97,6 @@ Der obige Code funktioniert nicht. Das liegt daran, dass der Datensatz aus dem P
     `rtutorials::einkaufen`
 :::
 
-Warum sind Beispieldatensätze wichtig?
+Warum sind Beispieldatensätze wichtig???
 
 ## Literatur
