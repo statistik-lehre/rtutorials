@@ -1,5 +1,5 @@
 ---
-title: "template"
+title: "t-Tests"
 output:
   learnr::tutorial:
     language: de
