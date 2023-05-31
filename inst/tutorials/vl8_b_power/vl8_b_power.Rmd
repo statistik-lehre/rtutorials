@@ -1,5 +1,5 @@
 ---
-title: "template"
+title: "Teststärke"
 output:
   learnr::tutorial:
     language: de
@@ -8,7 +8,7 @@ output:
 runtime: shiny_prerendered
 bibliography: ref.json
 link-citations: TRUE
-description: empty
+description: Power-Analyse
 resource_files:
 - css/boxes.css
 ---

@@ -1,5 +1,5 @@
 ---
-title: "eigene Funktionen schreiben"
+title: "Maße der zentralen Tendenz"
 output:
   learnr::tutorial:
     language: de
@@ -8,7 +8,7 @@ output:
 runtime: shiny_prerendered
 bibliography: ref.json
 link-citations: TRUE
-description: Maße der zentralen Tendenz
+description: eigene Funktionen schreiben mit R
 resource_files:
 - css/boxes.css
 ---

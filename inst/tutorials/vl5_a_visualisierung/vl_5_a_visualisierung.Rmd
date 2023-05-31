@@ -1,5 +1,5 @@
 ---
-title: "eigene Funktionen schreiben"
+title: "Visualisierung"
 output:
   learnr::tutorial:
     language: de
@@ -8,7 +8,7 @@ output:
 runtime: shiny_prerendered
 bibliography: ref.json
 link-citations: TRUE
-description: Maße der zentralen Tendenz
+description: Diagramme erstellen mit ggplot2
 resource_files:
 - css/boxes.css
 ---

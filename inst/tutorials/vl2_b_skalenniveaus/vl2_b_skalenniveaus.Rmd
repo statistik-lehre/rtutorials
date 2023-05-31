@@ -1,5 +1,5 @@
 ---
-title: "Organisation und Darstellung von Daten"
+title: "Skalenniveaus"
 output:
   learnr::tutorial:
     language: de
@@ -8,7 +8,7 @@ output:
 runtime: shiny_prerendered
 bibliography: ref.json
 link-citations: TRUE
-description: empty
+description: "Welche Skalen gibt es und wie werden sie in R repräsentiert?"
 resource_files:
 - css/boxes.css
 ---

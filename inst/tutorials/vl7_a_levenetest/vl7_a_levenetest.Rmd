@@ -1,5 +1,5 @@
 ---
-title: "t-Tests"
+title: "Levene-Test"
 output:
   learnr::tutorial:
     language: de
@@ -8,7 +8,7 @@ output:
 runtime: shiny_prerendered
 bibliography: ref.json
 link-citations: TRUE
-description: empty
+description: Test auf Varianzhomogenität
 resource_files:
 - css/boxes.css
 ---

@@ -8,7 +8,7 @@ output:
 runtime: shiny_prerendered
 bibliography: ref.json
 link-citations: TRUE
-description: empty
+description: statistische Hypothesen testen
 resource_files:
 - css/boxes.css
 ---

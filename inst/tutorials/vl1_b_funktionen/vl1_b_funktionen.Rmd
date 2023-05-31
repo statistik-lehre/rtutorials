@@ -8,7 +8,7 @@ output:
 runtime: shiny_prerendered
 bibliography: ref.json
 link-citations: TRUE
-description: überblick
+description: "Spielerisch lernen, wie ein Funktionsaufruf in R aufgebaut ist. Mit Skripten oder R Notebooks eine Geschichte erzählen."
 resource_files:
 - css/boxes.css
 ---
