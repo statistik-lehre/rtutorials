@@ -8,7 +8,7 @@ output:
 runtime: shiny_prerendered
 bibliography: ref.json
 link-citations: TRUE
-description: Einführung in die einfache lineare Regression
+description: Einführung in die einfache lineare Regression.
 resource_files:
 - css/boxes.css
 ---
