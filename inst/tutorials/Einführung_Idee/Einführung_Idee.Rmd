@@ -1,0 +1,202 @@
+---
+title: "Einführung Idee"
+output:
+  learnr::tutorial:
+    language: de
+    css: css/boxes.css
+    fig_caption: no
+runtime: shiny_prerendered
+bibliography: ref.json
+link-citations: TRUE
+description: empty
+resource_files:
+- css/boxes.css
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(gradethis)
+knitr::opts_chunk$set(echo = FALSE)
+tutorial_options(exercise.checker = gradethis::grade_learnr())
+```
+
+## Lernziele
+
+- <input type="checkbox" unchecked> bereits geleistetes feiern </input>
+- <input type="checkbox" unchecked> Überbblick über den Aufbau dieses Kurses </input>
+- <input type="checkbox" unchecked> Überbblick über R Tutorials </input>
+- <input type="checkbox" unchecked> Überblick über R und R Studio bekommen </input>
+
+
+## Inhalt 
+
+### Herzlich Wilkommen
+
+Moin!
+
+Wunderbar, dass Du hierher gefunden hast! Das bedeutet, dass du die Anfangsschwierigkeiten bereits hervorragend gemeistert hast:
+
+- <input type="checkbox" checked> R installieren </input>
+- <input type="checkbox" checked> R Studio installieren </input>
+- <input type="checkbox" checked> R Studio öffnen </input>
+- <input type="checkbox" checked> wichtige Pakete installieren </input>
+- <input type="checkbox" checked> dieses Tutorial finden UND öffnen </input>
+
+![](images/queen.jpg)
+
+### Aufbau dieses Kurses
+
+Wir freuen uns total, euch R in diesem Format beibringen zu können, da wir es für einen übersichtlichen und eleganten Weg halten. Ihr könnt in eurem Tempo lernen und die Inhalte sind auch als stand-alone für euch später zum nachschauen und auch für andere Menschen nutzbar.
+
+Wir haben uns folgendes Format überlegt:
+Zu jeder Vorlesung gibt es mehrere kurze Tutorials, die wir euch im Moodle verlinken. Diese arbeitet Ihr in eurem Tempo im Laufe der folgenden Woche durch. Alle zwei Wochen gibt es eine Abgabe im Moodle, in der ihr das bereits gelernte der letzten zwei Wochen anwenden könnt.
+
+Die Tutorials sind alle gleich aufgebaut:
+
+- **Lernziele**, damit ihr wisst, worauf ihr beim bearbeiten dieses Tutorials besonders achten könnt
+- **Inhalte**: Die eigentlichen Inhalte
+- **Abschlussquiz**, wo ihr euch selbst prüfen könnt
+- **Leranings**: Knappe Zusammenfassung des Kapitels
+
+
+Innerhalb der Tutorials wird es interaktive Code-Blöcke geben. So könnt ihr mit neu gelernten Konzepten direkt experimentieren.
+
+Schreib Deinen Code hinein und führe ihn aus mit `Strg + Enter` oder dem Knopf `▶ Code ausführen`.\
+Es gibt zu jeder Aufgabe auch Tipps oder Lösungen. Klicke dafür auf den Button 💡`Tipp` oder `Lösung`. 
+
+**Aufgabe:** Ändere die Rechnung unten in 2 + 3
+
+
+
+```{r template, exercise = TRUE}
+1 + 1
+```
+
+```{r template-solution}
+2 + 3
+```
+
+```{r template-check}
+grade_result(
+  pass_if(~ identical(.result, 2 + 3), "1 Plus mit Sternchen"),
+  pass_if(~ identical(.result, 3 + 2), "das waren schon richtige Zahlen und Operator"),
+  fail_if(~ TRUE, "try once again")
+)
+```
+
+### R Tutorials
+
+Da Du dieses Tutorial schon gefunden hast, brauch ich gar nicht mehr so viel zu erklären:
+
+Wir schreiben jede Woche die Befehle zu den jeweiligen Tutorials ins Moodle. Diese kannst du einfach Zeile für Zeile in deine Konsole kopieren (s.u.) und durcharbeiten.
+
+Alternativ gibt es in R Studio, im Fenster oben rechts, ganz rechts einen Reiter der "Tutotial" heißt. Hier kannst du dich durchscrollen bis zu rtutorials:<name des tutorials>. Eine Liste aller Tutorials findest du HIER
+
+### R und R Studio
+
+Nun kommen wir zur Magie
+
+![](img/jesus.jpg)
+
+#### R
+
+R ist im Grunde ein sehr potenter Taschenrechner, der große Mengen an Daten verarbeiten und simulieren kann, schöne Grafiken und sogar diese Tutorials erstellen kann. Über das, was Dein Schultaschenrechner kann (selbst wenn es einer von denen mit grafischer Funktion ist), kann R also nur müde lächeln. Und hier, im echten Leben, haben wir es eben mit großen Datenmengen zu tun.
+
+Das Problem: R ist von Nerds für Nerds geschrieben, läuft läuft ganz unauffällig in der Konsohle und sieht in seiner roh-Fassung ungefähr so aus:
+
+![](img/R_in_Konsole.png)
+
+Das ist wird spätestens, wenn dein Bildschirm voll ist, unübersichtlich.
+
+Und hier kommt R Studio ins Spiel. R Studio ist für die Menschen, die gerne die Power von R nutzen möchten und ihre Programme gerne mit grafischer Oberfläche arbeiten. Wir werden nur in R Studio arbeiten.
+
+#### R Studio
+
+Wenn Du R-Studio öffnest sieht das ungefähr so aus:
+
+![](img/R_Studio.png)
+Unten links findest Du die Konsole:
+
+![](img/R_Studio_Console.png)
+
+Dieses Fenster entspricht der Konsole / Terminal beim Rechner (so.). Dies ist der "Taschenrechner", hier findet das *Rechnen* statt.
+
+
+
+Oben links findest Du deine Dateien: 
+
+![](img/R_Studio_Files.png)
+
+Diese Dateien sind schlichte Textdatein - wie ein Open Office oder Word Dokument. Hier passiert erstmal nichts. Erst wenn Du auf `Strg + Enter` drückst wird die Zeile für dich in die Konsole kopiert, hier ausgeführt und das Ergebnis angezeigt.
+
+Diese Aufteilung ist total sinnvoll, da sie es ermöglicht, in der Textdatei oben die Übersicht zu behalten, was wann in welchem Schritt passiert ist und gleichzeitig unten in der Konsole die Berechnungen stattfinden können. Im Gegensatz zur reinen Konsole lässt sich die Textdatei speichern und es bleibt nachvollziehbar und für weitere Arbeitsschritte nutzbar.
+
+Dieses Zusammenspiel von Textdatei und Kosole imitieren wir in den oben bereits erwähnten Code-Blöcken:\
+Du schreibst etwas in den Block, drückst `Strg + Enter` und weiter unten spuckt R dir ein Ergebnis aus. Probier es doch gleich mal aus:
+
+Nutze den `Tipp`-Knopf für Informationen und achte dabei auch auf guten Stil (siehe Infobox unten).
+
+
+::: {#first-hint}
+**Tipp**\
+Die Programmiersprache R kann wie ein Taschenrechner benutzt werden.
+
+-   `*` Multiplikation
+-   `/` Division
+-   `+` Addition
+-   `-` Subtraktion
+-   `^` Potention
+-   `sqrt()` Quadratwurzel
+
+(… und es gibt noch mehr)
+
+**Syntax**\
+Als Dezimaltrennzeichen akzeptiert R nur den Punkt `.`\
+Das Komma `,` ist für Aufzählungen reserviert, dazu kommen wir im nächsten Tutorial.
+:::
+
+```{r first, exercise = TRUE}
+1 + 2   # Addition
+3 - 4   # Subtraktion
+5 * 6   # Multiplikation
+7 / 8   # Divisor
+9 ^ 3  # Potentierung
+sqrt(9) # Quadratwurzel berechnen
+```
+
+```{r first-solution}
+1 + 2   # Addition
+3 - 4   # Subtraktion
+5 * 6   # Multiplikation
+7 / 8   # Divisor
+9 ^ 3  # Potentierung
+sqrt(9) # Quadratwurzel berechnen
+```
+
+
+::: infobox
+**Guter Stil**\
+Es gilt als guter Stil:
+
+-   Operatoren wie `+`, `-`, `=` auf beiden Seiten mit Leerzeichen zu umgeben.
+
+    -   z.B. `5 + 5`
+    
+    
+-   Für die inhaltliche Verständlichkeit ist es hilfreich, den geschriebenen Code zu kommentieren, mit einem `#`
+
+    -   z.B. `5 + 5     # Addition`
+
+:::
+
+
+> "Code is miserable to read on a good day, so giveyoureyesabreak and use spaces."
+>
+> \- Hadley Wickham, [R for Data Science](https://r4ds.had.co.nz/workflow-basics.html)
+
+
+## Abschlussquiz
+
+## Learnings
+
+
