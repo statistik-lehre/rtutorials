@@ -31,15 +31,7 @@ Im letzten Tutorial haben Sie sich spielerisch mit der allgemeinen Syntax von Fu
 
 -   Wie kann ich auf einzelne Elemente eines Vektors zugreifen? (Indizierung)
 
-Außerdem geht es um deskriptivstatistische Kennwerte:
 
--   arithmetisches Mittel, Median, Modus
-
--   Abweichungen vom Mittelwert
-
--   Quadratsummen
-
--   Maße der Streuung: Varianz und Standardabweichung
 
 ## kurze Wiederholung
 
