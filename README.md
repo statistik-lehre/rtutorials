@@ -45,9 +45,9 @@ Repository URL containing the source code.
 
 ### Accessing the tutorials in RStudio
 
-In RStudio, you will see the tutorials pane on the top left. Click there
-to select from different tutorials and start them. It might require a R
-restart until the tutorials appear.
+In RStudio, you will see the tutorials pane on the top right. Click
+there to select from different tutorials and start them. It might
+require a R restart until the tutorials appear.
 
 Alternatively, to list all available tutorials, run
 
