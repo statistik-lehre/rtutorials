@@ -130,14 +130,6 @@ Lesen Sie in Ihrem Kopf:
 
     `2 + 3` *wird auf* `x` *geschrieben*.
 
-Wenn Sie sich nicht gerade in einem learnr-Tutorial befinden, erscheint
-das Objekt `x` im Environment, nachdem es erstellt wurde:
-
-![](images/environment.png)
-
-Auf Variablen, die sich im Environment befinden, kann in weiteren
-Berechnungen Bezug genommen werden.
-
 Multiplizieren Sie nun zum Beispiel `x` mit 2!
 
 ```{r y_creation-setup, echo = FALSE}
@@ -269,15 +261,23 @@ Alter_gruppe.1
 
 ## Environment
 
+Wenn Sie sich nicht gerade in einem learnr-Tutorial befinden, erscheint
+das Objekt `x` im Environment, nachdem es erstellt wurde:
+
 ![](images/environment.png)
 
-Environment bedeutet Umgebung. Hier erscheinen alle erstellten Objekte,
+Auf Variablen, die sich im Environment befinden, kann in weiteren
+Berechnungen Bezug genommen werden.
+
+![](images/environment.png)
+
+Environment bedeutet Umgebung. Hier erscheinen alle definierten Objekte,
 und alles was sich in der Umgebung befindet, kann von R verwendet
 werden.
 
 Sie können natürlich nur Objekte aufrufen, die auch vorher definiert
-wurden und deswegen in der Umgebung verfügbar sind. Ansonsten bekommen
-Sie folgenden Fehler:
+`<-` wurden und deswegen in der Umgebung verfügbar sind. Ansonsten
+bekommen Sie folgenden Fehler:
 
 ```{r def, message=TRUE, warning=TRUE, exercise=TRUE, exercise.caption="Fehlermeldung"}
 obj           # nicht vorher definiert, deswegen Fehler
