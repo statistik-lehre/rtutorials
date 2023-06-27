@@ -261,19 +261,11 @@ Alter_gruppe.1
 
 ## Environment
 
-Wenn Sie sich nicht gerade in einem learnr-Tutorial befinden, erscheint
-das Objekt `x` im Environment, nachdem es erstellt wurde:
-
-![](images/environment.png)
-
-Auf Variablen, die sich im Environment befinden, kann in weiteren
-Berechnungen Bezug genommen werden.
-
-![](images/environment.png)
-
 Environment bedeutet Umgebung. Hier erscheinen alle definierten Objekte,
 und alles was sich in der Umgebung befindet, kann von R verwendet
 werden.
+
+![](images/environment.png)
 
 Sie können natürlich nur Objekte aufrufen, die auch vorher definiert
 `<-` wurden und deswegen in der Umgebung verfügbar sind. Ansonsten
@@ -340,10 +332,10 @@ Sie die Funktion `c()`.
 
 -   kombiniert mehrere Werte zu einem Vektor
 
--   Wie in jeder Funktion sind die Argumente (Werte) durch Kommata
+-   wie in jeder Funktion sind die Argumente (Werte) durch Kommata
     getrennt
 
--   Das Dezimalzeichen in R ist der Punkt!
+-   das Dezimalzeichen in R ist der Punkt!
 
 Verketten sie 1.5, 2.5 und 3 zu einem Vektor! Sie müssen ihn nicht
 speichern.
@@ -356,7 +348,7 @@ c()
 c(1.5, 2.5, 3)
 ```
 
-Mit `c()` lassen sich mehrere Vektoren aneinander zu binden. Kombinieren
+Mit `c()` lassen sich mehrere Vektoren aneinander binden. Kombinieren
 Sie `x`, `y` und `z` zu einem neuen Vektor!
 
 ```{r vectorc, exercise = TRUE}
@@ -374,7 +366,7 @@ c()
 c(x, y, z)
 ```
 
-Sehr gut! Nun beschäftigen wir uns damit, wie Rechnen mit Vektoren
+Sehr gut! Nun beschäftigen wir uns damit, wie das Rechnen mit Vektoren
 funktioniert.
 
 ## Rechnen mit Vektoren
@@ -428,7 +420,7 @@ vec + vec
 
 ::: infobox
 Die Rechenoperation wird jeweils zwischen den Elementen durchgeführt,
-die an der gleichen Stelle stehen.
+die an der gleichen Stelle stehen. (1 + 1, 2+ 2, 3 + 3)
 :::
 
 ### Vektoren unterschiedlicher Länge
@@ -461,10 +453,8 @@ z <- c(1, 2, 3, 4, 5)
 v + z
 ```
 
-Sehr gut! Sie haben nun einige fundamentale Bestandteile der
-Programmiersprache R in Aktion gesehen.
-
-## Überleitung hinzufügen oder Tutorials splitten?
+Sehr gut! Sie haben jetzt bereits die wichtigsten fundamentalen
+Bestandteile der Programmiersprache R in Aktion kennengelernt.
 
 ## Textvektoren
 
@@ -493,20 +483,15 @@ c(1, 2, 3, "vier")  # Die ausgegebenen Zahlen stehen in Anführungszeichen
 
 ::: infobox
 Achtung! Vektoren können immer nur Daten des gleichen Typs enthalten!
-Sobald ein einziges Element eines Vektors Text ist, wird der ganze
-Vektor zu einem Textvektor und die Zahlen stehen nicht mehr für
+Sobald auch nur ein einziges Element eines Vektors Text ist, wird der
+ganze Vektor zu einem Textvektor und die Zahlen stehen nicht mehr für
 Berechnungen zur Verfügung. Diese automatische Umwandlung heißt
 **coercion**.
 :::
 
-Erstellen Sie selbst einen gemischten Vektor aus Text und Zahlen und
-beobachten, was passiert, wenn Sie ihn mit 1 addieren!
-
-```{r mixedvec, exercise = TRUE, warning = TRUE}
-c(1, 2, "drei") + 1
-```
-
-Der Fehler ... EDIT
+Falls Sie über diesen Fehlertyp
+`non-numeric argument to binary operator`stolpern, untersuchen Sie ihre
+Berechnung auf solche Probleme.
 
 ## Zahlenreihen
 
@@ -541,7 +526,11 @@ z
 
 ## Learnings heute
 
-### neue Konzepte
+Sie haben gelernt, wie Sie Variablen Daten zuweisen. Wie sie mit
+Vektoren (später Datenreihen) rechnen können als auch die Dos und Don´ts
+der Arbeit mit R.
+
+### Diese neuen Konzepte kennen Sie nun:
 
 -   Assignment `<-`
 
