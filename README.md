@@ -9,31 +9,45 @@
 This R package is currently under active development. It provides
 interactive `learnr` statistics tutorials, aiming to teach statistics
 along with the basics of the R programming language.  
-It is in German and written for students of environmental and civil
-engineering, to accompany their first statistics lecture.
+It is in German language and directed at bachelor students of
+environmental and civil engineering, accompanying their first statistics
+lecture.
 
 ## Installation
 
-You can install the `rtutorials` package from
-[GitHub](https://github.com/) with the help of the `remotes` package,
-which you need to install first. Copy the following code into your R
-console and hit Enter.
+### Quick Start
+
+Copy the following code into your RStudio [console
+pane](https://cengel.github.io/R-intro/backgroud.html#rstudio-console-and-command-prompt)
+and hit Enter.
 
 ``` r
-install.packages("remotes")
-remotes::install_github("statistik-lehre/rtutorials")
+install.packages(c("devtools", "learnr"))
+devtools::install_github("statistik-lehre/rtutorials")
 ```
 
-Running this tutorial requires the `learnr` package, which you can
-install from CRAN with
+**Explanation**
 
-``` r
-install.packages("learnr")
-```
+`install.packages()` is a function that installs R packages. `devtools`
+and `learnr`.
 
-In RStudio, you will see the tutorials pane on the top left. Click there
-to select from different tutorials and start them. It might require a R
-restart until the tutorials appear.
+`learnr` is the framework we used to write the tutorials and required to
+run them.
+
+`devtools` is a package that adds functionality to build R packages from
+source code. The source code for the tutorial package we want to build
+into a functional package that you can use is available in this repo.
+
+In the second line, we use the `install_github()` function and specify
+that it can be found within the `devtools` package with double colons
+`::`. Inside the brackets, we specify the last part of this GitHub
+Repository URL containing the source code.
+
+### Accessing the tutorials in RStudio
+
+In RStudio, you will see the tutorials pane on the top right. Click
+there to select from different tutorials and start them. It might
+require a R restart until the tutorials appear.
 
 Alternatively, to list all available tutorials, run
 
