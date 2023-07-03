@@ -16,8 +16,6 @@ self paced.
 - **Audience**: Written for statistic newbies, in our case 3rd semester
   bachelor students of environmental and civil engineering
 
-## Installation
-
 ### Quick Start
 
 **Prerequisites**: R + RStudio installed
@@ -31,8 +29,10 @@ install.packages(c("devtools", "learnr"))
 devtools::install_github("statistik-lehre/rtutorials")
 ```
 
-**Explanation for those who want to understand these two lines, skip if
-you already know**
+**Explanation**
+
+*for those who want to understand the installation code, skip if you
+already know*
 
 `install.packages()` is a function that installs R packages.
 
@@ -53,7 +53,7 @@ Inside the parentheses, we supply the name of this GitHub repo, which
 contains the tutorials you will learn in this semester:
 `"statistik-lehre/rtutorials"`.
 
-### Accessing the tutorials in RStudio
+## Accessing the tutorials
 
 **The graphical way**
 
