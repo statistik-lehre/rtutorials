@@ -13,21 +13,26 @@ knitr::opts_chunk$set(
 )
 ```
 
-# rtutorials: interactive statistics tutorials
+# rtutorials: learn basic statistics and R interactively
 
 <!-- badges: start -->
 
 <!-- badges: end -->
 
-This R package is currently under active development.
-It provides interactive `learnr` statistics 
-tutorials, aiming to teach 
-statistics along with the basics of the R programming language.  
-It is in German language and directed at bachelor students of environmental and civil engineering, accompanying their first statistics lecture.
+*This R package is currently under active development.*
+
+
+teaching statistics along with the basics of the R programming language.
+
+Language: German
+
+Audience: Written for statistic newbies, in our case 3rd semester bachelor students of environmental and civil engineering
 
 ## Installation
 
 ### Quick Start
+
+Prerequisites: R + RStudio installed
 
 Copy the following code into your RStudio [console pane](https://cengel.github.io/R-intro/backgroud.html#rstudio-console-and-command-prompt) and hit Enter.
 
@@ -36,28 +41,39 @@ install.packages(c("devtools", "learnr"))
 devtools::install_github("statistik-lehre/rtutorials")
 ```
 
-**Explanation**
+**Explanation for those who want to understand these two lines, skip if you already know**
 
 
-`install.packages()` is a function that installs R packages. `devtools` and `learnr`. 
+`install.packages()` is a function that installs R packages. 
 
-`learnr` is the framework we used to write the tutorials and required to run them.
+`c()` is combining stuff, in our case the two package names.
 
-`devtools` is a package that adds functionality to build R packages from source code. 
-The source code for the tutorial package we want to build into a functional package that you can use 
-is available in this repo. 
+The packages we are installing are called `devtools` and `learnr`. 
 
-In the second line, we use the `install_github()` function and specify that it 
-can be found within the `devtools` package with double colons `::`. Inside the brackets, we specify the last part of 
-this GitHub Repository URL containing the source code. 
+- `learnr` is necessary because it supplies the interactive tutorials functionality
+
+- `devtools` is necessary to install packages from GitHub.
+
+`install_github()` is self explanatory - it installs a package from a GitHub repo. The double colons `::` show that the function lives inside the `devtools` package. 
+
+Inside the parentheses, we supply the name of this GitHub repo, which contains the tutorials you will learn in this semester: `"statistik-lehre/rtutorials"`.
 
 ### Accessing the tutorials in RStudio
 
-In RStudio, you will see the tutorials pane on the top right. Click there to
-select from different tutorials and start them. 
-It might require a R restart until the tutorials appear. 
+**The graphical way**
 
-Alternatively, to list all available tutorials, run
+In RStudio, you will see a tutorials tab in the top right. Click it to
+select from different tutorials and start them. You will see all tutorials of all different packages, including example tutorials from the `learnr` package. 
+
+It might require an RStudio restart until the tutorials of the `rtutorials` package appear. 
+
+Click "Start Tutorial" to learn interactively. That's it! 
+
+Below is some code which achieves the same thing without a navigating a click- and scrollable menu surface.
+
+**The command way**
+
+To list all available tutorials from `rtutorials`, copy paste following code to the console:
 
 ``` r
 learnr::available_tutorials(package = "rtutorials")
@@ -135,18 +151,22 @@ If you spot a typo, some incorrect content or see just a better way to do it, yo
 are welcome to collaborate. Either report it as an issue or even better, fix it
 yourself!
 
-Either fork the repo or create a new branch. After your contribution, please 
-submit it with a pull request. 
-The content of the tutorials is found at `inst/tutorials/…/….Rmd`. 
-For more in depth guidelines, check out the 
+Fork the repo, contribute and please submit your changes with a pull request. 
+
+The tutorial source code is found at `inst/tutorials/…/….Rmd`.
+
+For more in depth guidelines on `learnr` tutorials, check out the 
 [`learnr`](https://rstudio.github.io/learnr/) documentation. 
 
 ## Licensing
 
-All rights are currently reserved to Kassel University, because they are
-our employers. However, we are striving to license this project with an open source license
-in the near future. 
+We would be happy to hear from you if you want to modify or redistribute the contents of this course. 
+
+This software comes to you with an OpenSource license, because we are fond believers in the strength of commons.
+
+However, this only applies to the contents of this repository. Other course materials that you may get as a student can and probably will be subjected to copyright.
+
 
 ## Funding
 
-Kassel University, HessenHub
+Kassel University, HessenHub, 2022 - 2023
