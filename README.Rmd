@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# rtutorials: learn basic statistics and R interactively
+# rtutorials
 
 <!-- badges: start -->
 
@@ -21,18 +21,17 @@ knitr::opts_chunk$set(
 
 *This R package is currently under active development.*
 
+Acquire basic statistics and R knowledge (somewhat) interactively and self paced.
 
-teaching statistics along with the basics of the R programming language.
+- **Language**: German
 
-Language: German
-
-Audience: Written for statistic newbies, in our case 3rd semester bachelor students of environmental and civil engineering
+- **Audience**: Written for statistic newbies, in our case 3rd semester bachelor students of environmental and civil engineering
 
 ## Installation
 
 ### Quick Start
 
-Prerequisites: R + RStudio installed
+**Prerequisites**: R + RStudio installed
 
 Copy the following code into your RStudio [console pane](https://cengel.github.io/R-intro/backgroud.html#rstudio-console-and-command-prompt) and hit Enter.
 

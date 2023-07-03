@@ -1,25 +1,26 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# rtutorials: learn basic statistics and R interactively
+# rtutorials
 
 <!-- badges: start -->
 <!-- badges: end -->
 
 *This R package is currently under active development.*
 
-teaching statistics along with the basics of the R programming language.
+Acquire basic statistics and R knowledge (somewhat) interactively and
+self paced.
 
-Language: German
+- **Language**: German
 
-Audience: Written for statistic newbies, in our case 3rd semester
-bachelor students of environmental and civil engineering
+- **Audience**: Written for statistic newbies, in our case 3rd semester
+  bachelor students of environmental and civil engineering
 
 ## Installation
 
 ### Quick Start
 
-Prerequisites: R + RStudio installed
+**Prerequisites**: R + RStudio installed
 
 Copy the following code into your RStudio [console
 pane](https://cengel.github.io/R-intro/backgroud.html#rstudio-console-and-command-prompt)
