@@ -65,13 +65,9 @@ question("Welche Eigenschaften treffen auf den erreichten Rang in einem Wettkamp
   answer("qualitativ"),
   answer("stetig"),
   answer("diskret", correct = TRUE),
-  incorrect("Hilfestellung: Zusammengehörige Konzepte. Wählen Sie jeweils das passende aus!
-            - quantitativ - qualitativ
-            - stetig - diskret
-            - intervall - ordinal
-            - metrisch (Synonym: kardinal) - kategorial"),
+  try_again = "Hilfestellung: Begriffspaare, von denen jeweils nur einer ausgewählt werden kann: [quantitativ - qualitativ] [stetig - diskret] [intervall - ordinal] [metrisch (Synonym: kardinal) - kategorial]",
   post_message = "Der Rang ist: \n
-  - kategorial, da die Ränge mit abgrenzbaren Kategorien gleichzusetzen sind, und nicht metrisch/kardinal.  
+  - kategorial, da die Ränge mit abgrenzbaren Kategorien gleichzusetzen sind
   - ordinal, da Rangfolge die höchste abgebildete Relation ist - Abstände zwischen den Plätzen können nicht sinnvoll interpretiert werden, bzw. wir wissen nicht, wie viel schneller der erste Platz als der zweite Platz geschwommen ist. 
   - quantitativ, da der Rang sinnvoll numerisch interpretierbar ist - qualitativ wäre hingegen, wenn der Medaillenname angegeben wird (Gold, Silber, Bronze)
   - diskret, da es keine Plätze zwischen dem ersten und zweiten Platz gibt"
@@ -108,22 +104,23 @@ question("Studierende haben erhoben, an wie vielen Tagen in der Woche Menschen s
 
 R bietet hauseigene Datenformate an, um Daten in unterschiedlichen Skalenniveaus gut zu repräsentieren. 
 
-:::{.infobox}
+:::{.grau-nb}
 - `character`: Text
 - `factor`: effizienter als Text
 - `ordered factor` Sonderfall für ordinale Daten
 - `numeric`: für reine Zahlen
 :::
 
-Nehmen wir folgenden Beispieldatensatz:
+Nehmen wir folgenden Beispieldatensatz (`rtutorials::einkaufen`):
 
 ```{r echo=FALSE}
-head(rtutorials::einkaufen)
+head(rtutorials::einkaufen) |> dplyr::select(Essen, Verkehrsmittel, Frequenz, Weg) |> dplyr::mutate(Essen = as.character(Essen))
 ```
 
 Diese Daten wurden von Studierenden im Rahmen dieser Vorlesung im WiSe 2022-23 erhoben. 
-Dabei fokussieren wir uns auf drei verschiedene Fälle:
-- Das Lieblingsessen der Bioladenbesucher*innen (nominal)
+Dabei fokussieren wir uns auf verschiedene Fälle:
+
+- Das Lieblingsessen von Bioladenbesucher*innen (nominal)
 - Das Verkehrsmittel, mit dem sie gekommen sind (nominal)
 - Die Frequenz, mit der sie einkaufen gehen (ordinal)
 - Den Weg, den sie zurückgelegt haben in Kilometern (Verhältnis)
