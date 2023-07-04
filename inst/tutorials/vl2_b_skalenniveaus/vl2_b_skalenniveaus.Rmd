@@ -23,7 +23,11 @@ knitr::opts_chunk$set(echo = FALSE)
 
 Im letzten Tutorial haben Sie gelernt, was ein Vektor ist, und wie Sie damit in R arbeiten können. Sie haben die fundamentalen Mechanismen von Assignment, Environment und Indizierung kennengelernt.
 
-Wir versuchen, eine gewisse Balance zu finden zwischen nötigem Grundwissen und praktischer Anwendung. Ein Ziel dieses Tutorials könnte sein, dass Sie verstehen, dass Sie nicht alles verstehen müssen. Das heißt, wir werden auch Beispiele einbauen, deren Code Sie nicht kennen oder nicht verstehen. Das ist gewissermaßen unumgänglich, wenn wir nicht zuerst eine komplette Definition der Programmiersprache R schreiben wollen. Darauf aufbauend werden Sie in diesem Tutorial mehr darüber lernen, wie Daten aus der echten Welt in die Benutzeroberfläche von R gelangen. Wichtige Grundkenntnisse über Objekt- und Datentypen in R werden gemeinsam mit einer Wiederholung der Skalenniveaus vermittelt.
+Wir versuchen, eine gewisse Balance zu finden zwischen nötigem Grundwissen und praktischer Anwendung. Ein Ziel dieses Tutorials könnte sein, dass Sie verstehen, dass Sie nicht alles verstehen müssen. 
+
+Das heißt, wir werden auch Beispiele einbauen, deren Code Sie nicht kennen oder nicht verstehen. Das ist unumgänglich, wenn Sie nicht zuerst eine komplette Definition der Programmiersprache R lernen wollen. 
+
+In diesem Tutorial können Sie mehr darüber lernen, wie Daten aus der echten Welt in die Benutzeroberfläche von R gelangen. Wichtige Grundkenntnisse über Objekt- und Datentypen in R werden gemeinsam mit einer Wiederholung der Skalenniveaus vermittelt.
 
 
 
@@ -60,7 +64,17 @@ question("Welche Eigenschaften treffen auf den erreichten Rang in einem Wettkamp
   answer("quantitativ", correct = TRUE),
   answer("qualitativ"),
   answer("stetig"),
-  answer("diskret", correct = TRUE)
+  answer("diskret", correct = TRUE),
+  incorrect("Hilfestellung: Zusammengehörige Konzepte. Wählen Sie jeweils das passende aus!
+            - quantitativ - qualitativ
+            - stetig - diskret
+            - intervall - ordinal
+            - metrisch (Synonym: kardinal) - kategorial"),
+  post_message = "Der Rang ist: \n
+  - kategorial, da die Ränge mit abgrenzbaren Kategorien gleichzusetzen sind, und nicht metrisch/kardinal.  
+  - ordinal, da Rangfolge die höchste abgebildete Relation ist - Abstände zwischen den Plätzen können nicht sinnvoll interpretiert werden, bzw. wir wissen nicht, wie viel schneller der erste Platz als der zweite Platz geschwommen ist. 
+  - quantitativ, da der Rang sinnvoll numerisch interpretierbar ist - qualitativ wäre hingegen, wenn der Medaillenname angegeben wird (Gold, Silber, Bronze)
+  - diskret, da es keine Plätze zwischen dem ersten und zweiten Platz gibt"
   )
 ```
 
@@ -74,9 +88,6 @@ Es bedeutet, dass Beziehungen echter Objekte als Beziehungen zwischen Zahlen aus
 
 Das ist immernoch kompliziert. Hier ist ein konkretes Beispiel:
 
-Studierende haben erhoben, wie häufig Menschen in der Woche kochen.
-
-Welches Skalenniveau hat diese Variable?
 
 ```{r q1, echo=FALSE}
 question("Studierende haben erhoben, an wie vielen Tagen in der Woche Menschen selbst kochen. Welches Skalenniveau hat die Variable?",
@@ -85,6 +96,38 @@ question("Studierende haben erhoben, an wie vielen Tagen in der Woche Menschen s
   answer("Intervall"),
   answer("Verhältnis"),
   answer("Absolut", correct = TRUE),
-  post_message = "Wenn lediglich die Namen der Wochentage angegeben würden, wäre das Skalenniveau Nominalskaliert, da aber eine absolute Anzahl angegeben wird, befinden wir uns auf der Absolutskala."
+  post_message = "Da es sich um eine Anzahl handelt, befinden wir uns auf der Absolutskala. Ginge es hingegen um die Zeit in Stunden oder Tagen, die innerhalb einer Woche für Kochen aufgewendet wird, wären wir auf der Verhältnisskala. \n
+  Eine Absolutskala ist gekennzeichnet durch \n
+  - **natürliche Einheiten, die nicht umrechenbar sind (Anzahlen, Stück)** \n
+  - enthält die Merkmale aller vorherigen Skalenniveaus, beispielsweise einen natürlichen Nullpunkt.
+  "
 )
 ```
+
+## Skalenniveaus in R
+
+R bietet hauseigene Datenformate an, um Daten in unterschiedlichen Skalenniveaus gut zu repräsentieren. 
+
+:::{.infobox}
+- `character`: Text
+- `factor`: effizienter als Text
+- `ordered factor` Sonderfall für ordinale Daten
+- `numeric`: für reine Zahlen
+:::
+
+Nehmen wir folgenden Beispieldatensatz:
+
+```{r echo=FALSE}
+head(rtutorials::einkaufen)
+```
+
+Diese Daten wurden von Studierenden im Rahmen dieser Vorlesung im WiSe 2022-23 erhoben. 
+Dabei fokussieren wir uns auf drei verschiedene Fälle:
+- Das Lieblingsessen der Bioladenbesucher*innen (nominal)
+- Das Verkehrsmittel, mit dem sie gekommen sind (nominal)
+- Die Frequenz, mit der sie einkaufen gehen (ordinal)
+- Den Weg, den sie zurückgelegt haben in Kilometern (Verhältnis)
+
+
+
+
