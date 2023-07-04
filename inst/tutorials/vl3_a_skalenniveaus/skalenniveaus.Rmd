@@ -23,13 +23,11 @@ knitr::opts_chunk$set(echo = FALSE)
 
 Im letzten Tutorial haben Sie gelernt, was ein Vektor ist, und wie Sie damit in R arbeiten können. Sie haben die fundamentalen Mechanismen von Assignment, Environment und Indizierung kennengelernt.
 
-Wir versuchen, eine gewisse Balance zu finden zwischen nötigem Grundwissen und praktischer Anwendung. Ein Ziel dieses Tutorials könnte sein, dass Sie verstehen, dass Sie nicht alles verstehen müssen. 
+Wir versuchen, eine gewisse Balance zu finden zwischen nötigem Grundwissen und praktischer Anwendung. Ein Ziel dieses Tutorials könnte sein, dass Sie verstehen, dass Sie nicht alles verstehen müssen.
 
-Das heißt, wir werden auch Beispiele einbauen, deren Code Sie nicht kennen oder nicht verstehen. Das ist unumgänglich, wenn Sie nicht zuerst eine komplette Definition der Programmiersprache R lernen wollen. 
+Das heißt, wir werden auch Beispiele einbauen, deren Code Sie nicht kennen oder nicht verstehen. Das ist unumgänglich, wenn Sie nicht zuerst eine komplette Definition der Programmiersprache R lernen wollen.
 
 In diesem Tutorial können Sie mehr darüber lernen, wie Daten aus der echten Welt in die Benutzeroberfläche von R gelangen. Wichtige Grundkenntnisse über Objekt- und Datentypen in R werden gemeinsam mit einer Wiederholung der Skalenniveaus vermittelt.
-
-
 
 ## Wiederholung: Skalenniveaus
 
@@ -84,7 +82,6 @@ Es bedeutet, dass Beziehungen echter Objekte als Beziehungen zwischen Zahlen aus
 
 Das ist immernoch kompliziert. Hier ist ein konkretes Beispiel:
 
-
 ```{r q1, echo=FALSE}
 question("Studierende haben erhoben, an wie vielen Tagen in der Woche Menschen selbst kochen. Welches Skalenniveau hat die Variable?",
   answer("Nominal"),
@@ -102,30 +99,62 @@ question("Studierende haben erhoben, an wie vielen Tagen in der Woche Menschen s
 
 ## Skalenniveaus in R
 
-R bietet hauseigene Datenformate an, um Daten in unterschiedlichen Skalenniveaus gut zu repräsentieren. 
+R bietet hauseigene Datenformate an, um Daten in unterschiedlichen Skalenniveaus gut zu repräsentieren.
 
-:::{.grau-nb}
-- `character`: Text
-- `factor`: effizienter als Text
-- `ordered factor` Sonderfall für ordinale Daten
-- `numeric`: für reine Zahlen
+::: grau-nb
+-   `character`: Text
+-   `factor`: effizienter als Text
+-   `ordered factor` Sonderfall für ordinale Daten
+-   `double`: für Zahlen
 :::
 
 Nehmen wir folgenden Beispieldatensatz (`rtutorials::einkaufen`):
+
+Diese Daten wurden von Studierenden im Rahmen dieser Vorlesung im WiSe 2022-23 erhoben. Dabei fokussieren wir uns auf verschiedene Fälle:
+
+-   Das *Lieblingsessen* von Bioladenbesucher\*innen (nominal)
+-   Das *Verkehrsmittel*, mit dem sie zum Laden gekommen sind (nominal)
+-   Die *Frequenz*, mit der sie einkaufen gehen (ordinal)
+-   Den *Weg*, den sie zurückgelegt haben in Kilometern (Verhältnis)
 
 ```{r echo=FALSE}
 head(rtutorials::einkaufen) |> dplyr::select(Essen, Verkehrsmittel, Frequenz, Weg) |> dplyr::mutate(Essen = as.character(Essen))
 ```
 
-Diese Daten wurden von Studierenden im Rahmen dieser Vorlesung im WiSe 2022-23 erhoben. 
-Dabei fokussieren wir uns auf verschiedene Fälle:
+Hier sehen wir die obersten 6 Zeilen des Datensatzes. Wofür könnten die kleinen Abkürzungen \<chr\>, \<fctr\>, \<ord\> und \<dbl\> \`stehen?
 
-- Das Lieblingsessen von Bioladenbesucher*innen (nominal)
-- Das Verkehrsmittel, mit dem sie gekommen sind (nominal)
-- Die Frequenz, mit der sie einkaufen gehen (ordinal)
-- Den Weg, den sie zurückgelegt haben in Kilometern (Verhältnis)
+```{r abk, echo=FALSE}
+quiz(caption = "Wofür könnten die Abkürzungen stehen?",
+  question_text("chr",
+                answer("character", correct = TRUE),
+                answer("text", correct = TRUE),
+                answer("Character", correct = TRUE),
+                allow_retry = TRUE
+  ),
+   question_text("fctr",
+                answer("factor", correct = TRUE),
+                answer("Factor", correct = TRUE),
+                answer("Faktor", correct = TRUE),
+                allow_retry = TRUE
+  ),
+   question_text("ord",
+                answer("ordered factor", correct = TRUE),
+                answer("Ordered Factor", correct = TRUE),
+                answer("geordneter Faktor", correct = TRUE),
+                allow_retry = TRUE
+  ),
+   question_text("dbl",
+                answer("double", correct = TRUE),
+                answer("double precision floating point number", correct = TRUE),
+                answer("Double", correct = TRUE),
+                allow_retry = TRUE
+  )
+)
+```
 
-
-
-
-
+| Abkürzung | Datenformat                            | geeignet für       |
+|-----------|----------------------------------------|--------------------|
+| \<chr\>   | character                              | Text               |
+| \<fctr\>  | factor                                 | nominale Daten     |
+| \<ord\>   | ordered factor                         | ordinale Daten     |
+| \<dbl\>   | double precision floating point number | quantitative Daten |
