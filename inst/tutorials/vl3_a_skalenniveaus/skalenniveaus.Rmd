@@ -1,0 +1,200 @@
+---
+title: "Skalenniveaus"
+output:
+  learnr::tutorial:
+    language: de
+    css: css/boxes.css
+    fig_caption: no
+runtime: shiny_prerendered
+bibliography: ref.json
+link-citations: TRUE
+description: "Welche Skalen gibt es und wie werden sie in R repräsentiert?"
+resource_files:
+- css/boxes.css
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(tidyverse)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Was Sie in diesem Tutorial lernen:
+
+Im letzten Tutorial haben Sie gelernt, was ein Vektor ist, und wie Sie damit in R arbeiten können. Sie haben die fundamentalen Mechanismen von Assignment, Environment und Indizierung kennengelernt.
+
+Wir versuchen, eine gewisse Balance zu finden zwischen nötigem Grundwissen und praktischer Anwendung. Ein Ziel dieses Tutorials könnte sein, dass Sie verstehen, dass Sie nicht alles verstehen müssen.
+
+Das heißt, wir werden auch Beispiele einbauen, deren Code Sie nicht kennen oder nicht verstehen. Das ist unumgänglich, wenn Sie nicht zuerst eine komplette Definition der Programmiersprache R lernen wollen.
+
+In diesem Tutorial können Sie mehr darüber lernen, wie Daten aus der echten Welt in die Benutzeroberfläche von R gelangen. Wichtige Grundkenntnisse über Objekt- und Datentypen in R werden gemeinsam mit einer Wiederholung der Skalenniveaus vermittelt.
+
+## Wiederholung: Skalenniveaus
+
+```{r relationen, echo=FALSE}
+question("Welche Beziehungen können auf dem Ordinalskalenniveau abgebildet werden? (mehrere Antworten)",
+  answer("Äquivalenz", correct = TRUE ),
+  answer("Ungleichheit", correct = TRUE),
+  answer("Rangfolge", correct = TRUE),
+  answer("Proportionen"),
+  answer("Abstände")
+)
+```
+
+```{r sk2, echo=FALSE}
+question("Welche der folgenden Skalen werden unter dem Begriff *metrisch* zusammengefasst? (mehrere Antworten)",
+  answer("Nominal"),
+  answer("Ordinal"),
+  answer("Intervall", correct = TRUE),
+  answer("Verhältnis", correct = TRUE),
+  answer("Absolut", correct = TRUE)
+)
+```
+
+```{r sk3, echo=FALSE}
+question("Welche Eigenschaften treffen auf den erreichten Rang in einem Wettkamp zu? (mehrere Antworten)",
+         allow_retry = TRUE,
+  answer("metrisch"),
+  answer("kategorial", correct = TRUE),
+  answer("kardinal"),
+  answer("intervallskaliert"),
+  answer("ordinalskaliert", correct = TRUE),
+  answer("quantitativ", correct = TRUE),
+  answer("qualitativ"),
+  answer("stetig"),
+  answer("diskret", correct = TRUE),
+  try_again = "Hilfestellung: Begriffspaare, von denen jeweils nur einer ausgewählt werden kann: [quantitativ - qualitativ] [stetig - diskret] [intervall - ordinal] [metrisch (Synonym: kardinal) - kategorial]",
+  post_message = "Der Rang ist: \n
+  - kategorial, da die Ränge mit abgrenzbaren Kategorien gleichzusetzen sind
+  - ordinal, da Rangfolge die höchste abgebildete Relation ist - Abstände zwischen den Plätzen können nicht sinnvoll interpretiert werden, bzw. wir wissen nicht, wie viel schneller der erste Platz als der zweite Platz geschwommen ist. 
+  - quantitativ, da der Rang sinnvoll numerisch interpretierbar ist - qualitativ wäre hingegen, wenn der Medaillenname angegeben wird (Gold, Silber, Bronze)
+  - diskret, da es keine Plätze zwischen dem ersten und zweiten Platz gibt"
+  )
+```
+
+## Skalenniveaus
+
+> „Messen ist eine strukturerhaltende Abbildung eines empirischen in ein numerisches Relativ"
+
+Was heißt das genau?
+
+Es bedeutet, dass Beziehungen echter Objekte als Beziehungen zwischen Zahlen ausgedrückt werden können, und dass dieser Prozess "Messen" heißt.
+
+Das ist immernoch kompliziert. Hier ist ein konkretes Beispiel:
+
+```{r q1, echo=FALSE}
+question("Studierende haben erhoben, an wie vielen Tagen in der Woche Menschen selbst kochen. Welches Skalenniveau hat die Variable?",
+  answer("Nominal"),
+  answer("Ordinal"),
+  answer("Intervall"),
+  answer("Verhältnis"),
+  answer("Absolut", correct = TRUE),
+  post_message = "Da es sich um eine Anzahl handelt, befinden wir uns auf der Absolutskala. Ginge es hingegen um die Zeit in Stunden oder Tagen, die innerhalb einer Woche für Kochen aufgewendet wird, wären wir auf der Verhältnisskala. \n
+  Eine Absolutskala ist gekennzeichnet durch \n
+  - **natürliche Einheiten, die nicht umrechenbar sind (Anzahlen, Stück)** \n
+  - enthält die Merkmale aller vorherigen Skalenniveaus, beispielsweise einen natürlichen Nullpunkt.
+  "
+)
+```
+
+## Skalenniveaus in R
+
+R bietet hauseigene Datenformate an, um Daten in unterschiedlichen Skalenniveaus gut zu repräsentieren. Hier ist eine Auswahl davon:
+
+::: grau-nb
+-   `character`: Text
+-   `factor`: effizienter als Text
+-   `ordered factor` Sonderfall für ordinale Daten
+-   `double`: für Zahlen
+:::
+
+Nehmen wir folgenden Beispieldatensatz (`rtutorials::einkaufen`):
+
+Diese Daten wurden von Studierenden im Rahmen dieser Vorlesung im WiSe 2022-23 erhoben. Dabei fokussieren wir uns auf verschiedene Fälle:
+
+-   Das *Lieblingsessen* von Bioladenbesucher\*innen (nominal)
+-   Das *Verkehrsmittel*, mit dem sie zum Laden gekommen sind (nominal)
+-   Die *Frequenz*, mit der sie einkaufen gehen (ordinal)
+-   Den *Weg*, den sie zurückgelegt haben in Kilometern (Verhältnis)
+
+```{r echo=FALSE}
+head(rtutorials::einkaufen) |> dplyr::select(Essen, Verkehrsmittel, Frequenz, Weg) |> dplyr::mutate(Essen = as.character(Essen))
+```
+
+Hier sehen wir die obersten 6 Zeilen des Datensatzes. Wofür könnten die kleinen Abkürzungen \<chr\>, \<fctr\>, \<ord\> und \<dbl\> \`stehen?
+
+```{r abk, echo=FALSE}
+quiz(caption = "Wofür könnten die Abkürzungen stehen?",
+  question_text("chr",
+                answer("character", correct = TRUE),
+                answer("text", correct = TRUE),
+                answer("Character", correct = TRUE),
+                allow_retry = TRUE
+  ),
+   question_text("fctr",
+                answer("factor", correct = TRUE),
+                answer("Factor", correct = TRUE),
+                answer("Faktor", correct = TRUE),
+                allow_retry = TRUE
+  ),
+   question_text("ord",
+                answer("ordered factor", correct = TRUE),
+                answer("Ordered Factor", correct = TRUE),
+                answer("geordneter Faktor", correct = TRUE),
+                allow_retry = TRUE
+  ),
+   question_text("dbl",
+                answer("double", correct = TRUE),
+                answer("double precision floating point number", correct = TRUE),
+                answer("Double", correct = TRUE),
+                allow_retry = TRUE
+  )
+)
+```
+
+| Abkürzung | Datenformat                            | geeignet für       |
+|-----------|----------------------------------------|--------------------|
+| \<chr\>   | character                              | Text               |
+| \<fctr\>  | factor                                 | nominale Daten     |
+| \<ord\>   | ordered factor                         | ordinale Daten     |
+| \<dbl\>   | double precision floating point number | quantitative Daten |
+
+Bei `character`-Variablen werden die Inhalte als reiner Text gespeichert.
+
+Die Variable Verkehrsmittel enthält eine handvoll verschiedener Ausprägungen, auch Stufen genannt. Die ersten 20 Werte sehen so aus:
+
+```{r}
+rtutorials::einkaufen$Verkehrsmittel |> as.character() |> head(20)
+```
+
+```{r eink}
+quiz(
+  question(text = "Welches Skalenniveau hat die Variable *Einkaufen*?",
+         answer("Nominal", correct = T),
+         answer("Ordinal"),
+         answer("Intervall"),
+         answer("Verhältnis"),
+         answer("Absolut"),
+         allow_retry = T
+         ),
+  question("Was trifft noch auf die Variable *Einkaufen* zu?",
+           answer("kategorial", correct = T),
+           answer("kardinal / metrisch"),
+           answer("qualitativ", correct = T),
+           answer("quantitativ"),
+           answer("diskret", correct = T),
+           answer("stetig")
+  )
+)
+  
+```
+
+Bei kategorialen Variablen ist es oft sinnvoll, die Variable in einen `factor` umzuwandeln. Intern werden die verschiedenen Stufen oder engl. "Levels" mit Zahlen codiert, die weniger Speicherplatz brauchen als immer wieder den gesamten Text zu speichern. Das vermeidet unnötige Dopplung und macht das Ganze effizienter. Zusätzlich wird noch einmal mit abgespeichert, welche Zahl welches "Level" codiert.
+
+Auf der Oberfläche wird es gleich dargestellt, weil R für die Zahlen automatisch wieder den richtigen Text einsetzt, aber unter der Oberfläche wird mit Zahlen gearbeitet, was gerade bei großen Datenmengen deutlich effizienter ist.
+
+"Fahrrad" wird dann codiert als 1, "ÖPNV" als 2
+
+```{r}
+levels(rtutorials::einkaufen$Verkehrsmittel)
+```

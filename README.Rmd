@@ -13,42 +13,66 @@ knitr::opts_chunk$set(
 )
 ```
 
-# rtutorials: interactive statistics tutorials
+# rtutorials
 
 <!-- badges: start -->
 
 <!-- badges: end -->
 
-This R package is currently under active development.
-It provides interactive `learnr` statistics 
-tutorials, aiming to teach 
-statistics along with the basics of the R programming language.  
-It is in German and written for students of environmental and civil engineering,
-to accompany their first statistics lecture. 
+*This R package is currently under active development.*
 
-## Installation
+Acquire basic statistics and R knowledge (somewhat) interactively and self paced.
 
-You can install the `rtutorials` package from [GitHub](https://github.com/) with 
-the help of the `remotes` package, which you need to install first. 
-Copy the following code into your R console and hit Enter. 
+- **Language**: German
+
+- **Audience**: Written for statistic newbies, in our case 3rd semester bachelor students of environmental and civil engineering
+
+### Quick Start
+
+**Prerequisites**: R + RStudio installed
+
+Copy the following code into your RStudio [console pane](https://cengel.github.io/R-intro/backgroud.html#rstudio-console-and-command-prompt) and hit Enter.
 
 ``` r
-install.packages("remotes")
-remotes::install_github("statistik-lehre/rtutorials")
+install.packages(c("devtools", "learnr"))
+devtools::install_github("statistik-lehre/rtutorials")
 ```
 
-Running this tutorial requires the `learnr` package, which you can install 
-from CRAN with
+**Explanation** 
 
-```r
-install.packages("learnr")
-```
+*for those who want to understand the installation code, skip if you already know*
 
-In RStudio, you will see the tutorials pane on the top left. Click there to
-select from different tutorials and start them. 
-It might require a R restart until the tutorials appear. 
 
-Alternatively, to list all available tutorials, run
+`install.packages()` is a function that installs R packages. 
+
+`c()` is combining stuff, in our case the two package names.
+
+The packages we are installing are called `devtools` and `learnr`. 
+
+- `learnr` is necessary because it supplies the interactive tutorials functionality
+
+- `devtools` is necessary to install packages from GitHub.
+
+`install_github()` is self explanatory - it installs a package from a GitHub repo. The double colons `::` show that the function lives inside the `devtools` package. 
+
+Inside the parentheses, we supply the name of this GitHub repo, which contains the tutorials you will learn in this semester: `"statistik-lehre/rtutorials"`.
+
+## Accessing the tutorials
+
+**The graphical way**
+
+In RStudio, you will see a tutorials tab in the top right. Click it to
+select from different tutorials and start them. You will see all tutorials of all different packages, including example tutorials from the `learnr` package. 
+
+It might require an RStudio restart until the tutorials of the `rtutorials` package appear. 
+
+Click "Start Tutorial" to learn interactively. That's it! 
+
+Below is some code which achieves the same thing without a navigating a click- and scrollable menu surface.
+
+**The command way**
+
+To list all available tutorials from `rtutorials`, copy paste following code to the console:
 
 ``` r
 learnr::available_tutorials(package = "rtutorials")
@@ -126,18 +150,22 @@ If you spot a typo, some incorrect content or see just a better way to do it, yo
 are welcome to collaborate. Either report it as an issue or even better, fix it
 yourself!
 
-Either fork the repo or create a new branch. After your contribution, please 
-submit it with a pull request. 
-The content of the tutorials is found at `inst/tutorials/…/….Rmd`. 
-For more in depth guidelines, check out the 
+Fork the repo, contribute and please submit your changes with a pull request. 
+
+The tutorial source code is found at `inst/tutorials/…/….Rmd`.
+
+For more in depth guidelines on `learnr` tutorials, check out the 
 [`learnr`](https://rstudio.github.io/learnr/) documentation. 
 
 ## Licensing
 
-All rights are currently reserved to Kassel University, because they are
-our employers. However, we are striving to license this project with an open source license
-in the near future. 
+We would be happy to hear from you if you want to modify or redistribute the contents of this course. 
+
+This software comes to you with an OpenSource license, because we are fond believers in the strength of commons.
+
+However, this only applies to the contents of this repository. Other course materials that you may get as a student can and probably will be subjected to copyright.
+
 
 ## Funding
 
-Kassel University, HessenHub
+Kassel University, HessenHub, 2022 - 2023

@@ -49,9 +49,41 @@ sogenanntes *Indizieren*.
 Es gibt insgesamt 3 verschiedene Arten:
 
 1. Indizierung mit ganzzahligen Vektoren
+
+```{r ganzzahlig, exercise = TRUE}
+# Die ersten 6 Einträge der Spalte mpg 
+mtcars$mpg[1:6] 
+```
+
 2. Indizierung mit logischen Vektoren
+
+```{r logisch, exercise = TRUE}
+# Alle Autos, die mehr als 25 Meilen schaffen
+mtcars$mpg[mtcars$mpg > 25] 
+```
+
 3. Indizierung mit Textvektoren
 
+```{r logisch, exercise = TRUE}
+# Wie weit kommt ein Honda Civic mit einer Gallone Treibstoff?
+mtcars["Honda Civic", ]$mpg 
+```
+
+**\*\* Zusatzaufgabe:** Miles per gallon ist ein unübliches Maß für Deutschland. Rechnen Sie den Verbrauch des Honda Civic in Liter pro 100 km um!
+
+```{r zusatz, exercise = TRUE}
+# 1 gal (US) == 3.79 l
+# 1 m == 1.61 km
+
+mtcars["Honda Civic", ]$mpg  
+
+```
+
+```{r zusatz-solution}
+* 3.79 / (1.61 * 10)
+```
+
+Das war ein kurzer Überblick über die drei verschiedenen Methoden. Es klingt jetzt erst mal technisch, ist es auch. Um R wirklich zu verstehen ist es einfach total hilfreich, zu wissen, wie Indizierung funktioniert, und welche verschiedenen Arten es gibt. Denn die drei verschiedenen Arten funktionieren alle ähnlich, aber unterscheiden sich in ihrem Aufbau fundamental
 Der nächste Abschnitt demonstriert das Konzept zunächst mit ganzzahligen Vektoren.
 
 ## Indizieren mit ganzzahligen Vektoren
