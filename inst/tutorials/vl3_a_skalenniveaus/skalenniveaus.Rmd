@@ -99,7 +99,7 @@ question("Studierende haben erhoben, an wie vielen Tagen in der Woche Menschen s
 
 ## Skalenniveaus in R
 
-R bietet hauseigene Datenformate an, um Daten in unterschiedlichen Skalenniveaus gut zu repräsentieren.
+R bietet hauseigene Datenformate an, um Daten in unterschiedlichen Skalenniveaus gut zu repräsentieren. Hier ist eine Auswahl davon:
 
 ::: grau-nb
 -   `character`: Text
@@ -158,3 +158,39 @@ quiz(caption = "Wofür könnten die Abkürzungen stehen?",
 | \<fctr\>  | factor                                 | nominale Daten     |
 | \<ord\>   | ordered factor                         | ordinale Daten     |
 | \<dbl\>   | double precision floating point number | quantitative Daten |
+
+Bei `character`-Variablen werden die Inhalte als reiner Text gespeichert.
+
+Die Variable Verkehrsmittel enthält eine handvoll verschiedener Ausprägungen, auch Stufen genannt. Die ersten 20 Werte sehen so aus:
+
+```{r}
+rtutorials::einkaufen$Verkehrsmittel |> as.character() |> head(20)
+```
+
+```{r eink}
+quiz(
+  question(text = "Welches Skalenniveau hat die Variable *Einkaufen*?",
+         answer("Nominal", correct = T),
+         answer("Ordinal"),
+         answer("Intervall"),
+         answer("Verhältnis"),
+         answer("Absolut"),
+         allow_retry = T
+         ),
+  question("Was trifft noch auf die Variable Einkaufen zu?",
+           answer("kategorial", correct = T),
+           answer("kardinal / metrisch"),
+           answer("qualitativ", correct = T),
+           answer("quantitativ"),
+           answer("diskret", correct = T),
+           answer("stetig")
+  )
+)
+  
+```
+
+Bei kategorialen Variablen mit mehreren Ausprägungen ist es oft sinnvoll, die Variable in einen `factor` umzuwandeln.
+
+```{r}
+levels(rtutorials::einkaufen$Verkehrsmittel)
+```
