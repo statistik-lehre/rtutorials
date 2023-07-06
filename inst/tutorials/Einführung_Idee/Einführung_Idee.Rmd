@@ -144,7 +144,9 @@ Das öffnest Du: oben, ganz links (New File) > R Skript
 
 Skripte sind wie einzelne Blätter/ Unterlagen in einer Sammelmappe (= "Projekt").
 
-So, jetzt ist alles da, was wir für die nächsten Schritte brauchen. Und nun erkläre ich Dir erstmal, was du da im Einzelnen siehst. (Und ich beschränke mich dabei auf die Aspekte, die Du in nächster Zeit brauchen wirst.)
+So, jetzt ist alles da, was wir für die nächsten Schritte brauchen. 
+
+Und nun schauen wir erstmal, was du da im Einzelnen zu sehen ist. (Wir beschränken uns dabei auf die Aspekte, die Du in nächster Zeit brauchen wirst.)
 
 #### Konsole
 
@@ -298,6 +300,11 @@ Hier sind ziemlich wichtige und hilfreiche Funktionen zusammengefasst, die bishe
 -   Im Reiter `Packages` werden dir Deine installierten Pakete (s.u.) angezeigt. Hier gibt es auch die Möglichkeit, neue zu installieren oder vorhandene zu updaten.
 -   Unter `Help` findest Du Erklärungen und Hilfestellungen zu eigentlich jeder Funktion, die Du in R benutzt. Wenn Du zu einer bestimmten Funktion eine Hilfestellung benötigst tippe einfach `?funktion` in die Konsole und drücke `Enter`, schon wird dir die entsprechende Hilfeseite im Viewer angezeigt
 -   Im `Viewer`werden bei manchen Funktionen schöne Tabellen und Übersichten ausgegeben.
+
+::: aufgaberstudio
+**Aufgabe:**\
+Gib in deiner Konsole `?mean` ein und mache dich mit der Hilfe Seite zu dieser Funktion vertraut.
+:::
 
 ## Abschlussquiz
 
