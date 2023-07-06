@@ -177,7 +177,7 @@ quiz(
          answer("Absolut"),
          allow_retry = T
          ),
-  question("Was trifft noch auf die Variable Einkaufen zu?",
+  question("Was trifft noch auf die Variable *Einkaufen* zu?",
            answer("kategorial", correct = T),
            answer("kardinal / metrisch"),
            answer("qualitativ", correct = T),
@@ -189,7 +189,11 @@ quiz(
   
 ```
 
-Bei kategorialen Variablen mit mehreren Ausprägungen ist es oft sinnvoll, die Variable in einen `factor` umzuwandeln.
+Bei kategorialen Variablen ist es oft sinnvoll, die Variable in einen `factor` umzuwandeln. Intern werden die verschiedenen Stufen oder engl. "Levels" mit Zahlen codiert, die weniger Speicherplatz brauchen als immer wieder den gesamten Text zu speichern. Das vermeidet unnötige Dopplung und macht das Ganze effizienter. Zusätzlich wird noch einmal mit abgespeichert, welche Zahl welches "Level" codiert.
+
+Auf der Oberfläche wird es gleich dargestellt, weil R für die Zahlen automatisch wieder den richtigen Text einsetzt, aber unter der Oberfläche wird mit Zahlen gearbeitet, was gerade bei großen Datenmengen deutlich effizienter ist.
+
+"Fahrrad" wird dann codiert als 1, "ÖPNV" als 2
 
 ```{r}
 levels(rtutorials::einkaufen$Verkehrsmittel)
