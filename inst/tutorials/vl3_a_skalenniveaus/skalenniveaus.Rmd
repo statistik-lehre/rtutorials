@@ -23,11 +23,9 @@ knitr::opts_chunk$set(echo = FALSE)
 
 Im letzten Tutorial haben Sie gelernt, was ein Vektor ist, und wie Sie damit in R arbeiten können. Sie haben die fundamentalen Mechanismen von Assignment, Environment und Indizierung kennengelernt.
 
-Wir versuchen, eine gewisse Balance zu finden zwischen nötigem Grundwissen und praktischer Anwendung. Ein Ziel dieses Tutorials könnte sein, dass Sie verstehen, dass Sie nicht alles verstehen müssen.
-
-Das heißt, wir werden auch Beispiele einbauen, deren Code Sie nicht kennen oder nicht verstehen. Das ist unumgänglich, wenn Sie nicht zuerst eine komplette Definition der Programmiersprache R lernen wollen.
-
 In diesem Tutorial können Sie mehr darüber lernen, wie Daten aus der echten Welt in die Benutzeroberfläche von R gelangen. Wichtige Grundkenntnisse über Objekt- und Datentypen in R werden gemeinsam mit einer Wiederholung der Skalenniveaus vermittelt.
+
+Ein kurzer Hinweis: Wir versuchen, eine gewisse Balance zwischen nötigem Grundwissen und praktischer Anwendung zu finden. Ein Ziel dieses Tutorials ist es daher auch, dass Sie verstehen, dass Sie nicht alles verstehen müssen. Das heißt, Ihnen werden auch Beispiele begegnen, deren Code Sie nicht kennen oder nicht verstehen. Lassen Sie sich davon nicht beirren. Bei Interesse können Sie natürlich, eine komplette Definition der Programmiersprache R lernen wollen.
 
 ## Wiederholung: Skalenniveaus
 
