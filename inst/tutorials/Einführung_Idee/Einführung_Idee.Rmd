@@ -134,7 +134,7 @@ Wenn du erfolgreich warst steht nun ganz oben rechts Dein Projektname:
 
 #### (Fast) immer am Anfang: Skripte
 
-Glückwunsch, Du hast nun ein Projekt eingerichtet. (Sicherheitscheck: steht oben links `statistik_bachelor`?)
+Glückwunsch, Du hast nun ein Projekt eingerichtet. (Sicherheitscheck: steht oben rechts `statistik_bachelor`?)
 
 Jetzt brauchen wir nur noch ein `Skript`.
 
@@ -144,7 +144,9 @@ Das öffnest Du: oben, ganz links (New File) > R Skript
 
 Skripte sind wie einzelne Blätter/ Unterlagen in einer Sammelmappe (= "Projekt").
 
+So, jetzt ist alles da, was wir für die nächsten Schritte brauchen. 
 
+Und nun schauen wir erstmal, was du da im Einzelnen zu sehen ist. (Wir beschränken uns dabei auf die Aspekte, die Du in nächster Zeit brauchen wirst.)
 
 #### Konsole
 
@@ -154,9 +156,22 @@ Skripte sind wie einzelne Blätter/ Unterlagen in einer Sammelmappe (= "Projekt"
 
 Dieses Fenster entspricht der Konsole / Terminal beim Rechner (so.). Dies ist der "Taschenrechner", hier findet das *Rechnen* statt.
 
+::: aufgaberstudio
+**Aufgabe:**\
+Gib in deiner Konsole verschiedene Rechnungen ein (Addition, Subtraktion etc.) und drücke auf `Enter`. Mache dich auf diese Art mit der Funktionsweise und Optik der Konsole vertraut.
+:::
+
+::: infobox
+**Sytax-basics:**\
+
+-   Das Dezimaltrennzeichen ist ein Punkt `.`
+-   Für Aufzählungen (von Argumenten, anderes Tutorial) wird ein Komma `,` genutzt
+
+:::
+
 #### Datein
 
-**Oben links** findest Du Deine `Dateien`:
+**Oben links** findest Du Deine `Dateien` / `Files` / `Skripte`:
 
 <img src="images/R_Studio_Files.png" width=" 881" height="477"/>
 
@@ -164,10 +179,59 @@ Diese Dateien sind schlichte Textdatein - wie ein Open Office oder Word Dokument
 
 Diese Aufteilung ist total sinnvoll, da sie es ermöglicht, in der Textdatei oben die Übersicht zu behalten. Du kannst hier àuch Kommentare einfügen. So kannst Du auch später noch nachvollziehen, was Du wann in welchem Schritt gemacht hast. Zeitgleich können unten in der Konsole die Berechnungen stattfinden. Im Gegensatz zur reinen Konsole lässt sich die Textdatei speichern und es bleibt nachvollziehbar und für weitere Arbeitsschritte nutzbar.
 
-Dieses Zusammenspiel von Textdatei und Kosole imitieren wir in den oben bereits erwähnten Code-Blöcken:\
-Du schreibst etwas in den Block, drückst `Strg + Enter` und weiter unten spuckt R dir ein Ergebnis aus. Probier es doch gleich mal aus:
+::: aufgaberstudio
+**Aufgabe:**\
+gib die gleichen Rechenoperationen wie in der Konsole oben in dem Skript ein. Drücke in jeder Zeile `Strg` + `Enter`. Schau dann unten in die Konsole. Mach dich mit den Gleichheiten und Unterschiedlichkeiten vertraut, die Skript und Konsole haben.
+:::
 
-Nutze den `Tipp`-Knopf für Informationen und achte dabei auch auf guten Stil (siehe Infobox unten).
+Da du das Skript speicherst, es also später wieder öfnnen und weiternutzen und daran sogar mit anderen teilen / co-worken kannst, empfiehlt es sich sehr (**!!!**), auf einen *guten Stil* (s.u.) zu achten und deine Arbeitsschritte zu *kommentieren*.
+
+::: infobox
+**Guter Stil**\
+Es gilt als guter Stil:
+
+-   Operatoren wie `+`, `-`, `=` auf beiden Seiten mit Leerzeichen zu umgeben odereswirdanstrengendzulesen.
+    -   z.B. `5 + 5`
+    
+-   Kommata haben gerne, (wie in der gewohnten Schriftsprache) ein Leerzeichen
+:::
+
+::: infobox
+**Kommentare:**\
+-   Für die inhaltliche Verständlichkeit ist es hilfreich, den geschriebenen Code zu kommentieren. Dies geschieht mit einem `#`
+
+    -   z.B. `5 + 5     # Addition`
+    -   oder:\
+        `# Addition`\
+        `5 + 5`
+:::
+
+::: aufgaberstudio
+**Aufgaben:**\
+
+1.    Gib deinem Dokument einen Titel (`#### Titel ####`)
+2.    Kommentiere deine Rechenoperationen (`#`)
+3.    Speichere Dein Skript (`Strg` + `s`)
+:::
+
+Und ein letztes zu den Skripten und warum sie wunderbar sind: Sie lassen sich inkl. Ergebnisse in `Reports` bringen: Hier sind die Einzelnen Befehle, Kommentare UND Ergebnisse (inkl. Plots) zusammengefasst. Das macht es schön und übersichtlich. Meine Empfehlung ist, wenn ein Skript fertig ist, immer auch einen Report zu kreiern. Da schaust du später lieber rein. Trust me in that.
+
+**ganz oben, ganz links** > File > Compile Report... (> File Name: )> Report output format *MS Word*
+
+::: aufgaberstudio
+**Aufgabe:**\
+Kompiliere dein Skript.
+:::
+
+Das sind dann auch schon die Formate, in denen wir gerne die Studienleistung wollen: Ein Analyseskript `.R` und das gleiche nochmal in kommentiert und kompiliert als `.pdf` oder `.docx`. Das Analyseskript soll durchlaufen. Da geht es um den technischen Aspekt. Wenn es durchläuft schauen wir uns die kommentierte Version an und bewerten den inhaltlichen Aspekt, in dem ihr teilw. Interpretationen vornehmt.\
+Extrapunkte gibt es für einen guten Stil in den Skripten und wenn der Code übersichtlich und verständlich kommentiert ist.
+
+#### Skript, Konsole ud diese Tutorials
+
+Dieses Zusammenspiel von Textdatei und Kosole imitieren wir in den oben bereits erwähnten Code-Blöcken:\
+Du schreibst etwas in den Block, drückst `Strg` + `Enter` und weiter unten spuckt R dir ein Ergebnis aus. Probier es doch gleich mal aus:
+
+Nutze den `Tipp`-Knopf für Informationen und achte dabei auch auf guten Stil.
 
 ::: aufgabe
 **Aufgabe:**\
@@ -199,34 +263,11 @@ machst Du mit einem `#`. Dann weiß R, das alles dahinterstehende Menschensprach
 
 **Syntax**\
 Als Dezimaltrennzeichen akzeptiert R nur den Punkt `.`\
-Das Komma `,` ist für Aufzählungen reserviert, dazu kommen wir im nächsten Tutorial.
 :::
 
 ```{r first, exercise = TRUE}
 
 ```
-
-::: infobox
-**Guter Stil**\
-Es gilt als guter Stil:
-
--   Operatoren wie `+`, `-`, `=` auf beiden Seiten mit Leerzeichen zu umgeben.
-
-    -   z.B. `5 + 5`
-
--   Für die inhaltliche Verständlichkeit ist es hilfreich, den geschriebenen Code zu kommentieren, mit einem `#`
-
-    -   z.B. `5 + 5     # Addition`
-    -   oder:\
-        `# Addition`\
-        `5 + 5`
-:::
-
-\
-
-> "Code is miserable to read on a good day, so giveyoureyesabreak and use spaces."
->
-> \- Hadley Wickham, [R for Data Science](https://r4ds.had.co.nz/workflow-basics.html)
 
 #### Environment
 
@@ -242,11 +283,7 @@ Den Zusammenhang des bereits vorgestellten kannst Du dir in etwa so vorstellen:
 
 -   *Tänzer\*innen*: Leute, die das, was Du dir so ausdenkst auch wirklich ausführen. Das sind die `Daten` ("`Objekte`") **oben rechts**. Diese wiederum brauchen zum tanzen einen
 
--   
-
-    ```         
-    *Tanzboden*. Diesen Part übernimmt die `Konsole` **unten links**
-    ```
+-   *Tanzboden*. Diesen Part übernimmt die `Konsole` **unten links**
 
 Der zweite spannende Reiter in diesem Fenster ist **Tutorial**. Hier findest Du unsere und andere Tutorials - auch dieses hier.
 
@@ -263,6 +300,11 @@ Hier sind ziemlich wichtige und hilfreiche Funktionen zusammengefasst, die bishe
 -   Im Reiter `Packages` werden dir Deine installierten Pakete (s.u.) angezeigt. Hier gibt es auch die Möglichkeit, neue zu installieren oder vorhandene zu updaten.
 -   Unter `Help` findest Du Erklärungen und Hilfestellungen zu eigentlich jeder Funktion, die Du in R benutzt. Wenn Du zu einer bestimmten Funktion eine Hilfestellung benötigst tippe einfach `?funktion` in die Konsole und drücke `Enter`, schon wird dir die entsprechende Hilfeseite im Viewer angezeigt
 -   Im `Viewer`werden bei manchen Funktionen schöne Tabellen und Übersichten ausgegeben.
+
+::: aufgaberstudio
+**Aufgabe:**\
+Gib in deiner Konsole `?mean` ein und mache dich mit der Hilfe Seite zu dieser Funktion vertraut.
+:::
 
 ## Abschlussquiz
 
