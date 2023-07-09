@@ -66,9 +66,11 @@ Außerdem:
 
 ## R als Taschenrechner
 
-Fangen wir einfach an.
+:::{.aufgabe}
+Fangen wir einfach an:
 
 Berechnen Sie 2 + 3 im Codeblock!
+:::
 
 ```{r rechner, exercise = TRUE}
 
