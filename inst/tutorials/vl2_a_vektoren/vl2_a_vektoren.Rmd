@@ -86,15 +86,19 @@ ist *printed and lost*.
 Aber wie lässt sich das Ergebnis speichern, um damit im weiteren Verlauf
 zu arbeiten?
 
+Das funktioniert folgendermaßen:
+
 ```{r assignment_x, exercise = TRUE}
 x <- 2 + 3
 ```
 
-Wie Sie sehen, wird beim Ausführen dieses Mal nichts ausgegeben. Das
+Hier wird beim Ausführen des Codes nichts ausgegeben. Das
 liegt daran, dass der Wert von `2 + 3` in der Variable `x` gespeichert
-wurde.
+wurde. 
 
+:::{.aufgabe}
 Um zu sehen, was die Variable `x` nun enthält, tippen Sie einfach `x`:
+:::
 
 ```{r x_print-setup, echo = FALSE}
 x <- 2 + 3
