@@ -1,0 +1,58 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+### Datensatz
+Die Allgemeine Bevölkerungsumfrage der Sozialwissenschaften (ALLBUS) ist eine Befragung der Bevölkerung der Bundesrepublik Deutschland, die seit 1980 regelmäßig durchgeführt wird. Der Datensatz ist für Forschung und Lehre frei verfügbar.
+
+### Laden des Allbus-Datensatzes
+
+```{r}
+library(haven)
+df <- read_sav("Allbus.sav")
+View(df)
+```
+
+###
+```{r}
+library(tidyverse)
+dict <- labelled::generate_dictionary(df) %>% labelled::lookfor_to_long_format()
+```
+
+Interessante Variablen die numerisch sind: Alter und Einkommen
+Haushaltsnettoeinkommen: `di05`
+
+```{r}
+hist(df$age)
+hist(df$di01a)
+```
+
+```{r}
+plot(df$age, df$di01a)
+fit <- lm(di01a ~ age, data = df)
+summary(fit)
+```
+
+```{r}
+library(ggplot2)
+ggplot(df, aes(age, di01a)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+
+ggplot(df, aes(age, di05)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+```
+
+
+
+weitere interessante Variablen:
+
+Fernsehgesamtdauer pro Tag in Minuten (lm02)
+
+Wohndauer in Jahren (gd02)
+
+Haushaltsnettoeinkommen (di05)
+
+Anzahl der Haushaltspersonen (dh04)
+
