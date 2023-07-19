@@ -20,7 +20,17 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Inhalt 
 
+- Vorannahmen der Regression prüfen
+
 ## Lernziele
+
+## Regression
+
+kommt von lateinisch *regressare* - zurückgehen. 
+
+Dabei wird Varianz der einen Variable durch Varianz der anderen Variable erklärt.
+
+Beispielsweise können Unterschiede in der 
 
 ## Abschlussquiz
 
