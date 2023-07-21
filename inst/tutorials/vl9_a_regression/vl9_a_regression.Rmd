@@ -15,6 +15,8 @@ resource_files:
 
 ```{r setup, include=FALSE}
 library(learnr)
+library(ggplot2)
+
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
@@ -24,17 +26,53 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Lernziele
 
-## Regression
+## Überblick lineare Regression
 
 Ein Beispiel:
 
-Als Förster\*in möchtest du wissen, wie viele Kubikmeter Holz du von einem bestimmten Baum voraussichtlich ernten kannst. Gegeben ist dir für diese Vorhersage lediglich der Durchmesser des Baums.
+Als Förster\*in in den USA stehst du vor einer Amerikanischen Traubenkirsche (*Prunus serotina*) ([wiki](https://de.wikipedia.org/wiki/Sp%C3%A4tbl%C3%BChende_Traubenkirsche)). Sie soll bald gefällt werden, denn sie hat ein begehrtes Holz, und du brauchst Geld. Am liebsten möchtest wissen, bevor du den Baum fällst, wie viele Kubikmeter Holz wohl dabei herauskommen werden, die du verkaufen kannst. Aber du möchtest keine anstrengenden Messungen vornehmen. Den besten und einfachsten Schätzer, den wir vornehmen können ist der Durchmesser des Baumes, der sich ungefähr aus dem Umfang errechnen lässt. Dafür braucht es lediglich ein Maßband und $\pi$.
 
-Wir könnten das erwartete Volumen durch eine mathematische Formel aus dem Durchmesser berechnen. Genau das werden wir heute machen.
+Der Baum, vor dem wir stehen, hat einen Durchmesser von 45 cm. 
 
-Dieses Verfahren nennt man auch modellieren (engl. *to fit a model*). Unser statistisches Modell sagt für einen gegebenen Durchmesser eine erwartete Holzernte voraus.
+Wir haben bereits Daten von 31 gefällten Bäumen der gleichen Art, und können damit eine Vorhersage treffen. Die Daten befinden sich im `trees`-Datensatz, der in Base R eingebaut ist, und sind der Grund für dieses Beispiel.
 
-Dabei beschränken wir uns in diesem Kurs auf ein lineares Modell, das heißt, der Zusammenhang zwischen Durchmesser und vorausgesagter Holzmenge wird durch eine lineare Funktion beschrieben.
+Schauen wir uns die Daten mal an:
+
+```{r, echo = TRUE}
+trees$Diameter <- trees$Girth * 2.54 # Umrechnen in cm und Umbennen
+trees$Volume <- trees$Volume * 0.0283168466 # Umrechnen in m³
+ggplot(trees, aes(x = Diameter, y = Volume)) +
+  geom_point() +
+  theme_minimal() +
+  labs(x = "Durchmesser (cm)", y = "Volumen (m³)")
+```
+
+Grundsätzlich sieht es so aus, dass wir mehr Holz ernten, je dicker der Baum war.
+
+Durchmesser und Volumen hängen also irgendwie proportional zusammen. Für unsere Vorhersage wünschen wir uns aber zu wissen, wie genau diese Proportion aussieht.
+
+Glücklicherweise sieht der Zusammenhang linear aus, das heißt, wir könnten ihn sinnvoll mit einer Gerade beschreiben:
+
+
+```{r echo = TRUE}
+ggplot(trees, aes(x = Diameter, y = Volume)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = F) +
+  theme_minimal() +
+  labs(x = "Durchmesser (cm)", y = "Volumen (m³)")
+```
+
+Die blaue Gerade ist unser Modell, die Punkte sind die Realität, aus der wir das Modell abgeleitet haben. Ein Modell wird den Komplexitäten der Realität nie komplett gerecht, aber manche Modelle sind trotzdem sehr nützlich. Die Gerade hier zum Beispiel ist ein eher einfaches Modell und beschreibt die Realität trotzdem relativ gut. 
+
+Geraden werden beschrieben durch lineare Funktionen. Unser Modell besteht also essentiell aus einer linearen Funktion!
+
+```{r first}
+question_numeric(
+  "Wie viel Kubikmeter Holz sind zu erwarten laut der blauen Gerade (unserem linearen Modell) bei einem Durchmesser von 45 cm?",
+  answer(1.5, correct = T)
+)
+```
+
 
 ### lineare Funktionen
 
@@ -80,24 +118,34 @@ Bei einer Gerade ist $b_0$ also dort, wo $x = 0$. Das ist oft auch dort, wo die 
 
 $b_1$ ist die Änderung im vorhergesagten Wert ($\hat y$), wenn man $x$ um eine Einheit erhöht. 
 
-Es erinnern sich bestimmt alle an das Dreieck, was man unter die Gerade zeichnen kann. 
+Es erinnern sich bestimmt alle an das Dreieck, was man an die Gerade zeichnen kann. 
 
 ```{r}
-library(ggplot2)
 .gerade <- function(x, intercept = 0, slope = 1){
   intercept + slope * x
 }
 
 ggplot() +
   stat_function(fun = `.gerade`, xlim = c(-1, 10), args = list(slope = -1.5, intercept = 9)) +
-  geom_segment(aes(x = 2, y = 6, yend = 6, xend = 4), color = "red") +
-  geom_segment(aes(x = 4, xend = 4, y = 6, yend = 3), color = "red") +
+  geom_segment(aes(x = 2, y = 6, yend = 6, xend = 3), color = "red", 
+               arrow = arrow(length = unit(0.03, "npc"))) +
+  geom_segment(aes(x = 3, xend = 3, y = 6, yend = 4.5), color = "red",
+               arrow = arrow(length = unit(0.03, "npc"))) +
+  annotate("text", x = 2.5, y = 6.5, label = "1") +
+  annotate("text", x = 3.5, y = 5.125, label = "-1.5") +
   coord_cartesian(xlim = c(0, 10), ylim = c(0, 10), expand = F) +
   scale_y_continuous(breaks = 0:10) +
   scale_x_continuous(breaks = 0:10) +
   theme_minimal()
 ```
 
+Die zugehörige Geradengleichung lautet:
+
+$\hat y = 9 - 1.5x$
+
+mit Intercept $b_0 = 9$ und Steigung $b_1 = -1.5$
+
+### Quiz
 
 ```{r}
 
@@ -131,6 +179,8 @@ quiz(
   caption = "Schulmathe auffrischen"
 )
 ```
+
+### Fitting the model
 
 Um die Modellparameter $b_0$ und $b_1$ zu bestimmen, brauchen wir zunächst Daten, anhand derer das Modell "trainiert" wird.
 
