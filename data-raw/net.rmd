@@ -1,0 +1,44 @@
+---
+title: "NET"
+author: "Marie Klosterkamp"
+date: "2023-07-20"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+###
+```{r}
+library(labelled)
+library(tidyverse)
+df <- NET2_ready
+dict <- labelled::generate_dictionary(df) %>% labelled::lookfor_to_long_format()
+```
+
+Interessante Variablen die numerisch sind: Nutzung im Juni und Juli an X Tagen und Alter
+Nutzung Juni/ Juli: `AT15_01_2`und `AT37_01_2´und
+Alter: Alter_2
+
+
+Merging Juni and Juli
+```{r}
+df2 <- df |> select(AT15_01_2, AT37_01_2, Alter_2 )
+````
+
+```{r}
+df2$AT15_01_2[is.na(df2$AT15_01_2)] <- df2$AT37_01_2[is.na(df2$AT15_01_2)]
+df2$nutzung <- df2$AT15_01_2
+df2$alter <-df2$Alter_2
+
+```
+
+
+Merging Juni and Juli
+```{r}
+net <- df2 |> select(nutzung, alter )
+
+````
+save(net, file = "net.rda")
