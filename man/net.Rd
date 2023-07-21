@@ -12,7 +12,7 @@ Metrische Variablen:
 \item \strong{alter}:
 Alter
 \item \strong{nutzung}:
-Nutzung des Tickets an X Tagen pro Monat
+Nutzung des Tickets an X Tagen pro Monat. Achtung Ausreißer: jemand hat ein Alter über 900 Jahre angegeben.
 }
 }
 \source{
@@ -22,6 +22,6 @@ https://www.uni-kassel.de/fb14bau/institute/institut-fuer-verkehrswesen-ifv/radv
 net
 }
 \description{
-Umfrage Anlässlich des in Deutschland eingeführten 9-Euro-Tickets
+Ausschnitt aus echten Daten einer Umfrage anlässlich des 2022 in Deutschland eingeführten 9-Euro-Tickets
 }
 \keyword{datasets}

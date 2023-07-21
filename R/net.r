@@ -1,6 +1,6 @@
 #' Neun-Euro-Ticket Umfrage 2022
 #'
-#' Umfrage Anlässlich des in Deutschland eingeführten 9-Euro-Tickets
+#' Ausschnitt aus echten Daten einer Umfrage anlässlich des 2022 in Deutschland eingeführten 9-Euro-Tickets
 #'
 #'
 #'
@@ -15,7 +15,7 @@
 #'- **alter**:
 #'  Alter
 #'- **nutzung**:
-#' Nutzung des Tickets an X Tagen pro Monat
+#' Nutzung des Tickets an X Tagen pro Monat. Achtung Ausreißer: jemand hat ein Alter über 900 Jahre angegeben.
 #'
 #'
 #'
