@@ -54,7 +54,21 @@ $$
 y = a + bx
 $$
 
-Um die genauen Parameter zu bestimmen, brauchen wir zunächst Daten, anhand derer das Modell "trainiert" wird.
+Dabei steht $\hat y$ für den durch das Modell vorhergesagten Wert, auch engl. "*response variable"* genannt, "*output variable"* oder Kriterium. Im Beispiel wäre es das Holzvolumen in m³.
+
+$x$ ist der Prädiktor, oder unser *input*, im Beispiel der Baumdurchmesser in Inches.
+
+Daraus ergibt sich für uns folgendes Modell:
+
+$$
+\hat{Volumen} = b_0 + b_1 \cdot Durchmesser 
+$$
+
+::: infobox
+Ein Dach über der Variable kennzeichnet immer, dass es sich hier um einen geschätzten Wert handelt.
+:::
+
+Um die Parameter $b_0$ und $b_1$ zu bestimmen, brauchen wir zunächst Daten, anhand derer das Modell "trainiert" wird.
 
 Die sind uns gegeben in Form des `trees`-Datensatzes, der in Base R eingebaut ist. Dafür wurden 31 Amerikanische Traubenkirschen (*Prunus serotina*) ([wiki](https://de.wikipedia.org/wiki/Sp%C3%A4tbl%C3%BChende_Traubenkirsche)) gefällt und Durchmesser und geerntetes Holzvolumen gemessen.
 
@@ -66,7 +80,14 @@ plot(trees$Girth, trees$Volume)
 Der Durchmesser heißt in den Daten fälschlicherweise `Girth`, bezieht sich aber nicht auf den Umfang sondern den Durchmesser. (siehe `?trees`)In einem schnellen Scatterplot können wir die Beziehung zwischen Durchmesser und Volumen visuell überprüfen.
 :::
 
-Für eine lineare Regression ist unsere erste Frage, ob die Daten tatsächlich linear sind.
+Die Modellparameter $b_0$ und $b_1$ werden so bestimmt, dass sie eine Gerade beschreiben, die möglichst nah an allen Punkten dran ist. Mathematisch ausgedrückt, so dass der quadrierte Abstand zwischen vorhergesagten und tatsächlichen Werten minimal ist.
+
+Wenn es fertig ist, sieht es so aus:
+
+```{r echo=TRUE}
+plot(trees$Girth, trees$Volume)
+abline(lm(Volume ~ Girth, data = trees))
+```
 
 ## Abschlussquiz
 
