@@ -32,7 +32,7 @@ Wir kennen den Zementanteil des Betons eines Brückenpfeilers und wollen daraus 
 
 Hilfreich wäre also ein Modell, was uns die Druckfestigkeit vorhersagen kann anhand des Prädiktors Zementanteil.
 
-\*\* Achtung Vereinfachungsalarm!\*\*
+**Achtung Vereinfachungsalarm!**
 
 Wir vernachlässigen der Einfachkeit halber für Lernzwecke:
 
@@ -40,6 +40,17 @@ Wir vernachlässigen der Einfachkeit halber für Lernzwecke:
 -   dass die Beziehung zwischen Zutaten und Druckfestigkeit in der Realität nicht linear ist.
 
 ![](images/1280px-Europabrücke.jpg)
+
+```{r}
+library(ggplot2)
+library(rtutorials)
+ggplot(concrete) +
+  geom_point(aes(x = cement, y = compressive_strength)) +
+  theme_minimal() +
+  ggtitle("Beton") +
+  xlab("Zementanteil in kg / m³") +
+  ylab("Druckfestigkeit in MPa")
+```
 
 ## Abschlussquiz
 
