@@ -34,6 +34,8 @@ Name -- Data Type -- Measurement -- Description
 }
 \source{
 https://archive.ics.uci.edu/dataset/165/concrete+compressive+strength
+
+DOI: 10.24432/C5PK67
 }
 \usage{
 concrete
@@ -47,6 +49,14 @@ water, superplasticizer, coarse aggregate, and fine aggregate.
 \details{
 The actual concrete compressive strength (MPa) for a given mixture under a
 specific age (days) was determined from laboratory. Data is in raw form (not scaled).
+
+Acknowledgements, Copyright Information, and Availability:
+
+NOTE: Reuse of this database is unlimited with retention of copyright notice for
+Prof. I-Cheng Yeh and the following published paper:
+
+I-Cheng Yeh, "Modeling of strength of high performance concrete using artificial
+neural networks," Cement and Concrete Research, Vol. 28, No. 12, pp. 1797-1808 (1998)
 }
 \references{
 Past Usage:
