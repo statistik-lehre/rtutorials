@@ -1,5 +1,8 @@
 #' Airfoil Self-Noise Data by NASA
 #'
+#' @description
+#' The NASA data set comprises different size NACA 0012 airfoils at various wind tunnel speeds and angles of attack. The span of the airfoil and the observer position were the same in all of the experiments.
+#'
 #' @format This problem has the following inputs:
 #'
 #' 1. Frequency, in Hertzs.
