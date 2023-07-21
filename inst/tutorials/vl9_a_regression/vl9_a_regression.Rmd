@@ -18,22 +18,29 @@ library(learnr)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## Inhalt 
+## Inhalt
 
-- Vorannahmen der Regression prüfen
+-   Vorannahmen der Regression prüfen
 
 ## Lernziele
 
 ## Regression
 
-kommt von lateinisch *regressare* - zurückgehen. 
+Ein Beispiel:
 
-Dabei wird Varianz der einen Variable durch Varianz der anderen Variable erklärt.
+Wir kennen den Zementanteil des Betons eines Brückenpfeilers und wollen daraus seine Druckfestigkeit vorhersagen (ohne ihn zu zerstören).
 
-Beispielsweise können Unterschiede in der 
+Hilfreich wäre also ein Modell, was uns die Druckfestigkeit vorhersagen kann anhand des Prädiktors Zementanteil.
+
+\*\* Achtung Vereinfachungsalarm!\*\*
+
+Wir vernachlässigen der Einfachkeit halber für Lernzwecke:
+
+-   alle möglichen anderen Zutaten in Beton, sowie die Bauweise
+-   dass die Beziehung zwischen Zutaten und Druckfestigkeit in der Realität nicht linear ist.
+
+![](images/1280px-Europabrücke.jpg)
 
 ## Abschlussquiz
 
 ## Learnings
-
-
