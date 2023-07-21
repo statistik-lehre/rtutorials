@@ -28,29 +28,45 @@ knitr::opts_chunk$set(echo = FALSE)
 
 Ein Beispiel:
 
-Wir kennen den Zementanteil des Betons eines Brückenpfeilers und wollen daraus seine Druckfestigkeit vorhersagen (ohne ihn zu zerstören).
+Als Förster\*in möchtest du gerne wissen, wie viele Kubikmeter Holz du von einem bestimmten Baum voraussichtlich ernten kannst. Gegeben ist dir für diese Vorhersage lediglich der Durchmesser des Baums.
 
-Hilfreich wäre also ein Modell, was uns die Druckfestigkeit vorhersagen kann anhand des Prädiktors Zementanteil.
+Wir könnten das erwartete Volumen durch eine mathematische Formel aus dem Durchmesser berechnen. Genau das werden wir heute machen.
 
-**Achtung Vereinfachungsalarm!**
+Dieses Verfahren nennt man auch modellieren (engl. *to fit a model*). Unser statistisches Modell sagt für einen gegebenen Durchmesser eine erwartete Holzernte voraus.
 
-Wir vernachlässigen der Einfachkeit halber für Lernzwecke:
+Dabei beschränken wir uns in diesem Kurs auf ein lineares Modell, das heißt, der Zusammenhang zwischen Durchmesser und vorausgesagter Holzmenge wird durch eine lineare Funktion beschrieben.
 
--   alle möglichen anderen Zutaten in Beton, sowie die Bauweise
--   dass die Beziehung zwischen Zutaten und Druckfestigkeit in der Realität nicht linear ist.
+Die lineare Funktion kennen sicher alle noch aus der Schule, ca. 8. Klasse:
 
-![](images/1280px-Europabrücke.jpg)
+$$
+\hat y = b_0 + b_1\cdot x_1
+$$
 
-```{r}
-library(ggplot2)
-library(rtutorials)
-ggplot(concrete) +
-  geom_point(aes(x = cement, y = compressive_strength)) +
-  theme_minimal() +
-  ggtitle("Beton") +
-  xlab("Zementanteil in kg / m³") +
-  ylab("Druckfestigkeit in MPa")
+oder in leicht abgewandelter Form:
+
+$$
+y = mx + n
+$$
+
+oder:
+
+$$
+y = a + bx
+$$
+
+Um die genauen Parameter zu bestimmen, brauchen wir zunächst Daten, anhand derer das Modell "trainiert" wird.
+
+Die sind uns gegeben in Form des `trees`-Datensatzes, der in Base R eingebaut ist. Dafür wurden 31 Amerikanische Traubenkirschen (*Prunus serotina*) ([wiki](https://de.wikipedia.org/wiki/Sp%C3%A4tbl%C3%BChende_Traubenkirsche)) gefällt und Durchmesser und geerntetes Holzvolumen gemessen.
+
+```{r echo=TRUE}
+plot(trees$Girth, trees$Volume)
 ```
+
+::: infobox
+Der Durchmesser heißt in den Daten fälschlicherweise `Girth`, bezieht sich aber nicht auf den Umfang sondern den Durchmesser. (siehe `?trees`)In einem schnellen Scatterplot können wir die Beziehung zwischen Durchmesser und Volumen visuell überprüfen.
+:::
+
+Für eine lineare Regression ist unsere erste Frage, ob die Daten tatsächlich linear sind.
 
 ## Abschlussquiz
 
