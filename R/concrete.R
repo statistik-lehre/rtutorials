@@ -29,15 +29,32 @@
 #' pp.597-604 ?2006?.
 #'
 #'
-#' @author Original Owner and Donor
+#' @author
+#'
+#' Original Owner and Donor
+#'
 #' Prof. I-Cheng Yeh
+#'
 #' Department of Information Management
+#'
 #' Chung-Hua University,
+#'
 #' Hsin Chu, Taiwan 30067, R.O.C.
+#'
 #' e-mail:icyeh@chu.edu.tw
+#'
 #' TEL:886-3-5186511
 #'
 #' Date Donated: August 3, 2007
+#'
+#' Acknowledgements, Copyright Information, and Availability:
+#'
+#' NOTE: Reuse of this database is unlimited with retention of copyright notice for
+#' Prof. I-Cheng Yeh and the following published paper:
+#'
+#'   I-Cheng Yeh, "Modeling of strength of high performance concrete using artificial
+#' neural networks," Cement and Concrete Research, Vol. 28, No. 12, pp. 1797-1808 (1998)
+#'
 #'
 #' @description
 #'
@@ -76,14 +93,6 @@
 #' @source https://archive.ics.uci.edu/dataset/165/concrete+compressive+strength
 #'
 #' DOI: 10.24432/C5PK67
-#' @details
-#' Acknowledgements, Copyright Information, and Availability:
-#'
-#' NOTE: Reuse of this database is unlimited with retention of copyright notice for
-#' Prof. I-Cheng Yeh and the following published paper:
-#'
-#'   I-Cheng Yeh, "Modeling of strength of high performance concrete using artificial
-#' neural networks," Cement and Concrete Research, Vol. 28, No. 12, pp. 1797-1808 (1998)
 #'
 #' @docType data
 "concrete"
