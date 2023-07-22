@@ -28,19 +28,85 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Überblick lineare Regression
 
-Ein Beispiel:
+### Ein Beispiel
 
-Als Förster\*in in den USA stehst du vor einer Amerikanischen Traubenkirsche (*Prunus serotina*) ([wiki](https://de.wikipedia.org/wiki/Sp%C3%A4tbl%C3%BChende_Traubenkirsche)). Sie soll bald gefällt werden, denn sie hat ein begehrtes Holz, und du brauchst Geld. Am liebsten möchtest wissen, bevor du den Baum fällst, wie viele Kubikmeter Holz wohl dabei herauskommen werden, die du verkaufen kannst. Aber du möchtest keine anstrengenden Messungen vornehmen. Den besten und einfachsten Schätzer, den wir vornehmen können ist der Durchmesser des Baumes, der sich ungefähr aus dem Umfang errechnen lässt. Dafür braucht es lediglich ein Maßband und $\pi$.
+Als Förster\*in in den USA stehst du vor einer Amerikanischen Traubenkirsche (*Prunus serotina*) ([wiki](https://de.wikipedia.org/wiki/Sp%C3%A4tbl%C3%BChende_Traubenkirsche)). Sie soll bald gefällt werden, denn sie hat ein begehrtes Holz, und du brauchst Geld. Am liebsten möchtest wissen, bevor du den Baum fällst, wie viele Kubikmeter Holz wohl dabei herauskommen werden, die du verkaufen kannst. Aber du möchtest keine allzu komplexen Messungen vornehmen. Den besten und einfachsten Schätzer, den wir bequem vornehmen können ist der Durchmesser des Baumes, der sich ungefähr aus dem Umfang errechnen lässt. Dafür braucht es lediglich ein Maßband und $\pi$.
 
-Der Baum, vor dem wir stehen, hat einen Durchmesser von 45 cm. 
+Der Baum, vor dem wir stehen, hat einen Durchmesser von 45 cm. Wie viel Kubikmeter Holz können wir erwarten?
 
 Wir haben bereits Daten von 31 gefällten Bäumen der gleichen Art, und können damit eine Vorhersage treffen. Die Daten befinden sich im `trees`-Datensatz, der in Base R eingebaut ist, und sind der Grund für dieses Beispiel.
 
+### Beispieldaten
+
 Schauen wir uns die Daten mal an:
 
+:::{.aufgabe}
+Wie sehen die ersten 6 Zeilen des Datensatzes `trees` aus?
+:::
+
+```{r head, exercise = TRUE}
+
+```
+
+```{r head-solution}
+head(trees)
+```
+
+:::{.aufgabe}
+Die Höhe `Height` lassen wir heute außen vor. 
+
+Der Durchmesser heißt im Datensatz fälschlicherweise `Girth`, was Umfang bedeutet. (Das ist einfach ein Fehler in der Benennung, siehe `?trees`). 
+
+Beheben Sie das, in dem Sie in `trees` eine neue Variable namens `Diameter` erstellen, die den Inhalt der Variable `Girth` enthält.
+:::
+
+```{r girth, exercise = TRUE}
+
+```
+
+```{r girth-solution}
+trees$Diameter <- trees$Girth
+```
+
+:::{.aufgabe}
+Die Variablen sind (typisch USA) alle in nicht-metrischen Einheiten angegeben. 
+
+Rechnen Sie `Diameter` und `Girth` in metrische Einheiten um, damit das Beispiel intuitiver verständlich ist.
+
+`Diameter` = Inch. Ziel: cm
+
+`Volume` = ft³. Ziel: m³
+
+**Hilfestellung zur Umrechung:**
+
+$cm = Inch * 2.54$
+
+$m^3 = ft^3 * 0.0283168466$
+
+:::
+```{r feet-setup}
+trees$Diameter <- trees$Girth
+```
+
+
+```{r feet, exercise = TRUE}
+
+```
+
+
+```{r feet-solution}
+trees$Diameter <- trees$Diameter * 2.54 # Inch in cm
+trees$Volume <- trees$Volume * 0.0283168466 #  ft³ in m³
+
+```
+
+```{r silentsetup}
+trees$Diameter <- trees$Girth * 2.54 # Inch in cm
+trees$Volume <- trees$Volume * 0.0283168466 #  ft³ in m³
+```
+
+
 ```{r, echo = TRUE}
-trees$Diameter <- trees$Girth * 2.54 # Umrechnen in cm und Umbennen
-trees$Volume <- trees$Volume * 0.0283168466 # Umrechnen in m³
 ggplot(trees, aes(x = Diameter, y = Volume)) +
   geom_point() +
   theme_minimal() +
@@ -64,7 +130,7 @@ ggplot(trees, aes(x = Diameter, y = Volume)) +
 
 Die blaue Gerade ist unser Modell, die Punkte sind die Realität, aus der wir das Modell abgeleitet haben. Ein Modell wird den Komplexitäten der Realität nie komplett gerecht, aber manche Modelle sind trotzdem sehr nützlich. Die Gerade hier zum Beispiel ist ein eher einfaches Modell und beschreibt die Realität trotzdem relativ gut. 
 
-Geraden werden beschrieben durch lineare Funktionen. Unser Modell besteht also essentiell aus einer linearen Funktion!
+Geraden werden beschrieben durch lineare Funktionen. Unser Modell besteht also essentiell aus einer linearen Funktion! Wie genau das alles funktioniert, erfahrt ihr im nächsten Abschnitt. Vorher aber noch ein kleiner Test, ob ihr auch schon mit dem Modell umgehen könnt und die Eingangsfrage lösen könntet:
 
 ```{r first}
 question_numeric(
@@ -73,8 +139,17 @@ question_numeric(
 )
 ```
 
+:::{.infobox}
+Achtung! **Vereinfachungsalarm**
 
-### lineare Funktionen
+Wir lassen hier einige Dinge der Einfachheit halber komplett außer Acht, zum Beispiel:
+
+- in der Forstwirtschaft wird zur Schätzung des Volumens eine etwas kompliziertere Formel verwendet, in die unter anderem die Höhe mit einfließt
+- Dabei gibt es verschiedene Volumenmaße für Holz mit und ohne Rinde
+- ...
+:::
+
+## lineare Funktionen
 
 Die lineare Funktion kennen sicher alle noch aus der Schule, ca. 8. Klasse:
 
