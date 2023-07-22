@@ -26,21 +26,30 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Lernziele
 
-## Überblick lineare Regression
+## Teaser lineare Regression
 
 ### Ein Beispiel
 
 Als Förster\*in in den USA stehst du vor einer Amerikanischen Traubenkirsche (*Prunus serotina*) ([wiki](https://de.wikipedia.org/wiki/Sp%C3%A4tbl%C3%BChende_Traubenkirsche)). Sie soll bald gefällt werden, denn sie hat ein begehrtes Holz, und du brauchst Geld. Am liebsten möchtest wissen, bevor du den Baum fällst, wie viele Kubikmeter Holz wohl dabei herauskommen werden, die du verkaufen kannst. Aber du möchtest keine allzu komplexen Messungen vornehmen. Den besten und einfachsten Schätzer, den wir bequem vornehmen können ist der Durchmesser des Baumes, der sich ungefähr aus dem Umfang errechnen lässt. Dafür braucht es lediglich ein Maßband und $\pi$.
 
-Der Baum, vor dem wir stehen, hat einen Durchmesser von 45 cm. Wie viel Kubikmeter Holz können wir erwarten?
+Der Baum, vor dem wir stehen, hat einen Durchmesser von 45 cm. Wie viele Kubikmeter Holz können wir erwarten?
 
-Wir haben bereits Daten von 31 gefällten Bäumen der gleichen Art, und können damit eine Vorhersage treffen. Die Daten befinden sich im `trees`-Datensatz, der in Base R eingebaut ist, und sind der Grund für dieses Beispiel.
+```{r out.width= 500}
+knitr::include_graphics("images/tree_patrick.jpg")
+```
+
+Bild: Kein Kirschbaum, aber zeigt das Prinzip.
+
+*US Army Corps of Engineers. Patrick Bloodgood, photographer. [CC BY 2.0](https://creativecommons.org/licenses/by/2.0), via Wikimedia Commons*
 
 ### Beispieldaten
+
+Wir haben bereits Daten von 31 gefällten Bäumen der gleichen Art, und können damit eine Vorhersage treffen. Die Daten befinden sich im `trees`-Datensatz, der in Base R eingebaut ist, und sind der Grund für dieses Beispiel.
 
 Schauen wir uns die Daten mal an:
 
 :::{.aufgabe}
+**1.**
 Wie sehen die ersten 6 Zeilen des Datensatzes `trees` aus?
 :::
 
@@ -52,7 +61,11 @@ Wie sehen die ersten 6 Zeilen des Datensatzes `trees` aus?
 head(trees)
 ```
 
+#### Ein bisschen Data-Cleaning
+
 :::{.aufgabe}
+**2.**
+
 Die Höhe `Height` lassen wir heute außen vor. 
 
 Der Durchmesser heißt im Datensatz fälschlicherweise `Girth`, was Umfang bedeutet. (Das ist einfach ein Fehler in der Benennung, siehe `?trees`). 
@@ -69,6 +82,8 @@ trees$Diameter <- trees$Girth
 ```
 
 :::{.aufgabe}
+**3.**
+
 Die Variablen sind (typisch USA) alle in nicht-metrischen Einheiten angegeben. 
 
 Rechnen Sie `Diameter` und `Girth` in metrische Einheiten um, damit das Beispiel intuitiver verständlich ist.
@@ -106,6 +121,11 @@ trees$Volume <- trees$Volume * 0.0283168466 #  ft³ in m³
 ```
 
 
+#### Visualisierung
+
+Ein schneller Scatterplot gibt uns jetzt Auskunft über die Beziehung zwischen Durchmesser und Volumen:
+
+
 ```{r, echo = TRUE}
 ggplot(trees, aes(x = Diameter, y = Volume)) +
   geom_point() +
@@ -120,7 +140,7 @@ Durchmesser und Volumen hängen also irgendwie proportional zusammen. Für unser
 Glücklicherweise sieht der Zusammenhang linear aus, das heißt, wir könnten ihn sinnvoll mit einer Gerade beschreiben:
 
 
-```{r echo = TRUE}
+```{r echo=F, message=FALSE, warning=FALSE}
 ggplot(trees, aes(x = Diameter, y = Volume)) +
   geom_point() +
   geom_smooth(method = "lm", se = F) +
