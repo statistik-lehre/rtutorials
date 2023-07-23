@@ -42,6 +42,16 @@ Bild: Kein Kirschbaum, aber zeigt das Prinzip.
 
 *US Army Corps of Engineers. Patrick Bloodgood, photographer. [CC BY 2.0](https://creativecommons.org/licenses/by/2.0), via Wikimedia Commons*
 
+:::{.infobox}
+Achtung! **Vereinfachungsalarm**
+
+Wir lassen hier einige Dinge der Einfachheit halber komplett außer Acht, zum Beispiel:
+
+- in der Forstwirtschaft wird zur Schätzung des Volumens eine etwas kompliziertere Formel verwendet, in die neben dem Durchmesser auch die Höhe mit einfließt
+- Dabei gibt es verschiedene Volumenmaße für Holz mit und ohne Rinde
+- ...
+:::
+
 ### Beispieldaten
 
 Wir haben bereits Daten von 31 gefällten Bäumen der gleichen Art, und können damit eine Vorhersage treffen. Die Daten befinden sich im `trees`-Datensatz, der in Base R eingebaut ist, und sind der Grund für dieses Beispiel.
@@ -159,15 +169,7 @@ question_numeric(
 )
 ```
 
-:::{.infobox}
-Achtung! **Vereinfachungsalarm**
 
-Wir lassen hier einige Dinge der Einfachheit halber komplett außer Acht, zum Beispiel:
-
-- in der Forstwirtschaft wird zur Schätzung des Volumens eine etwas kompliziertere Formel verwendet, in die unter anderem die Höhe mit einfließt
-- Dabei gibt es verschiedene Volumenmaße für Holz mit und ohne Rinde
-- ...
-:::
 
 ## lineare Funktionen
 
@@ -213,7 +215,12 @@ Bei einer Gerade ist $b_0$ also dort, wo $x = 0$. Das ist oft auch dort, wo die 
 
 $b_1$ ist die Änderung im vorhergesagten Wert ($\hat y$), wenn man $x$ um eine Einheit erhöht. 
 
-Es erinnern sich bestimmt alle an das Dreieck, was man an die Gerade zeichnen kann. 
+Es erinnern sich bestimmt alle an das Dreieck, was man an die Gerade zeichnen kann, um die Steigung zu bestimmen.
+
+Hier einmal eine Beispiel-Gerade, beschrieben durch die Gleichung $\hat y = 9 - 1.5x$.
+
+- Intercept $b_0 = 9$ 
+- Steigung $b_1 = -1.5$
 
 ```{r}
 .gerade <- function(x, intercept = 0, slope = 1){
@@ -233,12 +240,6 @@ ggplot() +
   scale_x_continuous(breaks = 0:10) +
   theme_minimal()
 ```
-
-Die zugehörige Geradengleichung lautet:
-
-$\hat y = 9 - 1.5x$
-
-mit Intercept $b_0 = 9$ und Steigung $b_1 = -1.5$
 
 ### Quiz
 
@@ -275,34 +276,168 @@ quiz(
 )
 ```
 
-### Fitting the model
+## Fitting the model
 
-Um die Modellparameter $b_0$ und $b_1$ zu bestimmen, brauchen wir zunächst Daten, anhand derer das Modell "trainiert" wird.
+Nun wissen wir also, dass das Modell einer einfachen linearen Regression einfach eine Geradengleichung ist,
+beschrieben durch die Parameter $b_0$ (Intercept) und $b_1$ (Steigung.)
 
-Die sind uns gegeben in Form des `trees`-Datensatzes, der in Base R eingebaut ist. Dafür wurden 31 Amerikanische Traubenkirschen (*Prunus serotina*) ([wiki](https://de.wikipedia.org/wiki/Sp%C3%A4tbl%C3%BChende_Traubenkirsche)) gefällt und Durchmesser und geerntetes Holzvolumen gemessen.
+Aber wie genau kommen wir auf diese Parameter? Den Prozess, ein Modell zu erstellen, was die Realität möglichst gut erklärt,
+nennt man auf Englisch *to fit a model*. 
 
-In einem schnellen Scatterplot können wir die Beziehung zwischen Durchmesser und Volumen visuell überprüfen.
+$b_0$ und $b_1$ werden so gewählt, dass die Gerade einen möglichst kleinen Abstand zu allen Datenpunkten hat. 
 
+```{r residplot, echo=F, message=FALSE, warning=FALSE}
+lm(Volume ~ Diameter, data = trees) -> fit
+fitted(fit) -> fitted
 
-```{r echo=TRUE}
-plot(trees$Girth, trees$Volume)
+ggplot(trees, aes(x = Diameter, y = Volume)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = F) +
+  geom_segment(aes(xend = Diameter, yend = fitted, color = "resid")) +
+  scale_color_manual(values = c(resid = "darkred"), labels = c(resid = "Residuen")) +
+  theme_minimal() +
+  labs(x = "Durchmesser (cm)", y = "Volumen (m³)")
 ```
 
-::: infobox
-Der Durchmesser heißt in den Daten fälschlicherweise `Girth`, bezieht sich aber nicht auf den Umfang sondern den Durchmesser. (siehe `?trees`)
+Die Gerade liegt so, dass die Summe der quadrierten Abstände zu den Datenpunkten minimal ist.
+
+Das könnte man durch sehr langes Ausprobieren und immer wieder optimieren erreichen, aber glücklicherweise gibt es Formeln dafür, die auf direktem Weg die optimale Gerade berechnen können. 
+
+### Umsetzung in R 
+In R erhält man die Regressionskoeffizienten $b_0$ und $b_1$ über die Funktion `lm()` (*linear model*).
+
+Fokussieren wir uns zunächst auf die Eingabe, den Output schauen wir uns im nächsten Schritt an.
+
+#### Eingabe
+```r
+# Modell erstellen und abspeichern 
+fit <- lm(Volume ~ Diameter, data = trees)
+
+# Modell ansehen
+summary(fit)
+```
+##### Code Breakdown
+
+`lm()`:
+
+- `Volume ~ Diameter`:
+  ist eine Formel, die R sagt: *explain Volume by Diameter*.
+  
+  Ich finde es hilfreich, die Tilde im Kopf zu lesen als: *explained by* oder auf deutsch "erklärt durch". Links der Tilde kommt immer die Variable hin, die wir erklären oder vorhersagen wollen, und rechts der Tilde die Prädiktoren. 
+
+- `data = trees`:
+  Da wir die die Variablennamen verwenden ohne `trees$...` davor, sagen wir R noch im Argument `data`, wo die Variablen zu finden sind.
+
+`fit <-`:
+
+- Schließlich speichern wir das Modell in einem Objekt, was wir `fit` genannt haben, was ein frei ausgewählter Name ist.
+
+`summary(fit)`:
+
+- ruft eine Zusammenfassung unseres gespeicherten Modells auf, was uns zur Ausgabe führt.
+
+#### Ausgabe
+
+Der Output sieht eventuell überwältigend aus, weil er eine ziemlich hohe Informationsdichte hat. Das macht aber gar nichts, denn wir richten unsere Aufmerksamkeit gezielt auf den Abschnitt "Coefficients:". Dort finden wir die Parameter $b_0$ (Intercept)
+ und $b_1$ (Steigung). Und zwar in der Spalte "Estimate". 
+ 
+```
+Call:
+lm(formula = Volume ~ Diameter, data = trees)
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.228386 -0.087972  0.004303  0.098961  0.271468 
+
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -1.046122   0.095290  -10.98 7.62e-12 ***
+Diameter     0.056476   0.002758   20.48  < 2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1204 on 29 degrees of freedom
+Multiple R-squared:  0.9353,	Adjusted R-squared:  0.9331 
+F-statistic: 419.4 on 1 and 29 DF,  p-value: < 2.2e-16
+```
+Daraus können wir entnehmen: 
+
+- Intercept $b_0 = -1.0461$
+- Steigung $b_1 = 0.0565$ 
+
+Alle anderen Spalten interessieren uns im Moment nicht. 
+
+```
+Coefficients:
+             Estimate    
+(Intercept) -1.046122   <--- b0
+Diameter     0.056476   <--- b1
+---
+```
+
+Jetzt sind Sie dran!
+
+:::{.aufgabe}
+**1.**
+
+Erstellen Sie mit `lm()` ein lineares Modell zur Erklärung des Volumens durch den Durchmesser im `trees`-Datensatz und speichern Sie es ab als `fit`.
 :::
 
-Die Modellparameter $b_0$ und $b_1$ werden so bestimmt, dass sie eine Gerade beschreiben, die möglichst nah an allen Punkten dran ist.
+```{r model, exercise = TRUE}
 
-Mathematisch ausgedrückt: Die Regressionsgerade liegt so, dass die Summe der quadrierten Abweichungen minimal ist.
-
-Wenn es fertig ist, sieht es so aus:
-
-```{r echo=TRUE}
-plot(trees$Girth, trees$Volume)
-abline(lm(Volume ~ Girth, data = trees))
 ```
 
+```{r model-solution}
+fit <- lm(Volume ~ Diameter, data = trees)
+```
+
+
+:::{.aufgabe}
+**2.**
+
+Lassen Sie sich mit `summary()` eine Zusammenfassung des gespeicherten Modells ausgeben!
+
+Finden Sie $b_0$ und $b_1$!
+:::
+```{r summary-setup}
+trees$Diameter <- trees$Girth * 2.54 # Inch in cm
+trees$Volume <- trees$Volume * 0.0283168466 #  ft³ in m³
+fit <- lm(Volume ~ Diameter, data = trees)
+```
+
+```{r summary, exercise = TRUE}
+
+```
+
+```{r summary-solution}
+summary(fit)
+```
+
+
+## Interpretation der Koeffizienten
+
+Jetzt haben wir $b_0 = -1.0461$ und $b_1 = 0.0565$ herausgefunden - aber was heißen sie eigentlich inhaltlich?
+
+Zunächst einmal können wir uns merken, dass die Regressionskoeffizienten in Einheiten der vorhergesagten Variable, in unserem Fall also
+Volumen (m³) sind. 
+
+### Interpretation $b_0$ (Intercept)
+
+> „$b_0$ ist der vorhergesagte Wert, wenn der Prädiktor den Wert 0 annimt. Bezogen auf das Beispiel:
+>
+> Wenn der Durchmesser eines Baumes 0 cm betragen würde, wäre das vorhergesagte Holzvolumen -1.05 Kubikmeter.“
+
+Das ist in diesem Fall (und in vielen anderen auch) keine sinnvolle Interpretation - es gibt keinen Baum, wenn er einen Durchmesser von 0 cm hat, und es gibt auch kein negatives Volumen. Mehr dazu im Abschnitt Transformationen.
+
+### Interpretation $b_1$ (Steigung)
+
+>„$b_1$ ist die vorhergesagte Änderung, wenn der Prädiktor um eine Einheit erhöht wird. 
+>
+>Pro Zentimeter Durchmesser mehr steigt also unser erwartetes Volumen um 0.0565 Kubikmeter.“
+
+## Transformationen
+
+## Vorraussetzungen prüfen
 
 ## Abschlussquiz
 
