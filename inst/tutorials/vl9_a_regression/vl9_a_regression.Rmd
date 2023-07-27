@@ -668,6 +668,7 @@ question_text("5. Haben Sie das Wichtigste mitgenommen? Was repräsentiert der W
 Sie sind schon sehr weit gekommen! Schauen wir uns jetzt mal an, was noch so im R-Output zu finden ist. 
 
 ![](images/tree_dance.gif)
+
 ## Modellgüte $R^2$
 
 Konzentrieren wir uns nun auf einen neuen Bereich im R-Output:
@@ -677,14 +678,31 @@ fit_centered <- lm(Volume ~ Diameter_centered, data = trees)
 summary(fit_centered)
 ```
 
-Das Bestimmtheitsmaß $R^2$ finden wir in der vorletzten Zeile, bei:
+Das Bestimmtheitsmaß (auch Determinationskoeffizient) $R^2$ finden wir in der vorletzten Zeile, bei:
 
 ```
 Multiple R-squared:  0.9353   <------- R²
 ```
+## Signifikanztests
 
+Lokaltests und Gesamtmodell
 
 ## Vorraussetzungen prüfen
+
+## Ausblick: Multiple lineare Regression
+
+In der Praxis wird selten nur eine einfache (im Sinne von 1-fach) lineare Regression gerechnet, sondern mehrere Prädiktoren werden verwendet, um ein Kriterium vorherzusagen oder zu erklären.
+
+Bei unserem Forst-Beispiel ist das ja auch so: Die Höhe spielt natürlich eine wichtige Rolle, und ist nicht zu vernachlässigen, wenn wir einen guten Schätzer für das Holzvolumen eines Baumes haben wollen. 
+
+```{r}
+trees$Height <- trees$Height * 0.3048  # Umrechnung Fuß in Meter
+
+multiple_fit <- lm(Volume ~ Diameter + Height, data = trees)
+summary(multiple_fit)
+anova(fit, multiple_fit)
+```
+
 
 ## Abschlussquiz
 
