@@ -307,7 +307,6 @@ quiz(
 
 Alles klar! Wir sind bereit, unser eigenes lineares Modell zu erstellen.
 
-![](./images/tree_dance.gif)
 
 ## Fitting the model
 
@@ -506,7 +505,7 @@ summary(fit)
 
 Jetzt haben wir $b_0 = -1.0461$ und $b_1 = 0.0565$ herausgefunden - aber was heißen sie eigentlich inhaltlich?
 
-Zunächst einmal können wir uns merken, dass die Regressionskoeffizienten in Einheiten der vorhergesagten Variable, in unserem Fall also Volumen (m³) sind.
+Zunächst einmal können wir uns merken, dass die Regressionskoeffizienten *immer in Einheiten der vorhergesagten Variable*, in unserem Fall also Volumen (m³) sind.
 
 ### $b_0$ (Intercept)
 
@@ -688,7 +687,162 @@ Multiple R-squared:  0.9353   <------- R²
 
 Lokaltests und Gesamtmodell
 
+## Visualisierungen
+
+Es gibt viele Wege, eine Punktwolke mit Regressionsgerade in R herzustellen.
+
+Ich stelle hier nur zwei vor:
+
+1. Der schnelle Weg, mit base R 
+1. Der schöne Weg, mit ggplot
+
+Aber es ist unfassbar wichtig, mindestens einen dieser Wege zu können, um schnell und unkompliziert visuell zu überprüfen, ob die Daten überhaupt einen linearen Zusammenhang haben, und auch um zu sehen, wie gut die Gerade die Datenpunkte "erklärt". 
+
+
+
+### Der schnelle Weg mit base R
+
+```{r, echo = TRUE}
+fit <- lm(Volume ~ Diameter, data = trees) # Modell erstellen
+
+plot(Volume ~ Diameter, data = trees) # Punktdiagramm erstellen
+
+abline(fit) # Regressionsgerade ins Punktdiagramm einbinden
+```
+
+#### Code Breakdown
+
+- Modell erstellen mit `lm()` und abspeichern wie gewohnt.
+
+- `plot()`:
+
+  Funktioniert genau wie `lm` mit der Formelschreibweise `y ~ x`
+  
+  (Pluspunkt für Konsistenz)
+  
+- `abline()`:
+
+  heißt literally $a$-$b$-Line und fügt eine Gerade zum Plot hinzu. 
+  
+  $a$ ist in dem Fall Intercept und $b$ Slope.
+  
+  Das aufregende und schöne ist: Wir können einfach das gesamte gespeicherte Modell `fit` als Argument übergeben, und `abline()` weiß selbst wo die Koeffizienten zu finden sind und liest sie aus. 
+
+#### Übung
+::: aufgabe
+Erstellen Sie selbst ein simples Punktdiagramm mitsamt Regressionsgerade mit base R.
+
+Damit es etwas spannender wird, verwenden wir mal einen anderen Datensatz: In `airquality` finden Sie Daten der Luftqualität in New York im Sommer 1973. Unter anderem gemessen wurde die Windgeschwindigkeit in Meilen pro Stunde, und die maximale Tagestemperatur in Grad Fahrenheit.
+
+1. Stellen Sie ein Regressionsmodell namens `temp_model` auf, was Veränderungen der Temperatur durch Veränderungen der Windgeschwindigkeit erklären kann. 
+1. Erstellen Sie ein Punktdiagramm 
+1. Fügen Sie die Regressionsgerade hinzu
+
+Variablennamen:
+`Wind` = Windgeschwindigkeit
+`Temp` = Temperatur
+:::
+
+```{r slopeestim}
+question_radio("Geben Sie einen Tipp ab: Welche Steigung wird die Regressionsgerade vermutlich haben?",
+               answer("positiv", message = "Leider nicht so wahrscheinlich - dann würde es heißer werden, wenn der Wind schneller weht."),
+               answer("negativ", correct = T, message = "Sinnvoll, da höhere Windgeschwindigkeit eher zu niedrigeren Temperaturen führt -> negativer Zusammenhang"))
+```
+
+```{r baser, exercise = TRUE, exercise.setup = "silentsetup", exercise.cap = "base R Grafik"}
+
+```
+
+```{r baser-solution}
+temp_model <- lm(Temp ~ Wind, data = airquality) # Modell erstellen
+
+plot(Temp ~ Wind, data = airquality) # Punktdiagramm erstellen
+
+abline(temp_model) # Regressionsgerade zum Plot hinzufügen
+```
+
+### Der schöne Weg mit ggplot
+
+```{r, echo = T}
+library(ggplot2) # Paket laden
+
+ggplot(trees, aes(x = Diameter, y = Volume)) +   # Daten und Mappings definieren
+  geom_point() +                                 # Punktdiagramm
+  geom_smooth(method = "lm", se = F) +           # Regressionsgerade
+  theme_minimal() +                              # Schnick-Schnack
+  labs(x = "Durchmesser (cm)", y = "Volumen (m³)", title = "Amerikanische Traubenkirsche")
+```
+
+#### Code Breakdown
+
+Ich setze hier Grundkenntnisse in ggplot voraus, da das den Rahmen sprengen würde (siehe Tutorial zur Visualisierung).
+
+- `geom_smooth()` ist das Geom, was wir verwenden um eine Regressionsgerade zu zeichnen. Der entscheidende Unterschied zu base R ist, dass wir kein Modell aufstellen müssen vorher, sondern das wird automatisch von `geom_smooth()` intern übernommen. 
+
+  - `method = "lm"`: Da es auch viele andere mögliche Modelle gibt, müssen wir im Argument `method` angeben, dass wir die Funktion `lm` nutzen wollen, also ein **l**ineares **M**odell. 
+  
+    Intern wird dadurch `lm()` aufgerufen, standardmäßig mit der Formel `y ~ x`. Das Ergebnis hängt davon ab, welche Variablen wir auf $x$ mappen und auf $y$. Dieser Sachverhalt wird uns auch in einer neutralen Nachricht bewusst gemacht: `geom_smooth() using formula = 'y ~ x'`.
+  
+  - `se = F`: **s**tandard **e**rror = **F**ALSE. Standardmäßig ist dieses Argument `TRUE`, und es wird automatisch ein Konfidenzintervall mit eingezeichnet, was wir aber nicht benötigen im Moment. 
+  
+#### Übung
+
+::: aufgabe
+Erstellen Sie nun analog zur letzten Übung eine Grafik mittels ggplot, die den Einfluss von Wind auf die Temperatur in einem Punktdiagramm mit Regressionsgerade darstellt. 
+
+Die Daten befinden sich wieder im `airquality`-Datensatz.
+:::
+
+```{r airggplot, exercise = TRUE, exercise.cap = "ggplot Grafik"}
+
+```
+
+```{r airggplot-solution}
+library(ggplot2)
+
+ggplot(airquality, aes(x = Wind, y = Temp)) +  # Datensatz und Mappings definieren
+  geom_point() +                          # Punktdiagramm zeichnen
+  geom_smooth(method = "lm", se = F) +    # Regressionsgerade zeichnen
+  theme_minimal()                         # weißer Hintergrund
+
+# Zusatzaufgabe:
+                     
+#  geom_smooth(method = "lm", se = F, color = "red") + 
+```
+
+::: aufgabe
+**\* Zusatzaufgabe**
+
+Ändern sie die Farbe der Regressionsgeraden!
+:::
+
+Super, jetzt haben Sie gelernt, wie eine einfache lineare Regression visuell dargestellt werden kann!
+
+Im nächsten Kapitel werden wir uns mit den Vorannahmen beschäftigen, die erfüllt sein müssen, damit die lineare Regression überhaupt zulässig ist. 
+
 ## Vorraussetzungen prüfen
+
+### Linearer Zusammenhang in den Daten
+
+Manche Daten werden besser nicht durch Geraden erklärt, sondern haben vielleicht quadratische Zusammenhänge:
+
+```{r}
+data <- data.frame(Arbeitszeit=c(6, 9, 12, 14, 30, 35, 40, 47, 51, 55, 60),
+                   Glück=c(14, 28, 50, 70, 89, 94, 90, 75, 59, 44, 27))
+
+
+straight_fit <- lm(Glück ~ Arbeitszeit, data = data)
+data$Arbeitszeit2 <- data$Arbeitszeit^2
+quad_fit <- lm(Glück ~ Arbeitszeit + Arbeitszeit2, data = data)
+zeit <- seq(0, 60, 0.1)
+prediction <- predict(quad_fit, list(Arbeitszeit = zeit, Arbeitszeit2 = zeit^2))
+
+plot(Glück ~ Arbeitszeit, data = data)
+abline(fit, col = "red")
+lines(zeit, prediction, col = "blue")
+```
+
+Die Gerade erklärt die Daten nicht gut und trifft falsche Vorhersagen, während die quadratische Funktion sehr nah an der Realität liegt. (Fiktive Daten, Quelle: [statology](https://www.statology.org/quadratic-regression-r/))
 
 ## Ausblick: Multiple lineare Regression
 
