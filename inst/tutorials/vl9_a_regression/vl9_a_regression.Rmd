@@ -683,6 +683,7 @@ Das Bestimmtheitsmaß (auch Determinationskoeffizient) $R^2$ finden wir in der v
 ```
 Multiple R-squared:  0.9353   <------- R²
 ```
+
 ## Signifikanztests
 
 Lokaltests und Gesamtmodell
