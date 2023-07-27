@@ -42,14 +42,14 @@ Bild: Kein Kirschbaum, aber zeigt das Prinzip.
 
 *US Army Corps of Engineers. Patrick Bloodgood, photographer. [CC BY 2.0](https://creativecommons.org/licenses/by/2.0), via Wikimedia Commons*
 
-:::{.infobox}
+::: infobox
 Achtung! **Vereinfachungsalarm**
 
 Wir lassen hier einige Dinge der Einfachheit halber komplett außer Acht, zum Beispiel:
 
-- in der Forstwirtschaft wird zur Schätzung des Volumens eine etwas kompliziertere Formel verwendet, in die neben dem Durchmesser auch die Höhe mit einfließt
-- Dabei gibt es verschiedene Volumenmaße für Holz mit und ohne Rinde
-- ...
+-   in der Forstwirtschaft wird zur Schätzung des Volumens eine etwas kompliziertere Formel verwendet, in die neben dem Durchmesser auch die Höhe mit einfließt
+-   Dabei gibt es verschiedene Volumenmaße für Holz mit und ohne Rinde
+-   ...
 :::
 
 ### Beispieldaten
@@ -58,9 +58,8 @@ Wir haben bereits Daten von 31 gefällten Bäumen der gleichen Art, und können 
 
 Schauen wir uns die Daten mal an:
 
-:::{.aufgabe}
-**1.**
-Wie sehen die ersten 6 Zeilen des Datensatzes `trees` aus?
+::: aufgabe
+**1.** Wie sehen die ersten 6 Zeilen des Datensatzes `trees` aus?
 :::
 
 ```{r head, exercise = TRUE}
@@ -73,12 +72,12 @@ head(trees)
 
 #### Ein bisschen Data-Cleaning
 
-:::{.aufgabe}
+::: aufgabe
 **2.**
 
-Die Höhe `Height` lassen wir heute außen vor. 
+Die Höhe `Height` lassen wir heute außen vor.
 
-Der Durchmesser heißt im Datensatz fälschlicherweise `Girth`, was Umfang bedeutet. (Das ist einfach ein Fehler in der Benennung, siehe `?trees`). 
+Der Durchmesser heißt im Datensatz fälschlicherweise `Girth`, was Umfang bedeutet. (Das ist einfach ein Fehler in der Benennung, siehe `?trees`).
 
 Beheben Sie das, in dem Sie in `trees` eine neue Variable namens `Diameter` erstellen, die den Inhalt der Variable `Girth` enthält.
 :::
@@ -91,10 +90,10 @@ Beheben Sie das, in dem Sie in `trees` eine neue Variable namens `Diameter` erst
 trees$Diameter <- trees$Girth
 ```
 
-:::{.aufgabe}
+::: aufgabe
 **3.**
 
-Die Variablen sind (typisch USA) alle in nicht-metrischen Einheiten angegeben. 
+Die Variablen sind (typisch USA) alle in nicht-metrischen Einheiten angegeben.
 
 Rechnen Sie `Diameter` und `Girth` in metrische Einheiten um, damit das Beispiel intuitiver verständlich ist.
 
@@ -107,17 +106,15 @@ Rechnen Sie `Diameter` und `Girth` in metrische Einheiten um, damit das Beispiel
 $cm = Inch * 2.54$
 
 $m^3 = ft^3 * 0.0283168466$
-
 :::
+
 ```{r feet-setup}
 trees$Diameter <- trees$Girth
 ```
 
-
 ```{r feet, exercise = TRUE}
 
 ```
-
 
 ```{r feet-solution}
 trees$Diameter <- trees$Diameter * 2.54 # Inch in cm
@@ -126,15 +123,27 @@ trees$Volume <- trees$Volume * 0.0283168466 #  ft³ in m³
 ```
 
 ```{r silentsetup}
+# Hier drauf sollten sich alle Exercise Code Chunks, die das trees-Dataset verwenden, beziehen
+
 trees$Diameter <- trees$Girth * 2.54 # Inch in cm
 trees$Volume <- trees$Volume * 0.0283168466 #  ft³ in m³
+
+trees$Diameter_centered <- trees$Diameter - mean(trees$Diameter)
 ```
 
+
+```{r silentsetup-global}
+# Und das gleiche noch mal fürs Global Environment
+
+trees$Diameter <- trees$Girth * 2.54 # Inch in cm
+trees$Volume <- trees$Volume * 0.0283168466 #  ft³ in m³
+
+trees$Diameter_centered <- trees$Diameter - mean(trees$Diameter)
+```
 
 #### Visualisierung
 
 Ein schneller Scatterplot gibt uns jetzt Auskunft über die Beziehung zwischen Durchmesser und Volumen:
-
 
 ```{r, echo = TRUE}
 ggplot(trees, aes(x = Diameter, y = Volume)) +
@@ -149,7 +158,6 @@ Durchmesser und Volumen hängen also irgendwie proportional zusammen. Für unser
 
 Glücklicherweise sieht der Zusammenhang linear aus, das heißt, wir könnten ihn sinnvoll mit einer Gerade beschreiben:
 
-
 ```{r echo=F, message=FALSE, warning=FALSE}
 ggplot(trees, aes(x = Diameter, y = Volume)) +
   geom_point() +
@@ -158,7 +166,7 @@ ggplot(trees, aes(x = Diameter, y = Volume)) +
   labs(x = "Durchmesser (cm)", y = "Volumen (m³)")
 ```
 
-Die blaue Gerade ist unser Modell, die Punkte sind die Realität, aus der wir das Modell abgeleitet haben. Ein Modell wird den Komplexitäten der Realität nie komplett gerecht, aber manche Modelle sind trotzdem sehr nützlich. Die Gerade hier zum Beispiel ist ein eher einfaches Modell und beschreibt die Realität trotzdem relativ gut. 
+Die blaue Gerade ist unser Modell, die Punkte sind die Realität, aus der wir das Modell abgeleitet haben. Ein Modell wird den Komplexitäten der Realität nie komplett gerecht, aber manche Modelle sind trotzdem sehr nützlich. Die Gerade hier zum Beispiel ist ein eher einfaches Modell und beschreibt die Realität trotzdem relativ gut.
 
 Geraden werden beschrieben durch lineare Funktionen. Unser Modell besteht also essentiell aus einer linearen Funktion! Wie genau das alles funktioniert, erfahrt ihr im nächsten Abschnitt. Vorher aber noch ein kleiner Test, ob ihr auch schon mit dem Modell umgehen könnt und die Eingangsfrage lösen könntet:
 
@@ -169,31 +177,47 @@ question_numeric(
 )
 ```
 
+Super, das waren die ersten Schritte! Im nächsten Kapitel werden die mathematischen Grundlagen aufgefrischt.
 
+![Yay!](./images/shuffling_tree.gif)
 
 ## lineare Funktionen
 
+
+![](./images/function.gif)
+
+Bisher sieht unser Modell so aus: 
+
+Wir wissen nicht genau, was drin passiert, nur das wir den **Prädiktor** $x$ (Durchmesser) reingeben und daraus das **Kriterium** $y$ (Volumen) herausbekommen wollen. In diesem Kapitel erklären wir, was im Modell vorgeht - nämlich eine lineare Funktion. 
+
+
+### ein bisschen Begriffsarbeit
+
 Die lineare Funktion kennen sicher alle noch aus der Schule, ca. 8. Klasse:
-
-$$
-\hat y = b_0 + b_1\cdot x_1
-$$
-
-oder in leicht abgewandelter Form:
 
 $$
 y = mx + n
 $$
 
-oder:
+oder in anderer Notation:
 
 $$
 y = a + bx
 $$
 
-Dabei steht $\hat y$ für den durch das Modell vorhergesagten Wert, auch engl. "*response variable"* genannt,"*output variable"* oder Kriterium. Im Beispiel wäre es das Holzvolumen in m³.
+Egal welche der Notationen Sie hatten, oder auch wenn Sie noch gar keine Berührungspunkte mit linearen Funktionen hatten, der Aufbau ist immer gleich.
 
-$x$ ist der Prädiktor, oder unser *input*, im Beispiel der Baumdurchmesser in Inches.
+Wir werden diese Notation verwenden:
+
+$$
+\hat y = b_0 + b_1\cdot x
+$$
+
+-   Dabei steht $\hat y$ für den durch das Modell vorhergesagten Wert, auch engl. "*response variable"* genannt,"*output variable"* oder **Kriterium**. Im Beispiel wäre es das Holzvolumen in m³.
+
+    Ein Dach über der Variable kennzeichnet immer, dass es sich hier um einen geschätzten Wert handelt.
+
+-   $x$ ist der **Prädiktor**, oder unsere *input variable*, im Beispiel der Baumdurchmesser in Inches.
 
 Daraus ergibt sich für uns folgendes Modell:
 
@@ -201,26 +225,31 @@ $$
 \hat{Volumen} = b_0 + b_1 \cdot Durchmesser 
 $$
 
-::: infobox
-Ein Dach über der Variable kennzeichnet immer, dass es sich hier um einen geschätzten Wert handelt.
-:::
+#### Was sind $b_0$ und $b_1$?
 
-Aber was sind $b_0$ und $b_1$?
+Beides sind Regressionskoeffizienten - zwei Parameter, die die Lage der Gerade beschreiben. 
 
-$b_0$ ist der vorhergesagte Wert, wenn $x$ 0 ist. Das ergibt sich aus der Gleichung:
 
-$\hat y = b_0 + b_1 \cdot 0$
+-   $b_0$ ist die **Regressionskonstante**. 
+  
+    Das ist der vorhergesagte Wert, wenn $x$ 0 ist. Das ergibt sich aus der Gleichung, wenn man für $x$ 0 einsetzt:
 
-Bei einer Gerade ist $b_0$ also dort, wo $x = 0$. Das ist oft auch dort, wo die y-Achse verläuft, deswegen nennt man $b_0$ auch Achsenabschnitt oder *Intercept* auf Englisch.
+    $\hat y = b_0 + b_1 \cdot 0 = b_0$
 
-$b_1$ ist die Änderung im vorhergesagten Wert ($\hat y$), wenn man $x$ um eine Einheit erhöht. 
+    Bei einer Gerade ist $b_0$ also dort, wo $x = 0$. Das ist oft auch dort, wo die y-Achse verläuft, deswegen nennt man $b_0$ auch Achsenabschnitt oder *Intercept* auf Englisch.
 
-Es erinnern sich bestimmt alle an das Dreieck, was man an die Gerade zeichnen kann, um die Steigung zu bestimmen.
+-   $b_1$ ist das **Regressionsgewicht**.
+
+    Es entspricht der Steigung der Gerade (engl. *Slope*) und ist inhaltlich die Änderung im vorhergesagten Wert ($\hat y$), wenn man $x$ um eine Einheit erhöht.
+
+    Es erinnern sich bestimmt alle an das Dreieck, was man an die Gerade zeichnen kann, um die Steigung zu bestimmen.
+
+### Beispiel-Gerade
 
 Hier einmal eine Beispiel-Gerade, beschrieben durch die Gleichung $\hat y = 9 - 1.5x$.
 
-- Intercept $b_0 = 9$ 
-- Steigung $b_1 = -1.5$
+-   Intercept $b_0 = 9$
+-   Steigung $b_1 = -1.5$
 
 ```{r}
 .gerade <- function(x, intercept = 0, slope = 1){
@@ -276,15 +305,17 @@ quiz(
 )
 ```
 
+Alles klar! Wir sind bereit, unser eigenes lineares Modell zu erstellen.
+
+![](./images/tree_dance.gif)
+
 ## Fitting the model
 
-Nun wissen wir also, dass das Modell einer einfachen linearen Regression einfach eine Geradengleichung ist,
-beschrieben durch die Parameter $b_0$ (Intercept) und $b_1$ (Steigung.)
+Nun wissen wir also, dass das Modell einer einfachen linearen Regression einfach eine Geradengleichung ist, beschrieben durch die Parameter $b_0$ (Intercept) und $b_1$ (Steigung.)
 
-Aber wie genau kommen wir auf diese Parameter? Den Prozess, ein Modell zu erstellen, was die Realität möglichst gut erklärt,
-nennt man auf Englisch *to fit a model*. 
+Aber wie genau kommen wir auf diese Parameter? Den Prozess, ein Modell zu erstellen, was die Realität möglichst gut erklärt, nennt man auf Englisch *to fit a model*.
 
-$b_0$ und $b_1$ werden so gewählt, dass die Gerade einen möglichst kleinen Abstand zu allen Datenpunkten hat. 
+$b_0$ und $b_1$ werden so gewählt, dass die Regressionsgerade einen möglichst kleinen Abstand zu allen Datenpunkten hat.
 
 ```{r residplot, echo=F, message=FALSE, warning=FALSE}
 lm(Volume ~ Diameter, data = trees) -> fit
@@ -296,52 +327,109 @@ ggplot(trees, aes(x = Diameter, y = Volume)) +
   geom_segment(aes(xend = Diameter, yend = fitted, color = "resid")) +
   scale_color_manual(values = c(resid = "darkred"), labels = c(resid = "Residuen")) +
   theme_minimal() +
-  labs(x = "Durchmesser (cm)", y = "Volumen (m³)")
+  labs(x = "Durchmesser (cm)", y = "Volumen (m³)", color = "")
 ```
 
 Die Gerade liegt so, dass die Summe der quadrierten Abstände zu den Datenpunkten minimal ist.
 
-Das könnte man durch sehr langes Ausprobieren und immer wieder optimieren erreichen, aber glücklicherweise gibt es Formeln dafür, die auf direktem Weg die optimale Gerade berechnen können. 
+Das könnte man durch sehr langes Ausprobieren und immer wieder optimieren erreichen, aber glücklicherweise gibt es Formeln dafür, die auf direktem Weg die optimale Gerade berechnen können.
 
-### Umsetzung in R 
+### Residuen
+
+Die oben in dunkelrot gekennzeichneten Abstände zwischen den realen Werten und den vorhergesagten Werten nennt man auch **Residuen**, also "Überbleibsel". Residuen stellen die Abweichung der Realität vom Modell dar, also den "Fehler", den das Modell nicht erklären kann.
+
+Offensichtlich ist es daher besser, wenn die Residuen kleiner sind, als wenn sie sehr groß sind. Kleine Residuen bedeuten, dass das Modell näher an der Realität liegt.
+
+Hier eine Illustration des Fitting-Prozesses, allerdings mit anderen Daten. Die Grafik zeigt wie ein Machine-Learning-Algorithmus sich Schritt für Schritt der optimalen Regressionsgerade annähert, und die mittlere quadritische Abweichung (Mean Squared Error, MSE) der vorhergesagten Werte von den tatsächlichen Werten  dabei immer kleiner wird, bis es nicht kleiner geht. 
+
+![](images/iterative_fitting.gif){width=80%}
+
+Bild: [ghbat.com](https://gbhat.com/machine_learning/linear_regression.html)
+
+
+#### * fürs Interesse
+<details>
+  <summary>**▼ Klicken Sie `HIER` für mathematische Formeln**</summary>
+::: infobox
+**Woher kommen die Formeln für $b_1$ und $b_0$?**
+
+
+Wie bereits gesagt, wird die Gerade so gelegt, dass die Summe der quadrierten Residuen minimal ist.
+
+Formel für die Quadratsumme der Residuen:
+
+$$
+\sum_{i = 1}^n \left( y_i - \hat y_i \right)^2 = min
+$$
+mit: 
+
+-   $y_i$ = tatsächlicher Wert
+
+-   $\hat y_i$ = vorhergesagter Wert
+
+Analog zur Berechnung der Varianz wird hier quadriert. Da quadrierte Werte immer positiv sind, erreicht man, dass sich negative und positive Abweichungen nicht aufheben beim Summieren.
+
+
+Einsetzen der Regressionsgleichung für $\hat y$:
+
+$$
+\sum_{i = 1}^n \left( y_i - (b_0 + b_1 \cdot x_i) \right)^2 = min
+$$
+
+Ableiten von allgemeinen Formeln ist nun möglich. Details führen hier zu weit, aber hier sind die fertigen Formeln für $b_0$ und $b_1$:
+
+```{=tex}
+\begin{align}
+b_1 &= \frac{cov(x,y)}{var(x)}
+\\
+b_0 &= \bar y - b_1 \cdot \bar x
+\end{align}
+```
+Diese Formeln liefern per Definition die optimale Regressionsgerade mit minimalen Residuen!
+
+Amazing.
+:::
+</details> 
+
+### Umsetzung in R
+
 In R erhält man die Regressionskoeffizienten $b_0$ und $b_1$ über die Funktion `lm()` (*linear model*).
 
 Fokussieren wir uns zunächst auf die Eingabe, den Output schauen wir uns im nächsten Schritt an.
 
 #### Eingabe
-```r
+
+``` r
 # Modell erstellen und abspeichern 
 fit <- lm(Volume ~ Diameter, data = trees)
 
 # Modell ansehen
 summary(fit)
 ```
+
 ##### Code Breakdown
 
 `lm()`:
 
-- `Volume ~ Diameter`:
-  ist eine Formel, die R sagt: *explain Volume by Diameter*.
-  
-  Ich finde es hilfreich, die Tilde im Kopf zu lesen als: *explained by* oder auf deutsch "erklärt durch". Links der Tilde kommt immer die Variable hin, die wir erklären oder vorhersagen wollen, und rechts der Tilde die Prädiktoren. 
+-   `Volume ~ Diameter`: ist eine Formel, die R sagt: *explain Volume by Diameter*.
 
-- `data = trees`:
-  Da wir die die Variablennamen verwenden ohne `trees$...` davor, sagen wir R noch im Argument `data`, wo die Variablen zu finden sind.
+    Ich finde es hilfreich, die Tilde im Kopf zu lesen als: *explained by* oder auf deutsch "erklärt durch". Links der Tilde kommt immer die Variable hin, die wir erklären oder vorhersagen wollen, und rechts der Tilde die Prädiktoren.
+
+-   `data = trees`: Da wir die die Variablennamen verwenden ohne `trees$...` davor, sagen wir R noch im Argument `data`, wo die Variablen zu finden sind.
 
 `fit <-`:
 
-- Schließlich speichern wir das Modell in einem Objekt, was wir `fit` genannt haben, was ein frei ausgewählter Name ist.
+-   Schließlich speichern wir das Modell in einem Objekt, was wir `fit` genannt haben, was ein frei ausgewählter Name ist.
 
 `summary(fit)`:
 
-- ruft eine Zusammenfassung unseres gespeicherten Modells auf, was uns zur Ausgabe führt.
+-   ruft eine Zusammenfassung unseres gespeicherten Modells auf, was uns zur Ausgabe führt.
 
 #### Ausgabe
 
-Der Output sieht eventuell überwältigend aus, weil er eine ziemlich hohe Informationsdichte hat. Das macht aber gar nichts, denn wir richten unsere Aufmerksamkeit gezielt auf den Abschnitt "Coefficients:". Dort finden wir die Parameter $b_0$ (Intercept)
- und $b_1$ (Steigung). Und zwar in der Spalte "Estimate". 
- 
-```
+Der Output sieht eventuell überwältigend aus, weil er eine ziemlich hohe Informationsdichte hat. Das macht aber gar nichts, denn wir richten unsere Aufmerksamkeit gezielt auf den Abschnitt "Coefficients:". Dort finden wir die Parameter $b_0$ (Intercept) und $b_1$ (Steigung). Und zwar in der Spalte "Estimate".
+
+```         
 Call:
 lm(formula = Volume ~ Diameter, data = trees)
 
@@ -357,17 +445,18 @@ Diameter     0.056476   0.002758   20.48  < 2e-16 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 Residual standard error: 0.1204 on 29 degrees of freedom
-Multiple R-squared:  0.9353,	Adjusted R-squared:  0.9331 
+Multiple R-squared:  0.9353,    Adjusted R-squared:  0.9331 
 F-statistic: 419.4 on 1 and 29 DF,  p-value: < 2.2e-16
 ```
-Daraus können wir entnehmen: 
 
-- Intercept $b_0 = -1.0461$
-- Steigung $b_1 = 0.0565$ 
+Daraus können wir entnehmen:
 
-Alle anderen Spalten interessieren uns im Moment nicht. 
+-   Intercept $b_0 = -1.0461$
+-   Steigung $b_1 = 0.0565$
 
-```
+Alle anderen Spalten interessieren uns im Moment nicht.
+
+```         
 Coefficients:
              Estimate    
 (Intercept) -1.046122   <--- b0
@@ -377,7 +466,7 @@ Diameter     0.056476   <--- b1
 
 Jetzt sind Sie dran!
 
-:::{.aufgabe}
+::: aufgabe
 **1.**
 
 Erstellen Sie mit `lm()` ein lineares Modell zur Erklärung des Volumens durch den Durchmesser im `trees`-Datensatz und speichern Sie es ab als `fit`.
@@ -391,14 +480,14 @@ Erstellen Sie mit `lm()` ein lineares Modell zur Erklärung des Volumens durch d
 fit <- lm(Volume ~ Diameter, data = trees)
 ```
 
-
-:::{.aufgabe}
+::: aufgabe
 **2.**
 
 Lassen Sie sich mit `summary()` eine Zusammenfassung des gespeicherten Modells ausgeben!
 
 Finden Sie $b_0$ und $b_1$!
 :::
+
 ```{r summary-setup}
 trees$Diameter <- trees$Girth * 2.54 # Inch in cm
 trees$Volume <- trees$Volume * 0.0283168466 #  ft³ in m³
@@ -413,29 +502,187 @@ fit <- lm(Volume ~ Diameter, data = trees)
 summary(fit)
 ```
 
-
 ## Interpretation der Koeffizienten
 
 Jetzt haben wir $b_0 = -1.0461$ und $b_1 = 0.0565$ herausgefunden - aber was heißen sie eigentlich inhaltlich?
 
-Zunächst einmal können wir uns merken, dass die Regressionskoeffizienten in Einheiten der vorhergesagten Variable, in unserem Fall also
-Volumen (m³) sind. 
+Zunächst einmal können wir uns merken, dass die Regressionskoeffizienten in Einheiten der vorhergesagten Variable, in unserem Fall also Volumen (m³) sind.
 
-### Interpretation $b_0$ (Intercept)
+### $b_0$ (Intercept)
 
-> „$b_0$ ist der vorhergesagte Wert, wenn der Prädiktor den Wert 0 annimt. Bezogen auf das Beispiel:
->
-> Wenn der Durchmesser eines Baumes 0 cm betragen würde, wäre das vorhergesagte Holzvolumen -1.05 Kubikmeter.“
+> „$b_0$ ist der vorhergesagte Wert, wenn der Prädiktor den Wert 0 annimt.“ 
 
-Das ist in diesem Fall (und in vielen anderen auch) keine sinnvolle Interpretation - es gibt keinen Baum, wenn er einen Durchmesser von 0 cm hat, und es gibt auch kein negatives Volumen. Mehr dazu im Abschnitt Transformationen.
+Bezogen auf das Beispiel:
 
-### Interpretation $b_1$ (Steigung)
+„Wenn der Durchmesser eines Baumes 0 cm betragen würde, wäre das vorhergesagte Holzvolumen -1.05 Kubikmeter.“ — Das macht inhaltlich wenig Sinn - es gibt keinen Baum, wenn er einen Durchmesser von 0 cm hat, und es gibt auch kein negatives Volumen. 
 
->„$b_1$ ist die vorhergesagte Änderung, wenn der Prädiktor um eine Einheit erhöht wird. 
->
->Pro Zentimeter Durchmesser mehr steigt also unser erwartetes Volumen um 0.0565 Kubikmeter.“
+Das ist mit allen Daten so, wo 0 nicht im sinnvollen Wertebereich ist. 
+Man kann dann für eine bessere Interpretierbarkeit die Daten zentrieren, so dass 0 ein sinnvoller Wert ist. Siehe Abschnitt Transformation. 
+
+### $b_1$ (Steigung)
+
+> „$b_1$ ist die vorhergesagte Änderung, wenn der Prädiktor um eine Einheit erhöht wird.“
+
+„Pro Zentimeter Durchmesser mehr steigt also unser erwartetes Volumen um 0.0565 Kubikmeter.“
 
 ## Transformationen
+
+Für die lineare Regression müssen das Kriterium $y$ und der Prädiktor $x$ beide metrisch sein, also mindestens intervallskaliert. Ab dem Intervallskalenniveau sind Transformationen zulässig, solange sie die Proportion erhalten.
+
+| Transformation | Daten        |
+|----------------|--------------|
+| $x$ (Original) | 10, 20, 30   |
+| $x \cdot 5$    | 50, 100, 150 |
+| $x - 20$       | -10, 0, 10   |
+
+: Beispiel für proportionale Transformation
+
+Eine dieser proportionserhaltenden Transformationen ist das Zentrieren.
+
+### Zentrieren
+
+Beim Zentrieren wird von jedem Wert der Mittelwert abgezogen. Das entspricht der letzten Tabellenzeile, weil 20 der Mittelwert der Zahlenreihe ist. Die transformierten Daten bilden dann die Differenz zum Mittelwert ab.
+
+
+
+#### Formel
+
+$$
+x' = x - \bar x
+$$
+Sie sind dran!
+
+::: aufgabe
+**1.**
+Zentrieren Sie die Variable `Diameter` aus dem `trees`-Datensatz und speichern sie das Ergebnis als eine neue Spalte namens `Diameter_centered` ab.
+:::
+
+
+```{r center, exercise = TRUE, exercise.setup = "silentsetup", exercise.caption = "Zentrieren"}
+
+```
+
+```{r center-solution}
+trees$Diameter_centered <- trees$Diameter - mean(trees$Diameter)
+```
+
+
+
+```{r meancenter}
+question_numeric("2. Was ist der Mittelwert einer zentrierten Variable und warum ist das so? Prüfen Sie notfalls im obigen Codeblock nach.",
+                 answer(0, correct = TRUE, message = "Richtig! Der Mittelwert einer zentrierten Variablen ist immer 0."))
+```
+
+#### * fürs Interesse
+<details>
+  <summary>**▼ Klicken Sie `HIER` für einen mathematischen Beweis**</summary>
+
+::: infobox
+
+Es ist auch mathematisch zu zeigen, dass der Mittelwert einer zentrierten Variable immer 0 ist:
+
+\begin{align}
+\mbox{Allgemeine Formel für arithmetisches Mittel} & ~ & \bar x' = \frac{\sum_{i = 1}^n x_i'}{n} &= 0 \\
+\mbox{Einsetzen der Zentrierungsformel} & ~ & \frac{\sum_{i = 1}^n (x_i - \bar x)}{n} &= 0 \\
+\mbox{Aufspalten der Summe in mehrere Summen} & ~ & \frac{\sum_{i = 1}^n x_i - \sum_{i = 1}^n \bar x}{n} &= 0 \\
+\mbox{\(\bar x\) ist eine Konstante - Summe einer Konstanten = \(n \cdot Konstante\)} & ~ & \frac{\sum_{i = 1}^n x_i - n \cdot \bar x}{n} &= 0 \\
+\mbox{Einsetzen der Formel für \(\bar x\)} & ~ & \frac{\sum_{i = 1}^n x_i - n \cdot \frac{\sum_{i = 1}^n x_i}{n}}{n} &= 0 \\
+\mbox{Kürzen} & ~ & \frac{\sum_{i = 1}^n x_i - \sum_{i = 1}^n x_i}{n} &= 0 \\
+\mbox{was zu zeigen war: 0 ist 0} & ~ & \frac{0}{n} &= 0
+\end{align}
+:::
+
+</details> 
+
+#### Modell mit zentriertem Prädiktor
+
+Jetzt können wir das Modell noch einmal mit der zentrierten Variable rechnen:
+
+
+```{r centernew, exercise = TRUE, exercise.setup = "silentsetup"}
+fit_centered <- lm(Volume ~ Diameter_centered, data = trees)
+summary(fit_centered)
+```
+
+```{r centerquestion}
+quiz(
+question_numeric("Wie lautet $b_0$ (*Intercept*) (auf drei Nachkommastellen)?",
+                 answer(0.854347, correct = T),
+                 answer(0.854, correct = T)),
+question_numeric("Wie lautet $b_1$ (*Slope*) (auf drei Nachkommestellen)?",
+                 answer(0.056476, correct = T),
+                 answer(0.056, correct = T)),
+caption = "3. Koeffizienten finden")
+```
+
+
+Am Modell hat sich nichts geändert außer dem *Intercept*. 
+
+Durch das Zentrieren haben wir 0 zu einem sinnvollen Wert gemacht, der auch tatsächlich durch die Daten abgedeckt ist. 
+
+Stellen wir das visuell dar:
+
+Nur die x-Achse ist anders skaliert, die Proportionen sind aber erhalten. 
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+uncentered <- ggplot(trees, aes(x = Diameter, y = Volume)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = F) +
+  theme_minimal() +
+  labs(x = "Durchmesser (cm)", y = "Volumen (m³)")
+
+centered <- ggplot(trees, aes(x = Diameter_centered, y = Volume)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = F) +
+  theme_minimal() +
+  labs(x = "Durchmesser (cm), zentriert", y = "Volumen (m³)")
+
+gridExtra::grid.arrange(uncentered, centered)
+```
+
+Bei den unzentrierten Daten ist 0 nicht im Wertebereich enthalten und lässt sich nicht sinnvoll interpretieren. 
+
+Nach dem Zentrieren ist 0 ein sinnvoller Wert, nämlich der Mittelwert!
+
+Die Steigung $b_1$ ändert sich durch das Zentrieren nicht.
+
+#### Interpretation zentrierte Prädiktoren
+
+```{r questioncenter}
+question_checkbox("4. Wie würden Sie $b_0$ jetzt interpretieren, wo der Prädiktor zentriert wurde?",
+                  answer("Bei einem mittleren Baumdurchmesser sagt das Modell 0.854 m³ Holzernte voraus.", correct = TRUE, message = "$b_0$ ist der vorhergesagte Wert, wenn der Prädiktor den Wert 0 annimt. Da nun 0 dem Mittelwert entspricht, können wir von einem mittleren Durchmesser sprechen"),
+                  answer("Wenn man das Volumen um eine Einheit erhöht, steigt der mittlere Durchmesser um 0.854 cm", correct = FALSE, message = "Hier ist alles verdreht. Zunächst, das Volumen ist unser Kriterium, also können wir daraus nicht den Durchmesser vorhersagen. Aber selbst dann wäre das Schema „Wenn man Prädiktor um 1 Einheit erhöht, um wie viel ändert sich dann die Vorhersage?“ für die Interpretation für das Regressionsgewicht $b_1$ geeignet und nicht für die Regressionskonstante $b_0$. Zuletzt: Die Koeffizienten liegen immer in Einheiten des Kriteriums vor, also ist cm hier auch nicht die richtige Einheit."),
+                  answer("Bei einem hypothetischen Durchmesser von 0.854 cm nimmt das vorhergesagte Volumen den Mittelwert an", correct = F, message = "Das stimmt leider nicht, denn die Koeffizienten liegen immer in Einheiten des Kriteriums vor, also in diesem Fall m³. Und dann ist auch noch der Mittelwert an der falschen Stelle, nämlich eigentlich ist 0.854 das vorhergesagte Volumen in m³ bei einem Durchmesser von 0 - da wir aber zentriert haben, entspricht das einem mittleren Durchmesser.")
+                  )
+```
+
+```{r importantcenter}
+question_text("5. Haben Sie das Wichtigste mitgenommen? Was repräsentiert der Wert 0 bei einer zentrierten Variablen? (Stichwort)", 
+            correct = "Super! Sie haben das Wichtigste verstanden.", incorrect = "Probieren Sie es nochmal (vielleicht eine andere Schreibweise). Zentrierte Daten haben als Wert ihren Abstand zum Mittelwert. Der Mittelwert hat den Abstand 0 zum Mittelwert",
+                 answer("den Mittelwert", correct = T),
+                 answer("arithmetisches Mittel", correct = T),
+                 answer("Mittelwert", correct = T)
+)
+```
+
+Sie sind schon sehr weit gekommen! Schauen wir uns jetzt mal an, was noch so im R-Output zu finden ist. 
+
+![](images/tree_dance.gif)
+## Modellgüte $R^2$
+
+Konzentrieren wir uns nun auf einen neuen Bereich im R-Output:
+
+```{r modelgoodness, exercise = T, exercise.eval = TRUE}
+fit_centered <- lm(Volume ~ Diameter_centered, data = trees)
+summary(fit_centered)
+```
+
+Das Bestimmtheitsmaß $R^2$ finden wir in der vorletzten Zeile, bei:
+
+```
+Multiple R-squared:  0.9353   <------- R²
+```
+
 
 ## Vorraussetzungen prüfen
 
