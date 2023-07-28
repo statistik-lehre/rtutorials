@@ -34,9 +34,7 @@ Als Förster\*in in den USA stehst du vor einer Amerikanischen Traubenkirsche (*
 
 Der Baum, vor dem wir stehen, hat einen Durchmesser von 45 cm. Wie viele Kubikmeter Holz können wir erwarten?
 
-```{r out.width= 500}
-knitr::include_graphics("images/tree_patrick.jpg")
-```
+![](images/tree_patrick.jpg){width=60%}
 
 Bild: Kein Kirschbaum, aber zeigt das Prinzip.
 
@@ -131,7 +129,6 @@ trees$Volume <- trees$Volume * 0.0283168466 #  ft³ in m³
 trees$Diameter_centered <- trees$Diameter - mean(trees$Diameter)
 ```
 
-
 ```{r silentsetup-global}
 # Und das gleiche noch mal fürs Global Environment
 
@@ -183,13 +180,11 @@ Super, das waren die ersten Schritte! Im nächsten Kapitel werden die mathematis
 
 ## lineare Funktionen
 
-
 ![](./images/function.gif)
 
-Bisher sieht unser Modell so aus: 
+Bisher sieht unser Modell so aus:
 
-Wir wissen nicht genau, was drin passiert, nur das wir den **Prädiktor** $x$ (Durchmesser) reingeben und daraus das **Kriterium** $y$ (Volumen) herausbekommen wollen. In diesem Kapitel erklären wir, was im Modell vorgeht - nämlich eine lineare Funktion. 
-
+Wir wissen nicht genau, was drin passiert, nur das wir den **Prädiktor** $x$ (Durchmesser) reingeben und daraus das **Kriterium** $y$ (Volumen) herausbekommen wollen. In diesem Kapitel erklären wir, was im Modell vorgeht - nämlich eine lineare Funktion.
 
 ### ein bisschen Begriffsarbeit
 
@@ -227,11 +222,10 @@ $$
 
 #### Was sind $b_0$ und $b_1$?
 
-Beides sind Regressionskoeffizienten - zwei Parameter, die die Lage der Gerade beschreiben. 
+Beides sind Regressionskoeffizienten - zwei Parameter, die die Lage der Gerade beschreiben.
 
+-   $b_0$ ist die **Regressionskonstante**.
 
--   $b_0$ ist die **Regressionskonstante**. 
-  
     Das ist der vorhergesagte Wert, wenn $x$ 0 ist. Das ergibt sich aus der Gleichung, wenn man für $x$ 0 einsetzt:
 
     $\hat y = b_0 + b_1 \cdot 0 = b_0$
@@ -307,7 +301,6 @@ quiz(
 
 Alles klar! Wir sind bereit, unser eigenes lineares Modell zu erstellen.
 
-
 ## Fitting the model
 
 Nun wissen wir also, dass das Modell einer einfachen linearen Regression einfach eine Geradengleichung ist, beschrieben durch die Parameter $b_0$ (Intercept) und $b_1$ (Steigung.)
@@ -339,19 +332,20 @@ Die oben in dunkelrot gekennzeichneten Abstände zwischen den realen Werten und 
 
 Offensichtlich ist es daher besser, wenn die Residuen kleiner sind, als wenn sie sehr groß sind. Kleine Residuen bedeuten, dass das Modell näher an der Realität liegt.
 
-Hier eine Illustration des Fitting-Prozesses, allerdings mit anderen Daten. Die Grafik zeigt wie ein Machine-Learning-Algorithmus sich Schritt für Schritt der optimalen Regressionsgerade annähert, und die mittlere quadritische Abweichung (Mean Squared Error, MSE) der vorhergesagten Werte von den tatsächlichen Werten  dabei immer kleiner wird, bis es nicht kleiner geht. 
+Hier eine Illustration des Fitting-Prozesses, allerdings mit anderen Daten. Die Grafik zeigt wie ein Machine-Learning-Algorithmus sich Schritt für Schritt der optimalen Regressionsgerade annähert, und die mittlere quadritische Abweichung (Mean Squared Error, MSE) der vorhergesagten Werte von den tatsächlichen Werten dabei immer kleiner wird, bis es nicht kleiner geht.
 
-![](images/iterative_fitting.gif){width=80%}
+![](images/iterative_fitting.gif){width="80%"}
 
 Bild: [ghbat.com](https://gbhat.com/machine_learning/linear_regression.html)
 
+#### \* fürs Interesse
 
-#### * fürs Interesse
 <details>
-  <summary>**▼ Klicken Sie `HIER` für mathematische Formeln**</summary>
-::: infobox
-**Woher kommen die Formeln für $b_1$ und $b_0$?**
 
+<summary>**▼ Klicken Sie `HIER` für mathematische Formeln**</summary>
+
+::: infobox
+**Woher kommen die Formeln für** $b_1$ und $b_0$?
 
 Wie bereits gesagt, wird die Gerade so gelegt, dass die Summe der quadrierten Residuen minimal ist.
 
@@ -359,15 +353,13 @@ Formel für die Quadratsumme der Residuen:
 
 $$
 \sum_{i = 1}^n \left( y_i - \hat y_i \right)^2 = min
-$$
-mit: 
+$$ mit:
 
 -   $y_i$ = tatsächlicher Wert
 
 -   $\hat y_i$ = vorhergesagter Wert
 
 Analog zur Berechnung der Varianz wird hier quadriert. Da quadrierte Werte immer positiv sind, erreicht man, dass sich negative und positive Abweichungen nicht aufheben beim Summieren.
-
 
 Einsetzen der Regressionsgleichung für $\hat y$:
 
@@ -388,7 +380,8 @@ Diese Formeln liefern per Definition die optimale Regressionsgerade mit minimale
 
 Amazing.
 :::
-</details> 
+
+</details>
 
 ### Umsetzung in R
 
@@ -509,20 +502,19 @@ Zunächst einmal können wir uns merken, dass die Regressionskoeffizienten *imme
 
 ### $b_0$ (Intercept)
 
-> „$b_0$ ist der vorhergesagte Wert, wenn der Prädiktor den Wert 0 annimt.“ 
+> „$b_0$ ist der vorhergesagte Wert, wenn der Prädiktor den Wert 0 annimt."
 
 Bezogen auf das Beispiel:
 
-„Wenn der Durchmesser eines Baumes 0 cm betragen würde, wäre das vorhergesagte Holzvolumen -1.05 Kubikmeter.“ — Das macht inhaltlich wenig Sinn - es gibt keinen Baum, wenn er einen Durchmesser von 0 cm hat, und es gibt auch kein negatives Volumen. 
+„Wenn der Durchmesser eines Baumes 0 cm betragen würde, wäre das vorhergesagte Holzvolumen -1.05 Kubikmeter." --- Das macht inhaltlich wenig Sinn - es gibt keinen Baum, wenn er einen Durchmesser von 0 cm hat, und es gibt auch kein negatives Volumen.
 
-Das ist mit allen Daten so, wo 0 nicht im sinnvollen Wertebereich ist. 
-Man kann dann für eine bessere Interpretierbarkeit die Daten zentrieren, so dass 0 ein sinnvoller Wert ist. Siehe Abschnitt Transformation. 
+Das ist mit allen Daten so, wo 0 nicht im sinnvollen Wertebereich ist. Man kann dann für eine bessere Interpretierbarkeit die Daten zentrieren, so dass 0 ein sinnvoller Wert ist. Siehe Abschnitt Transformation.
 
 ### $b_1$ (Steigung)
 
-> „$b_1$ ist die vorhergesagte Änderung, wenn der Prädiktor um eine Einheit erhöht wird.“
+> „$b_1$ ist die vorhergesagte Änderung, wenn der Prädiktor um eine Einheit erhöht wird."
 
-„Pro Zentimeter Durchmesser mehr steigt also unser erwartetes Volumen um 0.0565 Kubikmeter.“
+„Pro Zentimeter Durchmesser mehr steigt also unser erwartetes Volumen um 0.0565 Kubikmeter."
 
 ## Transformationen
 
@@ -542,20 +534,15 @@ Eine dieser proportionserhaltenden Transformationen ist das Zentrieren.
 
 Beim Zentrieren wird von jedem Wert der Mittelwert abgezogen. Das entspricht der letzten Tabellenzeile, weil 20 der Mittelwert der Zahlenreihe ist. Die transformierten Daten bilden dann die Differenz zum Mittelwert ab.
 
-
-
 #### Formel
 
 $$
 x' = x - \bar x
-$$
-Sie sind dran!
+$$ Sie sind dran!
 
 ::: aufgabe
-**1.**
-Zentrieren Sie die Variable `Diameter` aus dem `trees`-Datensatz und speichern sie das Ergebnis als eine neue Spalte namens `Diameter_centered` ab.
+**1.** Zentrieren Sie die Variable `Diameter` aus dem `trees`-Datensatz und speichern sie das Ergebnis als eine neue Spalte namens `Diameter_centered` ab.
 :::
-
 
 ```{r center, exercise = TRUE, exercise.setup = "silentsetup", exercise.caption = "Zentrieren"}
 
@@ -565,21 +552,21 @@ Zentrieren Sie die Variable `Diameter` aus dem `trees`-Datensatz und speichern s
 trees$Diameter_centered <- trees$Diameter - mean(trees$Diameter)
 ```
 
-
-
 ```{r meancenter}
 question_numeric("2. Was ist der Mittelwert einer zentrierten Variable und warum ist das so? Prüfen Sie notfalls im obigen Codeblock nach.",
                  answer(0, correct = TRUE, message = "Richtig! Der Mittelwert einer zentrierten Variablen ist immer 0."))
 ```
 
-#### * fürs Interesse
+#### \* fürs Interesse
+
 <details>
-  <summary>**▼ Klicken Sie `HIER` für einen mathematischen Beweis**</summary>
+
+<summary>**▼ Klicken Sie `HIER` für einen mathematischen Beweis**</summary>
 
 ::: infobox
-
 Es ist auch mathematisch zu zeigen, dass der Mittelwert einer zentrierten Variable immer 0 ist:
 
+```{=tex}
 \begin{align}
 \mbox{Allgemeine Formel für arithmetisches Mittel} & ~ & \bar x' = \frac{\sum_{i = 1}^n x_i'}{n} &= 0 \\
 \mbox{Einsetzen der Zentrierungsformel} & ~ & \frac{\sum_{i = 1}^n (x_i - \bar x)}{n} &= 0 \\
@@ -589,14 +576,14 @@ Es ist auch mathematisch zu zeigen, dass der Mittelwert einer zentrierten Variab
 \mbox{Kürzen} & ~ & \frac{\sum_{i = 1}^n x_i - \sum_{i = 1}^n x_i}{n} &= 0 \\
 \mbox{was zu zeigen war: 0 ist 0} & ~ & \frac{0}{n} &= 0
 \end{align}
+```
 :::
 
-</details> 
+</details>
 
 #### Modell mit zentriertem Prädiktor
 
 Jetzt können wir das Modell noch einmal mit der zentrierten Variable rechnen:
-
 
 ```{r centernew, exercise = TRUE, exercise.setup = "silentsetup"}
 fit_centered <- lm(Volume ~ Diameter_centered, data = trees)
@@ -614,14 +601,13 @@ question_numeric("Wie lautet $b_1$ (*Slope*) (auf drei Nachkommestellen)?",
 caption = "3. Koeffizienten finden")
 ```
 
+Am Modell hat sich nichts geändert außer dem *Intercept*.
 
-Am Modell hat sich nichts geändert außer dem *Intercept*. 
-
-Durch das Zentrieren haben wir 0 zu einem sinnvollen Wert gemacht, der auch tatsächlich durch die Daten abgedeckt ist. 
+Durch das Zentrieren haben wir 0 zu einem sinnvollen Wert gemacht, der auch tatsächlich durch die Daten abgedeckt ist.
 
 Stellen wir das visuell dar:
 
-Nur die x-Achse ist anders skaliert, die Proportionen sind aber erhalten. 
+Nur die x-Achse ist anders skaliert, die Proportionen sind aber erhalten.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 uncentered <- ggplot(trees, aes(x = Diameter, y = Volume)) +
@@ -639,7 +625,7 @@ centered <- ggplot(trees, aes(x = Diameter_centered, y = Volume)) +
 gridExtra::grid.arrange(uncentered, centered)
 ```
 
-Bei den unzentrierten Daten ist 0 nicht im Wertebereich enthalten und lässt sich nicht sinnvoll interpretieren. 
+Bei den unzentrierten Daten ist 0 nicht im Wertebereich enthalten und lässt sich nicht sinnvoll interpretieren.
 
 Nach dem Zentrieren ist 0 ein sinnvoller Wert, nämlich der Mittelwert!
 
@@ -664,7 +650,7 @@ question_text("5. Haben Sie das Wichtigste mitgenommen? Was repräsentiert der W
 )
 ```
 
-Sie sind schon sehr weit gekommen! Schauen wir uns jetzt mal an, was noch so im R-Output zu finden ist. 
+Sie sind schon sehr weit gekommen! Schauen wir uns jetzt mal an, was noch so im R-Output zu finden ist.
 
 ![](images/tree_dance.gif)
 
@@ -679,7 +665,7 @@ summary(fit_centered)
 
 Das Bestimmtheitsmaß (auch Determinationskoeffizient) $R^2$ finden wir in der vorletzten Zeile, bei:
 
-```
+```         
 Multiple R-squared:  0.9353   <------- R²
 ```
 
@@ -693,12 +679,10 @@ Es gibt viele Wege, eine Punktwolke mit Regressionsgerade in R herzustellen.
 
 Ich stelle hier nur zwei vor:
 
-1. Der schnelle Weg, mit base R 
-1. Der schöne Weg, mit ggplot
+1.  Der schnelle Weg, mit base R
+2.  Der schöne Weg, mit ggplot
 
-Aber es ist unfassbar wichtig, mindestens einen dieser Wege zu können, um schnell und unkompliziert visuell zu überprüfen, ob die Daten überhaupt einen linearen Zusammenhang haben, und auch um zu sehen, wie gut die Gerade die Datenpunkte "erklärt". 
-
-
+Aber es ist unfassbar wichtig, mindestens einen dieser Wege zu können, um schnell und unkompliziert visuell zu überprüfen, ob die Daten überhaupt einen linearen Zusammenhang haben, und auch um zu sehen, wie gut die Gerade die Datenpunkte "erklärt".
 
 ### Der schnelle Weg mit base R
 
@@ -712,35 +696,34 @@ abline(fit) # Regressionsgerade ins Punktdiagramm einbinden
 
 #### Code Breakdown
 
-- Modell erstellen mit `lm()` und abspeichern wie gewohnt.
+-   Modell erstellen mit `lm()` und abspeichern wie gewohnt.
 
-- `plot()`:
+-   `plot()`:
 
-  Funktioniert genau wie `lm` mit der Formelschreibweise `y ~ x`
-  
-  (Pluspunkt für Konsistenz)
-  
-- `abline()`:
+    Funktioniert genau wie `lm` mit der Formelschreibweise `y ~ x`
 
-  heißt literally $a$-$b$-Line und fügt eine Gerade zum Plot hinzu. 
-  
-  $a$ ist in dem Fall Intercept und $b$ Slope.
-  
-  Das aufregende und schöne ist: Wir können einfach das gesamte gespeicherte Modell `fit` als Argument übergeben, und `abline()` weiß selbst wo die Koeffizienten zu finden sind und liest sie aus. 
+    (Pluspunkt für Konsistenz)
+
+-   `abline()`:
+
+    heißt literally $a$-$b$-Line und fügt eine Gerade zum Plot hinzu.
+
+    $a$ ist in dem Fall Intercept und $b$ Slope.
+
+    Das aufregende und schöne ist: Wir können einfach das gesamte gespeicherte Modell `fit` als Argument übergeben, und `abline()` weiß selbst wo die Koeffizienten zu finden sind und liest sie aus.
 
 #### Übung
+
 ::: aufgabe
 Erstellen Sie selbst ein simples Punktdiagramm mitsamt Regressionsgerade mit base R.
 
 Damit es etwas spannender wird, verwenden wir mal einen anderen Datensatz: In `airquality` finden Sie Daten der Luftqualität in New York im Sommer 1973. Unter anderem gemessen wurde die Windgeschwindigkeit in Meilen pro Stunde, und die maximale Tagestemperatur in Grad Fahrenheit.
 
-1. Stellen Sie ein Regressionsmodell namens `temp_model` auf, was Veränderungen der Temperatur durch Veränderungen der Windgeschwindigkeit erklären kann. 
-1. Erstellen Sie ein Punktdiagramm 
-1. Fügen Sie die Regressionsgerade hinzu
+1.  Stellen Sie ein Regressionsmodell namens `temp_model` auf, was Veränderungen der Temperatur durch Veränderungen der Windgeschwindigkeit erklären kann.
+2.  Erstellen Sie ein Punktdiagramm
+3.  Fügen Sie die Regressionsgerade hinzu
 
-Variablennamen:
-`Wind` = Windgeschwindigkeit
-`Temp` = Temperatur
+Variablennamen: `Wind` = Windgeschwindigkeit `Temp` = Temperatur
 :::
 
 ```{r slopeestim}
@@ -777,18 +760,18 @@ ggplot(trees, aes(x = Diameter, y = Volume)) +   # Daten und Mappings definieren
 
 Ich setze hier Grundkenntnisse in ggplot voraus, da das den Rahmen sprengen würde (siehe Tutorial zur Visualisierung).
 
-- `geom_smooth()` ist das Geom, was wir verwenden um eine Regressionsgerade zu zeichnen. Der entscheidende Unterschied zu base R ist, dass wir kein Modell aufstellen müssen vorher, sondern das wird automatisch von `geom_smooth()` intern übernommen. 
+-   `geom_smooth()` ist das Geom, was wir verwenden um eine Regressionsgerade zu zeichnen. Der entscheidende Unterschied zu base R ist, dass wir kein Modell aufstellen müssen vorher, sondern das wird automatisch von `geom_smooth()` intern übernommen.
 
-  - `method = "lm"`: Da es auch viele andere mögliche Modelle gibt, müssen wir im Argument `method` angeben, dass wir die Funktion `lm` nutzen wollen, also ein **l**ineares **M**odell. 
-  
-    Intern wird dadurch `lm()` aufgerufen, standardmäßig mit der Formel `y ~ x`. Das Ergebnis hängt davon ab, welche Variablen wir auf $x$ mappen und auf $y$. Dieser Sachverhalt wird uns auch in einer neutralen Nachricht bewusst gemacht: `geom_smooth() using formula = 'y ~ x'`.
-  
-  - `se = F`: **s**tandard **e**rror = **F**ALSE. Standardmäßig ist dieses Argument `TRUE`, und es wird automatisch ein Konfidenzintervall mit eingezeichnet, was wir aber nicht benötigen im Moment. 
-  
+    -   `method = "lm"`: Da es auch viele andere mögliche Modelle gibt, müssen wir im Argument `method` angeben, dass wir die Funktion `lm` nutzen wollen, also ein **l**ineares **M**odell.
+
+        Intern wird dadurch `lm()` aufgerufen, standardmäßig mit der Formel `y ~ x`. Das Ergebnis hängt davon ab, welche Variablen wir auf $x$ mappen und auf $y$. Dieser Sachverhalt wird uns auch in einer neutralen Nachricht bewusst gemacht: `geom_smooth() using formula = 'y ~ x'`.
+
+    -   `se = F`: **s**tandard **e**rror = **F**ALSE. Standardmäßig ist dieses Argument `TRUE`, und es wird automatisch ein Konfidenzintervall mit eingezeichnet, was wir aber nicht benötigen im Moment.
+
 #### Übung
 
 ::: aufgabe
-Erstellen Sie nun analog zur letzten Übung eine Grafik mittels ggplot, die den Einfluss von Wind auf die Temperatur in einem Punktdiagramm mit Regressionsgerade darstellt. 
+Erstellen Sie nun analog zur letzten Übung eine Grafik mittels ggplot, die den Einfluss von Wind auf die Temperatur in einem Punktdiagramm mit Regressionsgerade darstellt.
 
 Die Daten befinden sich wieder im `airquality`-Datensatz.
 :::
@@ -818,37 +801,181 @@ ggplot(airquality, aes(x = Wind, y = Temp)) +  # Datensatz und Mappings definier
 
 Super, jetzt haben Sie gelernt, wie eine einfache lineare Regression visuell dargestellt werden kann!
 
-Im nächsten Kapitel werden wir uns mit den Vorannahmen beschäftigen, die erfüllt sein müssen, damit die lineare Regression überhaupt zulässig ist. 
+Im nächsten Kapitel werden wir uns mit den Vorannahmen beschäftigen, die erfüllt sein müssen, damit die lineare Regression überhaupt zulässig ist.
 
 ## Vorraussetzungen prüfen
 
-### Linearer Zusammenhang in den Daten
+Hier ein kleiner Überblick, darüber, wie die Voraussetzungen geprüft werden können in R:
 
-Manche Daten werden besser nicht durch Geraden erklärt, sondern haben vielleicht quadratische Zusammenhänge:
++----------------------------------------+-----------------------------------+
+| Vorannahme                             | Überprüfung                       |
++========================================+===================================+
+| 1.  metrische Variablen                | Vorwissen über die Erhebung       |
++----------------------------------------+-----------------------------------+
+| 2.  Zufällige Stichprobe               | Vorwissen über die Erhebung       |
++----------------------------------------+-----------------------------------+
+| 3.  Linearer Zusammenhang in den Daten | Streudiagramm                     |
++----------------------------------------+-----------------------------------+
+| 4.  Es gibt Variation beim Prädiktor   | Streudiagramm                     |
++----------------------------------------+-----------------------------------+
+
+: Vor dem Modellieren
+
++----------------------------------------------+-----------------------------------------------+
+| Vorannahme                                   | Überprüfung                                   |
++==============================================+===============================================+
+| 5.  Unkorreliertheit der Residuen mit der UV | `plot(fit)`                                   |
++----------------------------------------------+-----------------------------------------------+
+| 6.  Homoskedastizität                        | `plot(fit)`                                   |
++----------------------------------------------+-----------------------------------------------+
+| 7.  keine Autokorrelation der Residuen       | `car::durbinWatsonTest()`                     |
++----------------------------------------------+-----------------------------------------------+
+| 8.  Normalverteilung der Residuen            | -   Q-Q-Plot: der zweite Plot bei `plot(fit)` |
+|                                              |                                               |
+|                                              | -   Histogramm der standardisierten Residuen  |
+|                                              |                                               |
+|                                              |     -   `library(tidyverse)`                  |
+|                                              |                                               |
+|                                              |     -   `resid(fit) %>% scale() %>% hist()`   |
++----------------------------------------------+-----------------------------------------------+
+
+: Nach dem Modellieren
+
+### 1. Metrische Variablen
+
+Sowohl der Prädiktor als auch das Kriterium müssen metrisch sein.
+
+Hier sind einige andere Verfahren bei:
+
+kategorialer Prädiktor + metrisches Kriterium
+
+-   bei zwei Kategorien: $t$-Test
+
+-   bei mehr als zwei Kategorien: Varianzanalyse (ANOVA) oder Dummy-Kodierung
+
+metrischer Prädiktor + kategoriales Kriterium:
+
+-   logistische Regression
+
+### 2. Zufällige Stichprobe
+
+Im Beispiel mit der Amerikanischen Traubenkirsche wäre es zum Beispiel wichtig, dass nicht selektiv nur Bäume vermessen wurden, die eine besonders gute Wuchsform hatten, sondern eine zufällige Auswahl aus allen möglichen Bäumen getroffen wurde - sonst ist das Modell nicht generalisierbar.
+
+### 3. Linearer Zusammenhang in den Daten
+
+Manche Daten werden besser nicht durch Geraden erklärt, sondern haben vielleicht quadratische Zusammenhänge, wie in diesem Beispiel:
 
 ```{r}
-data <- data.frame(Arbeitszeit=c(6, 9, 12, 14, 30, 35, 40, 47, 51, 55, 60),
-                   Glück=c(14, 28, 50, 70, 89, 94, 90, 75, 59, 44, 27))
+data <- data.frame(Temperatur=c(6, 9, 12, 14, 30, 35, 40, 47, 51, 55, 60),
+                   Enzymaktivität=c(14, 28, 50, 70, 89, 94, 90, 75, 59, 44, 27))
 
 
-straight_fit <- lm(Glück ~ Arbeitszeit, data = data)
-data$Arbeitszeit2 <- data$Arbeitszeit^2
-quad_fit <- lm(Glück ~ Arbeitszeit + Arbeitszeit2, data = data)
+straight_fit <- lm(Enzymaktivität ~ Temperatur, data = data)
+data$Temperatur2 <- data$Temperatur^2
+quad_fit <- lm(Enzymaktivität ~ Temperatur + Temperatur2, data = data)
 zeit <- seq(0, 60, 0.1)
-prediction <- predict(quad_fit, list(Arbeitszeit = zeit, Arbeitszeit2 = zeit^2))
+prediction <- predict(quad_fit, list(Temperatur = zeit, Temperatur2 = zeit^2))
 
-plot(Glück ~ Arbeitszeit, data = data)
-abline(fit, col = "red")
+plot(Enzymaktivität ~ Temperatur, data = data)
+abline(straight_fit, col = "red")
 lines(zeit, prediction, col = "blue")
 ```
 
 Die Gerade erklärt die Daten nicht gut und trifft falsche Vorhersagen, während die quadratische Funktion sehr nah an der Realität liegt. (Fiktive Daten, Quelle: [statology](https://www.statology.org/quadratic-regression-r/))
 
+Die Überprüfung einer linearen Beziehung in den Daten erfolgt visuell über ein Punktdiagramm. Die Punkte sollten sich alle durch eine Gerade beschreiben lassen und keine systematischen Abweichungen haben.
+
+Beispiele:
+
+```{r plotmaking, fig.height=5, fig.width=6}
+p1 <- ggplot(rtutorials::concrete, aes(x = coarse_aggregate, y = compressive_strength)) +
+  geom_point(alpha = 0.2) +
+  theme_void() +
+  labs(title = "1")
+
+p2 <- ggplot(rtutorials::heated, aes(x = edvisits, y = maxtemp)) +
+  geom_point(alpha = 0.18) +
+  theme_void() +
+  labs(title = "2")
+
+p3 <- ggplot(rtutorials::airfoil, aes(x = angle, y = displacement_thickness)) +
+  geom_point(alpha = 0.03) +
+  theme_void() +
+  labs(title = "3")
+
+p4 <- ggplot(iris, aes(x = Petal.Length, y = Petal.Width)) +
+  geom_point(alpha = 0.2) +
+  theme_void() +
+  labs(title = "4")
+
+p5 <- ggplot(women, aes(x = height, y = weight)) +
+  geom_point(alpha = 0.5) +
+  theme_void() +
+  labs(title = "5")
+  
+p6 <- ggplot(faithful, aes(x = eruptions, y = waiting)) +
+  geom_point(alpha = 0.34) +
+  theme_void() +
+  labs(title = "6")
+
+gridExtra::grid.arrange(p1, p2, p3, p4, p5, p6)
+```
+
+```{r plotquiz}
+question_checkbox("Bei welchen dieser Plots würden Sie eine zugrunde liegende lineare Beziehung vermuten?",
+                  answer("1", message = "Hier ist es schwer zu sagen - die Daten enthalten sehr viel Streuung."),
+                  answer("2", message = "Diese Beziehung zwischen Notaufnahmebesuchen (y) und Hitze (x) folgt eher einer Kurve als einer Gerade"),
+                  answer("3", message = "Hier liegt scheinbar eher eine Exponentialfunktion zu Grunde, keine Gerade"),
+                  answer("4", correct = T, message = "4: Hier könnte eine Gerade die Punkte gut beschreiben."),
+                  answer("5", correct = T, message = "5: Es handelt sich um den Zusammenhang zwischen Körpergröße und Gewicht."),
+                  answer("6", correct = T, message = "6: Auch hier lässt sich eine lineare Beziehung vermuten."),
+                  allow_retry = TRUE
+         )
+```
+
+### 4. Variation des Prädiktors
+
+Wie sieht ein Plot ohne Variation des Prädiktors aus?
+
+Alle Punkte liegen auf dem selben $x$-Wert. In diesem Fall hilft $x$ überhaupt nicht, Varianz in $y$ zu erklären. Die beste Vorhersage für $y$ ist dann der Mittelwert $\bar y$.
+
+Dieser Fall ist in der Praxis extrem unwahrscheinlich, da es meistens ein bisschen zufällige Variation gibt.
+
+```{r novariation, fig.height=5, fig.width=5}
+plot(x = rep(20, 100), y = rnorm(100), yaxt = "n", xaxt = "n", xlab = "x", ylab = "y")
+```
+
+::: aufgabe
+**\* Profi-Frage**
+:::
+
+```{r proquestion}
+question_numeric("Welchen Wert würde $R^2$ im obigen Plot annehmen und warum?",
+                 answer(0, correct = T),
+                 allow_retry = T)
+```
+
+<details>
+<summary>**▼ Erklärung**</summary>
+
+::: infobox
+\begin{align}
+R^2 &= \frac{\text{Durch das Modell erklärte Varianz in y}}{\text{Gesamtvarianz in y}} \\
+R^2 &= \frac{0}{\text{Gesamtvarianz in y}}
+R^2 &= 0
+\end{align}
+:::
+</details>
+
+### 5. Unkorreliertheit der Residuen mit Kriterium
+
+### 6. Homoskedastizität der Residuen
+
 ## Ausblick: Multiple lineare Regression
 
 In der Praxis wird selten nur eine einfache (im Sinne von 1-fach) lineare Regression gerechnet, sondern mehrere Prädiktoren werden verwendet, um ein Kriterium vorherzusagen oder zu erklären.
 
-Bei unserem Forst-Beispiel ist das ja auch so: Die Höhe spielt natürlich eine wichtige Rolle, und ist nicht zu vernachlässigen, wenn wir einen guten Schätzer für das Holzvolumen eines Baumes haben wollen. 
+Bei unserem Forst-Beispiel ist das ja auch so: Die Höhe spielt natürlich eine wichtige Rolle, und ist nicht zu vernachlässigen, wenn wir einen guten Schätzer für das Holzvolumen eines Baumes haben wollen.
 
 ```{r}
 trees$Height <- trees$Height * 0.3048  # Umrechnung Fuß in Meter
@@ -857,7 +984,6 @@ multiple_fit <- lm(Volume ~ Diameter + Height, data = trees)
 summary(multiple_fit)
 anova(fit, multiple_fit)
 ```
-
 
 ## Abschlussquiz
 
