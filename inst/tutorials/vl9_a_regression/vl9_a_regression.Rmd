@@ -747,7 +747,7 @@ F-statistic: 419.4 on 1 and 29 DF,  p-value: < 2.2e-16   <--- p-Wert Gesamtmodel
 ### Interpretation des $p$-Werts
 
 <details>
-  <summary>**▼ Hilfe, ich weiß nicht wie man `2.2e-16` liest!**</summary>
+  <summary><a>▼ Wie wird `2.2e-16` gelesen?</a></summary>
   </br>
   
 ::: vorteile
@@ -775,11 +775,8 @@ Der $p$-Wert ist eine Antwort auf folgende Frage: „Unter der Annahme, dass $R^
 
 Da wir eine Bedingung annehmen, nämlich dass die Nullhypothese gilt, ist der $p$-Wert eine *bedingte* Wahrscheinlichkeit.
 
-Aussagen wie: „Mit einer Wahrscheinlichkeit von [$p$ %] gilt die Nullhypothese“ sind deshalb **falsch**. Ob die Nullhypothese in Wahrheit gilt oder nicht, werden wir nie herausfinden - es sei denn, wir messen die ganze Population - aber wir können schätzen, wie wahrscheinlich es ist, zufällig das vorliegende Ergebnis oder ein extremeres zu ziehen, wenn wir annehmen, dass die Nullhypothese gilt - und daraus wiederum Rückschlüsse ziehen darüber, ob wir die Nullhypothese verwerfen oder beibehalten.
+Aussagen wie: <s>„Mit einer Wahrscheinlichkeit von [$p$ %] gilt die Nullhypothese“</s> sind deshalb **falsch**. Ob die Nullhypothese in Wahrheit gilt oder nicht, werden wir nie herausfinden - es sei denn, wir messen die ganze Population - aber wir können schätzen, wie wahrscheinlich es ist, zufällig das vorliegende Ergebnis oder ein extremeres zu ziehen, wenn wir annehmen, dass die Nullhypothese gilt - und daraus wiederum Rückschlüsse ziehen darüber, ob wir die Nullhypothese verwerfen oder beibehalten.
 
-```r
-F-statistic: 419.4 on 1 and 29 DF,  p-value: < 2.2e-16   <--- p-Wert Gesamtmodelltest
-```
 
 
 ### Lokaltest
