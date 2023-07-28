@@ -669,9 +669,122 @@ Das Bestimmtheitsmaß (auch Determinationskoeffizient) $R^2$ finden wir in der v
 Multiple R-squared:  0.9353   <------- R²
 ```
 
+### Interpretation 
+
+„93,53 % der Varianz im Holzvolumen können auf den Prädiktor "Durchmesser" zurückgeführt werden (lat. *regressare* = zurückgehen).
+
+Allgemein formuliert: 
+
+> „93,53% der Varianz im Kriterium können durch das Modell aufgeklärt werden.“ 
+
+(Zufällig besteht unser Modell nur aus einem Prädiktor, aber in der Praxis werden es häufig mehrere Prädiktoren sein - siehe "Ausblick: multiple lineare Regression".)
+
+Die Höhe des Wertes ist nicht wirklich gut vergleichbar, da es vom Forschungsgebiet abhängt, wie viel Varianzaufklärung als "gut" gilt. Über 90% Varianzaufklärung durch das Modell sind aber fast schon unglaublich und das kommt in der Praxis eher selten vor.  
+
+### Zusammenhang mit Korrelationskoeffizient $r$
+
+Im Fall der einfachen linearen Regression, aber nicht bei multipler Regression, entspricht $R^2$ der quadrierten Pearson-Korrelation $r$ des Prädiktors mit dem Kriterium. Daraus folgt: $\sqrt{R^2} = r$
+
+#### Übung
+::: aufgabe
+Berechnen Sie den Korrelationskoeffizienten auf zwei Wegen: 
+- als Wurzel von $R^2$
+- mit der `cor()`-Funktion
+
+Sind die Ergebnisse identisch?
+:::
+
+```{r cor, exercise = TRUE, exercise.setup = "silentsetup", exercise.cap = "Korrelation"}
+r2 <- 0.9353
+
+```
+
+```{r cor-solution}
+r2 <- 0.9353
+sqrt(r2)
+cor(trees$Diameter, trees$Volume) 
+# 0.967109 == 0.967112
+# Die kleine Abweichung ist ok, wir runden auf 4 Nachkommastellen, weil R² uns nicht präziser gegeben ist.
+```
+
+```{r korrelationsfrage}
+question_numeric("Geben Sie Ihren errechneten Wert der Pearson-Korrelation zwischen Volumen und Durchmesser ein, gerundet au 4 Nachkommastellen!",
+                 answer(0.9671, correct = TRUE, message = "Wir runden auf 4 Nachkommastellen, weil R² uns nicht präziser gegeben ist."))
+```
+
+#### Reminder: Interpretation Korrelation
+Wie interpretiert man noch mal den Korrelationskoeffizienten? Siehe Tutorial Korrelation.
+
+- Stärke des Zusammenhangs (alles ab ca. |.5| ist ein starker Zusammenhang)
+- Richtung des Zusammenhangs
+
+„0.9671 ist ein starker positiver Zusammenhang“.
+
+Nun haben Sie sich ausgiebig mit der Modellgüte befasst. Allerdings können wir damit noch keine allgemeinen Aussagen treffen über Kausalität, denn $R^2$ ist ein rein deskriptives, also *beschreibendes* Maß. Um Schlussfolgerungen abzuleiten, müssen wir ein bisschen Inferenzstatistik betreiben (schließende Statistik).
+
 ## Signifikanztests
 
-Lokaltests und Gesamtmodell
+### Test des Gesamtmodells
+
+Die Nullhypothese des Gesamtmodelltests lautet: $R^2$ beträgt in Wahrheit 0. 
+Das heißt, wir sind sehr kritisch und gehen erst mal davon aus, dass unser Modell nur rein zufällig etwas Varianz aufklärt,  aber in der Grundgesamtheit gibt es eigentlich keine Varianzaufklärung. 
+
+Wir finden den Test des Gesamtmodells in der allerletzten Zeile des R-Outputs:
+
+```{r ftest_output, exercise = T, exercise.eval = TRUE}
+fit_centered <- lm(Volume ~ Diameter_centered, data = trees)
+summary(fit_centered)
+```
+
+Der Test des Gesamtmodells ist ein $F$-Test, da zwei Varianzen ins Verhältnis gesetzt werden:
+Die durch das Modell erklärte Varianz, und die nicht erklärte Varianz. (Immer, wenn Varianzen verglichen werden, klingt das in Ihren Ohren nach $F$-Test. Zumindest sollte das so sein.)
+
+Wie genau die `F-statistic` zustande kommt und was es mit den Freiheitsgraden `DF` auf sich hat, kann hier nicht ausführlich behandelt werden. Das sind nur Zwischenschritte auf dem Weg zur Berechnung des $p$-Werts. Wichtig ist, dass Sie den $p$-Wert als Endresultat interpretieren können, egal ob er von einem $F$-, $t$- oder $z$-Test ist. 
+
+```
+F-statistic: 419.4 on 1 and 29 DF,  p-value: < 2.2e-16   <--- p-Wert Gesamtmodelltest
+```
+### Interpretation des $p$-Werts
+
+<details>
+  <summary>**▼ Hilfe, ich weiß nicht wie man `2.2e-16` liest!**</summary>
+  </br>
+  
+::: vorteile
+  Keine Panik - das ist wissenschaftliche Notation (*scientific notation*).
+  
+  Das wird verwendet, um sehr viele Nullen kompakt darzustellen. 
+  
+  So ist das Schema:
+  
+  `2.2e-16`$= 2.2 \cdot 10^{-16} = 0\overbrace{.0000000000000002}^{\substack{\text{Komma} \\ \text{16 Stellen nach vorne}}}2$
+  
+  - `e` steht für „mal 10 hoch Exponent“
+  
+  - `-16` ist der Exponent
+  
+Ein Positiv-Beispiel wäre:
+
+`5.12e+12`$= 5.12 \cdot 10^{12} = 5\overbrace{120\ 000\ 000\ 000}^{\substack{\text{Komma} \\ \text{12 Stellen nach hinten}}}.0$
+  
+:::
+</details>
+</br>
+
+Der $p$-Wert ist eine Antwort auf folgende Frage: „Unter der Annahme, dass $R^2$ in der Population 0 ist — Wie wahrscheinlich ist es, zufällig eine Stichprobe zu ziehen in der das vorliegende oder ein noch extremeres $R^2$ zustande kommt?“
+
+Da wir eine Bedingung annehmen, nämlich dass die Nullhypothese gilt, ist der $p$-Wert eine *bedingte* Wahrscheinlichkeit.
+
+Aussagen wie: „Mit einer Wahrscheinlichkeit von [$p$ %] gilt die Nullhypothese“ sind deshalb **falsch**. Ob die Nullhypothese in Wahrheit gilt oder nicht, werden wir nie herausfinden - es sei denn, wir messen die ganze Population - aber wir können schätzen, wie wahrscheinlich es ist, zufällig das vorliegende Ergebnis oder ein extremeres zu ziehen, wenn wir annehmen, dass die Nullhypothese gilt - und daraus wiederum Rückschlüsse ziehen darüber, ob wir die Nullhypothese verwerfen oder beibehalten.
+
+```r
+F-statistic: 419.4 on 1 and 29 DF,  p-value: < 2.2e-16   <--- p-Wert Gesamtmodelltest
+```
+
+
+### Lokaltest
+
+
 
 ## Visualisierungen
 
@@ -969,7 +1082,11 @@ R^2 &= 0
 
 ### 5. Unkorreliertheit der Residuen mit Kriterium
 
-### 6. Homoskedastizität der Residuen
+### 6. Homoskedastizität
+
+### 7. keine Auto-Korrelation der Residuen
+
+### 8. Normalverteilung der Residuen
 
 ## Ausblick: Multiple lineare Regression
 
