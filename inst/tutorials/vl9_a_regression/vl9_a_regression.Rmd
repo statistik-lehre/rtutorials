@@ -420,9 +420,9 @@ Amazing.
 
 </details>
 
-Das könnte man durch sehr langes Ausprobieren und immer wieder optimieren erreichen, aber glücklicherweise gibt es Formeln dafür, die auf direktem Weg die optimale Gerade berechnen können.
+#### Exkurs: Fitting durch Machine Learning
 
-
+Man kann die Quadrierten Residuen auch minimieren durch Trial & Error, wie Sie oben selbst es auch gemacht haben. Das geht super mit Machine-Learning-Algorithmen. 
 
 Hier eine Illustration des Fitting-Prozesses, allerdings mit anderen Daten. Die Grafik zeigt wie ein Machine-Learning-Algorithmus sich Schritt für Schritt der optimalen Regressionsgerade annähert, und die mittlere quadratische Abweichung (Mean Squared Error, MSE) der vorhergesagten Werte von den tatsächlichen Werten dabei immer kleiner wird, bis es nicht kleiner geht.
 
