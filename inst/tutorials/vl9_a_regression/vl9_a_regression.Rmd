@@ -366,27 +366,25 @@ Offensichtlich ist es daher besser, wenn die Residuen kleiner sind, als wenn sie
 
 Ein Residuum der Messung $i$ errechnet sich aus: $y_i - \hat y_i$.
 
+#### Methode der kleinsten Quadrate
 
+Eine Möglichkeit, zu definieren wann eine Regressionsgerade optimal an die Daten angepasst ist, zu sagen:
 
+> „Die Regressionsgerade liegt optimal, wenn die Summe der quadrierten Residuen minimal ist.“
 
-Hier eine Illustration des Fitting-Prozesses, allerdings mit anderen Daten. Die Grafik zeigt wie ein Machine-Learning-Algorithmus sich Schritt für Schritt der optimalen Regressionsgerade annähert, und die mittlere quadratische Abweichung (Mean Squared Error, MSE) der vorhergesagten Werte von den tatsächlichen Werten dabei immer kleiner wird, bis es nicht kleiner geht.
+Diese Definition verwendet zur Schätzung der Regressionskoeffizienten die Methode der kleinsten Quadrate (*least squares*).
 
-![](images/iterative_fitting.gif){width="80%"}
-
-Bild: [ghbat.com](https://gbhat.com/machine_learning/linear_regression.html)
-
-#### \* fürs Interesse
+Günstigerweise liefert diese Methode immer die Gerade mit minimalem Abstand zu den Residuen! 
 
 <details>
 
-<summary>**▼ Klicken Sie `HIER` für mathematische Formeln**</summary>
+<summary><a>▼ * für's Interesse: mathematische Formeln</a></summary>
 
 ::: infobox
 **Woher kommen die Formeln für** $b_1$ und $b_0$?
 
 Wie bereits gesagt, wird die Gerade so gelegt, dass die Summe der quadrierten Residuen minimal ist.
 
-Formel für die Quadratsumme der Residuen:
 
 $$
 \sum_{i = 1}^n \left( y_i - \hat y_i \right)^2 = min
@@ -396,7 +394,7 @@ $$ mit:
 
 -   $\hat y_i$ = vorhergesagter Wert
 
-Analog zur Berechnung der Varianz wird hier quadriert. Da quadrierte Werte immer positiv sind, erreicht man, dass sich negative und positive Abweichungen nicht aufheben beim Summieren.
+Analog zur Berechnung der Varianz wird hier quadriert. Da quadrierte Werte immer positiv sind, erreicht man, dass sich negative und positive Abweichungen nicht aufheben beim Summieren. Außerdem stellt das Quadrieren weitere günstige mathematische Eigenschaften für das Minimieren her (eine genaue Erklärung führt zu weit).
 
 Einsetzen der Regressionsgleichung für $\hat y$:
 
@@ -404,7 +402,9 @@ $$
 \sum_{i = 1}^n \left( y_i - (b_0 + b_1 \cdot x_i) \right)^2 = min
 $$
 
-Ableiten von allgemeinen Formeln ist nun möglich. Details führen hier zu weit, aber hier sind die fertigen Formeln für $b_0$ und $b_1$:
+Ableiten von allgemeinen Formeln ist nun möglich. Details führen hier zu weit, aber es gibt gute externe Quellen dazu:
+
+hier sind die fertigen Formeln für $b_0$ und $b_1$:
 
 ```{=tex}
 \begin{align}
@@ -419,6 +419,20 @@ Amazing.
 :::
 
 </details>
+
+Das könnte man durch sehr langes Ausprobieren und immer wieder optimieren erreichen, aber glücklicherweise gibt es Formeln dafür, die auf direktem Weg die optimale Gerade berechnen können.
+
+
+
+Hier eine Illustration des Fitting-Prozesses, allerdings mit anderen Daten. Die Grafik zeigt wie ein Machine-Learning-Algorithmus sich Schritt für Schritt der optimalen Regressionsgerade annähert, und die mittlere quadratische Abweichung (Mean Squared Error, MSE) der vorhergesagten Werte von den tatsächlichen Werten dabei immer kleiner wird, bis es nicht kleiner geht.
+
+![](images/iterative_fitting.gif){width="80%"}
+
+Bild: [ghbat.com](https://gbhat.com/machine_learning/linear_regression.html)
+
+#### \* fürs Interesse
+
+
 
 ### Umsetzung in R
 
