@@ -16,7 +16,7 @@ resource_files:
 ```{r setup, include=FALSE}
 library(learnr)
 library(ggplot2)
-trees <- datasets::trees
+library(shiny)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
@@ -123,8 +123,8 @@ trees$Volume <- trees$Volume * 0.0283168466 #  ft³ in m³
 ```{r silentsetup}
 # Hier drauf sollten sich alle Exercise Code Chunks, die das trees-Dataset verwenden, beziehen
 
-trees$Diameter <- trees$Girth * 2.54 # Inch in cm
-trees$Volume <- trees$Volume * 0.0283168466 #  ft³ in m³
+trees$Diameter <- datasets::trees$Girth * 2.54 # Inch in cm
+trees$Volume <- datasets::trees$Volume * 0.0283168466 #  ft³ in m³
 
 trees$Diameter_centered <- trees$Diameter - mean(trees$Diameter)
 ```
@@ -132,8 +132,8 @@ trees$Diameter_centered <- trees$Diameter - mean(trees$Diameter)
 ```{r silentsetup-global}
 # Und das gleiche noch mal fürs Global Environment
 
-trees$Diameter <- trees$Girth * 2.54 # Inch in cm
-trees$Volume <- trees$Volume * 0.0283168466 #  ft³ in m³
+trees$Diameter <- datasets::trees$Girth * 2.54 # Inch in cm
+trees$Volume <- datasets::trees$Volume * 0.0283168466 #  ft³ in m³
 
 trees$Diameter_centered <- trees$Diameter - mean(trees$Diameter)
 ```
@@ -309,6 +309,42 @@ Aber wie genau kommen wir auf diese Parameter? Den Prozess, ein Modell zu erstel
 
 $b_0$ und $b_1$ werden so gewählt, dass die Regressionsgerade einen möglichst kleinen Abstand zu allen Datenpunkten hat.
 
+Probieren Sie selbst aus, Regressionsgerade optimal durch die Datenpunkte zu legen!
+
+```{r shiny_ui, echo=FALSE}
+sliderInput("b0", "Intercept b0:", min = -1.5, max = 1.5, value = 0, step = 0.01)
+sliderInput("b1", "Slope b1:", min = 0, max = 0.15, value = 0.075, step = 0.001)
+plotOutput("distPlot", inline = TRUE)
+```
+
+```{r shiny_server, context="server", cache=TRUE}
+output$distPlot <- renderPlot({
+  
+# Prerequisites: Daten müssen noch mal erstellt werden weil shiny app verwendet eigenes environment
+trees$Diameter <- datasets::trees$Girth * 2.54 # Inch in cm
+trees$Volume <- datasets::trees$Volume * 0.0283168466 #  ft³ in m³
+  
+# Plot
+ggplot(trees, aes(x = Diameter, y = Volume)) +
+  geom_point() +
+  geom_abline(intercept = input$b0, slope = input$b1, color = "blue") +
+  theme_minimal() +
+  labs(x = "Durchmesser (cm)", y = "Volumen (m³)") +
+  coord_cartesian(xlim = c(0, 60), ylim =c(-2, 2.5), expand = F)
+
+},
+width = 800, height = 400)
+```
+
+Super! Später können Sie Ihre Schätzungen mit der vom Computer errechneten optimalen Gerade vergleichen.
+
+Aber wann liegt die Gerade optimal über den Daten? Es gibt verschiedene Ansätze dazu. 
+
+Ein wichtiges Konzept sind dabei die Residuen. 
+
+
+### Residuen
+
 ```{r residplot, echo=F, message=FALSE, warning=FALSE}
 lm(Volume ~ Diameter, data = trees) -> fit
 fitted(fit) -> fitted
@@ -322,17 +358,18 @@ ggplot(trees, aes(x = Diameter, y = Volume)) +
   labs(x = "Durchmesser (cm)", y = "Volumen (m³)", color = "")
 ```
 
-Die Gerade liegt so, dass die Summe der quadrierten Abstände zu den Datenpunkten minimal ist.
-
-Das könnte man durch sehr langes Ausprobieren und immer wieder optimieren erreichen, aber glücklicherweise gibt es Formeln dafür, die auf direktem Weg die optimale Gerade berechnen können.
-
-### Residuen
-
-Die oben in dunkelrot gekennzeichneten Abstände zwischen den realen Werten und den vorhergesagten Werten nennt man auch **Residuen**, also "Überbleibsel". Residuen stellen die Abweichung der Realität vom Modell dar, also den "Fehler", den das Modell nicht erklären kann.
+Die oben in dunkelrot gekennzeichneten vertikalen Abstände zwischen realen Werten und den vorhergesagten Werten nennt man auch **Residuen**, also "Überbleibsel". Residuen stellen die Abweichung der Realität vom Modell dar, also den "Fehler", den das Modell nicht erklären kann.
 
 Offensichtlich ist es daher besser, wenn die Residuen kleiner sind, als wenn sie sehr groß sind. Kleine Residuen bedeuten, dass das Modell näher an der Realität liegt.
 
-Hier eine Illustration des Fitting-Prozesses, allerdings mit anderen Daten. Die Grafik zeigt wie ein Machine-Learning-Algorithmus sich Schritt für Schritt der optimalen Regressionsgerade annähert, und die mittlere quadritische Abweichung (Mean Squared Error, MSE) der vorhergesagten Werte von den tatsächlichen Werten dabei immer kleiner wird, bis es nicht kleiner geht.
+#### Formel
+
+Ein Residuum der Messung $i$ errechnet sich aus: $y_i - \hat y_i$.
+
+
+
+
+Hier eine Illustration des Fitting-Prozesses, allerdings mit anderen Daten. Die Grafik zeigt wie ein Machine-Learning-Algorithmus sich Schritt für Schritt der optimalen Regressionsgerade annähert, und die mittlere quadratische Abweichung (Mean Squared Error, MSE) der vorhergesagten Werte von den tatsächlichen Werten dabei immer kleiner wird, bis es nicht kleiner geht.
 
 ![](images/iterative_fitting.gif){width="80%"}
 
