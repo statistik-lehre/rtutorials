@@ -16,7 +16,7 @@ resource_files:
 ```{r setup, include=FALSE}
 library(learnr)
 library(ggplot2)
-
+trees <- datasets::trees
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
@@ -726,12 +726,33 @@ Nun haben Sie sich ausgiebig mit der Modellgüte befasst. Allerdings können wir
 
 ### Test des Gesamtmodells
 
-Die Nullhypothese des Gesamtmodelltests lautet: $R^2$ beträgt in Wahrheit 0. 
-Das heißt, wir sind sehr kritisch und gehen erst mal davon aus, dass unser Modell nur rein zufällig etwas Varianz aufklärt,  aber in der Grundgesamtheit gibt es eigentlich keine Varianzaufklärung. 
+Die Problemstellung ist folgende: 
+
+Alles, was wir bisher beobachtet haben, gilt zwar in unserer kleinen Stichprobe von 31 Amerikanischen Traubenkirschen, aber wir wissen nicht, ob wir die Ergebnisse auch verallgemeinern können. 
+
+Haben wir nicht vielleicht eine Stichprobe gezogen, in welcher der Durchmesser und das Holzvolumen **zufällig** zusammenhängen, obwohl das eigentlich generell im ganzen Wald nicht der Fall ist?
+
+![](images/ftest.jpg){width=80%}
+
+Die Nullhypothese $H_0$ des Tests lautet: $R^2$ beträgt in Wahrheit 0. 
+
+Was der Signifikanztest tut, ist zu schauen: Wie groß ist die Wahrscheinlichkeit $p$, die vorliegende Stichprobe (oder eine noch extremere) aus einer Population zu ziehen, in der die Nullhypothese gilt?
+
+Wie groß ist die Wahrscheinlichkeit, in den Wald zu gehen, 31 Bäume zu fällen, bei denen der Durchmesser zufällig 93% der Varianz im Volumen aufklären kann, obwohl im ganzen Wald der Durchmesser eigentlich nichts mit dem Volumen zu tun hat? 
+
+Wenn es sich als sehr unwahrscheinlich herausstellt, gewinnen wir gewissermaßen rückwärts die Erkenntnis, dass die Nullhypothese aller Wahrscheinlichkeit nach nicht in der Population gilt.
+
+Aber ab wann ist etwas sehr unwahrscheinlich?
+
+Das sind arbiträr festgelegte Grenzen, die sich je nach Fachgebiet unterscheiden, aber ein allgemeiner Standard ist ein Signifikanzniveau $\alpha = 0.05\ \ (5\%)$.
+
+Wir sind sehr kritisch und unterstellen erst mal, dass es in Wahrheit in der gesamten Population keine Varianzaufklärung gibt, und dass unsere Stichprobe nur ein zufällige Abweichung davon ist. Diese Art von kritischer Haltung ist allen Nullhypothesen-Signifikanztests gemeinsam, sei es ein $F$-, $t$- oder $z$-Test.
+
+#### R-Output
 
 Wir finden den Test des Gesamtmodells in der allerletzten Zeile des R-Outputs:
 
-```{r ftest_output, exercise = T, exercise.eval = TRUE}
+```{r ftest_output, exercise = T, exercise.eval = TRUE, exercise.setup = "silentsetup"}
 fit_centered <- lm(Volume ~ Diameter_centered, data = trees)
 summary(fit_centered)
 ```
@@ -739,11 +760,15 @@ summary(fit_centered)
 Der Test des Gesamtmodells ist ein $F$-Test, da zwei Varianzen ins Verhältnis gesetzt werden:
 Die durch das Modell erklärte Varianz, und die nicht erklärte Varianz. (Immer, wenn Varianzen verglichen werden, klingt das in Ihren Ohren nach $F$-Test. Zumindest sollte das so sein.)
 
-Wie genau die `F-statistic` zustande kommt und was es mit den Freiheitsgraden `DF` auf sich hat, kann hier nicht ausführlich behandelt werden. Das sind nur Zwischenschritte auf dem Weg zur Berechnung des $p$-Werts. Wichtig ist, dass Sie den $p$-Wert als Endresultat interpretieren können, egal ob er von einem $F$-, $t$- oder $z$-Test ist. 
+Das hier ist die relevante Zeile:
 
 ```
 F-statistic: 419.4 on 1 and 29 DF,  p-value: < 2.2e-16   <--- p-Wert Gesamtmodelltest
 ```
+
+Wie genau die `F-statistic` zustande kommt und was es mit den Freiheitsgraden `DF` auf sich hat, kann hier nicht ausführlich behandelt werden. Das sind nur Zwischenschritte auf dem Weg zur Berechnung des $p$-Werts. Wichtig ist, dass Sie den $p$-Wert als Endresultat interpretieren können, egal ob er von einem $F$-, $t$- oder $z$-Test ist. 
+
+
 ### Interpretation des $p$-Werts
 
 <details>
@@ -773,14 +798,202 @@ Ein Positiv-Beispiel wäre:
 
 Der $p$-Wert ist eine Antwort auf folgende Frage: „Unter der Annahme, dass $R^2$ in der Population 0 ist — Wie wahrscheinlich ist es, zufällig eine Stichprobe zu ziehen in der das vorliegende oder ein noch extremeres $R^2$ zustande kommt?“
 
-Da wir eine Bedingung annehmen, nämlich dass die Nullhypothese gilt, ist der $p$-Wert eine *bedingte* Wahrscheinlichkeit.
+> Wenn $p \le 0.05$: unwahrscheinlich -> Nullhypothese verwerfen
+>
+> Wenn $p > 0.05$: wahrscheinlich -> Nullhypothese beibehalten
+
+```{r pquestion}
+learnr::question_radio("Wie würde Ihre Hypothesenentscheidung für das Beispiel aussehen? (α = 0.05)",
+               answer("Nullhypothese beibehalten", message = "Da p mit 0.00…22 kleiner als 0.05 ist, sollten wir die Nullhypothese verwerfen."),
+               answer("Nullhypothese verwerfen", correct = TRUE, message = "Da p unglaublich klein ist, auf jeden Fall kleiner als das Signifikanzniveau von 0.05, ist es richtig, die Nullhypothese zu verwerfen."),
+               allow_retry = TRUE
+)
+```
+
+#### häufige inkorrekte Formulierungen
+
+Da wir für die Errechnung des $p$-Werts eine Bedingung annehmen, nämlich dass die Nullhypothese gilt, ist der $p$-Wert eine *bedingte* Wahrscheinlichkeit.
 
 Aussagen wie: <s>„Mit einer Wahrscheinlichkeit von [$p$ %] gilt die Nullhypothese“</s> sind deshalb **falsch**. Ob die Nullhypothese in Wahrheit gilt oder nicht, werden wir nie herausfinden - es sei denn, wir messen die ganze Population - aber wir können schätzen, wie wahrscheinlich es ist, zufällig das vorliegende Ergebnis oder ein extremeres zu ziehen, wenn wir annehmen, dass die Nullhypothese gilt - und daraus wiederum Rückschlüsse ziehen darüber, ob wir die Nullhypothese verwerfen oder beibehalten.
 
+### Grafische Darstellung
+
+Da $p$ unglaublich klein ist, ist es schwierig, alle relevanten Teile in einem Plot unterzubringen. Deswegen gibt es 3: 
+
+- Übersicht (komplett herausgezoomt)
+- Zoom Nr. 1 
+- Zoom Nr. 2
+
+In der Übersicht sehen Sie den empirischen (=beobachteten) F-Wert, der sich aus der beobachteten Varianzaufklärung von 93% errechnet. Er entspricht `F-statistic` im R-Output. 
+
+<details>
+  <summary><a>▼ \* Wie wird der empirische $F$-Wert berechnet?</a></summary>
+  </br>
+  
+::: infobox
+\begin{align*}
+F &= \frac{R^2}{1-R^2} \\
+F &= \frac{\text{durch das Modell erklärte Varianz}}{\text{nicht erklärbare Varianz}}
+\end{align*}
+:::
+</details>
+</br>
+
+
+Die Fläche unter der F-Verteilung zwischen 419.4 und $+\infty$ ist der $p$-Wert, aber die ist so klein, dass man in der Übersicht gar keine Fläche sieht, und erst sehr weit hineinzoomen muss (siehe Zoom Nr. 2). Dort kann man den $p$-Wert als Fläche erkennen. 
+
+Die kritische Grenze ist der Punkt, jenseits dessen bis $+\infty$ 5% der Fläche unter der Kurve liegen. Das ist gut zu sehen in Zoom Nr. 1. So lange der empirische F-Wert innerhalb dieses Bereichs bleibt, wird der Test signifikant.
+
+
+```{r fplots, message=FALSE, warning=FALSE}
+
+### Hilfsfunktion definieren, um Ausschnitte aus der F-Funktion zu generieren
+
+.pshade <- function(x, min, max, df1, df2) {
+    y <- df(x = x, df1 = df1, df2 = df2)
+    y[x < min  |  x > max] <- NA
+    return(y)
+}
+
+### Parameter definieren
+
+alpha = 0.05
+df1 = 1
+df2 = 29
+detail = 800  # Detailgrad des Plots
+f_krit <- qf(1 - alpha, df1, df2)
+f_emp <- 419.4  # aus dem R-output übernommen
+xlim <- f_krit + 2
+
+### Übersichts-Plot
+ggplot() +
+  stat_function(geom = "area",
+                fill = "4",
+                alpha = .4,
+                fun = .pshade, 
+                args = list(min = 0, max = f_krit, df1 = df1, df2 = df2),
+                n = detail) +
+  stat_function(geom = "area",
+                fill = "7",
+                alpha = .4,
+                fun = .pshade, 
+                args = list(min = f_krit, max = xlim, df1 = df1, df2 = df2),
+                n = detail) +
+  stat_function(geom = "area",
+                fill = "red",
+                alpha = .4,
+                fun = .pshade, 
+                args = list(min = f_emp, max = xlim, df1 = df1, df2 = df2),
+                n = detail) +  
+  geom_function(fun = df, args = list(df1 = df1, df2 = df2), n = detail) +
+  annotate("segment", x = f_emp, xend = f_emp, y = 0, yend = 0.1) +
+  annotate("label", y = 0.1, x = f_emp, label = "empirischer\nF-Wert\n= 419") +
+  annotate("segment", xend = f_krit, x = 50, yend = 0, y = 0.1, 
+           arrow = arrow(type = "closed", length = unit(0.02, "npc"))) +
+  annotate("label", x = 50, y = 0.1, label = "kritische\nGrenze") +
+  xlim(0, f_emp + 100) +
+  labs(x = "F(1, 29)", y = "Wahrscheinlichkeitsdichte", title = "Übersicht", subtitle = "F-Verteilung") +
+  theme_minimal()
+
+### Zoom 1
+ggplot() +
+  stat_function(geom = "area",
+                fill = "4",
+                alpha = .4,
+                fun = .pshade, 
+                args = list(min = 0, max = f_krit, df1 = df1, df2 = df2),
+                n = detail) +
+    stat_function(geom = "area",
+                fill = "7",
+                alpha = .4,
+                fun = .pshade, 
+                args = list(min = f_krit, max = xlim, df1 = df1, df2 = df2),
+                n = detail) +
+    geom_function(
+            fun = df, args = list(df1 = df1, df2 = df2), n = detail) +
+    annotate("segment", x = mean(c(f_krit, xlim)), y = 0.1, xend = mean(c(f_krit, xlim)), yend = 0.008,
+         arrow = arrow(type = "closed", length = unit(0.02, "npc"))) +
+    annotate("segment", x = f_krit, y = 0.1, xend = f_krit, yend = 0) +
+    annotate("label", x = f_krit, y = 0.12, label = "kritische\nGrenze") +
+    annotate("label", x = mean(c(f_krit, xlim)), y = 0.12, label = "5 % der\nFläche") +
+    annotate("label", x = 1, y = 0.1, label = "95 % der\nFläche") +
+    scale_x_continuous(limits = c(0, xlim)) +
+    coord_cartesian(ylim = c(0, 0.5), xlim = c(0, xlim), expand = F) +
+    labs(x = "F(1, 29)", y = "Wahrscheinlichkeitsdichte", title = "Zoom Nr. 1",
+         subtitle = "Streckung der x-Achse") +
+    theme_minimal()
+
+
+### Zoom 2
+
+xlim_small <- f_emp + 100
+ylim_small <- 1e-19
+ggplot() +
+    stat_function(geom = "area",
+                fill = "4",
+                alpha = .4,
+                fun = .pshade, 
+                args = list(min = 0, max = f_krit, df1 = df1, df2 = df2),
+                n = detail) +
+    stat_function(geom = "area",
+                fill = "7",
+                alpha = .4,
+                fun = .pshade, 
+                args = list(min = f_krit, max = xlim_small, df1 = df1, df2 = df2),
+                n = detail) +
+      stat_function(geom = "area",
+                fill = "red",
+                alpha = .4,
+                fun = .pshade, 
+                args = list(min = f_emp, max = xlim_small, df1 = df1, df2 = df2),
+                n = detail) +
+    geom_function(
+            fun = df, args = list(df1 = df1, df2 = df2), n = detail) +
+    annotate("segment", x = mean(c(f_emp, xlim_small)), yend = 0.2e-20, xend = mean(c(f_emp, xlim_small)), y = 1e-20, # p-Pfeil
+         arrow = arrow(type = "closed", length = unit(0.02, "npc"))) +
+    annotate("segment", x = 50, yend = 0, xend = f_krit, y = 2.5e-20, # Pfeil krit. Gr.
+         arrow = arrow(type = "closed", length = unit(0.02, "npc"))) +
+    annotate("label", x = 50, y = 2.5e-20, label = "kritische\nGrenze") +           # Label kritische Grenze
+    annotate("segment", x = 50, yend = 7.5e-20, xend = 2, y = 7.5e-20, # Pfeil krit. Gr. # Pfeil 95%
+         arrow = arrow(type = "closed", length = unit(0.02, "npc"))) +
+    annotate("label", x = 50, y = 7.5e-20, label = "95 % der\nFläche") + # Label 95%
+    annotate("label", x = mean(c(f_emp, xlim_small)), y = 1.2e-20, label = "Fläche\n= p-Wert") + # p-Label
+    annotate("label", x = 200, y = 5e-20, label = "5 % der\nFläche") +
+    annotate("segment", x = f_emp, y = 0, yend = 5e-20, xend = f_emp) +
+    annotate("label", y = 5e-20, x = f_emp, label = "empirischer\nF-Wert\n= 419") +
+    xlim(0, xlim_small) +
+    coord_cartesian(ylim = c(0, ylim_small), xlim = c(0, xlim_small), expand = F) +
+    labs(x = "F(1, 29)", y = "Wahrscheinlichkeitsdichte", title = "Zoom Nr. 2",
+         subtitle = "Streckung der y-Achse") +
+    theme_minimal()
+
+```
 
 
 ### Lokaltest
 
+Der Lokaltest testet jeden Regressionskoeffizienten einzeln, und ist deswegen für die multiple lineare Regression wichtig, wo es mehrere Prädiktoren gibt. 
+
+Im Fall der einfachen linearen Regression entspricht der Lokaltest dem Test für das Gesamtmodell, weil das gesamte Modell nur aus einem Prädiktor besteht.
+
+Das lässt sich auch schön zeigen anhand der Beziehung zwischen der $t$-Statistik aus dem Lokaltest und der $F$-Statistik aus dem Gesamtmodelltest:
+
+Generell gilt: $F = t^2$.
+
+mit $t^2 = 20.48^2 = 419.4 = F$
+
+Wo finde ich diese Werte im R-Output?
+
+#### R-Output
+
+```{r localtest_output, exercise = T, exercise.eval = TRUE, exercise.setup = "silentsetup"}
+fit_centered <- lm(Volume ~ Diameter_centered, data = trees)
+summary(fit_centered)
+```
+
+
+
+Da der Lokaltest eigentlich nur für die multiple lineare Regression wichtig ist, gehen wir nicht im Detail darauf ein, zeigen aber ein paar Besonderheiten. 
 
 
 ## Visualisierungen
