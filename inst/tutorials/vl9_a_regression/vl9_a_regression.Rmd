@@ -18,6 +18,8 @@ library(learnr)
 library(ggplot2)
 library(shiny)
 knitr::opts_chunk$set(echo = FALSE)
+
+if(require(ggbrace)) library(ggbrace) else {devtools::install_github("NicolasH2/ggbrace")}
 ```
 
 ## Inhalt
@@ -336,12 +338,10 @@ ggplot(trees, aes(x = Diameter, y = Volume)) +
 width = 800, height = 400)
 ```
 
-Super! Später können Sie Ihre Schätzungen mit der vom Computer errechneten optimalen Gerade vergleichen.
+Super! Merken Sie sich Ihre Schätzungen, und vergleichen Sie im Kapitel "Umsetzung in R" mit R's Schätzungen. 
 
 Aber wann liegt die Gerade optimal über den Daten? Es gibt verschiedene Ansätze dazu. 
-
 Ein wichtiges Konzept sind dabei die Residuen. 
-
 
 ### Residuen
 
@@ -372,19 +372,16 @@ Eine Möglichkeit, zu definieren wann eine Regressionsgerade optimal an die Date
 
 > „Die Regressionsgerade liegt optimal, wenn die Summe der quadrierten Residuen minimal ist.“
 
-Diese Definition verwendet zur Schätzung der Regressionskoeffizienten die Methode der kleinsten Quadrate (*least squares*).
+Diese Definition verwendet zur Schätzung der Regressionskoeffizienten die Methode der kleinsten Quadrate (*least squares*), was auch aus gutem Grund die populärste ist - sie minimiert die Residuen und erreicht damit die größtmögliche Varianzaufklärung durch das Modell. 
 
-Günstigerweise liefert diese Methode immer die Gerade mit minimalem Abstand zu den Residuen! 
+Natürlich hat *least squares estimation* auch Nachteile, zum Beispiel durch das Quadrieren hohe Empfindlichkeit gegenüber Extremwerten. Deswegen sei hier gesagt: es gibt auch andere Methoden, jedoch ist *least squares* der Standard, und das ist auch gut so. 
 
 <details>
-
 <summary><a>▼ * für's Interesse: mathematische Formeln</a></summary>
-
 ::: infobox
 **Woher kommen die Formeln für** $b_1$ und $b_0$?
 
 Wie bereits gesagt, wird die Gerade so gelegt, dass die Summe der quadrierten Residuen minimal ist.
-
 
 $$
 \sum_{i = 1}^n \left( y_i - \hat y_i \right)^2 = min
@@ -394,7 +391,7 @@ $$ mit:
 
 -   $\hat y_i$ = vorhergesagter Wert
 
-Analog zur Berechnung der Varianz wird hier quadriert. Da quadrierte Werte immer positiv sind, erreicht man, dass sich negative und positive Abweichungen nicht aufheben beim Summieren. Außerdem stellt das Quadrieren weitere günstige mathematische Eigenschaften für das Minimieren her (eine genaue Erklärung führt zu weit).
+Analog zur Berechnung der Varianz wird hier quadriert. Da quadrierte Werte immer positiv sind, erreicht man, dass sich negative und positive Abweichungen nicht aufheben beim Summieren. Außerdem stellt das Quadrieren weitere günstige mathematische Eigenschaften für das Minimieren her.
 
 Einsetzen der Regressionsgleichung für $\hat y$:
 
@@ -402,7 +399,7 @@ $$
 \sum_{i = 1}^n \left( y_i - (b_0 + b_1 \cdot x_i) \right)^2 = min
 $$
 
-Ableiten von allgemeinen Formeln ist nun möglich. Details führen hier zu weit, aber es gibt gute externe Quellen dazu:
+Minimieren: Die Herleitung allgemeiner Formeln für minimale Residuen funktioniert über das Nullsetzen der partiellen Ableitung nach $b_0$ und der partiellen Ableitung nach $b_1$. Es gibt gute externe Quellen dazu, z. B. im [wikibook über lineare Regression](https://de.wikibooks.org/wiki/Statistik:_Regressionsanalyse#Einfaches_lineares_Regressionsmodell).
 
 hier sind die fertigen Formeln für $b_0$ und $b_1$:
 
@@ -413,28 +410,29 @@ b_1 &= \frac{cov(x,y)}{var(x)}
 b_0 &= \bar y - b_1 \cdot \bar x
 \end{align}
 ```
-Diese Formeln liefern per Definition die optimale Regressionsgerade mit minimalen Residuen!
+Der Key-Takeaway ist: Diese Formeln liefern per Definition die optimale Regressionsgerade mit minimalen Residuen!
 
 Amazing.
 :::
-
 </details>
+</br>
+<details>
+<summary><a>▼ \* Exkurs: lineare Regression und Machine Learning</a></summary>
+::: infobox
+Man kann die Quadrierten Residuen auch minimieren durch Trial & Error, wie Sie es oben selbst vermutlich auch gemacht haben. Das geht super mit Machine-Learning-Algorithmen. Wir werden keine dieser Algorithmen in R verwenden, aber ich möchte darauf hinweisen, dass es auch mit Machine Learning geht, und die lineare Regression zu den am häufigsten angewandten Machine-Learning-Algorithmen zählt. 
 
-#### Exkurs: Fitting durch Machine Learning
-
-Man kann die Quadrierten Residuen auch minimieren durch Trial & Error, wie Sie oben selbst es auch gemacht haben. Das geht super mit Machine-Learning-Algorithmen. 
-
-Hier eine Illustration des Fitting-Prozesses, allerdings mit anderen Daten. Die Grafik zeigt wie ein Machine-Learning-Algorithmus sich Schritt für Schritt der optimalen Regressionsgerade annähert, und die mittlere quadratische Abweichung (Mean Squared Error, MSE) der vorhergesagten Werte von den tatsächlichen Werten dabei immer kleiner wird, bis es nicht kleiner geht.
+Hier eine Illustration des Fitting-Prozesses, allerdings mit anderen Daten. Die Grafik zeigt wie ein Machine-Learning-Algorithmus sich Schritt für Schritt der optimalen Regressionsgerade annähert, und die mittleren quadrierten Residuen (Mean Squared Error, MSE) immer kleiner werden, bis es nicht kleiner geht.
 
 ![](images/iterative_fitting.gif){width="80%"}
 
 Bild: [ghbat.com](https://gbhat.com/machine_learning/linear_regression.html)
 
-#### \* fürs Interesse
+:::
+</details>
+</br>
+Hervorragend, das theoretische Grundlagenwissen ist nun vorhanden, so dass Sie sich einem R-Output stellen können!
 
-
-
-### Umsetzung in R
+## Umsetzung in R
 
 In R erhält man die Regressionskoeffizienten $b_0$ und $b_1$ über die Funktion `lm()` (*linear model*).
 
@@ -506,6 +504,23 @@ Coefficients:
 Diameter     0.056476   <--- b1
 ---
 ```
+
+::: aufgabe
+Vergleichen Sie Ihre Schätzung aus dem letzten Kapitel vom Experimentieren mit den Slidern mit den realen Werten!
+:::
+
+<details>
+
+<summary><a>▼ \* Geek Stuff: Welchen Algorithmus verwendet `lm()`?</a></summary>
+::: infobox
+Lustigerweise wird unter der Haube von `lm()` letztlich nach vielen Zwischenschritten eine uralte Funktion in einer anderen Programmiersprache, nämlich FORTRAN, aufgerufen, um die Schwerarbeit zu machen. Sie stammt aus dem `LINPACK`-Paket, was original für Supercomputer in den 70ern und 80ern verfasst wurde, um lineare Gleichungssysteme zu lösen. 
+
+Hier gibt es einen interessanten Blogbeitrag [(A deep dive into how R fits a linear model)](https://madrury.github.io/jekyll/update/statistics/2016/07/20/lm-in-R.html) dazu, der jeden einzelnen Schritt auflistet bis zur untersten Ebene, dem FORTRAN-Herzstück von `lm()`. 
+
+Der verwendte Algorithmus basiert auf QR-Zerlegung, und verwendet eine Householder-Transformations, um zu den Koeffizienten mit den kleinstmöglichen quadrierten Residuen zu gelangen. Ich weiß nicht, was das ist - aber [Wikipedia](https://de.wikipedia.org/wiki/QR-Zerlegung) weiß es :)   
+:::
+</details>
+</br>
 
 Jetzt sind Sie dran!
 
@@ -612,7 +627,7 @@ question_numeric("2. Was ist der Mittelwert einer zentrierten Variable und warum
 
 <details>
 
-<summary>**▼ Klicken Sie `HIER` für einen mathematischen Beweis**</summary>
+<summary><a>▼ Klicken Sie `HIER` für einen mathematischen Beweis</a></summary>
 
 ::: infobox
 Es ist auch mathematisch zu zeigen, dass der Mittelwert einer zentrierten Variable immer 0 ist:
@@ -719,16 +734,39 @@ Das Bestimmtheitsmaß (auch Determinationskoeffizient) $R^2$ finden wir in der v
 ```         
 Multiple R-squared:  0.9353   <------- R²
 ```
+<details>
+<summary><a>▼ Warum heißt es im Output „Multiple R-squared“?</a></summary>
+::: infobox
+Der Präfix "Multiple" ist wie eine Warnung: Wenn mehr als ein Prädiktor im Modell verwendet werden, wird $R^2$ mit jedem Prädiktor zwangsläufig höher, außer man korrigiert diese Verzerrung. Das heißt dann `Adjusted R-squared` und das ignorieren wir hier alles, weil wir nur einfache lineare Regression machen, also nur einen Prädiktor verwenden.
+:::
+</details>
+
+#### Was ist $R^2$?
+
+$R^2$ definiert, wie gut ein Modell an die Daten angepasst ist und heißt deswegen auch „Anpassungsgüte“. 
+
+Um $R^2$ zu verstehen, ist es hilfreich zu verstehen, dass man die Varianz im Kriterium (Schwankungen im Holzvolumen) aufteilen kann in zwei Teile: 
+
+- in einen durch das Modell (0.056 * Durchmesser - 1.04) erklärten Teil 
+- und in den Fehler, der nicht erklärbare zufällige Abweichung vom Modell ist.
+
+Aus beiden Teilen zusammen ergibt sich die Gesamtvarianz des Kriteriums. 
+
+Die Formel für $R^2$ ist dann: 
+
+$$
+R^2 = \frac{\text{durch das Modell erklärte Varianz in y}}{\text{Gesamte Varianz in y}} = \frac{\sum_{i=1}^n( \hat y_i - \bar y)^2}{\sum_{i=1}^n(y_i - \bar y)^2}
+$$
 
 ### Interpretation 
 
-„93,53 % der Varianz im Holzvolumen können auf den Prädiktor "Durchmesser" zurückgeführt werden (lat. *regressare* = zurückgehen).
+$R^2 = 0.9353$
 
-Allgemein formuliert: 
+> „93,53% der Varianz im Holzvolumen können durch das Modell aufgeklärt werden.“ 
 
-> „93,53% der Varianz im Kriterium können durch das Modell aufgeklärt werden.“ 
+Das Modell besteht in diesem Fall nur aus einem Prädiktor, deswegen können wir auch „Modell“ durch den Prädiktor ersetzen:
 
-(Zufällig besteht unser Modell nur aus einem Prädiktor, aber in der Praxis werden es häufig mehrere Prädiktoren sein - siehe "Ausblick: multiple lineare Regression".)
+„93,53 % der Varianz im Holzvolumen können auf den Prädiktor "Durchmesser" zurückgeführt werden.“
 
 Die Höhe des Wertes ist nicht wirklich gut vergleichbar, da es vom Forschungsgebiet abhängt, wie viel Varianzaufklärung als "gut" gilt. Über 90% Varianzaufklärung durch das Modell sind aber fast schon unglaublich und das kommt in der Praxis eher selten vor.  
 
@@ -739,6 +777,7 @@ Im Fall der einfachen linearen Regression, aber nicht bei multipler Regression, 
 #### Übung
 ::: aufgabe
 Berechnen Sie den Korrelationskoeffizienten auf zwei Wegen: 
+
 - als Wurzel von $R^2$
 - mit der `cor()`-Funktion
 
@@ -759,7 +798,7 @@ cor(trees$Diameter, trees$Volume)
 ```
 
 ```{r korrelationsfrage}
-question_numeric("Geben Sie Ihren errechneten Wert der Pearson-Korrelation zwischen Volumen und Durchmesser ein, gerundet au 4 Nachkommastellen!",
+question_numeric("Geben Sie Ihren errechneten Wert der Pearson-Korrelation zwischen Volumen und Durchmesser ein, gerundet auf 4 Nachkommastellen!",
                  answer(0.9671, correct = TRUE, message = "Wir runden auf 4 Nachkommastellen, weil R² uns nicht präziser gegeben ist."))
 ```
 
@@ -797,8 +836,6 @@ Aber ab wann ist etwas sehr unwahrscheinlich?
 
 Das sind arbiträr festgelegte Grenzen, die sich je nach Fachgebiet unterscheiden, aber ein allgemeiner Standard ist ein Signifikanzniveau $\alpha = 0.05\ \ (5\%)$.
 
-Wir sind sehr kritisch und unterstellen erst mal, dass es in Wahrheit in der gesamten Population keine Varianzaufklärung gibt, und dass unsere Stichprobe nur ein zufällige Abweichung davon ist. Diese Art von kritischer Haltung ist allen Nullhypothesen-Signifikanztests gemeinsam, sei es ein $F$-, $t$- oder $z$-Test.
-
 #### R-Output
 
 Wir finden den Test des Gesamtmodells in der allerletzten Zeile des R-Outputs:
@@ -811,14 +848,13 @@ summary(fit_centered)
 Der Test des Gesamtmodells ist ein $F$-Test, da zwei Varianzen ins Verhältnis gesetzt werden:
 Die durch das Modell erklärte Varianz, und die nicht erklärte Varianz. (Immer, wenn Varianzen verglichen werden, klingt das in Ihren Ohren nach $F$-Test. Zumindest sollte das so sein.)
 
+Wie genau die `F-statistic` zustande kommt und was es mit den Freiheitsgraden `DF` auf sich hat, kann hier nicht ausführlich behandelt werden. Das sind nur Zwischenschritte auf dem Weg zur Berechnung des $p$-Werts. Wichtig ist, dass Sie den $p$-Wert als Endresultat interpretieren können, egal ob er von einem $F$-, $t$- oder $z$-Test ist. 
+
 Das hier ist die relevante Zeile:
 
 ```
 F-statistic: 419.4 on 1 and 29 DF,  p-value: < 2.2e-16   <--- p-Wert Gesamtmodelltest
 ```
-
-Wie genau die `F-statistic` zustande kommt und was es mit den Freiheitsgraden `DF` auf sich hat, kann hier nicht ausführlich behandelt werden. Das sind nur Zwischenschritte auf dem Weg zur Berechnung des $p$-Werts. Wichtig ist, dass Sie den $p$-Wert als Endresultat interpretieren können, egal ob er von einem $F$-, $t$- oder $z$-Test ist. 
-
 
 ### Interpretation des $p$-Werts
 
@@ -849,9 +885,11 @@ Ein Positiv-Beispiel wäre:
 
 Der $p$-Wert ist eine Antwort auf folgende Frage: „Unter der Annahme, dass $R^2$ in der Population 0 ist — Wie wahrscheinlich ist es, zufällig eine Stichprobe zu ziehen in der das vorliegende oder ein noch extremeres $R^2$ zustande kommt?“
 
-> Wenn $p \le 0.05$: unwahrscheinlich -> Nullhypothese verwerfen
+> Angenommen, $\alpha = 0.05$:
+> 
+> Wenn $p \le 0.05$ -> unwahrscheinlich -> Nullhypothese verwerfen
 >
-> Wenn $p > 0.05$: wahrscheinlich -> Nullhypothese beibehalten
+> Wenn $p > 0.05$ -> wahrscheinlich -> Nullhypothese beibehalten
 
 ```{r pquestion}
 learnr::question_radio("Wie würde Ihre Hypothesenentscheidung für das Beispiel aussehen? (α = 0.05)",
@@ -869,34 +907,13 @@ Aussagen wie: <s>„Mit einer Wahrscheinlichkeit von [$p$ %] gilt die Nullhypoth
 
 ### Grafische Darstellung
 
-Da $p$ unglaublich klein ist, ist es schwierig, alle relevanten Teile in einem Plot unterzubringen. Deswegen gibt es 3: 
+Da $p$ in diesem Fall unglaublich klein ist, ist es schwierig, alle relevanten Teile in einem Plot unterzubringen. Deswegen gibt es 3: 
 
 - Übersicht (komplett herausgezoomt)
 - Zoom Nr. 1 
 - Zoom Nr. 2
 
-In der Übersicht sehen Sie den empirischen (=beobachteten) F-Wert, der sich aus der beobachteten Varianzaufklärung von 93% errechnet. Er entspricht `F-statistic` im R-Output. 
-
-<details>
-  <summary><a>▼ \* Wie wird der empirische $F$-Wert berechnet?</a></summary>
-  </br>
-  
-::: infobox
-\begin{align*}
-F &= \frac{R^2}{1-R^2} \\
-F &= \frac{\text{durch das Modell erklärte Varianz}}{\text{nicht erklärbare Varianz}}
-\end{align*}
-:::
-</details>
-</br>
-
-
-Die Fläche unter der F-Verteilung zwischen 419.4 und $+\infty$ ist der $p$-Wert, aber die ist so klein, dass man in der Übersicht gar keine Fläche sieht, und erst sehr weit hineinzoomen muss (siehe Zoom Nr. 2). Dort kann man den $p$-Wert als Fläche erkennen. 
-
-Die kritische Grenze ist der Punkt, jenseits dessen bis $+\infty$ 5% der Fläche unter der Kurve liegen. Das ist gut zu sehen in Zoom Nr. 1. So lange der empirische F-Wert innerhalb dieses Bereichs bleibt, wird der Test signifikant.
-
-
-```{r fplots, message=FALSE, warning=FALSE}
+```{r uebersichtplot, message=FALSE, warning=FALSE}
 
 ### Hilfsfunktion definieren, um Ausschnitte aus der F-Funktion zu generieren
 
@@ -946,6 +963,33 @@ ggplot() +
   labs(x = "F(1, 29)", y = "Wahrscheinlichkeitsdichte", title = "Übersicht", subtitle = "F-Verteilung") +
   theme_minimal()
 
+```
+
+
+In der Übersicht sehen Sie den empirischen (=beobachteten) F-Wert, der sich aus der Varianzaufklärung $R^2$ des Modells berechnen lässt. Er entspricht `F-statistic` im R-Output. 
+
+Hier noch mal die relevante Zeile aus dem Output:
+
+```
+F-statistic: 419.4 on 1 and 29 DF,  p-value: < 2.2e-16
+```
+
+<details>
+  <summary><a>▼ \* Hintergrundwissen: Wie wird der $F$-Wert berechnet?</a></summary>
+  </br>
+  
+::: infobox
+\begin{align*}
+F &= \frac{R^2}{1-R^2} \\
+F &= \frac{\text{durch das Modell erklärte Varianz}}{\text{nicht erklärbare Varianz}}
+\end{align*}
+:::
+</details>
+</br>
+
+Die blaue Fläche repräsentiert 95% der Fläche unter der Kurve. Nach den 95% beginnen die restlichen 5% der Fläche, in gelb, und dazwischen liegt die kritische Grenze. Ist der empirische F-Wert größer als die kritische Grenze, ist er innerhalb der gelben Fläche, also innerhalb den äußersten 5%. Ab diesem Punkt wird die Nullhypothese als "unwahrscheinlich" verworfen - der Test wird signifikant. 
+
+```{r zoom1, message = F, warning = F}
 ### Zoom 1
 ggplot() +
   stat_function(geom = "area",
@@ -975,6 +1019,17 @@ ggplot() +
     theme_minimal()
 
 
+```
+
+
+#### Wo ist der $p$-Wert?
+
+Die Fläche unter Kurve ab dem empirischen $F$-Wert bis $+\infty$ entspricht dem $p$-Wert.
+
+Dieser ist in diesem Fall so klein, dass man erst sehr weit hineinzoomen muss (siehe Zoom Nr. 2). Dort kann man den $p$-Wert als Fläche erkennen. (Remember, im Output stand ja bereits, $p < 2.2 \cdot 10^{-16}$, was 15 Nullen nach dem Komma entspricht - in der Übersicht überhaupt nicht sichtbar.)
+
+
+```{r fplots, message=FALSE, warning=FALSE}
 ### Zoom 2
 
 xlim_small <- f_emp + 100
@@ -1020,6 +1075,74 @@ ggplot() +
 
 ```
 
+#### zum Vergleich: nicht signifikant
+
+Hier noch mal der entgegengesetzte Fall:
+
+Falls der empirische $F$-Wert innerhalb der blauen 95% liegen würde, die als „wahrscheinlich“ gelten - wie würde unsere Hypothenentscheidung dann lauten?
+
+Wir würden die Nullhypothese beibehalten, da $p > \alpha = 5.21 \%> 5\%$. 
+
+Die Wahrscheinlichkeit, die beobachtete Stichprobe aus einer Population zu ziehen, in welcher die Nullhypothese gilt, ist höher als die von uns angesetzte Grenze (Signifikanzniveau), ab der etwas als „unwahrscheinlich“ gilt.
+
+```{r notsignificantplot, message=FALSE, warning=FALSE}
+# devtools::install_github("NicolasH2/ggbrace")
+# WARNING! GITHUB DEPENDENCY, wird wahrscheinlich nicht automatisch gehandled - momentan habe ich das testweise verlegt auf setup chunk
+# library(ggbrace)
+
+### Parameter festlegen
+f_emp <- 3.0
+xlim_new <- f_krit + 1
+p <- df(3, df1, df2) # 0.052
+### PLOT 
+### Zoom 1
+ggplot() +
+  stat_function(geom = "area",
+                fill = "4",
+                alpha = .4,
+                fun = .pshade, 
+                args = list(min = 0, max = f_krit, df1 = df1, df2 = df2),
+                n = detail) +
+    stat_function(geom = "area",
+                fill = "7",
+                alpha = .4,
+                fun = .pshade, 
+                args = list(min = f_krit, max = xlim, df1 = df1, df2 = df2),
+                n = detail) +
+ stat_function(geom = "area",              # p-Wert
+                fill = "red",
+                alpha = .4,
+                fun = .pshade, 
+                args = list(min = f_emp, max = xlim_new, df1 = df1, df2 = df2),
+                n = detail) +  
+    geom_function(
+            fun = df, args = list(df1 = df1, df2 = df2), n = detail) +
+    annotate("segment", x = f_krit, y = 0.3, xend = f_krit, yend = 0) +
+    annotate("label", x = f_krit, y = 0.3, label = "kritische\nGrenze") +
+    annotate("label", x = mean(c(f_krit, xlim_new)), y = 0.04, label = "α = 5 %") +
+    annotate("label", x = 2.1, y = 0.05, label = "1 - α = 95 %") +
+    annotate("segment", x = f_emp, y = 0, yend = .3, xend = f_emp) +
+    annotate("label", y = 0.3, x = f_emp, label = "empirischer\nF-Wert") + 
+    annotate("label", y = .13, x = 3.63, label = "p = 5.21 %") +
+    geom_brace(aes(x = c(0, f_krit), y = c(0.0, 0.03))) +
+    geom_brace(aes(x = c(f_krit, xlim_new), y = c(0.0, 0.023))) +
+    geom_brace(aes(x = c(f_emp, xlim_new), y = c(0.05, 0.115)), mid = 0.29) +
+    
+    scale_x_continuous(limits = c(0, xlim_new)) +
+    coord_cartesian(ylim = c(0, 0.5), xlim = c(0, xlim_new), expand = F) +
+    labs(x = "F(1, 29)", y = "Wahrscheinlichkeitsdichte", title = "Beispiel",
+         subtitle = "nicht signifikant (p > α)") +
+    theme_minimal()
+
+# Fail, does not render correctly in output
+# library(pBrackets)
+# grid.brackets(518, 453, 858, 453, h = .1)
+# grid.brackets(702, 478, 858, 478, h = .09)
+# grid.brackets(50, 478, 702, 487, h = .1, curvature = 0.2)
+
+
+```
+
 
 ### Lokaltest
 
@@ -1037,14 +1160,47 @@ Wo finde ich diese Werte im R-Output?
 
 #### R-Output
 
+Die Ergebnisse der Lokaltests befinden sich im Abschnitt `Coefficients`:
+
 ```{r localtest_output, exercise = T, exercise.eval = TRUE, exercise.setup = "silentsetup"}
-fit_centered <- lm(Volume ~ Diameter_centered, data = trees)
+fit_centered <- lm(Volume ~ Diameter, data = trees)
 summary(fit_centered)
 ```
 
+Dabei ist wieder vor allem der $p$-Wert relevant. Er befindet sich in der Spalte `Pr(>|t|)`.
 
+Der $p$-Wert für den Test von $b_1$ finden wir in der Zeile `Diameter`, also der Variablenname des Prädiktors.
 
-Da der Lokaltest eigentlich nur für die multiple lineare Regression wichtig ist, gehen wir nicht im Detail darauf ein, zeigen aber ein paar Besonderheiten. 
+Er ist identisch mit dem Wert aus dem Gesamtmodelltest! Auch das stützt, dass die Tests im Fall der einfachen linearen Regression äquivalent sind. 
+
+```
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -1.046122   0.095290  -10.98 7.62e-12 ***
+Diameter     0.056476   0.002758   20.48  < 2e-16 *** <----- p-Wert
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+
+Den Lokaltest für *Intercept* ignorieren wir, da es in der Regel nicht interessant ist zu wissen, ob der Achsenabschnitt in Wirklichkeit 0 ist - das wäre ja eigentlich gar kein Problem, deswegen müssen wir das auch nicht herausfinden. 
+
+Wichtig ist, herauszufinden, ob sich das Regressionsgewicht signifikant von 0 unterscheidet. 
+
+Da der Lokaltest nur für die multiple lineare Regression Bedeutung entfaltet, gehen wir nicht weiter im Detail darauf ein.
+
+Sie haben jetzt hoffentlich erfolgreich verstanden:
+
+- warum wir unser Modell testen
+- was wir testen
+- wo Sie den $p$-Wert finden, sowohl für Lokaltest als auch Gesamtmodelltest
+
+::: aufgabe
+Dazu gibt es jetzt noch ein paar Übungsaufgaben mit anderen R-Outputs!
+:::
+
+```{r}
+
+```
 
 
 ## Visualisierungen
