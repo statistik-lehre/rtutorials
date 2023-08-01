@@ -1536,7 +1536,7 @@ Erklärung der Variablen:
 :::
 </br>
 
-```{r, exercise = TRUE, exercise.eval = TRUE}
+```{r ueb1_routput, exercise = TRUE, exercise.eval = TRUE, exercise.cap = "R Output"}
 lm(mpg ~ disp, data = mtcars) |> summary()
 ```
 
