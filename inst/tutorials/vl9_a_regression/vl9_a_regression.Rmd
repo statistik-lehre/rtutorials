@@ -1190,13 +1190,17 @@ Da der Lokaltest nur für die multiple lineare Regression Bedeutung entfaltet, g
 
 Sie haben jetzt hoffentlich erfolgreich verstanden:
 
-- warum wir unser Modell testen
-- was wir testen
-- wo Sie den $p$-Wert finden, sowohl für Lokaltest als auch Gesamtmodelltest
+- <input type="checkbox" unchecked> warum wir unser Modell testen
+- <input type="checkbox" unchecked> was wir testen
+- <input type="checkbox" unchecked> wo Sie den $p$-Wert finden, sowohl für Lokaltest als auch Gesamtmodelltest
 
 ::: aufgabe
 Übungsaufgaben dazu finden Sie in einem eigenen Übungs-Kapitel, wo Sie alles Gelernte an einer Reihe von R-Outputs testen können. 
 :::
+
+Prima! Weiter geht es damit, wie Sie Daten und ein Modell visualisieren können.
+
+![](images/tree.gif)
 
 
 ## Visualisierungen
