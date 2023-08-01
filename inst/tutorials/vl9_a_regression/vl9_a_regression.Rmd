@@ -1195,12 +1195,8 @@ Sie haben jetzt hoffentlich erfolgreich verstanden:
 - wo Sie den $p$-Wert finden, sowohl für Lokaltest als auch Gesamtmodelltest
 
 ::: aufgabe
-Dazu gibt es jetzt noch ein paar Übungsaufgaben mit anderen R-Outputs!
+Übungsaufgaben dazu finden Sie in einem eigenen Übungs-Kapitel, wo Sie alles Gelernte an einer Reihe von R-Outputs testen können. 
 :::
-
-```{r}
-
-```
 
 
 ## Visualisierungen
@@ -1517,6 +1513,49 @@ trees$Height <- trees$Height * 0.3048  # Umrechnung Fuß in Meter
 multiple_fit <- lm(Volume ~ Diameter + Height, data = trees)
 summary(multiple_fit)
 anova(fit, multiple_fit)
+```
+
+## Übungskapitel
+
+Hier finden Sie eine Reihe von Aufgaben zu R-Outputs, an denen Sie das Interpretieren in Gänze üben können. 
+
+Sie können für Übungszwecke annehmen, dass alle Voraussetzungen erfüllt sind.
+
+::: aufgabe
+**1.**
+Erklärung der Variablen:
+
+- `mpg` - Miles per Gallon, Reichweite von Autos pro Gallone Kraftstoff (höherer Wert = sparsamer!)
+- `disp` - Displacement - Hubraum in cubic inches
+
+
+:::
+</br>
+
+```{r, exercise = TRUE, exercise.eval = TRUE}
+lm(mpg ~ disp, data = mtcars) |> summary()
+```
+
+```{r ueb_1a}
+question_text("Geben Sie eine inhaltliche Interpretation der beiden Regressionskoeffizienten!",
+              answer_fn(~ correct()),
+              placeholder = "Eine Musterlösung erscheint, wenn Sie die Antwort einreichen, bitte vergleichen Sie selbstständig.",
+              correct = "Musterlösung: \n
+b0: Für einen Hubraum von 0 cubic inches sagt das Modell 29.600 Meilen pro Gallone Treibstoff vorher. Das ist inhaltlich natürlich sinnlos, aber technisch ist das die richtige Interpretation. \n
+b1: Wenn man den Hubraum um einen cubic inch erhöht, verringert sich die vorhergesagte Reichweite pro Gallone um -0.041 Meilen.")
+```
+```{r ueb_1b}
+question_text("Interpretieren Sie die Modellgüte!",
+  answer_fn(~ correct()),
+              correct = "Musterlösung: \n
+R² beträgt 0.7183. Das bedeutet, das Modell erklärt 71,83% der totalen Varianz der Reichweiten. Das ist eine vergleichsweise hohe Varianzaufklärung.")
+```
+```{r ueb_1c}
+question_text("Könnten wir die Ergebnisse auf eine größere Population übertragen? Interpretieren Sie die Ergebnisse des Lokal- und des Gesamtmodelltests. Welche Hypothesen werden jeweils getestet, und wie fällt Ihre Hypothesenentscheidung aus bei einem Signifikanzniveau von $\\alpha$ = 5%?",
+  answer_fn(~ correct()),
+              correct = "Musterlösung: \n
+Der Lokaltest testet die Nullhypothese, dass das Regressionsgewicht „Hubraum“ in Wahrheit 0 beträgt. Diese Hypothese verwerfe ich, da der p-Wert kleiner als α ist. Das bedeutet, wir können davon ausgehen, dass die Stichprobe aus einer Population stammt, in der „Hubraum“ einen Einfluss auf die Reichweite hat. \n
+Analog dazu testet der Gesamtmodelltest die Nullhypothese, dass das Modell in der Population in Wahrheit keine Varianzaufklärung bietet. Da der p-Wert der gleiche ist, treffe ich hier die gleiche Hypothesenentscheidung und verwerfe die Nullhypothese, und gehe davon aus, dass das Modell auch in Wahrheit eine Varianzaufklärung verschieden von 0 hat.")
 ```
 
 ## Abschlussquiz
