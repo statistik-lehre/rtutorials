@@ -207,19 +207,21 @@ Egal welche der Notationen Sie hatten, oder auch wenn Sie noch gar keine Berühr
 Wir werden diese Notation verwenden:
 
 $$
-\hat y = b_0 + b_1\cdot x
+\hat y_i = b_0 + b_1\cdot x_i
 $$
 
--   Dabei steht $\hat y$ für den durch das Modell vorhergesagten Wert, auch engl. "*response variable"* genannt,"*output variable"* oder **Kriterium**. Im Beispiel wäre es das Holzvolumen in m³.
+-   Dabei steht $\hat y_i$ für den durch das Modell vorhergesagten Wert, auch engl. "*response variable"* genannt,"*output variable"* oder **Kriterium**. Im Beispiel wäre es das Holzvolumen in m³.
 
     Ein Dach über der Variable kennzeichnet immer, dass es sich hier um einen geschätzten Wert handelt.
 
--   $x$ ist der **Prädiktor**, oder unsere *input variable*, im Beispiel der Baumdurchmesser in Inches.
+-   $x_i$ ist der **Prädiktor**, oder unsere *input variable*, im Beispiel der Baumdurchmesser in Inches.
+
+-   Der tiefgestellte Index $i$ bezeichnet die Nummer eines Messwertpaars
 
 Daraus ergibt sich für uns folgendes Modell:
 
 $$
-\hat{Volumen} = b_0 + b_1 \cdot Durchmesser 
+\hat{Volumen_i} = b_0 + b_1 \cdot Durchmesser_i 
 $$
 
 #### Was sind $b_0$ und $b_1$?
@@ -230,19 +232,19 @@ Beides sind Regressionskoeffizienten - zwei Parameter, die die Lage der Gerade b
 
     Das ist der vorhergesagte Wert, wenn $x$ 0 ist. Das ergibt sich aus der Gleichung, wenn man für $x$ 0 einsetzt:
 
-    $\hat y = b_0 + b_1 \cdot 0 = b_0$
+    $\hat y_i = b_0 + b_1 \cdot 0 = b_0$
 
-    Bei einer Gerade ist $b_0$ also dort, wo $x = 0$. Das ist oft auch dort, wo die y-Achse verläuft, deswegen nennt man $b_0$ auch Achsenabschnitt oder *Intercept* auf Englisch.
+    Bei einer Gerade ist $b_0$ also dort, wo $x = 0$. Das ist oft auch dort, wo die y-Achse verläuft, deswegen nennt man $b_0$ auch y-Achsenabschnitt oder *Intercept* auf Englisch.
 
 -   $b_1$ ist das **Regressionsgewicht**.
 
-    Es entspricht der Steigung der Gerade (engl. *Slope*) und ist inhaltlich die Änderung im vorhergesagten Wert ($\hat y$), wenn man $x$ um eine Einheit erhöht.
+    Es entspricht der Steigung der Gerade (engl. *Slope*) und ist inhaltlich die Änderung im vorhergesagten Wert ($\hat y_i$), wenn man $x$ um eine Einheit erhöht.
 
     Es erinnern sich bestimmt alle an das Dreieck, was man an die Gerade zeichnen kann, um die Steigung zu bestimmen.
 
 ### Beispiel-Gerade
 
-Hier einmal eine Beispiel-Gerade, beschrieben durch die Gleichung $\hat y = 9 - 1.5x$.
+Hier einmal eine Beispiel-Gerade, beschrieben durch die Gleichung $\hat y_i = 9 - 1.5x_i$.
 
 -   Intercept $b_0 = 9$
 -   Steigung $b_1 = -1.5$
@@ -364,7 +366,13 @@ Offensichtlich ist es daher besser, wenn die Residuen kleiner sind, als wenn sie
 
 #### Formel
 
-Ein Residuum der Messung $i$ errechnet sich aus: $y_i - \hat y_i$.
+Ein Residuum $e$ (wie Error) der Messung $i$ errechnet sich aus: 
+$$e_i = y_i - \hat y_i$$.
+
+```{r}
+
+```
+
 
 #### Methode der kleinsten Quadrate
 
@@ -399,7 +407,7 @@ $$
 \sum_{i = 1}^n \left( y_i - (b_0 + b_1 \cdot x_i) \right)^2 = min
 $$
 
-Minimieren: Die Herleitung allgemeiner Formeln für minimale Residuen funktioniert über das Nullsetzen der partiellen Ableitung nach $b_0$ und der partiellen Ableitung nach $b_1$. Es gibt gute externe Quellen dazu, z. B. im [wikibook über lineare Regression](https://de.wikibooks.org/wiki/Statistik:_Regressionsanalyse#Einfaches_lineares_Regressionsmodell).
+Minimieren: Die Herleitung allgemeiner Formeln für minimale Residuen funktioniert über das Nullsetzen der partiellen Ableitung nach $b_0$ und der partiellen Ableitung nach $b_1$. Es gibt gute externe Quellen dazu, um sich das im Detail anzusehen, z. B. im [wikibook über lineare Regression](https://de.wikibooks.org/wiki/Statistik:_Regressionsanalyse#Einfaches_lineares_Regressionsmodell).
 
 hier sind die fertigen Formeln für $b_0$ und $b_1$:
 
@@ -410,7 +418,8 @@ b_1 &= \frac{cov(x,y)}{var(x)}
 b_0 &= \bar y - b_1 \cdot \bar x
 \end{align}
 ```
-Der Key-Takeaway ist: Diese Formeln liefern per Definition die optimale Regressionsgerade mit minimalen Residuen!
+
+**Key-Takeaway**: Diese Formeln liefern per Definition die optimale Regressionsgerade mit minimalen Residuen!
 
 Amazing.
 :::
@@ -581,6 +590,28 @@ Das ist mit allen Daten so, wo 0 nicht im sinnvollen Wertebereich ist. Man kann 
 > „$b_1$ ist die vorhergesagte Änderung, wenn der Prädiktor um eine Einheit erhöht wird."
 
 „Pro Zentimeter Durchmesser mehr steigt also unser erwartetes Volumen um 0.0565 Kubikmeter."
+
+::: gelb
+Das Regressionsgewicht $b_1$ ist eng verwandt mit der Korrelation, aber es gibt einen wichtigen Unterschied: Es ist nicht „symmetrisch“ wie eine Korrelation. Es lässt immer nur Rückschlüsse in eine Richtung zu, z.B. vom Durchmesser auf das Volumen, nicht umgekehrt. Das ist das Spezielle an der linearen Regression!
+
+<details>
+<summary><a>▼ Für diejenigen, die das anhand von Formeln verstehen möchten:</a></summary>
+
+Formel für die Korrelation
+
+$$
+r = \frac{cov(x, y)}{s_x \cdot s_y}
+$$
+Formel für das Regressionsgewicht:
+
+$$
+b_1 = \frac{cov(x, y)}{s_x^2}
+$$
+Hier fehlt im Nenner die Varianz von y
+</details>
+</br>
+
+:::
 
 ## Transformationen
 
@@ -1565,3 +1596,23 @@ Analog dazu testet der Gesamtmodelltest die Nullhypothese, dass das Modell in de
 ## Abschlussquiz
 
 ## Learnings
+
+## Abstellgleis
+
+::: aufgabe
+Wie hoch ist $e_{20}$ (das Residuum von Messung 20) beim Eingangsbeispiel im `trees` Datensatz?
+
+Berechnen Sie mit R!
+
+$$
+e_{20} = y_{20} - \hat y_{20}
+$$
+
+:::
+
+```{r residuumberechnen, exercise = TRUE, exercise.cap = "Residuum"}
+e20 <- trees$Volume[20] - predict(fit)[20]
+e20
+resid(fit)[20]
+
+```
