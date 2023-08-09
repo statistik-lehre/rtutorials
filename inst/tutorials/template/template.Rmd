@@ -19,8 +19,141 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 
 ## Inhalt 
+kurze Beschreibung des Inhalts
+
+Verortung auf der Roadmap
 
 ## Lernziele
+
+kleine Checkliste mit abhakbaren Checkboxen:
+
+-   <input type="checkbox" unchecked> Wie verschiedene Überschriften gerendert werden </input>
+-   <input type="checkbox" unchecked> farbige HTML-Boxen </input>
+-   <input type="checkbox" unchecked> HTML-Tag für Absätze </input>
+-   <input type="checkbox" unchecked> ausklappbare Abschnitte </input>
+-   <input type="checkbox" unchecked> LaTex </input>
+
+
+## Kapitelüberschrift
+
+Normalerweise steht hier im Tutorial dann der Inhalt, in beliebig viele ##-Level-2-Header unterteilt. Jede ##-Überschrift entspricht einem Kapitel in learnr. 
+
+Level 1 Header verhalten sich nicht so gut, deswegen bitte nicht verwenden. 
+
+### Level 3 Überschrift
+
+#### Level 4 Header
+
+##### Level 5 Header
+
+###### Level 6 Header
+
+## HTML-Stuff
+
+Im ganzen .Rmd-Dokument können rohe HTML-Tags verwendet werden, und es gibt CSS in einer extra Datei. Hier eine Auswahl:
+
+
+### Absätze
+
+RMarkdown ermöglicht keine vertikalen freien Flächen, die die länger als eine Zeile sind
+
+Hier drüber ist also 1 Absatz. Will man mehr Platz, kann man 
+`</br>` verwenden um Absätze zu generieren. 
+
+</br>
+</br>
+
+voila
+
+### momentan mögliche CSS-Klassen für farbige Boxen:
+
+`::: klasse ` ist ein shortcut für `<div, class=klasse>`
+
+::: aufgabe
+Für Aufgabenbeschreibungen
+:::
+
+</br>
+
+::: aufgaberstudio
+Für aufgaben, die nicht im Tutorial, sondern in Rstudio gelöst werden sollen
+:::
+</br>
+
+::: infobox
+hellblaue Box für advanced content (zusatzwissen, oft mit einem * gekennzeichnet)
+:::
+</br>
+
+::: blau-nb
+Infobox ohne blauen Rand
+:::
+</br>
+
+::: gelb
+hellgelbe Box im sinne von "Achtung!"
+:::
+</br>
+
+::: vorteile
+grüne Box
+:::
+</br>
+
+::: nachteile
+rote Box
+:::
+</br>
+
+::: grau
+graue Box
+:::
+</br>
+
+::: grau-nb
+graue Box ohne dunklen Rand, fast nicht sichtbar auf weiß
+:::
+
+### ausklappbare Abschnitte
+
+verwende ich oft in Kombination mit einer Infobox für advanced Themen mit Sternchen. 
+
+<details>
+<summary><a>▼ \* Überschrift</a></summary>
+::: infobox
+Abgefahrene Formel:
+
+$$
+\infty + \infty = \infty
+$$
+:::
+</details>
+</br>
+
+Achtung! der Pfeil nach unten ▼ muss manuell immer neben der Überschrift eingefügt werden. 
+
+## LaTex
+Im ganzen Dokument können rohe LaTex-Tags verwendet werden. 
+Hier die wichtigsten: 
+
+### Inline Math
+
+Hier ist ein Summenzeichen: $\sum_{n=1}^i$
+
+### Display Math
+
+Hier ist ein Summenzeichen: 
+$$\sum_{n=1}^i$$
+
+### Align
+
+\begin{align*}
+1 &= 1 \\
+1 &= 1 + 0 + 0
+\end{align*}
+
+
+
 
 ## Abschlussquiz
 
