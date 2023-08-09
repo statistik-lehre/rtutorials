@@ -314,7 +314,7 @@ Aber wie genau kommen wir auf diese Parameter? Den Prozess, ein Modell zu erstel
 
 $b_0$ und $b_1$ werden so gewählt, dass die Regressionsgerade einen möglichst kleinen Abstand zu allen Datenpunkten hat.
 
-Probieren Sie selbst aus, Regressionsgerade optimal durch die Datenpunkte zu legen!
+Probieren Sie selbst aus, die Regressionsgerade optimal durch die Datenpunkte zu legen!
 
 ```{r shiny_ui, echo=FALSE}
     sliderInput("b0", "Intercept b0:", min = -1.5, max = 1.5, value = 1, step = 0.01)
@@ -336,13 +336,10 @@ res <- sum((trees$Volume - pre) ^ 2)
 ggplot2::ggplot(trees, aes(x = Diameter, y = Volume)) +
   geom_point() +
   geom_abline(intercept = input$b0, slope = input$b1, color = "blue") +
-  geom_linerange(x = trees$Diameter, ymin = trees$Volume, ymax = pre, linetype = "solid", colour = "red") +
-  annotate(geom = "label",
-            x = 50, y = 0.3,
-           hjust = 0,
-           col = "red",
-           size = 5,
-    label = paste0("Summe der \nquadrierten\nResiduen \n=", round(res, 5))) +
+  geom_linerange(x = trees$Diameter, ymin = trees$Volume, ymax = pre, 
+                 linetype = "solid", colour = "red") +
+  annotate(geom = "label", x = 50, y = 0.3, hjust = 0, col = "red", size = 5,
+          label = paste0("Summe der \nquadrierten\nResiduen \n=", round(res, 5))) +
   theme_minimal() +
   labs(x = "Durchmesser (cm)", y = "Volumen (m³)") +
   coord_cartesian(xlim = c(20, 55), ylim =c(0, 2.5), expand = F) 
