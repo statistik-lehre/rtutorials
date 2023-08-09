@@ -20,6 +20,7 @@ library(shiny)
 knitr::opts_chunk$set(echo = FALSE)
 
 if(require(ggbrace)) library(ggbrace) else {devtools::install_github("NicolasH2/ggbrace")}
+library(ggbrace)
 ```
 
 ## Inhalt
