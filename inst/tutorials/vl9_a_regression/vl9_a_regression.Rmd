@@ -317,38 +317,84 @@ $b_0$ und $b_1$ werden so gewählt, dass die Regressionsgerade einen möglichst 
 Probieren Sie selbst aus, die Regressionsgerade optimal durch die Datenpunkte zu legen!
 
 ```{r shiny_ui, echo=FALSE}
-    sliderInput("b0", "Intercept b0:", min = -1.5, max = 1.5, value = 1, step = 0.01)
-    sliderInput("b1", "Slope b1:", min = 0, max = 0.15, value = 0, step = 0.001)
-    plotOutput("distPlot")
+sliderInput("b0", "Intercept b0:", min = -1.5, max = 1.5, value = 1, step = 0.0001)
+sliderInput("b1", "Slope b1:", min = 0, max = 0.15, value = 0, step = 0.0001)
+plotOutput("distPlot")
+actionButton("show", "Antwort einreichen & Lösung anzeigen", class = "btn-default")
+tableOutput("estimate")
+plotOutput("optimumPlot")
 ```
 
 ```{r shiny_server, context="server"}
-output$distPlot <- renderPlot({
-  
-# Prerequisites: Daten müssen noch mal erstellt werden weil shiny app verwendet eigenes environment
-trees$Diameter <- datasets::trees$Girth * 2.54 # Inch in cm
-trees$Volume <- datasets::trees$Volume * 0.0283168466 #  ft³ in m³
-  
-# Plot
-require(ggplot2)
+  # Prerequisites: Daten müssen noch mal erstellt werden weil shiny app verwendet eigenes environment
+  require(ggplot2)
+  sysinfo <- Sys.info()
+  if(sysinfo["sysname"] == "Linux") require(Cairo) #bessere Grafik unter Linux, ist aber nur hörensagen und nicht nötig
 
-pre <- input$b0 + input$b1 * trees$Diameter
-res <- sum((trees$Volume - pre) ^ 2)
-  
-ggplot(trees, aes(x = Diameter, y = Volume)) +
-  geom_point() +
-  geom_abline(intercept = input$b0, slope = input$b1, color = "blue") +
-  geom_linerange(x = trees$Diameter, ymin = trees$Volume, ymax = pre, 
-                 linetype = "solid", colour = "red") +
-  annotate(geom = "label", x = 50, y = 0.3, hjust = 0, col = "red", size = 5,
-          label = paste0("Summe der \nquadrierten\nResiduen \n=", round(res, 5))) +
-  theme_minimal() +
-  labs(x = "Durchmesser (cm)", y = "Volumen (m³)") +
-  coord_cartesian(xlim = c(20, 55), ylim =c(0, 2.5), expand = F) 
+  trees$Diameter <- datasets::trees$Girth * 2.54 # Inch in cm
+  trees$Volume <- datasets::trees$Volume * 0.0283168466 #  ft³ in m³
+  fit <- lm(Volume ~ Diameter, data = trees)
 
+  # Wahre Werte für b0 und b1 bestimmen
+  coefs <-  fit |> coef() |> as.numeric()
+
+  # Minimale QS_res bestimmen
+  sum_res_min <- (trees$Volume - predict(fit))^2 |> sum()
+
+  # Lösungsplot
+  optimumPlot <- ggplot(trees, aes(x = Diameter, y = Volume)) +
+    geom_point() +
+    geom_abline(intercept = coefs[1], slope = coefs[2], color = "blue") +
+    geom_linerange(x = trees$Diameter, ymin = trees$Volume, ymax = predict(fit),
+                   linetype = "solid", colour = "red") +
+    annotate(geom = "label", x = 50, y = 0.3, hjust = 0, col = "red", size = 5,
+             label = paste0("Summe der \nquadrierten\nResiduen \n=", round(sum_res_min, 4))) +
+    theme_minimal() +
+    labs(x = "Durchmesser (cm)", y = "Volumen (m³)", title = "beste Schätzung") +
+    coord_cartesian(xlim = c(20, 55), ylim =c(0, 2.5), expand = F)
+
+  # Reaktive Vorhersage (für rote Linien)
+  pre <- reactive(input$b0 + input$b1 * trees$Diameter)
+
+  # reaktive Summe der quadrierten Residuen
+  res <- reactive(sum((trees$Volume - pre()) ^ 2))
+
+  # Grading Function
+  .estimate_grader <- function(x){
+    real <- c(coefs, sum_res_min)
+    deviation <- (x - real) * 100 / real
+    data.frame("Ihre Schätzung" = x,
+               "beste Schätzung" = real,
+               "Abweichung" = paste(round(deviation, 2), "%"),
+               row.names = c("Intercept", "Slope", "summierte quadrierte Residuen"),
+               check.names = FALSE)
+  }
+
+  # Check Button Logic
+  observeEvent(input$show, {
+    estimate_cache <- c(input$b0, input$b1, res())
+    # updateSliderInput(inputId = "b0", value = coefs[1])
+    # updateSliderInput(inputId = "b1", value = coefs[2])
+    output$estimate <- renderTable(.estimate_grader(estimate_cache),
+                                   rownames = TRUE, digits = 4)
+    output$optimumPlot <- renderPlot(optimumPlot)
+  })
+
+  # Plot
+  output$distPlot <- renderPlot({
+
+  ggplot(trees, aes(x = Diameter, y = Volume)) +
+    geom_point() +
+    geom_abline(intercept = input$b0, slope = input$b1, color = "blue") +
+    geom_linerange(x = trees$Diameter, ymin = trees$Volume, ymax = pre(),
+                   linetype = "solid", colour = "red") +
+    annotate(geom = "label", x = 50, y = 0.3, hjust = 0, col = "red", size = 5,
+             label = paste0("Summe der \nquadrierten\nResiduen \n=", round(res(), 5))) +
+    theme_minimal() +
+    labs(x = "Durchmesser (cm)", y = "Volumen (m³)") +
+    coord_cartesian(xlim = c(20, 55), ylim =c(0, 2.5), expand = F)
 
 })
-
 ```
 
 
