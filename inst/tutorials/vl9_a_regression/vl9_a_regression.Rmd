@@ -302,7 +302,7 @@ quiz(
 )
 ```
 
-Alles klar! Wir sind bereit, unser eigenes lineares Modell zu erstellen.
+Alles klar! Wir sind bereit, $b_0$ und $b_1$ für unser eigenes Modell zu bestimmen.
 
 ## Fitting the model
 
@@ -320,7 +320,7 @@ Probieren Sie selbst aus, Regressionsgerade optimal durch die Datenpunkte zu leg
     plotOutput("distPlot")
 ```
 
-```{r shiny_server, context="server", cache=TRUE}
+```{r shiny_server, context="server"}
 output$distPlot <- renderPlot({
   
 # Prerequisites: Daten müssen noch mal erstellt werden weil shiny app verwendet eigenes environment
@@ -328,10 +328,12 @@ trees$Diameter <- datasets::trees$Girth * 2.54 # Inch in cm
 trees$Volume <- datasets::trees$Volume * 0.0283168466 #  ft³ in m³
   
 # Plot
+require(ggplot2)
+
 pre <- input$b0 + input$b1 * trees$Diameter
 res <- sum((trees$Volume - pre) ^ 2)
   
-ggplot2::ggplot(trees, aes(x = Diameter, y = Volume)) +
+ggplot(trees, aes(x = Diameter, y = Volume)) +
   geom_point() +
   geom_abline(intercept = input$b0, slope = input$b1, color = "blue") +
   geom_linerange(x = trees$Diameter, ymin = trees$Volume, ymax = pre, linetype = "solid", colour = "red") +
@@ -358,26 +360,14 @@ Ein wichtiges Konzept sind dabei die Residuen.
 
 ### Residuen
 
-```{r residplot, echo=F, message=FALSE, warning=FALSE}
-lm(Volume ~ Diameter, data = trees) -> fit
-fitted(fit) -> fitted
-
-ggplot(trees, aes(x = Diameter, y = Volume)) +
-  geom_point() +
-  geom_smooth(method = "lm", se = F) +
-  geom_segment(aes(xend = Diameter, yend = fitted, color = "resid")) +
-  scale_color_manual(values = c(resid = "darkred"), labels = c(resid = "Residuen")) +
-  theme_minimal() +
-  labs(x = "Durchmesser (cm)", y = "Volumen (m³)", color = "")
-```
-
-Die oben in dunkelrot gekennzeichneten vertikalen Abstände zwischen realen Werten und den vorhergesagten Werten nennt man auch **Residuen**, also "Überbleibsel". Residuen stellen die Abweichung der Realität vom Modell dar, also den "Fehler", den das Modell nicht erklären kann.
+Die oben in rot gekennzeichneten vertikalen Abstände zwischen realen Werten und den vorhergesagten Werten nennt man auch **Residuen**, also "Überbleibsel". Residuen stellen die Abweichung der Realität vom Modell dar, also den "Fehler", den das Modell nicht erklären kann.
 
 Offensichtlich ist es daher besser, wenn die Residuen kleiner sind, als wenn sie sehr groß sind. Kleine Residuen bedeuten, dass das Modell näher an der Realität liegt.
 
 #### Formel
 
-Ein Residuum der Messung $i$ errechnet sich aus: $y_i - \hat y_i$.
+Ein Residuum $e$ der Messung $i$ errechnet sich aus: 
+$$e_i = y_i - \hat y_i$$
 
 #### Methode der kleinsten Quadrate
 
@@ -385,19 +375,25 @@ Eine Möglichkeit, zu definieren wann eine Regressionsgerade optimal an die Date
 
 > „Die Regressionsgerade liegt optimal, wenn die Summe der quadrierten Residuen minimal ist.“
 
-Diese Definition verwendet zur Schätzung der Regressionskoeffizienten die Methode der kleinsten Quadrate (*least squares*), was auch aus gutem Grund die populärste ist - sie minimiert die Residuen und erreicht damit die größtmögliche Varianzaufklärung durch das Modell. 
+$$
+\sum_{i = 1}^n \left(e_i\right)^2 = min
+$$ 
+
+
+Dahinter steht ein grundlegendes Konzept, die „Methode der kleinsten Quadrate“ (*least squares*), was eine weit verbreitete Schätzmethode ist. Das liegt unter anderem daran, dass das Minimieren der Summe der quadrierten Residuen auch tatsächlich die beste Varianzaufklärung erreicht (siehe Kapitel $R^2$). Zum Vergleich: Warum minimiert man nicht die Summer der absoluten Residuen?
 
 Natürlich hat *least squares estimation* auch Nachteile, zum Beispiel durch das Quadrieren hohe Empfindlichkeit gegenüber Extremwerten. Deswegen sei hier gesagt: es gibt auch andere Methoden, jedoch ist *least squares* der Standard, und das ist auch gut so. 
 
 <details>
 <summary><a>▼ * für's Interesse: mathematische Formeln</a></summary>
 ::: infobox
-**Woher kommen die Formeln für** $b_1$ und $b_0$?
+
+##### Woher kommen die Formeln für $b_1$ und $b_0$?
 
 Wie bereits gesagt, wird die Gerade so gelegt, dass die Summe der quadrierten Residuen minimal ist.
 
 $$
-\sum_{i = 1}^n \left( y_i - \hat y_i \right)^2 = min
+\sum_{i = 1}^n \left(e_i\right)^2 = \sum_{i = 1}^n \left( y_i - \hat y_i \right)^2 = min
 $$ mit:
 
 -   $y_i$ = tatsächlicher Wert
@@ -406,15 +402,19 @@ $$ mit:
 
 Analog zur Berechnung der Varianz wird hier quadriert. Da quadrierte Werte immer positiv sind, erreicht man, dass sich negative und positive Abweichungen nicht aufheben beim Summieren. Außerdem stellt das Quadrieren weitere günstige mathematische Eigenschaften für das Minimieren her.
 
-Einsetzen der Regressionsgleichung für $\hat y$:
+##### Einsetzen der Regressionsgleichung für $\hat y$:
 
 $$
 \sum_{i = 1}^n \left( y_i - (b_0 + b_1 \cdot x_i) \right)^2 = min
 $$
 
-Minimieren: Die Herleitung allgemeiner Formeln für minimale Residuen funktioniert über das Nullsetzen der partiellen Ableitung nach $b_0$ und der partiellen Ableitung nach $b_1$. Es gibt gute externe Quellen dazu, z. B. im [wikibook über lineare Regression](https://de.wikibooks.org/wiki/Statistik:_Regressionsanalyse#Einfaches_lineares_Regressionsmodell).
+##### Minimieren: 
 
-hier sind die fertigen Formeln für $b_0$ und $b_1$:
+Sie haben vermutlich an den Schiebereglern selbst bemerkt - es funktioniert nicht, nur einen der beiden Koeffizienten isoliert zu optimieren, sondern sie müssen verschiedene Kombinationen ausprobieren. 
+
+Ähnlich ist es bei der Herleitung allgemeiner Formeln. Sie funktioniert über das Nullsetzen der beiden partiellen Ableitungen nach $b_0$ und nach $b_1$. Es gibt gute externe Quellen dazu, z. B. im [wikibook über lineare Regression](https://de.wikibooks.org/wiki/Statistik:_Regressionsanalyse#Einfaches_lineares_Regressionsmodell).
+
+Daraus leiten sich letzten Endes folgende Formeln ab:
 
 ```{=tex}
 \begin{align}
@@ -423,7 +423,7 @@ b_1 &= \frac{cov(x,y)}{var(x)}
 b_0 &= \bar y - b_1 \cdot \bar x
 \end{align}
 ```
-Der Key-Takeaway ist: Diese Formeln liefern per Definition die optimale Regressionsgerade mit minimalen Residuen!
+Der Key-Takeaway ist: Diese Formeln liefern per mathematischer Definition die **optimale Regressionsgerade mit minimalen Residuen**!
 
 Amazing.
 :::
@@ -443,7 +443,7 @@ Bild: [ghbat.com](https://gbhat.com/machine_learning/linear_regression.html)
 :::
 </details>
 </br>
-Hervorragend, das theoretische Grundlagenwissen ist nun vorhanden, so dass Sie sich einem R-Output stellen können!
+Hervorragend, nun möchten Sie sicher wissen, wie die optimalen Regressionskoeffizienten $b_1$ und $b_0$ für unser Modell denn nun lauten. Hang on! Im nächsten Kapitel rechnet R das für uns aus, und Sie können sich einem R-Output stellen!
 
 ## Umsetzung in R
 
@@ -526,11 +526,11 @@ Vergleichen Sie Ihre Schätzung aus dem letzten Kapitel vom Experimentieren mit 
 
 <summary><a>▼ \* Geek Stuff: Welchen Algorithmus verwendet `lm()`?</a></summary>
 ::: infobox
-Lustigerweise wird unter der Haube von `lm()` letztlich nach vielen Zwischenschritten eine uralte Funktion in einer anderen Programmiersprache, nämlich FORTRAN, aufgerufen, um die Schwerarbeit zu machen. Sie stammt aus dem `LINPACK`-Paket, was original für Supercomputer in den 70ern und 80ern verfasst wurde, um lineare Gleichungssysteme zu lösen. 
+Lustigerweise wird unter der Haube von `lm()` letztlich nach vielen Zwischenschritten eine uralte Funktion in einer anderen Programmiersprache, nämlich FORTRAN, aufgerufen, um die Schwerarbeit zu machen. Sie stammt aus dem `LINPACK`-Paket, was original für Supercomputer in den 70ern und 80ern verfasst wurde, um lineare Gleichungssysteme zu lösen. Es ist scheinbar trotz des Alters nach wie vor effizient darin, *least squares optimization* zu betreiben. 
 
 Hier gibt es einen interessanten Blogbeitrag [(A deep dive into how R fits a linear model)](https://madrury.github.io/jekyll/update/statistics/2016/07/20/lm-in-R.html) dazu, der jeden einzelnen Schritt auflistet bis zur untersten Ebene, dem FORTRAN-Herzstück von `lm()`. 
 
-Der verwendte Algorithmus basiert auf QR-Zerlegung, und verwendet eine Householder-Transformations, um zu den Koeffizienten mit den kleinstmöglichen quadrierten Residuen zu gelangen. Ich weiß nicht, was das ist - aber [Wikipedia](https://de.wikipedia.org/wiki/QR-Zerlegung) weiß es :)   
+Der verwendete Algorithmus basiert auf QR-Zerlegung, und ist durch die Methode der „Householder-Transformationen“ implementiert. Ich weiß nicht, was das ist - aber [Wikipedia](https://de.wikipedia.org/wiki/QR-Zerlegung) weiß es :)   
 :::
 </details>
 </br>
