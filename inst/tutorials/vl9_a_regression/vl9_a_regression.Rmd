@@ -20,6 +20,7 @@ library(shiny)
 knitr::opts_chunk$set(echo = FALSE)
 
 if(require(ggbrace)) library(ggbrace) else {devtools::install_github("NicolasH2/ggbrace")}
+library(ggbrace)
 ```
 
 ## Inhalt
@@ -316,9 +317,9 @@ $b_0$ und $b_1$ werden so gewählt, dass die Regressionsgerade einen möglichst 
 Probieren Sie selbst aus, Regressionsgerade optimal durch die Datenpunkte zu legen!
 
 ```{r shiny_ui, echo=FALSE}
-sliderInput("b0", "Intercept b0:", min = -1.5, max = 1.5, value = 0, step = 0.01)
-sliderInput("b1", "Slope b1:", min = 0, max = 0.15, value = 0.075, step = 0.001)
-plotOutput("distPlot", inline = TRUE)
+    sliderInput("b0", "Intercept b0:", min = -1.5, max = 1.5, value = 1, step = 0.01)
+    sliderInput("b1", "Slope b1:", min = 0, max = 0.15, value = 0, step = 0.001)
+    plotOutput("distPlot")
 ```
 
 ```{r shiny_server, context="server", cache=TRUE}
@@ -329,16 +330,28 @@ trees$Diameter <- datasets::trees$Girth * 2.54 # Inch in cm
 trees$Volume <- datasets::trees$Volume * 0.0283168466 #  ft³ in m³
   
 # Plot
-ggplot(trees, aes(x = Diameter, y = Volume)) +
+pre <- input$b0 + input$b1 * trees$Diameter
+res <- sum((trees$Volume - pre) ^ 2)
+  
+ggplot2::ggplot(trees, aes(x = Diameter, y = Volume)) +
   geom_point() +
   geom_abline(intercept = input$b0, slope = input$b1, color = "blue") +
+  geom_linerange(x = trees$Diameter, ymin = trees$Volume, ymax = pre, linetype = "solid", colour = "red") +
+  annotate(geom = "label",
+            x = 50, y = 0.3,
+           hjust = 0,
+           col = "red",
+           size = 5,
+    label = paste0("Summe der \nquadrierten\nResiduen \n=", round(res, 5))) +
   theme_minimal() +
   labs(x = "Durchmesser (cm)", y = "Volumen (m³)") +
-  coord_cartesian(xlim = c(0, 60), ylim =c(-2, 2.5), expand = F)
+  coord_cartesian(xlim = c(20, 55), ylim =c(0, 2.5), expand = F) 
 
-},
-width = 800, height = 400)
+
+})
+
 ```
+
 
 Super! Merken Sie sich Ihre Schätzungen, und vergleichen Sie im Kapitel "Umsetzung in R" mit R's Schätzungen. 
 
