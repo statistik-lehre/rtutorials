@@ -335,7 +335,7 @@ ggplot2::ggplot(trees, aes(x = Diameter, y = Volume)) +
   geom_point() +
   geom_abline(intercept = input$b0, slope = input$b1, color = "blue") +
   geom_linerange(x = trees$Diameter, ymin = trees$Volume, ymax = pre, linetype = "solid", colour = "red") +
-  annotate(geom = "text",
+  annotate(geom = "label",
             x = 50, y = 0.3,
            hjust = 0,
            col = "red",
