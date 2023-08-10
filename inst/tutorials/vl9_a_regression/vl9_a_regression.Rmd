@@ -130,6 +130,11 @@ trees$Diameter <- datasets::trees$Girth * 2.54 # Inch in cm
 trees$Volume <- datasets::trees$Volume * 0.0283168466 #  ft³ in m³
 
 trees$Diameter_centered <- trees$Diameter - mean(trees$Diameter)
+
+fit <- lm(Volume ~ Diameter, data = trees)
+
+trees_predict <- trees["Volume"]
+trees_predict$predict <- predict(fit)
 ```
 
 ```{r silentsetup-global}
@@ -314,7 +319,12 @@ Aber wie genau kommen wir auf diese Parameter? Den Prozess, ein Modell zu erstel
 
 $b_0$ und $b_1$ werden so gewählt, dass die Regressionsgerade einen möglichst kleinen Abstand zu allen Datenpunkten hat.
 
+::: aufgabe
 Probieren Sie selbst aus, die Regressionsgerade optimal durch die Datenpunkte zu legen!
+:::
+
+</br>
+
 
 ```{r shiny_ui, echo=FALSE}
 sliderInput("b0", "Intercept b0:", min = -1.5, max = 1.5, value = 1, step = 0.0001)
@@ -328,8 +338,8 @@ plotOutput("optimumPlot")
 ```{r shiny_server, context="server"}
   # Prerequisites: Daten müssen noch mal erstellt werden weil shiny app verwendet eigenes environment
   require(ggplot2)
-  sysinfo <- Sys.info()
-  if(sysinfo["sysname"] == "Linux") require(Cairo) #bessere Grafik unter Linux, ist aber nur hörensagen und nicht nötig
+  # sysinfo <- Sys.info()
+  # if(sysinfo["sysname"] == "Linux") require(Cairo) #bessere Grafik unter Linux, ist aber nur hörensagen und nicht nötig
 
   trees$Diameter <- datasets::trees$Girth * 2.54 # Inch in cm
   trees$Volume <- datasets::trees$Volume * 0.0283168466 #  ft³ in m³
@@ -397,10 +407,12 @@ plotOutput("optimumPlot")
 })
 ```
 
+</br>
 
-Super! Merken Sie sich Ihre Schätzungen, und vergleichen Sie im Kapitel "Umsetzung in R" mit R's Schätzungen. 
+Hervorragend! Sie haben jetzt hoffentlich ein intuitives Gefühl für die Problemstellung bekommen.
 
-Aber wann liegt die Gerade optimal über den Daten? Es gibt verschiedene Ansätze dazu. 
+Wie Sie gesehen haben, gab es auch eine durch den Computer berechnete „beste Schätzung“ - vielleicht haben Sie das einfach so hingenommen, aber was qualifiziert diese Schätzung eigentlich dazu, sich die „beste“ zu nennen?
+
 Ein wichtiges Konzept sind dabei die Residuen. 
 
 ### Residuen
@@ -414,6 +426,12 @@ Offensichtlich ist es daher besser, wenn die Residuen kleiner sind, als wenn sie
 Ein Residuum $e$ (wie Error) der Messung $i$ errechnet sich aus: 
 $$e_i = y_i - \hat y_i$$.
 
+mit: 
+
+-   $y_i$ = tatsächlicher Wert
+
+-   $\hat y_i$ = vorhergesagter Wert
+
 #### Methode der kleinsten Quadrate
 
 Eine Möglichkeit, zu definieren wann eine Regressionsgerade optimal an die Daten angepasst ist, zu sagen:
@@ -425,27 +443,25 @@ $$
 $$ 
 
 
-Dahinter steht ein grundlegendes Konzept, die „Methode der kleinsten Quadrate“ (*least squares*), was eine weit verbreitete Schätzmethode ist. Das liegt unter anderem daran, dass das Minimieren der Summe der quadrierten Residuen auch tatsächlich die beste Varianzaufklärung erreicht (siehe Kapitel $R^2$). Zum Vergleich: Warum minimiert man nicht die Summer der absoluten Residuen?
+Dahinter steht ein grundlegendes Konzept, die „Methode der kleinsten Quadrate“ (*least squares*), was eine weit verbreitete Schätzmethode ist. 
 
-Natürlich hat *least squares estimation* auch Nachteile, zum Beispiel durch das Quadrieren hohe Empfindlichkeit gegenüber Extremwerten. Deswegen sei hier gesagt: es gibt auch andere Methoden, jedoch ist *least squares* der Standard, und das ist auch gut so. 
+Natürlich hat *least squares estimation* auch Nachteile, zum Beispiel durch das Quadrieren hohe Empfindlichkeit gegenüber Extremwerten. Deswegen sei hier gesagt: es gibt auch andere Methoden, jedoch ist *least squares* der Standard.
 
 <details>
-<summary><a>▼ * für's Interesse: mathematische Formeln</a></summary>
+<summary><a>▼ * Hintergründe: analytische Lösung der Minimierung</a></summary>
 ::: infobox
 
 ##### Woher kommen die Formeln für $b_1$ und $b_0$?
 
-Wie bereits gesagt, wird die Gerade so gelegt, dass die Summe der quadrierten Residuen minimal ist.
+Das tolle an der Methode der kleinsten Quadrate ist, dass es für die Regressionskoeffizienten eine analytische Lösung gibt, das heißt, mathematische Formeln, mit denen sie *garantiert* so bestimmt werden, dass die quadrierten Residuen minimal sind. 
+
+Das hier ist die Ausgangslage, das Kriterium für eine optimal liegende Gerade: Die Summe der quadrierten Residuen soll minimal sein. 
 
 $$
 \sum_{i = 1}^n \left(e_i\right)^2 = \sum_{i = 1}^n \left( y_i - \hat y_i \right)^2 = min
-$$ mit:
+$$ 
 
--   $y_i$ = tatsächlicher Wert
-
--   $\hat y_i$ = vorhergesagter Wert
-
-Analog zur Berechnung der Varianz wird hier quadriert. Da quadrierte Werte immer positiv sind, erreicht man, dass sich negative und positive Abweichungen nicht aufheben beim Summieren. Außerdem stellt das Quadrieren weitere günstige mathematische Eigenschaften für das Minimieren her.
+Da quadrierte Werte immer positiv sind, erreicht man, dass sich negative und positive Abweichungen nicht aufheben beim Summieren. Außerdem stellt das Quadrieren weitere günstige mathematische Eigenschaften für das Minimieren her.
 
 ##### Einsetzen der Regressionsgleichung für $\hat y$:
 
@@ -477,9 +493,10 @@ Amazing.
 </details>
 </br>
 <details>
-<summary><a>▼ \* Exkurs: lineare Regression und Machine Learning</a></summary>
+<summary><a>▼ \* Exkurs: iterative Lösung der Minimierung</a></summary>
 ::: infobox
-Man kann die Quadrierten Residuen auch minimieren durch Trial & Error, wie Sie es oben selbst vermutlich auch gemacht haben. Das geht super mit Machine-Learning-Algorithmen. Wir werden keine dieser Algorithmen in R verwenden, aber ich möchte darauf hinweisen, dass es auch mit Machine Learning geht, und die lineare Regression zu den am häufigsten angewandten Machine-Learning-Algorithmen zählt. 
+
+Das Gegenstück zu einer analytischen Lösung ist ein iterativer Ansatz, also „Trial & Error“, wie Sie es oben selbst vermutlich auch gemacht haben. Das ist ebenso eine weit verbreitete Methode, die quadrierten Residuen zu minimieren, besonders dann, wenn die mathematischen Voraussetzungen für die klassische Lösung nicht gegeben sind (das sind einige, siehe Kapitel „Voraussetzungen“). Prädestiniert für die Trial & Error-Lösung sind Machine-Learning-Algorithmen. Wir werden keine dieser Algorithmen in R verwenden, aber ich möchte darauf hinweisen, dass es das gibt.
 
 Hier eine Illustration des Fitting-Prozesses, allerdings mit anderen Daten. Die Grafik zeigt wie ein Machine-Learning-Algorithmus sich Schritt für Schritt der optimalen Regressionsgerade annähert, und die mittleren quadrierten Residuen (Mean Squared Error, MSE) immer kleiner werden, bis es nicht kleiner geht.
 
@@ -490,7 +507,44 @@ Bild: [ghbat.com](https://gbhat.com/machine_learning/linear_regression.html)
 :::
 </details>
 </br>
-Hervorragend, nun möchten Sie sicher wissen, wie die optimalen Regressionskoeffizienten $b_1$ und $b_0$ für unser Modell denn nun lauten. Hang on! Im nächsten Kapitel rechnet R das für uns aus, und Sie können sich einem R-Output stellen!
+
+#### Übung Residuen
+::: aufgabe
+**1.**
+Um die Formeln noch mal selbst anzuwenden, ist hier eine kleine Praxisaufgabe. 
+
+In der Tabelle `trees_predict` finden Sie zwei Spalten: Das tatsächliche Volumen ($y_i$) und das vorhergesagte Volumen ($\hat y_i$).
+
+a) Schauen Sie sich `trees_predict` an. 
+b) Berechnen Sie eine neue Spalte mit den Residuen für jeden einzelnen Messwert!
+c) Berechnen Sie die Summe der quadrierten Residuen!
+:::
+</br>
+```{r predict, exercise = TRUE, exercise.setup = "silentsetup"}
+trees_predict
+```
+
+```{r predict-solution}
+# a)
+head(trees_predict)
+
+# b)
+trees_predict$resid <- trees_predict$Volume - trees_predict$predict
+
+# c)
+sum(trees_predict$resid ^ 2)
+```
+
+```{r predict-question}
+question_numeric("Welchen Wert haben Sie bei c) für die summierten quadrierten Residuen herausbekommen? (3 Nachkommastellen)",
+                 answer(0.420, correct = T, message = "Das ist genau der gleiche Wert wie oben bei der Aufgabe mit den Schiebereglern."), tolerance = 0.001, allow_retry = T)
+```
+
+</br>
+
+Hang on! Im nächsten Kapitel wird es praktisch: Wie kann ich ein Modell in R erstellen und mir die Koeffizienten ausrechnen lassen? Und die wichtige Frage wird vor allem sein: Wo finde ich die relevanten Ergebnisse, und wie interpretiere ich sie?
+
+![](images/shuffling_tree.gif)
 
 ## Umsetzung in R
 
@@ -565,13 +619,9 @@ Diameter     0.056476   <--- b1
 ---
 ```
 
-::: aufgabe
-Vergleichen Sie Ihre Schätzung aus dem letzten Kapitel vom Experimentieren mit den Slidern mit den realen Werten!
-:::
-
+</br>
 <details>
-
-<summary><a>▼ \* Geek Stuff: Welchen Algorithmus verwendet `lm()`?</a></summary>
+<summary><a>▼ \* Exkurs: Welchen Algorithmus verwendet `lm()`?</a></summary>
 ::: infobox
 Lustigerweise wird unter der Haube von `lm()` letztlich nach vielen Zwischenschritten eine uralte Funktion in einer anderen Programmiersprache, nämlich FORTRAN, aufgerufen, um die Schwerarbeit zu machen. Sie stammt aus dem `LINPACK`-Paket, was original für Supercomputer in den 70ern und 80ern verfasst wurde, um lineare Gleichungssysteme zu lösen. Es ist scheinbar trotz des Alters nach wie vor effizient darin, *least squares optimization* zu betreiben. 
 
@@ -606,19 +656,18 @@ Lassen Sie sich mit `summary()` eine Zusammenfassung des gespeicherten Modells a
 Finden Sie $b_0$ und $b_1$!
 :::
 
-```{r summary-setup}
-trees$Diameter <- trees$Girth * 2.54 # Inch in cm
-trees$Volume <- trees$Volume * 0.0283168466 #  ft³ in m³
-fit <- lm(Volume ~ Diameter, data = trees)
-```
-
-```{r summary, exercise = TRUE}
+```{r summary, exercise = TRUE, exercise.setup = "silentsetup"}
 
 ```
 
 ```{r summary-solution}
 summary(fit)
 ```
+</br>
+
+![](./images/menschbaum.JPG){width=80%}
+
+(Bild: Wikimedia Commons, CC 0)
 
 ## Interpretation der Koeffizienten
 
@@ -663,6 +712,9 @@ Hier fehlt im Nenner die Varianz von y
 </br>
 
 :::
+</br>
+
+![](images/massband.jpg){width=80%}
 
 ## Transformationen
 
@@ -704,12 +756,9 @@ trees$Diameter_centered <- trees$Diameter - mean(trees$Diameter)
 question_numeric("2. Was ist der Mittelwert einer zentrierten Variable und warum ist das so? Prüfen Sie notfalls im obigen Codeblock nach.",
                  answer(0, correct = TRUE, message = "Richtig! Der Mittelwert einer zentrierten Variablen ist immer 0."))
 ```
-
-#### \* fürs Interesse
-
+</br>
 <details>
-
-<summary><a>▼ Klicken Sie `HIER` für einen mathematischen Beweis</a></summary>
+<summary><a>▼ mathematischer Beweis, dass der Mittelwert einer zentrierten Variablen 0 sein muss</a></summary>
 
 ::: infobox
 Es ist auch mathematisch zu zeigen, dass der Mittelwert einer zentrierten Variable immer 0 ist:
