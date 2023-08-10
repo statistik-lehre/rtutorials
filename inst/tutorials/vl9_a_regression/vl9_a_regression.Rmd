@@ -33,7 +33,7 @@ library(ggbrace)
 
 ### Ein Beispiel
 
-Als Förster\*in in den USA stehst du vor einer Amerikanischen Traubenkirsche (*Prunus serotina*) ([wiki](https://de.wikipedia.org/wiki/Sp%C3%A4tbl%C3%BChende_Traubenkirsche)). Sie soll bald gefällt werden, denn sie hat ein begehrtes Holz, und du brauchst Geld. Am liebsten möchtest wissen, bevor du den Baum fällst, wie viele Kubikmeter Holz wohl dabei herauskommen werden, die du verkaufen kannst. Aber du möchtest keine allzu komplexen Messungen vornehmen. Den besten und einfachsten Schätzer, den wir bequem vornehmen können ist der Durchmesser des Baumes, der sich ungefähr aus dem Umfang errechnen lässt. Dafür braucht es lediglich ein Maßband und $\pi$.
+Als Förster\*in in den USA stehst du vor einer spätblühenden Traubenkirsche (*Prunus serotina*) ([wiki](https://de.wikipedia.org/wiki/Sp%C3%A4tbl%C3%BChende_Traubenkirsche)). Sie soll bald gefällt werden, denn sie hat ein begehrtes Holz, und du brauchst Geld. Am liebsten möchtest wissen, bevor du den Baum fällst, wie viele Kubikmeter Holz wohl dabei herauskommen werden, die du verkaufen kannst. Aber du möchtest keine allzu komplexen Messungen vornehmen. Den besten und einfachsten Schätzer, den wir bequem vornehmen können ist der Durchmesser des Baumes, der sich ungefähr aus dem Umfang errechnen lässt. Dafür braucht es lediglich ein Maßband und $\pi$.
 
 Der Baum, vor dem wir stehen, hat einen Durchmesser von 45 cm. Wie viele Kubikmeter Holz können wir erwarten?
 
@@ -949,7 +949,7 @@ Nun haben Sie sich ausgiebig mit der Modellgüte befasst. Allerdings können wir
 
 Die Problemstellung ist folgende: 
 
-Alles, was wir bisher beobachtet haben, gilt zwar in unserer kleinen Stichprobe von 31 Amerikanischen Traubenkirschen, aber wir wissen nicht, ob wir die Ergebnisse auch verallgemeinern können. 
+Alles, was wir bisher beobachtet haben, gilt zwar in unserer kleinen Stichprobe von 31 spätblühenden Traubenkirschen, aber wir wissen nicht, ob wir die Ergebnisse auch verallgemeinern können. 
 
 Haben wir nicht vielleicht eine Stichprobe gezogen, in welcher der Durchmesser und das Holzvolumen **zufällig** zusammenhängen, obwohl das eigentlich generell im ganzen Wald nicht der Fall ist?
 
@@ -1414,7 +1414,7 @@ ggplot(trees, aes(x = Diameter, y = Volume)) +   # Daten und Mappings definieren
   geom_point() +                                 # Punktdiagramm
   geom_smooth(method = "lm", se = F) +           # Regressionsgerade
   theme_minimal() +                              # Schnick-Schnack
-  labs(x = "Durchmesser (cm)", y = "Volumen (m³)", title = "Amerikanische Traubenkirsche")
+  labs(x = "Durchmesser (cm)", y = "Volumen (m³)", title = "spätblühende Traubenkirsche")
 ```
 
 #### Code Breakdown
@@ -1479,15 +1479,15 @@ Hier ein kleiner Überblick, darüber, wie die Voraussetzungen geprüft werden k
 +----------------------------------------+-----------------------------------+
 | 4.  Es gibt Variation beim Prädiktor   | Streudiagramm                     |
 +----------------------------------------+-----------------------------------+
+| 5.  Homoskedastizität                  | `plot(fit)`                       |
++----------------------------------------+-----------------------------------+
 
 : Vor dem Modellieren
 
 +----------------------------------------------+-----------------------------------------------+
 | Vorannahme                                   | Überprüfung                                   |
 +==============================================+===============================================+
-| 5.  Unkorreliertheit der Residuen mit der UV | `plot(fit)`                                   |
-+----------------------------------------------+-----------------------------------------------+
-| 6.  Homoskedastizität                        | `plot(fit)`                                   |
+| 6.  Unkorreliertheit der Residuen mit der UV | `plot(fit)`                                   |
 +----------------------------------------------+-----------------------------------------------+
 | 7.  keine Autokorrelation der Residuen       | `car::durbinWatsonTest()`                     |
 +----------------------------------------------+-----------------------------------------------+
@@ -1506,21 +1506,28 @@ Hier ein kleiner Überblick, darüber, wie die Voraussetzungen geprüft werden k
 
 Sowohl der Prädiktor als auch das Kriterium müssen metrisch sein.
 
-Hier sind einige andere Verfahren bei:
+<details>
+<summary><a>▼ \* Hier sind einige andere Verfahren, falls das nicht gegeben ist:
+</a></summary>
+::: infobox
 
 kategorialer Prädiktor + metrisches Kriterium
 
--   bei zwei Kategorien: $t$-Test
+-   bei zwei Kategorien / Gruppen: $t$-Test
 
--   bei mehr als zwei Kategorien: Varianzanalyse (ANOVA) oder Dummy-Kodierung
+-   bei mehr als zwei Kategorien / Gruppen: Varianzanalyse (ANOVA) oder generalisiertes lineares Modell (GLM) mit Dummy-Kodierung
 
 metrischer Prädiktor + kategoriales Kriterium:
 
 -   logistische Regression
 
+:::
+</details>
+</br>
+
 ### 2. Zufällige Stichprobe
 
-Im Beispiel mit der Amerikanischen Traubenkirsche wäre es zum Beispiel wichtig, dass nicht selektiv nur Bäume vermessen wurden, die eine besonders gute Wuchsform hatten, sondern eine zufällige Auswahl aus allen möglichen Bäumen getroffen wurde - sonst ist das Modell nicht generalisierbar.
+Im Beispiel mit der spätblühenden Traubenkirsche wäre es zum Beispiel wichtig, dass nicht selektiv nur Bäume vermessen wurden, die eine besonders gute Wuchsform hatten, sondern eine ausreichend große, zufällige Auswahl aus allen möglichen Bäumen getroffen wurde, damit eine Normalverteilung angenommen werden kann. Dabei heißt ausreichend große Stichprobe als Faustregel ungefähr $n > 30$.
 
 ### 3. Linearer Zusammenhang in den Daten
 
@@ -1542,9 +1549,9 @@ abline(straight_fit, col = "red")
 lines(zeit, prediction, col = "blue")
 ```
 
-Die Gerade erklärt die Daten nicht gut und trifft falsche Vorhersagen, während die quadratische Funktion sehr nah an der Realität liegt. (Fiktive Daten, Quelle: [statology](https://www.statology.org/quadratic-regression-r/))
+Die Gerade erklärt die Daten nicht gut und trifft falsche Vorhersagen, während die quadratische Funktion sehr nah an der Realität liegt. (Fiktive Daten)
 
-Die Überprüfung einer linearen Beziehung in den Daten erfolgt visuell über ein Punktdiagramm. Die Punkte sollten sich alle durch eine Gerade beschreiben lassen und keine systematischen Abweichungen haben.
+Die Überprüfung einer linearen Beziehung in den Daten erfolgt visuell über ein Punktdiagramm. Die Punkte sollten sich alle durch eine Gerade beschreiben lassen und keine *systematischen* Abweichungen von der Linearität haben. Zufällige Streuung hingegen ist komplett in Ordnung. 
 
 Beispiele:
 
@@ -1584,7 +1591,7 @@ gridExtra::grid.arrange(p1, p2, p3, p4, p5, p6)
 
 ```{r plotquiz}
 question_checkbox("Bei welchen dieser Plots würden Sie eine zugrunde liegende lineare Beziehung vermuten?",
-                  answer("1", message = "Hier ist es schwer zu sagen - die Daten enthalten sehr viel Streuung."),
+                  answer("1", message = "Hier ist es schwer zu sagen - die Daten enthalten sehr viel Streuung. Aufällig ist die Konzentration viele Punkte auf bestimmten x-Werten."),
                   answer("2", message = "Diese Beziehung zwischen Notaufnahmebesuchen (y) und Hitze (x) folgt eher einer Kurve als einer Gerade"),
                   answer("3", message = "Hier liegt scheinbar eher eine Exponentialfunktion zu Grunde, keine Gerade"),
                   answer("4", correct = T, message = "4: Hier könnte eine Gerade die Punkte gut beschreiben."),
@@ -1628,9 +1635,94 @@ R^2 &= 0
 :::
 </details>
 
-### 5. Unkorreliertheit der Residuen mit Kriterium
 
-### 6. Homoskedastizität
+### 5. Homoskedastizität
+
+```{r homoskedasis_grafiken, message=FALSE, warning=FALSE}
+# H1 Homosked.
+set.seed(1)
+x <- 1:1000
+y <- rnorm(1000, sd = 100)
+df1 <- data.frame(x, y)
+h1 <- ggplot(df1, aes(x, y)) +
+  geom_point(alpha = 0.34) +
+#  geom_smooth(method = "lm", se = F) +
+  theme_void() +
+  labs(title = "1")
+
+y <- 2 + 0.5 * x + rnorm(1000, sd = x)
+df2 <- data.frame(x, y)
+h2 <- ggplot(df2, aes(x, y)) +
+  geom_point(alpha = 0.34) +
+  # geom_smooth(method = "lm", se = F) +
+  theme_void() +
+  labs(title = "2")
+
+sd3 <- sin(seq(0, 5, length.out = 1000))^2
+y <- rnorm(1000, sd = sd3)
+df3 <- data.frame(x, y)
+h3 <- ggplot(df3, aes(x, y)) +
+  geom_point(alpha = 0.34) +
+  # geom_smooth(method = "lm", se = F) +
+  theme_void() +
+  labs(title = "3")
+
+y <- sin(seq(0, 10, length.out = 1000)) + rnorm(1000, sd = 0.5)
+df4 <- data.frame(x, y)
+h4 <- ggplot(df4, aes(x, y)) +
+  geom_point(alpha = 0.34) +
+  # geom_smooth(method = "lm", se = F) +
+  theme_void() +
+  labs(title = "4")
+
+y <- 2 + 0.5 * x + rnorm(1000, sd = 30)
+df5 <- data.frame(x, y)
+h5 <- ggplot(df5, aes(x, y)) +
+  geom_point(alpha = 0.34) +
+  # geom_smooth(method = "lm", se = F) +
+  theme_void() +
+  labs(title = "5")
+
+y <- 10 - 0.5 * x + rnorm(1000, sd = 1000:1)
+df6 <- data.frame(x, y)
+h6 <- ggplot(df6, aes(x, y)) +
+  geom_point(alpha = 0.34) +
+  # geom_smooth(method = "lm", se = F) +
+  theme_void() +
+  labs(title = "6")
+
+gridExtra::grid.arrange(h1, h2, h3, h4, h5, h6)
+```
+
+
+```{r homoskedasis_question}
+question_checkbox("Welche der Grafiken zeigen eine homoskedastische Verteilung?",
+                  answer(1, correct = T),
+                  answer(2),
+                  answer(3),
+                  answer(4, message = "Hier könnte man argumentieren, dass die Streuung überall gleich ist, also dass streng genommen Homoskedastizität vorliegt, nur dass die zugrundeliegende Funktion keine Gerade ist, sondern eine Sinuskurve."),
+                  answer(5, correct = T),
+                  answer(6))
+```
+
+Diese ganzen Betrachtungen kann man vor der Analyse durchführen.
+Nach der Analyse können noch die Residuen überprüft werden: 
+
+### 6. Unkorreliertheit der Residuen mit Kriterium
+
+Werden die Residuen zum Beispiel größer, je größer das Kriterium wird, dann ist das ein Hinweis auf Heteroskedastizität. Vergleichen wir dafür noch einmal zwei Plots: 
+
+```{r}
+h1 + geom_smooth(method = "lm", se = F)
+fit1 <- lm(y ~ x, data = df1)
+plot(fit1, which = 1)
+
+h6 + geom_smooth(method = "lm", se = F)
+fit6 <- lm(y ~ x, data = df6)
+
+plot(fit6, which = 1)
+```
+
 
 ### 7. keine Auto-Korrelation der Residuen
 
