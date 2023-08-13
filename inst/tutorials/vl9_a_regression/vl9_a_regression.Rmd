@@ -1591,12 +1591,12 @@ gridExtra::grid.arrange(p1, p2, p3, p4, p5, p6)
 
 ```{r plotquiz}
 question_checkbox("Bei welchen dieser Plots würden Sie eine zugrunde liegende lineare Beziehung vermuten?",
-                  answer("1", message = "Hier ist es schwer zu sagen - die Daten enthalten sehr viel Streuung. Aufällig ist die Konzentration viele Punkte auf bestimmten x-Werten."),
-                  answer("2", message = "Diese Beziehung zwischen Notaufnahmebesuchen (y) und Hitze (x) folgt eher einer Kurve als einer Gerade"),
-                  answer("3", message = "Hier liegt scheinbar eher eine Exponentialfunktion zu Grunde, keine Gerade"),
-                  answer("4", correct = T, message = "4: Hier könnte eine Gerade die Punkte gut beschreiben."),
-                  answer("5", correct = T, message = "5: Es handelt sich um den Zusammenhang zwischen Körpergröße und Gewicht."),
-                  answer("6", correct = T, message = "6: Auch hier lässt sich eine lineare Beziehung vermuten."),
+                  answer("1", message = "(1) Hier ist es schwer zu sagen - die Daten enthalten sehr viel Streuung. Aufällig ist die Konzentration viele Punkte auf bestimmten x-Werten."),
+                  answer("2", message = "(2) Diese Beziehung zwischen Notaufnahmebesuchen (y) und Hitze (x) folgt eher einer Kurve als einer Gerade"),
+                  answer("3", message = "(3) Hier liegt scheinbar eher eine Exponentialfunktion zu Grunde, keine Gerade"),
+                  answer("4", correct = T, message = "(4) Hier könnte eine Gerade die Punkte gut beschreiben."),
+                  answer("5", correct = T, message = "(5) Es handelt sich um den Zusammenhang zwischen Körpergröße und Gewicht."),
+                  answer("6", correct = T, message = "(6) Auch hier lässt sich eine lineare Beziehung vermuten."),
                   allow_retry = TRUE
          )
 ```
@@ -1624,13 +1624,12 @@ question_numeric("Welchen Wert würde $R^2$ im obigen Plot annehmen und warum?",
 ```
 
 <details>
-<summary>**▼ Erklärung**</summary>
+<summary><a>▼ Erklärung</a></summary>
 
 ::: infobox
 \begin{align}
 R^2 &= \frac{\text{Durch das Modell erklärte Varianz in y}}{\text{Gesamtvarianz in y}} \\
-R^2 &= \frac{0}{\text{Gesamtvarianz in y}}
-R^2 &= 0
+R^2 &= \frac{0}{\text{Gesamtvarianz in y}} = 0
 \end{align}
 :::
 </details>
@@ -1697,12 +1696,12 @@ gridExtra::grid.arrange(h1, h2, h3, h4, h5, h6)
 
 ```{r homoskedasis_question}
 question_checkbox("Welche der Grafiken zeigen eine homoskedastische Verteilung?",
-                  answer(1, correct = T),
-                  answer(2),
-                  answer(3),
-                  answer(4, message = "Hier könnte man argumentieren, dass die Streuung überall gleich ist, also dass streng genommen Homoskedastizität vorliegt, nur dass die zugrundeliegende Funktion keine Gerade ist, sondern eine Sinuskurve."),
-                  answer(5, correct = T),
-                  answer(6))
+                  answer(1, correct = T, message = "(1) Hier ist es offensichtlich"),
+                  answer(2, message = "(2) Das klassische Beispiel für Heteroskedastizität - die Trompetenform"),
+                  answer(3) message = "(3) könnte ein Beispiel für saisonale Schwankungen sein - heteroskedastisch",
+                  answer(4, correct = T, message = "(4) ist eigentlich homoskedastisch, weil die Streuung überall gleich ist, aber es liegt eine Sinuskurve anstelle einer Gerade zugrunde. (Dadurch ist dann auf jeden Fall eine andere Voraussetzung verletzt, nämlich die Linearitätsannahme)"),
+                  answer(5, correct = T, message = "(5) hat eine in der Praxis fast unrealistisch kleine Streuung, aber sie ist überall gleich breit - homoskedastisch"),
+                  answer(6), message = "(6) Das klassische Beispiel für Heteroskedastizität - die Trompetenform")
 ```
 
 Diese ganzen Betrachtungen kann man vor der Analyse durchführen.
@@ -1725,6 +1724,11 @@ plot(fit6, which = 1)
 
 
 ### 7. keine Auto-Korrelation der Residuen
+
+```{r}
+car::durbinWatsonTest(fit)
+```
+
 
 ### 8. Normalverteilung der Residuen
 
