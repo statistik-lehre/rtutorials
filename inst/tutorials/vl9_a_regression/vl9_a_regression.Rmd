@@ -1701,7 +1701,8 @@ question_checkbox("Welche der Grafiken zeigen eine homoskedastische Verteilung?"
                   answer(3) message = "(3) könnte ein Beispiel für saisonale Schwankungen sein - heteroskedastisch",
                   answer(4, correct = T, message = "(4) ist eigentlich homoskedastisch, weil die Streuung überall gleich ist, aber es liegt eine Sinuskurve anstelle einer Gerade zugrunde. (Dadurch ist dann auf jeden Fall eine andere Voraussetzung verletzt, nämlich die Linearitätsannahme)"),
                   answer(5, correct = T, message = "(5) hat eine in der Praxis fast unrealistisch kleine Streuung, aber sie ist überall gleich breit - homoskedastisch"),
-                  answer(6), message = "(6) Das klassische Beispiel für Heteroskedastizität - die Trompetenform")
+                  answer(6, message = "(6) Das klassische Beispiel für Heteroskedastizität - die Trompetenform"), 
+                  allow_retry = T)
 ```
 
 Diese ganzen Betrachtungen kann man vor der Analyse durchführen.
