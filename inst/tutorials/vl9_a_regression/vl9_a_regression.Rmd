@@ -1726,9 +1726,46 @@ plot(fit6, which = 1)
 
 ### 7. keine Auto-Korrelation der Residuen
 
-```{r}
+Was bedeutet Auto-Korrelation? 
+
+Die altgriechische Vorsilbe „Auto-“ bedeutet „Selbst-“ oder „Eigen-“. Es geht also um Korrelation der Werte mit sich selbst. 
+
+Dabei wissen wir ja eigentlich, dass die Korrelation jeder Variable mit sich selbst perfekt ist, also 1 beträgt. Darum geht es also nicht. 
+
+Die Frage hier ist, ob die Höhe eines Residuums die Höhe der benachbarten Residuen beeinflusst. Wenn das übermäßig der Fall ist, sind die Residuen nicht zufällig. 
+
+Warum ist das wichtig? Das Modell baut darauf, dass ein linearer Zusammenhang zugrunde liegt, und dass jegliche Streuung in den Daten um diese Gerade rein zufälliger Natur ist, also keine Systematik dahinter steht. 
+
+#### Überprüfung in R
+
+Die Auto-Korrelation kann in R berechnet und ausgegeben werden mitsamt eines Hypothesentests, der die Nullhypothese $\rho = 0$ testet („Die Auto-Korrelation beträgt in Wahrheit 0“). 
+
+```{r autocor-question}
+question_checkbox("Wie müsste der p-Wert aussehen, wenn unsere Daten vermutlich aus einer Population ohne Autokorrelation stammen?",
+                  answer("$p \\le 0.05$", message = "Wenn p kleiner als 0.05 wäre, müssten wir die Nullhypothese verwerfen. Da die Nullhypothese aber enthält, dass die Autokorrelation in Wahrheit 0 ist, wäre das also nicht der erwünschte Fall, diese Annahme zu verwerfen - das wäre dann ein Hinweis darauf, dass es Autokorrelation gibt."),
+                  answer("$p > 0.05$", correct = T, message = "Genau! In diesem Fall halten wir danach Ausschau, dass der Test nicht signifikant wird, der p-Wert größer als 0.05 bleibt, damit die Nullhypothese beibehalten werden darf, da das das „erwünschte“ Ergebnis ist."),
+                  allow_retry = T)
+```
+
+
+
+```{r, echo = TRUE}
 car::durbinWatsonTest(fit)
 ```
+
+<details>
+<summary><a>▼ Wie eine Autokorrelation berechnet wird</a></summary>
+Wie kann man die Auto-Korrelation berechnen, wenn die Korrelation einer Variablen mit sich selbst immer 1 ist? 
+
+Dafür werden die Daten gegeneinander verschoben um 1 Zeile und dann wird die Korrelation berechnet:
+
+```{r, echo = TRUE}
+
+```
+
+</details>
+
+
 
 
 ### 8. Normalverteilung der Residuen
