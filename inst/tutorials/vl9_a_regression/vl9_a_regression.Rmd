@@ -1747,17 +1747,27 @@ question_checkbox("Wie müsste der p-Wert aussehen, wenn unsere Daten vermutlich
                   allow_retry = T)
 ```
 
+Geprüft wird das mit einem Durbin-Watson-Test. Das Paket `car` stellt eine Funktion dafür bereit:
 
+Testen wir das zunächst an einem extremen Beispiel, was ich simuliert habe und definitiv Auto-Korrelation enthalten sollte:
+Plot 4 aus dem Homoskedastizität-Abschnitt, die Residuen variieren systematisch! 
+
+Wenn Auto-Korrelation besteht, dann variieren benachbarte Residuen gemeinsam.
+
+```{r message=FALSE, warning=FALSE}
+fit4 <- lm(y ~ x, data = df4)
+pre4 <- predict(fit4)
+h4 + geom_smooth(method = "lm", se = F) +
+  geom_linerange(aes(ymin = pre4, ymax = y), color = "red", alpha = .4)
+
+```
 
 ```{r, echo = TRUE}
-car::durbinWatsonTest(fit)
+car::durbinWatsonTest(fit4)
 ```
 
 <details>
-<summary><a>▼ Wie eine Autokorrelation berechnet wird</a></summary>
-Wie kann man die Auto-Korrelation berechnen, wenn die Korrelation einer Variablen mit sich selbst immer 1 ist? 
-
-Dafür werden die Daten gegeneinander verschoben um 1 Zeile und dann wird die Korrelation berechnet:
+<summary><a>▼ Wie eine Auto-Korrelation berechnet wird</a></summary>
 
 ```{r, echo = TRUE}
 
@@ -1769,6 +1779,40 @@ Dafür werden die Daten gegeneinander verschoben um 1 Zeile und dann wird die Ko
 
 
 ### 8. Normalverteilung der Residuen
+
+Eine letzte und zentrale Annahme ist, dass die Residuen normalverteilt sein müssen. 
+
+Eine Möglichkeit, das grob visuell zu überprüfen, ist ein Histogramm zu erstellen der standardisierten Residuen. 
+
+Wir erinnern uns: Ein Histogramm ermöglicht, die Verteilung einer metrischen Variable zu visualisieren. 
+
+```{r}
+resid(fit) |> scale() |> hist()
+```
+
+#### visuelle Überprüfung
+
+Es mag willkürlich erscheinen, rein aus dem Visuellen grob zu bestimmen, ob etwas normalverteilt ist oder nicht. Hier sind einige Beispiele für nicht-normalverteilte Daten, damit Sie eine Intuition entwickeln. 
+
+##### Definitiv Nicht-Normalverteilte Daten
+##### a) multimodale Verteilung
+
+```{r}
+(sin(1:40) + sin(40:1)) |> hist()
+runif(40) |> hist()
+```
+
+
+##### Beispiele von kleinen Stichproben mit $n=40$ aus einer Normalverteilung
+
+```{r}
+rnorm(40) |> hist()
+rnorm(40) |> hist()
+rnorm(40) |> hist()
+rnorm(40) |> hist()
+```
+
+
 
 ## Ausblick: Multiple lineare Regression
 
