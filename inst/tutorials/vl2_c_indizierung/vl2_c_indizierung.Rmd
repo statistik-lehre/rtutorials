@@ -48,39 +48,50 @@ sogenanntes *Indizieren*.
 
 Es gibt insgesamt 3 verschiedene Arten:
 
-1. Indizierung mit ganzzahligen Vektoren
+1. Indizierung mit ganzen Zahlen
 
 ```{r ganzzahlig, exercise = TRUE}
 # Die ersten 6 Einträge der Spalte mpg 
 mtcars$mpg[1:6] 
 ```
 
-2. Indizierung mit logischen Vektoren
+2. Indizierung mit Logik
 
-```{r logisch, exercise = TRUE}
+```{r logisch1, exercise = TRUE}
 # Alle Autos, die mehr als 25 Meilen schaffen
 mtcars$mpg[mtcars$mpg > 25] 
 ```
 
-3. Indizierung mit Textvektoren
+3. Indizierung mit Text
 
-```{r logisch, exercise = TRUE}
+```{r logisch2, exercise = TRUE}
 # Wie weit kommt ein Honda Civic mit einer Gallone Treibstoff?
 mtcars["Honda Civic", ]$mpg 
 ```
 
-**\*\* Zusatzaufgabe:** Miles per gallon ist ein unübliches Maß für Deutschland. Rechnen Sie den Verbrauch des Honda Civic in Liter pro 100 km um!
+::: aufgabe
+**\* Zusatzaufgabe:** Miles per gallon ist ein unübliches und Maß für uns. 
+
+a) Rechnen Sie die Spalte `mpg` in eine neue Spalte `lp100km` um, die den Verbauch in Litern pro 100 km angibt!
+b) Wie viel Liter pro 100 km verbraucht der Honda Civic?
+:::
 
 ```{r zusatz, exercise = TRUE}
-# 1 gal (US) == 3.79 l
-# 1 m == 1.61 km
+# L/100km = 235.214583 / mpg
 
-mtcars["Honda Civic", ]$mpg  
-
+mtcars$lp100km <- mtcars$mpg
 ```
 
 ```{r zusatz-solution}
-* 3.79 / (1.61 * 10)
+# a)
+mtcars$lp100km <- 235.214583 / mtcars$mpg
+
+# b) 
+mtcars["Honda Civic", ]$lp100km
+```
+
+```{r silentsetup}
+mtcars$lp100km <- 235.214583 / mtcars$mpg
 ```
 
 Das war ein kurzer Überblick über die drei verschiedenen Methoden. Es klingt jetzt erst mal technisch, ist es auch. Um R wirklich zu verstehen ist es einfach total hilfreich, zu wissen, wie Indizierung funktioniert, und welche verschiedenen Arten es gibt. Denn die drei verschiedenen Arten funktionieren alle ähnlich, aber unterscheiden sich in ihrem Aufbau fundamental
@@ -97,7 +108,7 @@ Lassen Sie sich `x` anzeigen!
 x <- c(22, 25, 23, 19, 20, 23, 25, 27, 29, 24, rep(1000, 20))
 ```
 
-```{r x, exercise = TRUE}
+```{r x, exercise = TRUE, exercise.setup = "ex"}
 
 ```
 
@@ -114,17 +125,7 @@ x[1:10]
 Innerhalb der eckigen Klammern wird ein Vektor angegeben. In diesem Fall 
 die Zahlenreihe `1:10`, um die ersten 10 Elemente auszuwählen.
 
-Jetzt sind Sie gefragt: Wählen Sie nur die 9. Messung aus! 
-
-```{r choose-solution}
-x[9]
-```
-
-```{r choose, exercise = TRUE, exercise.setup = "ex"}
-x[]
-```
-
-::: infobox
+::: grau
 #### Verbalisierung
 
 `[]` kann gelesen werden als: "*An der Stelle…*".
@@ -135,9 +136,34 @@ Beispiele:\
 `x[1:10]` = `x` *an den Stellen* 1 bis 10
 :::
 
-#### noch ein Anwendungsbeispiel
+Jetzt sind Sie gefragt:
 
-Lassen Sie sich nur die Messung von Tag 5 und Tag 2 ausgeben!
+::: aufgabe
+**1.** Wählen Sie nur die 7. Messung aus! 
+:::
+```{r choose-solution}
+x[7]
+```
+
+```{r choose, exercise = TRUE, exercise.setup = "ex"}
+x[]
+```
+
+<details>
+<summary><a>▼ \* Exkurs: One-based-counting</a></summary>
+::: infobox
+Viele Programmiersprachen basieren auf *zero-based-counting*, das heißt, das 
+Zählen der Elemente beginnt bei 0. Falls Sie bereits Erfahrung mit einer solchen 
+Sprache haben, müssen Sie sich nun umgewöhnen, denn R hingegen verwendet
+*one-based-counting*. Dabei bekommt das erste Element auch tatsächlich die
+Nummer 1. 
+:::
+</details>
+<br>
+
+::: aufgabe
+**2.** Lassen Sie sich nur die Messung von Tag 5 und Tag 2 ausgeben!
+:::
 
 ```{r selective, exercise = TRUE, exercise.setup = "ex"}
 x[]
@@ -153,23 +179,23 @@ Mehrere Zahlen werden mit `c()` zu einem Vektor verknüpft.
 ```{r selective-solution}
 x[c(5, 2)]
 ```
-### Sonderfall: mit negativen Zahlen
 
-Ein weitere hilfreiche Eigenschaft beim Subsetting mit ganzzahligen Vektoren:
-Mit negativen Zahlen können bestimmte Elemente ausgeschlossen werden. 
+::: aufgabe
+**3.** Lassen Sie sich die Buchstaben in der Reihenfolge `c`, `b`, `a` ausgeben!
+:::
 
-```{r neg, exercise = TRUE, exercise.setup = "ex"}
-x[-(11:30)]   # schließt Messung 11 bis 30 aus. 
-```
-
-### noch mehr Beispiele
 ```{r indexing, exercise = TRUE}
 # Definieren eines Vektors 'abc'
 abc <- c("a", "b", "c")
 
 # Indizierung:
-abc[3:1]      
+abc[]      
+```
 
+```{r indexing-solution}
+abc[3:1]
+# oder
+abc[c(3, 2, 1)]
 ```
 
 In diesem Fall werden drei Elemente ausgewählt. 
@@ -179,9 +205,11 @@ lautet, dann die zweite ("b") und dann die erste ("a").
 So langsam haben Sie vermutlich verstanden, wie es funktioniert. Hier sind noch
 ein paar Übungsaufgaben:
 
-#### Anwendungsaufgabe:
 
+::: aufgabe
+**4.**
 Lassen Sie sich das zweite und das dritte Element von `abc` ausgeben!
+:::
 
 ```{r application-setup}
 abc <- c("a", "b", "c")
@@ -203,9 +231,13 @@ Mehrere Zahlen werden mit `c()` zu einem Vektor verknüpft.
 abc[c(2, 3)]
 ```
 
-Wählen Sie nur das erste Element des Vektors `abc` aus und speichern Sie das Ergebnis in 
-einem neuen Vektor `a`! Lassen Sie sich `a` ausgeben, um zu sehen ob es
+::: aufgabe
+**5.** Wählen Sie nur das erste Element aus `abc` aus und speichern Sie das Ergebnis in 
+einem neuen Objekt `a`! 
+
+Lassen Sie sich `a` ausgeben, um zu sehen ob es
 funktioniert hat.
+::: 
 
 ```{r a-setup}
 abc <- c("a", "b", "c")
@@ -219,16 +251,20 @@ a
 abc[]
 ```
 
-### Exkurs: One-based-counting
+<details>
+<summary><a>▼ \* Zusatzwissen: Subsetting mit negativen Zahlen</a></summary>
+::: infobox
+Mit negativen Zahlen können bestimmte Elemente ausgeschlossen werden. 
 
-Viele Programmiersprachen basieren auf *zero-based-counting*, das heißt, das 
-Zählen der Elemente beginnt bei 0. Falls Sie bereits Erfahrung mit einer solchen 
-Sprache haben, müssen Sie sich nun umgewöhnen, denn R hingegen verwendet
-*one-based-counting*. Dabei bekommt das erste Element auch tatsächlich die
-Nummer 1. 
+```{r neg, exercise = TRUE, exercise.setup = "ex"}
+x[-(11:30)]   # schließt Messung 11 bis 30 aus. 
+```
+:::
+</details>
+<br>
 
 ::: gelb
-### Gut zu wissen
+#### Gut zu wissen
 
 Die Konsole nutzt auch die Index-Schreibweise, um langen Output zu strukturieren: 
 Zu Beginn jeder neuen Zeile ist die Nummer des ersten Elements der Zeile in 
@@ -294,18 +330,67 @@ Dieser Code prüft für jedes Element von `x`, ob es der Bedingung
 "ungleich 1000" entspricht. Das Ergebnis wird als logischer Vektor ausgegeben.
 Nur die ersten 10 Elemente sind TRUE, während die letzten 20 Elemente FALSE sind. 
 
+
+::: blau-nb
+#### Vergleichsoperatoren
+
+Diese Vergleichsoperatoren gibt es in R:
+
+- `<` und `>` : kleiner / größer als
+- `<=` und `>=`: kleiner gleich / größer gleich
+- `==`: gleich (Achtung, `=` hat eine ganz andere Bedeutung)
+- `!=`: ungleich
+:::
+<br>
+
+::: aufgabe
+**Anwendungsaufgabe**
+
+Stellen Sie Bedingungsprüfungen auf, in denen `x` geprüft wird auf...
+
+a) Werte die $\leq 25$ sind. 
+b) Werte $= 25$
+c) Werte $\geq 25$
+:::
+
+```{r leq, exercise = TRUE, exercise.setup = "ex"}
+x
+```
+
+```{r leq-solution}
+# a)
+x <= 25
+
+# b) 
+x == 25
+
+# c)
+x >= 25
+```
+
+Perfekt! Sie sind nun so weit, mit Bedingungsprüfungen zu indizieren. 
+
+### Indizierung 
+
 Wir möchten nun alle Elemente von `x` auswählen, die ungleich 1000 sind.
 
 ```{r neq, exercise = TRUE, exercise.setup = "ex"}
 x[x != 1000]  # Indizieren mit Bedingungsprüfung
 ```
 
+::: grau
+#### Verbalisierung
 Lies: `x[x != 1000]` = `x` *an der Stelle wo* "`x` ungleich 1000"
-
+:::
+<br>
 Hinter den Kulissen wird zuerst die Bedingungsprüfung `x != 1000` evaluiert, denn
 Code wird immer von innen nach außen ausgeführt. 
 
-Das Ergebnis der Prüfung ist ein logischer Vektor (wie im oberen Codeblock demonstriert).
+Das Ergebnis der Prüfung ist ein logischer Vektor:
+```
+TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+```
+
 Dann findet die Indizierung mittels dieses logischen Vektors statt. 
 
 Als Ergebnis erhalten wir alle Elemente von `x`, die ungleich 1000 sind. 
@@ -314,7 +399,10 @@ Als Ergebnis erhalten wir alle Elemente von `x`, die ungleich 1000 sind.
 
 Jetzt sind Sie dran:
 
+::: aufgabe
+**1.**
 Lassen Sie sich die Messungen in `x` ausgeben, die kleiner als 20 sind!
+:::
 
 ```{r filter, exercise = TRUE, exercise.setup = "ex"}
 x[]
@@ -324,10 +412,16 @@ x[]
 x[x < 20]
 ```
 
-### Anwendungsaufgabe
 
+::: aufgabe
+**2.**
 Mit der Funktion `rnorm()` können wir $n$ zufällige Ziehungen aus einer
 Standardnormalverteilung simulieren. 
+
+a) Lassen Sie sich x anzeigen!
+
+b) Lassen Sie sich nur die Elemente anzeigen, die größer als 0 sind.
+:::
 
 ```{r rnorm-solution}
 x        # Anzeigen
@@ -338,20 +432,14 @@ x[x > 0] # Nur Werte > 0 anzeigen
 x <- rnorm(100)  # Ziehung von 100 Werten
 ```
 
-1. Lassen Sie sich x anzeigen!
+### Verknüpfung von Bedingungen
 
-2. Lassen Sie sich nur die Elemente anzeigen, die größer als 0 sind.
+Nun haben Sie bereits Vergleichsoperatoren kennengelernt, um Bedingungsprüfungen zu erstellen.
+Was ist aber, wenn ich zwei Bedingungsprüfungen verknüpfen möchte?
 
+To be continued... logische Operatoren & und |
 
-
-### EDIT
-
-`<` und `>` sind nur zwei Vertreter der (*conditionals*).
-
-Weitere sind: `==` für Gleichheit, `!=` für Ungleichheit, `<=` kleiner gleich,
-`>=` größer gleich, 
-
-
+Super! Sie haben diese wichtige Art von Indizierung gemeistert.
 
 ## Indizierung mit Textvektoren
 
