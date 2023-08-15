@@ -1792,26 +1792,137 @@ resid(fit) |> scale() |> hist()
 
 #### visuelle Überprüfung
 
-Es mag willkürlich erscheinen, rein aus dem Visuellen grob zu bestimmen, ob etwas normalverteilt ist oder nicht. Hier sind einige Beispiele für nicht-normalverteilte Daten, damit Sie eine Intuition entwickeln. 
+Es mag willkürlich erscheinen, rein aus dem Visuellen grob zu bestimmen, ob etwas normalverteilt ist oder nicht. Mit diesem kleinen Spiel können Sie Ihre Intuition etwas schärfen:
 
-##### Definitiv Nicht-Normalverteilte Daten
-##### a) multimodale Verteilung
+```{r ui_distribution-guesser}
+verteilungen <- c("Normal", "Uniform", "Bimodal")
 
-```{r}
-(sin(1:40) + sin(40:1)) |> hist()
-runif(40) |> hist()
+fluidPage(
+
+  shinyFeedback::useShinyFeedback(),
+  shinyjs::useShinyjs(),
+
+  # Application title
+  titlePanel("Verteilungen erraten"),
+
+
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput("n", "Stichprobengröße (aka Schwierigkeitsgrad)",
+                  value = 50, min = 30, max = 300, step = 1),
+      # sliderInput("bins", "Anzahl Bins", min = 3, value = 20, max = 80, step = 1),
+    ),
+
+    mainPanel(
+      plotOutput("plot"),
+      radioButtons("radio",
+                   "Aus welcher Verteilung wurde die Stichprobe gezogen?",
+                   verteilungen, selected = character(0)),
+      actionButton("button", "Nächster Plot"),
+      tableOutput("table"),
+      textOutput("text"),
+      actionButton("reset", "Neustart")
+    )
+  )
+)
+
 ```
 
+```{r server_distribution-guesser, context = "server"}
 
-##### Beispiele von kleinen Stichproben mit $n=40$ aus einer Normalverteilung
+library(shinyFeedback)
+library(shinyjs)
 
-```{r}
-rnorm(40) |> hist()
-rnorm(40) |> hist()
-rnorm(40) |> hist()
-rnorm(40) |> hist()
+verteilungen <- c("Normal", "Uniform", "Bimodal")
+
+  sampler <- function() sample(verteilungen, size = 1)
+  zufall <- reactiveValues(sample = sampler())
+  counter <- reactiveValues(richtig = 0, falsch = 0, round = 0)
+
+  observeEvent(input$button, counter$round <- counter$round + 1)
+
+  observeEvent(input$n, {
+    feedback(inputId = "n", text = "unmöglich", color = "darkred",
+             show = {input$n < 30})
+    feedback(inputId = "n", text = "schwer", color = "red",
+             show = {input$n > 30 && input$n <= 39})
+    feedback(inputId = "n", text = "mittelschwer", color = "orange",
+             show = {input$n > 39 && input$n <= 50})
+    feedback(inputId = "n", text = "medium", color = "yellow",
+             show = {input$n > 50 && input$n <= 100})
+    feedback(inputId = "n", text = "leicht", color = "darkgreen",
+             show = {input$n > 100 && input$n <= 200})
+    feedback(inputId = "n", text = "sehr leicht", color = "lightgreen",
+             show = {input$n > 200})
+
+  })
+
+  observeEvent(input$reset, {
+    zufall$sample <- sampler()
+    counter$richtig <- 0
+    counter$falsch <- 0
+    counter$round <- 0
+  })
+
+  output$text <- renderText({
+
+    paste("Erfolgsquote:",
+          if(counter$round >= 5){
+            paste(
+              round(
+                counter$richtig / (counter$richtig + counter$falsch) * 100,
+                digits = 2
+              ),
+              "%")
+          } else {
+            "wird erst ab 5 Versuchen angezeigt"
+          }
+    )
+  })
+
+  output$plot <- renderPlot({
+    input$button
+    x <- switch(zufall$sample,
+                "Normal" = rnorm(input$n),
+                "Uniform" = runif(input$n),
+                "Bimodal" = c(rnorm(input$n / 2), (rnorm(input$n / 2) + 5))
+    )
+    df <- data.frame(x)
+    bins <- as.integer(nclass.Sturges(x) * 1.4)
+    ggplot(df, aes(x = x)) +
+      geom_histogram(bins = bins, fill = "gray", color = "black") +
+      theme_minimal()
+  })
+  observeEvent(input$radio,
+               {
+                 req(input$radio)
+                 test <- input$radio == zufall$sample
+                 if(test){
+                   counter$richtig <- counter$richtig + 1
+                   showToast(type = "success",
+                             message = "",
+                             keepVisible = TRUE)
+                 } else {
+                   counter$falsch <- counter$falsch + 1
+                   showToast(type = "error", message = zufall$sample,
+                             keepVisible = TRUE)
+                 }
+                 disable("radio")
+               })
+  observeEvent(input$button,
+               {updateRadioButtons(session, inputId = "radio",
+                                   selected = character(0))
+                 zufall$sample <- sampler() # Zufallsgenerator
+                 enable("radio")
+                 hideToast(animate = F)
+               })
+
+  output$table <- renderTable({
+    data.frame(richtig = counter$richtig, falsch = counter$falsch)
+  }, digits = 0)
+
+
 ```
-
 
 
 ## Ausblick: Multiple lineare Regression
