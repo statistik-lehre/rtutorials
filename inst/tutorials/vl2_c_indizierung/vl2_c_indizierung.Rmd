@@ -448,13 +448,15 @@ Attributen beschäftigen.
 
 …… to be continued. 
 
-### Anwendungsaufgaben
+## Anwendungsaufgaben
+::: aufgabe
 
-1.  Erstellen Sie eine absteigende Zahlenreihe von 100 bis 1. Geben Sie der Reihe den Namen x.
+a.  Erstellen Sie eine absteigende Zahlenreihe von 100 bis 1. Geben Sie der Reihe den Namen x.
 
-2.  Addieren Sie das dritte und siebte Element des Vektors x! Benennen Sie das Ergebnis mit y.
+b.  Addieren Sie das dritte und siebte Element des Vektors x! Benennen Sie das Ergebnis mit y.
 
-3.  Lassen Sie sich y ausgeben.
+c.  Lassen Sie sich y ausgeben.
+:::
 
 ```{r anw-hint}
 # Zahlenreihen rückwärts: die höhere Zahl nach vorne stellen.
@@ -472,7 +474,7 @@ y
 ```
 
 ::: grau-nb
-Hinweis: Dass beim Wert von `y` ein `L` dahinter steht, ist völlig normal. Das `L` steht für *Long* und bezeichnet einen Datentyp.
+Hinweis: Falls beim Wert von `y` ein `L` dahinter steht, ist völlig normal. Das `L` steht für *Long* und bezeichnet einen Datentyp.
 :::
 
 
