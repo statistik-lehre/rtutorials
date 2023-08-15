@@ -1829,8 +1829,8 @@ fluidPage(
 ```
 
 ```{r server_distribution-guesser, context = "server"}
-# Die App sollte separat getestet werden, da sonst das Laden des gesamten tutorials nötig ist
-# source of truth: 
+# Die App wird separat entwickelt, da sonst für jeden Test das Laden des gesamten tutorials nötig ist
+# source of truth: https://github.com/luk-brue/normal-distribution-guesser
 library(shinyFeedback)
 library(shinyjs)
 
