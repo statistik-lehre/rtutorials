@@ -125,6 +125,9 @@ x <- 2 + 3
 # Variablenname <- Wert
 ```
 
+::: grau
+#### Verbalisierung
+
 Oft ist es hilfreich, Code zu verbalisieren. Hier sind einige
 Möglichkeiten, wie der Pfeil ausgesprochen werden kann:
 
@@ -135,8 +138,12 @@ Lesen Sie in Ihrem Kopf:
 -   und von rechts nach links, in der Pfeilrichtung:
 
     `2 + 3` *wird auf* `x` *geschrieben*.
+:::
+<br>
 
-Multiplizieren Sie nun zum Beispiel `x` mit 2!
+::: aufgabe
+Multiplizieren Sie nun `x` mit 2!
+:::
 
 ```{r y_creation-setup, echo = FALSE}
 x <- 2 + 3
@@ -145,8 +152,11 @@ x <- 2 + 3
 ```{r y_creation, exercise = TRUE}
 x * 2
 ```
+<br>
 
+::: aufgabe
 Speichern Sie nun `x * 2` in einem neuen Objekt `y`!
+:::
 
 ```{r y_saving-setup, echo = FALSE}
 x <- 2 + 3
@@ -160,12 +170,16 @@ x * 2
 y <- x * 2
 ```
 
-::: infobox
+::: blau-nb
 **Tipp**: Nutzen Sie die Tastenkombination `Alt` + `-`, um den
 *assignment operator* `<-` zu erzeugen!
 
 Das hat den Vorteil, dass der Pfeil automatisch von Leerzeichen umgeben
 wird.
+:::
+<br>
+
+::: gelb
 
 **Achtung mit Leerzeichen:**
 
@@ -174,9 +188,11 @@ wird.
 Ersteres heißt: "Ist `x` kleiner als `-2 + 3`?", letzteres bedeutet:
 "Definiere `x` als `2 + 3`".
 :::
+<br>
 
+::: aufgabe
 Lassen Sie sich nun `y` ausgeben!
-
+:::
 ```{r y_print, exercise = TRUE, setup.chunk = "y_saving-solution"}
 
 ```
@@ -192,7 +208,7 @@ Der Pfeil funktioniert auch in umgedrehter Form: `5 -> x`, das ist aber
 unkonventionell.
 :::
 
-### unbenannte Werte
+### printed and lost
 
 Wie bereis erwähnt ist alles, was nicht benannt wird, "*printed and
 lost*".\
@@ -292,10 +308,13 @@ obj
 
 ![](images/settings.png)
 
+::: aufgaberstudio
+
 Setzen Sie bitte Ihre RStudio-Einstellungen unter Tools / Global Options
 auf diese Werte! Dadurch wird das Environment mit dem Beenden von
 RStudio automatisch gelöscht und nicht zwischen Sitzungen gespeichert.
-
+:::
+<br>
 Das soll Sie dazu animieren, alle Objekte die Sie benutzen auch
 tatsächlich selbst zu definieren.
 
@@ -304,6 +323,7 @@ nicht definiert, Ihre Berechnungen werden aber trotzdem ohne Warnung
 ausgeführt, weil noch ein anderes `x` aus der letzten Sitzung
 zwischengespeichert ist. Dann bekommen Sie falsche Ergebnisse und merken
 es eventuell nicht.
+
 
 ## Vektoren
 
@@ -343,8 +363,9 @@ Sie die Funktion `c()`.
 
 -   das Dezimalzeichen in R ist der Punkt!
 
-Verketten sie 1.5, 2.5 und 3 zu einem Vektor! Sie müssen ihn nicht
-speichern.
+::: aufgabe
+**1.** Verketten sie 1.5, 2.5 und 3 mithilfe von `c()`!
+:::
 
 ```{r concatenate, exercise = TRUE}
 c()
@@ -354,8 +375,10 @@ c()
 c(1.5, 2.5, 3)
 ```
 
-Mit `c()` lassen sich mehrere Vektoren aneinander binden. Kombinieren
+::: aufgabe
+**2.** Mit `c()` lassen sich auch mehrere Vektoren aneinander binden. Kombinieren
 Sie `x`, `y` und `z` zu einem neuen Vektor!
+:::
 
 ```{r vectorc, exercise = TRUE}
 # x, y und z definieren
@@ -426,7 +449,11 @@ vec + vec
 
 ::: infobox
 Die Rechenoperation wird jeweils zwischen den Elementen durchgeführt,
-die an der gleichen Stelle stehen. (1 + 1, 2+ 2, 3 + 3)
+die an der gleichen Position stehen. 
+
+(1 + 1, 2 + 2, 3 + 3)
+
+(erstes Element + erstes Element, zweites + zweites Element, drittes + drittes ... )
 :::
 
 ### Vektoren unterschiedlicher Länge
@@ -554,6 +581,4 @@ der Arbeit mit R.
 |-------|----------------------|
 | `c()` | combine              |
 | `<-`  | assignment operator  |
-| `[]`  | index operator       |
-| `!=`  | Ungleichheitsprüfung |
 | `:`   | colon operator       |
