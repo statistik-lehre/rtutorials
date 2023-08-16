@@ -16,22 +16,72 @@ resource_files:
 ```{r setup, include=FALSE}
 library(learnr)
 knitr::opts_chunk$set(echo = FALSE)
+library(ggplot2)
+```
+## Intuition bekommen
+
+### Was ist Streuung?
+```{r ui}
+            sliderInput("var",
+                        "Varianz",
+                        min = 0,
+                        max = 50,
+                        value = 5,
+                        step = 0.1)
+
+           plotOutput("distPlot")
+```
+
+```{r server, context = "server"}
+ output$distPlot <- renderPlot({
+       set.seed(1)
+       y <- rnorm(5000, sd = sqrt(input$var))
+       df <- data.frame(x = 1:5000, y)
+       ggplot(df, aes(x, y)) +
+         geom_hline(yintercept = 0, col = "blue") +
+         geom_point(alpha = .4) +
+         theme_void() +
+         coord_cartesian(xlim = c(1, 5000), ylim = c(-25, +25))
+
+
+    })
 ```
 
 
-## Abweichungen vom Mittelwert
+## Wie kann Streuung gemessen werden?
 
-Die Abweichungen vom Mittelwert liegen der Berechnung von Streuungen zugrunde. Das zugrunde liegende (geniale) Konzept, Streuung durch die Abweichungen von einem Zentrum darzustellen ist das Fundament für Varianz, Standardabweichung, und alle darauf basierenden Verfahren wie Korrelation und Regression. Deswegen gehen wir im Folgenden Schritt für Schritt durch die Berechnung der Abweichungen vom Mittelwert in R.
+### Streuung als Abweichung von einem Zentrum
 
-![Diagramm mit rot eingezeichneten Abweichungen vom Mittelwert.](images/dev.png){width="50%"}
+Es ist ein einfaches und geniales Konzept: 
 
-Wir können postulieren, dass die Summe der Abweichungen vom Mittelwert immer 0 beträgt.
+Streuung wird gemessen durch die gesamte Abweichung aller Werte von einem Zentrum.
 
-$$
-{\large \sum_{i=1}^{n}{(x_i - \bar{x})}=0}
-$$
+Das Zentrum ist meistens der Mittelwert, aber es gibt auch weniger gebräuchliche Maße, die z.B. den Median als Zentrum verwenden. Wir fokussieren uns jetzt aber auf die Abweichungen vom Mittelwert, weil das das Fundament für Varianz, Standardabweichung, Korrelation und Regression ist!
 
-Konkret gerechnet für die obenstehende Verteilung:
+### Abweichungen vom Mittelwert
+
+In Rot sehen sie den Abstand jedes einzelnen Werts zum Mittelwert.
+
+```{r deviance}
+y <- c(1, 1, 9, 3, 6)
+res <- y - mean(y)
+df <- data.frame(x = 1:5, y = y, res = res, meanres = (y + mean(y)) / 2)
+ggplot(df, aes(x, y)) +
+  geom_hline(yintercept = mean(y), color = "blue") +
+  geom_linerange(aes(ymin = mean(y), ymax = y), color = "red") +
+  geom_point(size = 3) +
+  geom_label(label = res, aes(x = x + 0, y = meanres)) +
+  scale_y_continuous(breaks = 0:10) +
+  scale_x_continuous(breaks = NULL) +
+  theme_bw() +
+  labs(x = "", y = "x")
+  
+```
+
+
+Die Abstände ergeben sich, wenn man den Mittelwert von jedem einzelnen Wert abzieht: 
+
+$\large x_i - \bar x$
 
 +-----------------+----------+----------+----------+----------+----------+
 | $x_i$           | 1        | 1        | 3        | 6        | 9        |
@@ -43,31 +93,45 @@ Konkret gerechnet für die obenstehende Verteilung:
 
 : Abweichungen vom Mittelwert
 
+#### wichtige Eigenschaft des Mittelwerts
+
+Interessanterweise ist der Mittelwert so definiert, dass sich die Abweichungen gegenseitig aufheben, wenn man sie alle addiert:
+
+$$
+{\large \sum_{i=1}^{n}{(x_i - \bar{x})}=0}
+$$
+
+
+
 Die Werte in der letzten Zeile stellen die Abweichungen vom Mittelwert dar. Wenn alle Werte der letzten Zeile addiert werden, kommt tatsächlich 0 heraus.
 
 Das liegt an der Definition des Mittelwertes: Er liegt immer so, dass die negativen und die positiven Abweichungen sich gegenseitig aufheben.
 
 Wie sähe eine mögliche Prüfung dieser Hypothese in R aus?
 
-Um die Abweichung eines Vektors vom Mittelwert zu berechnen, benötigen wir zunächst noch etwas mehr Kenntnisse über das Rechnen mit Vektoren.
-
 
 ## Umsetzung
 
-Um die Abweichungen vom Mittelwert ( $x_i - \bar{x}$ ) zu berechnen, wird der Mittelwert `mean(x)` von jedem einzelnen Wert des Vektors `x` abgezogen. Das entspricht dem Konzept Vektor und Konstante.
-
-Als Ergebnis entsteht ein neuer Vektor mit den Abweichungen vom Mittelwert.
+Um die Abweichungen vom Mittelwert ( $x_i - \bar{x}$ ) zu berechnen, wird der Mittelwert `mean(x)` von jedem einzelnen Wert des Vektors `x` abgezogen. Tatsächlich ist das in R so einfach, dass es fast nicht zu glauben ist - R's Mächtigkeit im Umgang mit Vektoren lässt grüßen!
 
 ```{r, echo=TRUE}
 x <- c(1, 1, 9, 3, 6)
 x - mean(x)
 ```
 
-### Anwendung
+Als Ergebnis entsteht ein neuer Vektor mit den Abweichungen vom Mittelwert.
 
-Jetzt sind Sie selber gefragt! Prüfen Sie die Hypothese, dass die Summe aller Abweichungen vom Mittelwert 0 beträgt.
+Jetzt sind Sie selber gefragt!
+
+::: aufgabe
+**Anwendungsaufgabe**
+
+Prüfen Sie, ob die Summe aller Abweichungen vom Mittelwert wirklich 0 beträgt.
 
 Übersetzen Sie dazu die Formel $\sum{(x_i - \bar{x})}=0$ in R Code!
+
+Denken Sie an Ihre bereits erlangten Kenntnisse der letzten Tutorials.
+:::
 
 ```{r deviation-setup}
 x <- c(1, 1, 9, 3, 6)
@@ -85,6 +149,8 @@ sum(x - mean(x)) == 0
 
 ```
 
+Super! Aber das war erst der halbe Weg - Wie Sie sehen, heben sich die Abweichungen gegenseitig auf, und wir müssen noch etwas dagegen unternehmen, um zu einem sinnvollen Maß für die Streuung zu kommen. 
+
 ## Quadratsummen
 
 Da die Abweichungen vom Mittelwert summiert immer 0 ergeben, geht ihr Informationsgehalt über die Streuung leider verloren. Um ein Maß für die Streuung (auch Dispersion genannt) zu erhalten, müssen noch zwei weitere Schritte geschehen:
@@ -96,7 +162,29 @@ $$
 {\large QS=\sum{(x_i-\bar{x})^2}}
 $$
 
-![Diagramm mit rot eingezeichneten Abweichungen vom Mittelwert](images/dev.png){width="50%"}
+```{r deviance2, fig.height=5, fig.width=5, message=FALSE, warning=FALSE}
+df$y2 <- df$y
+df$y2[2] <- NA
+df$yno2 <- df$y
+df$yno2[-2] <- NA
+df$res2 <- df$res
+df$res2[2] <- NA
+df$resno2 <- df$res
+df$resno2[-2] <- NA
+
+ggplot(df, aes(x, y)) +
+  geom_rect(aes(ymin = mean(y), ymax = y2, xmin = x, xmax = x - abs(res)), fill = "pink", alpha = .6, col = "darkred") +
+  geom_label(label = df$res2^2, aes(x = (x + (x - abs(res))) / 2, y = meanres)) +
+  geom_rect(aes(ymin = mean(y), ymax = yno2, xmin = x, xmax = x - abs(res)), fill = "pink", alpha = .6, col = "darkred") +
+  geom_label(label = df$resno2^2, aes(x = (x + (x - abs(res))) / 2, y = meanres)) +
+  geom_point(size = 3) +
+  geom_hline(yintercept = mean(y), color = "blue") +
+  scale_y_continuous(breaks = 0:10) +
+  scale_x_continuous(breaks = NULL) +
+  theme_bw() +
+  labs(x = "", y = "x")
+  
+```
 
 +---------------------+---------:+---------:+---------:+---------:+---------:+
 | $x_i - \bar{x}$     | -3       | -3       | 5        | -1       | 2        |
@@ -106,6 +194,7 @@ $$
 
 : Quadrierte Abweichungen vom Mittelwert
 
+<br>
 $QS = 9 + 9+25+1+4=48$
 
 Die Quadratsumme in unserem Beispiel beträgt 48. Mehr als die Hälfte dieses Werts (25) wurde durch einen einzigen Ausreißer verursacht.
@@ -132,7 +221,7 @@ $$
 {\large s = \sqrt{s^2}}
 $$
 
-Die Standardabweichung ist lediglich eine andere Maßeinheit für die Streuung, aber das zugrundeliegende Messinstrument ist das selbe. Deswegen wird auch die Empfindlichkeit gegenüber Ausreißern, die der Quadratsumme eingeschrieben ist, wird durch das Ziehen der Wurzel nicht rückgängig gemacht, auch wenn es vielleicht auf den ersten Blick so scheint.
+Die Standardabweichung ist lediglich eine transformierte Version der Varianz, das zugrundeliegende Messinstrument ist das selbe. Deswegen wird auch die Empfindlichkeit gegenüber Ausreißern, die der Quadratsumme eingeschrieben ist, wird durch das Ziehen der Wurzel nicht rückgängig gemacht, auch wenn es vielleicht auf den ersten Blick so scheint.
 
 ## Hausaufgabe
 
