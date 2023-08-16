@@ -18,6 +18,11 @@ library(learnr)
 knitr::opts_chunk$set(echo = FALSE)
 library(ggplot2)
 ```
+
+```{r ex}
+x <- c(1, 1, 9, 3, 6)
+```
+
 ## Intuition bekommen
 
 ### Was ist Streuung?
@@ -110,7 +115,7 @@ Das liegt an der Definition des Mittelwertes: Er liegt immer so, dass die negati
 Wie sähe eine mögliche Prüfung dieser Hypothese in R aus?
 
 
-## Umsetzung
+### Abweichungen vom Mittelwert berechnen
 
 Um die Abweichungen vom Mittelwert ( $x_i - \bar{x}$ ) zu berechnen, wird der Mittelwert `mean(x)` von jedem einzelnen Wert des Vektors `x` abgezogen. Tatsächlich ist das in R so einfach, dass es fast nicht zu glauben ist - R's Mächtigkeit im Umgang mit Vektoren lässt grüßen!
 
@@ -151,7 +156,7 @@ sum(x - mean(x)) == 0
 
 Super! Aber das war erst der halbe Weg - Wie Sie sehen, heben sich die Abweichungen gegenseitig auf, und wir müssen noch etwas dagegen unternehmen, um zu einem sinnvollen Maß für die Streuung zu kommen. 
 
-## Quadratsummen
+### Quadratsummen
 
 Da die Abweichungen vom Mittelwert summiert immer 0 ergeben, geht ihr Informationsgehalt über die Streuung leider verloren. Um ein Maß für die Streuung (auch Dispersion genannt) zu erhalten, müssen noch zwei weitere Schritte geschehen:
 
@@ -199,9 +204,22 @@ $QS = 9 + 9+25+1+4=48$
 
 Die Quadratsumme in unserem Beispiel beträgt 48. Mehr als die Hälfte dieses Werts (25) wurde durch einen einzigen Ausreißer verursacht.
 
-Um daraus tatsächlich ein Maß der Streuung zu machen, müssen wir noch durch $n$ (die Anzahl der Elemente im Vektor) teilen, um den Einfluss der Stichprobengröße herauszurechnen. Es hat sich gezeigt, dass das Teilen durch $n - 1$ akkuratere Schätzungen liefert - eine genaue Erklärung dazu führt hier aber zu weit.
+#### Quadratsummen vergleichbar machen
 
-Damit haben wir die Formel der Varianz:
+Das Problem mit Quadratsummen ist: Sie sind nicht wirklich vergleichbar. Je mehr Daten wir haben, desto größer wird die Quadratsumme. Wir müssen also den Einfluss der Stichprobengröße herausrechnen, um ein vergleichbares Maß der Streuung zu erhalten.
+
+Dafür teilen wir die Quadratsumme noch durch $n - 1$. 
+
+$n$ ist hierbei die Stichprobengröße und davon ziehen wir $1$ *Freiheitsgrad* ab. Die Erklärung von Freiheitsgraden führt zu weit an dieser Stelle. Aber es hat sich einfach gezeigt, dass man bessere Schätzungen erhält, wenn man sie mit berücksichtigt. 
+
+Nachdem:
+
+- die Höhe der Abweichungen quantifizierbar ist
+- und der Einfluss der Stichprobengröße herausgenommen wurde
+
+sind wir bei der Formel für die Varianz angelangt!
+
+### Varianz 
 
 $$
 {\large s^2 = {\frac{\sum{(x_i-\bar{x})^2}}{n-1}} }
@@ -213,21 +231,44 @@ $$
 {\large s^2 = {\frac{48}{4}}=12 }
 $$
 
+Überprüfen Sie das mit R:
+
+```{r var, exercise = T, exercise.setup = "ex"}
+var(x)
+```
+
+
 ### Standardabweichung
 
 Die Standardabweichung $s$ ist die Quadratwurzel der Varianz $s^2$.
 
 $$
-{\large s = \sqrt{s^2}}
+{\large s = \sqrt{s^2} = \sqrt{12}=3.46}
 $$
 
+Überprüfung mit R:
+
+```{r sd, exercise = T, exercise.setup = "ex"}
+sd(x)
+```
+
+::: gelb
 Die Standardabweichung ist lediglich eine transformierte Version der Varianz, das zugrundeliegende Messinstrument ist das selbe. Deswegen wird auch die Empfindlichkeit gegenüber Ausreißern, die der Quadratsumme eingeschrieben ist, wird durch das Ziehen der Wurzel nicht rückgängig gemacht, auch wenn es vielleicht auf den ersten Blick so scheint.
+:::
 
-## Hausaufgabe
+<br>
 
-Ihre Hausaufgabe ist es, die Formeln der Varianz und Standabweichung als R Code umzusetzen. Vergleichen Sie Ihre Ergebnisse mit den Ergebnissen der eingebauten Funktionen `var()` und `sd()`. Nutzen Sie dafür die Gleichheitsbedingung `==`.
+::: aufgabe
+**Coding Challenge**
 
-Speichern Sie die fertigen Formeln als Skript und laden Sie dieses als Abgabe auf Moodle hoch.
+Setzen Sie die Berechnung der Standardabweichung in R Code um, analog zur mathematischen Formel:
+
+$$
+\large s = \sqrt{\frac{\sum_{i = 1}^{n}{(x_i-\bar{x})^2}}{n-1}}
+$$
+
+Vergleichen Sie Ihre Ergebnisse mit den Ergebnissen der eingebauten Funktion `sd()`. Nutzen Sie dafür die Gleichheitsbedingung `==`.
+:::
 
 ::: grau-nb
 **Tipps**:
@@ -236,8 +277,32 @@ Speichern Sie die fertigen Formeln als Skript und laden Sie dieses als Abgabe au
 
 -   Quadrieren mit `^2`
 
+-   $n$ kann mit `length()` bestimmt werden
+
 -   Auf die Klammersetzung achten: tendenziell verlangt R mehr Klammern als die normale mathematische Notation
 :::
+
+```{r coding, exercise = TRUE, exercise.setup = "ex"}
+s <- 
+  
+s == sd(x)
+```
+
+```{r coding-solution}
+# verschiedene Stile:
+
+# Kompakt
+s <- sqrt(sum((x - mean(x))^2) / (length(x) - 1))
+
+# lesbarer:
+qs <- sum((x - mean(x))^2)
+df <- length(x) - 1
+s <- sqrt(qs / df)
+
+s == sd(x)
+```
+
+Super! 
 
 ## Überblick deskriptivstatistische Kennwerte
 
