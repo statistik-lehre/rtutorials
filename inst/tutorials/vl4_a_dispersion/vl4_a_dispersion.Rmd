@@ -17,6 +17,7 @@ resource_files:
 library(learnr)
 knitr::opts_chunk$set(echo = FALSE)
 library(ggplot2)
+x <- c(1, 1, 9, 3, 6)
 ```
 
 ```{r ex}
@@ -52,8 +53,79 @@ x <- c(1, 1, 9, 3, 6)
     })
 ```
 
+In den nächsten Kapiteln gehen wir der Frage nach, wie Streuung messbar gemacht werden kann. 
 
-## Wie kann Streuung gemessen werden?
+## Spannweite
+Das einfachste Maß, um die Ausdehnung von Daten zu bestimmen, ist vermutlich das Minimum und Maximum.
+Daraus ergibt sich dann die Spannweite (*range*).
+
+Wir arbeiten mit Beispieldaten, die auch in der Vorlesung verwendet wurden:
+
+```
+x <- c(1, 1, 9, 3, 6)
+```
+
+```{r range}
+y <- c(1, 1, 9, 3, 6)
+
+df <- data.frame(x = 1:5, y = y)
+ggplot(df, aes(x, y)) +
+  geom_point(size = 3) +
+  geom_segment(aes(x = 2.5, xend = 2.5, y = 1, yend = 9), 
+               arrow = arrow(ends = "both", type = "closed", length = unit(0.1, "inches")),
+               col = "red")+
+  geom_label(label = "Range\n= 8", aes(x = 2.5, y = 5)) +
+  scale_y_continuous(breaks = 0:10) +
+  scale_x_continuous(breaks = NULL) +
+  theme_bw() +
+  labs(x = "", y = "x")
+```
+
+#### Umsetzung in R
+
+::: aufgabe 
+**1.**
+
+Obwohl es in diesem Fall auch ohne Computer sehr überschaubar ist: verwenden Sie die R-Funktion
+`range()`, um Minimum und Maximum zu bestimmen!
+:::
+
+```{r range_exercise, exercise = TRUE, exercise.setup = "ex"}
+range(x)
+```
+
+Als Ergebnis steht ein Vektor mit zwei Zahlen: die erste bezeichnet das Minimum, die zweite das Maximum.
+
+::: aufgabe
+**2.**
+
+Um nun die Spannweite zu berechnen, müssen wir $Max - Min$ rechnen. Das geht für dieses Beispiel im Kopf, aber wir üben ja für die schweren Fälle - deswegen nehmen wir wieder eine R-Funktion zu Hilfe: `diff()` um die Differenz zu berechnen. 
+
+Füttern Sie `diff()` mit dem Vektor, der durch `range(x)` ausgegeben wird.
+:::
+
+```{r range2, exercise = TRUE, exercise.setup = "ex"}
+range(x)
+```
+
+```{r range2-solution}
+diff(range(x))
+```
+```{r questionaes}
+question_checkbox("Welches Skalenniveau muss mindestens vorhanden sein, um das Minimum und Maximum bestimmen zu können?",
+                  answer("Nominal", message = "leider falsch, nominale Daten haben keine Reihenfolge"),
+                  answer("Ordinal", correct = T, message = "ordinale Daten haben eine Reihenfolge"),
+                  answer("Metrisch", message = "metrische Daten haben nicht nur eine Reihenfolge, sondern auch Abstände, die interpretierbar sind, was für Minimum und Maximum nicht nötig ist."))
+```
+
+```{r questionaes2}
+question_checkbox("Welches Skalenniveau muss mindestens vorliegen, um die Spannweite zu berechnen?",
+                  answer("Nominal", message = "Leider falsch, nominale Daten haben keine Abstände"),
+                  answer("Ordinal", message = "Ordinale Daten haben leider keine Information über Abstände, weswegen das Bilden der Differenz zwischen Maximum und Minumum „illegal“ ist."),
+                  answer("Metrisch", correct = T, message = "Genau! Nur metrische Daten enthalten Informationen über Abstände."))
+```
+
+## Varianz & Standardabweichung
 
 ### Streuung als Abweichung von einem Zentrum
 
@@ -80,7 +152,6 @@ ggplot(df, aes(x, y)) +
   scale_x_continuous(breaks = NULL) +
   theme_bw() +
   labs(x = "", y = "x")
-  
 ```
 
 
@@ -120,7 +191,6 @@ Wie sähe eine mögliche Prüfung dieser Hypothese in R aus?
 Um die Abweichungen vom Mittelwert ( $x_i - \bar{x}$ ) zu berechnen, wird der Mittelwert `mean(x)` von jedem einzelnen Wert des Vektors `x` abgezogen. Tatsächlich ist das in R so einfach, dass es fast nicht zu glauben ist - R's Mächtigkeit im Umgang mit Vektoren lässt grüßen!
 
 ```{r, echo=TRUE}
-x <- c(1, 1, 9, 3, 6)
 x - mean(x)
 ```
 
@@ -252,8 +322,10 @@ $$
 sd(x)
 ```
 
+<br>
+
 ::: gelb
-Die Standardabweichung ist lediglich eine transformierte Version der Varianz, das zugrundeliegende Messinstrument ist das selbe. Deswegen wird auch die Empfindlichkeit gegenüber Ausreißern, die der Quadratsumme eingeschrieben ist, wird durch das Ziehen der Wurzel nicht rückgängig gemacht, auch wenn es vielleicht auf den ersten Blick so scheint.
+Die Standardabweichung ist lediglich eine transformierte Version der Varianz, das zugrundeliegende Messinstrument ist das selbe. Die Empfindlichkeit gegenüber Ausreißern, die der Quadratsumme eingeschrieben ist, wird durch das Ziehen der Wurzel nicht rückgängig gemacht, auch wenn es vielleicht auf den ersten Blick so scheint.
 :::
 
 <br>
@@ -303,6 +375,137 @@ s == sd(x)
 ```
 
 Super! 
+
+## Quantile
+
+Nun wechseln wir zu anderen Beispieldaten, weil sich Quantile schlecht erklären lassen anhand von lediglich 5 Datenpunkten. 
+Nehmen wir noch mal unser Eingangsbeispiel, was einfach zufällig aus einer Normalverteilung gezogene Daten waren - nur dieses mal mit etwas weniger Datenpunkten, 100 an der Zahl.
+
+### Proof of Concept
+
+Es folgt eine Erklärung in Bildern und Schritten, die das Konzept vermittelt, ohne auf technische Details einzugehen.
+
+```{r quantileintro}
+ set.seed(1)
+       data <- rnorm(100)
+       df2 <- data.frame(count = 1:100, data, sorted = sort(data))
+       ggplot(df2, aes(count, data)) +
+         geom_point() +
+         labs(y = "x", x = "Index") +
+         theme_bw()
+```
+
+Zunächst müssen wir die Daten ihrer Größe nach sortieren:
+
+```{r quantilesort}
+ ggplot(df2, aes(count, sorted)) +
+         geom_point() +
+         labs(y = "x", x = "Index") +
+         theme_bw()
+```
+
+Dann können wir das 25% - Qua**nnnnnn**til bestimmen, was dem 1. Qua**rrrrr**til (wie *quarter* = Viertel) entspricht. 
+
+Das 25% - Quantil ist der Wert, unterhalb dem 25% der Werte liegen. 
+
+```{r quartile1}
+ ggplot(df2, aes(count, sorted)) +
+         geom_point() +
+         geom_hline(yintercept = df2$sorted[26]) +
+         geom_label(y = df2$sorted[26], x = 0, label = "Q1") +
+         labs(y = "x", x = "Index") +
+         theme_bw()
+```
+
+Das wiederholen wir jetzt noch für das zweite und dritte Quartil!
+
+```{r}
+ ggplot(df2, aes(count, sorted)) +
+         geom_point() +
+         geom_hline(yintercept = quantile(df2$sorted, probs = c(0.25, 0.5, 0.75))) +
+         annotate(geom = "label", 
+                  y = quantile(df2$sorted, probs = c(0.25, 0.5, 0.75)), 
+                  x = 0, label = c("Q1", "Q2", "Q3")) +
+         labs(y = "x", x = "Index") +
+         theme_bw()
+```
+
+Jetzt sind die Daten in 25%-Abschnitte aufgeteilt. Hier wird jetzt auch sichtbar, warum das sinnvoll ist um Streuung zu beschreiben:
+
+Es ist klar zu sehen, dass die mittleren 50 % auf viel dichterer Fläche konzentriert sind als die 25% darüber und darunter. 
+
+Wenn wir jetzt einen Boxplot darüberlegen, wird intuitiv klar, wie er funktioniert:
+
+```{r}
+ ggplot(df2, aes(count, sorted)) +
+         geom_point() +
+          geom_boxplot(alpha = 0.8, x = 50, xmin = 0, xmax = 100, fill = "pink") +
+         annotate(geom = "label", 
+                  y = quantile(df2$sorted, probs = c(0.25, 0.5, 0.75)), 
+                  x = 0, label = c("Q1", "Q2", "Q3")) +
+         labs(y = "x", x = "Index") +
+         theme_bw()
+```
+
+```{r, include = FALSE}
+# Hier hab ich getestet, ob es mit vertauschten Achsen besser aussieht
+ ggplot(df2, aes(sorted, count)) +
+         geom_point() +
+         geom_boxplot(alpha = 0.8, y = 50, ymin = 0, ymax = 100, fill = "pink") +
+         annotate(geom = "label", 
+                  x = quantile(df2$sorted, probs = c(0.25, 0.5, 0.75)), 
+                  y = 0, label = c("Q1", "Q2", "Q3")) +
+         labs(x = "x", y = "Index") +
+         theme_bw()
+```
+
+### Umsetzung in R
+
+Jetzt kommen die technischen Details, die vormals ausgelassen wurden :)
+
+Es wurde nur erwähnt, dass ein $n \%$-Quantil der Wert ist, unter dem $n \%$ der Werte liegen. Aber wie genau wird dieser Wert bestimmt?
+
+Tja, die `quantile()`-Funktion kann Quantile durch ganze **8** verschiedene Methoden berechnen. Aber keine Sorge, in dieses Rabbithole gehen wir nicht hinein. Wir geben uns damit zufrieden, wenn uns ein Quantil ausgegeben wird, wie es zustande kommt, vernachlässigen wir. 
+
+::: aufgabe
+**1.**
+
+Die Punkte aus den obigen Grafiken sind im Vektor `x` gespeichert. Verwenden Sie die `quantile()`-Funktion, um sich die Quartile ausgeben zu lassen.
+
+:::
+
+```{r quant_setup}
+set.seed(1)
+x <- rnorm(100)
+```
+
+```{r quantex1, exercise = TRUE, exercise.setup = "quant_setup"}
+quantile(x)
+range(x)
+```
+
+```{r quant_question}
+question_checkbox("Welches Skalenniveau muss mindestens vorhanden sein, um Quantile bestimmen zu können?",
+                  answer("Nominal", message = "leider falsch, nominale Daten haben keine Reihenfolge"),
+                  answer("Ordinal", correct = T, message = "Ab Ordinalskala gibt es Informationen über eine Reihenfolge, und das ist die Mindestvoraussetzung um Quantile berechnen zu können."),
+                  answer("Metrisch", message = "Metrische Daten haben nicht nur eine Reihenfolge, sondern auch Abstände, die interpretierbar sind, was für Quantile nicht nötig ist."))
+```
+
+### Interquartilsabstand
+
+#### Umsetzung in R
+
+```{r iqr, exercise = TRUE, exercise.setup = "quant_setup"}
+IQR(x)
+```
+
+
+```{r iqr_question}
+question_checkbox("Welches Skalenniveau muss mindestens vorliegen, um den Interquartilsabstand zu berechnen?",
+                  answer("Nominal", message = "Leider falsch, nominale Daten haben keine Abstände"),
+                  answer("Ordinal", message = "Ordinale Daten haben leider keine Information über Abstände, weswegen das Bilden der Differenz zwischen Q3 und Q1 „illegal“ ist."),
+                  answer("Metrisch", correct = T, message = "Genau! Dadurch dass eine Differenz gebildet wird, interpretieren wir Abstände. Nur metrische Daten enthalten Informationen über Abstände."))
+```
 
 ## Überblick deskriptivstatistische Kennwerte
 
