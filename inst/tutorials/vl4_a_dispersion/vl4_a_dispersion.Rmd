@@ -378,110 +378,198 @@ Super!
 
 ## Quantile
 
-Nun wechseln wir zu anderen Beispieldaten, weil sich Quantile schlecht erklären lassen anhand von lediglich 5 Datenpunkten. 
-Nehmen wir noch mal unser Eingangsbeispiel, was einfach zufällig aus einer Normalverteilung gezogene Daten waren - nur dieses mal mit etwas weniger Datenpunkten, 100 an der Zahl.
+::: infobox
+**Einordnung**
+
+Ein Quantil ist eigentlich kein Streuungsmaß, sondern ein Lagemaß, wie Median, Modus oder Mittelwert. 
+
+Der Median ist ein spezielles Quantil, nämlich das 50%-Quantil. 
+
+Erst durch den Abstand von Quantilen erhalten wir ein Streuungsmaß. 
+:::
+<br>
+
+
+### Beispieldaten
+Wir wechseln zu anderen Beispieldaten, weil sich Quantile schlecht erklären lassen anhand von lediglich 5 Datenpunkten. 
+
+Im WiSe 2022 haben Studierende dieses Kurses sich zusammengeschlossen und Feldforschung an Bioläden in Kassel und Umgebung betrieben. Dabei sind unter anderem die Altersdaten von Kunden gesammelt worden - ein hervorragendes Beispiel.  
+
+Der Datensatz ist in diesem Paket enthalten und kann unter dem Namen `einkaufen` aufgerufen werden. 
+Für Erklärungszwecke sind die Altersdaten von genau 100 Personen zufällig aus dem Datensatz gezogen worden. 
+
+### Intuition bekommen
+
+Stellen Sie sich vor, Sie sortieren 100 Personen nach dem Alter und stellen alle in  einer aufsteigenden Reihe auf, vom Baby bis zu Senioren. Dann ist z.B. das 25%-Quantil das Alter, für das gilt:
+
+- wenigstens 25 Personen sind jünger oder gleich alt
+- wenigstens 75 Personen sind älter oder gleich alt
+
+```{r quant_ui}
+fluidPage(
+  titlePanel("p-Quantil"),
+  sliderInput("p", "p", min = 0, max = 1, value = .25, step = .01, animate = T),
+  plotOutput("quantplot"),
+  shinyWidgets::radioGroupButtons("method", "Berechnungs-Methode", choices = 1:9,
+                                  selected = 1)
+
+)
+```
+
+```{r quant_server, context = "server"}
+ set.seed(10)
+  data <- rtutorials::einkaufen$Alter[is.na(rtutorials::einkaufen$Alter) == F] |>
+    sample(size = 100)
+  df2 <- data.frame(count = seq_along(data),
+                    data,
+                    sorted = sort(data, na.last = T))
+  pointi <- ggplot(df2, aes(count, sorted)) +
+    geom_point() +
+    theme_bw() +
+    labs(y = "Alter", x = "Position in der Sortierung") +
+    scale_y_continuous(breaks = seq(10, 90, by = 10)) +
+    scale_x_continuous(breaks = seq(0, 100, by = 25),
+                       minor_breaks = seq(10, 100, by = 10))
+
+
+
+  output$quantplot <- renderPlot({
+    val <- reactiveValues(p = input$p)
+    p100 <- val$p * 100
+    discrete_quart <- quantile(df2$data, probs = val$p, type = as.numeric(input$method))
+
+    lab <- paste0(p100, "%-Quantil\n = ", round(discrete_quart, digits = 2), " Jahre")
+
+    pointi +
+      geom_segment(x = p100, xend = p100, y = 0, yend = discrete_quart,
+                   linetype = "dashed", col = "grey") +
+      geom_hline(yintercept = discrete_quart, col = "darkblue") +
+      annotate(geom = "label",
+               y = discrete_quart,
+               x = 2, label = lab) +
+      coord_flip()
+  })
+
+```
+
 
 ### Proof of Concept
 
-Es folgt eine Erklärung in Bildern und Schritten, die das Konzept vermittelt, ohne auf technische Details einzugehen.
+Das Diagramm zeigt die Daten dem Alter nach **sortiert**. Auf der x-Achse befindet sich die Position in der Sortierung, die 100. Person hat das größte Alter, und die 1. Person das kleinste.
 
 ```{r quantileintro}
- set.seed(1)
-       data <- rnorm(100)
-       df2 <- data.frame(count = 1:100, data, sorted = sort(data))
-       ggplot(df2, aes(count, data)) +
+set.seed(10)
+data <- rtutorials::einkaufen$Alter[is.na(rtutorials::einkaufen$Alter) == F] |>
+  sample(size = 100)
+
+df2 <- data.frame(count = seq_along(data), 
+                         data, 
+                         sorted = sort(data, na.last = T))
+       
+pointi <- ggplot(df2, aes(count, sorted)) +
          geom_point() +
-         labs(y = "x", x = "Index") +
-         theme_bw()
+         theme_bw() +
+         labs(y = "Alter", x = "Reihenfolge") +
+         scale_y_continuous(breaks = seq(10, 90, by = 10)) +
+         scale_x_continuous(breaks = seq(0, 100, by = 25), 
+                            minor_breaks = seq(10, 100, by = 10))
+pointi
+       
+       # # might delete later
+       # histo <- ggplot(df2, aes(data)) +
+       #   geom_histogram(binwidth = 5, boundary = 5, col = "white", fill = "steelblue", alpha = .7) +
+       #   scale_x_continuous(breaks = seq(5, 90, by = 5)) +
+       #   theme_bw() +
+       #   labs(x = "Alter", y = "Anzahl Personen")
+
 ```
 
-Zunächst müssen wir die Daten ihrer Größe nach sortieren:
-
-```{r quantilesort}
- ggplot(df2, aes(count, sorted)) +
-         geom_point() +
-         labs(y = "x", x = "Index") +
-         theme_bw()
+```{r}
+message("Bild einfügen mit Personen in Reihe dem Alter nach sortiert")
 ```
 
 Dann können wir das 25% - Qua**nnnnnn**til bestimmen, was dem 1. Qua**rrrrr**til (wie *quarter* = Viertel) entspricht. 
 
-Das 25% - Quantil ist der Wert, unterhalb dem 25% der Werte liegen. 
+Das 25% - Quantil ist der Wert, unterhalb de 25% der Werte liegen. 
 
 ```{r quartile1}
- ggplot(df2, aes(count, sorted)) +
-         geom_point() +
-         geom_hline(yintercept = df2$sorted[26]) +
-         geom_label(y = df2$sorted[26], x = 0, label = "Q1") +
-         labs(y = "x", x = "Index") +
-         theme_bw()
+probs <- .25
+probs100 <- probs * 100
+discrete_quart <- quantile(df2$data, probs = probs, type = 1) # Diskrete Quantile berechnen für die Grafik (visuelle Trickserei, aber lässt unschöne Fragen zurück)
+
+
+pointi +
+  geom_hline(yintercept = discrete_quart, col = "darkblue") +
+  geom_segment(x = probs100, xend = probs100, y = 0, yend = discrete_quart) +
+         annotate(geom = "label", 
+                  y = discrete_quart, 
+                  x = 1, label = "Q1")
 ```
 
 Das wiederholen wir jetzt noch für das zweite und dritte Quartil!
 
 ```{r}
- ggplot(df2, aes(count, sorted)) +
-         geom_point() +
-         geom_hline(yintercept = quantile(df2$sorted, probs = c(0.25, 0.5, 0.75))) +
-         annotate(geom = "label", 
-                  y = quantile(df2$sorted, probs = c(0.25, 0.5, 0.75)), 
-                  x = 0, label = c("Q1", "Q2", "Q3")) +
-         labs(y = "x", x = "Index") +
-         theme_bw()
+probs <- c(0.25, 0.5, 0.75)
+probs100 <- probs * 100
+discrete_quart <- quantile(df2$data, probs = probs, type = 1)
+helper_df <- data.frame(probs, probs100, discrete_quart)
+
+pointi + 
+    geom_hline(yintercept = discrete_quart, col = "darkblue") +
+    geom_segment(data = helper_df, 
+                 x = probs100, 
+                 xend = probs100, 
+                 y = 0, 
+                 yend = discrete_quart, 
+                 linetype = "dashed", 
+                 alpha = .4) +
+    annotate(geom = "label", 
+             y = discrete_quart, 
+             x = 1, label = c("Q1", "Q2", "Q3"))
+
 ```
 
 Jetzt sind die Daten in 25%-Abschnitte aufgeteilt. Hier wird jetzt auch sichtbar, warum das sinnvoll ist um Streuung zu beschreiben:
 
-Es ist klar zu sehen, dass die mittleren 50 % auf viel dichterer Fläche konzentriert sind als die 25% darüber und darunter. 
+Es ist klar zu sehen, dass die mittleren 50 % auf dichterer Fläche konzentriert sind als die 25% darüber und darunter. 
 
 Wenn wir jetzt einen Boxplot darüberlegen, wird intuitiv klar, wie er funktioniert:
 
 ```{r}
- ggplot(df2, aes(count, sorted)) +
-         geom_point() +
-          geom_boxplot(alpha = 0.8, x = 50, xmin = 0, xmax = 100, fill = "pink") +
-         annotate(geom = "label", 
-                  y = quantile(df2$sorted, probs = c(0.25, 0.5, 0.75)), 
-                  x = 0, label = c("Q1", "Q2", "Q3")) +
-         labs(y = "x", x = "Index") +
-         theme_bw()
-```
+pointi + 
+  geom_boxplot(alpha = 0.8, x = 50, xmin = 0, xmax = 100, fill = "pink") +
+  annotate(geom = "label", 
+            y = quantile(df2$data, probs = c(0.25, 0.5, 0.75)), 
+            x = 1, label = c("Q1", "Q2", "Q3"))
+       
 
-```{r, include = FALSE}
-# Hier hab ich getestet, ob es mit vertauschten Achsen besser aussieht
- ggplot(df2, aes(sorted, count)) +
-         geom_point() +
-         geom_boxplot(alpha = 0.8, y = 50, ymin = 0, ymax = 100, fill = "pink") +
-         annotate(geom = "label", 
-                  x = quantile(df2$sorted, probs = c(0.25, 0.5, 0.75)), 
-                  y = 0, label = c("Q1", "Q2", "Q3")) +
-         labs(x = "x", y = "Index") +
-         theme_bw()
 ```
 
 ### Umsetzung in R
 
 Jetzt kommen die technischen Details, die vormals ausgelassen wurden :)
 
-Es wurde nur erwähnt, dass ein $n \%$-Quantil der Wert ist, unter dem $n \%$ der Werte liegen. Aber wie genau wird dieser Wert bestimmt?
+Es wurde nur erwähnt, dass ein $p$-Quantil der Wert ist, unter dem $p$ der Werte liegen. Aber wie genau wird dieser Wert bestimmt?
 
 Tja, die `quantile()`-Funktion kann Quantile durch ganze **8** verschiedene Methoden berechnen. Aber keine Sorge, in dieses Rabbithole gehen wir nicht hinein. Wir geben uns damit zufrieden, wenn uns ein Quantil ausgegeben wird, wie es zustande kommt, vernachlässigen wir. 
 
 ::: aufgabe
 **1.**
 
-Die Punkte aus den obigen Grafiken sind im Vektor `x` gespeichert. Verwenden Sie die `quantile()`-Funktion, um sich die Quartile ausgeben zu lassen.
+Die Punkte aus den obigen Grafiken sind im Vektor `alter` gespeichert. Verwenden Sie die `quantile()`-Funktion, um sich die Quartile ausgeben zu lassen.
 
 :::
 
 ```{r quant_setup}
-set.seed(1)
-x <- rnorm(100)
+# learnr exercise Setup
+set.seed(10)
+alter <- rtutorials::einkaufen$Alter[is.na(rtutorials::einkaufen$Alter) == F] |>
+  sample(size = 100)
 ```
 
 ```{r quantex1, exercise = TRUE, exercise.setup = "quant_setup"}
-quantile(x)
-range(x)
+quantile(alter)
+
 ```
 
 ```{r quant_question}
@@ -490,6 +578,21 @@ question_checkbox("Welches Skalenniveau muss mindestens vorhanden sein, um Quant
                   answer("Ordinal", correct = T, message = "Ab Ordinalskala gibt es Informationen über eine Reihenfolge, und das ist die Mindestvoraussetzung um Quantile berechnen zu können."),
                   answer("Metrisch", message = "Metrische Daten haben nicht nur eine Reihenfolge, sondern auch Abstände, die interpretierbar sind, was für Quantile nicht nötig ist."))
 ```
+
+::: grau-nb
+Standardmäßig werden die vier Quartile ausgegeben.
+
+So sähe ein Beispiel aus, um das 20%-Quantil zu ermitteln:
+
+```r
+quantile(x, probs = 0.2)
+```
+:::
+
+::: aufgabe
+
+Ermitteln Sie den Wert, unterhalb dessen 95% aller Werte liegen!
+
 
 ### Interquartilsabstand
 
@@ -563,5 +666,10 @@ Hilfreich ist auch der Befehl `summary()`, der automatisch eine Zusammenfassung 
 
 | Code               | Beschreibung                    |
 |--------------------|---------------------------------|
+| `range()`          | Minimum und Maximum             |
+| `diff(range())`    | Spannweite                      |
 | `var()`            | variance                        |
 | `sd()`             | standard deviation              |
+| `quantile()`       | Quantile berechnen              |
+
+
