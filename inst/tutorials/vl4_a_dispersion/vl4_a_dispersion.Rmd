@@ -405,9 +405,10 @@ Stellen Sie sich vor, Sie sortieren 100 Personen nach dem Alter und stellen alle
 - wenigstens 25 Personen sind jünger oder gleich alt
 - wenigstens 75 Personen sind älter oder gleich alt
 
+#### p-Quantil
+
 ```{r quant_ui}
 fluidPage(
-  titlePanel("p-Quantil"),
   sliderInput("p", "p", min = 0, max = 1, value = .25, step = .01, animate = T),
   plotOutput("quantplot"),
   shinyWidgets::radioGroupButtons("method", "Berechnungs-Methode", choices = 1:9,
@@ -452,15 +453,170 @@ fluidPage(
 
 ```
 
+<details>
+<summary><a>▼ Infos zur Berechnungsmethode</a></summary>
 
-### Proof of Concept
+::: blau-nb
+Lassen Sie sich nicht davon verunsichern, dass es 9 verschiedene Berechnungsmethoden gibt, die alle zu leicht unterschiedlichen Ergebnissen kommen. Das ist nur der Vollständigkeit halber hier, damit sie nicht denken, Quantile müssten immer auf Datenpunkten liegen wie in Methode 1. 
+
+- Methode 1 ist für diskrete Daten gedacht und liefert nur Quantile, die auch auf tatsächlichen Datenpunkten liegen.
+
+- Methode 8, welche die von R verwendete Standardmethode ist für kontinuierliche Daten, liefert auch Quantile zwischen den Datenpunkten. 
+
+Für mehr Infos siehe `?quantile`.
+:::
+</details>
+<br>
+
+```{r medianquest}
+question_numeric("Was ist der Median der obigen Altersdaten?",
+                 answer(43, correct = T),
+                 allow_retry = T)
+```
+
+
+### Umsetzung in R
+
+#### Die `quantile()`-Funktion
+
+```{r quant_setup}
+# learnr exercise Setup
+set.seed(10)
+alter <- rtutorials::einkaufen$Alter[is.na(rtutorials::einkaufen$Alter) == F] |>
+  sample(size = 100)
+```
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+# repeat the setup for normal code chunks... :/ because we need it outside exercises too
+set.seed(10)
+alter <- rtutorials::einkaufen$Alter[is.na(rtutorials::einkaufen$Alter) == F] |>
+  sample(size = 100)
+```
+<br>
+
+::: aufgabe
+**1.**
+
+Die Punkte aus den obigen Grafiken sind im Vektor `alter` gespeichert. Verwenden Sie die `quantile()`-Funktion ohne weitere Argumente außer den Daten, um sich die Quartile ausgeben zu lassen.
+
+:::
+
+```{r quantex1, exercise = TRUE, exercise.setup = "quant_setup"}
+quantile(alter)
+
+```
+
+::: blau-nb
+Ohne weitere Argumente gibt `quantile()` die Quartile aus. Wie gehen wir vor, um spezifische Quantile zu ermitteln?
+
+So sähe ein Beispiel aus, um das 20%-Quantil zu ermitteln:
+
+```r
+quantile(x, probs = 0.2)
+```
+:::
+<br>
+
+::: aufgabe
+**2.**
+
+Wie alt müsste ein Mensch sein, um gleich alt oder älter als 95% der Stichprobe `alter` zu sein? 
+
+:::
+
+```{r quant95, exercise = TRUE, exercise.setup = "quant_setup"}
+quantile(alter, probs = ___)
+```
+
+
+```{r quant_question}
+question_checkbox("Welches Skalenniveau muss mindestens vorhanden sein, um Quantile bestimmen zu können?",
+                  answer("Nominal", message = "leider falsch, nominale Daten haben keine Reihenfolge"),
+                  answer("Ordinal", correct = T, message = "Ab Ordinalskala gibt es Informationen über eine Reihenfolge, und das ist die Mindestvoraussetzung um Quantile berechnen zu können."),
+                  answer("Metrisch", message = "Metrische Daten haben nicht nur eine Reihenfolge, sondern auch Abstände, die interpretierbar sind, was für Quantile nicht nötig ist."))
+```
+
+### Interquartilsabstand
+
+Der Interquartilsabstand ist die Spanne der Daten, in welcher die mittleren 50% der Werte liegen.
+
+#### Umsetzung in R
+
+```{r iqr, exercise = TRUE, exercise.setup = "quant_setup"}
+IQR(alter)
+```
+
+```{r iqr_question}
+question_checkbox("Welches Skalenniveau muss mindestens vorliegen, um den Interquartilsabstand zu berechnen?",
+                  answer("Nominal", message = "Leider falsch, nominale Daten haben keine Abstände"),
+                  answer("Ordinal", message = "Ordinale Daten haben leider keine Information über Abstände, weswegen das Bilden der Differenz zwischen Q3 und Q1 „illegal“ ist."),
+                  answer("Metrisch", correct = T, message = "Genau! Dadurch dass eine Differenz gebildet wird, interpretieren wir Abstände. Nur metrische Daten enthalten Informationen über Abstände."), 
+                  allow_retry = T)
+```
+
+::: aufgabe
+**Anwendungsaufgabe: Boxplot**
+
+Nehmen Sie sich ein Blatt Papier und einen Stift zur Hand. Zeichnen Sie einen Boxplot der Altersdaten!
+Nutzen Sie den Codeblock, um die nötigen Maße zu erhalten. Die Daten sind im Vektor `alter` enthalten. 
+:::
+
+::: grau-nb
+*Tipp*
+
+In einem Boxplot enthaltene Daten:
+
+- Länge der "Whiskers": 1.5 \* *IQR*, aber maximal bis zum *Minimum / Maximum*
+- *1. Quartil*
+- *Median*
+- *3. Quartil*
+:::
+
+```{r boxi, exercise = TRUE, exercise.setup = "quant_setup", exercise.caption = "Boxplot"}
+alter
+```
+
+```{r boxi-solution}
+# Box zeichnen mit Quartilen
+quantile(alter)
+
+# Länge der Whiskers
+range(alter) # Minumum und Maximum bestimmen
+
+# Theoretische Länge des unteren Whiskers: Q1 - 1.5 * IQR
+Q1 <- quantile(alter, probs = .25, names = F)
+Q1 - 1.5 * IQR(alter) # kleiner als Minimum 9, außerhalb der Daten
+
+# Theoretische Länge des oberen Whiskers: Q3 + 1.5 * IQR
+Q3 <- quantile(alter, probs = .75, names = F)
+Q3 + 1.5 * IQR(alter) # größer als Maximum 84, außerhalb der Daten
+
+# -> Whiskers nur bis Min. (9) und Max. (84) zeichnen
+```
+
+<br>
+<details>
+<summary><a>▼ Lösung: Boxplot anzeigen </a></summary>
+```{r fig.height=4, fig.width=2}
+helpdf <- data.frame(alter)
+ggplot(helpdf, aes(y = alter)) +
+  geom_boxplot() +
+  scale_y_continuous(breaks = seq(10, 90, by = 10)) +
+  theme_bw() +
+  labs(x = "") +
+  scale_x_discrete()
+  
+```
+
+</details
+<br>
+
+### Proof of Concept (wird gelöscht)
 
 Das Diagramm zeigt die Daten dem Alter nach **sortiert**. Auf der x-Achse befindet sich die Position in der Sortierung, die 100. Person hat das größte Alter, und die 1. Person das kleinste.
 
 ```{r quantileintro}
-set.seed(10)
-data <- rtutorials::einkaufen$Alter[is.na(rtutorials::einkaufen$Alter) == F] |>
-  sample(size = 100)
+data <- alter
 
 df2 <- data.frame(count = seq_along(data), 
                          data, 
@@ -553,62 +709,6 @@ Es wurde nur erwähnt, dass ein $p$-Quantil der Wert ist, unter dem $p$ der Wert
 
 Tja, die `quantile()`-Funktion kann Quantile durch ganze **8** verschiedene Methoden berechnen. Aber keine Sorge, in dieses Rabbithole gehen wir nicht hinein. Wir geben uns damit zufrieden, wenn uns ein Quantil ausgegeben wird, wie es zustande kommt, vernachlässigen wir. 
 
-::: aufgabe
-**1.**
-
-Die Punkte aus den obigen Grafiken sind im Vektor `alter` gespeichert. Verwenden Sie die `quantile()`-Funktion, um sich die Quartile ausgeben zu lassen.
-
-:::
-
-```{r quant_setup}
-# learnr exercise Setup
-set.seed(10)
-alter <- rtutorials::einkaufen$Alter[is.na(rtutorials::einkaufen$Alter) == F] |>
-  sample(size = 100)
-```
-
-```{r quantex1, exercise = TRUE, exercise.setup = "quant_setup"}
-quantile(alter)
-
-```
-
-```{r quant_question}
-question_checkbox("Welches Skalenniveau muss mindestens vorhanden sein, um Quantile bestimmen zu können?",
-                  answer("Nominal", message = "leider falsch, nominale Daten haben keine Reihenfolge"),
-                  answer("Ordinal", correct = T, message = "Ab Ordinalskala gibt es Informationen über eine Reihenfolge, und das ist die Mindestvoraussetzung um Quantile berechnen zu können."),
-                  answer("Metrisch", message = "Metrische Daten haben nicht nur eine Reihenfolge, sondern auch Abstände, die interpretierbar sind, was für Quantile nicht nötig ist."))
-```
-
-::: grau-nb
-Standardmäßig werden die vier Quartile ausgegeben.
-
-So sähe ein Beispiel aus, um das 20%-Quantil zu ermitteln:
-
-```r
-quantile(x, probs = 0.2)
-```
-:::
-
-::: aufgabe
-
-Ermitteln Sie den Wert, unterhalb dessen 95% aller Werte liegen!
-
-
-### Interquartilsabstand
-
-#### Umsetzung in R
-
-```{r iqr, exercise = TRUE, exercise.setup = "quant_setup"}
-IQR(x)
-```
-
-
-```{r iqr_question}
-question_checkbox("Welches Skalenniveau muss mindestens vorliegen, um den Interquartilsabstand zu berechnen?",
-                  answer("Nominal", message = "Leider falsch, nominale Daten haben keine Abstände"),
-                  answer("Ordinal", message = "Ordinale Daten haben leider keine Information über Abstände, weswegen das Bilden der Differenz zwischen Q3 und Q1 „illegal“ ist."),
-                  answer("Metrisch", correct = T, message = "Genau! Dadurch dass eine Differenz gebildet wird, interpretieren wir Abstände. Nur metrische Daten enthalten Informationen über Abstände."))
-```
 
 ## Überblick deskriptivstatistische Kennwerte
 
