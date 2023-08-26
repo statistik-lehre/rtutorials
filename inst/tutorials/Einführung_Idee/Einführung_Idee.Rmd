@@ -21,9 +21,12 @@ knitr::opts_chunk$set(echo = FALSE)
 ## Lernziele
 
 -   <input type="checkbox" unchecked> bereits geleistetes feiern </input>
--   <input type="checkbox" unchecked> Überbblick über den Aufbau dieses Kurses </input>
--   <input type="checkbox" unchecked> Überbblick über R Tutorials </input>
+-   <input type="checkbox" unchecked> Überbblick über den Aufbau dieses Kurses bekommen </input>
+-   <input type="checkbox" unchecked> Überbblick über R Tutorials bekommen </input>
 -   <input type="checkbox" unchecked> Überblick über R und R Studio bekommen </input>
+-   <input type="checkbox" unchecked> Projekt `statistik_bachelor` erstellen </input>
+-   <input type="checkbox" unchecked> Skript `01_einfuehrung` erstellen und kompilieren </input>
+
 
 ## Inhalt
 
@@ -43,7 +46,7 @@ Wunderbar, dass Du hierher gefunden hast! Das bedeutet, dass Du die Anfangsschwi
 
 ### Aufbau dieses Kurses
 
-Wir freuen uns total, euch R in diesem Format beibringen zu können, da wir es für einen übersichtlichen und eleganten Weg halten. Ihr könnt in eurem Tempo lernen und die Inhalte sind auch als stand-alone für euch später zum nachschauen und auch für andere Menschen nutzbar.
+Wir freuen uns total, euch R in diesem Format beibringen zu können, da wir es für einen übersichtlichen und eleganten Weg halten. Ihr könnt in eurem Tempo lernen und die Inhalte sind später als stand-alone für euch zum nachschauen und auch von anderen Menschen nutzbar.
 
 Wir haben uns folgendes Format überlegt:\
 Zu jeder Vorlesung gibt es eins oder mehrere kurze Tutorials, die wir euch im Moodle verlinken. Diese arbeitet Ihr in eurem Tempo im Laufe der folgenden Woche Durch. Alle zwei Wochen gibt es eine Abgabe im Moodle, in der ihr das bereits gelernte der letzten zwei Wochen anwenden könnt. Wenn Du 50% der Aufgaben richtig hast, gilt die Abgabe als bestanden. Es gibt eine Joker-Übung, falls es dir mal gar nicht in den Kram passt oder Du bei einer Übung weniger als 50% schaffen solltest.
@@ -83,7 +86,7 @@ Es wird auch einige wenige Aufgaben geben, für die Du bitte in R wechselst. Die
 
 Da Du dieses Tutorial schon gefunden hast, brauche ich gar nicht mehr so viel zu erklären:
 
-Wir schreiben jede Woche die Befehle zu den jeweiligen Tutorials ins Moodle. Diese kannst Du einfach Zeile für Zeile in Deine Konsole kopieren (s.u.) und Durcharbeiten.
+Wir schreiben jede Woche die Befehle bzw. die Links zu den jeweiligen Tutorials ins Moodle. Diese kannst Du einfach Zeile für Zeile in Deine Konsole kopieren (s.u.) und Durcharbeiten.
 
 Alternativ gibt es in R Studio, im Fenster oben rechts, ganz rechts einen Reiter der "Tutotial" heißt. Hier kannst Du dich Durchscrollen bis zu rtutorials:<name des tutorials>. Eine Liste aller Tutorials findest Du HIER
 
@@ -99,9 +102,9 @@ Das Problem: R ist von Nerds für Nerds geschrieben, läuft ganz unauffällig in
 
 ![](images/R_in_Konsole.png)
 
-Und das wird spätestens wenn Dein Bildschirm voll ist unübersichtlich.
+Und spätestens, wenn der Bildschirm voll ist, wird das unübersichtlich. 
 
-Und hier kommt R Studio ins Spiel. R Studio ist für die Menschen, die gerne die Power von R nutzen möchten und ihre Programme gerne mit grafischer Oberfläche arbeiten. Wir werden nur in R Studio arbeiten.
+Und hier kommt R Studio ins Spiel. R Studio ist für die Menschen, die gerne die Power von R nutzen möchten und für ihre Programme gerne eine grafische Oberfläche nutzen. Wir werden nur in R Studio arbeiten.
 
 ### R Studio
 
@@ -177,7 +180,7 @@ Gib in deiner Konsole verschiedene Rechnungen ein (Addition, Subtraktion etc.) u
 
 Diese Dateien sind schlichte Textdatein - wie ein Open Office oder Word Dokument. Hier passiert erstmal nichts. Erst wenn Du auf `Strg + Enter` drückst wird die Zeile für dich in die Konsole kopiert, hier ausgeführt und das Ergebnis angezeigt.
 
-Diese Aufteilung ist total sinnvoll, da sie es ermöglicht, in der Textdatei oben die Übersicht zu behalten. Du kannst hier àuch Kommentare einfügen. So kannst Du auch später noch nachvollziehen, was Du wann in welchem Schritt gemacht hast. Zeitgleich können unten in der Konsole die Berechnungen stattfinden. Im Gegensatz zur reinen Konsole lässt sich die Textdatei speichern und es bleibt nachvollziehbar und für weitere Arbeitsschritte nutzbar.
+Diese Aufteilung ist total sinnvoll, da sie es ermöglicht, in der Textdatei oben die Übersicht zu behalten. Du kannst hier auch Kommentare einfügen. So kannst Du auch später noch nachvollziehen, was Du wann in welchem Schritt gemacht hast. Zeitgleich können unten in der Konsole die Berechnungen stattfinden. Im Gegensatz zur reinen Konsole lässt sich die Textdatei speichern und es bleibt nachvollziehbar und für weitere Arbeitsschritte nutzbar.
 
 ::: aufgaberstudio
 **Aufgabe:**\
@@ -211,7 +214,8 @@ Es gilt als guter Stil:
 
 1.    Gib deinem Dokument einen Titel (`#### Titel ####`)
 2.    Kommentiere deine Rechenoperationen (`#`)
-3.    Speichere Dein Skript (`Strg` + `s`)
+3.    Speichere Dein Skript (`Strg` + `s`) [Nenne es für die Übersichtlichkeit: `01_einfuehrung`]
+4.    Kompiliere dein Skript als `.docx`
 :::
 
 Und ein letztes zu den Skripten und warum sie wunderbar sind: Sie lassen sich inkl. Ergebnisse in `Reports` bringen: Hier sind die Einzelnen Befehle, Kommentare UND Ergebnisse (inkl. Plots) zusammengefasst. Das macht es schön und übersichtlich. Meine Empfehlung ist, wenn ein Skript fertig ist, immer auch einen Report zu kreiern. Da schaust du später lieber rein. Trust me in that.
@@ -308,4 +312,32 @@ Gib in deiner Konsole `?mean` ein und mache dich mit der Hilfe Seite zu dieser F
 
 ## Abschlussquiz
 
+```{r abschlussquiz_01}
+question_checkbox("Ein Komma (,) wird von R verstanden als ein ...",
+         answer("... Dezimaltrennzeichen"),
+         answer("... Zeichen, um Argumente oder Objekte einer Aufzählung voneinander zu trennen", correct = T)
+         )
+```
+
+```{r abschlussquiz_02}
+question_checkbox("Als guter Stil gilt:",
+         answer("Operatoren mit Leerzeichen zu umgeben", correct = T),
+         answer("Möglichst keine Leerzeilen zu lassen, um möglichst viel Code auf einmal zu sehen"),
+         answer("Leerzeichen nach einem Komma für bessere Lesbarkeit", correct = T),
+         answer("Das Vorgehen möglichst Kleinschrittig kommentieren", correct = T),
+         answer("Möglichst wenig Kommentare schreiben, um den Code nicht unnötig lang werden zu lassen")
+         )
+```
+
+
 ## Learnings
+
+-   <input type="checkbox" unchecked> Ich habe R Studio geöffnet  </input>
+-   <input type="checkbox" unchecked> Ich weiß, was und wo die Konsole in R Studio ist </input>
+-   <input type="checkbox" unchecked>  Ich weiß was und wo ein Skript in R Studio ist und wie ich eines erstelle </input>
+-   <input type="checkbox" unchecked> Ich weiß, was ein Projekt in R Studio ist und wie ich eines erstelle </input>
+-   <input type="checkbox" unchecked> Ich weiß, mit welcher Funktion ich die Dokumentation einzelner Funktionen aufrufen kann, um Informationen über diese zu bekommen </input>
+-   <input type="checkbox" unchecked> Ich weiß, was ein guter Stil in R ist </input>
+-   <input type="checkbox" unchecked> Ich habe das Projekt `statistik_bachelor` erstellt </input>
+-   <input type="checkbox" unchecked> In diesem Projekt liegt ein Skript namens `01_einfuehrung.R` </input>
+-   <input type="checkbox" unchecked> Ebenfalls in diesem Projekt liegt ein kompiliertes Skript namens `01_einfuehrung.docx` </input>

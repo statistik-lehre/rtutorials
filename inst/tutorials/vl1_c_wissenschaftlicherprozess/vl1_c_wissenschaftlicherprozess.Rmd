@@ -1,0 +1,176 @@
+---
+title: "Wissenschaftlicher Prozess"
+output:
+  learnr::tutorial:
+    language: de
+    css: css/boxes.css
+    fig_caption: no
+runtime: shiny_prerendered
+bibliography: ref.json
+link-citations: TRUE
+description: empty
+resource_files:
+- css/boxes.css
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Inhalt 
+
+In diesem Tutorial stellen wir euch die Roadmap des wissenschaftlichen Prozesses vor, an der wir alle weiteren Tutorials orientieren.
+
+## Lernziele
+
+-   <input type="checkbox" unchecked> Ich kenne die Roadmap des wissenschaftlichen Prozesses und kann mich auf ihr orientieren </input>
+
+
+## Wissenschaftlicher Prozess
+
+Wir lieben Bilder, ihr liebt Bilder, hier gibt es Bilder: 
+
+![](images/prozess){width=95%}
+
+In diesem Tutorial lernt ihr die Roadmap des wissenschaftlichen Arbeitens kennen. Hieran orientieren sich auch die anderen Tutorials.
+
+::: gelb
+Da wir euch quantitative Verfahren beibringen, bezieht sich die Roadmap speziell auf quantitative Verfahren. Solltet ihr qualitativ Forschen wollen ändern sich die Schritte inhaltlich und ggf auch deren Abfolge teilweise.
+:::
+
+### I) Vorarbeit
+
+Ja, ein Großteil des wissenschaftlichen Arbeitens geschieht vor dem, was wir uns darunter Vorstellen: Mit Laborkittel und Lupe im Labor stehen und bunte Flüssigkeiten ineinander mixen... 
+
+Die Überschriften in Klammern sind zwar zentrale Bestandteile dieses Prozesses, doch sie sind weder Teil der Vorlesung, noch eurer kleinen Forschungsarbeit in diesem Modul, deswegen gehen wir nicht weiter darauf ein. Nichtsdestotrotz wollen wir ihren elementaren Stellenwert in diesem Prozess berücksichtigen.
+
+#### 1. Einarbeiten
+
+Jede gute (wissenschaftliche) Arbeit braucht eine gute Vorarbeit: Ein Einlesen in die Matrie, sich mit dem Feld vertraut und neue Gedanken machen: was gibt es schon? was braucht es noch? Was kann/ möchte ich beitragen?
+
+#### 2. Fragestellung
+
+Wenn mensch einen guten Überblick über das interessierende Forschungsfeld hat wird im nächsten Schritt eine konkrete Fragestellung entwickelt: Was GANZ GENAU möchte ich untersuchen?
+
+#### 3. Operationalisierung der Variablen
+
+Und WIE genau möchte bzw. kann ich das untersuchen?\
+Ganz konkret: Wie kann ich das, was mich interessiert, in Zahlen oder Kategorien bringen?
+
+Hier wird auch das Abbruchkriterium festgelegt: Nach wie vielen Beobachtungen/ Zeiteinheiten etc. wird die Datenerhebung abgebrochen? (Meist nach Personenanzahl berechnet.)
+
+#### 4. Konkrete, testbare Hypothesen aufstellen
+
+Was genau möchte ich untersuchen?
+
+#### (5. Ethikantrag)
+
+#### (6. Aquirierung von Geldern)
+
+#### (7. Präregistrierung)
+
+
+### II) Messen / Generieren von Daten
+
+#### 1. Vorbereitung
+
+Hier werden, je nach dem Forschungsdesign vorbereitungen getroffen:
+
+-   Online-Fragebögen werden ins Netz gestellt und verschickt
+-   Pen & Paper Fragebögen werden designed und ausgedruckt
+-   Die Aquirierung von Teilnehmenden
+-   etc.
+
+#### 2. Erhebung
+
+Der Teil, bei dem euch auf dem Campus Süßigkeiten für Studienteilnahmen angeboten werden (als Teilnehmende Person).\
+Für die Forschenden Personen ist dieses der Teil, in dem sie Umfrage durchführen, Einheiten (bspw. Fahrräder am Campus) zählen oder messen, wie lange eine Person für eine bestimmte Aufgaben braucht. Das wird so lange gemacht, bis das Abbruchkriterium (eine bestimmte Personenanzahl) erreicht ist.
+
+### III) Datenaufbereitung
+
+Um ehrlich zu sein: Der ätzenste und gleichzeitig wichtigste Schritt des ganzen Prozesses. Hier bringt ihr die Daten aus der vorhandenen in eine verarbeitbare Form. Das konkrete Vorgehen hängt stark von den vorliegenden Daten ab. Deswegen treffen nicht alle der folgenden Schritte auf jedes Projekt zu.
+
+#### 1. Digitalisieren
+
+Wenn ihr die Daten analog gesammelt habt (Pen & Paper Umfrage, zählen von Fahrrädern auf dem Campus etc.) müssen diese erstmal in eine für den Computer lesbare Form gebracht werden: Sie werden digitalisiert! \
+Es gibt Möglichkeiten, sie direkt in R zu schreiben, das bringt aber keinen Spaß. Die eleganteste Version ist, sie in Excel oder Open Office in eine Tabelle zu schreiben und diese dann  zu speichern.
+
+<details>
+<summary><a>▼ \* Hilfreiche Aspekte bei der Digitalisierung in Excel </a></summary>
+::: infobox
+
+Damit R später gut mit den Daten umgehen kann und keine Fehler oder fehlenden Werte liest, ist es ratsam, auf ein paar zentrale Punkte zu achten: 
+
+1. **Sortierung**: Jede Spalte ist eine Variable, jede Zeile eine Beobachtungseinheit, jede Zelle ein Wert!
+2. **Datenformatierung**: Stelle sicher, dass die Daten korrekt formatiert sind. Dies bedeutet, dass numerische Werte als Zahlen zu formatieren (achte auch auf Dezimaltrennzeichen), Datumsangaben als Datumswerte usw. Bleibe dabei so grundlegend wie möglich und vermeide spezielle Zeichen oder Formatierungen, die zu Problemen führen könnten.
+3. **Spaltenüberschriften**: Verwende klare, kurze (am besten 1 Wort) und aussagekräftige Spaltenüberschriften. Diese werden als *Variable-Namen* verwendet, wenn die Daten in R eingelesen werden. Vermeide dabei Sonderzeichen, Leerzeichen und andere Zeichen, die in R nicht als gültige Variablennamen verwendet werden können. Wenn du die Datei als CSV (s.u.) speichern möchtest (du möchtest sie als CSV speichern!), achte darauf, dass die Spaltenüberschriften in der 1. Zeile sind und NUR in der ersten Zeile. 
+4. **Inhalte**: Auf das Datenblatt kommen *NUR* die Variablen. (Jede Spalte ist eine Variable, Jede Zeile eine Beobachtung/ Person!) Für die genauere Beschreibung der einzelnen Variablen (z.B. die konkreten Fragen etc.) nutze eine *eigene Datei*. 
+5. **Leere Zellen und fehlende Werte**: Beachte, wie du leere Zellen und fehlende Werte behandeln möchtest. In R werden fehlende Werte oft mit "`NA`" repräsentiert. Achte darauf, *konsistent* mit fehlenden Werten umzugehen, um spätere Analysen nicht zu beeinträchtigen.
+6. **Textkodierung**: Wenn die Daten Text enthalten (z.B. bei kategorischen Variablen), achte  darauf, die richtige Textkodierung zu verwenden. `UTF-8` ist eine gängige Textkodierung, die sowohl in Excel als auch in R unterstützt wird. (Hier kann es noch Probleme mit den verschiedenen Betriebssystemen geben. Für eine Vertiefte Betrachtung bitte unter [Wikipedia])
+7. **Speichern / CSV-Format**: Speichere die Daten am besten im `.csv` (Comma-Separated Values) Format. CSV ist ein einfaches Textformat, das von R problemlos eingelesen werden kann.
+8. **Spaltennamen in der ersten Zeile**: Nochmal, denn es ist wirklich wichtig: Wenn Du das CSV-Format verwendest, stelle sicher, dass die erste Zeile die Spaltenüberschriften enthält. Dies erleichtert das Einlesen der Daten in R.
+9. **Speicherort**: Merke dir den den Speicherort der Datei, in der du die Daten gespeichert hast. Du benötigen diesen Pfad, um die Daten in R einzulesen. Noch besser: lege in deinem R-Projekt einen Ordner namens "`data`" an. Dort kannst du alle Datensätze für das Projekt speichern und dann ist der Pfad zu den daten immer `"data\datensatz.csv"`
+10. **Datumsformate**: *Spoiler*: In jedem Fall / jedem Programm sind Datumsangaben pain in the ass. Um es handhabbar zu halten achte dabei auf Folgendes: Stelle sicher, dass Datumsangaben im richtigen Format erfasst werden. In Excel könnten Datumsangaben je nach Region unterschiedlich formatiert sein (z. B. `MM/DD/YYYY` oder `DD.MM.YYYY`). Stelle sicher, dass Du das richtige Format verwendest, das später in R interpretiert werden kann.
+
+![](images/venn.jpg){width=25% style="display:block; margin:auto;"}
+
+:::
+</details>
+</br>
+
+#### 2. Datenimport
+
+Als nächstes wird der (digitalisierte) Datensatz in R eingelesen.
+
+<details>
+<summary><a>▼ \*Übersicht über Datenformate und deren Import</a></summary>
+
+Zuerst brauchen wir ein grundlegendes Verständnis davon, wie Daten für R aussehen:
+
+![](images/csv.png){width=95% style="display:block; margin:auto;"}
+![](images/rda.png){width=95% style="display:block; margin:auto;"}
+![](images/sav.png){width=95% style="display:block; margin:auto;"}
+
+Oben seht ihr ein und denselben Datensatz in drei verschiedenen Formaten und wie er aussieht, wenn er nicht in R eingelesen ist.
+
+1. **CSV (Excel)**: Ergibt einigermaßen Sinn für unser menschliches Auge.
+2. **RDA (R)**: Viele nicht lesbare Zeichen. Ist binär und enthält spezifische Informationen für R.
+3. **SAV (SPSS)**: Hier wirds richtig crazy für uns: Das ist eine Mischung aus binär-Code und Metainformationen, die nur SPSS entschlüsseln kann.
+
+Zum Glück müssen wir uns damit nicht weiter auseinander setzen. Es reicht, dass ihr das einmal gesehen habt.
+
+Wie ein und der selbe Code je nach Sprache schon für uns Menschen unterschiedlich aussieht, geht es auch R. Um Daten in R einzulesen, brauchen wir verschiedene Befehle. Quasi um R zu sagen, welche Übersetzungsprozesse R machen muss, um die Daten lesen und für uns Menschen verständlich anzeigen zu können.
+</details>
+</br>
+
+Alle Datensätze, die wir in dieser gesamten Veranstaltung verwenden hat Lukas netterweise direkt ins Paket im `.rda` Datenformat eingebunden, das heißt, ihr müsst für die Tutorials und Abgaben gar nichts tun, da die Daten bereits eingelesen sind.\
+Sobald ihr das warme Nest dieses Tutoriums verlasst, werdet ihr allerdings mit anderen Datenformaten konfrontiert sein. Desewgen wollen wir euch die drei wichtigsten Befehle mit auf den Weg geben:
+
+1. CSV: `daten <- read.csv("data/datensatz.csv")`
+2. RDA: `daten <- load("data/datensatz.rda")`
+3. SAV: `daten <- haven::read_sav("data/datensatz.csv")`
+
+::: aufgaberstudio
+**Aufgabe:**\
+Lies den Datensatz `publictr.rda` aus dem Ordner `data` in dein Skript zu dieser Veranstaltung ein.
+:::
+
+#### 3. Datenaufbereitung / Cleaning
+
+Jetzt kommt der Teil, der meistens lange dauert, in der Lehre häufig vergessen wird und ganz objektiv am wenigsten Spaß macht: Die Daten müssen aufbereitet werden. Und gleichzeitig: wer sich hier Zeit lässt und sauber arbeitet hat später keine oder zumindest kaum Probleme bei der Analyse. Wenn dieser wichtige Schritt abgeschlossen ist, kann der Spaß losgehen.
+
+### IV) Orientierung in den Daten
+
+### V) Auswertung / Statistik
+
+###) VI) Schöne Visualisierungen
+
+###) VII) Report
+
+
+## Abschlussquiz
+
+## Learnings
+
+

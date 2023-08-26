@@ -76,7 +76,7 @@ Für Aufgabenbeschreibungen
 </br>
 
 ::: aufgaberstudio
-Für aufgaben, die nicht im Tutorial, sondern in Rstudio gelöst werden sollen
+Für Aufgaben, die nicht im Tutorial, sondern in Rstudio gelöst werden sollen
 :::
 </br>
 
