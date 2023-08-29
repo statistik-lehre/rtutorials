@@ -36,7 +36,7 @@ Wir lieben Bilder, ihr liebt Bilder, hier gibt es Bilder:
 In diesem Tutorial lernt ihr die Roadmap des wissenschaftlichen Arbeitens kennen. Hieran orientieren sich auch die anderen Tutorials.
 
 ::: gelb
-Da wir euch quantitative Verfahren beibringen, bezieht sich die Roadmap speziell auf quantitative Verfahren. Solltet ihr qualitativ Forschen wollen ändern sich die Schritte inhaltlich und ggf auch deren Abfolge teilweise.
+Da wir euch quantitative Verfahren beibringen, bezieht sich die Roadmap speziell auf quantitative Verfahren. Solltet ihr qualitativ Forschen wollen, ändern sich die Schritte inhaltlich und ggf auch deren Abfolge teilweise.
 :::
 
 ### I) Vorarbeit
@@ -151,16 +151,90 @@ Sobald ihr das warme Nest dieses Tutoriums verlasst, werdet ihr allerdings mit a
 2. RDA: `daten <- load("data/datensatz.rda")`
 3. SAV: `daten <- haven::read_sav("data/datensatz.csv")`
 
+
 ::: aufgaberstudio
 **Aufgabe:**\
 Lies den Datensatz `publictr.rda` aus dem Ordner `data` in dein Skript zu dieser Veranstaltung ein.
 :::
 
+
 #### 3. Datenaufbereitung / Cleaning
 
 Jetzt kommt der Teil, der meistens lange dauert, in der Lehre häufig vergessen wird und ganz objektiv am wenigsten Spaß macht: Die Daten müssen aufbereitet werden. Und gleichzeitig: wer sich hier Zeit lässt und sauber arbeitet hat später keine oder zumindest kaum Probleme bei der Analyse. Wenn dieser wichtige Schritt abgeschlossen ist, kann der Spaß losgehen.
 
+
 ### IV) Orientierung in den Daten
+
+Jetzt, wo wir alle unsere Datan schön in R eingelesen und aufgeräumt haben, wollen wir uns einen Eindruck verschaffen: Was haben wir da eigentlich erhoben?
+
+Hier lade ich euch den Datensatz ins Tutorial:
+
+```{r IV_Daten}
+publictr <- load("data/publictr.rda")
+```
+
+<details>
+<summary><a>▼ \* Was passiert in dem Code? </a></summary>
+
+-   `data`: Zuerst erstellen wir ein Objekt, dass wir in diesem Fall `data` nennen. Bis jetzt ist es wie eine leere Box.
+-   `<-`: Dann sagen wir R, das es was in die Box tun soll. Das ist eine sehr einfache Funktion.
+-   `load()`: Auch das ist eine Funktion, es läd einen `rda` Datensatz.
+- `"data/publictr.rda"`: Der Datensatz (`"publictr.rda"`) und wo er liegt (`"data/"`)
+
+Also nochmal in langsam und zum mitschreiben. Wir sagen zu R: Gehe bitte diesen Weg (`"data/"`) und nimm diesen spezifischen, dort gespeicherten Datensatz (`"publictr.rda"`) und lade ihn ein (`load()`). Dann speichere ihn im Arbeitsspeicher (`<-`) unter diesem Namen (`data`).
+
+</details>
+
+<details>
+<summary><a>▼ \* Bennenung von Datensätzen </a></summary>
+
+Im Grunde ist es echt egal, wie ihr eure Datensätze in R nennt.
+
+Es gibt klassischerweise zwei Heransgehensweisen: sehr allgemein `data` oder sehr spezifisch den Namen, also `publictr`.
+
+**Verwendung von "data":**
+- Vorteile:
+  - *Allgemeiner Begriff:* Der Name "data" ist ein allgemeiner Begriff, der leicht zu merken (und tippen) ist.
+  - *Einfachheit:* Die Verwendung von "data" kann den Code einfach halten, da der Name kurz und prägnant ist.
+  - *Wiederverwendbarkeit:* Da "data" so allgemein ist, könnte der Name für verschiedene Arten von Datensätzen verwendet werden.
+
+- Nachteile:
+  - *Verwechslungsgefahr:* Da "data" ein häufig verwendetes Wort ist, könnten Verwechslungen oder Konflikte mit anderen Variablennamen und Argumenten in Funktionen auftreten.
+  - *Mangelnde Beschreibung:* Der Name "data" gibt keine Hinweise auf den Inhalt oder Zweck des Datensatzes, was zu Verwirrung führen könnte.
+  - *Kollisionen:* Wenn mehrere Datensätze "data" heißen, könnte es zu unerwarteten Konflikten führen.
+
+**Verwendung von "publictr":**
+- Vorteile:
+  - *Spezifizität:* Der Name "publictr" ist spezifisch und weist auf den Inhalt des Datensatzes hin.
+  - *Vermeidung von Verwechslungen:* Ein spezifischer Name wie "publictr" kann Verwechslungen mit anderen Variablennamen reduzieren.
+  - *Kontextbetonung:* Der Name kann den Fokus auf den Kontext des Datensatzes legen.
+
+- Nachteile:
+  - *Mögliche Überkomplexität:* Sehr spezifische Namen könnten zu lang oder komplex werden und das Schreiben von Code erschweren.
+  - *Mögliche Vergessenheit*: Ein komplexer Name wie "publictr" könnte schwer zu merken sein, insbesondere wenn er selten verwendet wird.
+  - *Eingeschränkte Wiederverwendbarkeit:* Ein sehr spezifischer Name macht das kopieren von Code fürs nächste Projekt anstrengender.
+
+
+</details>
+
+
+#### 1. Numerisch
+
+
+Hier kommen ein paar sehr nützliche Befehle:
+
+`datensatz`
+`View(datensatz)`: Öffnet den kompletten Datensatz in einem neuen Tab im Skript-Fenster. Hier ist die 
+
+#### 1. Grafisch (quick & dirty)
+
+Die Breitbandverbindung in unser Gehirn sind und bleiben unsere Augen. Deswegen ist an diesem Punkt des Prozesses eine grafische Auseinandersetzung mit den Daten zwar nicht notwendig, aber sehr hilfreich.
+
+
+
+#### 2. Numerisch (bisschen ausgiebiger)
+
+#### 3. Voraussetzungen prüfen (langweilig & unerlässlich)
 
 ### V) Auswertung / Statistik
 
