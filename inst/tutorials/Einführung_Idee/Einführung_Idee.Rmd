@@ -20,9 +20,9 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Lernziele
 
--   <input type="checkbox" unchecked> bereits geleistetes feiern </input>
--   <input type="checkbox" unchecked> Überbblick über den Aufbau dieses Kurses bekommen </input>
--   <input type="checkbox" unchecked> Überbblick über R Tutorials bekommen </input>
+-   <input type="checkbox" unchecked> Bereits geleistetes feiern </input>
+-   <input type="checkbox" unchecked> Überblick über den Aufbau dieses Kurses bekommen </input>
+-   <input type="checkbox" unchecked> Überblick über R Tutorials bekommen </input>
 -   <input type="checkbox" unchecked> Überblick über R und R Studio bekommen </input>
 -   <input type="checkbox" unchecked> Projekt `statistik_bachelor` erstellen </input>
 -   <input type="checkbox" unchecked> Skript `01_einfuehrung` erstellen und kompilieren </input>
@@ -102,7 +102,7 @@ Das Problem: R ist von Nerds für Nerds geschrieben, läuft ganz unauffällig in
 
 ![](images/R_in_Konsole.png)
 
-Und spätestens, wenn der Bildschirm voll ist, wird das unübersichtlich. 
+Und das wird, spätestens wenn der Bildschirm voll ist, unübersichtlich. 
 
 Und hier kommt R Studio ins Spiel. R Studio ist für die Menschen, die gerne die Power von R nutzen möchten und für ihre Programme gerne eine grafische Oberfläche nutzen. Wir werden nur in R Studio arbeiten.
 
@@ -164,8 +164,10 @@ Dieses Fenster entspricht der Konsole / Terminal beim Rechner (so.). Dies ist de
 Gib in deiner Konsole verschiedene Rechnungen ein (Addition, Subtraktion etc.) und drücke auf `Enter`. Mache dich auf diese Art mit der Funktionsweise und Optik der Konsole vertraut.
 :::
 
+</br>
+
 ::: infobox
-**Sytax-basics:**\
+**Syntax-basics:**\
 
 -   Das Dezimaltrennzeichen ist ein Punkt `.`
 -   Für Aufzählungen (von Argumenten, anderes Tutorial) wird ein Komma `,` genutzt
@@ -196,25 +198,24 @@ Es gilt als guter Stil:
 -   Operatoren wie `+`, `-`, `=` auf beiden Seiten mit Leerzeichen zu umgeben odereswirdanstrengendzulesen.
     -   z.B. `5 + 5`
     
--   Kommata haben gerne, (wie in der gewohnten Schriftsprache) ein Leerzeichen
+-   Kommata haben gerne, (wie in der gewohnten Schriftsprache) ein Leerzeichen hinter sich
+-   Kommentare: Für die inhaltliche Verständlichkeit ist es hilfreich, den geschriebenen Code zu kommentieren. Dies geschieht mit einem `#`
+    -   z.B.: 
+        -   `5 + 5     # Addition`
+    -   oder:
+        -   ` # Addition`
+        -   ` 5 + 5`
 :::
 
-::: infobox
-**Kommentare:**\
--   Für die inhaltliche Verständlichkeit ist es hilfreich, den geschriebenen Code zu kommentieren. Dies geschieht mit einem `#`
+</br>
 
-    -   z.B. `5 + 5     # Addition`
-    -   oder:\
-        `# Addition`\
-        `5 + 5`
-:::
 
 ::: aufgaberstudio
 **Aufgaben:**\
 
 1.    Gib deinem Dokument einen Titel (`#### Titel ####`)
 2.    Kommentiere deine Rechenoperationen (`#`)
-3.    Speichere Dein Skript (`Strg` + `s`) [Nenne es für die Übersichtlichkeit: `01_einfuehrung`]
+3.    Speichere Dein Skript (`Strg` + `s`) und nenne es: `01_einfuehrung`
 4.    Kompiliere dein Skript als `.docx`
 :::
 

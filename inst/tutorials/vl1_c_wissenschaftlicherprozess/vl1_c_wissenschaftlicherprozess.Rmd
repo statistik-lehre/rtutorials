@@ -16,11 +16,36 @@ resource_files:
 ```{r setup, include=FALSE}
 library(learnr)
 knitr::opts_chunk$set(echo = FALSE)
+
+# data
+publictr <- rtutorials::publictr
+
 ```
 
 ## Inhalt 
 
 In diesem Tutorial stellen wir euch die Roadmap des wissenschaftlichen Prozesses vor, an der wir alle weiteren Tutorials orientieren.
+
+::: aufgaberstudio
+**Aufgabe:**\
+Kopiere bitte folgenden Code in deine Konsole und drücke `Enter`:
+
+```{r pakete_installieren, message=FALSE, echo = TRUE}
+if (!require("haven")) 
+install.packages("haven")
+
+if (!require("car")) 
+install.packages("car")
+
+if (!require("psych")) 
+install.packages("psych")
+
+if (!require("mice")) 
+install.packages("mice")
+```
+
+(Hiermit werden automatisch Pakete installiert, die für dieses und die nächsten Tutorials gebraucht werden. Wenn ihr sie schon installiert habt, passiert gar nichts.)
+:::
 
 ## Lernziele
 
@@ -34,6 +59,8 @@ Wir lieben Bilder, ihr liebt Bilder, hier gibt es Bilder:
 ![](images/prozess){width=95%}
 
 In diesem Tutorial lernt ihr die Roadmap des wissenschaftlichen Arbeitens kennen. Hieran orientieren sich auch die anderen Tutorials.
+
+Um es einfach zu halten, sind im Fließtext nur die allergröbsten Orientierungspunkte. Da wir es sinnvoll fanden, euch an dieser Stelle auch schon weitere Infos und Aufgaben zum Verständnis zu geben, gibt es dafür die ausklappbaren Menüs. Diejenigen, die mit einem `*` gekennzeichnet sind, sind wie in den anderen Tutorials vertiefendes Extrawissen. Die anderen Ausklappmenüs halten wir für sehr sinnvoll.
 
 ::: gelb
 Da wir euch quantitative Verfahren beibringen, bezieht sich die Roadmap speziell auf quantitative Verfahren. Solltet ihr qualitativ Forschen wollen, ändern sich die Schritte inhaltlich und ggf auch deren Abfolge teilweise.
@@ -85,7 +112,7 @@ Hier werden, je nach dem Forschungsdesign vorbereitungen getroffen:
 #### 2. Erhebung
 
 Der Teil, bei dem euch auf dem Campus Süßigkeiten für Studienteilnahmen angeboten werden (als Teilnehmende Person).\
-Für die Forschenden Personen ist dieses der Teil, in dem sie Umfrage durchführen, Einheiten (bspw. Fahrräder am Campus) zählen oder messen, wie lange eine Person für eine bestimmte Aufgaben braucht. Das wird so lange gemacht, bis das Abbruchkriterium (eine bestimmte Personenanzahl) erreicht ist.
+Für die Forschenden Personen ist dieses der Teil, in dem sie Umfrage durchführen, Einheiten (bspw. Fahrräder am Campus) zählen oder messen, wie lange eine Person für eine bestimmten braucht. Das wird so lange gemacht, bis das Abbruchkriterium (eine bestimmte Personenanzahl) erreicht ist.
 
 ### III) Datenaufbereitung
 
@@ -117,14 +144,13 @@ Damit R später gut mit den Daten umgehen kann und keine Fehler oder fehlenden W
 
 :::
 </details>
-</br>
 
 #### 2. Datenimport
 
 Als nächstes wird der (digitalisierte) Datensatz in R eingelesen.
 
 <details>
-<summary><a>▼ \*Übersicht über Datenformate und deren Import</a></summary>
+<summary><a>▼ \* Übersicht über Datenformate </a></summary>
 
 Zuerst brauchen wir ein grundlegendes Verständnis davon, wie Daten für R aussehen:
 
@@ -142,36 +168,23 @@ Zum Glück müssen wir uns damit nicht weiter auseinander setzen. Es reicht, das
 
 Wie ein und der selbe Code je nach Sprache schon für uns Menschen unterschiedlich aussieht, geht es auch R. Um Daten in R einzulesen, brauchen wir verschiedene Befehle. Quasi um R zu sagen, welche Übersetzungsprozesse R machen muss, um die Daten lesen und für uns Menschen verständlich anzeigen zu können.
 </details>
-</br>
+<details>
+<summary><a>▼ \ Und deren Import **(mit Aufgabe)**</a></summary>
 
-Alle Datensätze, die wir in dieser gesamten Veranstaltung verwenden hat Lukas netterweise direkt ins Paket im `.rda` Datenformat eingebunden, das heißt, ihr müsst für die Tutorials und Abgaben gar nichts tun, da die Daten bereits eingelesen sind.\
+Alle Datensätze, die wir in dieser gesamten Veranstaltung verwenden, hat Lukas netterweise direkt ins Paket eingebunden, das heißt, ihr müsst für die Tutorials und Abgaben gar nichts tun, da die Daten bereits eingelesen sind. Um R eine Orientierung zu geben, welchen Datensatz ihr verwenden wollt tippt folgendes: `rtutorials::datensatz`\
 Sobald ihr das warme Nest dieses Tutoriums verlasst, werdet ihr allerdings mit anderen Datenformaten konfrontiert sein. Desewgen wollen wir euch die drei wichtigsten Befehle mit auf den Weg geben:
 
 1. CSV: `daten <- read.csv("data/datensatz.csv")`
 2. RDA: `daten <- load("data/datensatz.rda")`
 3. SAV: `daten <- haven::read_sav("data/datensatz.csv")`
 
-
 ::: aufgaberstudio
 **Aufgabe:**\
-Lies den Datensatz `publictr.rda` aus dem Ordner `data` in dein Skript zu dieser Veranstaltung ein.
+Lies den Datensatz `publictr.rda` aus dem Ordner `data` in dein Skript zu dieser Veranstaltung ein.\
+(Du könntest auch einfach `rtutorials::publictr` nutzen. Für Übungszwecke gehen wir aber hier den längeren Weg.)
 :::
+</details>
 
-
-#### 3. Datenaufbereitung / Cleaning
-
-Jetzt kommt der Teil, der meistens lange dauert, in der Lehre häufig vergessen wird und ganz objektiv am wenigsten Spaß macht: Die Daten müssen aufbereitet werden. Und gleichzeitig: wer sich hier Zeit lässt und sauber arbeitet hat später keine oder zumindest kaum Probleme bei der Analyse. Wenn dieser wichtige Schritt abgeschlossen ist, kann der Spaß losgehen.
-
-
-### IV) Orientierung in den Daten
-
-Jetzt, wo wir alle unsere Datan schön in R eingelesen und aufgeräumt haben, wollen wir uns einen Eindruck verschaffen: Was haben wir da eigentlich erhoben?
-
-Hier lade ich euch den Datensatz ins Tutorial:
-
-```{r IV_Daten}
-publictr <- load("data/publictr.rda")
-```
 
 <details>
 <summary><a>▼ \* Was passiert in dem Code? </a></summary>
@@ -213,18 +226,142 @@ Es gibt klassischerweise zwei Heransgehensweisen: sehr allgemein `data` oder seh
   - *Mögliche Überkomplexität:* Sehr spezifische Namen könnten zu lang oder komplex werden und das Schreiben von Code erschweren.
   - *Mögliche Vergessenheit*: Ein komplexer Name wie "publictr" könnte schwer zu merken sein, insbesondere wenn er selten verwendet wird.
   - *Eingeschränkte Wiederverwendbarkeit:* Ein sehr spezifischer Name macht das kopieren von Code fürs nächste Projekt anstrengender.
-
-
 </details>
+
+
+#### 3. Datenaufbereitung / Cleaning
+
+Jetzt kommt der Teil, der meistens lange dauert, in der Lehre häufig übersprungen wird und ganz objektiv am wenigsten Spaß macht: Die Daten müssen aufbereitet werden. Und gleichzeitig: wer sich hier Zeit lässt und sauber arbeitet hat später keine oder zumindest kaum Probleme bei der Analyse. Wenn dieser wichtige Schritt abgeschlossen ist, kann der Spaß losgehen.
+
+Um einen Eindruck zu bekommen, wie sowas aussehen kann, kannst du dir das [Skript](https://github.com/statistik-lehre/rtutorials/blob/main/data-raw/publictr.R) ansehen, in dem der `publictr` Datensatz aufgeräumt wird.
+
+<details>
+<summary><a>▼ \ Cleaning für dieses Tutorial </a></summary>
+Für das Beispiel in diesem Tutorial brauchen wir auch ein bisschen cleaning. Das machen wir jetzt zusammen. Für mehr und ausführlicher schaut gerne im folgenden Tutorial vorbei. Hier machen wir der einfachehit halber nur das, was wir auch wirklich brauchen.
+
+Wenn wir uns die Daten anschauen wird deutlich, dass die Erhebungseinheiten sowohl die Einzelnen Verkehrsmittel beinhaltet als auch deren Zusammenfassung. Das macht Analysen witzlos, da jetzt jede Einheit doppelt vorkommt. Wir kreieren also einen neuen Datensatz, in dem die Zeilen rausschmeiß, welche die anderen Einträge zusammenfassen.
+
+```{r cleaning, echo = T, context = "setup"}
+# Hier erstellen wir einen Index, in dem die position aller Beobachtungseinheiten
+# gespeichert ist, welche NICHT "insgesamt" als Typ angegeben haben
+index_to_keep <- which(!grepl("insgesamt", publictr$Typ))
+
+# Jetzt erstellen wir einen neuen Datensatz, welcher nur die
+# Einträge aus dem alten Datensatz OHNE "insgesamt" enthält
+filtered_data <- publictr[index_to_keep, ]
+```
+
+<\details>
+
+
+### IV) Orientierung in den Daten
+
+Jetzt, wo wir alle unsere Daten in R eingelesen und aufgeräumt haben, wollen wir uns einen Eindruck verschaffen: Was haben wir da eigentlich erhoben?
 
 
 #### 1. Numerisch
 
+##### a) Kompletter Datensatz
 
-Hier kommen ein paar sehr nützliche Befehle:
+<details>
+<summary><a>▼ \ Ein paar sehr nützliche Befehle, um sich einen Überblick über den Datensatz als ganzes zu verschaffen **(mit Aufgabe)** </a></summary>
 
-`datensatz`
-`View(datensatz)`: Öffnet den kompletten Datensatz in einem neuen Tab im Skript-Fenster. Hier ist die 
+-   `data`: Zeigt den Datensatz in der Konsole. Je mehr Variablen und Beobachtungseinheiten dieser Datensatz hat, desto unübersichtlicher wird die Geschichte. Zudem haben wir das gleiche Problem, wie im reinen R: sobald wir was neues rechnen rutschen die Infos für uns nach oben und wir scrollen uns dumm und dusselig. Viel praktischer wäre doch:
+-   `View(data)`: Öffnet den kompletten Datensatz als klassische Tabelle in einem neuen Tab im Skript-Fenster. Das eignet sich am besten um ein gutes Gespür für den Datensatz zu bekommen und immer wieder darauf schauen zu können. Dann gibt es noch:
+-   `head(data)`: Zeigt die ersten paar Zeilen eines Datensatzes
+-   `car::some(data)`: Zeigt ein paar zufällige Zeilen des Datensatzes.
+-   `names(data)`: Variablennamen
+-   `ncol(data)`: Gibt die Anzahl der Spalten des Datensatzes an (= Anzahl der Variablen)
+-   `nrow(data)`: Gibt die Anzahl der Zeilen des Datensatzes an (= Anzahl der Beobachtungseinheiten). Diese beiden eignen sich auch gut, um heraus zu finden, ob alles mit dem einlesen so geklappt hat, wie gewünscht.
+
+::: aufgaberstudio
+**Aufgabe:**
+
+1.    Öffne `publictr` in einem neuen Fenster und mach dich mit der Tabelle vertraut.
+2.    Wie heißen die Variablen?
+3.    Finde heraus, wie viele Zeilen und Spalten `publictr` hat.
+:::
+<\details>
+
+##### b) Einzelne Variablen
+
+<details>
+<summary><a>▼ \ Aber auch inhaltlich interessieren uns die einzelnen Variablen. **(mit Aufgabe)** </a></summary>
+
+::: gelb
+**Achtung**
+
+**1.**\
+Die Funktionen, welche sich mit NAs auseinandersetzen werden z.T. auch schon für das cleaning gebraucht. Und viele der Funktionen lernt ihr in ihren Einzelheiten auch in anderen Tutorials kennen, deswegen gehen wir hier nicht ins Detail drauf ein. Und sonst gibt es ja auch immer die Möglichkeit das Manual mittels `?funktion()` aufzurufen.
+
+**2.**\
+Viele der unten aufgeführten funktionen funktionieren nur, wenn keine Daten fehlen. Wenn ihr euch bereits mit den Missings auseinandergesetzt habt oder nur einen ersten Eindruck bekommen wollt, könnt ihr in vielen der jeweiligen funktionen das argument `na.rm = T` setzen (na = NA/ not available; rm = remove; T = TRUE/ ja, genau das will ich). Das könnte dann so aussehen: `mean(data$variable, na.rm = T)`.
+:::
+
+-   `$`: Eine Variable in einem Datensatz wird mit einem `$` angesprochen. Das sieht dann so aus: `data$variable`
+-   `sum(is.na(data$variable))`: Wie viele Werte fehlen in dieser Variable?
+-   `sum(is.na(data))`: Wie viele Werte fehlen im Datensatz insgesamt?
+-   `mice::md.pattern(data)`: Eine ganz zauberhafte Funktion, die etwas über die Struktur von fehlenden Daten aussagt. Wenn wir um die Systematik der Wissen gibt es unterschieldich komplexe Herangehensweisen. Wir brauchen erstmal nur die leichteste: Schau in deiner Tabelle (`View()`), ob du das Muster erkennst.
+-   `mean(data$variable)`: Gibt den Mittelwert der Variable aus.
+-   `sd(data$variable)`: Standardabweichung
+-   `range(data$variable)`: Spannweite
+-   `min(data$variable)`: Minimaler eingetragener Wert
+-   `max(data$variable)`: Maximaler eingetragener Wert
+-   `table(data$variable)`: Alle Werte des Vektors inklusive deren absolute Häufigkeit. Eignet sich besonders für nominal und ordinal (inkl. [Likert](https://de.wikipedia.org/wiki/Likert-Skala) skalierten Daten)
+-   `psych::describe(data)`: Wendet die meisten der og. Funktionen und noch mehr für den kompletten Datensatz an. Feine Funktion, um eine schnelle Übersicht zu erhalten. (Variablen, die mit einem Sternchen versehen sind, interpretiert R als nominal.)
+-   `summary(data)`: Ähnlich wie `describe()`, gibt zusätzlich noch die NAs mit an und dafür ein paar andere Verteilungsparameter (Schiefe und Wölbung) nicht.
+-   `class(data$variable)`: Gibt die Klasse oder den Datentyp des R-Objekts an. 
+-   `typeof(data$variable)`: Gibt den internen Datentyp des Objekts an.
+    -   Unterscheidung: `class()` sagt etwas darüber aus, wie R das Objekt speichert und liest. `typeof()` sagt etwas darüber, wie der Rechner das Objekt speichert und liest, also auf einer grundlegenderen Ebene. Darum zu wissen kann essentiell sein, da es manchmal der Grund ist, warum Funktionen nicht funktionieren. (Für alle, die es gerne ausführlicher und gleichzeitig noch verständlich lesen wollen gehts [hier](https://r-intro.tadaa-data.de/datentypen.html) entlang)
+
+::: aufgabe
+**Aufgabe**\
+Schau dir den oben gesäuberten Datensatz `filtered_data` an und beantworte folgende Fragen:
+
+1.    Wie viele Werte fehlen in dem Datensatz insgesamt?
+2.    Haben die fehlenden Werte ein Muster?
+3.    Wenn ja, welches? Wie lässt sich das erklären?
+4.    Wie viele Personen wurden im Durchschnitt transportiert?
+5.    Mit welcher Standardabweichung?
+6.    Was ist die minimale Anzahl an Personenkilometern?
+7.    Was die maximale?
+8.    Welche verschiedenen Typen von Transportmitteln wurden untersucht?
+9.    In welchem Zeitraum wurden die Daten erhoben?
+10.    Welche Variablen sind für R nominal, welche numerisch?
+:::
+
+```{r IV1-solution}
+sum(is.na(filtered_data))
+
+?mice::md.pattern()
+mice::md.pattern(filtered_data, rotate.names = T)
+
+filtered_data
+# In R Studio nehmt ihr hier bitte View(), das ist übersichtlicher und schöner
+
+mean(filtered_data$Personen, na.rm = T)
+
+sd(filtered_data$Personen, na.rm = T)
+
+min(filtered_data$Personenkilometer, na.rm = T)
+
+max(filtered_data$Personenkilometer, na.rm = T)
+
+table(filtered_data$Typ)
+
+table(filtered_data$Jahr)
+
+psych::describe(filtered_data)
+```
+
+
+```{r IV1, exercise = TRUE}
+
+```
+
+<\details>
+
+
 
 #### 1. Grafisch (quick & dirty)
 
