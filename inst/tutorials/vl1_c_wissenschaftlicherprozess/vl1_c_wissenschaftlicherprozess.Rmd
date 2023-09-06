@@ -11,6 +11,9 @@ link-citations: TRUE
 description: empty
 resource_files:
 - css/boxes.css
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 ```{r setup, include=FALSE}
@@ -22,9 +25,10 @@ publictr <- rtutorials::publictr
 
 ```
 
-## Inhalt 
+## Inhalt
 
-In diesem Tutorial stellen wir euch die Roadmap des wissenschaftlichen Prozesses vor, an der wir alle weiteren Tutorials orientieren.
+In diesem Tutorial stellen wir euch die Roadmap des wissenschaftlichen
+Prozesses vor, an der wir alle weiteren Tutorials orientieren.
 
 ::: aufgaberstudio
 **Aufgabe:**\
@@ -44,48 +48,75 @@ if (!require("mice"))
 install.packages("mice")
 ```
 
-(Hiermit werden automatisch Pakete installiert, die für dieses und die nächsten Tutorials gebraucht werden. Wenn ihr sie schon installiert habt, passiert gar nichts.)
+(Hiermit werden automatisch Pakete installiert, die für dieses und die
+nächsten Tutorials gebraucht werden. Wenn ihr sie schon installiert
+habt, passiert gar nichts.)
 :::
 
 ## Lernziele
 
--   <input type="checkbox" unchecked> Ich kenne die Roadmap des wissenschaftlichen Prozesses und kann mich auf ihr orientieren </input>
-
+-   <input type="checkbox" unchecked> Ich kenne die Roadmap des
+    wissenschaftlichen Prozesses und kann mich auf ihr orientieren
+    </input>
 
 ## Wissenschaftlicher Prozess
 
-Wir lieben Bilder, ihr liebt Bilder, hier gibt es Bilder: 
+Wir lieben Bilder, ihr liebt Bilder, hier gibt es Bilder:
 
-![](images/prozess){width=95%}
+![](images/prozess){width="95%"}
 
-In diesem Tutorial lernt ihr die Roadmap des wissenschaftlichen Arbeitens kennen. Hieran orientieren sich auch die anderen Tutorials.
+Die gesamten Tutorials orientieren sich an der "Roadmap des
+wissenschaftlichen Arbeitens". Sie soll euch zur Orientierung dienen und
+für zukünftige eigene Projekte einen strukturierten Ablauf vorgeben.
 
-Um es einfach zu halten, sind im Fließtext nur die allergröbsten Orientierungspunkte. Da wir es sinnvoll fanden, euch an dieser Stelle auch schon weitere Infos und Aufgaben zum Verständnis zu geben, gibt es dafür die ausklappbaren Menüs. Diejenigen, die mit einem `*` gekennzeichnet sind, sind wie in den anderen Tutorials vertiefendes Extrawissen. Die anderen Ausklappmenüs halten wir für sehr sinnvoll.
+Um es einfach zu halten, sind im Fließtext nur die allergröbsten
+Orientierungspunkte. Da wir es sinnvoll fanden, euch an dieser Stelle
+auch schon weitere Infos und Aufgaben zum Verständnis zu geben, gibt es
+dafür die ausklappbaren Menüs. Diejenigen, die mit einem `*`
+gekennzeichnet sind, sind wie in den anderen Tutorials vertiefendes
+Extrawissen. Die anderen Ausklappmenüs halten wir für sehr sinnvoll.
 
 ::: gelb
-Da wir euch quantitative Verfahren beibringen, bezieht sich die Roadmap speziell auf quantitative Verfahren. Solltet ihr qualitativ Forschen wollen, ändern sich die Schritte inhaltlich und ggf auch deren Abfolge teilweise.
+Da wir euch quantitative Verfahren beibringen, bezieht sich die Roadmap
+speziell auf quantitative Verfahren. Solltet ihr qualitativ Forschen
+wollen, ändern sich die Schritte inhaltlich und ggf auch deren Abfolge
+teilweise.
 :::
 
 ### I) Vorarbeit
 
-Ja, ein Großteil des wissenschaftlichen Arbeitens geschieht vor dem, was wir uns darunter Vorstellen: Mit Laborkittel und Lupe im Labor stehen und bunte Flüssigkeiten ineinander mixen... 
+Ja, ein Großteil des wissenschaftlichen Arbeitens geschieht vor dem, was
+wir uns darunter Vorstellen: Mit Laborkittel und Lupe im Labor stehen
+und bunte Flüssigkeiten ineinander mixen...
 
-Die Überschriften in Klammern sind zwar zentrale Bestandteile dieses Prozesses, doch sie sind weder Teil der Vorlesung, noch eurer kleinen Forschungsarbeit in diesem Modul, deswegen gehen wir nicht weiter darauf ein. Nichtsdestotrotz wollen wir ihren elementaren Stellenwert in diesem Prozess berücksichtigen.
+Die Überschriften in Klammern sind zwar zentrale Bestandteile dieses
+Prozesses, doch sie sind weder Teil der Vorlesung, noch eurer kleinen
+Forschungsarbeit in diesem Modul, deswegen gehen wir nicht weiter darauf
+ein. Nichtsdestotrotz wollen wir ihren elementaren Stellenwert in diesem
+Prozess berücksichtigen.
 
 #### 1. Einarbeiten
 
-Jede gute (wissenschaftliche) Arbeit braucht eine gute Vorarbeit: Ein Einlesen in die Matrie, sich mit dem Feld vertraut und neue Gedanken machen: was gibt es schon? was braucht es noch? Was kann/ möchte ich beitragen?
+Jede gute (wissenschaftliche) Arbeit braucht eine gute Vorarbeit: Ein
+Einlesen in die Matrie, sich mit dem Feld vertraut und neue Gedanken
+machen: was gibt es schon? was braucht es noch? Was kann/ möchte ich
+beitragen?
 
 #### 2. Fragestellung
 
-Wenn mensch einen guten Überblick über das interessierende Forschungsfeld hat wird im nächsten Schritt eine konkrete Fragestellung entwickelt: Was GANZ GENAU möchte ich untersuchen?
+Wenn mensch einen guten Überblick über das interessierende
+Forschungsfeld hat wird im nächsten Schritt eine konkrete Fragestellung
+entwickelt: Was GANZ GENAU möchte ich untersuchen?
 
 #### 3. Operationalisierung der Variablen
 
 Und WIE genau möchte bzw. kann ich das untersuchen?\
-Ganz konkret: Wie kann ich das, was mich interessiert, in Zahlen oder Kategorien bringen?
+Ganz konkret: Wie kann ich das, was mich interessiert, in Zahlen oder
+Kategorien bringen?
 
-Hier wird auch das Abbruchkriterium festgelegt: Nach wie vielen Beobachtungen/ Zeiteinheiten etc. wird die Datenerhebung abgebrochen? (Meist nach Personenanzahl berechnet.)
+Hier wird auch das Abbruchkriterium festgelegt: Nach wie vielen
+Beobachtungen/ Zeiteinheiten etc. wird die Datenerhebung abgebrochen?
+(Meist nach Personenanzahl berechnet.)
 
 #### 4. Konkrete, testbare Hypothesen aufstellen
 
@@ -96,7 +127,6 @@ Was genau möchte ich untersuchen?
 #### (6. Aquirierung von Geldern)
 
 #### (7. Präregistrierung)
-
 
 ### II) Messen / Generieren von Daten
 
@@ -111,38 +141,96 @@ Hier werden, je nach dem Forschungsdesign vorbereitungen getroffen:
 
 #### 2. Erhebung
 
-Der Teil, bei dem euch auf dem Campus Süßigkeiten für Studienteilnahmen angeboten werden (als Teilnehmende Person).\
-Für die Forschenden Personen ist dieses der Teil, in dem sie Umfrage durchführen, Einheiten (bspw. Fahrräder am Campus) zählen oder messen, wie lange eine Person für eine bestimmten braucht. Das wird so lange gemacht, bis das Abbruchkriterium (eine bestimmte Personenanzahl) erreicht ist.
+Der Teil, bei dem euch auf dem Campus Süßigkeiten für Studienteilnahmen
+angeboten werden (als Teilnehmende Person).\
+Für die Forschenden Personen ist dieses der Teil, in dem sie Umfrage
+durchführen, Einheiten (bspw. Fahrräder am Campus) zählen oder messen,
+wie lange eine Person für eine bestimmten braucht. Das wird so lange
+gemacht, bis das Abbruchkriterium (eine bestimmte Personenanzahl)
+erreicht ist.
 
 ### III) Datenaufbereitung
 
-Um ehrlich zu sein: Der ätzenste und gleichzeitig wichtigste Schritt des ganzen Prozesses. Hier bringt ihr die Daten aus der vorhandenen in eine verarbeitbare Form. Das konkrete Vorgehen hängt stark von den vorliegenden Daten ab. Deswegen treffen nicht alle der folgenden Schritte auf jedes Projekt zu.
+Um ehrlich zu sein: Der ätzenste und gleichzeitig wichtigste Schritt des
+ganzen Prozesses. Hier bringt ihr die Daten aus der vorhandenen in eine
+verarbeitbare Form. Das konkrete Vorgehen hängt stark von den
+vorliegenden Daten ab. Deswegen treffen nicht alle der folgenden
+Schritte auf jedes Projekt zu.
 
 #### 1. Digitalisieren
 
-Wenn ihr die Daten analog gesammelt habt (Pen & Paper Umfrage, zählen von Fahrrädern auf dem Campus etc.) müssen diese erstmal in eine für den Computer lesbare Form gebracht werden: Sie werden digitalisiert! \
-Es gibt Möglichkeiten, sie direkt in R zu schreiben, das bringt aber keinen Spaß. Die eleganteste Version ist, sie in Excel oder Open Office in eine Tabelle zu schreiben und diese dann  zu speichern.
+Wenn ihr die Daten analog gesammelt habt (Pen & Paper Umfrage, zählen
+von Fahrrädern auf dem Campus etc.) müssen diese erstmal in eine für den
+Computer lesbare Form gebracht werden: Sie werden digitalisiert!\
+Es gibt Möglichkeiten, sie direkt in R zu schreiben, das bringt aber
+keinen Spaß. Die eleganteste Version ist, sie in Excel oder Open Office
+in eine Tabelle zu schreiben und diese dann zu speichern.
 
 <details>
-<summary><a>▼ \* Hilfreiche Aspekte bei der Digitalisierung in Excel </a></summary>
+
+<summary><a>▼ \* Hilfreiche Aspekte bei der Digitalisierung in Excel
+</a></summary>
+
 ::: infobox
+Damit R später gut mit den Daten umgehen kann und keine Fehler oder
+fehlenden Werte liest, ist es ratsam, auf ein paar zentrale Punkte zu
+achten:
 
-Damit R später gut mit den Daten umgehen kann und keine Fehler oder fehlenden Werte liest, ist es ratsam, auf ein paar zentrale Punkte zu achten: 
+1.  **Sortierung**: Jede Spalte ist eine Variable, jede Zeile eine
+    Beobachtungseinheit, jede Zelle ein Wert!
+2.  **Datenformatierung**: Stelle sicher, dass die Daten korrekt
+    formatiert sind. Dies bedeutet, dass numerische Werte als Zahlen zu
+    formatieren (achte auch auf Dezimaltrennzeichen), Datumsangaben als
+    Datumswerte usw. Bleibe dabei so grundlegend wie möglich und
+    vermeide spezielle Zeichen oder Formatierungen, die zu Problemen
+    führen könnten.
+3.  **Spaltenüberschriften**: Verwende klare, kurze (am besten 1 Wort)
+    und aussagekräftige Spaltenüberschriften. Diese werden als
+    *Variable-Namen* verwendet, wenn die Daten in R eingelesen werden.
+    Vermeide dabei Sonderzeichen, Leerzeichen und andere Zeichen, die in
+    R nicht als gültige Variablennamen verwendet werden können. Wenn du
+    die Datei als CSV (s.u.) speichern möchtest (du möchtest sie als CSV
+    speichern!), achte darauf, dass die Spaltenüberschriften in der 1.
+    Zeile sind und NUR in der ersten Zeile.
+4.  **Inhalte**: Auf das Datenblatt kommen *NUR* die Variablen. (Jede
+    Spalte ist eine Variable, Jede Zeile eine Beobachtung/ Person!) Für
+    die genauere Beschreibung der einzelnen Variablen (z.B. die
+    konkreten Fragen etc.) nutze eine *eigene Datei*.
+5.  **Leere Zellen und fehlende Werte**: Beachte, wie du leere Zellen
+    und fehlende Werte behandeln möchtest. In R werden fehlende Werte
+    oft mit "`NA`" repräsentiert. Achte darauf, *konsistent* mit
+    fehlenden Werten umzugehen, um spätere Analysen nicht zu
+    beeinträchtigen.
+6.  **Textkodierung**: Wenn die Daten Text enthalten (z.B. bei
+    kategorischen Variablen), achte darauf, die richtige Textkodierung
+    zu verwenden. `UTF-8` ist eine gängige Textkodierung, die sowohl in
+    Excel als auch in R unterstützt wird. (Hier kann es noch Probleme
+    mit den verschiedenen Betriebssystemen geben. Für eine Vertiefte
+    Betrachtung bitte unter [Wikipedia])
+7.  **Speichern / CSV-Format**: Speichere die Daten am besten im `.csv`
+    (Comma-Separated Values) Format. CSV ist ein einfaches Textformat,
+    das von R problemlos eingelesen werden kann.
+8.  **Spaltennamen in der ersten Zeile**: Nochmal, denn es ist wirklich
+    wichtig: Wenn Du das CSV-Format verwendest, stelle sicher, dass die
+    erste Zeile die Spaltenüberschriften enthält. Dies erleichtert das
+    Einlesen der Daten in R.
+9.  **Speicherort**: Merke dir den den Speicherort der Datei, in der du
+    die Daten gespeichert hast. Du benötigen diesen Pfad, um die Daten
+    in R einzulesen. Noch besser: lege in deinem R-Projekt einen Ordner
+    namens "`data`" an. Dort kannst du alle Datensätze für das Projekt
+    speichern und dann ist der Pfad zu den daten immer
+    `"data\datensatz.csv"`
+10. **Datumsformate**: *Spoiler*: In jedem Fall / jedem Programm sind
+    Datumsangaben pain in the ass. Um es handhabbar zu halten achte
+    dabei auf Folgendes: Stelle sicher, dass Datumsangaben im richtigen
+    Format erfasst werden. In Excel könnten Datumsangaben je nach Region
+    unterschiedlich formatiert sein (z. B. `MM/DD/YYYY` oder
+    `DD.MM.YYYY`). Stelle sicher, dass Du das richtige Format
+    verwendest, das später in R interpretiert werden kann.
 
-1. **Sortierung**: Jede Spalte ist eine Variable, jede Zeile eine Beobachtungseinheit, jede Zelle ein Wert!
-2. **Datenformatierung**: Stelle sicher, dass die Daten korrekt formatiert sind. Dies bedeutet, dass numerische Werte als Zahlen zu formatieren (achte auch auf Dezimaltrennzeichen), Datumsangaben als Datumswerte usw. Bleibe dabei so grundlegend wie möglich und vermeide spezielle Zeichen oder Formatierungen, die zu Problemen führen könnten.
-3. **Spaltenüberschriften**: Verwende klare, kurze (am besten 1 Wort) und aussagekräftige Spaltenüberschriften. Diese werden als *Variable-Namen* verwendet, wenn die Daten in R eingelesen werden. Vermeide dabei Sonderzeichen, Leerzeichen und andere Zeichen, die in R nicht als gültige Variablennamen verwendet werden können. Wenn du die Datei als CSV (s.u.) speichern möchtest (du möchtest sie als CSV speichern!), achte darauf, dass die Spaltenüberschriften in der 1. Zeile sind und NUR in der ersten Zeile. 
-4. **Inhalte**: Auf das Datenblatt kommen *NUR* die Variablen. (Jede Spalte ist eine Variable, Jede Zeile eine Beobachtung/ Person!) Für die genauere Beschreibung der einzelnen Variablen (z.B. die konkreten Fragen etc.) nutze eine *eigene Datei*. 
-5. **Leere Zellen und fehlende Werte**: Beachte, wie du leere Zellen und fehlende Werte behandeln möchtest. In R werden fehlende Werte oft mit "`NA`" repräsentiert. Achte darauf, *konsistent* mit fehlenden Werten umzugehen, um spätere Analysen nicht zu beeinträchtigen.
-6. **Textkodierung**: Wenn die Daten Text enthalten (z.B. bei kategorischen Variablen), achte  darauf, die richtige Textkodierung zu verwenden. `UTF-8` ist eine gängige Textkodierung, die sowohl in Excel als auch in R unterstützt wird. (Hier kann es noch Probleme mit den verschiedenen Betriebssystemen geben. Für eine Vertiefte Betrachtung bitte unter [Wikipedia])
-7. **Speichern / CSV-Format**: Speichere die Daten am besten im `.csv` (Comma-Separated Values) Format. CSV ist ein einfaches Textformat, das von R problemlos eingelesen werden kann.
-8. **Spaltennamen in der ersten Zeile**: Nochmal, denn es ist wirklich wichtig: Wenn Du das CSV-Format verwendest, stelle sicher, dass die erste Zeile die Spaltenüberschriften enthält. Dies erleichtert das Einlesen der Daten in R.
-9. **Speicherort**: Merke dir den den Speicherort der Datei, in der du die Daten gespeichert hast. Du benötigen diesen Pfad, um die Daten in R einzulesen. Noch besser: lege in deinem R-Projekt einen Ordner namens "`data`" an. Dort kannst du alle Datensätze für das Projekt speichern und dann ist der Pfad zu den daten immer `"data\datensatz.csv"`
-10. **Datumsformate**: *Spoiler*: In jedem Fall / jedem Programm sind Datumsangaben pain in the ass. Um es handhabbar zu halten achte dabei auf Folgendes: Stelle sicher, dass Datumsangaben im richtigen Format erfasst werden. In Excel könnten Datumsangaben je nach Region unterschiedlich formatiert sein (z. B. `MM/DD/YYYY` oder `DD.MM.YYYY`). Stelle sicher, dass Du das richtige Format verwendest, das später in R interpretiert werden kann.
-
-![](images/venn.jpg){width=25% style="display:block; margin:auto;"}
-
+![](images/venn.jpg){width="25%" style="display:block; margin:auto;"}
 :::
+
 </details>
 
 #### 2. Datenimport
@@ -150,96 +238,157 @@ Damit R später gut mit den Daten umgehen kann und keine Fehler oder fehlenden W
 Als nächstes wird der (digitalisierte) Datensatz in R eingelesen.
 
 <details>
+
 <summary><a>▼ \* Übersicht über Datenformate </a></summary>
 
-Zuerst brauchen wir ein grundlegendes Verständnis davon, wie Daten für R aussehen:
+Zuerst brauchen wir ein grundlegendes Verständnis davon, wie Daten für R
+aussehen:
 
-![](images/csv.png){width=95% style="display:block; margin:auto;"}
-![](images/rda.png){width=95% style="display:block; margin:auto;"}
-![](images/sav.png){width=95% style="display:block; margin:auto;"}
+![](images/csv.png){width="95%" style="display:block; margin:auto;"}
+![](images/rda.png){width="95%" style="display:block; margin:auto;"}
+![](images/sav.png){width="95%" style="display:block; margin:auto;"}
 
-Oben seht ihr ein und denselben Datensatz in drei verschiedenen Formaten und wie er aussieht, wenn er nicht in R eingelesen ist.
+Oben seht ihr ein und denselben Datensatz in drei verschiedenen Formaten
+und wie er aussieht, wenn er nicht in R eingelesen ist.
 
-1. **CSV (Excel)**: Ergibt einigermaßen Sinn für unser menschliches Auge.
-2. **RDA (R)**: Viele nicht lesbare Zeichen. Ist binär und enthält spezifische Informationen für R.
-3. **SAV (SPSS)**: Hier wirds richtig crazy für uns: Das ist eine Mischung aus binär-Code und Metainformationen, die nur SPSS entschlüsseln kann.
+1.  **CSV (Excel)**: Ergibt einigermaßen Sinn für unser menschliches
+    Auge.
+2.  **RDA (R)**: Viele nicht lesbare Zeichen. Ist binär und enthält
+    spezifische Informationen für R.
+3.  **SAV (SPSS)**: Hier wirds richtig crazy für uns: Das ist eine
+    Mischung aus binär-Code und Metainformationen, die nur SPSS
+    entschlüsseln kann.
 
-Zum Glück müssen wir uns damit nicht weiter auseinander setzen. Es reicht, dass ihr das einmal gesehen habt.
+Zum Glück müssen wir uns damit nicht weiter auseinander setzen. Es
+reicht, dass ihr das einmal gesehen habt.
 
-Wie ein und der selbe Code je nach Sprache schon für uns Menschen unterschiedlich aussieht, geht es auch R. Um Daten in R einzulesen, brauchen wir verschiedene Befehle. Quasi um R zu sagen, welche Übersetzungsprozesse R machen muss, um die Daten lesen und für uns Menschen verständlich anzeigen zu können.
+Wie ein und der selbe Code je nach Sprache schon für uns Menschen
+unterschiedlich aussieht, geht es auch R. Um Daten in R einzulesen,
+brauchen wir verschiedene Befehle. Quasi um R zu sagen, welche
+Übersetzungsprozesse R machen muss, um die Daten lesen und für uns
+Menschen verständlich anzeigen zu können.
+
 </details>
+
 <details>
-<summary><a>▼ \ Und deren Import **(mit Aufgabe)**</a></summary>
 
-Alle Datensätze, die wir in dieser gesamten Veranstaltung verwenden, hat Lukas netterweise direkt ins Paket eingebunden, das heißt, ihr müsst für die Tutorials und Abgaben gar nichts tun, da die Daten bereits eingelesen sind. Um R eine Orientierung zu geben, welchen Datensatz ihr verwenden wollt tippt folgendes: `rtutorials::datensatz`\
-Sobald ihr das warme Nest dieses Tutoriums verlasst, werdet ihr allerdings mit anderen Datenformaten konfrontiert sein. Desewgen wollen wir euch die drei wichtigsten Befehle mit auf den Weg geben:
+<summary><a>▼  Und deren Import **(mit Aufgabe)**</a></summary>
 
-1. CSV: `daten <- read.csv("data/datensatz.csv")`
-2. RDA: `daten <- load("data/datensatz.rda")`
-3. SAV: `daten <- haven::read_sav("data/datensatz.csv")`
+Alle Datensätze, die wir in dieser gesamten Veranstaltung verwenden, hat
+Lukas netterweise direkt ins Paket eingebunden, das heißt, ihr müsst für
+die Tutorials und Abgaben gar nichts tun, da die Daten bereits
+eingelesen sind. Um R eine Orientierung zu geben, welchen Datensatz ihr
+verwenden wollt tippt folgendes: `rtutorials::datensatz`\
+Sobald ihr das warme Nest dieses Tutoriums verlasst, werdet ihr
+allerdings mit anderen Datenformaten konfrontiert sein. Desewgen wollen
+wir euch die drei wichtigsten Befehle mit auf den Weg geben:
+
+1.  CSV: `daten <- read.csv("data/datensatz.csv")`
+2.  RDA: `daten <- load("data/datensatz.rda")`
+3.  SAV: `daten <- haven::read_sav("data/datensatz.csv")`
 
 ::: aufgaberstudio
 **Aufgabe:**\
-Lies den Datensatz `publictr.rda` aus dem Ordner `data` in dein Skript zu dieser Veranstaltung ein.\
-(Du könntest auch einfach `rtutorials::publictr` nutzen. Für Übungszwecke gehen wir aber hier den längeren Weg.)
+Lies den Datensatz `publictr.rda` aus dem Ordner `data` in dein Skript
+zu dieser Veranstaltung ein.\
+(Du könntest auch einfach `rtutorials::publictr` nutzen. Für
+Übungszwecke gehen wir aber hier den längeren Weg.)
 :::
+
 </details>
 
-
 <details>
+
 <summary><a>▼ \* Was passiert in dem Code? </a></summary>
 
--   `data`: Zuerst erstellen wir ein Objekt, dass wir in diesem Fall `data` nennen. Bis jetzt ist es wie eine leere Box.
--   `<-`: Dann sagen wir R, das es was in die Box tun soll. Das ist eine sehr einfache Funktion.
+-   `data`: Zuerst erstellen wir ein Objekt, dass wir in diesem Fall
+    `data` nennen. Bis jetzt ist es wie eine leere Box.
+-   `<-`: Dann sagen wir R, das es was in die Box tun soll. Das ist eine
+    sehr einfache Funktion.
 -   `load()`: Auch das ist eine Funktion, es läd einen `rda` Datensatz.
-- `"data/publictr.rda"`: Der Datensatz (`"publictr.rda"`) und wo er liegt (`"data/"`)
+-   `"data/publictr.rda"`: Der Datensatz (`"publictr.rda"`) und wo er
+    liegt (`"data/"`)
 
-Also nochmal in langsam und zum mitschreiben. Wir sagen zu R: Gehe bitte diesen Weg (`"data/"`) und nimm diesen spezifischen, dort gespeicherten Datensatz (`"publictr.rda"`) und lade ihn ein (`load()`). Dann speichere ihn im Arbeitsspeicher (`<-`) unter diesem Namen (`data`).
+Also nochmal in langsam und zum mitschreiben. Wir sagen zu R: Gehe bitte
+diesen Weg (`"data/"`) und nimm diesen spezifischen, dort gespeicherten
+Datensatz (`"publictr.rda"`) und lade ihn ein (`load()`). Dann speichere
+ihn im Arbeitsspeicher (`<-`) unter diesem Namen (`data`).
 
 </details>
 
 <details>
+
 <summary><a>▼ \* Bennenung von Datensätzen </a></summary>
 
 Im Grunde ist es echt egal, wie ihr eure Datensätze in R nennt.
 
-Es gibt klassischerweise zwei Heransgehensweisen: sehr allgemein `data` oder sehr spezifisch den Namen, also `publictr`.
+Es gibt klassischerweise zwei Heransgehensweisen: sehr allgemein `data`
+oder sehr spezifisch den Namen, also `publictr`.
 
-**Verwendung von "data":**
-- Vorteile:
-  - *Allgemeiner Begriff:* Der Name "data" ist ein allgemeiner Begriff, der leicht zu merken (und tippen) ist.
-  - *Einfachheit:* Die Verwendung von "data" kann den Code einfach halten, da der Name kurz und prägnant ist.
-  - *Wiederverwendbarkeit:* Da "data" so allgemein ist, könnte der Name für verschiedene Arten von Datensätzen verwendet werden.
+**Verwendung von "data":** - Vorteile: - *Allgemeiner Begriff:* Der Name
+"data" ist ein allgemeiner Begriff, der leicht zu merken (und tippen)
+ist. - *Einfachheit:* Die Verwendung von "data" kann den Code einfach
+halten, da der Name kurz und prägnant ist. - *Wiederverwendbarkeit:* Da
+"data" so allgemein ist, könnte der Name für verschiedene Arten von
+Datensätzen verwendet werden.
 
-- Nachteile:
-  - *Verwechslungsgefahr:* Da "data" ein häufig verwendetes Wort ist, könnten Verwechslungen oder Konflikte mit anderen Variablennamen und Argumenten in Funktionen auftreten.
-  - *Mangelnde Beschreibung:* Der Name "data" gibt keine Hinweise auf den Inhalt oder Zweck des Datensatzes, was zu Verwirrung führen könnte.
-  - *Kollisionen:* Wenn mehrere Datensätze "data" heißen, könnte es zu unerwarteten Konflikten führen.
+-   Nachteile:
+    -   *Verwechslungsgefahr:* Da "data" ein häufig verwendetes Wort
+        ist, könnten Verwechslungen oder Konflikte mit anderen
+        Variablennamen und Argumenten in Funktionen auftreten.
+    -   *Mangelnde Beschreibung:* Der Name "data" gibt keine Hinweise
+        auf den Inhalt oder Zweck des Datensatzes, was zu Verwirrung
+        führen könnte.
+    -   *Kollisionen:* Wenn mehrere Datensätze "data" heißen, könnte es
+        zu unerwarteten Konflikten führen.
 
-**Verwendung von "publictr":**
-- Vorteile:
-  - *Spezifizität:* Der Name "publictr" ist spezifisch und weist auf den Inhalt des Datensatzes hin.
-  - *Vermeidung von Verwechslungen:* Ein spezifischer Name wie "publictr" kann Verwechslungen mit anderen Variablennamen reduzieren.
-  - *Kontextbetonung:* Der Name kann den Fokus auf den Kontext des Datensatzes legen.
+**Verwendung von "publictr":** - Vorteile: - *Spezifizität:* Der Name
+"publictr" ist spezifisch und weist auf den Inhalt des Datensatzes
+hin. - *Vermeidung von Verwechslungen:* Ein spezifischer Name wie
+"publictr" kann Verwechslungen mit anderen Variablennamen reduzieren. -
+*Kontextbetonung:* Der Name kann den Fokus auf den Kontext des
+Datensatzes legen.
 
-- Nachteile:
-  - *Mögliche Überkomplexität:* Sehr spezifische Namen könnten zu lang oder komplex werden und das Schreiben von Code erschweren.
-  - *Mögliche Vergessenheit*: Ein komplexer Name wie "publictr" könnte schwer zu merken sein, insbesondere wenn er selten verwendet wird.
-  - *Eingeschränkte Wiederverwendbarkeit:* Ein sehr spezifischer Name macht das kopieren von Code fürs nächste Projekt anstrengender.
+-   Nachteile:
+    -   *Mögliche Überkomplexität:* Sehr spezifische Namen könnten zu
+        lang oder komplex werden und das Schreiben von Code erschweren.
+    -   *Mögliche Vergessenheit*: Ein komplexer Name wie "publictr"
+        könnte schwer zu merken sein, insbesondere wenn er selten
+        verwendet wird.
+    -   *Eingeschränkte Wiederverwendbarkeit:* Ein sehr spezifischer
+        Name macht das kopieren von Code fürs nächste Projekt
+        anstrengender.
+
 </details>
-
 
 #### 3. Datenaufbereitung / Cleaning
 
-Jetzt kommt der Teil, der meistens lange dauert, in der Lehre häufig übersprungen wird und ganz objektiv am wenigsten Spaß macht: Die Daten müssen aufbereitet werden. Und gleichzeitig: wer sich hier Zeit lässt und sauber arbeitet hat später keine oder zumindest kaum Probleme bei der Analyse. Wenn dieser wichtige Schritt abgeschlossen ist, kann der Spaß losgehen.
+Jetzt kommt der Teil, der meistens lange dauert, in der Lehre häufig
+übersprungen wird und ganz objektiv am wenigsten Spaß macht: Die Daten
+müssen aufbereitet werden. Und gleichzeitig: wer sich hier Zeit lässt
+und sauber arbeitet hat später keine oder zumindest kaum Probleme bei
+der Analyse. Wenn dieser wichtige Schritt abgeschlossen ist, kann der
+Spaß losgehen.
 
-Um einen Eindruck zu bekommen, wie sowas aussehen kann, kannst du dir das [Skript](https://github.com/statistik-lehre/rtutorials/blob/main/data-raw/publictr.R) ansehen, in dem der `publictr` Datensatz aufgeräumt wird.
+Um einen Eindruck zu bekommen, wie sowas aussehen kann, kannst du dir
+das
+[Skript](https://github.com/statistik-lehre/rtutorials/blob/main/data-raw/publictr.R)
+ansehen, in dem der `publictr` Datensatz aufgeräumt wird.
 
 <details>
-<summary><a>▼ \ Cleaning für dieses Tutorial </a></summary>
-Für das Beispiel in diesem Tutorial brauchen wir auch ein bisschen cleaning. Das machen wir jetzt zusammen. Für mehr und ausführlicher schaut gerne im folgenden Tutorial vorbei. Hier machen wir der einfachehit halber nur das, was wir auch wirklich brauchen.
 
-Wenn wir uns die Daten anschauen wird deutlich, dass die Erhebungseinheiten sowohl die Einzelnen Verkehrsmittel beinhaltet als auch deren Zusammenfassung. Das macht Analysen witzlos, da jetzt jede Einheit doppelt vorkommt. Wir kreieren also einen neuen Datensatz, in dem die Zeilen rausschmeiß, welche die anderen Einträge zusammenfassen.
+<summary><a>▼  Cleaning für dieses Tutorial </a></summary>
+
+Für das Beispiel in diesem Tutorial brauchen wir auch ein bisschen
+cleaning. Das machen wir jetzt zusammen. Für mehr und ausführlicher
+schaut gerne im folgenden Tutorial vorbei. Hier machen wir der
+einfachehit halber nur das, was wir auch wirklich brauchen.
+
+Wenn wir uns die Daten anschauen wird deutlich, dass die
+Erhebungseinheiten sowohl die Einzelnen Verkehrsmittel beinhaltet als
+auch deren Zusammenfassung. Das macht Analysen witzlos, da jetzt jede
+Einheit doppelt vorkommt. Wir kreieren also einen neuen Datensatz, in
+dem die Zeilen rausschmeiß, welche die anderen Einträge zusammenfassen.
 
 ```{r cleaning, echo = T, context = "setup"}
 # Hier erstellen wir einen Index, in dem die position aller Beobachtungseinheiten
@@ -251,83 +400,134 @@ index_to_keep <- which(!grepl("insgesamt", publictr$Typ))
 filtered_data <- publictr[index_to_keep, ]
 ```
 
-<\details>
-
+\<\details\>
 
 ### IV) Orientierung in den Daten
 
-Jetzt, wo wir alle unsere Daten in R eingelesen und aufgeräumt haben, wollen wir uns einen Eindruck verschaffen: Was haben wir da eigentlich erhoben?
-
+Jetzt, wo wir alle unsere Daten in R eingelesen und aufgeräumt haben,
+wollen wir uns einen Eindruck verschaffen: Was haben wir da eigentlich
+erhoben?
 
 #### 1. Numerisch
 
 ##### a) Kompletter Datensatz
 
 <details>
-<summary><a>▼ \ Ein paar sehr nützliche Befehle, um sich einen Überblick über den Datensatz als ganzes zu verschaffen **(mit Aufgabe)** </a></summary>
 
--   `data`: Zeigt den Datensatz in der Konsole. Je mehr Variablen und Beobachtungseinheiten dieser Datensatz hat, desto unübersichtlicher wird die Geschichte. Zudem haben wir das gleiche Problem, wie im reinen R: sobald wir was neues rechnen rutschen die Infos für uns nach oben und wir scrollen uns dumm und dusselig. Viel praktischer wäre doch:
--   `View(data)`: Öffnet den kompletten Datensatz als klassische Tabelle in einem neuen Tab im Skript-Fenster. Das eignet sich am besten um ein gutes Gespür für den Datensatz zu bekommen und immer wieder darauf schauen zu können. Dann gibt es noch:
+<summary><a>▼  Ein paar sehr nützliche Befehle, um sich einen Überblick
+über den Datensatz als ganzes zu verschaffen **(mit Aufgabe)**
+</a></summary>
+
+-   `data`: Zeigt den Datensatz in der Konsole. Je mehr Variablen und
+    Beobachtungseinheiten dieser Datensatz hat, desto unübersichtlicher
+    wird die Geschichte. Zudem haben wir das gleiche Problem, wie im
+    reinen R: sobald wir was neues rechnen rutschen die Infos für uns
+    nach oben und wir scrollen uns dumm und dusselig. Viel praktischer
+    wäre doch:
+-   `View(data)`: Öffnet den kompletten Datensatz als klassische Tabelle
+    in einem neuen Tab im Skript-Fenster. Das eignet sich am besten um
+    ein gutes Gespür für den Datensatz zu bekommen und immer wieder
+    darauf schauen zu können. Dann gibt es noch:
 -   `head(data)`: Zeigt die ersten paar Zeilen eines Datensatzes
 -   `car::some(data)`: Zeigt ein paar zufällige Zeilen des Datensatzes.
 -   `names(data)`: Variablennamen
--   `ncol(data)`: Gibt die Anzahl der Spalten des Datensatzes an (= Anzahl der Variablen)
--   `nrow(data)`: Gibt die Anzahl der Zeilen des Datensatzes an (= Anzahl der Beobachtungseinheiten). Diese beiden eignen sich auch gut, um heraus zu finden, ob alles mit dem einlesen so geklappt hat, wie gewünscht.
+-   `ncol(data)`: Gibt die Anzahl der Spalten des Datensatzes an (=
+    Anzahl der Variablen)
+-   `nrow(data)`: Gibt die Anzahl der Zeilen des Datensatzes an (=
+    Anzahl der Beobachtungseinheiten). Diese beiden eignen sich auch
+    gut, um heraus zu finden, ob alles mit dem einlesen so geklappt hat,
+    wie gewünscht.
 
 ::: aufgaberstudio
 **Aufgabe:**
 
-1.    Öffne `publictr` in einem neuen Fenster und mach dich mit der Tabelle vertraut.
-2.    Wie heißen die Variablen?
-3.    Finde heraus, wie viele Zeilen und Spalten `publictr` hat.
+1.  Öffne `publictr` in einem neuen Fenster und mach dich mit der
+    Tabelle vertraut.
+2.  Wie heißen die Variablen?
+3.  Finde heraus, wie viele Zeilen und Spalten `publictr` hat.
 :::
-<\details>
+
+\<\details\>
 
 ##### b) Einzelne Variablen
 
 <details>
-<summary><a>▼ \ Aber auch inhaltlich interessieren uns die einzelnen Variablen. **(mit Aufgabe)** </a></summary>
+
+<summary><a>▼  Aber auch inhaltlich interessieren uns die einzelnen
+Variablen. **(mit Aufgabe)** </a></summary>
 
 ::: gelb
 **Achtung**
 
 **1.**\
-Die Funktionen, welche sich mit NAs auseinandersetzen werden z.T. auch schon für das cleaning gebraucht. Und viele der Funktionen lernt ihr in ihren Einzelheiten auch in anderen Tutorials kennen, deswegen gehen wir hier nicht ins Detail drauf ein. Und sonst gibt es ja auch immer die Möglichkeit das Manual mittels `?funktion()` aufzurufen.
+Die Funktionen, welche sich mit NAs auseinandersetzen werden z.T. auch
+schon für das cleaning gebraucht. Und viele der Funktionen lernt ihr in
+ihren Einzelheiten auch in anderen Tutorials kennen, deswegen gehen wir
+hier nicht ins Detail drauf ein. Und sonst gibt es ja auch immer die
+Möglichkeit das Manual mittels `?funktion()` aufzurufen.
 
 **2.**\
-Viele der unten aufgeführten funktionen funktionieren nur, wenn keine Daten fehlen. Wenn ihr euch bereits mit den Missings auseinandergesetzt habt oder nur einen ersten Eindruck bekommen wollt, könnt ihr in vielen der jeweiligen funktionen das argument `na.rm = T` setzen (na = NA/ not available; rm = remove; T = TRUE/ ja, genau das will ich). Das könnte dann so aussehen: `mean(data$variable, na.rm = T)`.
+Viele der unten aufgeführten funktionen funktionieren nur, wenn keine
+Daten fehlen. Wenn ihr euch bereits mit den Missings auseinandergesetzt
+habt oder nur einen ersten Eindruck bekommen wollt, könnt ihr in vielen
+der jeweiligen funktionen das argument `na.rm = T` setzen (na = NA/ not
+available; rm = remove; T = TRUE/ ja, genau das will ich). Das könnte
+dann so aussehen: `mean(data$variable, na.rm = T)`.
 :::
 
--   `$`: Eine Variable in einem Datensatz wird mit einem `$` angesprochen. Das sieht dann so aus: `data$variable`
--   `sum(is.na(data$variable))`: Wie viele Werte fehlen in dieser Variable?
+-   `$`: Eine Variable in einem Datensatz wird mit einem `$`
+    angesprochen. Das sieht dann so aus: `data$variable`
+-   `sum(is.na(data$variable))`: Wie viele Werte fehlen in dieser
+    Variable?
 -   `sum(is.na(data))`: Wie viele Werte fehlen im Datensatz insgesamt?
--   `mice::md.pattern(data)`: Eine ganz zauberhafte Funktion, die etwas über die Struktur von fehlenden Daten aussagt. Wenn wir um die Systematik der Wissen gibt es unterschieldich komplexe Herangehensweisen. Wir brauchen erstmal nur die leichteste: Schau in deiner Tabelle (`View()`), ob du das Muster erkennst.
+-   `mice::md.pattern(data)`: Eine ganz zauberhafte Funktion, die etwas
+    über die Struktur von fehlenden Daten aussagt. Wenn wir um die
+    Systematik der Wissen gibt es unterschieldich komplexe
+    Herangehensweisen. Wir brauchen erstmal nur die leichteste: Schau in
+    deiner Tabelle (`View()`), ob du das Muster erkennst.
 -   `mean(data$variable)`: Gibt den Mittelwert der Variable aus.
 -   `sd(data$variable)`: Standardabweichung
 -   `range(data$variable)`: Spannweite
 -   `min(data$variable)`: Minimaler eingetragener Wert
 -   `max(data$variable)`: Maximaler eingetragener Wert
--   `table(data$variable)`: Alle Werte des Vektors inklusive deren absolute Häufigkeit. Eignet sich besonders für nominal und ordinal (inkl. [Likert](https://de.wikipedia.org/wiki/Likert-Skala) skalierten Daten)
--   `psych::describe(data)`: Wendet die meisten der og. Funktionen und noch mehr für den kompletten Datensatz an. Feine Funktion, um eine schnelle Übersicht zu erhalten. (Variablen, die mit einem Sternchen versehen sind, interpretiert R als nominal.)
--   `summary(data)`: Ähnlich wie `describe()`, gibt zusätzlich noch die NAs mit an und dafür ein paar andere Verteilungsparameter (Schiefe und Wölbung) nicht.
--   `class(data$variable)`: Gibt die Klasse oder den Datentyp des R-Objekts an. 
+-   `table(data$variable)`: Alle Werte des Vektors inklusive deren
+    absolute Häufigkeit. Eignet sich besonders für nominal und ordinal
+    (inkl. [Likert](https://de.wikipedia.org/wiki/Likert-Skala)
+    skalierten Daten)
+-   `psych::describe(data)`: Wendet die meisten der og. Funktionen und
+    noch mehr für den kompletten Datensatz an. Feine Funktion, um eine
+    schnelle Übersicht zu erhalten. (Variablen, die mit einem Sternchen
+    versehen sind, interpretiert R als nominal.)
+-   `summary(data)`: Ähnlich wie `describe()`, gibt zusätzlich noch die
+    NAs mit an und dafür ein paar andere Verteilungsparameter (Schiefe
+    und Wölbung) nicht.
+-   `class(data$variable)`: Gibt die Klasse oder den Datentyp des
+    R-Objekts an.
 -   `typeof(data$variable)`: Gibt den internen Datentyp des Objekts an.
-    -   Unterscheidung: `class()` sagt etwas darüber aus, wie R das Objekt speichert und liest. `typeof()` sagt etwas darüber, wie der Rechner das Objekt speichert und liest, also auf einer grundlegenderen Ebene. Darum zu wissen kann essentiell sein, da es manchmal der Grund ist, warum Funktionen nicht funktionieren. (Für alle, die es gerne ausführlicher und gleichzeitig noch verständlich lesen wollen gehts [hier](https://r-intro.tadaa-data.de/datentypen.html) entlang)
+    -   Unterscheidung: `class()` sagt etwas darüber aus, wie R das
+        Objekt speichert und liest. `typeof()` sagt etwas darüber, wie
+        der Rechner das Objekt speichert und liest, also auf einer
+        grundlegenderen Ebene. Darum zu wissen kann essentiell sein, da
+        es manchmal der Grund ist, warum Funktionen nicht funktionieren.
+        (Für alle, die es gerne ausführlicher und gleichzeitig noch
+        verständlich lesen wollen gehts
+        [hier](https://r-intro.tadaa-data.de/datentypen.html) entlang)
 
 ::: aufgabe
 **Aufgabe**\
-Schau dir den oben gesäuberten Datensatz `filtered_data` an und beantworte folgende Fragen:
+Schau dir den oben gesäuberten Datensatz `filtered_data` an und
+beantworte folgende Fragen:
 
-1.    Wie viele Werte fehlen in dem Datensatz insgesamt?
-2.    Haben die fehlenden Werte ein Muster?
-3.    Wenn ja, welches? Wie lässt sich das erklären?
-4.    Wie viele Personen wurden im Durchschnitt transportiert?
-5.    Mit welcher Standardabweichung?
-6.    Was ist die minimale Anzahl an Personenkilometern?
-7.    Was die maximale?
-8.    Welche verschiedenen Typen von Transportmitteln wurden untersucht?
-9.    In welchem Zeitraum wurden die Daten erhoben?
-10.    Welche Variablen sind für R nominal, welche numerisch?
+1.  Wie viele Werte fehlen in dem Datensatz insgesamt?
+2.  Haben die fehlenden Werte ein Muster?
+3.  Wenn ja, welches? Wie lässt sich das erklären?
+4.  Wie viele Personen wurden im Durchschnitt transportiert?
+5.  Mit welcher Standardabweichung?
+6.  Was ist die minimale Anzahl an Personenkilometern?
+7.  Was die maximale?
+8.  Welche verschiedenen Typen von Transportmitteln wurden untersucht?
+9.  In welchem Zeitraum wurden die Daten erhoben?
+10. Welche Variablen sind für R nominal, welche numerisch?
 :::
 
 ```{r IV1-solution}
@@ -354,20 +554,18 @@ table(filtered_data$Jahr)
 psych::describe(filtered_data)
 ```
 
-
 ```{r IV1, exercise = TRUE}
 
 ```
 
-<\details>
-
-
+\<\details\>
 
 #### 1. Grafisch (quick & dirty)
 
-Die Breitbandverbindung in unser Gehirn sind und bleiben unsere Augen. Deswegen ist an diesem Punkt des Prozesses eine grafische Auseinandersetzung mit den Daten zwar nicht notwendig, aber sehr hilfreich.
-
-
+Die Breitbandverbindung in unser Gehirn sind und bleiben unsere Augen.
+Deswegen ist an diesem Punkt des Prozesses eine grafische
+Auseinandersetzung mit den Daten zwar nicht notwendig, aber sehr
+hilfreich.
 
 #### 2. Numerisch (bisschen ausgiebiger)
 
@@ -375,13 +573,10 @@ Die Breitbandverbindung in unser Gehirn sind und bleiben unsere Augen. Deswegen 
 
 ### V) Auswertung / Statistik
 
-###) VI) Schöne Visualisierungen
+\###) VI) Schöne Visualisierungen
 
-###) VII) Report
-
+\###) VII) Report
 
 ## Abschlussquiz
 
 ## Learnings
-
-
