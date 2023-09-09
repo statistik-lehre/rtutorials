@@ -1,5 +1,5 @@
 ---
-title: "Feldversuch"
+title: "Arbeit mit Tabellen"
 output:
   learnr::tutorial:
     language: de
@@ -21,9 +21,28 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Von der Datenerhebung zur Analyse
 
-Es klingt banal, aber wenn die Daten aufgeräumt sind, ist bereits die größte Hürde geschafft. Einen Großteil der Zeit von Datenanalyse verbringen Forschende damit, Daten in die richtige Form zu bringen. Die Auswertung selbst geht dann oft sehr schnell.
+Es klingt banal, aber wenn die Daten aufgeräumt sind, ist bereits die größte Hürde geschafft. Einen Großteil der Zeit von Datenanalyse verbringen Forschende damit, Daten in die richtige Form zu bringen. Die Auswertung selbst geht dann oft vergleichsweise schnell.
 
-Deswegen wird Ihnen hier gezeigt, was die optimale Form von Daten für die Nutzung in R ist.
+Den ganzen Aufräumprozess können Sie erleichtern, wenn Sie die Daten von Anfang an so organisieren, dass R gut damit umgehen kann. 
+
+Aber was gibt es eigentlich für Formen in denen Daten sein können?
+
+## 
+
+Gleiche Daten, aber anders organisiert:
+
+```{r}
+df <- trees |> tibble::rowid_to_column(var = "id")
+library(dplyr)
+library(tidyr)
+df |> pivot_longer(cols = !id, names_to = "variable")
+
+df |> arrange(Height) |> pivot_wider(id_cols = "id", names_from = "Height",
+                                     names_prefix = "Height=", values_from = "Volume")
+```
+
+
+## 
 
 ## Datenerhebung
 

@@ -20,6 +20,8 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Inhalt 
 
+Dieses Tutorial ist zum allergrößten Teil eine Übersetzung + Adaption des Buchkapitels [Tidy Data](https://r4ds.had.co.nz/tidy-data.html) aus Hadley Wickhams "R for Data Science". 
+
 ## Lernziele
 
 ## Abschlussquiz
