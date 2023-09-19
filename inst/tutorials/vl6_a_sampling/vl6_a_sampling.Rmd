@@ -4,7 +4,7 @@ output:
   learnr::tutorial:
     language: de
     css: css/boxes.css
-    fig_caption: no
+    fig_caption: yes
     df_print: default
 runtime: shiny_prerendered
 bibliography: ref.json
