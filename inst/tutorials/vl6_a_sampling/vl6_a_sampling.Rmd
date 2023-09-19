@@ -1,0 +1,204 @@
+---
+title: "Inferenzstatistik"
+output:
+  learnr::tutorial:
+    language: de
+    css: css/boxes.css
+    fig_caption: no
+    df_print: default
+runtime: shiny_prerendered
+bibliography: ref.json
+link-citations: TRUE
+description: statistische Hypothesen testen
+resource_files:
+- css/boxes.css
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(tidyverse)
+knitr::opts_chunk$set(echo = FALSE)
+library(ggplot2)
+library(moderndive)
+```
+
+## Lernziele
+
+Während wir bisher vor allem deskriptive Statistiken ausgewertet haben, also unsere Daten beschrieben haben, beschäftigen wir uns hier mit der Frage, was wir aus den Daten für Schlüsse ziehen können (Inferenzen bilden -\> Inferenzstatistik).
+
+Dabei werden viele neue Konzepte und Begriffe fallen. Einige davon sind:
+
+<input type="checkbox" unchecked> Stichprobenvariation (*sampling variation*)</input>
+
+<input type="checkbox" unchecked> Stichprobenkennwerteverteilung (*samling distribution*) </input>
+
+<input type="checkbox" unchecked> zentraler Grenzwertsatz (*central limit theorem*)</input>
+
+<input type="checkbox" unchecked> Punktschätzungen </input>
+
+<input type="checkbox" unchecked> Intervallschätzungen </input>
+
+<input type="checkbox" unchecked> $t$-Verteilung </input>
+
+<input type="checkbox" unchecked> $t$-Test </input>
+
+## Stichprobenkennwerteverteilung
+
+Der fundamentale Baustein für das Verständnis von Inferenzstatistik ist zu verstehen, was eine Stichproben----Kennwerte----Verteilung ist.
+
+Dazu gibt es ein tolles Beispiel im frei verfügbaren Online-Lehrbuch [*Modern Dive*](https://moderndive.com/7-sampling.html), was wir hier übernehmen [@ismay2022]. Der folgende Absatz übersetzt Teile des Kapitels 7.
+
+In diesem Gefäß ist eine unbekannte Zahl roter und weißer gleichgroßer Kugeln. Es wurde gut durchmischt. Wir fragen uns jetzt: „Welcher Anteil der Kugeln ist rot?\"
+
+![EIn Gefäß mit roten und weißen Kugeln](images/bowl.jpg){width=100%}
+
+Eine Möglichkeit, den Anteil roter Kugeln zu bestimmen, wäre eine vollständige Zählung aller Kugeln. Dann könnte die Zahl der roten Kugeln durch die Gesamtanzahl geteilt werden. In der Schüssel sind aber mit Absicht so viele Kugeln, dass das ein langer und ermüdender Prozess wäre.
+
+### eine Stichprobe ziehen
+
+Anstelle der vollständigen Zählung können wir eine Schaufel mit kugelförmigen Aussparungen verwenden, um 50 zufällige Bälle aus dem Gefäß zu ziehen.
+
+![Eine Schaufel nutzen](images/shovel1.jpg){width=100%}
+
+![50 Kugeln wurden zufällig gezogen](images/shovel1_close.jpg){width=100%}
+
+17 Kugeln von 50 sind rot - damit beträgt der Anteil
+$$\frac{17}{50}=0.34=34 \%$$
+
+Wir können den Anteil der roten Bälle in dieser Schaufel als eine Schätzung für die gesamte Schüssel verwenden. Während es zwar nicht so exakt ist wie alle Kugeln aus der gesamten Schüssel zu zählen, hat unsere Schätzung von 34% sehr viel weniger Zeit und Energie gekostet.
+
+Nun denn, lasst uns sagen, wir würden diesen Prozess jetzt noch einmal von vorne wiederholen. In anderen Worten, wir tun die 50 Kugeln zurück in die Schüssel und beginnen von vorn. Würden wir wieder genau 17 rote Kugeln ziehen? In anderen Worten, wäre unser Schätzer für den Anteil roter Kugeln im Gefäß wieder 34%? Vielleicht?
+
+Was, wenn wir die diese Aktivität mehrmals wiederholen würden? Würden wir jedes Mal 17 rote Kugeln erhalten, aka einen Anteil von 34% für die gesamte Schüssel schätzen? Sicherlich nicht. Lasst uns diese Übung nun mehrmals wiederholen mit der Hilfe von 33 Gruppen von Freunden, um zu verstehen wie die Werte sich durch Wiederholung verändern. 
+
+### 33 mal eine Stichprobe ziehen
+
+Jede der 33 Gruppen wird das Folgende tun:
+
+- die Schaufel nutzen, um 50 Kugeln zu ziehen
+- Anzahl der roten Kugeln zählen und den Anteil ausrechnen
+- Die Kugeln zurücklegen in die Schüssel.
+- Den Inhalt etwas mischen, um nicht die Resultate der nächsten Gruppe zu beeinflussen. 
+
+![Stichprobenziehung 33 mal wiederholen](images/33shovels.png){width=100%}
+
+Jede der 33 Gruppen trägt dann den von ihnen bestimmten Anteil roter Kugeln in ihrer Stichprobe in einem handgezeichneten Histogramm ein:
+
+![Ein Histogramm der verschiedenen Anteile bauen](images/hist1.jpg){width=100%}
+
+![Die ersten 10 handgemalten Einträge](images/hist2.jpg){width=100%}
+
+Schauen Sie sich das Histogramm mit den ersten 10 handgezeichneten Einträgen an:
+
+- Am unteren Ende hat eine Gruppe in ihren 50 Kugelneinen Anteil zwischen 20-25% rote gefunden
+
+- Am oberen Ende wurde in einer Stichprobe mit 50 Kugeln ein Anteil von 45-50% roter Kugeln gefunden.
+
+- Allerdings war der am häufigsten auftretende Anteil zwischen 30-35%, ganzz in der Mitte der Verteilung.
+
+- Die Form der Verteilung kann man als grob "glockenförmig" beschreiben (mit etwas gutem Willen)
+
+Lasst uns jetzt dieses selbe Histogramm in R herstellen mit den Daten-Visualisierungsskills die ihr im letzten Tutorial erlangt habt! Wir haben unsere 33 Gruppen im `tactile_prop_red`-Dataframe gespeichert, der im `moderndive`-Paket mitgeliefert wird. 
+
+Führt den Codeblock aus, um die ersten 10 von 33 Zeilen anzeigen zu lassen:
+
+```{r tibble, exercise = TRUE}
+moderndive::tactile_prop_red
+```
+
+Das hier ist zu ist zu sehen: Für jede Gruppe haben wir deren Namen, die Anzahl roter Kugeln, und den zugehörigen Anteil aus 50 Kugeln (`prop_red`). Außerdem haben wir die Variable `replicate`, welche die Zeilen nummeriert. Wir haben diesen Namen ausgesucht, weil jede Zeile als eine Instanz einer replizierten (wiederholten) Aktivität besteht. 
+
+::: aufgabe
+Lasst uns die Verteilung der 33 Proportionen roter Kugeln visualisieren mithilfe von `ggplot` und `geom_histogram` mit `binwidth = 0.05`!
+
+Für euren Komfort ist das Paket `ggplot2` bereits geladen in diesem Tutorial. 
+
+:::
+
+```{r hist, exercise=TRUE}
+
+```
+
+```{r hist-solution}
+ggplot(moderndive::tactile_prop_red, aes(x = prop_red)) +
+  geom_histogram(binwidth = 0.05, boundary = 0.4, color = "white", fill = "darkred") +
+  labs(x = "Anteil roter Kugeln", title = "Verteilung von 33 Stichproben mit 50 Kugeln")
+
+```
+
+### Was haben wir gerade gemacht?
+
+Sie haben gerade eine Stichproben-Kennwerte-Verteilung hergestellt!
+Das ist nichts anderes als die **Verteilung** eines **Kennwerts** über viele **Stichproben** hinweg.
+
+In diesem Fall ist der Kennwert der Anteil roter Kugeln. Für jede Zufalls-Stichprobe wurde dieser Kennwert berechnet. Im Histogramm wurde dann die Verteilung des Kennwerts visualisiert. Dort sehen wir, wie der Anteil roter Kugeln über verschiedene Stichproben hinweg schwankt. Diese Schwankung ist als **Stichprobenvariation** bekannt. 
+
+Es mag simpel erscheinen, aber die Idee dass zufällig gezogene Stichproben einer zufälligen Schwankung unterliegen ist fundamental! Merken. 
+
+Damit haben Sie die ersten zwei Schlüsselbegriffe gelernt!
+
+1. **Stichprobenvariation** (*sampling variation*)
+2. **Stichprobenkennwerteverteilung** (*sampling distribution*)
+
+Im nächsten Abschnitt werden wir die soeben durchgeführte praktische Probenahme mit einem Computer simulieren! Dadurch können wir nicht nur das Stichprobenziehen viel öfter als 33 Mal wiederholen, sondern auch Schaufeln mit einer anderen Anzahl von Löchern als nur 50 verwenden.
+
+```{r learning_check1}
+quiz(
+  caption = "Learning Check",
+  
+  learnr::question_text(
+    text = "Warum war es wichtig, die Kugeln zu mischen, bevor die Stichprobe gezogen wurde?", 
+    placeholder = "Musterlösung erscheint beim Einreichen der Antwort...",
+    answer_fn(function(x) correct()),
+    correct = "Damit sichergestellt war, dass die Stichprobe zufällig ist."
+    ), 
+  question_text(
+    text = "Warum haben nicht alle 33 Gruppen die selbe Proportion an roten Kugeln gezogen?",
+    placeholder = "Musterlösung erscheint beim Einreichen der Antwort...",
+    answer_fn(function(x) correct()),
+    correct = "Wegen Stichprobenvariation! Da die Stichproben zufällig sind, gibt es zufällige Abweichungen."
+  )
+)
+```
+
+## Virtuelles Stichprobenziehen
+
+Im vorherigen Abschnitt haben wir taktile Stichprobenziehungen mit der Hand gemacht aus einer echten Schüssel mit richtigen Kugeln und realen Schaufen. Dadurch konnten wir ein solides Verständnis aufbauen von den Grundideen hinter dem Stichprobenziehen. In diesem Abschnitt werden wir das taktile Stichprobenziehen simulieren durch ein virtuelles Stichprobenziehen mit dem Computer. 
+
+### einmalige Nutzung der Schaufel
+
+Lasst uns damit beginnen, eine einzelne Stichprobe zu ziehen. Dafür brauchen wir zuerst ein virtuelles Analog zur Schüssel mit den Kugeln. Zu diesem Zweck haben wir den Dataframe `bowl` ins `moderndive`-Paket hinzugefügt. Eine Zeile in diesem Datensatz entspricht einer tatsächlichen Kugel in der Schüssel:
+
+```{r bowl, exercise = TRUE}
+library(moderndive)
+bowl
+
+```
+
+`bowl` hat 2400 Zeilen, was heißt dass die Schüssel 2400 gleichgroße Bälle enthält. Die erste Variable `ball_ID` wird als „Identifikationsvariable“ verwendet, um die einzelnen Kugeln zu unterscheiden, auch wenn die Kugeln natürlich keine Nummern tragen. Die zweite Variable `color` zeigt ob eine bestimmte Kugel rot oder weiß ist. 
+
+::: aufgabe
+Überzeugen Sie sich nochmal, dass es wirklich sehr viele Kugeln sind!
+:::
+
+```{r manyballs, exercise = TRUE}
+print(bowl, n = 2000)
+```
+
+Jetzt brauchen wir noch ein virtuelles Analog zu unsere Schaufel um virtuelle Stichproben von 50 Kugeln zu ziehen. Wir werden dafür die `rep_sample_n()`-Funktion benutzen aus dem `moderndive`-Paket. Diese Funktion erlaubt uns, `rep`eated `sample`s der Größe `n` zu nehmen. 
+
+```{r virtualshovel, exercise = TRUE}
+virtual_shovel <- bowl |>
+  rep_sample_n(size = 50)
+virtual_shovel
+```
+
+`virtual_shovel` hat 50 Zeilen, genau wie wir es gewünscht haben. Die `ball_ID`-Variable zeigt, welche der 2400 Kugeln gezogen wurden und die `color`-Variable verrät uns ihre Farbe.
+Aber was sagt die `replicate`-Variable uns? In diesem Fall ist `replicate` = 1 für alle 50 Einträge. Das sagt uns, dass diese 50 Zeilen zur ersten Stichprobe gehören. Wir werden gleich sehen, was passiert wenn wir virtuell 33 Stichproben ziehen - dann nimmt `replicate` Werte zwischen 1 und 33 an. 
+
+Lasst uns den Anteil roter Kugeln in unserer Stichprobe berechnen mithilfe der `dplyr`-Data Wrangling-Verben. Als erstes finden wir für jede der 50 Kugeln heraus ob sie rot ist
+
+
+
+
+### Literatur
