@@ -152,7 +152,37 @@ $$\sum_{n=1}^i$$
 1 &= 1 + 0 + 0
 \end{align*}
 
+## Bilder
 
+### `width`-Attribut
+```
+![Caption](images/bild.jpg){width=100%}
+```
+
+Der wichtige Teil ist das `{width=100%}. Dabei steht der Prozentwert für "% des Browserfensters" und kann jede beliebige Zahl von 1-100 sein. Das heißt, wenn das Fenster vergrößert oder verkleinert wird durch Nutzende ändert sich auch die Größe des Bilds. Das heißt, es wird z.B. auch auf Mobilgeräten richtig angezeigt.
+
+Ohne dieses kleine HTML-Attribut in `{}` wird das Bild je nach Auflösung manchmal riesig angezeigt und passt nicht auf die Seite. 
+
+Die `{}` müssen ohne Leerzeichen direkt nach dem Bild folgen.
+
+![ein Bild mit 80% Breite](images/code_sources.png){width=80%}
+Das obige Bild hat 80% Breite, was manchmal ein netter Wert ist.
+
+Bei 100% kann man den unteren Teil nicht mehr sehen, weil es dann vertikal zu lang ist.
+
+Bei 50% wird es zu winzig um es auf einem Handy zu erkennen (halbe Bildschirmbreite).
+
+### Ordner
+
+Der `images` Ordner muss immer genau so heißen und sich auf der gleichen Ebene wie die `.Rmd`-Datei des Tutorials und dem `css`-Ordner des Tutorials befinden. Alle Bilder befinden sich im `images` Ordner. 
+
+### Gifs
+
+Es funktionieren auch GIFs:
+
+![Mind Blowing](images/mind_blown.gif)
+
+Hier ist die Auflösung so gering, dass es nicht Gefahr läuft, die ganze Seite zu blockieren. 
 
 
 ## Abschlussquiz
