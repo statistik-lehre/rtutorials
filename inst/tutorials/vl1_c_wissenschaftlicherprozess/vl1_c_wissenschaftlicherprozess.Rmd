@@ -400,7 +400,7 @@ index_to_keep <- which(!grepl("insgesamt", publictr$Typ))
 filtered_data <- publictr[index_to_keep, ]
 ```
 
-\<\details\>
+<\details\>
 
 ### IV) Orientierung in den Daten
 
@@ -447,7 +447,7 @@ erhoben?
 3.  Finde heraus, wie viele Zeilen und Spalten `publictr` hat.
 :::
 
-\<\details\>
+<\details\>
 
 ##### b) Einzelne Variablen
 
@@ -558,18 +558,97 @@ psych::describe(filtered_data)
 
 ```
 
-\<\details\>
+<\details\>
 
-#### 1. Grafisch (quick & dirty)
+Jetzt wo wir (über `View()`) die Ahnung haben, dass die NAs einem bestimmten Muster folgen, wollen wir uns das nochmal etwas genauer ansehen
+
+```{r IV1_NAs}
+# filtered_data zeigt einfach unseren Datensatz an
+# durch die eckigen Klammern direkt dahinter sagen wir R, welche Daten wir genau aus dem Datensatz sehen wollen
+# Das ansteuern geht so: daten[Zeilen, Spalten]
+# wir sagen also: Nimm von unseren filtered_data folgende Zeilen mit allen Spalten (deswegen steht hinter dem Komma nichts mehr)
+# cmplete.cases zeigt alle kompletten Fälle an, also alle Zeilen, die KEINE NAs beinhalten
+# ! (Ausrufezeichen) ist eine VERNEINUNG, also werden uns alle NICHT VOLLSTÄNDIGEN Zeilen angezeigt
+# das filtered_date IN dem complete.cases() Argument brauchen wir, weil R manchmal mehr Input braucht, als unser logischer Verstand das nachvollziehen kann.
+filtered_data[!complete.cases(filtered_data), ]
+```
+
+Wir sehen, dass es zwei Gründe für die NAs gibt:
+  
+  1. Alle `Linienfernverkehr mit Omnibussen` Einträge in den Jahren 2013-2015 fehlen. Das kann ganz unterschiedliche Gründe haben. Hier gibt es verschiedene und valide Möglichkeiten, mit umzugehen. Wichtig ist nur, wie immer, die Entscheidung gut zu dokumentieren und begründen.
+  2. ALLE Daten ab Quartal 2022/2 fehlen. Das deutet darauf hin, dass diese Zeilen schon erstellt aber noch nicht ausgefüllt wurden bzw. der Datensatz veröffentlicht wurde, bevor die bereits erstellten Zeilen ausgefüllt wurden. Das können wir getrost einfach rauslöschen.
+  
+In unserem Fall nutzen wir den Holzhammer: wir löschen alle Zeilen, in denen ein NA vorhanden ist. Das geht in diesem Fall, weil wir genau nachvollziehen können, warum welche Daten fehlen und wir verlieren dadurch auch keine Daten, weil ja alle interessanten Variablen leer sind. Wenn das NA Muster komplexer ist, bedarf es begründete Entscheidungen. 
+
+```{r IV1_cleaning}
+# wir speichern unsere Daten im selben Objekt wie vorher, bedeutet wir überschreiben die bereits vorhandenen Daten
+# na.omit() schmeißt alle Zeilen raus, in denen ein einziges NA ist. Das ist nicht immer wünschenswert!
+filtered_data <- na.omit(filtered_data)
+```
+
+
+#### 2. Grafisch (quick & dirty)
 
 Die Breitbandverbindung in unser Gehirn sind und bleiben unsere Augen.
 Deswegen ist an diesem Punkt des Prozesses eine grafische
 Auseinandersetzung mit den Daten zwar nicht notwendig, aber sehr
 hilfreich.
 
-#### 2. Numerisch (bisschen ausgiebiger)
+Dafür, wie für alle Grafiken brauchen wir `ggplot2`
 
-#### 3. Voraussetzungen prüfen (langweilig & unerlässlich)
+**Disclaimer:** `%>%` kommt aus dem Paket `dplyr`, heißt ausgesprochen "Pipe" und gibt einen vorher benannten Datensatz innerhalb einer Funktion weiter. Das macht es häufig schöner und übersichtlicher
+
+```{r IV2}
+library(ggplot2)
+library(dplyr)
+
+# ZB. der Zusammenhang zwischen Quartal und beförderten Personen könnte uns interessieren
+# dafür brauchen wir eine neue Variable, die Quartal als Zahl enthält. Ich erspare euch die Einzelheiten, führt die untenstehende Zeile einfach aus
+filtered_data$quartal_dbl <- as.integer(substr(filtered_data$Quartal, start = nchar(filtered_data$Quartal), stop = nchar(filtered_data$Quartal)))
+
+filtered_data %>% ggplot(aes(x = as.character(quartal_dbl), y = Personen)) +
+  geom_boxplot()
+# Es wird deutlich, dass die Menschen im 3. Quartal weniger Öffis fahren, als in den anderen Quartalen. Das ergibt total Sinn: Wahrscheinlich sind viele im Urlaub bzw. nutzen das Rad. Da wäre doch mal spannend zu schauen, ob sich das innerhalb der Beförderungsmitel unterscheidet:
+filtered_data %>% ggplot(aes(x = as.character(quartal_dbl), y = Personen, color = Typ)) +
+  geom_boxplot()
+
+# Und tadaa: der Fernverkehr wird im dritten Quartal als einziges mehr.
+# Das können wir noch deutlicher machen, indem wir einen neuen Vektor erstellen, der nur noch zwischen Nah- und Fernverkehr unterscheidet:
+filtered_data$nah_fern <- ifelse(grepl("nahverkehr", filtered_data$Typ), "nah", ifelse(grepl("fernverkehr", filtered_data$Typ), "fern"))
+filtered_data %>% ggplot(aes(x = as.character(quartal_dbl), y = Personen, color = nah_fern)) +
+  geom_boxplot()
+# Das ist was, was später in der Analyse spannend und wichtig sein könnte
+
+# Des weiteren könnte uns der Verlauf über die Jahre interessieren
+filtered_data %>%
+  group_by(Jahr) %>%
+  summarise(Summe_Personenkilometer = sum(Personenkilometer)) %>% 
+  ggplot(aes(x = Jahr, y = Summe_Personenkilometer)) +
+  geom_col()
+
+# Huch? Was ist denn 2020 passiert??! Achja, Corona!
+# Und dann noch mal nach Fortbewegungsmittel
+filtered_data %>%
+  group_by(Jahr, Typ) %>%
+  summarise(Summe_Personenkilometer = sum(Personenkilometer)) %>% 
+  ggplot(aes(x = Jahr, y = Summe_Personenkilometer, fill = Typ)) +
+  geom_col(position = "dodge") +
+  scale_fill_discrete()
+# Hier sind sehr schön die fehlenden Werte bei den Omnisbussen 2013-2015 zu sehen. Das könnte auch eine Erklärung sein für den Sprunghaften Anstieg an Gesamtkilometern zwischen 2015 und 2016 - der Sprung sieht sehr viel größer aus, als in den anderen Jahren
+
+# was uns noch interessieren könnte wäre der Zusammenhang zwischen der Anzahl der ausgewerteten Unternehmen und der Typ der Fortbewegung
+filtered_data %>% 
+  ggplot(aes(x = Typ, y = ausgewertete_Unternehmen)) +
+  geom_boxplot() +
+  scale_x_discrete(labels = function(x) gsub(" ", "\n", x))
+# sehr schön zu sehen: für den nahverkehr mit omnibussen gibt es mit abstand die meisten erhobenen Unternehmen
+
+```
+
+
+#### 3. Numerisch (bisschen ausgiebiger)
+
+#### 4. Voraussetzungen prüfen (langweilig & unerlässlich)
 
 ### V) Auswertung / Statistik
 
