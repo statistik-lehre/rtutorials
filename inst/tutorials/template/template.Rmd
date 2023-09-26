@@ -187,6 +187,31 @@ Hier ist die Auflösung so gering, dass es nicht Gefahr läuft, die ganze Seite 
 
 ## Abschlussquiz
 
+**Wichtig:** Argument setzen: `allow_retry = TRUE`
+
+```{r abschlussquiz_01}
+question_checkbox("Hier ist eine typische Frage für ein Abschlussquiz",
+         answer("mit einer Antwort"),
+         answer("und noch einer Antwort"),
+         answer("und einer korrekten Antwort", correct = T), 
+         answer("und einer weiteren korrekten Antwort", correct = T), 
+         answer("und noch einer falschen Antwort"),
+         allow_retry = TRUE
+         )
+```
+
+```{r abschlussquiz_02}
+question_checkbox("Wichtig, für eine neue Frage, brauchen wir einen neuen Codechunk",
+         answer("mit einer Antwort"),
+         answer("und noch einer Antwort"),
+         answer("und einer korrekten Antwort", correct = T), 
+         answer("und einer weiteren korrekten Antwort", correct = T), 
+         answer("und noch einer falschen Antwort"),
+         allow_retry = TRUE
+         )
+```
+
+
 ## Learnings
 
 

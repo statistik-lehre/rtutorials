@@ -316,7 +316,8 @@ Gib in deiner Konsole `?mean` ein und mache dich mit der Hilfe Seite zu dieser F
 ```{r abschlussquiz_01}
 question_checkbox("Ein Komma (,) wird von R verstanden als ein ...",
          answer("... Dezimaltrennzeichen"),
-         answer("... Zeichen, um Argumente oder Objekte einer Aufzählung voneinander zu trennen", correct = T)
+         answer("... Zeichen, um Argumente oder Objekte einer Aufzählung voneinander zu trennen", correct = T), 
+         allow_retry = TRUE
          )
 ```
 
@@ -326,7 +327,8 @@ question_checkbox("Als guter Stil gilt:",
          answer("Möglichst keine Leerzeilen zu lassen, um möglichst viel Code auf einmal zu sehen"),
          answer("Leerzeichen nach einem Komma für bessere Lesbarkeit", correct = T),
          answer("Das Vorgehen möglichst Kleinschrittig kommentieren", correct = T),
-         answer("Möglichst wenig Kommentare schreiben, um den Code nicht unnötig lang werden zu lassen")
+         answer("Möglichst wenig Kommentare schreiben, um den Code nicht unnötig lang werden zu lassen"),
+         allow_retry = TRUE
          )
 ```
 
