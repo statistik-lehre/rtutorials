@@ -30,25 +30,25 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Pakete
 
-Pakete können Daten und Funktionen enthalten. Erfahrene R-NutzerInnen veröffentlichen Pakete, um ihre Problemlösungen für andere verfügbar zu machen. 
-Alle Menschen können Pakete veröffentlichen, die Daten und Funktionen enthalten. Wir nutzen heute ein solches Paket, um spielerisch den typischen Umgang mit Funktionen in R zu erlernen. 
+Pakete können Daten und Funktionen enthalten. Erfahrene R-NutzerInnen veröffentlichen Pakete, um ihre Problemlösungen für andere verfügbar zu machen. Alle Menschen können Pakete veröffentlichen, die Daten und Funktionen enthalten. Wir nutzen heute ein solches Paket, um spielerisch den typischen Umgang mit Funktionen in R zu erlernen.
 
-Zunächst installieren wir das Paket. Es heißt `cowsay` und enthält lediglich eine einzige Funktion, mit der wir lustige Tiere lustige Dinge sagen lassen können. 
+Zunächst installieren wir das Paket. Es heißt `cowsay` und enthält lediglich eine einzige Funktion, mit der wir lustige Tiere lustige Dinge sagen lassen können.
 
 #### Ein Paket installieren
 
 Der Befehl zum Installieren lautet:
+
 ``` r
 install.packages("cowsay")
 ```
 
-Achten Sie dabei auf die Anführungszeichen um den Paketnamen! 
+Achten Sie dabei auf die Anführungszeichen um den Paketnamen!
 
 (Eine der häufigsten Fehlerquellen beim Installieren von Paketen sind vergessene Anführungszeichen).
 
 Um den Code auszuführen, schicken Sie ihn über die Konsole ab.
 
-(Normalerweise das untere linke Fenster in RStudio). 
+(Normalerweise das untere linke Fenster in RStudio).
 
 ::: blau-nb
 Sie können auch die grafische Benutzeroberfläche von RStudio benutzen - dafür auf den Reiter "Packages" im Fenster unten rechts gehen und über den Install-Knopf den Dialog aufrufen.\
@@ -56,18 +56,18 @@ Sie werden sehen, dass auch das grafische Menü Code über die Konsole sendet, u
 :::
 
 ::: grau-nb
-Tipp: Dass eine Funktion fertig ausgeführt ist, erkennen Sie daran, dass das rote Stoppzeichen oben rechts in der Konsole erlischt. ![](images/stop.PNG)
+Tipp: Dass eine Funktion fertig ausgeführt ist, erkennen Sie daran, dass das rote Stoppzeichen ![](images/stop.PNG)oben rechts in der Konsole erlischt.
 :::
 
 #### Das Paket nutzen
 
-R lädt zu Beginn einer neuen Sitzung nur eine handvoll essentieller Pakete. Diese automatisch geladenen Pakete werden unter dem Namen "base R" zusammengefasst und enthalten alles, was notwendig ist, damit R funktioniert. 
+R lädt zu Beginn einer neuen Sitzung nur eine handvoll essentieller Pakete. Diese automatisch geladenen Pakete werden unter dem Namen "base R" zusammengefasst und enthalten alles, was notwendig ist, damit R funktioniert.
 
-Alle anderen installierten Pakete sind nicht automatisch aktiv und müssen erst aufgerufen werden, um sie zu verwenden. 
+Alle anderen installierten Pakete sind nicht automatisch aktiv und müssen erst aufgerufen werden, um sie zu verwenden.
 
-Das tun Sie mit der Funktion `library()`. Damit rufen Sie aus der "Bibliothek" aller installierten Pakete eines auf, um es in die aktive Sitzung zu laden. 
+Das tun Sie mit der Funktion `library()`. Damit rufen Sie aus der "Bibliothek" aller installierten Pakete eines auf, um es in die aktive Sitzung zu laden.
 
-`library()` funktioniert im Gegensatz zu `install.packages()` ohne Anführungszeichen um den Paketnamen. 
+`library()` funktioniert im Gegensatz zu `install.packages()` ohne Anführungszeichen um den Paketnamen.
 
 Laden Sie das Paket `cowsay` in die aktive Sitzung, um es im nächsten Schritt zu benutzen!
 
@@ -79,7 +79,7 @@ Laden Sie das Paket `cowsay` in die aktive Sitzung, um es im nächsten Schritt z
 library(cowsay)
 ```
 
-Von außen ist nicht erkennbar, ob etwas passiert ist, aber die Abwesenheit einer Fehlermeldung ist ein gutes Zeichen dafür, dass das Paket nun in die aktive Sitzung geladen ist. 
+Von außen ist nicht erkennbar, ob etwas passiert ist, aber die Abwesenheit einer Fehlermeldung ist ein gutes Zeichen dafür, dass das Paket nun in die aktive Sitzung geladen ist.
 
 ## Funktionen und Argumente
 
@@ -123,7 +123,7 @@ Achten Sie darauf, die `=` mit Leerzeichen zu umgeben, und nach den trennenden K
 Die brennende Frage im Moment ist: Was gibt es denn noch alles für Tiere außer `chicken`?\
 Das erfahren wir über die Hilfeseite der Funktion `say()`.
 
-Alle Funktionen in öffentlichen Paketn müssen auf einer Hilfeseite dokumentiert sein.\
+Alle Funktionen in öffentlichen Paketen müssen auf einer Hilfeseite dokumentiert sein.\
 Auf der Hilfeseite werden alle möglichen Argumente aufgelistet, die eine Funktion entgegennehmen kann, und die möglichen Werte dieser Argumente. Also auch das Argument `by` und alle Tiere, die zur Verfügung stehen.
 
 ::: blau-nb
@@ -132,19 +132,18 @@ Um die Hilfe aufzurufen, gehen Sie mit dem Cursor in den Namen der Funktion (z.B
 Eine andere Option ist, `?say`, oder `help(say)`.\
 \
 
-
 **Tipp für das Lesen der Hilfe:**\
-Die Hilfeseiten sind oft eher an Vollständigkeit als Anfängerfreundlichkeit orientiert und versuchen, auf alle Spezialfälle einzugehen, die überhaupt vorkommen können. Deswegen wirkt die Hilfe anfangs unübersichtlich und technisch. 
+Die Hilfeseiten sind oft eher an Vollständigkeit als Anfängerfreundlichkeit orientiert und versuchen, auf alle Spezialfälle einzugehen, die überhaupt vorkommen können. Deswegen wirkt die Hilfe anfangs unübersichtlich und technisch.
 
-Versuchen Sie zu lernen, aktiv auszublenden, was Sie nicht verstehen, und sich nur die Informationen herauszukramen, die für Sie Sinn machen.
+Versuchen Sie zu lernen, aktiv auszublenden, was Sie nicht verstehen, und sich nur die Informationen herauszukramen, die für Sie Sinn ergeben.
 
 Hilfeseiten sind immer gleich aufgebaut:\
 
-- Description\
-- Usage\
-- Arguments\
-- Details\
-- Examples
+-   Description\
+-   Usage\
+-   Arguments\
+-   Details\
+-   Examples
 :::
 
 ```{r rms, exercise = TRUE, exercise.setup = "say", exercise.cap = "Probieren Sie andere Argumente aus!" }
@@ -197,7 +196,7 @@ Verkehrte Reihenfolgen wie
 say(by = "chicken", what = "hello")
 ```
 
-würden ebenfalls funktionieren, so lange die Argumente benannt sind. Guter Stil ist es allerdings nicht, da es das Lesen von Code anstrengender macht, wenn eine gewohnte Reihenfolge auf einmal durcheinandergebracht wird.
+würden ebenfalls funktionieren, so lange die Argumente benannt sind. Guter Stil ist es allerdings nicht, da es das Lesen von Code anstrengender macht, wenn eine gewohnte Reihenfolge auf einmal durcheinander gebracht wird.
 
 ## Eine Geschichte erzählen
 
@@ -209,58 +208,60 @@ say("Na wie gehts?", by = "chicken")
 say("Ganz gut, und dir?", by = "egret")
 ```
 
-     ----- 
-    Hi 
-     ------ 
-        \   
-         \  
-          \
-           \   _,
-          -==<' `
-              ) /
-             / (_.
-            |  ,-,`\
-             \\   \ \
-              `\,  \ \
-               ||\  \`|,
-     jgs      _|| `=`-'
-             ~~`~`
+```         
+ ----- 
+Hi 
+ ------ 
+    \   
+     \  
+      \
+       \   _,
+      -==<' `
+          ) /
+         / (_.
+        |  ,-,`\
+         \\   \ \
+          `\,  \ \
+           ||\  \`|,
+ jgs      _|| `=`-'
+         ~~`~`
 
 
-     ----- 
-    Na wie gehts? 
-     ------ 
-        \   
-         \
-             _
-           _/ }
-          `>' \
-          `|   \
-           |   /'-.     .-.
-            \'     ';`--' .'
-             \'.    `'-./
-              '.`-..-;`
-                `;-..'
-                _| _|
-                /` /` [nosig]
-      
+ ----- 
+Na wie gehts? 
+ ------ 
+    \   
+     \
+         _
+       _/ }
+      `>' \
+      `|   \
+       |   /'-.     .-.
+        \'     ';`--' .'
+         \'.    `'-./
+          '.`-..-;`
+            `;-..'
+            _| _|
+            /` /` [nosig]
+  
 
-     ----- 
-    Ganz gut, und dir? 
-     ------ 
-        \   
-         \  
-          \
-           \   _,
-          -==<' `
-              ) /
-             / (_.
-            |  ,-,`\
-             \\   \ \
-              `\,  \ \
-               ||\  \`|,
-     jgs      _|| `=`-'
-             ~~`~`
+ ----- 
+Ganz gut, und dir? 
+ ------ 
+    \   
+     \  
+      \
+       \   _,
+      -==<' `
+          ) /
+         / (_.
+        |  ,-,`\
+         \\   \ \
+          `\,  \ \
+           ||\  \`|,
+ jgs      _|| `=`-'
+         ~~`~`
+```
 
 Ihre Geschichte weist vielleicht mehr Kreativität auf, aber die Idee ist klar und die Möglichkeiten sehr vielfältig.
 
@@ -270,7 +271,7 @@ Die Konsole ist zum Ausführen einzelner Anweisungen gut, aber um eine zusammenh
 Genau wie beim Theater oder Film ist ein Skript ein Drehbuch für R-Code. Es enthält eine Abfolge von Anweisungen, die von oben nach unten gelesen wird.\
 Technisch gesehen ist es einfach ein Textdokument mit Befehlen.\
 Der einzige Unterschied ist, dass es auf die Endung `.R` endet und nicht auf `.txt`.\
-Das signalisiert, dass es sich beim Inhalt um ausführbaren Code handelt.
+Das signalisiert, dass es sich beim Inhalt um ausführbaren R Code handelt.
 
 ## Ein neues Skript anlegen
 
@@ -303,7 +304,7 @@ Um die Nachvollziehbarkeit zu erhöhen, beginnen Sie deshalb Ihr Skript immer mi
 #### Workflow
 
 Wenn Sie einen Befehl im Skript ausführen möchten, können Sie `Strg + Enter` benutzen.\
-Wie Sie sehen, wird der Befehl über die Konsole an R gesendet, und Output erscheint auch nur in der Konsole, niemals im Skript.\
+Wie Sie sehen, wird der Befehl über die Konsole an R gesendet, und Output erscheint auch nur in der Konsole, niemals im Skript.
 
 Beim Arbeiten im Skript wird durch Enter lediglich eine neue Zeile erzeugt, und nichts weiter passiert.\
 Beim Arbeiten in der Konsole hingegen sendet `Enter` direkt eine Eingabe ab.\
@@ -333,7 +334,7 @@ say("Ganz gut, und dir?", "egret") #auch hier lässt es sich kommentieren
 ## Speichern
 
 Ordnung ist wichtig, gerade wenn sich über Jahre viele verschiedene Skripte ansammeln, wäre es gut, wenn Sie sich am selben Ort befinden.\
-Erstellen Sie deshalb auf Ihrem PC einen Ordner, in dem Sie alles sammeln, was mit R zu tun hat. Geben Sie dann diesen Ordner in den Einstellungen an (Unter Tools -> Global Options):
+Erstellen Sie deshalb auf Ihrem PC einen Ordner, in dem Sie alles sammeln, was mit R zu tun hat. Geben Sie dann diesen Ordner in den Einstellungen an (Unter Tools -\> Global Options):
 
 ![](images/wd.png)
 
@@ -341,12 +342,11 @@ Das hat den Vorteil, dass nun in neuen R-Sitzungen auch dieser Ordner automatisc
 
 Speichern Sie Ihr Skript dann in diesem Ordner.
 
-(Menü: File => Save… oder `Strg` + `S`)
-
+(Menü: File =\> Save... oder `Strg` + `S`)
 
 ## Hausaufgabe
 
-Schreiben Sie eine kleine Geschichte mithilfe des Pakets `cowsay` und speichern Sie alles als Skript. \
+Schreiben Sie eine kleine Geschichte mithilfe des Pakets `cowsay` und speichern Sie alles als Skript.\
 Achten Sie dabei auf Lesbarkeit und korrekte Syntax.\
 
 ### Lesbarkeits-Kriterien
@@ -354,6 +354,8 @@ Achten Sie dabei auf Lesbarkeit und korrekte Syntax.\
 -   Leerzeichen nach Kommata
 
 -   Leerzeichen links und rechts von `=`
+
+-   Kommentare zur Beschreibung nutzen
 
 ### Syntax-Learnings
 
@@ -363,14 +365,13 @@ Achten Sie dabei auf Lesbarkeit und korrekte Syntax.\
 
 -   Die Argumente stehen in Klammern nach dem Namen der Funktion
 
-
 (Wenn Ihnen die Inspiration fehlt, stellen Sie eine bekannte Geschichte nach).\
 Der Umfang liegt in Ihrem Ermessen.\
 Laden Sie Ihr R-Skript oder Notebook im Geschichten-Forum auf Moodle hoch!\
 Sie entscheiden, ob sie anonym veröffentlich werden sollte oder nicht.\
 Um das Skript hochzuladen, erstellen Sie einen neuen Beitrag und hängen die Datei als Anhang an.
 
-Sie dürfen die Hausaufgabe auch als R Notebook hochladen, wenn Sie eine zusätzliche Herausforderung suchen - Infos dazu siehe Ende des Tutorials. 
+Sie dürfen die Hausaufgabe auch als R Notebook hochladen, wenn Sie eine zusätzliche Herausforderung suchen - Infos dazu siehe Ende des Tutorials.
 
 ### Tipps zum Formatieren
 
@@ -388,8 +389,9 @@ say('Q: What do you call a solitary shark\nA: A lone shark', by = 'shark')
 
 #### Advanced: verschachtelte Befehle
 
-Beachten Sie diesen Abschnitt nur, wenn Ihnen nach dem Tutorial immer noch langweilig ist.\
-Sie können ein Tier von einem anderen Tier erzählen lassen, indem Sie beim Argument `what` eine neue `say()`-Funktion eröffnen. Das heißt auch Verschachtelung.\
+Beachten Sie diesen Abschnitt nur, wenn Sie nach dem Tutorial noch weitere Herausforderungen suchen.\
+\
+Sie können ein Tier von einem anderen Tier erzählen lassen, indem Sie beim Argument `what` eine neue `say()`-Funktion eröffnen. Dieser Kniff wird "Verschachtelung" genannt.\
 Damit das funktioniert, müssen die inneren `say()`-Funktionen aber zusätzlich das Argument `type = "string"` enthalten, damit sie von der äußeren Funktion richtig ausgewertet werden können.
 
 ```{r schachtel, exercise = TRUE, exercise.setup = "say", exercise.cap = "Verschachtelung"}
@@ -399,8 +401,6 @@ Damit das funktioniert, müssen die inneren `say()`-Funktionen aber zusätzlich 
     )
 ```
 
-
-
 ## Ergänzung: R Notebooks
 
 Bei ![Symbol des Skripts](images/skript.PNG) lassen sich zahlreiche andere Formate außer dem klassischen R-Skript auswählen. Eins davon möchte ich hier genauer vorstellen: R Notebooks.\
@@ -409,10 +409,10 @@ Zentrales Kriterium beim wissenschaftlichen Programmieren ist Nachvollziehbarkei
 [R Notebooks](https://garrettgman.github.io/rmarkdown/r_notebooks#overview) ermöglichen, Code-Schnipsel gemeinsam mit ihren Outputs in ein schön formatiertes Textdokument einzubetten und so eine bessere Lesbarkeit herzustellen.\
 \
 Auch für Sie kann ein R Notebook eine sinnvolle Idee sein, im Sinne eines Notizheftes, wo Sie gelernte Konzepte gemeinsam mit dem Code in einer visuell ansprechenden Form notieren können.\
+\
+Um R Notebook zu verwenden, sollten Sie anfänglich den [Visual Editor](https://rstudio.github.io/visual-markdown-editing/) einschalten. Das geht mit `Strg + Shift + F4` oder der Schaltfläche unten links in der Leiste des Editors.
 
-Um R Notebook zu verwenden, sollten Sie anfänglich den [Visual Editor](https://rstudio.github.io/visual-markdown-editing/) einschalten. Das geht mit `Strg + Shift + F4` oder der einer Schaltfläche in der Leiste des Editors.
-
-Der Visual Editor verwandelt den rohen Quelltext in ein visuell ansprechenderes Dokument, und ermöglicht Ihnen die Bearbeitung ohne etwas über die dahinterliegende Formatierung nachzudenken.
+Der Visual Editor verwandelt den rohen Quelltext in ein visuell ansprechenderes Dokument, und ermöglicht Ihnen die Bearbeitung ohne viel über die dahinterliegende Formatierung nachzudenken.
 
 #### Markup Languages
 
@@ -420,9 +420,7 @@ R Notebooks verwenden zur Formatierung des Textes `Markdown`. Das ist eine Sprac
 Derartige Sprachen heißen **markup languages** (Auszeichnungssprachen). Die bekannteste ist `HTML` (Hypertext Markup Language). Eine nicht nur unter Mathematikern beliebte Auszeichnungssprache, deren Stärke unter anderem ist, Formeln schön darzustellen, heißt $\LaTeX$ (sprich "Latech").\
 Auch Textprogramme wie Word verwenden eine markup language, um Formatierungen zu speichern, aber nur intern.
 
-Markdown ist sehr unkompliziert. Sie müssen es allerdings nicht lernen, um R Notebooks zu benutzen, sondern können einfach den Visual Editor verwenden.
-
-Beim Preview-Knopf können Sie eine Vorschau des gerenderten Notizbuchs sehen. \
+Markdown ist sehr unkompliziert. Sie müssen es allerdings nicht lernen, um R Notebooks zu benutzen, sondern können einfach den Visual Editor verwenden.\
 \
 R Notebooks werden auf die Endung `.Rmd` gespeichert, was für R Markdown steht.
 
@@ -431,7 +429,7 @@ Sie erscheinen in Ihrem System aber automatisch ein zweites Mal unter der Endung
 ::: blau-nb
 Was sind eigentlich Dateiendungen?
 
-Die Endung einer Datei kennzeichnet die Art der Datei. Ihr Betriebssystem kann anhand der Endungen bestimmen, welches Programm geeignet ist, um die Datei zu öffnen. \
-So sind z.B. `.R` und `.Rmd` mit RStudio assoziiert, während `.html` vom Webbrowser geöffnet wird. \
+Die Endung einer Datei kennzeichnet die Art der Datei. Ihr Betriebssystem kann anhand der Endungen bestimmen, welches Programm geeignet ist, um die Datei zu öffnen.\
+So sind z.B. `.R` und `.Rmd` mit RStudio assoziiert, während `.html` vom Webbrowser geöffnet wird.\
 Manche Computer zeigen standardmäßig gar keine Endungen an. Innerhalb des Dateibrowsers von RStudio werden aber Endungen gezeigt.
 :::
