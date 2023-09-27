@@ -1,0 +1,353 @@
+---
+title: "Programmieren Basics"
+output:
+  learnr::tutorial:
+    language: de
+    css: css/boxes.css
+    fig_caption: no
+runtime: shiny_prerendered
+bibliography: ref.json
+link-citations: TRUE
+description: "Die absoluten Basics des programmierens. Weil es immer hilfreich ist und es hier anfängt, Spaß zu machen."
+resource_files:
+- css/boxes.css
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Inhalt 
+kurze Beschreibung des Inhalts
+
+Verortung auf der Roadmap
+
+## Lernziele
+
+-   <input type="checkbox" unchecked> `if` Statements kennen </input>
+-   <input type="checkbox" unchecked> `for` Loops kennen </input>
+-   <input type="checkbox" unchecked>  `if` Statements mit `for` Loops verbinden können </input>
+-   <input type="checkbox" unchecked> `ifelse()` Funktion kennen und anwenden können </input>
+-   <input type="checkbox" unchecked> `while` Loops anwenden können </input>
+
+## Programmieren
+
+Mittlerweile wissen wir: R macht Spaß. R ist mächtig. R ist [Turing complete](https://en.wikipedia.org/wiki/Turing_completeness) (kann also alles, was eine Programmiersprache können muss). Und R wächst:
+
+![](images/r_stackoverflow.png)
+*[Gefunden auf Stackoverflow](https://stackoverflow.blog/2017/10/10/impressive-growth-r/)*
+
+Neben den Basics, die wir bisher gelernt haben kann R noch ganz schön viele andere, coole Sachen: Diese Tutorials sind in R geschrieben, es lassen sich aber auch ganze Bücher (z.B. [hier](https://r4ds.had.co.nz/), [hier](https://adv-r.hadley.nz/) und [hier](https://r-graphics.org/)), Webseiten/ Blogs (z.B. [hier](https://www.tidymodels.org/), [hier](https://www.shirin-glander.de/)) und Web-Apps (z.B. [hier](https://demo.prod.appsilon.ai/content/55e17566-c4e9-472d-a78e-91caa476d415/), [hier](https://connect.appsilon.com/pixelator/) und [hier](https://connect.appsilon.com/fresh-water-resources/)) damit schreiben.
+
+Im Folgenden werden wir euch die ganz grundlegenden Basics erklären, die eigenltich immer gebraucht werden.
+
+### Statement: if
+
+`if () {}` ist ein Statement, dass genau das beinhaltet. Es sagt dem Rechner: `wenn ... dannn ...`. \
+
+  - In den runden Klammern (`()`) steht das `wenn` - Argument.\
+  - In den geschweiften Klammern (`{}`), die `dann` Anweisung.\
+  - Das ganze wird abgerundet mit einem `else {}`, also eine `sonst` Anweisung.
+
+Innerhalb dieser `if`-Statements werden die logischen Operatoren wieder wichtig. Hier einige Beispiele:
+
+  - `==` genau gleich
+  - `>` größer als
+  - `<` kleiner als
+  - `!` Nicht (Verneinung)
+  - eine ausführlichere Liste gibts [hier](https://www.datamentor.io/r-programming/operator)
+  
+Aber auch die Auseinandersetzung mit Zeichenkombinationen bzw. das Herausfiltern von Zeichen wird zentral:
+
+  - `grepl(pattern, x, ...)` sucht ein bestimmtes Muster (`pattern`) in einer bestehenden Zeichefolge (`x`), vorzugsweise einem Vektor oä.
+
+::: aufgabe
+**Aufgabe:**\
+Für unser (sehr stark vereinfachtes) Beispiel wollen wir wissen, ob eine zufällig generierte ganze Zahl größer oder kleiner als 4.5 ist.\
+Spiele das ganze im zweiten Schritt ein paar Mal durch und prüfe, ob das Statement so arbeitet, wie geplant.
+:::
+
+```{r if_1-solution}
+# Zufallszahl erstellen
+(zufallszahl <- sample(1:10, 1))
+
+if (zufallszahl > 4.5) {
+  print("größer")
+} else {
+  print("kleiner")
+}
+
+zufallszahl <- 1
+zufallszhal <- 9
+```
+
+```{r if_1, exercise = TRUE}
+
+```
+
+Natürlich können auch mehrere `if` Statements aneinander gehängt werden, für den Fall, dass es mehr als 2 logische Kategorien gibt.
+
+::: aufgabe
+**Aufgabe:**\
+In diesem Beispiel wollen wir wissen, ob eine zufällig generierte ganze Zahl größer, kleiner oder gleich 5 ist.\
+Spiele das ganze im zweiten Schritt ein paar Mal durch und prüfe, ob das Statement so arbeitet, wie geplant.
+:::
+
+```{r if_2-solution}
+# Zufallszahl erstellen
+(zufallszahl <- sample(1:10, 1))
+
+if (zufallszahl > 5) {
+  print("größer")
+} else if (zufallszahl == 5) {
+  print("gleich")
+} else {
+  print("kleiner")
+}
+```
+
+```{r if_2, exercise=TRUE}
+
+```
+
+Jetzt kommt noch die Frage nach dem Text. Wenn ich zum Beispiel wissen will, ob das wort "do" in dem Text ["Lorem ipsum"](https://en.wikipedia.org/wiki/Lorem_ipsum) vorkommt.
+
+::: aufgabe
+**Aufgabe:**\
+Finde mittels if-Statement heraus, ob das Wort "do" in dem ersten Satz von Lorem Ipsum vorkommt
+:::
+
+```{r if_3-solution}
+# satz als Element speichern
+satz <- "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+
+# if statement mit grepl() Funktion
+if (grepl("do", satz)) {
+  print("kommt vor")
+} else {
+  print("kommt NICHT vor")
+}
+```
+
+```{r if_3, exercise=TRUE}
+
+```
+
+
+### Loops
+
+Alles schön und gut. Jetzt können wir einzelne Werte testen. Da wir allerdings meistens mit spaltenweisen Datensätzen zu tun haben brauchen wir hier n bisschen mehr. Hier kommen Schleifen bzw. Loops ins Spiel.
+
+![](images/frootloops.png)
+
+Die beiden prominentesten Vertreter stellen wir euch hier vor: `for` und `while`.
+
+#### for
+
+Beginnen wir mit `for (Element in Vektor) {}`. Auch diese Schleife tut genau das, was sie sagt und folgt dankenswerter Weise genau der gleichen Struktur wie weiter oben das `if`-Statement. Sie sagt: `für ...das und das... mache ...das und das...`:\
+
+  - In den runden Klammern (`()`) steht, für `welche Elemente` etwas getan werden soll.\
+  - `Element in Vektor` Beschreibt die Menge der Elemente.\
+  - In den geschweiften Klammern (`{}`), `was` genau getan werden soll.
+
+::: gelb
+**Hinweis:** Hier wird das richtige indizieren sehr wichtig!
+:::
+
+<\br>
+
+**Disclaimer:** Die nächsten Aufgaben haben in der Praxis nicht so viel Sinn. Sie sind da, um die Grunstruktur des Programmierens zu lernen.
+<\br>
+
+::: aufgabe
+**Aufgabe:**\
+Der einfachste Loop, der in der Praxis total sinnlos ist ist folgender: Gib für jedes Element der Zahlenfolge 1 bis 5 ihren Wert aus
+:::
+
+```{r for_1-solution}
+# also: gib für jedes Element i in der Zahlenfolge 1 bis 5 das Element i aus
+for (i in 1:5) {
+  print(i)
+}
+```
+
+```{r for_1, exercise = TRUE}
+
+```
+
+Das ganze geht auch mit bereits bestehenenden Vektoren.
+
+::: aufgabe
+**Aufgabe:**\
+Erstelle einen Vektor mit 5 Zufallszahlen.
+Gib jedes Element dieses Vektors mittels for-Schleife aus
+:::
+
+```{r for_2-solution}
+# Dismal erstellen wir zuerst den Vektor und schauen uns an, wie er aussieht, um nachvollziehen zu können, was im Loop passiert
+(vektor <- sample(1:10, 5))
+
+ # Gib für jedes Element j im bestehenden Zufallsvektor das Element j aus
+for (j in vektor) {
+  print(j)
+}
+```
+
+```{r for_2, exercise = TRUE}
+
+```
+
+Jetzt wollen wir ein bisschen spannender machen, was im Loop passiert: wir wollen einen neuen Vektor erstellen, in dem jeweils die Quadratzahl der Zahlenfolge steht.
+
+::: aufgabe
+**Aufgabe:**\
+Erstelle einen geordneten Vektor mit den Zahlen 1 bis 5.\
+Erstelle einen neuen leeren Ergebnisvektor.\
+Speichere mittels for Schleife die Quadratzahl jedes Elementes des geordneten Vektors im Ergebnisvektor
+:::
+
+**OBACHT:** Indizierung!
+
+```{r for_3-solution}
+# Dismal erstellen wir zuerst einen geordneten Vektor und schauen uns an, wie er aussieht, um nachvollziehen zu können, was im Loop passiert
+(vek <- 1:5)
+(ergebnis <- 0)
+
+ # Speichere die Quadratzahl von jedem Element k im Ergebnisvektor
+for (k in vek) {
+  ergebnis[k] <- k ^ 2
+}
+
+# und ergebnisvektor anschauen:
+ergebnis
+```
+
+```{r for_3, exercise = TRUE}
+
+```
+
+Sehr gut. Nun kombinieren wir `for` Loops mit `if` Statements:
+
+
+
+::: aufgabe
+**Aufgabe:**\
+Wir arbeiten wieder mit dem `publictr` Datensatz. Wir wollen eine neue Spalte hinzufügen, in der nur zwischen Nah- und Fernverkehr unterschieden wird (und nicht den einzelnen Unterarten)
+:::
+
+```{r for_4-solution}
+# laden
+data <- rtutorials::publictr
+
+# Zuallererst müssen wir die neue Spalte erstellen, damit R die Ergebnisse auch abspeichern kann
+data$nah_fern <- character(length = nrow(data))
+
+# grepl("nahverkehr", data$Typ)
+# schaut, ob die Zeichenfolge "nahverkehr" in der Spalte "Typ" vorkommt
+# if (grepl("nahverkehr", data$Typ))
+# sagt also: wenn (die Zeichenfolge "nahverkehr" in der Spalte Typ vorkommt)
+for (l in 1:length(data$Typ)) {
+  if (grepl("nahverkehr", data$Typ[i])) {
+    data$nah_fern[l] <- "nah"
+  } else {
+    data$nah_fern[l] <- "fern"
+  }
+}
+
+data$nah_fern
+```
+
+```{r for_4, exercise = TRUE}
+
+```
+
+#### R Extrawurst ifelse()
+
+Weil die letzte Aufgabe ein häufiges Problem beim Programmieren ist und es relativ viele Zeilen sind dafür gibt es in R eine Möglichkeit das ganze Abzukürzen: `ifelse(test, yes, no)`:
+
+  - `ifelse()`: Die ganze `for` Schleife aus der vorherigen Aufgabe abgekürzt
+  - `test = `: Der Inhalt der runden Klammern `()` des `if` Statements der vorherigen Aufgabe
+  - `yes = `: Inhalt der ersten geschweiften Klammern `{}` des `if` Statements der vorherigen Aufgabe
+  - `no = `: Inhalt der zweiten geschweiften Klammern `{}`, also des `else` Argumentes des `if` Statements der vorherigen Aufgabe
+
+::: aufgabe
+**Aufgabe:**\
+Setze die vorherige Aufgabe mit dem `ifelse()` Befehl um. Erstelle hierfür einen neuen Vektor im Datensatz. Und überprüfe dann, ob die beiden Vektoren gleich sind oder sich unterscheiden.
+:::
+
+```{r ifelse-solution}
+# erstellen des neuen Vektors inkl. Inhalt
+data$nf <- ifelse(grepl("nahverkehr", data$Typ), "nah", "fern")
+
+# Prüfen
+library(dplyr)
+# vergleiche die beiden Vektore mit der Frage ist ungleich (!=) und summiere die ungleichen Entsprechungen auf. Wenn das Ergebnis Null ist, ist alles gelaufen wie geplant
+data$nah_fern != data$nf %>% sum()
+```
+
+```{r ifelse, exercise = TRUE}
+
+```
+
+#### while
+
+Die andree prominente Art der Loops sind `while () {}` Loops. Auch sie tun das, was draufsteht. Allerdings ist das hier mit dem Indizieren am Anfag etwas komplizierter.
+
+  - `while`: Während Ein Kriterium erfüllt ist
+  - `()`: Kriterium. Ähnlich formuliert wie  bei if Statements und for Loops
+  - `{}`: Aktion
+  
+::: aufgaberstudio
+**Aufgabe:**\
+Um die schwierigkeit mit dem Indexen zu verstehen: Kopiere bitte untenstehenden Code in deine Konsole in R Studio und führe ihn aus. Schau was passiert.\
+**Hinweis:** Wenn du genug gesehen hast klicke oben rechts in deiner Kosole auf das kleine Stopschild
+
+```{r while_1, eval=FALSE, echo=TRUE}
+while (TRUE) {
+  print("Dieser Loop wird immer ausgeführt.")
+}
+```
+:::
+
+<\br>
+
+Das passiert in einem `for` Loop nicht, weil hier ein natürliches Ende gegeben ist. Deswegen wollen wir besonders sorgfältig mit Abbruchkriterien bzw. Indexen umgehen.
+
+
+::: aufgabe
+**Aufgabe:**\
+Erstelle eine `while()` Schleife, die in 5 Durchläufen die Zahlen 1 bis 5 ausgibt.
+:::
+
+```{r while_2-solution}
+# Erstellen des Startwertes
+index <- 1
+
+# Angabe eines Abbruchkriteriums (Wenn der Index 5 überschreitet)
+while (index <= 5) {
+  
+  # zur Kontrolle: Angabe des Indexes
+  print(index)
+  
+  # Um das Abbruchkriterium zu erreichen: Index + 1
+  index <- index + 1
+}
+
+```
+
+```{r while_2, exercise = TRUE}
+
+```
+
+### This is the beginning
+
+So, nun habt ihr das Handwerkszeug, richtig gute Programmierer*innen zu werden. Viel Spaß!
+
+## Learnings
+
+-   <input type="checkbox" unchecked> `if` Statements kennen </input>
+-   <input type="checkbox" unchecked> `for` Loops kennen </input>
+-   <input type="checkbox" unchecked>  `if` Statements mit `for` Loops verbinden können </input>
+-   <input type="checkbox" unchecked> `ifelse()` Funktion kennen und anwenden können </input>
+-   <input type="checkbox" unchecked> `while` Loops anwenden können </input>
