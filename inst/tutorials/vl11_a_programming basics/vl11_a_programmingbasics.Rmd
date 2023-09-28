@@ -44,23 +44,136 @@ Im Folgenden werden wir euch die ganz grundlegenden Basics erklären, die eigenl
 
 ### Statement: if
 
-`if () {}` ist ein Statement, dass genau das beinhaltet. Es sagt dem Rechner: `wenn ... dannn ...`. \
+`if () {}` ist ein Statement, dass genau das beinhaltet. Es sagt dem Rechner: `wenn ... dann ...`. \
 
   - In den runden Klammern (`()`) steht das `wenn` - Argument.\
   - In den geschweiften Klammern (`{}`), die `dann` Anweisung.\
-  - Das ganze wird abgerundet mit einem `else {}`, also eine `sonst` Anweisung.
+  - Das ganze wird abgerundet mit einem `else {}`, also eine `sonst` Anweisung. (Wenn es nur ein einziges `wenn`-Argument gibt, kann dieser Teil einfach übersprungen werden.)
 
 Innerhalb dieser `if`-Statements werden die logischen Operatoren wieder wichtig. Hier einige Beispiele:
 
+  - `T` = `TRUE` = `1` = `!0`
+  - `F` = `FALSE` = `0`
   - `==` genau gleich
   - `>` größer als
   - `<` kleiner als
+  - `%% x` gibt den unteilbaren Rest an, wenn durch x geteilt wird
   - `!` Nicht (Verneinung)
+  - `&` und
+  - `|` oder: entweder A oder B oder A und B
+  - `xor(x, y)` Exklusives oder: Entweder ausschließlich x oder ausschließlich y
   - eine ausführlichere Liste gibts [hier](https://www.datamentor.io/r-programming/operator)
   
+<details>
+
+<summary><a>▼ \* Lustiger Spielkram mit logischen Operatoren
+</a></summary>
+
+Die oben beschriebenen logischen Operatoren erlauben uns Daten und Datensätze nach belieben zu filtern.\
+Zuerst verstehen wir, was eine logische Abfrage macht.
+
+:::aufgabe
+
+**Aufgabe:**\
+  1. Erstelle einen Vektor `vec` der die ganzen Zahlen 1 bis 10 in aufsteigender Reihenfolge enthält
+  2. Lass dir anzeigen, welche Werte kleiner als 5 sind
+  3. Lass dir anzeigen, welche Werte größer als 5 sind
+  4. Lass dir anzeigen, welcher Wert genau 5 ist
+  5. Lass dir anzeigen, welche Werte nicht genau 5 sind
+  6. Finde heraus, welche Werte sich ohne Rest durch 3 teilen lassen
+
+:::
+
+```{r operatoren_1-solution}
+# Erstelle einen Vektor
+vec <- 1:10
+
+# Logische Operatoren anwenden
+vec < 5
+vec > 5
+vec == 5
+vec != 5
+vec %% 3
+```
+
+```{r operatoren_1, exercise = TRUE}
+
+```
+
+Nun haben wir herausgefunden, dass bei den meisten Operatoren ein Vektor von `TRUE` und `FALSE` Werten herauskommt. Sie sagen `Wahr. Dieser Eintrag entspricht deiner Anfrage` oder `Falsch. Dieser Eintrag entspricht NICHT deiner Anfrage`. Für den Rechner ist es hierbei allerdings (in den allermeisten Fällen) gleichgültig, ob wir `TRUE`, `T` oder `1` bzw. `FALSE`, `F` oder `0` schreiben. Das hat einige schöne Nebeneffekte: Zum einen lassen sich die `TRUE` Werte einfach mittels `sum()` zusammen addieren - was uns zB. im Umgang mit NAs sehr zu Nutzen kommt. Zum anderen sind diese TRUE-FALSE Vektoren wie eine Schablone, die wir auf bestehende Vektoren legen können, die uns bestimmte Werte ausgeben/anzeigen. Das nachen wir, wenn wir die Ergbnisse des logischen Auswahlprozesses zum indizieren (`[]`) verwenden.
+
+:::aufgabe
+
+**Aufgabe:**\
+  1. Finde heraus, wie viele Werte den Anforderungen der logischen Anfragen aus den Punkten 2 bis 5 letzten Aufgabe entsprechen (**Hinweis:** Hier ist die Pipe (`%>% ` aus dem Pakt `dplyr` sehr hilfreich)) 
+  2. ... und welche
+  3. Formuliere, warum diese Fragestellung nicht sinnvoll ist, für den 6 Punkt der letzten Aufgabe
+  4. Finde heraus, wie viele und welche Zahlen sich ohne Rest durch 3 teilen lassen.
+  5. Finde heraus, wie viele und welche Zahlen sich nur mit Rest durch 3 teilen lassen.
+  
+:::
+
+```{r operatoren_2-solution}
+library(dplyr)
+vec < 5 %>% sum() # zähle die Anzahl der Zahlen unter 5 zusammen
+vec[vec < 5]      # zeige mir die Werte, die in diesem Vektor unter 5 liegen
+vec > 5 %>% sum()
+vec[vec > 5 ]
+vec == 5 %>% sum()
+vec[vec == 5]
+vec != 5 %>% sum()
+vec[vec != 5]
+
+# Das Ergebnis dieser Funktion ist KEIN logischer Vektor sondern ein numerischer, würden wir diesen einfach aufsummieren hätten wir am Ende eine Summe aller Reste, wenn wir 1 bis 10 durch 3 teilen. Das ist eher nicht sinnvoll. Trotzdem einmal zum nachvollziehen:
+vec %% 3 %>% sum()
+
+vec %% 3 == 0 %>% sum()
+vec[vec %% 3 == 0]
+vec %% 3 != 0 %>% sum()
+vec[vec %% 3 != 0]
+```
+
+```{r operatoren_2, exercise = TRUE}
+
+```
+
+Wäre ja schade, wenn wir so schöne logische Operatoren hätten und sie nicht kombinieren könnten. Dafür werden meistens folgende Operatoren verwendet: `A & B` (A UND B), `A | B` (A ODER B ODER A und B) und `xor(x = A, y = B)` (NUR EINS VON BEIDEM: A ODER B). In diesen Funktionen werden logische Vektoren (die durch die Anwendung der logischen Operatoren oben entstehen) miteinander verglichen.
+
+:::aufgabe
+
+**Aufgabe:**\
+  1. Finde heraus, welche Werte sowohl kleiner als 5 als auch durch 2 teilbar sind
+  2. Finde heraus, welche Werte entweder kleiner als 5, oder durch 2 teilbar oder sowohl kleiner als 5 als auch durch 2 teilbar sind
+  3. finde heraus, welche Werte entweder kleiner als 5 oder durch 2 teilbar sind.
+
+:::
+
+```{r operatoren_3, solution}
+vec[vec < 5 & vec %% 2 == 0]
+vec[vec < 5 | vec %% 2 == 0]
+vec[xor(vec < 5, vec %% 2 == 0)]
+```
+
+```{r solution_3, exercise = TRUE}
+
+```
+
+Und weils so Spaß und vllt. noch ein bisschen mehr Verständnis bringt hier nochmal ein fiktiver Datensatz, an dem wir fleißig rumfiltern können:
+```{r}
+dat <- data.frame(
+  wohnort = rep()
+)
+```
+
+
+</details>
+
+
+
 Aber auch die Auseinandersetzung mit Zeichenkombinationen bzw. das Herausfiltern von Zeichen wird zentral:
 
   - `grepl(pattern, x, ...)` sucht ein bestimmtes Muster (`pattern`) in einer bestehenden Zeichefolge (`x`), vorzugsweise einem Vektor oä.
+  - `%in%` prüft, ob ein Wert in einem bestimmten Vektor enthalten ist
 
 ::: aufgabe
 **Aufgabe:**\
