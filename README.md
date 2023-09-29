@@ -1,15 +1,9 @@
----
-editor_options: 
-  markdown: 
-    wrap: 72
----
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # rtutorials
 
 <!-- badges: start -->
-
 <!-- badges: end -->
 
 *This R package is currently under active development.*
@@ -17,10 +11,10 @@ editor_options:
 Acquire basic statistics and R knowledge (somewhat) interactively and
 self paced.
 
--   **Language**: German
+- **Language**: German
 
--   **Audience**: Written for statistic newbies, in our case 3rd
-    semester bachelor students of environmental and civil engineering
+- **Audience**: Written for statistic newbies, in our case 3rd semester
+  bachelor students of environmental and civil engineering
 
 ### Quick Start
 
@@ -46,10 +40,10 @@ already know*
 
 The packages we are installing are called `devtools` and `learnr`.
 
--   `learnr` is necessary because it supplies the interactive tutorials
-    functionality
+- `learnr` is necessary because it supplies the interactive tutorials
+  functionality
 
--   `devtools` is necessary to install packages from GitHub.
+- `devtools` is necessary to install packages from GitHub.
 
 `install_github()` is self explanatory - it installs a package from a
 GitHub repo. The double colons `::` show that the function lives inside
@@ -71,7 +65,7 @@ the `learnr` package.
 It might require an RStudio restart until the tutorials of the
 `rtutorials` package appear.
 
-Click "Start Tutorial" to learn interactively. That's it!
+Click “Start Tutorial” to learn interactively. That’s it!
 
 Below is some code which achieves the same thing without a navigating a
 click- and scrollable menu surface.
@@ -93,8 +87,8 @@ And to run the individual tutorials:
 learnr::run_tutorial("Einleitung", package = "rtutorials")
 ```
 
--   why do we need statistics, why programming languages
--   fist examples of R as a calculator
+- why do we need statistics, why programming languages
+- fist examples of R as a calculator
 
 ### Funktionen erkunden
 
@@ -102,9 +96,9 @@ learnr::run_tutorial("Einleitung", package = "rtutorials")
 learnr::run_tutorial("Funktionen_erkunden", package = "rtutorials")
 ```
 
--   installing and loading packages
--   what is a script? what is a R notebook?
--   playfully learn the structure of function calls with `cowsay::say()`
+- installing and loading packages
+- what is a script? what is a R notebook?
+- playfully learn the structure of function calls with `cowsay::say()`
 
 ### Vektoren
 
@@ -112,13 +106,13 @@ learnr::run_tutorial("Funktionen_erkunden", package = "rtutorials")
 learnr::run_tutorial("Vektoren", package = "rtutorials")
 ```
 
--   Learn how to assign content to a variable
--   how to find your variable in the environment
--   what is a vector?
--   combining vectors with `c()`
--   vector based calculations
--   vectorised nature of R
--   Using the colon operator `:`
+- Learn how to assign content to a variable
+- how to find your variable in the environment
+- what is a vector?
+- combining vectors with `c()`
+- vector based calculations
+- vectorised nature of R
+- Using the colon operator `:`
 
 ### Indizierung
 
@@ -126,26 +120,26 @@ learnr::run_tutorial("Vektoren", package = "rtutorials")
 learnr::run_tutorial("Indizierung", package = "rtutorials")
 ```
 
--   What is indexing (subsetting)?
--   Subsetting with integer vectors
--   ... with logical vectors
--   ... with character vectors
--   Using your first conditional statements
+- What is indexing (subsetting)?
+- Subsetting with integer vectors
+- … with logical vectors
+- … with character vectors
+- Using your first conditional statements
 
 #### tutorials to come:
 
--   writing your own functions
--   Datenimport
--   Objekte in R verstehen
--   Data Wrangling
--   Visualisierung
--   t-Tests
--   Warum Effektstärke wichtig ist
--   Power berechnen
--   Ab wann sind Daten normalverteilt
--   Chi-Square-Test
--   Korrelation
--   einfache lineare Regression
+- writing your own functions
+- Datenimport
+- Objekte in R verstehen
+- Data Wrangling
+- Visualisierung
+- t-Tests
+- Warum Effektstärke wichtig ist
+- Power berechnen
+- Ab wann sind Daten normalverteilt
+- Chi-Square-Test
+- Korrelation
+- einfache lineare Regression
 
 ## Contributing
 

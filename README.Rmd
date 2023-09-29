@@ -163,7 +163,7 @@ We would be happy to hear from you if you want to modify or redistribute the con
 
 This software comes to you with an OpenSource license, because we are fond believers in the strength of commons.
 
-However, this only applies to the contents of this repository. Other course materials that you may get as a student can and probably will be subjected to copyright.
+However, the use is restricted to noncommercial purposes and only applies to the contents of this repository. Other course materials that you may get as one of our students are subject to copyright.
 
 
 ## Funding
