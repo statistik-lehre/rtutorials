@@ -15,7 +15,27 @@ resource_files:
 
 ```{r setup, include=FALSE}
 library(learnr)
+library(ggplot2)
+library(dplyr)
 knitr::opts_chunk$set(echo = FALSE)
+
+set.seed(20230928)
+fo <- c("kreis", "quadrat", "dreieck")
+fa <- c("lila", "türkis", "gelb")
+
+dat <- expand.grid(form = fo,
+                   farbe = fa,
+                   groesse = 1:3)
+
+all_combinations <- expand.grid(form = fo,
+                                farbe = fa,
+                                groesse = 1:3,
+                                filter = 0:1)
+
+# für die plots
+man_col <- c("lila" = "#440154FF", "türkis" = "#21908CFF", "gelb" = "#FDE725FF")
+filter_man <-  c("0" = "Nicht herausgefiltert", "1" = "Herausgefiltert")
+
 ```
 
 ## Inhalt 
@@ -50,6 +70,8 @@ Im Folgenden werden wir euch die ganz grundlegenden Basics erklären, die eigenl
   - In den geschweiften Klammern (`{}`), die `dann` Anweisung.\
   - Das ganze wird abgerundet mit einem `else {}`, also eine `sonst` Anweisung. (Wenn es nur ein einziges `wenn`-Argument gibt, kann dieser Teil einfach übersprungen werden.)
 
+#### Exkurs logische Operatoren
+
 Innerhalb dieser `if`-Statements werden die logischen Operatoren wieder wichtig. Hier einige Beispiele:
 
   - `T` = `TRUE` = `1` = `!0`
@@ -74,7 +96,8 @@ Zuerst verstehen wir, was eine logische Abfrage macht.
 
 :::aufgabe
 
-**Aufgabe:**\
+**Aufgabe:**
+
   1. Erstelle einen Vektor `vec` der die ganzen Zahlen 1 bis 10 in aufsteigender Reihenfolge enthält
   2. Lass dir anzeigen, welche Werte kleiner als 5 sind
   3. Lass dir anzeigen, welche Werte größer als 5 sind
@@ -103,8 +126,8 @@ vec %% 3
 Nun haben wir herausgefunden, dass bei den meisten Operatoren ein Vektor von `TRUE` und `FALSE` Werten herauskommt. Sie sagen `Wahr. Dieser Eintrag entspricht deiner Anfrage` oder `Falsch. Dieser Eintrag entspricht NICHT deiner Anfrage`. Für den Rechner ist es hierbei allerdings (in den allermeisten Fällen) gleichgültig, ob wir `TRUE`, `T` oder `1` bzw. `FALSE`, `F` oder `0` schreiben. Das hat einige schöne Nebeneffekte: Zum einen lassen sich die `TRUE` Werte einfach mittels `sum()` zusammen addieren - was uns zB. im Umgang mit NAs sehr zu Nutzen kommt. Zum anderen sind diese TRUE-FALSE Vektoren wie eine Schablone, die wir auf bestehende Vektoren legen können, die uns bestimmte Werte ausgeben/anzeigen. Das nachen wir, wenn wir die Ergbnisse des logischen Auswahlprozesses zum indizieren (`[]`) verwenden.
 
 :::aufgabe
+**Aufgabe:**
 
-**Aufgabe:**\
   1. Finde heraus, wie viele Werte den Anforderungen der logischen Anfragen aus den Punkten 2 bis 5 letzten Aufgabe entsprechen (**Hinweis:** Hier ist die Pipe (`%>% ` aus dem Pakt `dplyr` sehr hilfreich)) 
   2. ... und welche
   3. Formuliere, warum diese Fragestellung nicht sinnvoll ist, für den 6 Punkt der letzten Aufgabe
@@ -140,15 +163,14 @@ vec[vec %% 3 != 0]
 Wäre ja schade, wenn wir so schöne logische Operatoren hätten und sie nicht kombinieren könnten. Dafür werden meistens folgende Operatoren verwendet: `A & B` (A UND B), `A | B` (A ODER B ODER A und B) und `xor(x = A, y = B)` (NUR EINS VON BEIDEM: A ODER B). In diesen Funktionen werden logische Vektoren (die durch die Anwendung der logischen Operatoren oben entstehen) miteinander verglichen.
 
 :::aufgabe
+**Aufgabe:**
 
-**Aufgabe:**\
   1. Finde heraus, welche Werte sowohl kleiner als 5 als auch durch 2 teilbar sind
   2. Finde heraus, welche Werte entweder kleiner als 5, oder durch 2 teilbar oder sowohl kleiner als 5 als auch durch 2 teilbar sind
   3. finde heraus, welche Werte entweder kleiner als 5 oder durch 2 teilbar sind.
-
 :::
 
-```{r operatoren_3, solution}
+```{r operatoren_3-solution}
 vec <- 1:10
 
 vec[vec < 5 & vec %% 2 == 0]
@@ -160,32 +182,29 @@ vec[xor(vec < 5, vec %% 2 == 0)]
 
 ```
 
-Und weils so Spaß und vllt. noch ein bisschen mehr Verständnis bringt hier nochmal ein fiktiver Datensatz, an dem wir fleißig rumfiltern können, führe bitte folgenden Code aus:
+Bis jetzt hatten wir es immer nur mit Vekotren zu tun. Das ganze lässt sich auch auf ganze Datensätze anwenden. Das Leben wird hier deutlich vereinfacht von der `filter` Funktion aus dem `dplyr` Paket. Dafür nutzen wir den fiktiven Datensatz (`dat`). Er hat 50 Einträge, drei Formen (Kreis, Quadrat, Dreieck [`form`]), drei Farben (lila, türlis, gelb [`farbe`]) und 3 Größen (1, 2, 3 [`groesse`]).
 
-```{r operatoren_4, exercise = TRUE}
-set.seed(20230928)
 
-fo <- c("kreis", "quadrat", "dreieck")
-fa <- c("lila", "türkis", "gelb")
 
-dat <- data.frame(
-  form = sample(fo, 50, T),
-  farbe = sample(fa, 50, T),
-  groesse = sample(1:3, 50, T)
-)
-```
+:::aufgabe
+**Aufgabe:**\
 
-Nun haben wir einen Datensatz mit 50 Einträgen, drei Formen (Kreis, Quadrat, Dreieck), drei Farben (lila, türlis, gelb) und 3 Größen (1, 2, 3). Bisschen wie so ein Baukasten:
+  1. Filtere alle Figuren heraus, die kleiner als 3 sind.
+  2. Filtere alle Figuren heraus, 
 
-```{r operatoren_5, exercise = TRUE}
-library(ggplot2)
+:::
+
+
+```{r mehrfilterspass, warning=FALSE, message=FALSE}
+dat
 
 ggplot(dat, aes(x = as.factor(groesse), y = farbe, col = farbe, shape = form, size = groesse)) +
-  geom_jitter() +
+  geom_point() +
   facet_wrap(~form, nrow = 3) +
   scale_shape_manual(values = c("kreis" = 16, "quadrat" = 15, "dreieck" = 17)) +
-  scale_colour_manual(values = colours) +
-  theme_minimal() +
+  scale_colour_manual(values = man_col) +
+  theme_bw() +
+  geom_tile(data = all_combinations, color = "black", fill = NA, size = 0.1) +
   theme(legend.position = "none") +
   labs(
     title = "Vorhandene Formen",
@@ -193,30 +212,36 @@ ggplot(dat, aes(x = as.factor(groesse), y = farbe, col = farbe, shape = form, si
     x = "Größe")
 ```
 
-Und nun wollen wir fröhlich darin herumfiltern. Um grafisch zu schauen, ob es wie geplant funktioniert hat, kannst du folgenden Code ausführen. Dafür kannst du dein akturell gefiltertes Datenset als `filtered_data` definieren und dann den Plot ausführen.
 
-```{r operatoren_6, eval = FALSE, echo=TRUE}
-ggplot(filtered_data, aes(x = as.factor(groesse), y = farbe, col = farbe, shape = form, size = groesse)) +
-  geom_jitter() +
-  facet_wrap(~form, nrow = 3) +
+```{r filterspass, warning=FALSE, message=FALSE}
+
+
+filtered_dat <- dat %>% filter(form == "dreieck" & groesse == 3)
+# dat %>% filter(farbe == "gelb" & groesse == 2)
+# dat %>% filter(form == "quadrat" & farbe == "lila")
+
+data <- rbind(filtered_dat %>%
+  mutate(filter = 1), anti_join(dat, filtered_dat) %>% 
+  mutate(filter = 0))
+
+
+ggplot(data, aes(x = as.factor(groesse), y = farbe, col = farbe, shape = form, size = groesse)) +
+  geom_point() +
+  facet_grid(form ~ filter, labeller = labeller(filter = filter_man)) +
   scale_shape_manual(values = c("kreis" = 16, "quadrat" = 15, "dreieck" = 17)) +
-  scale_colour_manual(values = colours) +
-  theme_minimal() +
+  scale_colour_manual(values = man_col) +
+  theme_bw() +
+  geom_tile(data = all_combinations, color = "black", fill = NA, size = 0.1) +
   theme(legend.position = "none") +
   labs(
-    title = "Herausgefilterte Formen",
+    title = "Alle Formen",
     y = "Farbe",
     x = "Größe")
+
+
+
 ```
 
-
-
-:::aufgabe
-**Aufgabe:**\
-  1. Filtere alle Figuren heraus, die kleiner als 3 sind.
-  2. Filtere alle Figuren heraus, 
-
-:::
 
 </details>
 
