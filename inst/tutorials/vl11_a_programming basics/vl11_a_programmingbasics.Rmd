@@ -19,16 +19,13 @@ library(ggplot2)
 library(dplyr)
 knitr::opts_chunk$set(echo = FALSE)
 
-set.seed(20230928)
-fo <- c("kreis", "quadrat", "dreieck")
-fa <- c("lila", "türkis", "gelb")
 
-dat <- expand.grid(form = fo,
-                   farbe = fa,
+dat <- expand.grid(form = c("kreis", "quadrat", "dreieck"),
+                   farbe = c("lila", "türkis", "gelb"),
                    groesse = 1:3)
 
-all_combinations <- expand.grid(form = fo,
-                                farbe = fa,
+all_combinations <- expand.grid(form = c("kreis", "quadrat", "dreieck"),
+                   farbe = c("lila", "türkis", "gelb"),
                                 groesse = 1:3,
                                 filter = 0:1)
 
@@ -212,39 +209,44 @@ ggplot(dat, aes(x = as.factor(groesse), y = farbe, col = farbe, shape = form, si
     x = "Größe")
 ```
 
-
-```{r filterspass, warning=FALSE, message=FALSE}
-
-
-filtered_dat <- dat %>% filter(form == "dreieck" & groesse == 3)
-# dat %>% filter(farbe == "gelb" & groesse == 2)
-# dat %>% filter(form == "quadrat" & farbe == "lila")
-
-data <- rbind(filtered_dat %>%
-  mutate(filter = 1), anti_join(dat, filtered_dat) %>% 
-  mutate(filter = 0))
+```{r ui}
+# Inputs
+textInput("value", "Filter",  "groesse == 1")
+actionButton("apply", "Filter anwenden")
 
 
-ggplot(data, aes(x = as.factor(groesse), y = farbe, col = farbe, shape = form, size = groesse)) +
-  geom_point() +
-  facet_grid(form ~ filter, labeller = labeller(filter = filter_man)) +
-  scale_shape_manual(values = c("kreis" = 16, "quadrat" = 15, "dreieck" = 17)) +
-  scale_colour_manual(values = man_col) +
-  theme_bw() +
-  geom_tile(data = all_combinations, color = "black", fill = NA, size = 0.1) +
-  theme(legend.position = "none") +
-  labs(
-    title = "Alle Formen",
-    y = "Farbe",
-    x = "Größe")
+plotOutput("filtered_plot")
+```
 
 
+```{r server, context = "server"}
+  observeEvent(input$apply, {
+    # Filter wird nur angewendet, wenn der Action Button geklickt wird
+    filtered_data <- filter(dat, eval(parse(text = input$value)))
+    combined_data <- rbind(filtered_data %>%
+      mutate(filter = 1), anti_join(dat, filtered_data) %>%
+      mutate(filter = 0))
+    output$filtered_plot <- renderPlot({
+      ggplot(combined_data, aes(x = as.factor(groesse), y = farbe, col = farbe, shape = form, size = groesse)) +
+        geom_point() +
+        facet_grid(form ~ filter, labeller = labeller(filter = filter_man)) +
+        scale_shape_manual(values = c("kreis" = 16, "quadrat" = 15, "dreieck" = 17)) +
+        scale_colour_manual(values = man_col) +
+        theme_bw() +
+        geom_tile(data = all_combinations, color = "black", fill = NA, size = 0.1) +
+        theme(legend.position = "none") +
+        labs(
+          title = "Alle Formen",
+          y = "Farbe",
+          x = "Größe"
+        )
+    })
+  })
 
 ```
 
 
 </details>
-
 
 
 Aber auch die Auseinandersetzung mit Zeichenkombinationen bzw. das Herausfiltern von Zeichen wird zentral:
