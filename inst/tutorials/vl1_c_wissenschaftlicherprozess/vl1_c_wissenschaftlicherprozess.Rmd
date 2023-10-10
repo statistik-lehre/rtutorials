@@ -66,9 +66,12 @@ Wir lieben Bilder, ihr liebt Bilder, hier gibt es Bilder:
 ![](images/prozess){width="95%"}
 
 Die gesamten Tutorials orientieren sich an der "Roadmap des
-wissenschaftlichen Arbeitens". Sie soll euch zur Orientierung dienen und für zukünftige eigene Projekte einen strukturierten Ablauf vorgeben.
+wissenschaftlichen Arbeitens". Sie soll euch zur Orientierung dienen und
+für zukünftige eigene Projekte einen strukturierten Ablauf vorgeben.
 
-Es gibt eine zweite Version dieses Tutorials. Dies ist die kurze und knappe. Die andere ist ausführlicher und auch als Nachschlagewerk gedacht.
+Es gibt eine zweite Version dieses Tutorials. Dies ist die kurze und
+knappe. Die andere ist ausführlicher und auch als Nachschlagewerk
+gedacht.
 
 ::: gelb
 Da wir euch quantitative Verfahren beibringen, bezieht sich die Roadmap
@@ -91,7 +94,9 @@ Prozess berücksichtigen.
 
 #### 1. Einarbeiten
 
-Bevor du mit dem Forschungsvorhaben beginnst, solltest du dich in das Forschungsthema einlesen und dir Gedanken darüber machen, was du erforschen möchtest.
+Bevor du mit dem Forschungsvorhaben beginnst, solltest du dich in das
+Forschungsthema einlesen und dir Gedanken darüber machen, was du
+erforschen möchtest.
 
 #### 2. Fragestellung
 
@@ -103,8 +108,9 @@ Entwickle eine klare und konkrete Forschungsfrage.
 
 #### 4. Konkrete, testbare Hypothesen aufstellen
 
-Formuliere testbare Hypothesen, mit der du deine Forschungsfrage im wissenschaftlichen Verständnis überprüfen kannst.
- 
+Formuliere testbare Hypothesen, mit der du deine Forschungsfrage im
+wissenschaftlichen Verständnis überprüfen kannst.
+
 #### (5. Ethikantrag)
 
 #### (6. Aquirierung von Geldern)
@@ -139,7 +145,8 @@ Lade den Datensatz in R.
 
 #### 3. Datenaufbereitung / Cleaning
 
-Bereite die Daten auf, indem du sie bereinigst und fehlende Werte behandlst.
+Bereite die Daten auf, indem du sie bereinigst und fehlende Werte
+behandelst.
 
 ### IV) Orientierung in den Daten
 
@@ -159,12 +166,13 @@ Prüfe die Voraussetzungen für statistische Analysen.
 
 ### V) Auswertung / Statistik
 
-Führe statistische Analysen durch, um deine Forschungsfrage zu beantworten.
-
+Führe statistische Analysen durch, um deine Forschungsfrage zu
+beantworten.
 
 ### VI) Schöne Visualisierungen
 
-Erstelle ansprechende und übersichtliche Grafiken, um deine Ergebnisse zu visualisieren.
+Erstelle ansprechende und übersichtliche Grafiken, um deine Ergebnisse
+zu visualisieren.
 
 S. hierfür Unterkapitel `Visualisierung`.
 
@@ -174,19 +182,26 @@ Dokumentiere deine Forschungsergebnisse und erstelle einen Bericht.
 
 ## Abschlussquiz
 
-@Marie: bin bisschen ratlos, was ich hier quizzen könnte
+"Hast du das Gefühl, den Ablauf des wissenschaftlichen Prozesses
+verstanden zu haben?"
 
-```{r abschlussquiz_01}
-question_checkbox("Hier ist eine typische Frage für ein Abschlussquiz",
-         answer("mit einer Antwort"),
-         answer("und noch einer Antwort"),
-         answer("und einer korrekten Antwort", correct = T), 
-         answer("und einer weiteren korrekten Antwort", correct = T), 
-         answer("und noch einer falschen Antwort"),
-         allow_retry = TRUE
-         )
-```
+\- <input type="checkbox" unchecked> Ja, scheint ganz simple </input>
+
+\- <input type="checkbox" unchecked> Nein, das ist alles noch zu
+abstrakt </input>
+
+Egal, ob du nun `Ja`, "Nein" oder sogar beides angekreutzt hast, wir
+sind uns sicher, in den folgenden Lektionen wirst du spielerisch mit uns
+diesen Prozess noch besser kennen lernen und verstehen, wie du deine
+eigenen Fragen wissenschaftlich untersuchen kannst.
 
 ## Learnings
 
-@Marie: und hier?
+Du hast grade im Schnelldurchlauf gelernt, wie der wissenschaftliche
+Prozess im Groben abläuft und wie dieser mit R und (Statistik) im
+Zusammenhang steht.
+
+-   Zur wissenschaftlichen Erfoschung einer Fragestellung gibt es einen
+    spezifischen Prozess
+
+-   Statistik ist die Grundlage des wissenschaftlichen Prozesses
