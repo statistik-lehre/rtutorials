@@ -57,7 +57,7 @@ Mittlerweile wissen wir: R macht Spaß. R ist mächtig. R ist [Turing complete](
 
 Neben den Basics, die wir bisher gelernt haben kann R noch ganz schön viele andere, coole Sachen: Diese Tutorials sind in R geschrieben, es lassen sich aber auch ganze Bücher (z.B. [hier](https://r4ds.had.co.nz/), [hier](https://adv-r.hadley.nz/) und [hier](https://r-graphics.org/)), Webseiten/ Blogs (z.B. [hier](https://www.tidymodels.org/), [hier](https://www.shirin-glander.de/)) und Web-Apps (z.B. [hier](https://demo.prod.appsilon.ai/content/55e17566-c4e9-472d-a78e-91caa476d415/), [hier](https://connect.appsilon.com/pixelator/) und [hier](https://connect.appsilon.com/fresh-water-resources/)) damit schreiben.
 
-Im Folgenden werden wir euch die ganz grundlegenden Basics erklären, die eigenltich immer gebraucht werden.
+Im Folgenden werden wir euch die ganz grundlegenden Basics erklären, die eigenltich immer gebraucht werden und in jeder Programmiersprache (fast) identisch funktionieren. Das heißt: Wie öffnen jetzt gemeinsam das Tor in die Welt von 
 
 ### Statement: if
 
@@ -107,7 +107,7 @@ zufallszahl <- 9
 
 ```
 
-Natürlich können auch mehrere `if` Statements aneinander gehängt werden, für den Fall, dass es mehr als 2 logische Kategorien gibt. Das sieht dann so aus `if (a == T) {do()} else if (b == T) {do()} else {do()}` und kann beliebig erweitert werden. Was darin passiert kannst du dir vorstellen, wie ein Sack abgelegter Kleidung, der in der Altersreihenfolge zwischen Geschwistern weiter gegeben wird: Wenn etwas den Kriterien des größte Geschwisterkindes entspricht (zB. dass es passt), nimmt es sich das, nur wenn es etwas nicht will, gibt es das an das mittlere Geschwister, dass als nächstes nach bestimmten Kriterien aussucht (zB, dass es pink ist) und das wiederum das abgelehnte ans kleinste Geschwister (das am liebsten Leggings und Print-Shirts trägt) die von allen abgelehnte Kleidung geht (in unserer globalisierten und rassistischen Welt) in die Altkleidersammlung. Ein Argument in der ersten if Ebene wird geprüft: Wenn das Ergebnis `TRUE` ist, wird der Inhalt der geschweiften Klammern ausgeführt. Nur, wenn das Ergebnis `FALSE` ist, wird es ins `else if` oder eben `else` geschickt. Also auf unser Beispiel angewendet:
+Natürlich können auch mehrere `if` Statements aneinander gehängt werden, für den Fall, dass es mehr als 2 logische Kategorien gibt. Das sieht dann so aus `if (a == T) {do()} else if (b == T) {do()} else {do()}` und kann beliebig erweitert werden. Was darin passiert kannst du dir vorstellen, wie ein Sack abgelegter Kleidung, der in der Altersreihenfolge zwischen Geschwistern weiter gegeben wird: Wenn etwas den Kriterien des größte Geschwisterkindes entspricht (zB. dass es passt), nimmt es sich das, nur wenn es etwas nicht will, gibt es das an das mittlere Geschwister, dass als nächstes nach bestimmten Kriterien aussucht (zB, dass es pink ist) und das wiederum das abgelehnte ans kleinste Geschwister (das am liebsten Leggings und Print-Shirts trägt) die von allen abgelehnte Kleidung geht (in unserer globalisierten und rassistischen Welt) in die Altkleidersammlung. Ein Argument in der ersten if Ebene wird geprüft: Wenn das Ergebnis `TRUE` ist, wird der Inhalt der geschweiften Klammern ausgeführt. Nur, wenn das Ergebnis `FALSE` ist, wird es ins `else if` oder eben `else` geschickt. Bedeutet auch: Pinke Leggings der größe 152 landen bei Geschisterkind 1, pinke Leggings jeder anderen Größe bei Kind 2 und nur alle Leggings, die weder 152 noch pink sind, landen bei Kind 3. Also auf unser Beispiel angewendet:
 
 ```{r kleidung, eval=FALSE, echo=TRUE}
 if (Größe == 152) {     # 1. Geschwisterkind trägt Größe 152
@@ -369,7 +369,8 @@ Aber auch die Auseinandersetzung mit Zeichenkombinationen bzw. das Herausfiltern
 
 ::: aufgabe
 **Aufgabe:**\
-Finde mittels if-Statement heraus, ob das Wort "do" in dem ersten Satz von ["Lorem ipsum"](https://en.wikipedia.org/wiki/Lorem_ipsum) vorkommt
+
+Finde mittels if-Statement heraus, ob die Zeichenkombination "do" in dem ersten Satz von ["Lorem ipsum"](https://en.wikipedia.org/wiki/Lorem_ipsum) vorkommt.
 :::
 
 ```{r if_3-solution}
@@ -391,7 +392,7 @@ if (grepl("do", satz)) {
 
 ### Loops
 
-Alles schön und gut. Jetzt können wir einzelne Werte testen. Da wir allerdings meistens mit spaltenweisen Datensätzen zu tun haben brauchen wir hier n bisschen mehr. Hier kommen Schleifen bzw. Loops ins Spiel.
+Wir können jetzt sowohl einzelne Werte testen als auch logische Operatoren auf Vektoren oder Datensätze anwenden. Allerdings wollen wir häufiger Daten **zeilenweise** bearbeiten. Hier kommen Schleifen (oder auf englisch: Loops) ins Spiel.
 
 ![](images/frootloops.png)
 
@@ -409,9 +410,6 @@ Beginnen wir mit `for (Element in Vektor) {}`. Auch diese Schleife tut genau das
 **Hinweis:** Hier wird das richtige indizieren sehr wichtig!
 :::
 
-<\br>
-
-**Disclaimer:** Die nächsten Aufgaben haben in der Praxis nicht so viel Sinn. Sie sind da, um die Grunstruktur des Programmierens zu lernen.
 <\br>
 
 ::: aufgabe
@@ -498,14 +496,14 @@ data <- rtutorials::publictr
 data$nah_fern <- character(length = nrow(data))
 
 # grepl("nahverkehr", data$Typ)
-# schaut, ob die Zeichenfolge "nahverkehr" in der Spalte "Typ" vorkommt
+# prüft elementweise, ob die Zeichenfolge "nahverkehr" in der Spalte "Typ" vorkommt
 # if (grepl("nahverkehr", data$Typ))
-# sagt also: wenn (die Zeichenfolge "nahverkehr" in der Spalte Typ vorkommt)
-for (l in 1:length(data$Typ)) {
+# sagt also: wenn (die Zeichenfolge "nahverkehr" in einem Element der Spalte Typ vorkommt) {dann tu das}
+for (i in 1:length(data$Typ)) {
   if (grepl("nahverkehr", data$Typ[i])) {
-    data$nah_fern[l] <- "nah"
+    data$nah_fern[i] <- "nah"
   } else {
-    data$nah_fern[l] <- "fern"
+    data$nah_fern[i] <- "fern"
   }
 }
 
@@ -535,9 +533,8 @@ Setze die vorherige Aufgabe mit dem `ifelse()` Befehl um. Erstelle hierfür eine
 data$nf <- ifelse(grepl("nahverkehr", data$Typ), "nah", "fern")
 
 # Prüfen
-library(dplyr)
-# vergleiche die beiden Vektore mit der Frage ist ungleich (!=) und summiere die ungleichen Entsprechungen auf. Wenn das Ergebnis Null ist, ist alles gelaufen wie geplant
-data$nah_fern != data$nf %>% sum()
+# vergleiche die beiden Vektoren mit der Frage ist ungleich (!=) und summiere die ungleichen Entsprechungen auf. Wenn das Ergebnis Null ist, ist alles gelaufen wie geplant
+sum(data$nah_fern != data$nf)
 ```
 
 ```{r ifelse, exercise = TRUE}
@@ -546,27 +543,29 @@ data$nah_fern != data$nf %>% sum()
 
 #### while
 
-Die andree prominente Art der Loops sind `while () {}` Loops. Auch sie tun das, was draufsteht. Allerdings ist das hier mit dem Indizieren am Anfag etwas komplizierter.
+Die andere prominente Art der Loops sind `while () {}` Loops. Auch sie tun das, was draufsteht. Allerdings ist das hier mit dem Indizieren am Anfang etwas komplizierter.
 
   - `while`: Während Ein Kriterium erfüllt ist
   - `()`: Kriterium. Ähnlich formuliert wie  bei if Statements und for Loops
   - `{}`: Aktion
   
+Diese Schleife zählt nicht automatisch weiter, wie ihre bereits bekannte Schwester `for ()`, deswegen muss die Laufvariable vorher definiert werden und das Weiterspringen in ihr ins nächste Element muss Teil der Schleife sein.
+  
 ::: aufgaberstudio
 **Aufgabe:**\
-Um die schwierigkeit mit dem Indexen zu verstehen: Kopiere bitte untenstehenden Code in deine Konsole in R Studio und führe ihn aus. Schau was passiert.\
+Um die schwierigkeit mit dem Indizieren zu verstehen: Kopiere bitte untenstehenden Code in deine Konsole in R Studio und führe ihn aus. Schau was passiert.\
 **Hinweis:** Wenn du genug gesehen hast klicke oben rechts in deiner Kosole auf das kleine Stopschild
 
 ```{r while_1, eval=FALSE, echo=TRUE}
 while (TRUE) {
-  print("Dieser Loop wird immer ausgeführt.")
+  print("Dieser Loop wird immer weiter ausgeführt.")
 }
 ```
 :::
 
 <\br>
 
-Das passiert in einem `for` Loop nicht, weil hier ein natürliches Ende gegeben ist. Deswegen wollen wir besonders sorgfältig mit Abbruchkriterien bzw. Indexen umgehen.
+Das passiert in einem `for` Loop nicht, weil hier ein natürliches Ende gegeben ist. Deswegen wollen wir besonders sorgfältig mit Abbruchkriterien bzw. Indizes umgehen.
 
 
 ::: aufgabe
@@ -596,7 +595,7 @@ while (index <= 5) {
 
 ### This is the beginning
 
-So, nun habt ihr das Handwerkszeug, richtig gute Programmierer*innen zu werden. Viel Spaß!
+So, nun habt ihr das Handwerkszeug, richtig gute Programmierer*innen zu werden und damit seid ihr noch nichtmal auf R festgelegt. Logik und Schleifen funktionieren in fast allen Programmiersprachen gleich bzw. weisen wirklich nur geringfügige Abweichungen auf. Viel Spaß!
 
 ## Learnings
 
