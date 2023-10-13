@@ -559,9 +559,19 @@ z
 
 ## Learnings heute
 
-Sie haben gelernt, wie Sie Variablen Daten zuweisen. Wie sie mit
-Vektoren (später Datenreihen) rechnen können als auch die Dos und Don´ts
-der Arbeit mit R.
+Sie haben gelernt, wie Sie Variablen Daten zuweisen. Variablen sind in R repräsentiert als Vektoren. Vektoren sind der fundamentale Objekttyp in R, auf dem alle anderen Objekte wie z.B. Tabellen aufbauen. Ihr Vorteil ist, dass sie mehrere Werte enthalten können.
+
+Beim Rechnen mit Vektoren haben Sie das Konzept "Recycling" kennengelernt,und erahnen ungefähr, was "Vektorisierung" ist - dass vektorisierte Funktionen wie `+` auf jedes Element eines Vektors einzeln angewendet werden, und als Ergebnis auch wieder ein Vektor steht.
+
+Beim Assigment haben Sie gelernt, Leerzeichen zu verwenden um den Assignment Operator <-`. 
+
+Das Dezimaltrennzeichen in R ist der Punkt.
+Kommata werden verwendet, um Werte in Aufzählungen voneinander zu trennen.
+
+Gute Objektnamen sind konsistent und kleingeschrieben und dürfen keine 
+Leerzeichen enthalten oder mit einer Zahl beginnen.
+
+Im Environment werden die erstellten Objekte der laufenden Sitzung angezeigt. Bei Beenden von RStudio werden sie gelöscht, was die empfohlene Einstellung ist. So wird Replizierbarkeit trainiert: Nicht die erstellten Variablen werden aufbewahrt, sondern das Rezept um sie zu erstellen - in Form eines Skripts.
 
 ### Diese neuen Konzepte kennen Sie nun:
 
