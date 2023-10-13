@@ -44,6 +44,8 @@ etwas ab.
 In diesem Tutorial geht es auch um das Anzeigen einer bestimmten Stelle, 
 sogenanntes *Indizieren*.
 
+Sie haben bereits gelernt, wie Vektoren erstellt werden und dass sie mehrere Elemente hintereinander enthalten können. Jedes Element hat also eine Position. Im Folgenden lernen Sie, die Elemente anhand ihrer Position oder ihres Inhalts separat aufzurufen. Das heißt in R "Indizierung".
+
 ### verschiedene Arten der Indizierung
 
 Es gibt insgesamt 3 verschiedene Arten:

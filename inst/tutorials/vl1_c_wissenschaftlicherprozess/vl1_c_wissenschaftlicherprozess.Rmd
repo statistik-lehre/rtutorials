@@ -129,7 +129,7 @@ Sammle die Daten gemäß deinem Forschungsdesign.
 
 ### III) Datenaufbereitung
 
-Um ehrlich zu sein: Der ätzenste und gleichzeitig wichtigste Schritt des
+Um ehrlich zu sein: Der ätzendste und gleichzeitig wichtigste Schritt des
 ganzen Prozesses. Hier bringt ihr die Daten aus der vorhandenen in eine
 verarbeitbare Form. Das konkrete Vorgehen hängt stark von den
 vorliegenden Daten ab. Deswegen treffen nicht alle der folgenden
@@ -166,7 +166,7 @@ Prüfe die Voraussetzungen für statistische Analysen.
 
 ### V) Auswertung / Statistik
 
-Führe statistische Analysen durch, um deine Forschungsfrage zu
+Führe die vorab geplanten statistischen Analysen durch, um deine Forschungsfrage zu
 beantworten.
 
 ### VI) Schöne Visualisierungen
