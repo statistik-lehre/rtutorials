@@ -19,6 +19,64 @@ library(tidyverse)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
+## Data Frames
+
+Dieses Kapitel zeigt Ihnen die Objektklasse, mit   welcher Sie hauptsächlich arbeiten werden. Ein Data Frame ist die Art und Weise, wie Tabellen in R repräsentiert werden. 
+
+Im letzten Kapitel haben Sie gelernt, dass Vektoren Variablen darstellen und mehrere Werte enthalten können. 
+
+Die Idee eines Data Frames ist, einen Haufen Vektoren gleicher Länge zu nehmen und damit eine Tabelle zu bauen. Dabei ist **jede Spalte ein Vektor**. Anders ausgedrückt: jede Spalte ist eine Variable. 
+
+(Beispiel einfügen)
+
+## Indizierung bei Data Frames
+
+Um gezielt eine bestimmte Spalte anzusteuern, benötigen Sie den `$`-Operator.
+
+(Beispiel einfügen)
+
+(Exercise einfügen)
+
+An sich können Sie für die Spalten die gleichen Mechanismen verwenden wie für Vektoren, denn es *sind* Vektoren. 
+
+(Beispiel einfügen)
+
+(Exercise)
+
+Bemerken Sie, dass bei Data Frames der Output beim Indizieren mit dem `$`-Operator immer ein Vektor ist.
+
+Es gibt noch eine andere Methode, die bei Data Frames immer auch einen Data Frame zurückgibt.
+
+Das ist ein wichtiger Unterschied! 
+
+### Subsetting mit `[ , ]`
+
+Um nicht nur eine einzelne Spalte herausgreifen zu können, sondern auch mehrere, können wir wieder den Index-Operator nutzen `[]`. Der funktioniert bei Data Frames eigentlich genau wie bei Vektoren, allerdings haben wir nun zwei mögliche Dimensionen: Zeilen und Spalten - anstatt vormals nur einer Dimension bei Vektoren.
+
+Deswegen brauchen wir für Data Frames auch zwei Positionsangaben, mit einem Komma 
+getrennt: 
+
+`[Zeilen, Spalten]`
+
+(Beispiel einfügen)
+
+(Exercise)
+
+Bemerken Sie, dass Sie mit `[ , ]` immer einen Data Frame zurückbekommen, während Sie mit `$` nur den jeweiligen Vektor ausgegeben bekommen der die Spalte darstellt.
+
+## Learnings
+
+Data Frames sind Listen von gleichlangen Vektoren.
+
+## Tibbles
+
+(Erklärung)
+
+## Exkurs: Daten- und Objekttypen
+
+Klassen und Modi unterscheiden
+
+
 ## Von der Datenerhebung zur Analyse
 
 Es klingt banal, aber wenn die Daten aufgeräumt sind, ist bereits die größte Hürde geschafft. Einen Großteil der Zeit von Datenanalyse verbringen Forschende damit, Daten in die richtige Form zu bringen. Die Auswertung selbst geht dann oft vergleichsweise schnell.
