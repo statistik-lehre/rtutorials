@@ -72,9 +72,19 @@ Data Frames sind Listen von gleichlangen Vektoren.
 
 (Erklärung)
 
-## Exkurs: Daten- und Objekttypen
+## Exkurs: Listen
 
-Klassen und Modi unterscheiden
+Data Frames sind eine spezielle Art von Liste für R. Nämlich eine Liste, deren einzelne Inhalte alle die gleiche Länge haben müssen. 
+
+Das charakterisierende Merkmal von Listen ist, dass die einzelnen Inhalte verschiedenen Typs sein dürfen. 
+
+Bei einem Vektor muss der gesamte Vektor den gleichen Datentyp beinhalten.
+
+Viele andere Objekte sind in ihrer Grundstruktur auch Listen, die Sie kennenlernen werden.
+
+
+
+
 
 
 ## Von der Datenerhebung zur Analyse
