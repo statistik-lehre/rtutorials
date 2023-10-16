@@ -1,16 +1,24 @@
 Package: rtutorials
-Title: Learnr Tutorials To Learn R in German
+Title: Interactive R And Statistics Tutorials In German
 Version: 0.0.0.9000
 Authors@R: 
+    c(
     person("Lukas", "Bruelheide", , "lukas.bruelheide@student.uni-kassel.de", 
     role = c("aut", "cre", "cph"))
-Description: Lessons for basic R fluency and some classical statistics applications. Aiming to accompany entry level statistics courses in german universities. 
-License: MIT + file LICENSE
+    person("Gesa", "Graf", , "gesa.graf@student.uni-kassel.de", 
+    role = c("aut", "cre", "cph"))
+    person("Marie", "Klosterkamp", , "marie.klosterkamp@uni-kassel.de", 
+    role = c("ctb", "rev"))
+    person("HessenHub", role = "fnd")
+    person("Universität Kassel, role = "fnd")
+    )
+Description: By installing, interactive tutorials can be viewed inside RStudio's "Tutorials" Tab. No prior programming or statistics knowledge is assumed. 
+License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Imports: 
     learnr
 Depends: 
-    R (>= 2.10)
+    R (>= 3.5)
 LazyData: true
