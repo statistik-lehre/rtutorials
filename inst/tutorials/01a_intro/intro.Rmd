@@ -221,7 +221,7 @@ Es gilt als guter Stil:
 
 Und ein letztes zu den Skripten und warum sie wunderbar sind: Sie lassen sich inkl. Ergebnisse in `Reports` bringen: Hier sind die Einzelnen Befehle, Kommentare UND Ergebnisse (inkl. Plots) zusammengefasst. Das macht es schön und übersichtlich. Meine Empfehlung ist, wenn ein Skript fertig ist, immer auch einen Report zu kreiern. Da schaust du später lieber rein. Trust me in that.
 
-**ganz oben, ganz links** > File > Compile Report... (> File Name: )> Report output format *MS Word*
+**ganz oben, ganz links** > File > compile_Report... (> File Name: )> Report output format *MS Word*
 
 ::: aufgaberstudio
 **Aufgabe:**\
