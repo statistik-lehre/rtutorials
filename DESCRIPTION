@@ -10,7 +10,7 @@ Authors@R:
     person("Marie", "Klosterkamp", , "marie.klosterkamp@uni-kassel.de", 
     role = c("ctb", "rev")),
     person("HessenHub", role = "fnd"),
-    person("Universität Kassel, role = "fnd")
+    person("Universität Kassel", role = "fnd")
     )
 Description: By installing, interactive tutorials can be viewed inside RStudio's "Tutorials" Tab. No prior programming or statistics knowledge is assumed. 
 License: GPL (>= 3)
