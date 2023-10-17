@@ -4,11 +4,12 @@ output:
   learnr::tutorial:
     language: de
     css: css/boxes.css
-    fig_caption: no
+    fig_caption: yes
+    df_print: default
 runtime: shiny_prerendered
 bibliography: ref.json
 link-citations: TRUE
-description: Von der Datenerhebung bis zur Analyse
+description: Was sind Data Frames? Das Indizieren mit $-Operator wird geübt. 
 resource_files:
 - css/boxes.css
 ---
@@ -16,18 +17,53 @@ resource_files:
 ```{r setup, include=FALSE}
 library(learnr)
 library(tidyverse)
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Data Frames
+## Data Frames {data-progressive=TRUE}
 
-Dieses Kapitel zeigt Ihnen die Objektklasse, mit   welcher Sie hauptsächlich arbeiten werden. Ein Data Frame ist die Art und Weise, wie Tabellen in R repräsentiert werden. 
+### Einführung
+
+Dieses Kapitel zeigt Ihnen die Objektklasse, mit welcher Sie hauptsächlich arbeiten werden. Ein *Data Frame* ist die Art und Weise, wie **Tabellen** in R repräsentiert werden. 
 
 Im letzten Kapitel haben Sie gelernt, dass Vektoren Variablen darstellen und mehrere Werte enthalten können. 
 
+In nächsten Abschnitt lernen Sie, wie Sie mehrere Vektoren in einer Tabelle zusammenbringen können. 
+
+Dass Sie den Umgang mit Tabellen in R lernen, ist essentiell, da die meisten Daten auf dieser Welt irgendwie in Tabellen dargestellt werden.
+
+### Beispiel
+
+Schauen Sie sich die Vektoren `alter` und `tier` im Codeblock an: Sie enthalten jeweils drei Elemente.
+
+Führen Sie den Code aus, um daraus einen Data Frame zu erstellen und anzuzeigen. 
+
+```{r dataframe, exercise = TRUE, exercise.caption = "Data Frame erstellen"}
+alter <- c(14, 7, 1)
+tier <- c("Hund", "Katze", "Maus")
+
+df <- data.frame(alter, tier)
+df
+```
+
+
+
+### Prinzip
+
+
 Die Idee eines Data Frames ist, einen Haufen Vektoren gleicher Länge zu nehmen und damit eine Tabelle zu bauen. Dabei ist **jede Spalte ein Vektor**. Anders ausgedrückt: jede Spalte ist eine Variable. 
 
+
+::: infobox
+Neue Funktion: `data.frame()`
+
+Erstellt aus einzelnen Vektoren eine Tabelle. Dabei können die Spaltennamen auch 
+umbenannt werden:
+
 (Beispiel einfügen)
+:::
+
+
 
 ## Indizierung bei Data Frames
 
