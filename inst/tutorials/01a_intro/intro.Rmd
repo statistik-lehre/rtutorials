@@ -1,5 +1,5 @@
 ---
-title: "Einführung Idee"
+title: Einführung
 output:
   learnr::tutorial:
     language: de
@@ -8,7 +8,7 @@ output:
 runtime: shiny_prerendered
 bibliography: ref.json
 link-citations: TRUE
-description: empty
+description: Vorstellung des Tutorial-Formats, einen Überblick gewinnen über RStudio und einen Projekt-Ordner erstellen für den Kurs
 resource_files:
 - css/boxes.css
 ---
