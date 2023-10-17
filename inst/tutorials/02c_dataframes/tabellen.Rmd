@@ -50,20 +50,190 @@ df
 
 ### Prinzip
 
-
 Die Idee eines Data Frames ist, einen Haufen Vektoren gleicher Länge zu nehmen und damit eine Tabelle zu bauen. Dabei ist **jede Spalte ein Vektor**. Anders ausgedrückt: jede Spalte ist eine Variable. 
 
+Das ist eine wichtige Grundstruktur, die Sie sich merken sollten. Im Kern sind Data Frames nichts als Listen von Vektoren gleicher Länge. 
+
+In der Praxis werden Sie zur Dateneingabe ein grafisches Programm wie Excel verwenden, und die fertige Tabelle dann für die Verwendung mit R importieren. Das lernen Sie im Tutorial "Datenimport". 
+
+Wir fokussieren uns hier auf das Hantieren mit Data Frames, denn egal wie Sie die Tabelle
+erstellt haben - durch Import aus Excel oder Zusammensetzen einzelner Vektoren, es wird immer ein Data Frame sein in R. 
+
+Wenn im Folgenden immer wieder kleine Data Frames aus Vektoren erstellt werden, dient das nur
+dazu, Beispiele zu konstruieren um den Umgang zu erlernen. 
 
 ::: infobox
 Neue Funktion: `data.frame()`
 
-Erstellt aus einzelnen Vektoren eine Tabelle. Dabei können die Spaltennamen auch 
-umbenannt werden:
-
-(Beispiel einfügen)
+Erstellt aus einzelnen Vektoren eine Tabelle. Die Vektoren müssen gleich lang sein.
 :::
 
+### Neu = Alt
 
+Eine in R übliche Konvention ist die Reihenfolge `NEW = OLD`. 
+
+Das ist beim Assignment so (wo wir gedanklich ein `<-` für das `=` einsetzen):
+Links steht immer der neue Name, rechts immer der alte Name oder Inhalt.
+
+Betrachten Sie das folgende Beispiel: 
+
+```{r new_is_old, exercise = TRUE, exercise.caption = "Neu ist Alt"}
+# Mitbewohnis in einer WG
+
+# Schema: neu <- alt
+x <- c("Hannes", "Mira", "Luisa", "Alex")
+y <- c(2000, 2001, 1990, 1995)
+alt <- 5.23 
+
+# 2. Data Frame erstellen und dabei Spalten benennen. Gleiches Schema:
+
+wg <- data.frame(
+  name = x, 
+  jahrgang = y, 
+  neu = alt) 
+wg
+```
+
+Achten Sie auf die Argumente von `data.frame()`: Dort gilt das gleiche Schema. Die "neuen" Namen stehen jeweils auf 
+der linken Seite des Gleichheitszeichens, der "alte" Name auf der rechten. 
+
+Das ist gut zu wissen, denn dieses Schema gilt als Konvention für die meisten Bennennungssituationen in R. 
+
+### Eine neue Spalte hinzufügen
+
+Nun wollen wir noch die Zimmergröße der WG-Mitbewohnis mit erfassen. 
+Ein einfacher Weg, dem Data Frame eine neue Spalte hinzuzufügen, ist der `$`-Operator.
+
+Sehen Sie sich folgendes Beispiel an:
+
+```{r wg_setupchunk, echo=FALSE}
+x <- c("Hannes", "Mira", "Luisa", "Alex")
+y <- c(2000, 2001, 1990, 1995)
+alt <- 5.23 
+wg <- data.frame(
+  name = x, 
+  jahrgang = y, 
+  neu = alt) 
+```
+
+```{r dollar, exercise.setup = "wg_setupchunk", exercise = TRUE}
+wg$quadratmeter <- c(12, 14, 20, 15)
+wg
+```
+
+Auch hier gilt wieder das Schema `Alt <- Neu`. 
+
+Im Folgenden erfahren Sie mehr über das Indizieren mit `$`. 
+
+## Listen und der `$`-Operator {data-progressive=TRUE}
+
+Wir werden in diesem Kapitel vom Allgemeinen auf das Spezifische schließen, das heißt, Sie lernen eventuell mehr als Sie müssen, haben aber danach eine bessere Ausgangslage um auch andere spezifische Situationen einzuordnen. 
+
+In diesem Kapitel haben Sie die Chance im Schnelldurchlauf zu verstehen:
+
+- warum ein Data Frame eine Art von Liste ist
+- was eine Liste in R ist
+- dass Listen `$` zum Indizieren verwenden
+- und deshalb auch Data Frames `$` zum Indizieren verwenden. 
+
+### Warum ein Data Frame eine Liste ist
+
+Einen Data Frame können Sie als einen Vektor auffassen, der als Teilemente andere Vektoren enthält. Die grundlegende Datenstruktur in R dafür heißt *Liste*. 
+
+Die Listen-Artige Struktur eines Data Frames wird deutlich, wenn wir uns die Struktur mit `str()` anzeigen lassen:
+
+```{r str, exercise = TRUE, exercise.setup = "dollar"}
+str(wg)
+```
+
+Wir werden informiert über:
+
+- Die Objektklasse (`data.frame`)
+- Die Anzahl an Variablen (4) 
+- Anzahl von Beobachtungen (*observations*) je Variable (`4 obs.`)
+- Den Datentyp der einzelnen Variablen: 
+  
+  - `chr` für *character* (Text)
+  - `num` für *numeric* (Zahlen)
+
+<br>
+
+Noch deutlicher wird es, wenn wir mit `typeof()` nach dem zugrunde liegenden Datentyp von `wg` fragen. 
+
+```{r typeof, exercise = TRUE, exercise.setup = "dollar"}
+typeof(wg)
+```
+
+
+### Was eine Liste in R ist
+
+Eine Liste kann verstanden werden als ein "allgemeiner Vektor", welcher normale Vektoren enthalten kann - und sogar andere Listen (das wird dann aber schnell sehr unübersichtlich). 
+
+Ein ganz zentraler Punkt: Während normale Vektoren *atomic* sind, also immer nur Daten des gleichen Typs beherbergen können, können Listen gemischte Daten enthalten.
+
+Hier ein Beispiel: 
+
+```{r list_example, exercise = TRUE, exercise.setup = "dollar"}
+# named vector:
+named_vec <- c(
+  aepfel = 10,
+  birnen = "zwanzig",
+  pflaumen = 30)
+
+# Liste:
+named_li <- list(
+  aepfel = 10,
+  birnen = "zwanzig",
+  pflaumen = 30)
+
+named_vec
+named_li
+```
+
+Der Vektor (oben im Output) kann nur Daten eines einzigen Typs enthalten. Da er den Text "zwanzig" enthält, werden die Zahlen automatisch auch zu Text umgeformt und mit Anführungszeichen umgeben. (Siehe auch Tutorial "Vektoren").
+
+Die Liste (unten) hingegen kann problemlos Text und Zahlen gleichzeitig aufnehmen.
+
+### Listen verwenden `$` zum Indizieren
+
+`$` ist speziell für das Indizieren bei benannten Listen gedacht, deswegen haben wir im letzten Abschnitt auch Namen für die Elemente der Liste vergeben. 
+
+Sagen wir mal, wir interessieren uns dafür, was das Listenelement "birnen" so enthält:
+
+```{r list_indexing, exercise = TRUE, exercise.setup = "list_example"}
+named_li$birnen
+```
+
+<br>
+
+::: aufgabe
+
+Finden Sie heraus, was das Listenelement namens "pflaumen" aus der Liste `named_li` enthält! Verwenden Sie den `$`-Operator. 
+
+:::
+
+```{r dollar_exercise, exercise = TRUE, exercise.setup = "list_example"}
+
+```
+
+```{r dollar_exercise-solution}
+named_li$pflaumen
+```
+
+
+
+`$` ist eine spezielle Art des
+Indizierens für Listen, und Data Frames sind in ihrer Grundstruktur einfach Listen.
+
+Data Frames sind in ihrer Grundstruktur Listen. Das ist Hintergrundwissen, dass sie nur benötigen, um Verbindungslinien zu ziehen zu anderen Situationen, in denen der `$`-Operator auch auf den Plan tritt. Denn `$` ist ein Werkzeug, um Bestandteile einer Liste mit ihrem Namen aufzurufen. 
+
+Wenn Sie andere Objektklassen kennenlernen, die auch fundamental Listen sind, wie zum Beispiel `fit`-Objekte (siehe Tutorial Regression), wird das Erscheinen von `$` Sinn ergeben.
+
+### Data Frames verwenden `$` zum Indizieren.
+
+### Learnings
+
+- `$` ist ein Werkzeug, um Bestandteile einer Liste mit ihrem Namen aufzurufen. 
 
 ## Indizierung bei Data Frames
 
