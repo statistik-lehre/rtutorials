@@ -194,6 +194,10 @@ Der Vektor (oben im Output) kann nur Daten eines einzigen Typs enthalten. Da er 
 
 Die Liste (unten) hingegen kann problemlos Text und Zahlen gleichzeitig aufnehmen.
 
+Ein weitere Vorteil von Listen ist, dass sie auch Elemente unterschiedlicher Länge enthalten darf. 
+
+Data Frames sind dann eine spezielle Art von Liste - das charakterisierende Merkmal ist, dass alle Elemente die gleiche Länge haben müssen, während das für Listen generell nicht so sein muss. 
+
 ### Listen verwenden `$` zum Indizieren
 
 `$` ist speziell für das Indizieren bei benannten Listen gedacht, deswegen haben wir im letzten Abschnitt auch Namen für die Elemente der Liste vergeben. 
@@ -225,11 +229,17 @@ named_li$pflaumen
 `$` ist eine spezielle Art des
 Indizierens für Listen, und Data Frames sind in ihrer Grundstruktur einfach Listen.
 
-Data Frames sind in ihrer Grundstruktur Listen. Das ist Hintergrundwissen, dass sie nur benötigen, um Verbindungslinien zu ziehen zu anderen Situationen, in denen der `$`-Operator auch auf den Plan tritt. Denn `$` ist ein Werkzeug, um Bestandteile einer Liste mit ihrem Namen aufzurufen. 
+Data Frames sind in ihrer Grundstruktur Listen. Das ist Hintergrundwissen, dass Sie nur benötigen, um Verbindungslinien zu ziehen zu anderen Situationen, in denen der `$`-Operator auch auf den Plan tritt. Denn `$` ist ein Werkzeug, um Bestandteile einer Liste mit ihrem Namen aufzurufen. 
 
 Wenn Sie andere Objektklassen kennenlernen, die auch fundamental Listen sind, wie zum Beispiel `fit`-Objekte (siehe Tutorial Regression), wird das Erscheinen von `$` Sinn ergeben.
 
-### Data Frames verwenden `$` zum Indizieren.
+### Data Frames verwenden `$` zum Indizieren
+
+Um das Ganze etwas praktischer zu gestalten, verwenden wir nun mal einen realen Datensatz, der als Data Frame mit im `rtutorials`-Paket enthalten ist.
+
+Erfasst sind dort die tägliche Maximaltemperatur in Grad Fahrenheit, und die Anzahl von durch Überhitzung verursachten Notaufnahme-Fällen in den Krankenhäusern von New York für den jeweiligen Tag. 
+
+Um sich einen Überblick über
 
 ### Learnings
 
@@ -280,7 +290,7 @@ Data Frames sind Listen von gleichlangen Vektoren.
 
 ## Exkurs: Listen
 
-Data Frames sind eine spezielle Art von Liste für R. Nämlich eine Liste, deren einzelne Inhalte alle die gleiche Länge haben müssen. 
+
 
 Das charakterisierende Merkmal von Listen ist, dass die einzelnen Inhalte verschiedenen Typs sein dürfen. 
 
@@ -289,7 +299,7 @@ Bei einem Vektor muss der gesamte Vektor den gleichen Datentyp beinhalten.
 Viele andere Objekte sind in ihrer Grundstruktur auch Listen, die Sie kennenlernen werden.
 
 
-
+(Duplikat von weiter oben, mergen)
 
 
 
