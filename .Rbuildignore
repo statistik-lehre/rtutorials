@@ -8,3 +8,4 @@ rtutorials/inst/tutorials/template$
 \.html$
 figure-html$
 
+^\.github$

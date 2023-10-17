@@ -4,6 +4,8 @@
 # rtutorials
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/statistik-lehre/rtutorials/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/statistik-lehre/rtutorials/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 *This R package is currently under active development.*
@@ -11,10 +13,10 @@
 Acquire basic statistics and R knowledge (somewhat) interactively and
 self paced.
 
-- **Language**: German
+-   **Language**: German
 
-- **Audience**: Written for statistic newbies, in our case 3rd semester
-  bachelor students of environmental and civil engineering
+-   **Audience**: Written for statistic newbies, in our case 3rd
+    semester bachelor students of environmental and civil engineering
 
 ### Quick Start
 
@@ -49,7 +51,7 @@ highlighted.
 |---------|---------------------------------------|--------|
 | 1       | **Introduction**                      | 80%    |
 | 1       | **Exploring Functions and Arguments** | 95%    |
-| 1       | **Scientific Process**                | ~70%   |
+| 1       | **Scientific Process**                | \~70%  |
 | 2       | **Vectors**                           | 90%    |
 | 2       | **Indexing**                          | 65%    |
 | 2       | Data Frames                           | 30%    |
@@ -67,8 +69,8 @@ highlighted.
 | 8       | Power Analysis                        | 0%     |
 | 8       | Correlations                          | 0%     |
 | 9       | **Simple Linear Regression**          | 85%    |
-| 10      | **Scientific Process**                | ~70%   |
-| 11      | **Programming Basics**                | ~70%   |
+| 10      | **Scientific Process**                | \~70%  |
+| 11      | **Programming Basics**                | \~70%  |
 
 ## Accessing the tutorials
 
@@ -142,10 +144,10 @@ already know*
 
 The packages we are installing are called `devtools` and `learnr`.
 
-- `learnr` is necessary because it supplies the interactive tutorials
-  functionality
+-   `learnr` is necessary because it supplies the interactive tutorials
+    functionality
 
-- `devtools` is necessary to install packages from GitHub.
+-   `devtools` is necessary to install packages from GitHub.
 
 `install_github()` is self explanatory - it installs a package from a
 GitHub repo. The double colons `::` show that the function lives inside
@@ -196,7 +198,7 @@ Tutorials:
 learnr::run_tutorial("01a_intro", package = "rtutorials")
 ```
 
-- R als Taschenrechner
+-   R als Taschenrechner
 
 #### Funktionen erkunden
 
@@ -204,11 +206,11 @@ learnr::run_tutorial("01a_intro", package = "rtutorials")
 learnr::run_tutorial("01b_funktionen", package = "rtutorials")
 ```
 
-- Funktionsaufruf am Beispiel von `cowsay`
+-   Funktionsaufruf am Beispiel von `cowsay`
 
-- Argumente spezifizieren
+-   Argumente spezifizieren
 
-- Skripte erstellen
+-   Skripte erstellen
 
 #### Wissenschaftlicher Prozess (kurz)
 
@@ -222,15 +224,15 @@ learnr::run_tutorial("01c_prozess", package = "rtutorials")
 learnr::run_tutorial("02a_vektoren", package = "rtutorials")
 ```
 
-- Variablen erstellen, Assignment
+-   Variablen erstellen, Assignment
 
-- Gute Namen
+-   Gute Namen
 
-- Was ist das Environment
+-   Was ist das Environment
 
-- Recycling beim Rechnen mit Vektoren
+-   Recycling beim Rechnen mit Vektoren
 
-- Vektorisierung
+-   Vektorisierung
 
 #### Indizierung bei Vektoren
 
@@ -238,13 +240,13 @@ learnr::run_tutorial("02a_vektoren", package = "rtutorials")
 learnr::run_tutorial("02b_index", package = "rtutorials")
 ```
 
-- Auf spezifische Elemente eines Vektors zugreifen mittels `[]`…
+-   Auf spezifische Elemente eines Vektors zugreifen mittels `[]`…
 
-- Über die Position
+-   Über die Position
 
-- Über eine logische Bedingungsprüfung
+-   Über eine logische Bedingungsprüfung
 
-- Über Namen (Attribute)
+-   Über Namen (Attribute)
 
 #### Data Frames
 
@@ -252,9 +254,9 @@ learnr::run_tutorial("02b_index", package = "rtutorials")
 learnr::run_tutorial("02c_dataframes", package = "rtutorials")
 ```
 
-- Wie werden Tabellen in R repräsentiert?
+-   Wie werden Tabellen in R repräsentiert?
 
-- Indizierung bei Data Frames mit `$`
+-   Indizierung bei Data Frames mit `$`
 
 #### Maße der Streuung
 
@@ -262,11 +264,11 @@ learnr::run_tutorial("02c_dataframes", package = "rtutorials")
 learnr::run_tutorial("04a_dispersion", package = "rtutorials")
 ```
 
-- Was ist Varianz
+-   Was ist Varianz
 
-- Spannweite
+-   Spannweite
 
-- Quartile und Interquartilsabstand
+-   Quartile und Interquartilsabstand
 
 #### Sampling
 
@@ -274,11 +276,11 @@ learnr::run_tutorial("04a_dispersion", package = "rtutorials")
 learnr::run_tutorial("06a_sampling", package = "rtutorials")
 ```
 
-- “Stichprobenkennwerteverteilung” verstehen
+-   “Stichprobenkennwerteverteilung” verstehen
 
-- das Konzept “Stichprobenvariation” verstehen
+-   das Konzept “Stichprobenvariation” verstehen
 
-- simulierte Stichprobenziehung mit `moderndive::rep_sample_n()`
+-   simulierte Stichprobenziehung mit `moderndive::rep_sample_n()`
 
 #### t-Test
 
@@ -286,7 +288,7 @@ learnr::run_tutorial("06a_sampling", package = "rtutorials")
 learnr::run_tutorial("06b_ttest", package = "rtutorials")
 ```
 
-- einen t-Test in R ausführen und Output interpretieren
+-   einen t-Test in R ausführen und Output interpretieren
 
 #### Einfache lineare Regression
 
@@ -294,13 +296,13 @@ learnr::run_tutorial("06b_ttest", package = "rtutorials")
 learnr::run_tutorial("09a_regression", package = "rtutorials")
 ```
 
-- Interpretation der Koeffizienten
+-   Interpretation der Koeffizienten
 
-- Erstellen eines `lm()` (linear model)
+-   Erstellen eines `lm()` (linear model)
 
-- Output lesen lernen
+-   Output lesen lernen
 
-- Voraussetzungen der Regression prüfen
+-   Voraussetzungen der Regression prüfen
 
 #### Wissenschaftlicher Prozess (lang)
 
@@ -308,8 +310,8 @@ learnr::run_tutorial("09a_regression", package = "rtutorials")
 learnr::run_tutorial("10a_prozess_lang", package = "rtutorials")
 ```
 
-- Nachschlagewerk für den detaillierten Ablauf des typischen
-  Forschungsprozesses auf einer Roadmap
+-   Nachschlagewerk für den detaillierten Ablauf des typischen
+    Forschungsprozesses auf einer Roadmap
 
 #### Programmieren Basics
 
@@ -317,6 +319,6 @@ learnr::run_tutorial("10a_prozess_lang", package = "rtutorials")
 learnr::run_tutorial("11a_programmieren", package = "rtutorials")
 ```
 
-- Schleifen und Bedingungen
+-   Schleifen und Bedingungen
 
-- `for`, `while`, `if`, `else`, …
+-   `for`, `while`, `if`, `else`, …
