@@ -24,13 +24,20 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### Einführung
 
-Dieses Kapitel zeigt Ihnen die Objektklasse, mit welcher Sie hauptsächlich arbeiten werden. Ein *Data Frame* ist die Art und Weise, wie **Tabellen** in R repräsentiert werden. 
+Dieses Kapitel zeigt Ihnen die Objektklasse, mit welcher Sie hauptsächlich arbeiten werden. Ein *Data Frame* ist die Struktur, mit der **Tabellen** in R repräsentiert werden. 
 
-Im letzten Kapitel haben Sie gelernt, dass Vektoren Variablen darstellen und mehrere Werte enthalten können. 
+Wenn Sie mit Tabellen in R zu tun haben werden - und das wird oft sein - wird es sich meist um *Data Frames* oder eine spezielle Unterform davon, *Tibbles*, handeln. Beides werden Sie in diesem Tutorial kennenlernen. 
+
+Dass Sie den Umgang mit Tabellen in R lernen, ist essentiell, da die meisten Daten auf dieser Welt irgendwie in Tabellen dargestellt werden.
+
+Im Tutorial "Vektoren" haben Sie gelernt, dass Vektoren Variablen darstellen und mehrere Werte enthalten können. 
 
 In nächsten Abschnitt lernen Sie, wie Sie mehrere Vektoren in einer Tabelle zusammenbringen können. 
 
-Dass Sie den Umgang mit Tabellen in R lernen, ist essentiell, da die meisten Daten auf dieser Welt irgendwie in Tabellen dargestellt werden.
+::: blau-nb
+Übrigens: Wir verwenden hier für die Eindeutschung "der" Data Frame, die
+innerliche Begründung lautet: *Frame* = Rahmen, "der" Rahmen :)
+:::
 
 ### Beispiel
 
@@ -46,21 +53,7 @@ df <- data.frame(alter, tier)
 df
 ```
 
-
-
-### Prinzip
-
-Die Idee eines Data Frames ist, einen Haufen Vektoren gleicher Länge zu nehmen und damit eine Tabelle zu bauen. Dabei ist **jede Spalte ein Vektor**. Anders ausgedrückt: jede Spalte ist eine Variable. 
-
-Das ist eine wichtige Grundstruktur, die Sie sich merken sollten. Im Kern sind Data Frames nichts als Listen von Vektoren gleicher Länge. 
-
-In der Praxis werden Sie zur Dateneingabe ein grafisches Programm wie Excel verwenden, und die fertige Tabelle dann für die Verwendung mit R importieren. Das lernen Sie im Tutorial "Datenimport". 
-
-Wir fokussieren uns hier auf das Hantieren mit Data Frames, denn egal wie Sie die Tabelle
-erstellt haben - durch Import aus Excel oder Zusammensetzen einzelner Vektoren, es wird immer ein Data Frame sein in R. 
-
-Wenn im Folgenden immer wieder kleine Data Frames aus Vektoren erstellt werden, dient das nur
-dazu, Beispiele zu konstruieren um den Umgang zu erlernen. 
+<br>
 
 ::: infobox
 Neue Funktion: `data.frame()`
@@ -68,36 +61,83 @@ Neue Funktion: `data.frame()`
 Erstellt aus einzelnen Vektoren eine Tabelle. Die Vektoren müssen gleich lang sein.
 :::
 
+
+### Prinzip
+
+Die Idee eines Data Frames ist, einen Haufen Vektoren gleicher Länge zu nehmen und damit eine Tabelle zu bauen. Dabei ist **jede Spalte ein Vektor**. Anders ausgedrückt: jede Spalte ist eine Variable. 
+
+Das ist eine wichtige Grundstruktur, die Sie sich merken sollten, denn es bedeutet dass für die Spalten einer Tabelle die gleichen Mechanismen greifen wie bei Vektoren.
+
+::: gelb
+**Disclaimer**
+
+In der Praxis werden Sie zur Dateneingabe ein grafisches Programm wie Excel verwenden, und die fertige Tabelle dann für die Verwendung mit R importieren. Das lernen Sie im Tutorial "Datenimport". 
+
+Wir fokussieren uns hier auf das Hantieren mit Data Frames, denn egal wie Sie die Tabelle
+erstellt haben - durch Import aus Excel oder Zusammensetzen einzelner Vektoren, es wird immer ein Data Frame sein in R. 
+
+Wenn im Folgenden immer wieder kleine Data Frames aus Vektoren erstellt werden, 
+dient das nur dazu, Beispiele zu konstruieren um den Umgang zu erlernen, aber 
+nicht weil das die übliche Methode ist, wie Daten in R eingegeben werden. 
+:::
+
 ### Neu = Alt
 
-Eine in R übliche Konvention ist die Reihenfolge `NEW = OLD`. 
+Eine in R übliche Konvention für Namensgebungs-Situationen ist die Reihenfolge `NEW = OLD`. 
 
-Das ist beim Assignment so (wo wir gedanklich ein `<-` für das `=` einsetzen):
+Bei der Verwendung von `data.frame()` kommen wir in eine solche Situation, weil 
+wir während der Erstellung Spaltennamen vergeben können. Betrachten Sie dazu das
+folgende Beispiel, wo wir eine Tabelle mit Daten über eine WG erstellen. 
+
+Schon beim Assignment, was ja auch eine Namensgebungs-Situation ist, gilt:
 Links steht immer der neue Name, rechts immer der alte Name oder Inhalt.
 
-Betrachten Sie das folgende Beispiel: 
+Achten Sie auf die Argumente von `data.frame()`: Dort gilt das gleiche Schema. Die "neuen" Spaltennamen stehen jeweils auf der linken Seite des Gleichheitszeichens, der "alte" Name des bereits vorhandenen Vektors auf der rechten. 
 
 ```{r new_is_old, exercise = TRUE, exercise.caption = "Neu ist Alt"}
 # Mitbewohnis in einer WG
 
 # Schema: neu <- alt
-x <- c("Hannes", "Mira", "Luisa", "Alex")
+x <- c("Amadou", "Mira", "Luisa", "Alex")
 y <- c(2000, 2001, 1990, 1995)
-alt <- 5.23 
+z <- 5.23 
 
 # 2. Data Frame erstellen und dabei Spalten benennen. Gleiches Schema:
 
 wg <- data.frame(
   name = x, 
   jahrgang = y, 
-  neu = alt) 
+  grundpreis = z) 
 wg
 ```
 
-Achten Sie auf die Argumente von `data.frame()`: Dort gilt das gleiche Schema. Die "neuen" Namen stehen jeweils auf 
-der linken Seite des Gleichheitszeichens, der "alte" Name auf der rechten. 
-
 Das ist gut zu wissen, denn dieses Schema gilt als Konvention für die meisten Bennennungssituationen in R. 
+
+#### Lerntest
+
+Haben Sie im Tutorial "Vektoren" gut aufgepasst? 
+
+Eigentlich haben Sie eben gelernt, alle Vektoren müssen gleich lang sein um einen Data Frame zu erstellen. Warum funktioniert es oben trotzdem, obwohl Vektor `z` nur Länge 1 hat und nicht ebenfalls 4?
+
+```{r recyc-quiz, echo = FALSE}
+learnr::question_radio(
+  "Das liegt ...",
+  answer("am Konzept der Vektorisierung, was bedeutet, dass eine Funktion die einen Vektor als Input bekommt auch einen Vektor der gleichen Länge als Output gibt",
+         message = "Vektorisierung ist nicht die Ursache hier, aber die Beschreibung ist korrekt."),
+  answer("an R's Eigenart, dass kürzere Vektoren ohne Warnung „recycelt“ werden, wenn die Länge des längeren ein Vielfaches des kürzeren ist", 
+         correct = TRUE,
+         message = "Das Konzept des Recycling ist hier die Ursache. Sollte ein Vektor aber kein Vielfaches des anderen sein, gibt es bei der Erstellung von Data Frames einen Fehler."),
+  answer("daran, dass es ein Fehler in der Software ist, der seit den 90ern nicht behoben wurde",
+         message = "Manche Leute sehen das so, weil es still und leise passiert,
+         aber es ist so gewolltes Verhalten von den Entwickler*innen."),
+  answer("daran, dass das Dezimaltrennzeichen der Punkt ist",
+         message = "Das stimmt für sich genommen, ist aber nicht die Ursache"),
+  answer("daran, dass Vektoren immer nur einen einzigen Datentyp enthalten dürfen",
+         message = "Das stimmt für sich genommen, ist aber nicht die Ursache"),
+  allow_retry = TRUE
+)
+```
+
 
 ### Eine neue Spalte hinzufügen
 
@@ -107,13 +147,13 @@ Ein einfacher Weg, dem Data Frame eine neue Spalte hinzuzufügen, ist der `$`-Op
 Sehen Sie sich folgendes Beispiel an:
 
 ```{r wg_setupchunk, echo=FALSE}
-x <- c("Hannes", "Mira", "Luisa", "Alex")
+x <- c("Amadou", "Mira", "Luisa", "Alex")
 y <- c(2000, 2001, 1990, 1995)
-alt <- 5.23 
+z <- 5.23 
 wg <- data.frame(
   name = x, 
   jahrgang = y, 
-  neu = alt) 
+  grundpreis = z) 
 ```
 
 ```{r dollar, exercise.setup = "wg_setupchunk", exercise = TRUE}
@@ -123,7 +163,89 @@ wg
 
 Auch hier gilt wieder das Schema `Alt <- Neu`. 
 
-Im Folgenden erfahren Sie mehr über das Indizieren mit `$`. 
+::: aufgabe
+Sie sind dran!
+
+Erstellen Sie mittels `$` im `wg`-Datensatz eine neue Spalte `balkon`, die angibt ob die Zimmer Zugang zu einem 
+Balkon haben. Geben Sie erfundene Werte ein. `TRUE` bedeutet "mit Balkon", `FALSE`
+"ohne Balkon".
+
+Lassen Sie sich `wg` danach anzeigen, um zu überprüfen ob die neue Spalte da ist. 
+
+:::
+
+```{r balkon, exercise = TRUE, exercise.setup = "dollar", exercise.caption = "Balkon"}
+
+```
+
+```{r balkon-solution}
+wg$balkon <- c(TRUE, FALSE, FALSE, FALSE)
+wg
+```
+
+<br>
+
+#### auf Spalten zugreifen
+
+Sie können `$` nicht nur verwenden, um neue Spalten zu erstellen, sondern auch um sich
+Spalten einzeln ausgeben zu lassen und damit Berechnungen anzustellen.
+
+Testen Sie, was der folgende Code zurückgibt.
+
+```{r name, exercise = TRUE, exercise.caption = "Ausgabe mit $", exercise.setup = "balkon"}
+wg$name
+```
+
+Preisfrage:
+
+```{r preisfrage, echo = FALSE}
+learnr::question_radio("Was vermuten Sie: Was wird ausgegeben durch `wg$name`?",
+                       answer("Ein Data Frame",
+                              message = "Es ist kein Data Frame, weil die Werte dann untereinander in einer Spalte ausgegeben würden und nicht nebeneinander."),
+                       answer("Ein Vektor",
+                              correct = TRUE,
+                              message = "Genau. Es ist ein Vektor, denn bei einem Data Frame würden die Werte untereinander in einer Spalte ausgegeben statt horizontal."),
+                       allow_retry = TRUE)
+```
+
+### Berechnungen mit Spalten
+
+(Anmerkung: Hier mehr Aufgaben einfügen, die zunächst "Spalte + Zahl sind oder so, bevor Spalte * Spalte kommt.)
+
+::: aufgabe
+Berechnen Sie eine neue Spalte namens `miete`, in dem Sie den Qudratmeterpreis `grundpreis` mit der Zimmergröße `quadratmeter` multiplizieren. 
+
+Lassen Sie sich dann die gesamte Tabelle anzeigen!
+:::
+
+```{r wg_setupchunk_2, echo=FALSE}
+x <- c("Amadou", "Mira", "Luisa", "Alex")
+y <- c(2000, 2001, 1990, 1995)
+z <- 5.23 
+wg <- data.frame(
+  name = x, 
+  jahrgang = y, 
+  grundpreis = z) 
+
+wg$quadratmeter <- c(12, 14, 20, 15)
+wg$balkon <- c(TRUE, FALSE, FALSE, FALSE)
+```
+
+```{r miete, exercise = TRUE, exercise.setup = "wg_setupchunk_2", exercise.caption = "Miete"}
+
+```
+
+```{r miete-solution}
+wg$miete <- wg$grundpreis * wg$quadratmeter
+wg
+```
+
+
+Da die einzelnen Spalten fundamental Vektoren sind, ist alles genau wie beim Rechnen mit Vektoren. Sie verwenden `$`, um bestimmte Spalten aus dem Data Frame einzeln als Vektoren zu adressieren. 
+
+(Mehr Aufgaben einfügen, eventuell auch eine, die den Balkon mit einbezieht.)
+
+Super! Nun haben Sie `$` schon mal einfach so verwendet, ohne zu erfahren, warum das eigentlich geht. Im nächsten Kapitel erfahren Sie mehr über die technischen Hintergründe des Indizierens mit `$`, wenn Sie das interessiert.
 
 ## Listen und der `$`-Operator {data-progressive=TRUE}
 
