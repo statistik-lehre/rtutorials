@@ -210,10 +210,14 @@ learnr::question_radio("Was vermuten Sie: Was wird ausgegeben durch `wg$name`?",
 
 ### Berechnungen mit Spalten
 
-(Anmerkung: Hier mehr Aufgaben einfügen, die zunächst "Spalte + Zahl sind oder so, bevor Spalte * Spalte kommt.)
+Jetzt wo Sie wissen, wie Sie auf eine Spalte zugreifen können, üben wir das ein bisschen. 
 
 ::: aufgabe
-Berechnen Sie eine neue Spalte namens `miete`, in dem Sie den Qudratmeterpreis `grundpreis` mit der Zimmergröße `quadratmeter` multiplizieren. 
+(Beispiel einfügen)
+:::
+
+::: aufgabe
+Berechnen Sie eine neue Spalte namens `miete`, in dem Sie den Quadratmeterpreis `grundpreis` mit der Zimmergröße `quadratmeter` multiplizieren. 
 
 Lassen Sie sich dann die gesamte Tabelle anzeigen!
 :::
@@ -318,7 +322,7 @@ Die Liste (unten) hingegen kann problemlos Text und Zahlen gleichzeitig aufnehme
 
 Ein weitere Vorteil von Listen ist, dass sie auch Elemente unterschiedlicher Länge enthalten darf. 
 
-Data Frames sind dann eine spezielle Art von Liste - das charakterisierende Merkmal ist, dass alle Elemente die gleiche Länge haben müssen, während das für Listen generell nicht so sein muss. 
+Data Frames sind dann eine spezielle Art von Liste - das charakterisierende Merkmal ist, dass alle Elemente die gleiche Länge haben müssen, während das für Listen generell nicht so sein muss. Und sie werden anders gedruckt als Listen
 
 ### Listen verwenden `$` zum Indizieren
 
@@ -347,15 +351,18 @@ named_li$pflaumen
 ```
 
 
-
-`$` ist eine spezielle Art des
-Indizierens für Listen, und Data Frames sind in ihrer Grundstruktur einfach Listen.
-
-Data Frames sind in ihrer Grundstruktur Listen. Das ist Hintergrundwissen, dass Sie nur benötigen, um Verbindungslinien zu ziehen zu anderen Situationen, in denen der `$`-Operator auch auf den Plan tritt. Denn `$` ist ein Werkzeug, um Bestandteile einer Liste mit ihrem Namen aufzurufen. 
+`$` ist ein Werkzeug, um Bestandteile einer Liste mit ihrem Namen aufzurufen. Das ist Hintergrundwissen, dass Sie nur benötigen, um Verbindungslinien zu ziehen zu anderen Situationen, in denen der `$`-Operator auch auf den Plan tritt. 
 
 Wenn Sie andere Objektklassen kennenlernen, die auch fundamental Listen sind, wie zum Beispiel `fit`-Objekte (siehe Tutorial Regression), wird das Erscheinen von `$` Sinn ergeben.
 
 ### Data Frames verwenden `$` zum Indizieren
+
+Sie haben gelernt: 
+- Data Frames sind der Struktur nach benannte Listen
+- benannte Listen verwenden `$` zum Indizieren
+- Folglich verwenden Data Frames `$` zum Indizieren. 
+
+
 
 Um das Ganze etwas praktischer zu gestalten, verwenden wir nun mal einen realen Datensatz, der als Data Frame mit im `rtutorials`-Paket enthalten ist.
 
@@ -408,22 +415,69 @@ Data Frames sind Listen von gleichlangen Vektoren.
 
 ## Tibbles
 
-(Erklärung)
+Tibbles sind eine spezielle Art von Data Frame, die etwas nutzerfreundlicher ist.
 
-## Exkurs: Listen
+Hier ist ein Beispiel: 2022 hat der Fachbereich 14 der Uni Kassel eine groß angelegte Umfrage über die Nutzung des Neun-Euro-Tickets durchgeführt. `net` steht für Neun-Euro-Ticket und ist ein Datensatz, welcher im rtutorials-Paket enthalten ist und einen Ausschnitt aus der Umfrage enthält: 
+
+- `alter` (selbsterklärend)
+- `nutzung`: die Gesamtanzahl von Tagen pro Monat, an denen das Ticket genutzt wurde. 
+
+Lassen Sie sich den Datensatz `net` ausgeben!
+```{r net, exercise = TRUE, exercise.caption = "Neun-Euro-Ticket"}
+rtutorials::net
+```
+
+Wir erfahren schon in der ersten Zeile: Es handelt sich um eine Tibble. (Eindeutschung unserer Meinung nach "die", weil abgeleitet von *table* -> "die" Tabelle :)
+
+- Es werden nur die ersten 10 Zeilen gedruckt beim Ausgeben.
+- Fehlende Werte `NA`s sind rot gekennzeichnet (funktioniert hier im Tutorial nicht, nur in der Konsole von RStudio)
+- Der Datentyp jeder Spalte ist unter den Spaltennamen vermerkt (in diesem Fall beide Spalten `double`, also numerisch)
+
+```{r netquest, echo = FALSE}
+learnr::question_numeric("Wie viele Zeilen hat der Datensatz? Wenn jede Zeile eine Versuchsperson ist, wie viele Personen haben an der Studie teilgenommen?",
+                         answer(2446, correct = TRUE, message = "Die Zeilen einer Tabelle in R stehen üblicherweise für die Beobachtungen. Unsere Beobachtungseinheit hier ist Versuchsperson, das heißt, eine Zeile ist eine Versuchsperson."),
+                         allow_retry = TRUE)
+```
 
 
+Nun konvertieren wir `net` zu einem klassischen Data Frame. So können wir die Unterschiede noch besser sehen. Was passiert, wenn wir uns `net` als Data Frame ausgeben lassen?
 
-Das charakterisierende Merkmal von Listen ist, dass die einzelnen Inhalte verschiedenen Typs sein dürfen. 
+```{r netdf, exercise=TRUE, exercise.caption="Neun-Euro-Ticket als Data Frame"}
+as.data.frame(rtutorials::net)
+```
 
-Bei einem Vektor muss der gesamte Vektor den gleichen Datentyp beinhalten.
+Der Output wird unfassbar lang und für das menschliche Auge sehr unübersichtlich.
+Tibbles sind also einfach etwas freundlicher und praktischer im Umgang. 
 
-Viele andere Objekte sind in ihrer Grundstruktur auch Listen, die Sie kennenlernen werden.
+Sie können jeden Data Frame über die Funktion `as_tibble()` in eine Tibble umwandeln.
 
+Sie stammt aus dem Paket `tibble`, was Teil des `tidyverse` ist. Dann ist hier vermutlich auch die richtige Stelle, um Sie mit dem `tidyverse` bekannt zu machen.
 
-(Duplikat von weiter oben, mergen)
+## Tidyverse
 
+Was ist das `tidyverse`? Es ist ein Universum von Paketen, die sich einem bestimmten
+Ziel widmen, nämlich R für *Data Science* zu nutzen. Dazu gehört vor
+allem die Arbeit mit Tabellen und Daten. 
 
+Dabei hat sich eine Art Dialekt gebildet, der das Ziel hat, übersichtlich zu sein
+und konsistent und nutzerfreundlich.
+In den meisten Fällen werden `tidyverse`-Funktionen diesem Anspruch gerecht und 
+deswegen macht es auch Sinn, sie zu nutzen.
+
+Trotzdem ein Wort der Warnung: Alles, was mit `tidyverse`-Paketen möglich ist, 
+lässt sich auch mit `base R` erreichen. Es wäre nicht so schlau, die "Basis" zu vergessen,
+und nur noch `tidyverse` zu lernen.
+
+Folgende Pakete gehören zum `tidyverse`:
+
+- ggplot2: konsistente *Grammar of Graphs* für Visualisierungen
+- dplyr: *Data Plyers* "Datenzange"
+- tidyr: Daten in ein *tidy*-Format bringen
+-
+
+`tidyverse` ist ein Schirm, unter dem
+
+Achten Sie hierbei auf den Unterstrich in `as_tibble()`. Das ist ein klassisches Zeichen, dass wir uns im `tidyverse` bewegen
 
 ## Von der Datenerhebung zur Analyse
 
