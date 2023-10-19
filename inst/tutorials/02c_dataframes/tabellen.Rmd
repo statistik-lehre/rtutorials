@@ -451,33 +451,44 @@ Tibbles sind also einfach etwas freundlicher und praktischer im Umgang.
 
 Sie können jeden Data Frame über die Funktion `as_tibble()` in eine Tibble umwandeln.
 
-Sie stammt aus dem Paket `tibble`, was Teil des `tidyverse` ist. Dann ist hier vermutlich auch die richtige Stelle, um Sie mit dem `tidyverse` bekannt zu machen.
+Sie stammt aus dem Paket `tibble`, was Teil des Tidyverse ist. Dann ist hier vermutlich auch die richtige Stelle, um Sie mit dem Tidyverse bekannt zu machen.
 
 ## Tidyverse
 
-Was ist das `tidyverse`? Es ist ein Universum von Paketen, die sich einem bestimmten
+Was ist das Tidyverse? Es ist ein Universum von Paketen, die sich einem bestimmten
 Ziel widmen, nämlich R für *Data Science* zu nutzen. Dazu gehört vor
 allem die Arbeit mit Tabellen und Daten. 
 
 Dabei hat sich eine Art Dialekt gebildet, der das Ziel hat, übersichtlich zu sein
 und konsistent und nutzerfreundlich.
-In den meisten Fällen werden `tidyverse`-Funktionen diesem Anspruch gerecht und 
+In den meisten Fällen werden Tidyverse-Funktionen diesem Anspruch gerecht und 
 deswegen macht es auch Sinn, sie zu nutzen.
 
-Trotzdem ein Wort der Warnung: Alles, was mit `tidyverse`-Paketen möglich ist, 
-lässt sich auch mit `base R` erreichen. Es wäre nicht so schlau, die "Basis" zu vergessen,
-und nur noch `tidyverse` zu lernen.
+Trotzdem ein Wort der Warnung: Alles, was mit Tidyverse-Paketen möglich ist, 
+lässt sich auch mit base R erreichen. Es wäre nicht so schlau, die "Basis" zu vergessen,
+und nur noch Tidyverse zu lernen. Tidyverse schreibt selbst auf seiner [Website](https://www.tidyverse.org/), es sei ein „opinionated R Package“. Das heißt, es vertritt eine klare Meinung darüber, was eigentlich `tidy` für R bedeutet. Letztlich kann das Tidyverse nicht alles und nicht alle sind überzeugt
+davon, weswegen wir Ihnen ab jetzt an manchen Stellen parallel sowohl die base R-Lösung und die Tidyverse-Variante beibringen werden. Manche R-Kurse entscheiden sich, um nicht zu verwirrend zu sein, nur noch Tidyverse zu lehren, beispielsweise
+@ismay2022 oder @wickham2016. Wir denken jedoch, dass Sie base R zumindest auch 
+schon einmal gesehen haben sollten.
 
-Folgende Pakete gehören zum `tidyverse`:
+Folgende Pakete gehören zum Tidyverse: 
 
-- ggplot2: konsistente *Grammar of Graphs* für Visualisierungen
-- dplyr: *Data Plyers* "Datenzange"
-- tidyr: Daten in ein *tidy*-Format bringen
--
+(Hex-Sticker von tidyverse hinzufügen über das hexsticker Paket)
 
-`tidyverse` ist ein Schirm, unter dem
+- `ggplot2`: konsistente *Grammar of Graphs* für Visualisierungen
+- `dplyr`: *Data Plyers* "Datenzange"
+- `tidyr`: Daten in ein *tidy*-Format bringen
+- ... und noch einige mehr, unter anderem `tibble`.
 
-Achten Sie hierbei auf den Unterstrich in `as_tibble()`. Das ist ein klassisches Zeichen, dass wir uns im `tidyverse` bewegen
+Alle diese Pakete können entweder einzeln installiert werden oder alle auf einmal,
+in dem das Schirmpaket `tidyverse` installiert wird.
+
+Ein Beispiel für die Design-Richtlinien, nach denen sich Tidyverse-Funktionen
+richten müssen, ist keine Punkte zu verwenden in Funktionsnamen (wie z.B. base R:  `as.data.frame()`), sondern Unterstriche wie in `as_tibble()`. Das ist ein klassisches Zeichen, dass wir uns im Tidyverse bewegen.
+
+## Data Manipulation Tasks
+
+(dplyr und baseR aufgaben gegenüberstellen)
 
 ## Von der Datenerhebung zur Analyse
 
