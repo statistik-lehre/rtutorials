@@ -12,6 +12,9 @@ link-citations: TRUE
 description: Was sind Data Frames? Das Indizieren mit $-Operator wird geübt. 
 resource_files:
 - css/boxes.css
+editor_options:
+  markdown:
+    canonical: true
 ---
 
 ```{r setup, include=FALSE}
@@ -20,30 +23,29 @@ library(tidyverse)
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Data Frames {data-progressive=TRUE}
+## Data Frames {data-progressive="TRUE"}
 
 ### Einführung
 
-Dieses Kapitel zeigt Ihnen die Objektklasse, mit welcher Sie hauptsächlich arbeiten werden. Ein *Data Frame* ist die Struktur, mit der **Tabellen** in R repräsentiert werden. 
+Dieses Kapitel zeigt Ihnen die Objektklasse, mit welcher Sie hauptsächlich arbeiten werden. Ein *Data Frame* ist die Struktur, mit der **Tabellen** in R repräsentiert werden.
 
-Wenn Sie mit Tabellen in R zu tun haben werden - und das wird oft sein - wird es sich meist um *Data Frames* oder eine spezielle Unterform davon, *Tibbles*, handeln. Beides werden Sie in diesem Tutorial kennenlernen. 
+Wenn Sie mit Tabellen in R zu tun haben werden - und das wird oft sein - wird es sich meist um *Data Frames* oder eine spezielle Unterform davon, *Tibbles*, handeln. Beides werden Sie in diesem Tutorial kennenlernen.
 
 Dass Sie den Umgang mit Tabellen in R lernen, ist essentiell, da die meisten Daten auf dieser Welt irgendwie in Tabellen dargestellt werden.
 
-Im Tutorial "Vektoren" haben Sie gelernt, dass Vektoren Variablen darstellen und mehrere Werte enthalten können. 
+Im Tutorial "Vektoren" haben Sie gelernt, dass Vektoren Variablen darstellen und mehrere Werte enthalten können.
 
-In nächsten Abschnitt lernen Sie, wie Sie mehrere Vektoren in einer Tabelle zusammenbringen können. 
+In nächsten Abschnitt lernen Sie, wie Sie mehrere Vektoren in einer Tabelle zusammenbringen können.
 
 ::: blau-nb
-Übrigens: Wir verwenden hier für die Eindeutschung "der" Data Frame, die
-innerliche Begründung lautet: *Frame* = Rahmen, "der" Rahmen :)
+Übrigens: Wir verwenden hier für die Eindeutschung "der" Data Frame, die innerliche Begründung lautet: *Frame* = Rahmen, "der" Rahmen :)
 :::
 
 ### Beispiel
 
 Schauen Sie sich die Vektoren `alter` und `tier` im Codeblock an: Sie enthalten jeweils drei Elemente.
 
-Führen Sie den Code aus, um daraus einen Data Frame zu erstellen und anzuzeigen. 
+Führen Sie den Code aus, um daraus einen Data Frame zu erstellen und anzuzeigen.
 
 ```{r dataframe, exercise = TRUE, exercise.caption = "Data Frame erstellen"}
 alter <- c(14, 7, 1)
@@ -61,38 +63,31 @@ Neue Funktion: `data.frame()`
 Erstellt aus einzelnen Vektoren eine Tabelle. Die Vektoren müssen gleich lang sein.
 :::
 
-
 ### Prinzip
 
-Die Idee eines Data Frames ist, einen Haufen Vektoren gleicher Länge zu nehmen und damit eine Tabelle zu bauen. Dabei ist **jede Spalte ein Vektor**. Anders ausgedrückt: jede Spalte ist eine Variable. 
+Die Idee eines Data Frames ist, einen Haufen Vektoren gleicher Länge zu nehmen und damit eine Tabelle zu bauen. Dabei ist **jede Spalte ein Vektor**. Anders ausgedrückt: jede Spalte ist eine Variable.
 
 Das ist eine wichtige Grundstruktur, die Sie sich merken sollten, denn es bedeutet dass für die Spalten einer Tabelle die gleichen Mechanismen greifen wie bei Vektoren.
 
 ::: gelb
 **Disclaimer**
 
-In der Praxis werden Sie zur Dateneingabe ein grafisches Programm wie Excel verwenden, und die fertige Tabelle dann für die Verwendung mit R importieren. Das lernen Sie im Tutorial "Datenimport". 
+In der Praxis werden Sie zur Dateneingabe ein grafisches Programm wie Excel verwenden, und die fertige Tabelle dann für die Verwendung mit R importieren. Das lernen Sie im Tutorial "Datenimport".
 
-Wir fokussieren uns hier auf das Hantieren mit Data Frames, denn egal wie Sie die Tabelle
-erstellt haben - durch Import aus Excel oder Zusammensetzen einzelner Vektoren, es wird immer ein Data Frame sein in R. 
+Wir fokussieren uns hier auf das Hantieren mit Data Frames, denn egal wie Sie die Tabelle erstellt haben - durch Import aus Excel oder Zusammensetzen einzelner Vektoren, es wird immer ein Data Frame sein in R.
 
-Wenn im Folgenden immer wieder kleine Data Frames aus Vektoren erstellt werden, 
-dient das nur dazu, Beispiele zu konstruieren um den Umgang zu erlernen, aber 
-nicht weil das die übliche Methode ist, wie Daten in R eingegeben werden. 
+Wenn im Folgenden immer wieder kleine Data Frames aus Vektoren erstellt werden, dient das nur dazu, Beispiele zu konstruieren um den Umgang zu erlernen, aber nicht weil das die übliche Methode ist, wie Daten in R eingegeben werden.
 :::
 
 ### Neu = Alt
 
-Eine in R übliche Konvention für Namensgebungs-Situationen ist die Reihenfolge `NEW = OLD`. 
+Eine in R übliche Konvention für Namensgebungs-Situationen ist die Reihenfolge `NEW = OLD`.
 
-Bei der Verwendung von `data.frame()` kommen wir in eine solche Situation, weil 
-wir während der Erstellung Spaltennamen vergeben können. Betrachten Sie dazu das
-folgende Beispiel, wo wir eine Tabelle mit Daten über eine WG erstellen. 
+Bei der Verwendung von `data.frame()` kommen wir in eine solche Situation, weil wir während der Erstellung Spaltennamen vergeben können. Betrachten Sie dazu das folgende Beispiel, wo wir eine Tabelle mit Daten über eine WG erstellen.
 
-Schon beim Assignment, was ja auch eine Namensgebungs-Situation ist, gilt:
-Links steht immer der neue Name, rechts immer der alte Name oder Inhalt.
+Schon beim Assignment, was ja auch eine Namensgebungs-Situation ist, gilt: Links steht immer der neue Name, rechts immer der alte Name oder Inhalt.
 
-Achten Sie auf die Argumente von `data.frame()`: Dort gilt das gleiche Schema. Die "neuen" Spaltennamen stehen jeweils auf der linken Seite des Gleichheitszeichens, der "alte" Name des bereits vorhandenen Vektors auf der rechten. 
+Achten Sie auf die Argumente von `data.frame()`: Dort gilt das gleiche Schema. Die "neuen" Spaltennamen stehen jeweils auf der linken Seite des Gleichheitszeichens, der "alte" Name des bereits vorhandenen Vektors auf der rechten.
 
 ```{r new_is_old, exercise = TRUE, exercise.caption = "Neu ist Alt"}
 # Mitbewohnis in einer WG
@@ -111,11 +106,11 @@ wg <- data.frame(
 wg
 ```
 
-Das ist gut zu wissen, denn dieses Schema gilt als Konvention für die meisten Bennennungssituationen in R. 
+Das ist gut zu wissen, denn dieses Schema gilt als Konvention für die meisten Bennennungssituationen in R.
 
 #### Lerntest
 
-Haben Sie im Tutorial "Vektoren" gut aufgepasst? 
+Haben Sie im Tutorial "Vektoren" gut aufgepasst?
 
 Eigentlich haben Sie eben gelernt, alle Vektoren müssen gleich lang sein um einen Data Frame zu erstellen. Warum funktioniert es oben trotzdem, obwohl Vektor `z` nur Länge 1 hat und nicht ebenfalls 4?
 
@@ -138,11 +133,9 @@ learnr::question_radio(
 )
 ```
 
-
 ### Eine neue Spalte hinzufügen
 
-Nun wollen wir noch die Zimmergröße der WG-Mitbewohnis mit erfassen. 
-Ein einfacher Weg, dem Data Frame eine neue Spalte hinzuzufügen, ist der `$`-Operator.
+Nun wollen wir noch die Zimmergröße der WG-Mitbewohnis mit erfassen. Ein einfacher Weg, dem Data Frame eine neue Spalte hinzuzufügen, ist der `$`-Operator.
 
 Sehen Sie sich folgendes Beispiel an:
 
@@ -161,17 +154,14 @@ wg$quadratmeter <- c(12, 14, 20, 15)
 wg
 ```
 
-Auch hier gilt wieder das Schema `Alt <- Neu`. 
+Auch hier gilt wieder das Schema `Alt <- Neu`.
 
 ::: aufgabe
 Sie sind dran!
 
-Erstellen Sie mittels `$` im `wg`-Datensatz eine neue Spalte `balkon`, die angibt ob die Zimmer Zugang zu einem 
-Balkon haben. Geben Sie erfundene Werte ein. `TRUE` bedeutet "mit Balkon", `FALSE`
-"ohne Balkon".
+Erstellen Sie mittels `$` im `wg`-Datensatz eine neue Spalte `balkon`, die angibt ob die Zimmer Zugang zu einem Balkon haben. Geben Sie erfundene Werte ein. `TRUE` bedeutet "mit Balkon", `FALSE` "ohne Balkon".
 
-Lassen Sie sich `wg` danach anzeigen, um zu überprüfen ob die neue Spalte da ist. 
-
+Lassen Sie sich `wg` danach anzeigen, um zu überprüfen ob die neue Spalte da ist.
 :::
 
 ```{r balkon, exercise = TRUE, exercise.setup = "dollar", exercise.caption = "Balkon"}
@@ -187,8 +177,7 @@ wg
 
 #### auf Spalten zugreifen
 
-Sie können `$` nicht nur verwenden, um neue Spalten zu erstellen, sondern auch um sich
-Spalten einzeln ausgeben zu lassen und damit Berechnungen anzustellen.
+Sie können `$` nicht nur verwenden, um neue Spalten zu erstellen, sondern auch um sich Spalten einzeln ausgeben zu lassen und damit Berechnungen anzustellen.
 
 Testen Sie, was der folgende Code zurückgibt.
 
@@ -210,14 +199,14 @@ learnr::question_radio("Was vermuten Sie: Was wird ausgegeben durch `wg$name`?",
 
 ### Berechnungen mit Spalten
 
-Jetzt wo Sie wissen, wie Sie auf eine Spalte zugreifen können, üben wir das ein bisschen. 
+Jetzt wo Sie wissen, wie Sie auf eine Spalte zugreifen können, üben wir das ein bisschen.
 
 ::: aufgabe
 (Beispiel einfügen)
 :::
 
 ::: aufgabe
-Berechnen Sie eine neue Spalte namens `miete`, in dem Sie den Quadratmeterpreis `grundpreis` mit der Zimmergröße `quadratmeter` multiplizieren. 
+Berechnen Sie eine neue Spalte namens `miete`, in dem Sie den Quadratmeterpreis `grundpreis` mit der Zimmergröße `quadratmeter` multiplizieren.
 
 Lassen Sie sich dann die gesamte Tabelle anzeigen!
 :::
@@ -244,27 +233,26 @@ wg$miete <- wg$grundpreis * wg$quadratmeter
 wg
 ```
 
-
-Da die einzelnen Spalten fundamental Vektoren sind, ist alles genau wie beim Rechnen mit Vektoren. Sie verwenden `$`, um bestimmte Spalten aus dem Data Frame einzeln als Vektoren zu adressieren. 
+Da die einzelnen Spalten fundamental Vektoren sind, ist alles genau wie beim Rechnen mit Vektoren. Sie verwenden `$`, um bestimmte Spalten aus dem Data Frame einzeln als Vektoren zu adressieren.
 
 (Mehr Aufgaben einfügen, eventuell auch eine, die den Balkon mit einbezieht.)
 
 Super! Nun haben Sie `$` schon mal einfach so verwendet, ohne zu erfahren, warum das eigentlich geht. Im nächsten Kapitel erfahren Sie mehr über die technischen Hintergründe des Indizierens mit `$`, wenn Sie das interessiert.
 
-## Listen und der `$`-Operator {data-progressive=TRUE}
+## Listen und der `$`-Operator {data-progressive="TRUE"}
 
-Wir werden in diesem Kapitel vom Allgemeinen auf das Spezifische schließen, das heißt, Sie lernen eventuell mehr als Sie müssen, haben aber danach eine bessere Ausgangslage um auch andere spezifische Situationen einzuordnen. 
+Wir werden in diesem Kapitel vom Allgemeinen auf das Spezifische schließen, das heißt, Sie lernen eventuell mehr als Sie müssen, haben aber danach eine bessere Ausgangslage um auch andere spezifische Situationen einzuordnen.
 
 In diesem Kapitel haben Sie die Chance im Schnelldurchlauf zu verstehen:
 
-- warum ein Data Frame eine Art von Liste ist
-- was eine Liste in R ist
-- dass Listen `$` zum Indizieren verwenden
-- und deshalb auch Data Frames `$` zum Indizieren verwenden. 
+-   warum ein Data Frame eine Art von Liste ist
+-   was eine Liste in R ist
+-   dass Listen `$` zum Indizieren verwenden
+-   und deshalb auch Data Frames `$` zum Indizieren verwenden.
 
 ### Warum ein Data Frame eine Liste ist
 
-Einen Data Frame können Sie als einen Vektor auffassen, der als Teilemente andere Vektoren enthält. Die grundlegende Datenstruktur in R dafür heißt *Liste*. 
+Einen Data Frame können Sie als einen Vektor auffassen, der als Teilemente andere Vektoren enthält. Die grundlegende Datenstruktur in R dafür heißt *Liste*.
 
 Die Listen-Artige Struktur eines Data Frames wird deutlich, wenn wir uns die Struktur mit `str()` anzeigen lassen:
 
@@ -274,30 +262,32 @@ str(wg)
 
 Wir werden informiert über:
 
-- Die Objektklasse (`data.frame`)
-- Die Anzahl an Variablen (4) 
-- Anzahl von Beobachtungen (*observations*) je Variable (`4 obs.`)
-- Den Datentyp der einzelnen Variablen: 
-  
-  - `chr` für *character* (Text)
-  - `num` für *numeric* (Zahlen)
+-   Die Objektklasse (`data.frame`)
+
+-   Die Anzahl an Variablen (4)
+
+-   Anzahl von Beobachtungen (*observations*) je Variable (`4 obs.`)
+
+-   Den Datentyp der einzelnen Variablen:
+
+    -   `chr` für *character* (Text)
+    -   `num` für *numeric* (Zahlen)
 
 <br>
 
-Noch deutlicher wird es, wenn wir mit `typeof()` nach dem zugrunde liegenden Datentyp von `wg` fragen. 
+Noch deutlicher wird es, wenn wir mit `typeof()` nach dem zugrunde liegenden Datentyp von `wg` fragen.
 
 ```{r typeof, exercise = TRUE, exercise.setup = "dollar"}
 typeof(wg)
 ```
 
-
 ### Was eine Liste in R ist
 
-Eine Liste kann verstanden werden als ein "allgemeiner Vektor", welcher normale Vektoren enthalten kann - und sogar andere Listen (das wird dann aber schnell sehr unübersichtlich). 
+Eine Liste kann verstanden werden als ein "allgemeiner Vektor", welcher normale Vektoren enthalten kann - und sogar andere Listen (das wird dann aber schnell sehr unübersichtlich).
 
 Ein ganz zentraler Punkt: Während normale Vektoren *atomic* sind, also immer nur Daten des gleichen Typs beherbergen können, können Listen gemischte Daten enthalten.
 
-Hier ein Beispiel: 
+Hier ein Beispiel:
 
 ```{r list_example, exercise = TRUE, exercise.setup = "dollar"}
 # named vector:
@@ -320,13 +310,13 @@ Der Vektor (oben im Output) kann nur Daten eines einzigen Typs enthalten. Da er 
 
 Die Liste (unten) hingegen kann problemlos Text und Zahlen gleichzeitig aufnehmen.
 
-Ein weitere Vorteil von Listen ist, dass sie auch Elemente unterschiedlicher Länge enthalten darf. 
+Ein weitere Vorteil von Listen ist, dass sie auch Elemente unterschiedlicher Länge enthalten darf.
 
 Data Frames sind dann eine spezielle Art von Liste - das charakterisierende Merkmal ist, dass alle Elemente die gleiche Länge haben müssen, während das für Listen generell nicht so sein muss. Und sie werden anders gedruckt als Listen
 
 ### Listen verwenden `$` zum Indizieren
 
-`$` ist speziell für das Indizieren bei benannten Listen gedacht, deswegen haben wir im letzten Abschnitt auch Namen für die Elemente der Liste vergeben. 
+`$` ist speziell für das Indizieren bei benannten Listen gedacht, deswegen haben wir im letzten Abschnitt auch Namen für die Elemente der Liste vergeben.
 
 Sagen wir mal, wir interessieren uns dafür, was das Listenelement "birnen" so enthält:
 
@@ -337,9 +327,7 @@ named_li$birnen
 <br>
 
 ::: aufgabe
-
-Finden Sie heraus, was das Listenelement namens "pflaumen" aus der Liste `named_li` enthält! Verwenden Sie den `$`-Operator. 
-
+Finden Sie heraus, was das Listenelement namens "pflaumen" aus der Liste `named_li` enthält! Verwenden Sie den `$`-Operator.
 :::
 
 ```{r dollar_exercise, exercise = TRUE, exercise.setup = "list_example"}
@@ -350,29 +338,23 @@ Finden Sie heraus, was das Listenelement namens "pflaumen" aus der Liste `named_
 named_li$pflaumen
 ```
 
-
-`$` ist ein Werkzeug, um Bestandteile einer Liste mit ihrem Namen aufzurufen. Das ist Hintergrundwissen, dass Sie nur benötigen, um Verbindungslinien zu ziehen zu anderen Situationen, in denen der `$`-Operator auch auf den Plan tritt. 
+`$` ist ein Werkzeug, um Bestandteile einer Liste mit ihrem Namen aufzurufen. Das ist Hintergrundwissen, dass Sie nur benötigen, um Verbindungslinien zu ziehen zu anderen Situationen, in denen der `$`-Operator auch auf den Plan tritt.
 
 Wenn Sie andere Objektklassen kennenlernen, die auch fundamental Listen sind, wie zum Beispiel `fit`-Objekte (siehe Tutorial Regression), wird das Erscheinen von `$` Sinn ergeben.
 
 ### Data Frames verwenden `$` zum Indizieren
 
-Sie haben gelernt: 
-- Data Frames sind der Struktur nach benannte Listen
-- benannte Listen verwenden `$` zum Indizieren
-- Folglich verwenden Data Frames `$` zum Indizieren. 
-
-
+Sie haben gelernt: - Data Frames sind der Struktur nach benannte Listen - benannte Listen verwenden `$` zum Indizieren - Folglich verwenden Data Frames `$` zum Indizieren.
 
 Um das Ganze etwas praktischer zu gestalten, verwenden wir nun mal einen realen Datensatz, der als Data Frame mit im `rtutorials`-Paket enthalten ist.
 
-Erfasst sind dort die tägliche Maximaltemperatur in Grad Fahrenheit, und die Anzahl von durch Überhitzung verursachten Notaufnahme-Fällen in den Krankenhäusern von New York für den jeweiligen Tag. 
+Erfasst sind dort die tägliche Maximaltemperatur in Grad Fahrenheit, und die Anzahl von durch Überhitzung verursachten Notaufnahme-Fällen in den Krankenhäusern von New York für den jeweiligen Tag.
 
 Um sich einen Überblick über
 
 ### Learnings
 
-- `$` ist ein Werkzeug, um Bestandteile einer Liste mit ihrem Namen aufzurufen. 
+-   `$` ist ein Werkzeug, um Bestandteile einer Liste mit ihrem Namen aufzurufen.
 
 ## Indizierung bei Data Frames
 
@@ -382,7 +364,7 @@ Um gezielt eine bestimmte Spalte anzusteuern, benötigen Sie den `$`-Operator.
 
 (Exercise einfügen)
 
-An sich können Sie für die Spalten die gleichen Mechanismen verwenden wie für Vektoren, denn es *sind* Vektoren. 
+An sich können Sie für die Spalten die gleichen Mechanismen verwenden wie für Vektoren, denn es *sind* Vektoren.
 
 (Beispiel einfügen)
 
@@ -392,14 +374,13 @@ Bemerken Sie, dass bei Data Frames der Output beim Indizieren mit dem `$`-Operat
 
 Es gibt noch eine andere Methode, die bei Data Frames immer auch einen Data Frame zurückgibt.
 
-Das ist ein wichtiger Unterschied! 
+Das ist ein wichtiger Unterschied!
 
 ### Subsetting mit `[ , ]`
 
 Um nicht nur eine einzelne Spalte herausgreifen zu können, sondern auch mehrere, können wir wieder den Index-Operator nutzen `[]`. Der funktioniert bei Data Frames eigentlich genau wie bei Vektoren, allerdings haben wir nun zwei mögliche Dimensionen: Zeilen und Spalten - anstatt vormals nur einer Dimension bei Vektoren.
 
-Deswegen brauchen wir für Data Frames auch zwei Positionsangaben, mit einem Komma 
-getrennt: 
+Deswegen brauchen wir für Data Frames auch zwei Positionsangaben, mit einem Komma getrennt:
 
 `[Zeilen, Spalten]`
 
@@ -417,21 +398,22 @@ Data Frames sind Listen von gleichlangen Vektoren.
 
 Tibbles sind eine spezielle Art von Data Frame, die etwas nutzerfreundlicher ist.
 
-Hier ist ein Beispiel: 2022 hat der Fachbereich 14 der Uni Kassel eine groß angelegte Umfrage über die Nutzung des Neun-Euro-Tickets durchgeführt. `net` steht für Neun-Euro-Ticket und ist ein Datensatz, welcher im rtutorials-Paket enthalten ist und einen Ausschnitt aus der Umfrage enthält: 
+Hier ist ein Beispiel: 2022 hat der Fachbereich 14 der Uni Kassel eine groß angelegte Umfrage über die Nutzung des Neun-Euro-Tickets durchgeführt. `net` steht für Neun-Euro-Ticket und ist ein Datensatz, welcher im rtutorials-Paket enthalten ist und einen Ausschnitt aus der Umfrage enthält:
 
-- `alter` (selbsterklärend)
-- `nutzung`: die Gesamtanzahl von Tagen pro Monat, an denen das Ticket genutzt wurde. 
+-   `alter` (selbsterklärend)
+-   `nutzung`: die Gesamtanzahl von Tagen pro Monat, an denen das Ticket genutzt wurde.
 
 Lassen Sie sich den Datensatz `net` ausgeben!
+
 ```{r net, exercise = TRUE, exercise.caption = "Neun-Euro-Ticket"}
 rtutorials::net
 ```
 
-Wir erfahren schon in der ersten Zeile: Es handelt sich um eine Tibble. (Eindeutschung unserer Meinung nach "die", weil abgeleitet von *table* -> "die" Tabelle :)
+Wir erfahren schon in der ersten Zeile: Es handelt sich um eine Tibble. (Eindeutschung unserer Meinung nach "die", weil abgeleitet von *table* -\> "die" Tabelle :)
 
-- Es werden nur die ersten 10 Zeilen gedruckt beim Ausgeben.
-- Fehlende Werte `NA`s sind rot gekennzeichnet (funktioniert hier im Tutorial nicht, nur in der Konsole von RStudio)
-- Der Datentyp jeder Spalte ist unter den Spaltennamen vermerkt (in diesem Fall beide Spalten `double`, also numerisch)
+-   Es werden nur die ersten 10 Zeilen gedruckt beim Ausgeben.
+-   Fehlende Werte `NA`s sind rot gekennzeichnet (funktioniert hier im Tutorial nicht, nur in der Konsole von RStudio)
+-   Der Datentyp jeder Spalte ist unter den Spaltennamen vermerkt (in diesem Fall beide Spalten `double`, also numerisch)
 
 ```{r netquest, echo = FALSE}
 learnr::question_numeric("Wie viele Zeilen hat der Datensatz? Wenn jede Zeile eine Versuchsperson ist, wie viele Personen haben an der Studie teilgenommen?",
@@ -439,15 +421,13 @@ learnr::question_numeric("Wie viele Zeilen hat der Datensatz? Wenn jede Zeile ei
                          allow_retry = TRUE)
 ```
 
-
 Nun konvertieren wir `net` zu einem klassischen Data Frame. So können wir die Unterschiede noch besser sehen. Was passiert, wenn wir uns `net` als Data Frame ausgeben lassen?
 
 ```{r netdf, exercise=TRUE, exercise.caption="Neun-Euro-Ticket als Data Frame"}
 as.data.frame(rtutorials::net)
 ```
 
-Der Output wird unfassbar lang und für das menschliche Auge sehr unübersichtlich.
-Tibbles sind also einfach etwas freundlicher und praktischer im Umgang. 
+Der Output wird unfassbar lang und für das menschliche Auge sehr unübersichtlich. Tibbles sind also einfach etwas freundlicher und praktischer im Umgang.
 
 Sie können jeden Data Frame über die Funktion `as_tibble()` in eine Tibble umwandeln.
 
@@ -455,36 +435,24 @@ Sie stammt aus dem Paket `tibble`, was Teil des Tidyverse ist. Dann ist hier ver
 
 ## Tidyverse
 
-Was ist das Tidyverse? Es ist ein Universum von Paketen, die sich einem bestimmten
-Ziel widmen, nämlich R für *Data Science* zu nutzen. Dazu gehört vor
-allem die Arbeit mit Tabellen und Daten. 
+Was ist das Tidyverse? Es ist ein Universum von Paketen, die sich einem bestimmten Ziel widmen, nämlich R für *Data Science* zu nutzen. Dazu gehört vor allem die Arbeit mit Tabellen und Daten.
 
-Dabei hat sich eine Art Dialekt gebildet, der das Ziel hat, übersichtlich zu sein
-und konsistent und nutzerfreundlich.
-In den meisten Fällen werden Tidyverse-Funktionen diesem Anspruch gerecht und 
-deswegen macht es auch Sinn, sie zu nutzen.
+Dabei hat sich eine Art Dialekt gebildet, der das Ziel hat, übersichtlich zu sein und konsistent und nutzerfreundlich. In den meisten Fällen werden Tidyverse-Funktionen diesem Anspruch gerecht und deswegen macht es auch Sinn, sie zu nutzen.
 
-Trotzdem ein Wort der Warnung: Alles, was mit Tidyverse-Paketen möglich ist, 
-lässt sich auch mit base R erreichen. Es wäre nicht so schlau, die "Basis" zu vergessen,
-und nur noch Tidyverse zu lernen. Tidyverse schreibt selbst auf seiner [Website](https://www.tidyverse.org/), es sei ein „opinionated R Package“. Das heißt, es vertritt eine klare Meinung darüber, was eigentlich `tidy` für R bedeutet. Letztlich kann das Tidyverse nicht alles und nicht alle sind überzeugt
-davon, weswegen wir Ihnen ab jetzt an manchen Stellen parallel sowohl die base R-Lösung und die Tidyverse-Variante beibringen werden. Manche R-Kurse entscheiden sich, um nicht zu verwirrend zu sein, nur noch Tidyverse zu lehren, beispielsweise
-@ismay2022 oder @wickham2016. Wir denken jedoch, dass Sie base R zumindest auch 
-schon einmal gesehen haben sollten.
+Trotzdem ein Wort der Warnung: Alles, was mit Tidyverse-Paketen möglich ist, lässt sich auch mit base R erreichen. Es wäre nicht so schlau, die "Basis" zu vergessen, und nur noch Tidyverse zu lernen. Tidyverse schreibt selbst auf seiner [Website](https://www.tidyverse.org/), es sei ein „opinionated R Package". Das heißt, es vertritt eine klare Meinung darüber, was eigentlich `tidy` für R bedeutet. Letztlich kann das Tidyverse nicht alles und nicht alle sind überzeugt davon, weswegen wir Ihnen ab jetzt an manchen Stellen parallel sowohl die base R-Lösung und die Tidyverse-Variante beibringen werden. Manche R-Kurse entscheiden sich, um nicht zu verwirrend zu sein, nur noch Tidyverse zu lehren, beispielsweise @ismay2022 oder @wickham2016. Wir denken jedoch, dass Sie base R zumindest auch schon einmal gesehen haben sollten.
 
-Folgende Pakete gehören zum Tidyverse: 
+Folgende Pakete gehören zum Tidyverse:
 
 (Hex-Sticker von tidyverse hinzufügen über das hexsticker Paket)
 
-- `ggplot2`: konsistente *Grammar of Graphs* für Visualisierungen
-- `dplyr`: *Data Plyers* "Datenzange"
-- `tidyr`: Daten in ein *tidy*-Format bringen
-- ... und noch einige mehr, unter anderem `tibble`.
+-   `ggplot2`: konsistente *Grammar of Graphs* für Visualisierungen
+-   `dplyr`: *Data Plyers* "Datenzange"
+-   `tidyr`: Daten in ein *tidy*-Format bringen
+-   ... und noch einige mehr, unter anderem `tibble`.
 
-Alle diese Pakete können entweder einzeln installiert werden oder alle auf einmal,
-in dem das Schirmpaket `tidyverse` installiert wird.
+Alle diese Pakete können entweder einzeln installiert werden oder alle auf einmal, in dem das Schirmpaket `tidyverse` installiert wird.
 
-Ein Beispiel für die Design-Richtlinien, nach denen sich Tidyverse-Funktionen
-richten müssen, ist keine Punkte zu verwenden in Funktionsnamen (wie z.B. base R:  `as.data.frame()`), sondern Unterstriche wie in `as_tibble()`. Das ist ein klassisches Zeichen, dass wir uns im Tidyverse bewegen.
+Ein Beispiel für die Design-Richtlinien, nach denen sich Tidyverse-Funktionen richten müssen, ist keine Punkte zu verwenden in Funktionsnamen (wie z.B. base R: `as.data.frame()`), sondern Unterstriche wie in `as_tibble()`. Das ist ein klassisches Zeichen, dass wir uns im Tidyverse bewegen.
 
 ## Data Manipulation Tasks
 
@@ -494,7 +462,7 @@ richten müssen, ist keine Punkte zu verwenden in Funktionsnamen (wie z.B. base 
 
 Es klingt banal, aber wenn die Daten aufgeräumt sind, ist bereits die größte Hürde geschafft. Einen Großteil der Zeit von Datenanalyse verbringen Forschende damit, Daten in die richtige Form zu bringen. Die Auswertung selbst geht dann oft vergleichsweise schnell.
 
-Den ganzen Aufräumprozess können Sie erleichtern, wenn Sie die Daten von Anfang an so organisieren, dass R gut damit umgehen kann. 
+Den ganzen Aufräumprozess können Sie erleichtern, wenn Sie die Daten von Anfang an so organisieren, dass R gut damit umgehen kann.
 
 Aber was gibt es eigentlich für Formen in denen Daten sein können?
 
@@ -511,7 +479,6 @@ df |> pivot_longer(cols = !id, names_to = "variable")
 df |> arrange(Height) |> pivot_wider(id_cols = "id", names_from = "Height",
                                      names_prefix = "Height=", values_from = "Volume")
 ```
-
 
 ## 
 
@@ -533,9 +500,9 @@ Merke: Beobachtungen sind immer die Zeilen, und Variablen immer die Spalten.
 
 Variablen sind die unterschiedlichen Fragen, die wir gestellt haben. Zum Beispiel:
 
--   Wie alt sind Sie? -> Variable: Alter
+-   Wie alt sind Sie? -\> Variable: Alter
 
--   Wie weit war Ihr Weg in km? -> Variable: Weg
+-   Wie weit war Ihr Weg in km? -\> Variable: Weg
 
 ##### Beobachtungen
 
