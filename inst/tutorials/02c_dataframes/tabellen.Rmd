@@ -20,6 +20,7 @@ editor_options:
 ```{r setup, include=FALSE}
 library(learnr)
 library(tidyverse)
+library(nycflights13)
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
@@ -439,7 +440,7 @@ Was ist das Tidyverse? Es ist ein Universum von Paketen, die sich einem bestimmt
 
 Dabei hat sich eine Art Dialekt gebildet, der das Ziel hat, übersichtlich zu sein und konsistent und nutzerfreundlich. In den meisten Fällen werden Tidyverse-Funktionen diesem Anspruch gerecht und deswegen macht es auch Sinn, sie zu nutzen.
 
-Trotzdem ein Wort der Warnung: Alles, was mit Tidyverse-Paketen möglich ist, lässt sich auch mit base R erreichen. Es wäre nicht so schlau, die "Basis" zu vergessen, und nur noch Tidyverse zu lernen. Tidyverse schreibt selbst auf seiner [Website](https://www.tidyverse.org/), es sei ein „opinionated R Package". Das heißt, es vertritt eine klare Meinung darüber, was eigentlich `tidy` für R bedeutet. Letztlich kann das Tidyverse nicht alles und nicht alle sind überzeugt davon, weswegen wir Ihnen ab jetzt an manchen Stellen parallel sowohl die base R-Lösung und die Tidyverse-Variante beibringen werden. Manche R-Kurse entscheiden sich, um nicht zu verwirrend zu sein, nur noch Tidyverse zu lehren, beispielsweise @ismay2022 oder @wickham2016. Wir denken jedoch, dass Sie base R zumindest auch schon einmal gesehen haben sollten.
+Trotzdem ein Wort der Warnung: Alles, was mit Tidyverse-Paketen möglich ist, lässt sich auch mit base R erreichen. Es wäre nicht so schlau, die "Basis" zu vergessen, und nur noch Tidyverse zu lernen. Tidyverse schreibt selbst auf seiner [Website](https://www.tidyverse.org/), es sei ein „opinionated R Package". Das heißt, es vertritt eine klare Meinung darüber, was eigentlich *tidy*, also aufgeräumt sein, für R bedeutet. Letztlich kann das Tidyverse nicht alles und nicht alle sind überzeugt davon, weswegen wir Ihnen ab jetzt an manchen Stellen parallel sowohl die base R-Lösung und die Tidyverse-Variante beibringen werden. Manche R-Kurse entscheiden sich, um nicht zu verwirrend zu sein, nur noch Tidyverse zu lehren, beispielsweise @ismay2022 oder @wickham2016. Wir denken jedoch, dass Sie base R zumindest auch schon einmal gesehen haben sollten.
 
 Folgende Pakete gehören zum Tidyverse:
 
@@ -450,13 +451,79 @@ Folgende Pakete gehören zum Tidyverse:
 -   `tidyr`: Daten in ein *tidy*-Format bringen
 -   ... und noch einige mehr, unter anderem `tibble`.
 
-Alle diese Pakete können entweder einzeln installiert werden oder alle auf einmal, in dem das Schirmpaket `tidyverse` installiert wird.
+Alle diese Pakete können entweder einzeln installiert werden oder alle auf einmal, indem das Schirmpaket `tidyverse` installiert wird.
 
 Ein Beispiel für die Design-Richtlinien, nach denen sich Tidyverse-Funktionen richten müssen, ist keine Punkte zu verwenden in Funktionsnamen (wie z.B. base R: `as.data.frame()`), sondern Unterstriche wie in `as_tibble()`. Das ist ein klassisches Zeichen, dass wir uns im Tidyverse bewegen.
 
 ## Data Manipulation Tasks
 
-(dplyr und baseR aufgaben gegenüberstellen)
+Der erste Anwendungsfall, in denen wir Ihnen sowohl Tidyverse- als auch base R-Varianten vorstellen möchten, ist das Reduzieren eines Datensatzes auf bestimmte Spalten.
+
+Die Ausgangslage ist: Wir haben einen Datensatz mit unübersichtlich vielen Variablen (Spalten), und möchten davon bestimmte auswählen.
+
+Als Beispiel sollte uns im Folgenden der `nycflights13::flights`-Datensatz dienen. Viele Erklärungen und Lehrbücher aus dem Tidyverse diese Daten als Referenz, deswegen ist es gut, wenn Sie sich damit vertraut machen.
+
+#### `flights`
+
+... ist einer von fünf Datensätzen aus dem `nycflights13`-Paket. Darin sind reale Daten aller Flüge enthalten, die im Jahr 2013 von einem der drei großen Flughäfen New Yorks abflogen - JFK (John F. Kennedy Airport), LGA oder EWR (Newark). Vor allem liegt der Fokus auf Verspätungen und Pünktlichkeit.
+
+Die anderen Datensätze aus dem Paket bieten zusätzliche Informationen, von Nachschlage-Tabellen für...
+
+-   Airline-Abkürzungen (`airlines`)
+
+```{=html}
+<!-- -->
+```
+-   Flugzeugtypen (`planes`)
+
+-   Flughafenkürzel (`airports`)
+
+bis zu stündlichen Wetterdaten des ganzen Jahres für alle drei Flughäfen (in `weather`).
+
+Hier haben Sie die Möglichkeit, sich `flights` ausgeben zu lassen. Für Ihren Komfort haben wir das Paket `nycflights13` bereits geladen, aber wenn Sie die Daten außerhalb des Tutorials aufrufen möchten, müssten Sie das vorher tun.
+
+```{r flightsout, exercise = TRUE, exercise.caption = "flights"}
+flights
+```
+
+```{r flightsquiz, echo = F}
+quiz(
+  question_numeric("Wie viele Beobachtungen enthält der `flights`-Datensatz?",
+  answer(336776, correct = TRUE, message = "Entweder Sie nutzen `nrow()` oder Sie lesen es beim Output in der allerersten Zeile ab: `A tibble: 336,776 x 19`"),
+  allow_retry = TRUE),
+  question_numeric("Wie viele Variablen enthält `flights`?",
+    answer(19, correct = TRUE),
+    allow_retry = TRUE)
+  )
+```
+
+### Bestimmte Variablen auswählen
+
+#### Tidyverse-Approach
+
+Dafür verwenden wir das Paket `dplyr`, was so viel bedeutet wie *Data Plyers*, "Datenzange". Es ist im Tidyverse enthalten und wird mit geladen, wenn Sie `library(tidyverse)` laden, Sie können es aber auch einzeln laden mit `library(dplyr)`. Für Ihren Komfort haben wir das im Tutorial schon erledigt für Sie.
+
+Um nun lediglich die zurückgelegte Strecke (`distance`) und die Zeit in der Luft (`air_time`) anzeigen zu lassen, gehen Sie wie folgt vor:
+
+```{r}
+flights |> select(distance, air_time)
+```
+
+Dabei dürfte Ihnen vor allem diese Funktion ins Auge fallen: `|>`, der Pipe-Operator.
+
+"Pipes" gibt es in vielen Programmiersprachen, das heißt, was Sie hier als Konzept lernen, ist auf jeden Fall übertragbar auf andere Kontexte.
+
+Bei der *Pipe*, "Röhre", wird etwas Schritt für Schritt verarbeitet und dabei wird der Output von einer Station als Input an die nächste weitergegeben, wie auf einem Förderband in einer Industrieanlage, oder in einer Röhre eben.
+
+```{r}
+# Pipe-Schreibweise
+c(1, 2, 3, 4, 5) |> mean()
+
+# ohne Pipe
+mean(c(1, 2, 3, 4, 5))
+```
+
+Pipes helfen, den Code lesbarer zu machen und komplizierte Verschachtelungen oder unnötige Zwischenspeicher-Schritte zu ersetzen.
 
 ## Von der Datenerhebung zur Analyse
 
