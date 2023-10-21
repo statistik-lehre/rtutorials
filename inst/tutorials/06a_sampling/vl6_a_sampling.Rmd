@@ -90,23 +90,23 @@ Jede der 33 Gruppen trägt dann den von ihnen bestimmten Anteil roter Kugeln in 
 
 Schauen Sie sich das Histogramm mit den ersten 10 handgezeichneten Einträgen an:
 
-- Am unteren Ende hat eine Gruppe in ihren 50 Kugelneinen Anteil zwischen 20-25% rote gefunden
+- Am unteren Ende hat eine Gruppe in ihren 50 Kugeln einen Anteil zwischen 20-25% roten gefunden
 
-- Am oberen Ende wurde in einer Stichprobe mit 50 Kugeln ein Anteil von 45-50% roter Kugeln gefunden.
+- Am oberen Ende wurde in einer Stichprobe mit 50 Kugeln ein Anteil von 45-50% roten Kugeln gefunden.
 
-- Allerdings war der am häufigsten auftretende Anteil zwischen 30-35%, ganzz in der Mitte der Verteilung.
+- Allerdings war der am häufigsten auftretende Anteil zwischen 30-35%, ganz in der Mitte der Verteilung.
 
 - Die Form der Verteilung kann man als grob "glockenförmig" beschreiben (mit etwas gutem Willen)
 
-Lasst uns jetzt dieses selbe Histogramm in R herstellen mit den Daten-Visualisierungsskills die ihr im letzten Tutorial erlangt habt! Wir haben unsere 33 Gruppen im `tactile_prop_red`-Dataframe gespeichert, der im `moderndive`-Paket mitgeliefert wird. 
+Lasst uns jetzt ebendieses Histogramm noch einmal in R herstellen mit den Daten-Visualisierungsskills die ihr im letzten Tutorial erlangt habt! Wir haben unsere 33 Gruppen im `tactile_prop_red`-Dataframe gespeichert, der im `moderndive`-Paket mitgeliefert wird. 
 
-Führt den Codeblock aus, um die ersten 10 von 33 Zeilen anzeigen zu lassen:
+Führen Sie den Codeblock aus, um sich die ersten 10 von 33 Zeilen anzeigen zu lassen:
 
 ```{r tibble, exercise = TRUE}
 moderndive::tactile_prop_red
 ```
 
-Das hier ist zu ist zu sehen: Für jede Gruppe haben wir deren Namen, die Anzahl roter Kugeln, und den zugehörigen Anteil aus 50 Kugeln (`prop_red`). Außerdem haben wir die Variable `replicate`, welche die Zeilen nummeriert. Wir haben diesen Namen ausgesucht, weil jede Zeile als eine Instanz einer replizierten (wiederholten) Aktivität besteht. 
+Das hier ist zu ist zu sehen: Für jede Gruppe haben wir die Namen der Studierenden, die Anzahl roter Kugeln, und den zugehörigen Anteil aus 50 Kugeln (`prop_red`). Außerdem haben wir die Variable `replicate`, welche die Zeilen nummeriert. Wir haben diesen Namen ausgesucht, weil jede Zeile als eine Instanz einer replizierten (wiederholten) Aktivität besteht. 
 
 ::: aufgabe
 Lasst uns die Verteilung der 33 Proportionen roter Kugeln visualisieren mithilfe von `ggplot` und `geom_histogram` mit `binwidth = 0.05`!
@@ -405,7 +405,9 @@ quiz(
 
 Nehmen wir an, Sie hätten die Wahl zwischen drei verschiedenen Schaufeln, um Stichproben zu ziehen: Mit 25, 50 oder 100 Slots.
 
-[Drei Schaufeln für drei verschiedene Stichprobengrößen](images/three_shovels.png){width = 100%}
+![Drei Schaufeln für drei verschiedene Stichprobengrößen](images/three_shovels.png){width=100%}
+
+<br>
 
 Wenn Ihr Ziel immer noch ist, die Proportion der roten Kugeln in der gesamten Schüssel möglichst gut abzuschätzen, welche der Schaufeln würden sie verwenden?
 
