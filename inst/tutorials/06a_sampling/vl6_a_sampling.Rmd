@@ -44,7 +44,7 @@ Dabei werden viele neue Konzepte und Begriffe fallen. Einige davon sind:
 
 ## Stichprobenkennwerteverteilung
 
-Der fundamentale Baustein für das Verständnis von Inferenzstatistik ist zu verstehen, was eine Stichproben----Kennwerte----Verteilung ist.
+Der fundamentale Baustein für das Verständnis von Inferenzstatistik ist zu verstehen, was eine Stichproben---Kennwerte---Verteilung ist.
 
 Dazu gibt es ein tolles Beispiel im frei verfügbaren Online-Lehrbuch [*Modern Dive*](https://moderndive.com/7-sampling.html), was wir hier übernehmen [@ismay2022]. Der folgende Absatz übersetzt Teile des Kapitels 7.
 
@@ -185,20 +185,242 @@ bowl
 print(bowl, n = 2000)
 ```
 
-Jetzt brauchen wir noch ein virtuelles Analog zu unsere Schaufel um virtuelle Stichproben von 50 Kugeln zu ziehen. Wir werden dafür die `rep_sample_n()`-Funktion benutzen aus dem `moderndive`-Paket. Diese Funktion erlaubt uns, `rep`eated `sample`s der Größe `n` zu nehmen. 
+### virtuelle Schaufel
+
+Jetzt brauchen wir noch ein virtuelles Analog zu unserer Schaufel, um virtuelle Stichproben von jeweils $n = 50$ Kugeln zu ziehen. Wir werden dafür die `rep_sample_n()`-Funktion benutzen aus dem `moderndive`-Paket. Diese Funktion erlaubt uns, `rep`eated `sample`s der Größe `n` zu nehmen. 
 
 ```{r virtualshovel, exercise = TRUE}
 virtual_shovel <- bowl |>
-  rep_sample_n(size = 50)
+  rep_sample_n(size = 50, reps = 1)
 virtual_shovel
 ```
 
-`virtual_shovel` hat 50 Zeilen, genau wie wir es gewünscht haben. Die `ball_ID`-Variable zeigt, welche der 2400 Kugeln gezogen wurden und die `color`-Variable verrät uns ihre Farbe.
+Was sehen wir?
+
+Der Output `virtual_shovel` hat 50 Zeilen, für jede der gewünschten 50 Kugeln eine Zeile. 
+
+Die `ball_ID`-Variable zeigt, welche der 2400 Kugeln gezogen wurden und die `color`-Variable verrät uns ihre Farbe.
+
 Aber was sagt die `replicate`-Variable uns? In diesem Fall ist `replicate` = 1 für alle 50 Einträge. Das sagt uns, dass diese 50 Zeilen zur ersten Stichprobe gehören. Wir werden gleich sehen, was passiert wenn wir virtuell 33 Stichproben ziehen - dann nimmt `replicate` Werte zwischen 1 und 33 an. 
 
-Lasst uns den Anteil roter Kugeln in unserer Stichprobe berechnen mithilfe der `dplyr`-Data Wrangling-Verben. Als erstes finden wir für jede der 50 Kugeln heraus ob sie rot ist
+### Proportion berechnen
+
+Unser Ziel ist nun mithilfe von `dplyr`-Verben wie `mutate()` und `summarize()` den Anteil roter Kugeln in der Stichprobe zu berechnen. 
+
+Der erste Schritt ist, eine neue Variable erstellen, die anzeigt ob eine Kugel rot ist und dafür entweder `TRUE` oder `FALSE` enthält. Dafür nutzen wir den Vergleichsoperator `==`, welcher jedes Element der Spalte `color` abfragt, ob es dem Wert "red" entspricht, und für jedes Element (jede Kugel) `TRUE` oder `FALSE` ausgibt. Dieser neue logische Vektor wird in der Spalte `is_red` abgespeichert. 
+
+```{r wrangle, exercise = TRUE, exercise.cap = "Neue Spalte erstellen", exercise.setup = "virtualshovel"}
+virtual_shovel |> 
+  mutate(is_red = (color == "red"))
+```
+
+Wir sehen, dass überall dort, wo `color == "red"`, der logische Wert `TRUE` zurückgegeben wurde, und überall wo das nicht gilt, `FALSE` steht. 
+
+Im zweiten Schritt berechnen wir den Anteil roter Kugeln mit der `summarize()`-Funktion. Erinnern Sie sich, dass `summarize()` einen Data Frame mit vielen Zeilen als Input nimmt und als Output einen Data Frame mit einer einzigen Zeile zurückgibt, die *summary statistics* wie `mean()` oder `median()` enthält. In diesem Fall nutzen wir die Summe `sum()`:
+
+```{r sum, exercise = TRUE, exercise.cap = "Summarize", exercise.setup = "virtualshovel"}
+virtual_shovel |>
+  mutate(is_red = (color == "red")) |>
+  summarize(num_red = sum(is_red))
+```
+
+Warum funktioniert das? Weil R `TRUE` wie die Zahl `1` behandelt und `FALSE` wie eine `0`. Also ist das Aufsummieren von `TRUE` und `FALSE` genau wie das Summieren von `1` und `0`. Letztendlich zählt diese Operation die Anzahl aller roten Kugeln. Die Zahl der roten Kugeln schwankt, wenn Sie den Code neu ausführen - Warum? Wegen Stichprobenvariation (*sampling variation*)!
+
+Drittens und als letzten Punkt berechnen wir den Anteil roter Kugeln, in dem wir die Anzahl `num_red` durch die Stichprobengröße (in diesem Fall 50) dividieren.
+
+```{r div, exercise = TRUE, exercise.cap = "Durch n dividieren", exercise.setup = "virtualshovel"}
+virtual_shovel %>% 
+  mutate(is_red = color == "red") %>% 
+  summarize(num_red = sum(is_red)) %>% 
+  mutate(prop_red = num_red / 50)
+```
+
+Die Proportion lässt sich auch als Prozentzahl interpretieren. Zum Beispiel könnten Sie bei 0.24 sagen, „24% der Kugeln waren rot“. 
+
+Jetzt machen wir den Code noch etwas kompakter, indem wir den ersten `mutate()`- und den zweiten `summarize()`-Aufruf kombinieren:
+
+```{r comb, exercise = TRUE, exercise.cap = "kompakter Code", exercise.setup = "virtualshovel"}
+virtual_shovel %>% 
+  summarize(num_red = sum(color == "red")) %>% 
+  mutate(prop_red = num_red / 50)
+```
+
+Sehr gut!
+
+Wenn wir die Stichprobenziehung nun öfter wiederholen, wird es wahrscheinlich zu Stichprobenvariation kommen, und es wird nicht immer der selbe Anteil roter Kugeln herauskommen.
+Wiederholen wir die Stichprobenziehung nun 33 Mal, wie im letzten Kapitel, dieses Mal aber mit der virtuellen Schaufel!
+
+### Nutze die virtuelle Schaufel 33 mal
+
+Erinnern Sie sich, dass im letzten Kapitel 33 Gruppen von Studierenden jeweils die Schaufel genutzt haben, um eine Stichprobe zu ziehen, was zu 33 Stichproben mit jeweils $n = 50$ Kugeln geführt hat. Dann haben wir daraus 33 Proportionen berechnet.
+
+In anderen Worten, wir haben das Stichprobenziehen 33 mal repliziert (wiederholt).
+Wir können das virtuell wiederholen, wieder mit der `rep_sample_n()`-Funktion. Dieses Mal fügen wir das Argument `reps = 33` hinzu, was R sagt, dass wir das Stichprobenziehen 33 mal wiederholen wollen. 
+
+Die Ergebnisse speichern wir in einem Data Frame namens `virtual_samples`. Während wir im folgenden Output lediglich die ersten 10 Zeilen angezeigt bekommen, passiert das wirklich Wichtige erst in Zeile 51.
+
+::: aufgabe
+Nutzen Sie `print(n = ...)` um sich 60 Zeilen anzeigen zu lassen!
+:::
+
+```{r rep33, exercise = TRUE, exercise.cap = "33 Stichproben ziehen"}
+virtual_samples <- bowl |>
+  rep_sample_n(size = 50, reps = 33)
+virtual_samples
+```
+
+```{r rep33-solution}
+virtual_samples |> print(n = 60)
+
+# oder ohne Pipe:
+print(virtual_samples, n = 60)
+```
+
+Beobachten Sie, dass die ersten 50 Zeilen der Spalte `replicate` den Wert 1 tragen, und die nächsten 50 Zeilen den Wert 2, und so weiter, bis zur 33. Das sagt uns dass die ersten 50 Zeilen zur ersten Stichprobe gehören, die nächsten 50 Zeilen zur zweiten, und so weiter. Da sich dieses Muster durchgängig wiederholt, hat `virtual_samples` $33 \cdot 50 = 1650$ Zeilen. 
+
+#### Proportionen berechnen
+
+Nun wollen wir den jeweiligen Anteil roter Kugeln in den 33 Stichproben herausfinden.
+Wir werden die selben `dplyr`-Verben wie zuvor verwenden, aber dieses Mal noch mit `group_by()` nach der `replicate`-Variable gruppieren.
+
+Erinnern Sie sich, dass bei `group_by()` vor `summarize()` die *summary statistics* für jede Gruppe einzeln berechnet werden, unsere Ausgabe also 33 Zeilen haben wird.
+
+```{r prop33, exercise = TRUE, exercise.cap = "33 Proportionen berechnen", exercise.setup = "rep33"}
+virtual_prop_red <- virtual_samples |> 
+  group_by(replicate) |>
+  summarize(red = sum(color == "red")) |>
+  mutate(prop_red = red / 50)
+virtual_prop_red
+```
+
+Sie sehen die ersten 10 Zeilen von 33, was völlig ausreichend ist um zu begreifen, dass wir nun den Anteil roter Kugeln für jede der 33 Stichproben errechnet haben.
+
+Wie bei der realen Stichprobenziehung gibt es auch hier Stichprobenvariation zwischen den Anteilen roter Kugeln in den einzelnen Stichproben. 
+
+#### Visualisierung
+
+Nun wollen wir die Stichprobenkennwerteverteilung der 33 Stichproben visualisieren.
+Beachten Sie, dass wir die Argumente `binwidth = 0.05` und `boundary = 0.4` hinzugefügt haben. Erinnern Sie sich, dass `boundary = 0.4` zu setzen, sicherstellt dass die Grenze einer Kategorie bei 0.4 liegt. Weil `binwidth = 0.05` ebenfalls festgelegt ist, wird das Kategorien mit Grenzen bei 0.30, 0.35, 0.40, 0.45 und so weiter erzeugen. 
+
+```{r plot33, exercise = TRUE, exercise.cap = "Histogramm", exercise.setup = "prop33"}
+ggplot(virtual_prop_red, aes(x = prop_red)) +
+  geom_histogram(binwidth = 0.05, boundary = 0.4, color = "white") +
+  labs(x = "Anteil roter Kugeln aus 50", 
+       subtitle = "simulierte Stichprobenziehung (33 mal)", 
+       title = "Verteilung der Anteile") 
+```
+
+Wir sehen, dass wir seltener Anteile unter 25% oder über 45% erhalten haben. Die am häufigsten auftretenden Anteile liegen zwischen 25% und 45%. Warum gibt es diese Unterschiede in den Anteilen? Wegen Stichprobenvariation.
+
+Vergleichen wir das Histogramm aus der realen Stichprobenziehung mit dem aus der virtuellen:
+
+```{r compare}
+ggplot(moderndive::tactile_prop_red, aes(x = prop_red)) +
+  geom_histogram(
+    binwidth = 0.05, 
+    boundary = 0.4, 
+    color = "white", 
+    fill = "darkred") +
+  labs(x = "Anteil roter Kugeln", 
+       subtitle = "reale Stichprobenziehung (33 mal)", 
+       title = "Verteilung der Anteile")
+```
 
 
+Beobachten Sie, dass beide Histogramme gewisse Ähnlichkeiten aufweisen, was das Zentrum und die Variation angeht, obwohl sie nicht identisch sind.
+Auch das ist wieder einmal auf die Stichprobenvariation zurückzuführen. Und mit gutem Willen können wir sagen, dass beide Verteilungen eine gewisse Glockenform annehmen. 
+
+```{r learningcheck2}
+quiz(
+  caption = "Learning Check",
+  
+  learnr::question_text(
+    text = "Warum konnten wir den Effekt der Stichprobenvariation erst sehen, als wir mehrere (z.B. 33) Stichproben gezogen haben und nicht bei einer Stichprobe?", 
+    placeholder = "Musterlösung erscheint beim Einreichen der Antwort...",
+    answer_fn(function(x) correct()),
+    correct = "Weil wir aus einer Stichprobe nur einen Anteil berechnen konnten, und den nicht vergleichen konnten mit einem anderen. Um eine Bandbreite von Anteilen zu erreichen, brauchten wir mehrere Stichproben."
+    )
+)
+```
+
+### Nutze die Schaufel 1000 mal
+
+Jetzt wollen wir die Effekte von Stichprobenvariation nicht nur für 33 Stichproben untersuchen, sondern eher für größere Anzahlen, sagen wir mal 1000. Wir haben zwei Möglichkeiten an diesem Punkt: Wir könnten die Studierenden per Hand 1000 Stichproben mit je 50 Kugeln ziehen lassen und händisch die 1000 Proportionen ausrechnen lassen. Das wäre aber ein mühseliger und zeitaufwendiger Prozess. Genau darin sind Computer besonders exzellent: lange und monotone Aufgaben automatisch und schnell ausführen. An dieser Stelle werden wir also händisches Stichprobenziehen hintenanstellen und lieber eine Simulation verwenden. 
+
+Wir werden noch einmal die `rep_sample_n()`-Funktion verwenden, wieder mit der Stichprobengröße bei `size = 50`, aber dieses Mal die Anzahl der Wiederholungen `reps = 1000` setzen. Auch hier schauen wir uns ein paar mehr Zeilen an mit `print(n = ...)`.
+
+```{r reps1000, exercise = TRUE, exercise.cap = "1000 Stichproben ziehen"}
+virtual_samples <- bowl |>
+  rep_sample_n(size = 50, reps = 1000)
+virtual_samples |> print(n = 300)
+```
+
+Beobachten Sie dass `virtual_samples` $1000 \cdot 50 = 50 000$ Zeilen hat.
+Mit dem selben Data Wrangling wie zuvor berechnen wir jetzt für die 1000 Stichprobe jeweils den Anteil roter Kugeln.
+
+```{r prop1000, exercise = TRUE, exercise.setup = "reps1000", exercise.cap = "1000 Anteile berechnen"}
+virtual_prop_red <- virtual_samples |>
+  group_by(replicate) |>
+  summarize(red = sum(color == "red")) |> 
+  mutate(prop_red = red / 50)
+virtual_prop_red
+
+```
+
+Wir sehen, dass es nun 1000 Zeilen gibt mit je einer Proportion roter Kugeln für eine Stichprobe. 
+Nun nutzen wir den selben Code wie zuvor, um die Verteilung der Proportionen als Histogramm zu visualisieren.
+
+```{r plot1000, exercise = TRUE, exercise.cap = "Histogramm", exercise.setup = "prop1000"}
+ggplot(virtual_prop_red, aes(x = prop_red)) +
+  geom_histogram(binwidth = 0.05, boundary = 0.4, color = "white") +
+  labs(x = "Anteil roter Kugeln aus 50", 
+       subtitle = "simulierte Stichprobenziehung (1000 mal)", 
+       title = "Verteilung der Anteile") 
+```
+
+Hier ist nun eindeutig die Kategorie 35% - 40% die am häufigsten auftretende Proportion roter Kugeln. 
+
+Ganz selten finden wir nun auch Anteile unter 20% oder über 55%. Diese sind jedoch wirklich selten. Vor allem haben wir jetzt eine Verteilung, die auch ohne guten Willen "glockenförmig" genannt werden dürfte. Sie ist tatsächlich nah an einer *Normalverteilung* dran. 
+
+```{r learningcheck3}
+quiz(
+  caption = "Learning Check",
+  
+  learnr::question_text(
+    text = "Wenn Sie das Histogramm ansehen, würden Sie sagen, es ist wahrscheinlich, eine einzelne Stichprobe mit 30% - 35% roten Kugeln zu ziehen?", 
+    placeholder = "Musterlösung erscheint beim Einreichen der Antwort...",
+    answer_fn(function(x) correct()),
+    correct = "Das kommt relativ häufig vor, in ca. 180 von 1000 Fällen (die genaue Zahl kommt natürlich auf Ihre konkreten 1000 Stichproben an)."
+    ),
+  learnr::question_text(
+    text = "Und was ist mit einer Stichprobe mit unter 10% roten Kugeln?", 
+    placeholder = "Musterlösung erscheint beim Einreichen der Antwort...",
+    answer_fn(function(x) correct()),
+    correct = "Die Chance ist verschwindend gering, so dass es in den meisten Fällen bei 1000 Stichproben nicht einmal vorkommt."
+    )
+)
+```
+
+## verschieden große Schaufeln verwenden
+
+Nehmen wir an, Sie hätten die Wahl zwischen drei verschiedenen Schaufeln, um Stichproben zu ziehen: Mit 25, 50 oder 100 Slots.
+
+[Drei Schaufeln für drei verschiedene Stichprobengrößen](images/three_shovels.png){width = 100%}
+
+Wenn Ihr Ziel immer noch ist, die Proportion der roten Kugeln in der gesamten Schüssel möglichst gut abzuschätzen, welche der Schaufeln würden sie verwenden?
+
+Die meisten Menschen würden die Schaufel mit 100 Slots wählen, denn es würde den "besten" Schätzer für die wahre Proportion liefern. Aber wann ist ein Schätzer der "beste"? Das gehen wir in diesem Kapitel an.
+
+Wir können unsere neu erlernten Werkzeuge für simulierte Stichprobenziehung nehmen, um den Effekt verschiedener Stichprobengrößen zu untersuchen! In anderen Worten, wir nutzen `rep_sample_n()` mit `size =` gesetzt auf `25`, `50` und `100`, während wir die Anzahl der Wiederholungen auf `reps = 1000` festhalten.
+
+1. Schaufel nutzen
+2. Proportionen berechnen
+3. Histogramm erstellen.
+
+Hier aufgehört:
+https://moderndive.com/7-sampling.html#different-shovels
+
+To be continued
 
 
 ### Literatur
