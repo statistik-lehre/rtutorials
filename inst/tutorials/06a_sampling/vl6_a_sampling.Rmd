@@ -20,6 +20,7 @@ library(tidyverse)
 knitr::opts_chunk$set(echo = FALSE)
 library(ggplot2)
 library(moderndive)
+library(shiny)
 ```
 
 ## Lernziele
@@ -419,10 +420,90 @@ Wir können unsere neu erlernten Werkzeuge für simulierte Stichprobenziehung ne
 2. Proportionen berechnen
 3. Histogramm erstellen.
 
-Hier aufgehört:
-https://moderndive.com/7-sampling.html#different-shovels
+Diese Schritte haben wir im Hintergrund automatisiert und ein Interface geschrieben, wo Sie die Inputs hineingeben und das Histogramm hinausbekommen. 
 
-To be continued
+::: aufgabe
+Experimentieren Sie mit der Stichprobengröße, während die Zahl von Stichprobenziehungen konstant bei 1000 bleibt.
+
+Welches Muster erkennen Sie?
+:::
+
+<br>
+
+```{r ui, echo = FALSE}
+fluidPage(
+    sidebarLayout(
+        sidebarPanel(
+            sliderInput("reps",
+                        "Stichprobenziehungen",
+                        min = 1,
+                        max = 2000,
+                        value = 1000),
+            sliderInput("size",
+                        "Stichprobengröße",
+                        min = 0,
+                        max = 200,
+                        value = 50,
+                        step = 5),
+            sliderInput("bins",
+                        "binwidth",
+                        min = 0.01, 
+                        max = 0.05, 
+                        value = 0.02,
+                        step = 0.01),
+            actionButton("reload", "Neu generieren")
+        ),
+        mainPanel(
+           plotOutput("distPlot"),
+           textOutput("sd")
+        )
+    )
+)
+
+```
+
+```{r server, context = "server"}
+
+  rv <- reactiveValues()
+  
+  observeEvent(c(input$reload, input$size, input$reps), {
+      rv$samples <- rep_sample_n(bowl, 
+                                 size = input$size, 
+                                 reps = input$reps)
+      rv$props <- rv$samples |> group_by(replicate) %>% 
+        summarize(red = sum(color == "red")) %>% 
+        mutate(prop_red = red / input$size)
+      
+      rv$sd <- rv$props |> summarize(sd = sd(prop_red)) |> pull(sd)
+      })
+  
+    output$distPlot <- renderPlot({
+      
+      ggplot(rv$props, aes(x = prop_red)) +
+        geom_histogram(binwidth = input$bins, boundary = 0.4, color = "white") +
+        coord_cartesian(xlim = c(0.05, 0.65)) +
+        labs(x = paste0("Anteil von roten Kugeln aus ", as.character(input$size)),
+             title = "Verteilung der Anteile",
+             subtitle = paste0(input$reps, " Stichproben")) 
+    })
+    
+    output$sd <- renderText({
+      paste0("Standardabweichung der Verteilung: ", round(rv$sd[1], digits = 2))
+      })
+
+```
+
+```{r patternquiz}
+quiz(
+  caption = "Learning Check",
+  learnr::question_text(
+    text = "Welches Muster haben Sie beim Verändern der Stichprobengröße bemerkt?", 
+    placeholder = "Musterlösung erscheint beim Einreichen der Antwort...",
+    answer_fn(function(x) correct()),
+    correct = "Die Standardabweichung der Stichprobenkennwerteverteilung nimmt ab, wenn die Stichprobengröße steigt. Zunächst nimmt die Verteilung einen breiten Wertebereich ein bei geringer Stichprobengröße, bis sie schließlich relativ schmal wird. In anderen Worten, es gibt weniger Einfluss der Stichprobenvariation und die Verteilung zentriert sich enger um einen bestimmten Wert. "
+    )
+)
+```
 
 
 ### Literatur
