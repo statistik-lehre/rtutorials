@@ -184,6 +184,183 @@ Es funktionieren auch GIFs:
 
 Hier ist die Auflösung so gering, dass es nicht Gefahr läuft, die ganze Seite zu blockieren. 
 
+## Code Chunks
+
+Da die Code Chunk-Sache etwas tricky ist, ist hier eine Ergänzung zur `learnr`-Dokumentation.
+
+### Exercises
+Es gibt Exercise-Code-Chunks und "normale" Code Chunks.
+
+Exercises werden gekennzeichnet durch die Chunk-Option `exercise = TRUE`. Zusätzlich können noch viele weitere Optionen spezifiziert werden:
+
+- `exercise.setup` (Siehe Exercise-Setup-Chunks)
+- `exercise.cap` Einen Titel für die Exercise
+- `exercise.lines` Die Fenstergröße der Exercise
+
+Alle Exercise-Code-Chunks haben ihr eigenes Environment und sind somit unabhängig vom normalen Environment. Der einzige Punkt, wo Code für das normale Environment und alle Code Chunks gleichzeitig gilt, ist der globale Setup-Chunk ganz zu Beginn eines Tutorials.
+
+### Tipps und Lösungen
+
+```{r ex0, exercise = TRUE, exercise.cap = "Übung 0"}
+
+```
+
+```{r ex0-hint-1}
+# Tipp 1
+```
+
+```{r ex0-hint-2}
+# Tipp 2
+```
+
+```{r ex0-solution}
+# Lösung
+```
+
+Leider wird die Lösung nicht als solche gekennzeichnet oder von den Tipps differenziert, wenn sowohl Tipps als auch Lösung da sind. 
+
+#### Markdown Hints
+Es ist auch möglich, Tipps als Markdown zu formatieren. 
+Dafür werden sie in ein `<div>` gepackt mit `id=...-hint`, wie bei den Code-Chunk-Hints. 
+
+Aber Achtung! Stand jetzt wird dann ein möglicher "-solution"-Chunk nicht mehr angezeigt, sondern nur noch der Markdown Hint. Und es kann nur einen Hint geben, nicht mehrere.
+
+Diese Funktion wird eventuell in Zukunft entfernt, und Markdown Hints werden in `-hint`-Codeblöcken möglich sein. Deswegen sollten wir diese Markdown-Hints vielleicht eher weniger verwenden. 
+
+```{r ex0_5, exercise = TRUE, exercise.cap = "Markdown Hints"}
+
+```
+
+```{r ex0_5-solution}
+# Diese Lösung wird nie angezeigt
+```
+
+<div id=ex0_5-hint>
+**Tipp**
+
+- a
+- b
+- c
+</div>
+
+
+
+
+### Globaler Setup-Chunk
+
+Ist immer daran zu erkennen, dass er einfach nur "setup" heißt. Siehe ganz oben in diesem Tutorial.
+
+Dort können Pakete geladen werden und Default-Werte für Chunk-Optionen spezifiziert werden. Zum Beispiel setzt `knitr::opts_chunk$set(echo = FALSE)` als Default-Wert `echo = FALSE` für alle Chunks.
+
+Die Pakete die dort geladen werden, werden dann auch als Abhängigkeiten für das Tutorial aufgefasst und User werden aufgefordert, diese installieren zu lassen, wenn sie das Tutorial starten. 
+
+### Tutorial-Setup-Chunks
+
+Da die Exercise-Chunks alle ihr eigenes Environment haben, und lediglich vom globalen Setup-Chunk erben, ist es oft nötig eigene Setup-Chunks für die Exercises zu erstellen.
+
+#### Setup-Chunk über "-setup" Suffix
+
+Es ist hilfreich, sich diese Sektion sowohl im Quellcode als auch im Tutorial gerendert anzusehen. 
+
+```{r ex1-setup}
+x <- 5
+```
+
+```{r ex1, exercise = TRUE, exercise.caption = "Übung 1"}
+x
+```
+
+Der Exercise-Code-Chunk heißt "ex1", und wenn ein anderer Code-Chunk diesen Namen plus den Suffix "-setup" verwendet, wird er automatisch als Setup-Code-Chunk für den Exercise Chunk ausgewertet und *erscheint dadurch auch nicht im globalen Environment*. 
+
+Das heißt, wenn Sie `x` in einen normalen Code Chunk ohne `exercise = TRUE` aufrufen möchten, müssten Sie es vorher noch mal definieren. Das ist nicht intuitiv, weil "ex1-setup" kein `exercise = TRUE` enthält, und trotzdem auch nicht im normalen Environment erscheint. 
+
+```{r, echo = TRUE}
+try(x)
+```
+
+Hier wird ein Fehler erzeugt, da `x` nicht im normalen Environment definiert wurde. (Ich verwende `try()`, damit das Tutorial-Rendering nicht wegen der Fehlermeldung angehalten wird.)
+
+Auch ein neuer Code Chunk ohne weiter Setup-Optionen würde `x` logischerweise nicht finden.
+
+```{r ex2, exercise = TRUE, exercise.caption = "Übung 2"}
+x
+```
+
+#### Setup-Chunk über Namen
+
+Ein Weg, einen geteilten Setup-Chunk zu erstellen für mehrere Exercises, ist die Chunk-Option `exercise.setup`.
+
+Bei `exercise.setup` kann jeder namentlich benannte Code-Chunk angegeben werden, egal ob es ein "-setup"-Chunk für andere Tutorials ist oder nicht. Es gilt wieder das Gleiche wie vorher: *Ergebnisse des Setup-Chunks sind nicht im normalen Environment verfügbar.*
+
+```{r ex3, exercise = TRUE, exercise.caption = "Übung 3", exercise.setup = "ex1-setup"}
+x
+```
+
+```{r ex3-solution}
+y <- 1
+```
+
+Eine Besonderheit gibt es aber: ein "-solution"-Chunk kann nicht gleichzeitig Setup-Chunk und Lösung sein. Dieser Chunk (3.5) verwendet die Lösung von Übung 3 als Setup, und dadurch wird bei Übung 3 kein Lösungsknopf mehr angezeigt. Deswegen sollten Lösungs-Chunks nicht als Setup-Chunks verwendet werden. 
+
+```{r ex3_5, exercise = TRUE, exercise.caption = "Übung 3.5", exercise.setup = "ex3-solution"}
+y
+```
+
+
+#### Verkettete Setup-Chunks
+
+Es gibt die Möglichkeit, in Setup-Chunks einen vorherigen Setup-Chunk mit einzubeziehen über die Chunk-Option `exercise.setup`. Also `exercise.setup` kann nicht nur in Exercise-Chunks verwendet werden, sondern auch in Setup-Chunks!
+
+```{r a}
+x <- 5
+```
+
+```{r b, exercise.setup = "a"}
+z <- 1
+```
+
+```{r ex4, exercise = TRUE, exercise.setup = "b", exercise.caption = "Übung 4: Chained Setup Chunks"}
+z # Aus Setup-Chunk "b"
+x # Aus Setup-Chunk "a"
+
+c <- x + z # neuer Code
+c
+```
+
+Auch Exercise-Chunks können in die Setup-Chain eingebunden werden, aber es gilt dann nur das, was schon vorausgefüllt als Code drin steht, nicht das, was User hineinschreiben. 
+
+```{r ex5, exercise = TRUE, exercise.setup = "ex4", exercise.caption = "Übung 5: Chained Setup mit Übung 4"}
+c # Aus Übung 4
+z # Aus Setup-Chunk "b"
+x # Aus Setup-Chunk "a"
+```
+
+(Das ist meist nur dann nützlich, wenn die Lösung bereits in der Exercise vorausgefüllt ist wie im Fall von "Übung 4", es also eigentlich nur Demo ist und keine Aufgabe für die User). In den meisten Fällen möchte man die Lösung ja nicht hineinschreiben. 
+
+Dafür ist Stand jetzt die einzige Option, für aufeinander aufbauende Übungen die Lösung sowohl in einem "-solution"-Chunk unterzubringen, als auch in einem verketteten Setup-Chunk.
+
+```{r ex6, exercise = TRUE, exercise.setup = "ex4", exercise.caption = "Übung 6"}
+# Aufgabe: Definiere d als c + 1
+
+```
+
+```{r ex6-solution}
+d <- c + 1
+# Lösung zum Anzeigen lassen durch User
+```
+
+```{r d, exercise.setup = "ex4"}
+d <- c + 1
+# Lösung als Setup Chunk für "ex7".
+```
+
+```{r ex7, exercise = TRUE, exercise.setup = "d", exercise.caption = "Übung 7: Enthält die korrekte Lösung von Übung 6"}
+d
+```
+
+Obwohl `d` nicht gegegen ist in Übung 5, kennt Übung 7 `d`, da wir einen extra Setup-Chunk dafür in die Kette eingefügt haben. Um für Übung 5 auch den Lösungsknopf anzuzeigen, ist es nötig, noch einen Extra Lösungs-Chunk zu haben, der nicht Setup-Chunk sein darf. Da gibt es also eine Dopplung, die sich Stand jetzt aber nicht elegant vermeiden lässt. Es wird anscheinend als Bug anerkannt und daran gearbeitet, siehe [learnr Issue #548](https://github.com/rstudio/learnr/issues/548). 
+
+Für mehr Infos für Hintergründe der Entstehung von Chained Setup Chunks: [learnr Issue #72](https://github.com/rstudio/learnr/issues/72).
 
 ## Abschlussquiz
 
