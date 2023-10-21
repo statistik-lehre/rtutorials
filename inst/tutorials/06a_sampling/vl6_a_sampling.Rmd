@@ -488,12 +488,12 @@ fluidPage(
     })
     
     output$sd <- renderText({
-      paste0("Standardabweichung der Verteilung: ", round(rv$sd[1], digits = 2))
+      paste0("Stichprobenvariation (Standardabweichung der Verteilung): ", round(rv$sd[1], digits = 2))
       })
 
 ```
 
-```{r patternquiz}
+```{r learningcheck4}
 quiz(
   caption = "Learning Check",
   learnr::question_text(
@@ -505,5 +505,88 @@ quiz(
 )
 ```
 
+Wir können also feststellen: Wenn die Stichprobengröße steigt, werden unsere Schätzer der wahren Proportion immer akkurater. 
+
+Theoretisch bis zu dem Punkt, wo die Stichprobe so groß ist, dass sie alle 2400 Kugeln auf einmal zieht und damit den wahren Anteil roter Kugeln automatisch immer richtig bestimmt. 
+
+```{r learningcheck5}
+quiz(caption = "Learning Check",
+     question_radio("Wenn wir die Stichprobengröße erhöht haben, wie hat sich die Varianz der Proportionen roter Kugeln verändert?",
+     answer("Die Proportionen variierten weniger", correct = TRUE),
+     answer("Die Proportionen variierten mehr"),
+     answer("Die Varianz der Proportionen blieb unverändert"),
+     allow_retry = TRUE
+     ),
+     question_radio("Welches Maß haben wir verwendet, um zu quantifizieren wie sehr die 1000 Proportionen variierten?",
+                    answer("Die Varianz"),
+                    answer("Die Standardabweichung", correct = TRUE),
+                    answer("Den Mittelwert"),
+                    answer("Die Summe"),
+                    answer("Den Interquartilsabstand"),
+                    allow_retry = TRUE)
+)
+```
+
+## Terminologie
+
+Jetzt, wo Sie intuitives Verständnis von der Stichprobenziehung bekommen haben, können wir den Konzepten, die Sie eben gesehen haben, Fachbegriffe zuordnen.
+
+Die ersten Begriffe haben mit **Populationen** zu tun.
+
+### Populationen
+
+1. Eine **Population** ist eine Sammlung von Individuen oder Beobachtungen, an denen wir Interesse haben. Mathematisch kann die Größe der Population mit einem großen $N$ notiert werden.
+
+2. Ein **Populations-Parameter** ist eine numerische Zusammenfassung über die Population, die wir nicht kennen, aber gerne kennen würden. Beispielsweise könnte der Parameter ein Mittelwert sein wie die mittlere Größe aller Kanadier. Oft wird der Parameter auch als der unbekannte "wahre Wert" bezeichnet und trägt allgemein den griechischen Buchstaben $\theta$ (Theta).
+
+3. Ein **Zensus** ist eine erschöpfende Aufzählung aller $N$ Individuen in der Population. Nur damit kann der Populations-Paramater *exakt* bestimmt werden. Natürlich wird das immer zeit-, energie- und geld-intensiver je größer $N$. 
+
+Die **Population** in unserer Stichprobenziehungs-Aktion wird durch die $N = 2400$ Kugeln in der Schale dargestellt. 
+
+Der **Populations-Parameter** ist uns noch unbekannt, aber wir können den wahren Anteil roter Kugeln in der Population berechnen, da wir in `bowl` eine erschöpfende Liste aller Kugeln haben! (**Zensus**)
+
+::: aufgabe
+Berechnen Sie die wahre Proportion roter Kugeln in der Population! 
+
+(Das ist normalerweise nicht möglich, da normalerweise keine Liste vorliegt mit den Werten aller Individuen der Population, aber in diesem Lehrbeispiel geht das)
+:::
+
+<br>
+
+```{r theta, exercise = TRUE, exercise.cap = "wahre Proportion roter Kugeln"}
+bowl
+```
+
+```{r theta-solution}
+bowl |>
+  summarize(red = sum(color == "red")) |>
+  mutate(prop_red = red / 2400)
+```
+
+```{r truepercent}
+question_numeric("Wie viel Prozent der Population sind rote Kugeln? (Zahl von 0 - 100)",
+                 answer(37.5, correct = TRUE))
+```
+
+An diesem Punkt könnten Sie sich fragen, wenn wir den wahren Populations-Parameter so einfach bestimmen konnten, warum haben wir dann überhaupt Stichproben gezogen?
+Gute Frage! Normalerweise würde man in einer solchen Situation, wo ein **Zensus** der Population möglich ist, auch nicht anfangen Stichproben zu ziehen. Die simulierte Stichprobenziehung in diesem Tutorial soll einfach ein Beispiel dafür sein, wie es im echten Leben abläuft. Wir haben die Simulationen durchgeführt, um folgende Konzepte zu studieren:
+
+- den Effekt von *Stichprobenvariation* auf unsere Schätzer
+- den Effekt von *Stichprobengröße* auf *Stichprobenvariation*!
+
+Wie wir im Kapitel über Umfragen lernen werden, wird manchmal nicht nur die Populationsgröße $N$ zu groß sein, um einen **Zensus** durchzuführen, manchmal wissen wir nicht einmal, wie groß sie ist. 
+
+Gehen wir zum nächsten Oberbegriff: **Stichprobenziehung** (*Sampling*)
+
+### Stichprobenziehung
+
+- *Sampling* ist der Akt des Ziehens einer Stichprobe aus der Population, was wir normalerweise nur tun, wenn es nicht möglich ist, einen Zensus durchzuführen. Mathematisch notiert wird die Stichprobengröße mit einem kleinen $n$, im Gegensatz zu einem großen $N$ für die Populationsgröße.
+Normalerweise ist $n$ sehr viel kleiner als $N$, weshalb *Sampling* eine viel günstigere Alternative ist als einen Zensus durchzuführen.
+
+- Eine **Punktschätzung**, auch bekannt als Stichprobenkennwert, ist eine *summary statistic* aus einer gezogenen Stichprobe, die als Schätzer für den unbekannten Populationsparameter verwendet wird. Mit *summary statistic* sind Maße wie Mittelwert, Proportion oder Standardabweichung gemeint.
+
+Zuvor haben wir also *Sampling* durchgeführt mit $n = 50$ und als wir die Proportion in der Stichprobe errechnet haben, haben wir einen **Punktschätzer** für die wahre Populations-Proportion generiert. 
+
+In der Statistik ist es eine Konvention, Schätzungen mit einem Dach zu versehen. Wenn die Populations-Proportion $p$ heißt, ist die Stichproben-Proportion $\hat p$. 
 
 ### Literatur
