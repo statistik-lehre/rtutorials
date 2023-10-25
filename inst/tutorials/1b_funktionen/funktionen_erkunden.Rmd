@@ -152,6 +152,7 @@ Text ohne Anführungszeichen wird von R als Aufruf eines Objekts verstanden. Das
 Hingegen wird Text mit Anführungszeichen von R dann tatsächlich als Text interpretiert. Das ist zum Beispiel bei `install.packages()` nötig, weil es das Paket noch nicht als existierendes Objekt im Regal gibt.
 :::
 
+<br>
 
 Von außen ist nicht erkennbar, ob etwas passiert ist, aber die Abwesenheit einer Fehlermeldung ist ein gutes Zeichen dafür, dass das Paket nun in die aktive Sitzung geladen ist. Prima!
 
