@@ -15,6 +15,7 @@ resource_files:
 
 ```{r setup, include=FALSE}
 library(learnr)
+library(ggplot2)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
@@ -36,21 +37,33 @@ CRAN steht für *Comprehensive R Archive Network* und ist die offizielle Adresse
 Pakete von CRAN reichen für unsere Anwendungszwecke vollkommen aus und können über den einfachen Befehl `install.packages("Paketname")` installiert werden - das ist unkompliziert, Sie müssen keine Internetseiten besuchen, keine Dateien irgendwo hinschieben oder ausführen, das wird alles intern von dieser Funktion erledigt.
 
 ```{r cran_packages_reading}
-tbl <- rvest::read_html("https://cran.r-project.org/web/packages/available_packages_by_date.html")
-df <- rvest::html_table(tbl)
-df <- df[[1]] 
-df2 <- df |> dplyr::select(Date, Package) |> dplyr::arrange(Date)
-df2$id <- 1:nrow(df2)
-df2$Date <- lubridate::as_date(df2$Date)
+# Für den Fall keiner Internetverbindung
+tbl <- rtutorials::cranpacks
 
-library(ggplot2)
-ggplot(df2, aes(x = Date, y = id)) +
+# Im Fall einer Internetverbindung die aktuellen Daten holen
+try({tbl <- rvest::read_html("https://cran.r-project.org/web/packages/available_packages_by_date.html") |>
+    rvest::html_table() |>
+    purrr::pluck(1) |>
+    dplyr::arrange(Date) |>
+    dplyr::mutate(id = dplyr::row_number(),
+                  date = lubridate::as_date(Date)) |>
+    dplyr::select(id, date)},
+    silent = TRUE)
+
+
+current_date <- max(tbl$date) |> format("%d.%m.%Y")
+current_message <- paste0("Stand ", current_date, ": ", 
+                          prettyNum(nrow(tbl), big.mark = " "), " Pakete")
+
+ggplot(tbl, aes(x = date, y = id)) +
   geom_line() +
   geom_area(fill = "steelblue") +
   theme_bw() +
+  #scale_y_log10() +
   labs(title = "Verfügbare Pakete auf CRAN",
-       y = "Anzahl",
-       x = "Veröffentlichungsdatum")
+       y = "Anzahl (logarithmische Skala)",
+       x = "Veröffentlichungsdatum",
+       subtitle = current_message)
 ```
 
 
