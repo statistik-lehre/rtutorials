@@ -4,7 +4,7 @@
 ^README\.Rmd$
 ^data-raw$
 ^Arbeitszeit\.Rmd$
-rtutorials/inst/tutorials/template$
+inst/tutorials/template$
 \.html$
 figure-html$
 
