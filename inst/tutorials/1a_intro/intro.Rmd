@@ -93,15 +93,7 @@ Die meisten Aufgaben in diesem Kurs sind direkt im jeweiligen Tutorial in den en
 
 Es wird auch einige wenige Aufgaben geben, für die Du bitte in R wechselst. Diese Aufgaben findest Du in den **<span style="color: #95AD7D;">hellgrünen Kästen</span>** (s.u.).
 
-### R Tutorials
-
-Da Du dieses Tutorial schon gefunden hast, brauche ich gar nicht mehr so viel zu erklären:
-
-Wir schreiben jede Woche die Befehle bzw. die Links zu den jeweiligen Tutorials ins Moodle. Diese kannst Du einfach Zeile für Zeile in Deine Konsole kopieren (s.u.) und Durcharbeiten.
-
-Alternativ gibt es in R Studio, im Fenster oben rechts, ganz rechts einen Reiter der "Tutorial" heißt. Hier kannst Du dich Durchscrollen bis zu rtutorials:<name des tutorials>. Eine Liste aller Tutorials findest Du HIER
-
-Nun kommen wir zur Magie
+Nun kommen wir zur Magie:
 
 ![](images/jesus.jpg){width=50%}
 
@@ -109,7 +101,7 @@ Nun kommen wir zur Magie
 
 R ist im Grunde ein sehr potenter Taschenrechner, der große Mengen an Daten verarbeiten und simulieren kann, schöne Grafiken und sogar diese Tutorials erstellen kann. Über das, was Dein Schultaschenrechner kann (selbst wenn es einer von denen mit grafischer Funktion ist), kann R also nur müde lächeln. Und hier, im echten Leben, haben wir es eben mit großen Datenmengen zu tun.
 
-Das Problem: R ist von Nerds für Nerds geschrieben, läuft ganz unauffällig in der Konsole und sieht in seiner roh-Fassung ungefähr so aus:
+Das Problem: R ist von Nerds für Nerds geschrieben, läuft ganz unauffällig ohne eine grafische Benutzeroberfläche in der Konsole und sieht in seiner Roh-Fassung ungefähr so aus:
 
 ![](images/R_in_Konsole.png){width=100%}
 
@@ -140,7 +132,7 @@ Ein Projekt erstellst du: Project: (None) > New Project... > New Directory > New
 **Aufgabe:**\
 Erstelle in R Studio ein Projekt mit dem Namen `Statistik-bachelor`! 
 
-Dabei wirst du zunächst gewarnt, dass noch ein Job im Hintergrund ausgeführt wird, nämlich dieses Tutorial anzuzeigen. Klick auf "Terminate", das Tutorial wird dadurch beendet. Ruf das Tutorial wieder auf, wenn du das Projekt erstellt hast. 
+Dabei wirst du zunächst gewarnt, dass noch ein Job im Hintergrund ausgeführt wird, nämlich dieses Tutorial. Klick auf "Terminate", das Tutorial wird dadurch beendet. Ruf das Tutorial wieder auf, wenn du das Projekt erstellt hast. 
 
 (Die Aufgabe gilt nicht für diejenigen, die RStudio in der Cloud nutzen: diese Personen mussten bereits ein Projekt erstellen um überhaupt RStudios Benutzeroberfläche zu sehen.)
 :::
@@ -189,13 +181,14 @@ Gib in deiner Konsole verschiedene Rechnungen ein (Addition, Subtraktion etc.) u
 
 :::
 
-#### Datein
+#### Skripteditor
 
-**Oben links** findest Du Deine `Dateien` / `Files` / `Skripte`:
+**Oben links** findest du ein multifunktionales Fenster, was sich nur öffnet wenn ein Skript geladen ist oder eine Tabelle angezeigt wird. 
 
 <img src="images/R_Studio_Files.png" width=" 881" height="477"/>
 
-Diese Dateien sind schlichte Textdatein - wie ein Open Office oder Word Dokument. Hier passiert erstmal nichts. Erst wenn Du auf `Strg + Enter` drückst wird die Zeile für dich in die Konsole kopiert, hier ausgeführt und das Ergebnis angezeigt.
+Mit Code in einem Skript passiert erst mal gar nichts.
+Erst wenn Du auf `Strg + Enter` drückst wird die betreffende Zeile für dich in die Konsole kopiert, hier ausgeführt und das Ergebnis angezeigt.
 
 Diese Aufteilung ist total sinnvoll, da sie es ermöglicht, in der Textdatei oben die Übersicht zu behalten. Du kannst hier auch Kommentare einfügen. So kannst Du auch später noch nachvollziehen, was Du wann in welchem Schritt gemacht hast. Zeitgleich können unten in der Konsole die Berechnungen stattfinden. Im Gegensatz zur reinen Konsole lässt sich die Textdatei speichern und es bleibt nachvollziehbar und für weitere Arbeitsschritte nutzbar.
 
