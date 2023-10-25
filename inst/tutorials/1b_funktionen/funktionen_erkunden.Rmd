@@ -209,10 +209,10 @@ Die brennende Frage im Moment ist: Was gibt es denn noch alles für Tiere außer
 Das erfahren wir über die Hilfeseite der Funktion `say()`.
 
 Alle Funktionen in öffentlichen Paketen müssen auf einer Hilfeseite dokumentiert sein.\
-Auf der Hilfeseite werden alle möglichen Argumente aufgelistet, die eine Funktion entgegennehmen kann, und die möglichen Werte dieser Argumente. Also auch das Argument `by` und alle Tiere, die zur Verfügung stehen.
+Auf der Hilfeseite werden alle möglichen Argumente aufgelistet, die eine Funktion entgegennehmen kann, und die möglichen Werte dieser Argumente. Also auch das Argument `by` und alle Tiere, die zur Verfügung stehen - und das ist ja die Information, die wir selektiv suchen!
 
 ::: blau-nb
-Um die Hilfe aufzurufen, gehen Sie mit dem Cursor in den Namen der Funktion (z.B. `say`) und drücken F1. (das funktioniert nicht im interaktiven Codeblock).\
+Um in RStudio die Hilfe aufzurufen, gehen Sie mit dem Cursor in den Namen der Funktion (z.B. `say`) und drücken F1. Das funktioniert aber nicht im interaktiven Codeblock.
 \
 Eine andere Option ist, `?say`, oder `help(say)`.\
 \
@@ -229,6 +229,15 @@ Hilfeseiten sind immer gleich aufgebaut:\
 -   Arguments\
 -   Details\
 -   Examples
+:::
+
+<br>
+
+::: aufgabe
+Nutzen Sie `?`, um die Hilfeseite für die Funktion`say()` aufzurufen!
+Schauen Sie selektiv nach der Information, welche Tiere alle beim Argument `by` möglich sind. 
+
+Blenden Sie Unverständliches und schlechte Formatierung möglichst aus (weil wir uns im Tutorial befinden werden die Überschriften komisch dargestellt).
 :::
 
 ```{r rms, exercise = TRUE, exercise.setup = "say", exercise.cap = "Probieren Sie andere Argumente aus!" }
@@ -248,10 +257,10 @@ say(what = "fortune", by = "rms")
 say()
 ```
 
-`say()` gibt auch ohne jegliche Argumente etwas aus.
+`say()` gibt auch ohne jegliche Argumente etwas aus. Das hat mit Default-Werten zu tun.
 
 Die meisten Funktionen haben Default-Werte für alle Argumente. Das heißt, Argumente, die nicht spezifiziert werden, nehmen ihren Standardwert an.\
-Diese Default-Werte finden Sie in den Hilfeseiten unter dem Abschnitt **Usage**, und sie werden Ihnen angezeigt in einem kleinen gelben Kästchen, sobald Sie die Klammer hinter dem Funktionsnamen tippen.
+Diese Default-Werte finden Sie in den Hilfeseiten unter dem Abschnitt **Usage**, und sie werden Ihnen in RStudio angezeigt in einem kleinen gelben Kästchen, sobald Sie die Klammer hinter dem Funktionsnamen tippen.
 
 ![](images/box.png)
 
