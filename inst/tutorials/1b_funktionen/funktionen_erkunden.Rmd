@@ -30,11 +30,43 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Pakete
 
-Pakete können Daten und Funktionen enthalten. Erfahrene R-NutzerInnen veröffentlichen Pakete, um ihre Problemlösungen für andere verfügbar zu machen. Alle Menschen können Pakete veröffentlichen, die Daten und Funktionen enthalten. Wir nutzen heute ein solches Paket, um spielerisch den typischen Umgang mit Funktionen in R zu erlernen.
+Was R so mächtig macht, sind die von der Community veröffentlichten und gepflegten Erweiterungen drum herum. Stand 2023 gibt es knapp 20.000 offiziell veröffentlichte Pakete auf CRAN.
+CRAN steht für *Comprehensive R Archive Network* und ist die offizielle Adresse für geprüfte Erweiterungen. Es sei aber erwähnt, dass es auch noch andere Orte gibt, von denen man Pakete beziehen kann, und deswegen ist die Gesamtzahl aktiv gepflegter Pakete wohl noch höher als 20.000.
 
-Zunächst installieren wir das Paket. Es heißt `cowsay` und enthält lediglich eine einzige Funktion, mit der wir lustige Tiere lustige Dinge sagen lassen können.
+Pakete von CRAN reichen für unsere Anwendungszwecke vollkommen aus und können über den einfachen Befehl `install.packages("Paketname")` installiert werden - das ist unkompliziert, Sie müssen keine Internetseiten besuchen, keine Dateien irgendwo hinschieben oder ausführen, das wird alles intern von dieser Funktion erledigt.
+
+```{r cran_packages_reading}
+tbl <- rvest::read_html("https://cran.r-project.org/web/packages/available_packages_by_date.html")
+df <- rvest::html_table(tbl)
+df <- df[[1]] 
+df2 <- df |> dplyr::select(Date, Package) |> dplyr::arrange(Date)
+df2$id <- 1:nrow(df2)
+df2$Date <- lubridate::as_date(df2$Date)
+
+library(ggplot2)
+ggplot(df2, aes(x = Date, y = id)) +
+  geom_line() +
+  geom_area(fill = "steelblue") +
+  theme_bw() +
+  labs(title = "Verfügbare Pakete auf CRAN",
+       y = "Anzahl",
+       x = "Veröffentlichungsdatum")
+```
+
+
+### Woraus bestehen Pakete?
+
+Üblicherweise enthalten Pakete neue Funktionen, die das Leben von R-Nutzenden irgendwo erleichtern sollen. Manchmal werden Pakete auch genutzt, um Datensätze bereitzustellen, oder andere, außergewöhnlichere Sachen wie z.B. die interaktiven Tutorials, die Sie im Moment betrachten - diese stammen auch aus einem Paket, was wir für Sie geschrieben und auf GitHub veröffentlicht haben. 
 
 #### Ein Paket installieren
+
+Wir installieren und nutzen heute ein Paket, um spielerisch den typischen Umgang mit Funktionen in R zu erlernen. 
+
+Es heißt `cowsay` und stellt eine einzige neue Funktion namens `say()` bereit, mit der wir lustige Tiere lustige Dinge sagen lassen können.
+
+Hier im Tutorial müssen Sie das Paket nicht mehr installieren - vermutlich wurden Sie gefragt beim Start des Tutorials, ob fehlende Pakete installiert werden sollen. Das sollten Sie bejahen, und dann erledigt RStudio das automatisch für Sie.
+
+Aber sollten Sie mal eigenständig ein Paket installieren wollen, ist wichtig zu wissen wie es geht:
 
 Der Befehl zum Installieren lautet:
 
@@ -42,35 +74,54 @@ Der Befehl zum Installieren lautet:
 install.packages("cowsay")
 ```
 
-Achten Sie dabei auf die Anführungszeichen um den Paketnamen!
+::: gelb
 
-(Eine der häufigsten Fehlerquellen beim Installieren von Paketen sind vergessene Anführungszeichen).
+**Häufige Fehler beim Installieren von Paketen**
 
-Um den Code auszuführen, schicken Sie ihn über die Konsole ab.
+1. Achten Sie auf die Anführungszeichen um den Paketnamen!
+  
+  Eine der häufigsten Fehlerquellen beim Installieren von Paketen sind vergessene Anführungszeichen.
 
-(Normalerweise das untere linke Fenster in RStudio).
+2. `installed.packages()` ist etwas anderes als `install.packages`!
+  
+  Ersteres gibt Ihnen eine Liste aller auf dem Gerät installierten Pakete, zweiteres ist das was Sie brauchen um Pakete zu installieren.
+  
+3. Sie brauchen eine funktionierende Internetverbindung.
 
-::: blau-nb
-Sie können auch die grafische Benutzeroberfläche von RStudio benutzen - dafür auf den Reiter "Packages" im Fenster unten rechts gehen und über den Install-Knopf den Dialog aufrufen.\
-Sie werden sehen, dass auch das grafische Menü Code über die Konsole sendet, um ihn auszuführen.
 :::
+
+<br>
 
 ::: grau-nb
-Tipp: Dass eine Funktion fertig ausgeführt ist, erkennen Sie daran, dass das rote Stoppzeichen ![](images/stop.PNG)oben rechts in der Konsole erlischt.
+Tipp: Dass ein länger dauernder Befehl in der Konsole fertig ausgeführt ist, wie z.B. die Installation eines Pakets, erkennen Sie daran, dass das rote Stoppzeichen ![](images/stop.PNG) oben rechts in der Konsole erlischt.
 :::
 
-#### Das Paket nutzen
+### Das Paket nutzen
+
+Jetzt haben Sie ein Paket installiert, nämlich `cowsay`, was wir in diesem Tutorial nutzen möchten. Nun liegt es mit allen anderen installierten Paketen in einer "Bibliothek" auf Ihrem Rechner. Um es aber tatsächlich nutzen zu können, fehlt noch ein letzter Schritt, es muss aus der Bibliothek geholt werden und in die aktive Sitzung geladen werden.
+
+Es gibt zwei Wege, an den Inhalt eines bereits installierten Pakets zu gelangen:
+
+1. Sie laden das gesamte Paket in die aktive Sitzung mit `library(Paketname)`.
+1. Sie addressiern nur bestimmte Inhalte aus dem Paket mit `Paketname::Inhalt`.
+
+Beide Varianten werden Ihnen begegnen. Wobei die erste (`library()`) häufig
+
+::: blau
+**Info**
 
 R lädt zu Beginn einer neuen Sitzung nur eine handvoll essentieller Pakete. Diese automatisch geladenen Pakete werden unter dem Namen "base R" zusammengefasst und enthalten alles, was notwendig ist, damit R funktioniert.
+:::
 
-Alle anderen installierten Pakete sind nicht automatisch aktiv und müssen erst aufgerufen werden, um sie zu verwenden.
-
-Das tun Sie mit der Funktion `library()`. Damit rufen Sie aus der "Bibliothek" aller installierten Pakete eines auf, um es in die aktive Sitzung zu laden.
-
+::: gelb
 `library()` funktioniert im Gegensatz zu `install.packages()` ohne Anführungszeichen um den Paketnamen.
+:::
 
-Laden Sie das Paket `cowsay` in die aktive Sitzung, um es im nächsten Schritt zu benutzen!
+<br>
 
+::: aufgabe
+Laden Sie das gesamte Paket `cowsay` in die aktive Sitzung, um es im nächsten Schritt zu benutzen!
+:::
 ```{r lib, exercise = TRUE}
 
 ```
