@@ -42,25 +42,36 @@ Wunderbar, dass Du hierher gefunden hast! Das bedeutet, dass Du die Anfangsschwi
 -   <input type="checkbox" checked> wichtige Pakete installieren </input>
 -   <input type="checkbox" checked> dieses Tutorial finden UND öffnen </input>
 
-![](images/queen.jpg)
+![](images/queen.jpg){width=80%}
 
-### Aufbau dieses Kurses
+### Über den Kurs
 
-Wir freuen uns total, euch R in diesem Format beibringen zu können, da wir es für einen übersichtlichen und eleganten Weg halten. Ihr könnt in eurem Tempo lernen und die Inhalte sind später als stand-alone für euch zum nachschauen und auch von anderen Menschen nutzbar.
+Wir freuen uns total, euch R und Statistik in diesem Format beibringen zu können, da wir es für einen übersichtlichen und eleganten Weg halten. Ihr könnt in eurem Tempo lernen und die Tutorials auch auf eurem weiteren Weg immer als Nachschlagewerk verwenden. 
 
-Wir haben uns folgendes Format überlegt:\
-Zu jeder Vorlesung gibt es eins oder mehrere kurze Tutorials, die wir euch im Moodle verlinken. Diese arbeitet Ihr in eurem Tempo im Laufe der folgenden Woche Durch. Alle zwei Wochen gibt es eine Abgabe im Moodle, in der ihr das bereits gelernte der letzten zwei Wochen anwenden könnt. Wenn Du 50% der Aufgaben richtig hast, gilt die Abgabe als bestanden. Es gibt eine Joker-Übung, falls es dir mal gar nicht in den Kram passt oder Du bei einer Übung weniger als 50% schaffen solltest.
+Diese Tutorials sind frei verfügbar, da der Quellcode auf der Plattform [GitHub](https://github.com/statistik-lehre/rtutorials.git) veröffentlicht ist. 
 
-Mehr zu den konkreten Anforderungen schreiben wir euch ins Moodle bei der jeweiligen Abgabe.
+#### Feedback
+
+Sollte etwas nicht funktionieren, fehlt etwas, sollten Tippfehler auftauchen oder andere Probleme, möchten wir als Autor*innen darum bitten, uns das mitzuteilen. Auch Verbesserungsvorschläge nehmen wir gerne entgegen.
+
+Der beste Weg dafür ist, über diesen [Link Issues direkt auf GitHub zu erstellen](https://github.com/statistik-lehre/rtutorials/issues/new/choose), wo der Quellcode liegt, was allerdings einen Account benötigt bei GitHub. Ist das zu umständlich, einfach eine [Email](mailto:lukas.bruelheide@student.uni-kassel.de) senden.
+
+#### Autor*innen
+
+Die Entwicklung wurde 2022 - 2023 im Rahmen eines Förderprojekts für digitale Lehre von HessenHub und der Universität Kassel finanziert.
+
+An der Entwicklung haben Lukas Bruelheide und Gesa Graf mitgewirkt und Marie Klosterkamp hat die Tutorials inhaltlich überprüft. 
+
+### Aufbau
 
 Die Tutorials sind alle gleich aufgebaut:
 
--   **Lernziele**: Damit ihr wisst, worauf ihr beim bearbeiten dieses Tutorials besonders achten könnt
+-   **Lernziele**: Damit ihr wisst, worauf ihr beim Bearbeiten dieses Tutorials besonders achten könnt
 -   **Inhalte**: Die eigentlichen Inhalte
 -   **Abschlussquiz**: Was von dem, was wir wichtig finden ist hängen geblieben?
--   **Leranings**: Knappe Zusammenfassung des Kapitels
+-   **Learnings**: Knappe Zusammenfassung des Kapitels
 
-Innerhalb der Tutorials wird es interaktive Code-Blöcke geben. So könnt ihr mit neu gelernten Konzepten direkt experimentieren.
+Der Grund, warum wir diese Tutorials interaktiv nennen: Sie enthalten ausführbare Code-Blöcke, deren Inhalt Sie bearbeiten können.
 
 Schreib Deinen Code hinein und führe ihn aus mit `Strg + Enter` oder dem Knopf `▶ Code ausführen`.\
 Es gibt zu jeder Aufgabe auch Tipps oder Lösungen. Klicke dafür auf den Button 💡`Tipp` oder `Lösung`.
@@ -88,11 +99,11 @@ Da Du dieses Tutorial schon gefunden hast, brauche ich gar nicht mehr so viel zu
 
 Wir schreiben jede Woche die Befehle bzw. die Links zu den jeweiligen Tutorials ins Moodle. Diese kannst Du einfach Zeile für Zeile in Deine Konsole kopieren (s.u.) und Durcharbeiten.
 
-Alternativ gibt es in R Studio, im Fenster oben rechts, ganz rechts einen Reiter der "Tutotial" heißt. Hier kannst Du dich Durchscrollen bis zu rtutorials:<name des tutorials>. Eine Liste aller Tutorials findest Du HIER
+Alternativ gibt es in R Studio, im Fenster oben rechts, ganz rechts einen Reiter der "Tutorial" heißt. Hier kannst Du dich Durchscrollen bis zu rtutorials:<name des tutorials>. Eine Liste aller Tutorials findest Du HIER
 
 Nun kommen wir zur Magie
 
-![](images/jesus.jpg)
+![](images/jesus.jpg){width=50%}
 
 ### R
 
@@ -100,7 +111,7 @@ R ist im Grunde ein sehr potenter Taschenrechner, der große Mengen an Daten ver
 
 Das Problem: R ist von Nerds für Nerds geschrieben, läuft ganz unauffällig in der Konsole und sieht in seiner roh-Fassung ungefähr so aus:
 
-![](images/R_in_Konsole.png)
+![](images/R_in_Konsole.png){width=100%}
 
 Und das wird, spätestens wenn der Bildschirm voll ist, unübersichtlich. 
 
@@ -110,34 +121,38 @@ Und hier kommt R Studio ins Spiel. R Studio ist für die Menschen, die gerne die
 
 Wenn Du R-Studio öffnest sieht das ungefähr so aus:
 
-<img src="images/R_Studio_blank.png" width=" 881" height="477"/>
+![](images/R_Studio_blank.png){width=100}
 
 Das sieht erstmal viel und unübersichtlich aus. Aber wir brauchen (erstmal) nur einen ganz kleinen Teil davon. Und den erkläre ich dir jetzt Schritt für Schritt.
 
 
 #### Einmalig am Anfang: Projekte
 
-In R gibt es die Möglichkeit, `Projekte` zu erstellen. Das ist dann (wie) ein Ordner, in dem Du alles, was Du für dieses Prjekt benötigst (Daten, Skripte, Plots, Tabellen, Bilder etc. [unten mehr dazu]) speichern und sammeln kannst.
+In RStudio gibt es die Möglichkeit, „Projekte“ zu erstellen. Das ist dann (wie) ein Ordner, in dem Du alles, was Du für dieses Projekt benötigst (Daten, Skripte, Plots, Tabellen, Bilder etc. [unten mehr dazu]) speichern und sammeln kannst.
 
-Im Unialltag empfinde ich es als sehr hilfreich, für jedes entsprechende Modul ein eigenes Projekt anzulegen (also: Statistik-bachelor im Bachelor, Statistik-bachelor im Master, Vertiefte Statistik-bachelor im Master etc.). Solltest Du in die Forschung gehen wollen oder bereits Forschungsprojekte im Studium umsetzen empfiehlt es sich, auch hierfür jeweils eigene Projekte anzulegen. Wichtig ist dann, dass du schaust, immer im richtigen Projekt zu arbeiten.
+Im Unialltag empfinde ich es als sehr hilfreich, für jedes entsprechende Modul ein eigenes Projekt anzulegen (also: statistik-bachelor im Bachelor, statistik-master im Master, etc.). Solltest Du in die Forschung gehen wollen oder bereits Forschungsprojekte im Studium umsetzen empfiehlt es sich, auch hierfür jeweils eigene Projekte anzulegen. Wichtig ist dann, dass du schaust, immer im richtigen Projekt zu arbeiten.
 
 Ein Projekt erstellst du: Project: (None) > New Project... > New Directory > New Project > *Directory name:* > Create Project
 
-<img src="images/rproject.jpg" width=" 881" height="477"/>
+![](images/rproject.jpg){width=100%}
 
 ::: aufgaberstudio
 **Aufgabe:**\
-Erstellen in R Studio ein Projekt mit dem Namen `Statistik-bachelor`
+Erstelle in R Studio ein Projekt mit dem Namen `Statistik-bachelor`! 
+
+Dabei wirst du zunächst gewarnt, dass noch ein Job im Hintergrund ausgeführt wird, nämlich dieses Tutorial anzuzeigen. Klick auf "Terminate", das Tutorial wird dadurch beendet. Ruf das Tutorial wieder auf, wenn du das Projekt erstellt hast. 
+
+(Die Aufgabe gilt nicht für diejenigen, die RStudio in der Cloud nutzen: diese Personen mussten bereits ein Projekt erstellen um überhaupt RStudios Benutzeroberfläche zu sehen.)
 :::
 
 Wenn du erfolgreich warst steht nun ganz oben rechts Dein Projektname:
 
-<img src="images/rproject_5.png" width=" 881" height="477"/>
+![](images/rproject_5.png){width=100%}
 
 
 #### (Fast) immer am Anfang: Skripte
 
-Glückwunsch, Du hast nun ein Projekt eingerichtet. (Sicherheitscheck: steht oben rechts `Statistik-bachelor`?)
+Glückwunsch, du hast nun ein Projekt eingerichtet. (Sicherheitscheck: steht oben rechts `Statistik-bachelor`?)
 
 Jetzt brauchen wir nur noch ein `Skript`.
 
