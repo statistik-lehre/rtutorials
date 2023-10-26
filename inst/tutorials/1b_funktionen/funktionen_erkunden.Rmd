@@ -240,8 +240,16 @@ Schauen Sie selektiv nach der Information, welche Tiere alle beim Argument `by` 
 Blenden Sie Unverständliches und schlechte Formatierung möglichst aus (weil wir uns im Tutorial befinden werden die Überschriften komisch dargestellt).
 :::
 
-```{r rms, exercise = TRUE, exercise.setup = "say", exercise.cap = "Probieren Sie andere Argumente aus!" }
+<br>
 
+```{r help_say, exercise = TRUE, exercise.setup = "say", exercise.cap = "Rufen Sie die Hilfe auf!" }
+?say
+
+```
+
+
+```{r rms, exercise = TRUE, exercise.setup = "say", exercise.cap = "Probieren Sie andere Tiere aus!" }
+say(what = "R is fun!", by = "stegosaurus")
 ```
 
 ```{r rms-hint}
@@ -278,7 +286,7 @@ say(what = "Hello!", by = "chicken")
 
 Die Argumentnamen können weggelassen werden, wenn die Argumente in genau der Standardabfolge eingegeben werden, wie Sie auch in den Hilfeseiten angegeben ist.
 
-Ein häufiger Stil ist, das Datenargument (das erste) nicht zu bennenen, weil es einfach so häufig ist, und die anderen Argumente dann zu bennennen.
+Eine übliche Konvention ist, das Datenargument (das erste) nicht zu bennenen, weil es einfach so häufig ist, und die anderen Argumente dann zu bennennen.
 
 ``` {.r .grau-nb}
 say("Hello!", by = "chicken")
@@ -290,9 +298,9 @@ Verkehrte Reihenfolgen wie
 say(by = "chicken", what = "hello")
 ```
 
-würden ebenfalls funktionieren, so lange die Argumente benannt sind. Guter Stil ist es allerdings nicht, da es das Lesen von Code anstrengender macht, wenn eine gewohnte Reihenfolge auf einmal durcheinander gebracht wird.
+würden ebenfalls funktionieren, aber nur so lange die Argumente benannt sind. Guter Stil ist es allerdings nicht, da es das Lesen von Code anstrengender macht, wenn eine gewohnte Reihenfolge auf einmal durcheinander gebracht wird.
 
-## Eine Geschichte erzählen
+## Skripte: Eine Geschichte erzählen
 
 Wir möchten einen Dialog erzählen mit verschiedenen Charakteren. Beispielsweise so hier:
 
@@ -367,7 +375,12 @@ Technisch gesehen ist es einfach ein Textdokument mit Befehlen.\
 Der einzige Unterschied ist, dass es auf die Endung `.R` endet und nicht auf `.txt`.\
 Das signalisiert, dass es sich beim Inhalt um ausführbaren R Code handelt.
 
-## Ein neues Skript anlegen
+### Ein neues Skript anlegen
+
+::: aufgaberstudio
+**Aufgabe**
+
+Gehen Sie in RStudio.
 
 Legen Sie ein neues Skript an, um Ihre eigene Geschichte zu schreiben!
 
@@ -375,8 +388,9 @@ Legen Sie ein neues Skript an, um Ihre eigene Geschichte zu schreiben!
 Alternativ gehen Sie auf das kleine Symbol ![Symbol des Skripts](images/skript.PNG) ganz oben links und wählen "R-Skript" aus.
 
 Ein viertes Fenster, der Editor, öffnet sich.
+:::
 
-#### Replizierbarkeit
+### Replizierbarkeit
 
 Das Gute an Skripten ist, dass wir sie immer wieder ausführen können, und so den Output auch immer wieder replizieren können. Unser Ziel ist Replizierbarkeit.
 
@@ -425,18 +439,15 @@ say("Ganz gut, und dir?", "egret") #auch hier lässt es sich kommentieren
 #---
 ```
 
-## Speichern
+### Speichern
 
 Ordnung ist wichtig, gerade wenn sich über Jahre viele verschiedene Skripte ansammeln, wäre es gut, wenn Sie sich am selben Ort befinden.\
-Erstellen Sie deshalb auf Ihrem PC einen Ordner, in dem Sie alles sammeln, was mit R zu tun hat. Geben Sie dann diesen Ordner in den Einstellungen an (Unter Tools -\> Global Options):
 
-![](images/wd.png)
+Ein hervorragender Weg Ordnung zu halten auf dem PC sind *Projekte*. 
 
-Das hat den Vorteil, dass nun in neuen R-Sitzungen auch dieser Ordner automatisch als Arbeitsverzeichnis gesetzt wird und im File-Browser (unteres rechtes Fenster) erscheint.
+Falls Sie noch kein Projekt erstellt haben, sollten Sie das tun - gehen Sie in dafür zurück zum letzten Tutorial, wo das erklärt wird.
 
-Speichern Sie Ihr Skript dann in diesem Ordner.
-
-(Menü: File =\> Save... oder `Strg` + `S`)
+Speichern Sie Ihr Skript einfach in den Projektordner! Nutzen Sie dafür `Strg + S` oder das grafische Menü unter "File" und dann auf "Save" klicken.
 
 ## Hausaufgabe
 
@@ -495,7 +506,7 @@ Damit das funktioniert, müssen die inneren `say()`-Funktionen aber zusätzlich 
     )
 ```
 
-## Ergänzung: R Notebooks
+## R Notebooks
 
 Bei ![Symbol des Skripts](images/skript.PNG) lassen sich zahlreiche andere Formate außer dem klassischen R-Skript auswählen. Eins davon möchte ich hier genauer vorstellen: R Notebooks.\
 Zentrales Kriterium beim wissenschaftlichen Programmieren ist Nachvollziehbarkeit und damit Überprüfbarkeit. Ein Skript ist, selbst wenn es gut kommentiert ist, immer noch schwer genug zu lesen.
@@ -503,16 +514,48 @@ Zentrales Kriterium beim wissenschaftlichen Programmieren ist Nachvollziehbarkei
 [R Notebooks](https://garrettgman.github.io/rmarkdown/r_notebooks#overview) ermöglichen, Code-Schnipsel gemeinsam mit ihren Outputs in ein schön formatiertes Textdokument einzubetten und so eine bessere Lesbarkeit herzustellen.\
 \
 Auch für Sie kann ein R Notebook eine sinnvolle Idee sein, im Sinne eines Notizheftes, wo Sie gelernte Konzepte gemeinsam mit dem Code in einer visuell ansprechenden Form notieren können.\
-\
-Um R Notebook zu verwenden, sollten Sie anfänglich den [Visual Editor](https://rstudio.github.io/visual-markdown-editing/) einschalten. Das geht mit `Strg + Shift + F4` oder der Schaltfläche unten links in der Leiste des Editors.
 
-Der Visual Editor verwandelt den rohen Quelltext in ein visuell ansprechenderes Dokument, und ermöglicht Ihnen die Bearbeitung ohne viel über die dahinterliegende Formatierung nachzudenken.
+::: aufgaberstudio
 
-#### Markup Languages
+**Aufgabe 1**
 
-R Notebooks verwenden zur Formatierung des Textes `Markdown`. Das ist eine Sprache, um Strukturierungen des Texts zu kennzeichnen. (Zum Beispiel ist ein später \*\***fettgeschriebenes Wort**\*\* mit doppelten Sternchen umgeben.)\
-Derartige Sprachen heißen **markup languages** (Auszeichnungssprachen). Die bekannteste ist `HTML` (Hypertext Markup Language). Eine nicht nur unter Mathematikern beliebte Auszeichnungssprache, deren Stärke unter anderem ist, Formeln schön darzustellen, heißt $\LaTeX$ (sprich "Latech").\
-Auch Textprogramme wie Word verwenden eine markup language, um Formatierungen zu speichern, aber nur intern.
+Erstellen Sie ein neues R Notebook über ![](images/skript.PNG) und dann "R Notebook" auswählen. Speichern Sie es in Ihrem Projekt.
+
+![](images/newfile.png){width=20%}
+:::
+
+<br>
+
+Es erscheint ein neues Dokument, was ein paar Beispiele enthält. 
+
+::: aufgaberstudio
+**Aufgabe 2**
+
+Speichern Sie das Dokument zunächst in Ihren Projektordner.
+
+Nutzen Sie dann den ![](images/preview.png)-Knopf, um sich eine Vorschau des fertigen Dokuments erstellen zu lassen.
+
+Vergleichen Sie die „Rohform“ mit der „gerenderten“ Form. 
+
+Welche Muster in der Rohform bewirken welche Erscheinung im gerenderten Zustand?
+:::
+
+<br>
+
+Um zu verstehen, was genau Sie sehen, sollten Sie zunächst etwas über `Markdown` lernen.
+
+### Markup Languages
+
+R Notebooks verwenden `Markdown`. Das ist eine Sprache, um Formatierungen des Texts zu kennzeichnen. 
+
+Zum Beispiel ist ein später \*\***fettgeschriebenes Wort**\*\* mit doppelten Sternchen umgeben.\
+
+Derartige Sprachen heißen **markup languages** (Auszeichnungssprachen). 
+
+- Die wohl  bekannteste ist `HTML` (Hypertext Markup Language). 
+
+- Eine andere nicht nur unter Mathematikern beliebte Auszeichnungssprache, deren Stärke ist, Formeln schön darzustellen, heißt $\LaTeX$ (sprich "Latech").\
+- Auch Textprogramme wie Word verwenden intern eine markup language, um Formatierungen zu speichern, diese ist allerdings etwas komplexer als Markdown.
 
 Markdown ist sehr unkompliziert. Sie müssen es allerdings nicht lernen, um R Notebooks zu benutzen, sondern können einfach den Visual Editor verwenden.\
 \
@@ -527,3 +570,21 @@ Die Endung einer Datei kennzeichnet die Art der Datei. Ihr Betriebssystem kann a
 So sind z.B. `.R` und `.Rmd` mit RStudio assoziiert, während `.html` vom Webbrowser geöffnet wird.\
 Manche Computer zeigen standardmäßig gar keine Endungen an. Innerhalb des Dateibrowsers von RStudio werden aber Endungen gezeigt.
 :::
+
+### Visual Editor
+
+Um sich im R Notebook einfach zurechtzufinden, können Sie den [Visual Editor](https://rstudio.github.io/visual-markdown-editing/) einschalten. Das geht mit `Strg + Shift + F4` oder der Schaltfläche unten links in der Leiste des Editors.
+
+Der Visual Editor zeigt den Text an ähnlich wie in normalen Textprogrammen, mit einer Benutzeroberfläche mit Formatierungsoptionen wie z.B. bei Word. 
+
+### Eine Geschichte im R Notebook schreiben
+
+Das coole am R Notebook ist, dass der Output zusammen mit dem Code abgespeichert wird.
+
+Wenn Sie jemandem ein Skript geben, wo nur der Code enthalten ist, müsste die Person erst mal R starten, das Skript öffnen, die nötigen Pakete installieren, und das Skript ausführen, um irgendwelche Ergebnisse zu sehen. Natürlich macht das niemand. 
+
+Die andere Option, nur den Output ohne Quellcode weiterzugeben, wird oft praktiziert - Sie erstellen eine Grafik mit R, speichern sie, und geben Sie an eine Kollegin weiter. Diese möchte aber vielleicht verstehen wie diese Grafik entstanden ist, oder einen Fehler korrigieren, kann die Grafik aber nicht reproduzieren, weil sie nicht Ihren Code hat sondern nur den Output.
+
+Der Königsweg ist also, Code und Output zusammen übersichtlich darzustellen.
+Wenn Sie jetzt also eine Geschichte schreiben, möchte ich Sie ermuntern, das in einem R Notebook zu speichern. So können andere viel schneller sehen, welche schönen Tiere Sie sich ausgesucht haben, und es ist viel aussagekräftiger als ein Skript.
+
