@@ -8,7 +8,7 @@ output:
 runtime: shiny_prerendered
 bibliography: ref.json
 link-citations: TRUE
-description: "Spielerisch lernen, wie ein Funktionsaufruf in R aufgebaut ist. Mit Skripten oder R Notebooks eine Geschichte erzählen."
+description: "Spielerisch lernen, wie ein Funktionsaufruf in R aufgebaut ist. Mit Skripten oder R Notebooks eine Geschichte erzählen. Pakete installieren und laden."
 resource_files:
 - css/boxes.css
 ---
@@ -27,7 +27,9 @@ knitr::opts_chunk$set(echo = FALSE)
 
 -   Die Benutzung der Hilfe-Seiten
 
--   Arbeiten im Skript
+-   Was sind Skripte? Erstellen und speichern.
+
+-   Code und Outputs zusammen als R Notebooks abspeichern.
 
 ## Pakete
 
@@ -423,7 +425,7 @@ Skripte werden immer von oben nach unten ausgeführt, eine Zeile nach der andere
 
 Ihre Hausaufgabe wird sein, Ihrer Fantasie freien Lauf zu lassen und im Skript eine Geschichte mit `say()`-Befehlen zu erzählen. In den folgenden Abschnitten finden Sie noch einige wichtige Hinweise.
 
-## Kommentare
+### Kommentare
 
 Nun möchten Sie Ihrer Geschichte vielleicht eine Überschrift verleihen, oder sonstige Bemerkungen einfügen, die nicht als Befehl ausgeführt werden sollen, sonden lediglich der Orientierung im Skript dienen. Für Menschen erhöht das die Lesbarkeit eines Skripts. R hingegen kann Überschriften oder Bemerkungen nicht als solche erkennen und gibt Fehlermeldungen aus, beim Versuch sie zu interpretieren - deswegen müssen wir sie kennzeichnen.
 
@@ -443,16 +445,24 @@ say("Ganz gut, und dir?", "egret") #auch hier lässt es sich kommentieren
 
 Ordnung ist wichtig, gerade wenn sich über Jahre viele verschiedene Skripte ansammeln, wäre es gut, wenn Sie sich am selben Ort befinden.\
 
-Ein hervorragender Weg Ordnung zu halten auf dem PC sind *Projekte*. 
+Ein hervorragender Weg Ordnung zu halten auf dem PC sind *Projekte*.
 
 Falls Sie noch kein Projekt erstellt haben, sollten Sie das tun - gehen Sie in dafür zurück zum letzten Tutorial, wo das erklärt wird.
 
+::: aufgaberstudio
+**Aufgabe 1**
+
 Speichern Sie Ihr Skript einfach in den Projektordner! Nutzen Sie dafür `Strg + S` oder das grafische Menü unter "File" und dann auf "Save" klicken.
 
-## Hausaufgabe
+**Aufgabe 2**
 
-Schreiben Sie eine kleine Geschichte mithilfe des Pakets `cowsay` und speichern Sie alles als Skript.\
+Schreiben Sie im Skript eine kleine Geschichte mithilfe des Pakets `cowsay`.\
+Lassen Sie verschiedene Protagonisten sprechen. Der Umfang liegt in Ihrem Ermessen.\
+Speichern Sie alles.\
 Achten Sie dabei auf Lesbarkeit und korrekte Syntax.\
+
+(Sie dürfen sich gerne auch von bereits existierenden Geschichten inspirieren lassen oder diese nachstellen.)
+:::
 
 ### Lesbarkeits-Kriterien
 
@@ -469,14 +479,6 @@ Achten Sie dabei auf Lesbarkeit und korrekte Syntax.\
 -   Die Argumente einer Funktion sind durch Kommata getrennt
 
 -   Die Argumente stehen in Klammern nach dem Namen der Funktion
-
-(Wenn Ihnen die Inspiration fehlt, stellen Sie eine bekannte Geschichte nach).\
-Der Umfang liegt in Ihrem Ermessen.\
-Laden Sie Ihr R-Skript oder Notebook im Geschichten-Forum auf Moodle hoch!\
-Sie entscheiden, ob sie anonym veröffentlich werden sollte oder nicht.\
-Um das Skript hochzuladen, erstellen Sie einen neuen Beitrag und hängen die Datei als Anhang an.
-
-Sie dürfen die Hausaufgabe auch als R Notebook hochladen, wenn Sie eine zusätzliche Herausforderung suchen - Infos dazu siehe Ende des Tutorials.
 
 ### Tipps zum Formatieren
 
@@ -558,18 +560,6 @@ Derartige Sprachen heißen **markup languages** (Auszeichnungssprachen).
 - Auch Textprogramme wie Word verwenden intern eine markup language, um Formatierungen zu speichern, diese ist allerdings etwas komplexer als Markdown.
 
 Markdown ist sehr unkompliziert. Sie müssen es allerdings nicht lernen, um R Notebooks zu benutzen, sondern können einfach den Visual Editor verwenden.\
-\
-R Notebooks werden auf die Endung `.Rmd` gespeichert, was für R Markdown steht.
-
-Sie erscheinen in Ihrem System aber automatisch ein zweites Mal unter der Endung `.nb.html` in fertig gerenderter Form und können mit jedem Webbrowser angezeigt werden, auch ohne RStudio.
-
-::: blau-nb
-Was sind eigentlich Dateiendungen?
-
-Die Endung einer Datei kennzeichnet die Art der Datei. Ihr Betriebssystem kann anhand der Endungen bestimmen, welches Programm geeignet ist, um die Datei zu öffnen.\
-So sind z.B. `.R` und `.Rmd` mit RStudio assoziiert, während `.html` vom Webbrowser geöffnet wird.\
-Manche Computer zeigen standardmäßig gar keine Endungen an. Innerhalb des Dateibrowsers von RStudio werden aber Endungen gezeigt.
-:::
 
 ### Visual Editor
 
@@ -586,5 +576,104 @@ Wenn Sie jemandem ein Skript geben, wo nur der Code enthalten ist, müsste die P
 Die andere Option, nur den Output ohne Quellcode weiterzugeben, wird oft praktiziert - Sie erstellen eine Grafik mit R, speichern sie, und geben Sie an eine Kollegin weiter. Diese möchte aber vielleicht verstehen wie diese Grafik entstanden ist, oder einen Fehler korrigieren, kann die Grafik aber nicht reproduzieren, weil sie nicht Ihren Code hat sondern nur den Output.
 
 Der Königsweg ist also, Code und Output zusammen übersichtlich darzustellen.
-Wenn Sie jetzt also eine Geschichte schreiben, möchte ich Sie ermuntern, das in einem R Notebook zu speichern. So können andere viel schneller sehen, welche schönen Tiere Sie sich ausgesucht haben, und es ist viel aussagekräftiger als ein Skript.
+Wenn Sie jetzt also eine Geschichte schreiben, möchte ich Sie ermuntern, das in einem R Notebook zu speichern. So können andere viel schneller sehen, welche schönen Tiere Sie sich ausgesucht haben, und es ist viel aussagekräftiger als ein bloßes Skript.
 
+Ein R Notebook ist, als würden Sie Drehbuch und Film nebeneinanderlegen. 
+
+::: aufgaberstudio
+**Aufgabe 3**
+
+1. Kopieren Sie Ihre Geschichte aus dem Skript in das R Notebook! Fügen Sie den Code innerhalb des Codeblocks ein.
+
+2. Führen Sie den Codeblock aus.
+
+3. Lassen Sie sich ein ![](images/preview.png) anzeigen.
+
+4. Passen Sie den "normalen" Text außerhalb des Codeblocks an Ihre Geschichte an.
+
+5. Speichern Sie das R Notebook mit `Strg + S` oder über das Menü.
+:::
+
+<br>
+
+### Dateiendungen 
+
+R Notebooks werden auf die Endung `.Rmd` gespeichert, was für R Markdown steht.
+
+Sie erscheinen in Ihrem System aber automatisch ein zweites Mal unter der Endung `.nb.html` in fertig gerenderter Form und können mit jedem Webbrowser angezeigt werden, auch ohne RStudio.
+
+::: blau-nb
+Was sind eigentlich Dateiendungen?
+
+Die Endung einer Datei kennzeichnet die Art der Datei. Ihr Betriebssystem kann anhand der Endungen bestimmen, welches Programm geeignet ist, um die Datei zu öffnen.\
+So sind z.B. `.R` und `.Rmd` mit RStudio assoziiert, während `.html` vom Webbrowser geöffnet wird.\
+Manche Computer zeigen standardmäßig gar keine Endungen an. Innerhalb des Dateibrowsers von RStudio werden aber Endungen gezeigt.
+:::
+
+## Abschlussquiz
+
+```{r quiz}
+learnr::quiz(caption = "Testen Sie Ihr Verständnis",
+             learnr::question_radio("Welches Zeichen wird verwendet, um Kommentare für R von ausführbarem Code zu unterscheiden?",
+               random_answer_order = TRUE,
+               answer("`*\`"),
+               answer("`//`"),
+               answer("`<>`"),
+               answer("`#`", correct = TRUE),
+               allow_retry = TRUE
+             ),
+             learnr::question_radio("Wofür steht das ‚ML‘ in „HTML“?",
+                                    answer("Machine Learning"),
+                                    answer("Markup Language", correct = TRUE),
+                                    answer("Milliliter"),
+                                    answer("Multi-Lateral"),
+                                    allow_retry = TRUE,
+                                    random_answer_order = TRUE),
+             learnr::question_text("Welche Funktion verwenden Sie, um den gesamten Inhalt eines Pakets in die aktive Sitzung zu laden?",
+                                   answer("library()", correct = TRUE),
+                                   answer("library", correct = TRUE),
+                                   allow_retry = TRUE
+                                   ),
+             learnr::question_radio("Braucht es Anführungszeichen um den Paketnamen, wenn Sie ein Paket mit `install.packages()` installieren möchten?",
+                                   answer("Ja", correct = TRUE),
+                                   allow_retry = TRUE,
+                                   random_answer_order = TRUE,
+                                   answer("Nein")),
+             learnr::question_radio("Wenn Sie ein Skript schreiben, wo im Skript laden Sie alle benötigten Pakete?",
+                                    answer("Jeweils dort, wo sie gebraucht werden, damit der Zusammenhang klar ist."),
+                                    answer("Ganz oben, damit sofort ersichtlich ist, was vielleicht noch installiert werden muss um das ganze Skript auszuführen.", correct = TRUE), 
+                                    allow_retry = TRUE,
+                                    random_answer_order = TRUE),
+             question_radio("Wie markieren Sie für R, dass es sich bei Ihrer Eingabe um Text handelt?",
+                            answer("mit genau diesen Anführungszeichen: `\" \"` ", correct = TRUE),
+                            answer("mit genau diesen Anführungszeichen: `„ “`"),
+                            answer("mit genau diesen Anführungszeichen: `« »`"),
+                            answer("mit Backticks: `` ` ` ``"),
+                            allow_retry = TRUE,
+                            random_answer_order = TRUE),
+             question_radio("Welche der folgenden Funktionsaufrufe folgt gutem Stil?",
+                            answer("`say(\"Hi\",\"longcat\")`",
+                                   message = "Kommas mögen gerne, von einem Leerzeichen gefolgt zu werden."),
+                            answer("`say(\"Hi\", by = \"longcat\")`", 
+                                   correct = TRUE,
+                                   message = "Dem Komma folgt ein Leerzeichen. Das erste Argument ist nicht benannt, weil klar ist, dass es das „Datenargument“ ist. Alle weiteren Argumente werden benannt."),
+                            answer("`say(by = \"longcat\", what = \"Hi\")`",
+                                   message = "Die Argumente sind in der falschen Reihenfolge. Das ändert nichts an der Funktion, weil sie benannt sind, aber es könnte verwirrend sein."),
+                            answer("`say(\"Hi\", by=\"longcat\")`", 
+                                   correct = TRUE,
+                                   message = "Leider ist das `=` nicht von Leerzeichen umgeben."),
+                            allow_retry = TRUE,
+                            random_answer_order = TRUE
+                            ),
+             question_checkbox("Wählen Sie alle möglichen Wege aus, die Hilfe zur Funktion `say()` aufzurufen",
+                            answer("`?say`", correct = TRUE),
+                            answer("`help(say)`", correct = TRUE),
+                            answer("Den Cursor in die Funktion bewegen und F1 drücken", correct = TRUE),
+                            allow_retry = TRUE,
+                            random_answer_order = TRUE)
+             )
+```
+
+## Learnings
+
+Heute haben Sie
