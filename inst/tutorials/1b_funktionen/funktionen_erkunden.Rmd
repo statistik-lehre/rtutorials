@@ -166,6 +166,8 @@ Von außen ist nicht erkennbar, ob etwas passiert ist, aber die Abwesenheit eine
 R lädt zu Beginn einer neuen Sitzung nur eine handvoll essentieller Pakete. Diese automatisch geladenen Pakete werden unter dem Namen "base R" zusammengefasst und enthalten die notwendige Grundsubstanz, damit R funktioniert, und ein paar Erweiterungen. Alle anderen Pakete bauen auf diesen Grundsteinen auf.
 :::
 
+<br>
+
 Dann können wir nun endlich zum Hauptteil dieses Tutorials übergehen - jetzt wurde von Paketen gesprochen, die Funktionen bereitstellen sollen; nun wird es Zeit, dass Sie mal eine Funktion in Aktion sehen.
 
 ## Funktionen und Argumente
@@ -261,7 +263,7 @@ say(what = "fortune", by = "rms")
 
 (Nach dem Lesen der Dokumentation fragen Sie sich vielleicht: wer oder was ist ein `rms`? Antwort [hier](https://de.wikipedia.org/wiki/Richard_Stallman "Richard Matthew Stallman"))
 
-## Default-Werte
+### Default-Werte
 
 ```{r default, exercise = TRUE, exercise.setup = "say", exercise.eval = TRUE, exercise.cap = "Default"}
 say()
@@ -286,7 +288,7 @@ gibt genau das gleiche aus wie
 say(what = "Hello!", by = "chicken")
 ```
 
-Die Argumentnamen können weggelassen werden, wenn die Argumente in genau der Standardabfolge eingegeben werden, wie Sie auch in den Hilfeseiten angegeben ist.
+Die Argumentnamen können weggelassen werden, wenn die Argumente in genau der Standardabfolge eingegeben werden, wie Sie auch in den Hilfeseiten angegeben ist. Auf Englisch wird das *positional arguments* gennant.
 
 Eine übliche Konvention ist, das Datenargument (das erste) nicht zu bennenen, weil es einfach so häufig ist, und die anderen Argumente dann zu bennennen.
 
@@ -301,6 +303,22 @@ say(by = "chicken", what = "hello")
 ```
 
 würden ebenfalls funktionieren, aber nur so lange die Argumente benannt sind. Guter Stil ist es allerdings nicht, da es das Lesen von Code anstrengender macht, wenn eine gewohnte Reihenfolge auf einmal durcheinander gebracht wird.
+
+::: blau-nb
+
+Wo wir gerade beim Stil sind: Wenn es ca. mehr als drei benannte Argumente gibt, und es unübersichtlich würde, ist es angebracht jedes bennante Argument auf eine eigene, eingerückte Zeile zu setzen. Zum Beispiel so:
+
+:::
+
+
+```{r newline, exercise = TRUE, exercise.setup = "say", exercise.cap = "Benannte Argumente auf eigener Zeile"}
+say("Ordnung ist das halbe Leben...",
+    by = "longcat",
+    length = 10,
+    type = "message")
+```
+
+Das erleichtert anderen, die den Code mal lesen müssen (z.B. Ihrem zukünftigen Ich), schneller zu erfassen worum es geht. 
 
 ## Skripte: Eine Geschichte erzählen
 
@@ -556,7 +574,8 @@ Derartige Sprachen heißen **markup languages** (Auszeichnungssprachen).
 
 - Die wohl  bekannteste ist `HTML` (Hypertext Markup Language). 
 
-- Eine andere nicht nur unter Mathematikern beliebte Auszeichnungssprache, deren Stärke ist, Formeln schön darzustellen, heißt $\LaTeX$ (sprich "Latech").\
+- Eine andere nicht nur unter Mathematikern beliebte Auszeichnungssprache, deren Stärke ist, Formeln schön darzustellen, heißt $\LaTeX$ (sprich "Latech"). Alle Formeln in diesen Tutorials sind damit geschrieben worden.
+
 - Auch Textprogramme wie Word verwenden intern eine markup language, um Formatierungen zu speichern, diese ist allerdings etwas komplexer als Markdown.
 
 Markdown ist sehr unkompliziert. Sie müssen es allerdings nicht lernen, um R Notebooks zu benutzen, sondern können einfach den Visual Editor verwenden.\
@@ -595,6 +614,12 @@ Ein R Notebook ist, als würden Sie Drehbuch und Film nebeneinanderlegen.
 :::
 
 <br>
+
+### Codeblöcke
+
+Während in einem Skript jeglicher Text als Code interpretiert wird, also prinzipiell dafür gedacht ist, von R ausgeführt zu werden, ist das in einem R Notebook anders. Hier ist normaler Text dazu gedacht, Text zu sein der mit Markdown formatiert werden kann, und R Code muss in speziell dafür ausgewiesenen Abschnitte platziert werden, die sich *Codeblöcke* nennen. 
+
+Sie können einen Codeblock erstellen mit `Ctrl + Shift + i`. Falls Sie sich im Visual Mode befinden, geht es auch über das "Insert"-Menü. 
 
 ### Dateiendungen 
 
@@ -668,12 +693,37 @@ learnr::quiz(caption = "Testen Sie Ihr Verständnis",
              question_checkbox("Wählen Sie alle möglichen Wege aus, die Hilfe zur Funktion `say()` aufzurufen",
                             answer("`?say`", correct = TRUE),
                             answer("`help(say)`", correct = TRUE),
-                            answer("Den Cursor in die Funktion bewegen und F1 drücken", correct = TRUE),
+                            answer("Den Cursor in die Funktion bewegen und F1 drücken", correct = TRUE, message = "Das mit F1 funktioniert nicht innerhalb der interaktiven Tutorials, aber wenn Sie in RStudio etwas im Skript oder der Konsole schreiben."),
                             allow_retry = TRUE,
-                            random_answer_order = TRUE)
+                            random_answer_order = TRUE),
+             question_checkbox("Was können Pakete alles enthalten?",
+                               answer("Daten", correct = TRUE),
+                               answer("Funktionen", correct = TRUE),
+                               answer("interaktive Tutorials", correct = TRUE),
+                               allow_retry = TRUE,
+                               random_answer_order = TRUE),
+             question_text("Wofür steht das Akronym CRAN?",
+                           answer("comprehensive r archive network", correct = TRUE),
+                           answer("Comprehensive R Archive Network", correct = TRUE),
+                           allow_retry = TRUE),
+             question_radio("Was ist der Standardprozess, um ein Paket von CRAN zu installieren?",
+                           answer("Die Webseite von CRAN aufrufen und von dort das Paket herunterladen, entpacken, dann an den Ort Ihrer Bibliothek legen und installieren, in dem Sie den Befehl `install.packages()` verwenden.", 
+                                  message = "Das ist zwar eine mögliche Art, aber sehr umständlich und eigentlich auch nur nötig, wenn Sie keine Internetverbindung haben. Ohne Internet ist es praktisch, Pakete an einem Gerät mit Internet herunterzuladen, dann über USB oder ähnliches auf das Gerät ohne Internet schieben zu können und dann installieren. Das ist aber eher selten und nicht die Standardprozedur."),
+                           answer("Es reicht aus, den Befehl `install.packages()` zu verwenden."), correct = TRUE)
              )
 ```
 
 ## Learnings
 
-Heute haben Sie
+Heute haben Sie gelernt, dass das R Ökosystem unter anderem aus 20 000 Paketen besteht, die von Mitgliedern der Community entwickelt und gepflegt werden. 
+Pakete stellen meistens Funktionen oder auch Daten bereit. Funktionen haben Argumente, die bestimmte Werte annehmen können. Welche Argumente eine Funktion entgegennimmt, steht im zugehörigen Hilfe-Artikel, der über `?funktion` oder F1 + Cursor in der Funktion aufgerufen werden kann. Darin stehen auch im Abschnitt `Usage` die Default-Werte der Argumente, auf die zurückgegriffen wird, wenn nichts angegeben wird.
+Argumente können auch ohne den Namen des Arguments angegeben werden, dann werden sie nach einer Standard-Reihenfolge ausgewertet. Das ist prinzipiell eine schlechte Idee, weil es den Code unverständlicher macht. Bei vielen Funktionen ist das erste Argument eine Ausnahme davon, weil es oft dazu dient, die „Daten“ zu übergeben, mit denen gearbeitet werden soll. Es gibt eine stille Vereinbarung, dieses „Datenargument“ üblicherweise nicht zu bennenen, und alle folgenden Argumente dann zu bennennen. 
+Wenn Sie einem Argument Text übergeben wollen, muss dieser von `"` umschlossen sein, um auch als solcher erkannt zu werden. Alles, was nicht so gekennzeichnet ist, wird von R als Aufruf eines bereits vorhandenen Objekts interpretiert. Beispielsweise als eine Funktion oder eine Variable.\
+Um Inhalte eines Paketes zu nutzen, muss das Paket in die aktive Sitzung geladen werden. Das funktioniert mit `library(Paket)`. Alternativ, wenn nur einzelne Inhalte aus dem Paket gebraucht werden, kann man mit `Paket::Inhalt` angeben, wo in der „Bibliothek“ R danach schauen soll.\
+Skripte sind wie ein Drehbuch, was Code enthält. Ein Grundprinzip ist, dass der Quellcode ausreicht, um die Ergebnisse zu replizieren, aber von Ergebnissen auf Quellcode zu schließen, wesentlich mühsamer ist. Deswegen speichern wir die „Regieanweisungen“ als Skript innerhalb unseres Projektordners ab. Technisch gesehen ist ein Skript eine reine Textdatei mit Anweisungen, die dazu gedacht sind von R ausgewertet zu werden.\
+Um Analyseergebnisse zusammen mit dem Quellcode weiterzugeben, eignet sich das Format “R Notebook“ gut. Das ist sinnvoll, um Code und Output beieinander zu behalten. R Notebooks verwenden die Auszeichnungssprache Markdown, um Text zu formatieren, und enthalten ausführbaren R-Code innerhalb von Codeblöcken. Diese Tutorials sind auch mit Markdown geschrieben. R Notebooks werden gespeichert als ein HTML-Dokument, was mit jedem Webbrowser angezeigt werden kann. Der Quellcode wird in einer `.Rmd`-Datei gespeichert, was *R Markdown* bedeutet. Das HTML-Dokument wird als `.nb.html`-Datei gespeichert und enthält eingebettet aber auch den Quellcode, ist also ein super Weg, um Forschungsergebnisse und Analyseprozesse replizierbar weiterzugeben.
+Dateiendungen wie `.R` oder `.Rmd` sagen dem Betriebssystem, dass die Datei besser mit RStudio geöffnet werden sollte, während `.html` dazu führt, dass automatisch ein Webbrowser zum Öffnen der Datei verwendet wird.
+
+
+
+
