@@ -226,10 +226,14 @@ Etwas advanced und weitab von den Themen, die wir in diesem Kurs behandeln werde
 
 R Code, welcher eine animierte Grafik (GIF) erstellt, worin eine schrittweise Iteration der [Mandelbrot-Menge](https://de.wikipedia.org/wiki/Mandelbrot-Menge) gezeigt wird. 
 
+<<<<<<< HEAD
 Da es etwas rechenintensiv ist, haben wir die Animation schon vorab hergestellt und zeigen den zugehörigen Quellcode, er kann aber nicht im Tutorial ausgeführt werden.
 
 Quelle für den Code: [R Programming Language Wikipedia](https://en.wikipedia.org/wiki/R_(programming_language)#Mandelbrot_set)
 
+=======
+Da es etwas rechenintensiv ist, haben wir die Animation schon vorab hergestellt und zeigen den zugehörigen Quellcode, er kann aber nicht ausgeführt werden.
+>>>>>>> d9d4d359e02740c28ee2e129194f47937176d549
 
 ```r
 # install.packages("caTools")  # install external package
