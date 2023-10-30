@@ -250,7 +250,9 @@ write.gif(X, "Mandelbrot.gif", col = viridis::viridis, delay = 10)
 
 ![Mandelbrot-Menge](images/Mandelbrot.gif){width=100%}
 
-## R
+## Zusammenspiel von R und RStudio
+
+### R
 
 R ist im Grunde ein sehr potenter Taschenrechner, der große Mengen an Daten verarbeiten und simulieren kann, schöne Grafiken und sogar diese Tutorials erstellen kann. Über das, was Dein Schultaschenrechner kann (selbst wenn es einer von denen mit grafischer Funktion ist), kann R also nur müde lächeln. Und hier, im echten Leben, haben wir es eben mit großen Datenmengen zu tun.
 
