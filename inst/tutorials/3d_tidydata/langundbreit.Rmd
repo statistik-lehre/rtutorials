@@ -1,0 +1,31 @@
+---
+title: "Lang und Breit"
+output:
+  learnr::tutorial:
+    language: de
+    css: css/boxes.css
+    fig_caption: no
+runtime: shiny_prerendered
+bibliography: ref.json
+link-citations: TRUE
+description: long & wide Datenformate und warum das für R wichtig ist.
+resource_files:
+- css/boxes.css
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Inhalt 
+
+Dieses Tutorial ist zum allergrößten Teil eine Übersetzung + Adaption des Buchkapitels [Tidy Data](https://r4ds.had.co.nz/tidy-data.html) aus Hadley Wickhams "R for Data Science". 
+
+## Lernziele
+
+## Abschlussquiz
+
+## Learnings
+
+

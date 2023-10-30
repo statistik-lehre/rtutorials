@@ -1,0 +1,97 @@
+---
+title: "z-Standardisierung"
+output:
+  learnr::tutorial:
+    language: de
+    css: css/boxes.css
+    fig_caption: no
+runtime: shiny_prerendered
+bibliography: ref.json
+link-citations: TRUE
+description: Zentrierung und Standardisierung
+resource_files:
+- css/boxes.css
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+## Abweichungen vom Mittelwert
+
+Die Abweichungen vom Mittelwert liegen der Berechnung von Streuungen zugrunde. Das zugrunde liegende (geniale) Konzept, Streuung durch die Abweichungen von einem Zentrum darzustellen ist das Fundament für Varianz, Standardabweichung, und alle darauf basierenden Verfahren wie Korrelation und Regression. Deswegen gehen wir im Folgenden Schritt für Schritt durch die Berechnung der Abweichungen vom Mittelwert in R.
+
+![Diagramm mit rot eingezeichneten Abweichungen vom Mittelwert.](images/dev.png){width="50%"}
+
+Wir können postulieren, dass die Summe der Abweichungen vom Mittelwert immer 0 beträgt.
+
+$$
+{\large \sum_{i=1}^{n}{(x_i - \bar{x})}=0}
+$$
+
+Konkret gerechnet für die obenstehende Verteilung:
+
++-----------------+----------+----------+----------+----------+----------+
+| $x_i$           | 1        | 1        | 3        | 6        | 9        |
++=================+=========:+=========:+=========:+=========:+=========:+
+| $\bar{x}$       | 4        | 4        | 4        | 4        | 4        |
++-----------------+----------+----------+----------+----------+----------+
+| $x_i - \bar{x}$ | -3       | -3       | -1       | 2        | 5        |
++-----------------+----------+----------+----------+----------+----------+
+
+: Abweichungen vom Mittelwert
+
+Die Werte in der letzten Zeile stellen die Abweichungen vom Mittelwert dar. Wenn alle Werte der letzten Zeile addiert werden, kommt tatsächlich 0 heraus.
+
+Das liegt an der Definition des Mittelwertes: Er liegt immer so, dass die negativen und die positiven Abweichungen sich gegenseitig aufheben.
+
+Wie sähe eine mögliche Prüfung dieser Hypothese in R aus?
+
+Um die Abweichung eines Vektors vom Mittelwert zu berechnen, benötigen wir zunächst noch etwas mehr Kenntnisse über das Rechnen mit Vektoren.
+
+
+## Umsetzung
+
+Um die Abweichungen vom Mittelwert ( $x_i - \bar{x}$ ) zu berechnen, wird der Mittelwert `mean(x)` von jedem einzelnen Wert des Vektors `x` abgezogen. Das entspricht dem Konzept Vektor und Konstante.
+
+Als Ergebnis entsteht ein neuer Vektor mit den Abweichungen vom Mittelwert.
+
+```{r, echo=TRUE}
+x <- c(1, 1, 9, 3, 6)
+x - mean(x)
+```
+
+### Anwendung
+
+Jetzt sind Sie selber gefragt! Prüfen Sie die Hypothese, dass die Summe aller Abweichungen vom Mittelwert 0 beträgt.
+
+Übersetzen Sie dazu die Formel $\sum{(x_i - \bar{x})}=0$ in R Code!
+
+```{r deviation-setup}
+x <- c(1, 1, 9, 3, 6)
+```
+
+```{r deviation-solution}
+sum(x - mean(x)) == 0
+```
+
+```{r deviation-hint}
+# Verwenden Sie sum() für die Formel und für die Überprüfung == 0 
+```
+
+```{r deviation, exercise=TRUE, exercise.setup = "deviation-setup", exercise.caption = "Abweichungen vom Mittelwert"}
+
+```
+
+## Learnings
+
+### neue Konzepte
+
+
+### neue Funktionen
+
+| Code               | Beschreibung                    |
+|--------------------|---------------------------------|
+| `var()`            | variance                        |

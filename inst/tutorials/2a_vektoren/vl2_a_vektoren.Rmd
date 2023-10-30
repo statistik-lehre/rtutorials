@@ -1,0 +1,594 @@
+---
+title: "Vektoren"
+output:
+  learnr::tutorial:
+    language: de
+    css: css/boxes.css
+    fig_caption: no
+runtime: shiny_prerendered
+bibliography: ref.json
+link-citations: TRUE
+description: Einführung in Assignment und Vektoren
+resource_files:
+- css/boxes.css
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(modeest)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Was Sie in diesem Tutorial lernen:
+
+Im letzten Tutorial haben Sie sich spielerisch mit der allgemeinen
+Syntax von Funktionen in R beschäftigt. Darauf bauen wir hier auf:
+
+-   Wie erstelle ich ein Objekt in R? (Assignment)
+
+-   Was ist das Environment?
+
+-   Wozu brauchen wir Vektoren?
+
+-   Wie kann ich auf einzelne Elemente eines Vektors zugreifen?
+    (Indizierung)
+
+## kurze Wiederholung
+
+```{r q1, echo=FALSE}
+question("Wie kennzeichnen Sie einen Kommentar in R?",
+  answer("`#` mit der Raute", correct = TRUE),
+  answer("`;` mit einem Semikolon "),
+  answer("`>` mit dem Größer-als-Zeichen"),
+  answer(" `“` mit Anführungszeichen")
+)
+```
+
+Außerdem:
+
+-   Text wird durch Anführungszeichen `"` gekennzeichnet.
+
+-   Argumente werden durch Kommata getrennt (Argument1 `,` Argument2)
+
+-   Laden von Paketen mit `library()`
+
+-   Installieren von Paketen mit `install.packages()`
+
+-   Hilfe wird über F1 / `?`Funktionsname / `help()` aufgerufen
+
+-   R Skript = Drehbuch für Code
+
+-   R Notebook = gut lesbare Mischung aus Code, Erläuterungen und
+    Ergebnissen
+
+## R als Taschenrechner
+
+:::{.aufgabe}
+Fangen wir einfach an:
+
+Berechnen Sie 2 + 3 im Codeblock!
+:::
+
+```{r rechner, exercise = TRUE}
+
+```
+
+```{r rechner-solution}
+2 + 3
+```
+
+Das Ergebnis wird nicht gespeichert, sondern einfach nur ausgegeben - es
+ist *printed and lost*.
+
+Aber wie lässt sich das Ergebnis speichern, um damit im weiteren Verlauf
+zu arbeiten?
+
+Das funktioniert folgendermaßen:
+
+```{r assignment_x, exercise = TRUE}
+x <- 2 + 3
+```
+
+Hier wird beim Ausführen des Codes nichts ausgegeben. Das
+liegt daran, dass der Wert von `2 + 3` in der Variable `x` gespeichert
+wurde. 
+
+:::{.aufgabe}
+Um zu sehen, was die Variable `x` nun enthält, tippen Sie einfach `x`:
+:::
+
+```{r x_print-setup, echo = FALSE}
+x <- 2 + 3
+```
+
+```{r x_print, exercise = TRUE}
+
+```
+
+```{r x_print-solution}
+x
+```
+
+Sehr gut! Im nächsten Abschnitt erfahren Sie mehr über die Zuweisung mit
+`<-`.
+
+## Assignment
+
+Mithilfe des *assignment operators* `<-` bekommt ein Name einen Wert
+zugewiesen. So können Variablen erstellt werden.
+
+``` r
+x <- 2 + 3
+# Variablenname <- Wert
+```
+
+::: grau
+#### Verbalisierung
+
+Oft ist es hilfreich, Code zu verbalisieren. Hier sind einige
+Möglichkeiten, wie der Pfeil ausgesprochen werden kann:
+
+Lesen Sie in Ihrem Kopf:
+
+-   `x` *bekommt den Wert von* `2 + 3`
+
+-   und von rechts nach links, in der Pfeilrichtung:
+
+    `2 + 3` *wird auf* `x` *geschrieben*.
+:::
+<br>
+
+::: aufgabe
+Multiplizieren Sie nun `x` mit 2!
+:::
+
+```{r y_creation-setup, echo = FALSE}
+x <- 2 + 3
+```
+
+```{r y_creation, exercise = TRUE}
+x * 2
+```
+<br>
+
+::: aufgabe
+Speichern Sie nun `x * 2` in einem neuen Objekt `y`!
+:::
+
+```{r y_saving-setup, echo = FALSE}
+x <- 2 + 3
+```
+
+```{r y_saving, exercise = TRUE}
+x * 2
+```
+
+```{r y_saving-solution}
+y <- x * 2
+```
+
+::: blau-nb
+**Tipp**: Nutzen Sie die Tastenkombination `Alt` + `-`, um den
+*assignment operator* `<-` zu erzeugen!
+
+Das hat den Vorteil, dass der Pfeil automatisch von Leerzeichen umgeben
+wird.
+:::
+<br>
+
+::: gelb
+
+**Achtung mit Leerzeichen:**
+
+`x < -2 + 3` hat eine sehr andere Bedeutung als   `x <- 2 + 3`.
+
+Ersteres heißt: "Ist `x` kleiner als `-2 + 3`?", letzteres bedeutet:
+"Definiere `x` als `2 + 3`".
+:::
+<br>
+
+::: aufgabe
+Lassen Sie sich nun `y` ausgeben!
+:::
+```{r y_print, exercise = TRUE, setup.chunk = "y_saving-solution"}
+
+```
+
+```{r y_print-setup}
+y <- x * 2
+```
+
+::: grau-nb
+Übrigens:
+
+Der Pfeil funktioniert auch in umgedrehter Form: `5 -> x`, das ist aber
+unkonventionell.
+:::
+
+### printed and lost
+
+Wie bereis erwähnt ist alles, was nicht benannt wird, "*printed and
+lost*".\
+Das heißt, die Rechenaufgabe wird ausgewertet und das Ergebnis
+ausgegeben, aber nirgends gespeichert.
+
+```{r printed, echo=TRUE}
+5 + 5       # Ergebnis ist "printed and lost"
+x <- 5 + 5  # Ergebnis speichern
+x           # Ergebnis ausgeben
+```
+
+### Überschreibung
+
+Bereits existierende Variablen werden ohne Warnung überschrieben, wenn
+sie neu definiert werden:
+
+```{r overwrite, exercise = TRUE, eval=TRUE}
+z <- 1
+z
+z <- 5
+z
+```
+
+### Hinweise zu Objektnamen
+
+#### formale Kriterien
+
+-   R akzeptiert keine Leerzeichen in Objektnamen.
+
+-   Namen dürfen nicht mit einer Zahl beginnen.
+
+-   Namen sind *case-sensitive*, das heißt, Groß- und Kleinschreibung
+    spielt eine Rolle. (x ≠ X)
+
+#### stilistische Kriterien
+
+Gute Namen:
+
+-   **sind leicht zu tippen**
+
+-   verwenden konsistent `_` oder `.` oder `-` als Leerzeichen
+
+-   sind konsequent kleingeschrieben (hilft Verwechslungen zu vermeiden)
+
+-   sind nicht identisch mit internen Objekten
+
+    -   `T` und `F` sind z.B. schlechte Namen (stehen intern für TRUE
+        und FALSE)
+
+::: vorteile
+##### Beispiele guter Namen
+
+``` r
+a
+alter
+alter_gruppe_1
+alter-gruppe-1
+alter.gruppe.1
+```
+:::
+
+::: nachteile
+##### Beispiele schlechter Namen
+
+``` r
+aLteR
+ALTER
+Alter_gruppe.1
+```
+:::
+
+## Environment
+
+Environment bedeutet Umgebung. Hier erscheinen alle definierten Objekte,
+und alles was sich in der Umgebung befindet, kann von R verwendet
+werden.
+
+![](images/environment.png)
+
+Sie können natürlich nur Objekte aufrufen, die auch vorher definiert
+`<-` wurden und deswegen in der Umgebung verfügbar sind. Ansonsten
+bekommen Sie folgenden Fehler:
+
+```{r def, message=TRUE, warning=TRUE, exercise=TRUE, exercise.caption="Fehlermeldung"}
+obj           # nicht vorher definiert, deswegen Fehler
+```
+
+Das lässt sich dadurch lösen, dass Sie das Objekt vorher definieren:
+
+```{r def2, exercise = TRUE}
+obj <- 100
+obj
+```
+
+### wichtige Einstellung
+
+![](images/settings.png)
+
+::: aufgaberstudio
+
+Setzen Sie bitte Ihre RStudio-Einstellungen unter Tools / Global Options
+auf diese Werte! Dadurch wird das Environment mit dem Beenden von
+RStudio automatisch gelöscht und nicht zwischen Sitzungen gespeichert.
+:::
+<br>
+Das soll Sie dazu animieren, alle Objekte die Sie benutzen auch
+tatsächlich selbst zu definieren.
+
+Das dient der Replizierbarkeit - Stellen Sie sich vor, Sie haben `x` gar
+nicht definiert, Ihre Berechnungen werden aber trotzdem ohne Warnung
+ausgeführt, weil noch ein anderes `x` aus der letzten Sitzung
+zwischengespeichert ist. Dann bekommen Sie falsche Ergebnisse und merken
+es eventuell nicht.
+
+
+## Vektoren
+
+Wir haben bereits die ganze Zeit mit Vektoren gearbeitet. Zum Beispiel
+ist `obj` ein Vektor mit der Länge 1 - enthält also nur eine Zahl.
+
+```{r, echo=TRUE}
+obj <- 100
+obj
+```
+
+Vektoren sind die elementarste Kategorie von Objekten in R und werden
+sehr häufig gebraucht. Andere Objekttypen werden in einem eigenen
+Tutorial vorkommen und bauen darauf auf.
+
+Das Nützliche an einem Vektor ist, dass er mehrere Werte enthalten kann.
+
+Beispielsweise die Ausprägungen des Merkmals "Alter" bei einer Befragung
+von 4 Personen:
+
+```{r, echo=TRUE}
+alter <- c(20, 23, 50, 11)
+alter
+```
+
+### neue Funktion: `c()`
+
+Um Vektoren zu erstellen, die mehr als einen Wert enthalten, brauchen
+Sie die Funktion `c()`.
+
+-   *c* wie *combine* oder *concatenate* (verketten)
+
+-   kombiniert mehrere Werte zu einem Vektor
+
+-   wie in jeder Funktion sind die Argumente (Werte) durch Kommata
+    getrennt
+
+-   das Dezimalzeichen in R ist der Punkt!
+
+::: aufgabe
+**1.** Verketten sie 1.5, 2.5 und 3 mithilfe von `c()`!
+:::
+
+```{r concatenate, exercise = TRUE}
+c()
+```
+
+```{r concatenate-solution}
+c(1.5, 2.5, 3)
+```
+
+::: aufgabe
+**2.** Mit `c()` lassen sich auch mehrere Vektoren aneinander binden. Kombinieren
+Sie `x`, `y` und `z` zu einem neuen Vektor!
+:::
+
+```{r vectorc, exercise = TRUE}
+# x, y und z definieren
+x <- 5     
+y <- 2 * x
+z <- y / x
+
+# x, y und z zu einem neuen Vektor verketten
+c()
+
+```
+
+```{r vectorc-solution}
+c(x, y, z)
+```
+
+Sehr gut! Nun beschäftigen wir uns damit, wie das Rechnen mit Vektoren
+funktioniert.
+
+## Rechnen mit Vektoren
+
+Betrachten Sie das folgende Beispiel. Welchen Schluss können wir daraus
+über das Rechnen mit Vektoren ziehen?
+
+```{r vecmath, exercise = TRUE}
+vec <- c(1, 2, 3) 
+vec 
+vec + 1
+```
+
+Die Rechenoperation wird mit jedem einzelnen Element des Vektors
+durchgeführt!
+
+Als Ergebnis steht ein neuer Vektor der die Ergebnisse der einzelnen
+Berechnungen enthält. `vec` wird dadurch nicht verändert.
+
+Dass Funktionen (wie z.B. `+`) auf jedes Element eines Vektors
+angewendet werden, ist eine fundamentale Erkenntnis, die Sie noch sehr
+häufig benötigen werden. Das Konzept dahinter heißt **Vektorisierung**
+und ist ein Bestandteil der Mächtigkeit von R.
+
+```         
+vec + 10
+```
+
+```{r vecq}
+question( "Was erwarten Sie als Ergebnis dieser Berechnung?",
+  answer("Einen Vektor der Länge 1 mit dem Wert 15"),
+  answer("Einen Vektor der Länge von `vec`, wo jedes Element mit 10 addiert 
+   wurde", correct = TRUE),
+  answer("Einen leeren Vektor")
+)
+```
+
+Schauen wir uns ein paar weitere Beispiele an:
+
+### Vektor + Vektor
+
+Was passiert, wenn zwei Vektoren gleicher Länge addiert werden?
+
+```{r vecvec-setup}
+vec <- c(1, 2, 3)
+```
+
+```{r vecvec, exercise = TRUE}
+vec + vec
+```
+
+::: infobox
+Die Rechenoperation wird jeweils zwischen den Elementen durchgeführt,
+die an der gleichen Position stehen. 
+
+(1 + 1, 2 + 2, 3 + 3)
+
+(erstes Element + erstes Element, zweites + zweites Element, drittes + drittes ... )
+:::
+
+### Vektoren unterschiedlicher Länge
+
+```{r recycl, exercise = TRUE}
+v <- c(1, 2, 3, 4, 5, 6)
+z <- c(1, 2)
+v + z
+```
+
+::: infobox
+Wenn zwei Vektoren unterschiedlicher Länge verrechnet werden, wird der
+kürzere Vektor automatisch so lange wiederholt, bis die Länge des
+anderen Vektors erreicht ist. Dieses Konzept heißt auch **Recycling**.
+:::
+
+Letztlich geschieht dieser Mechanismus auch bei unserem ersten Beispiel
+von Rechnen mit Vektor + Zahl (`vec + 1`), weil die Zahl eigentlich auch
+nur ein Vektor der Länge 1 ist.
+
+### Fehlermeldung
+
+Entsteht beim Recycling ein "Überstand", weil die beiden Vektoren keine
+Vielfachen voneinander sind, wird die Berechnung trotzdem durchgeführt,
+allerdings mit einer Warnung:
+
+```{r warn, exercise = TRUE, warning=TRUE, exercise.caption="Warnmeldung"}
+v <- c(1, 2, 3, 4, 5, 6)
+z <- c(1, 2, 3, 4, 5)
+v + z
+```
+
+Sehr gut! Sie haben jetzt bereits die wichtigsten fundamentalen
+Bestandteile der Programmiersprache R in Aktion kennengelernt.
+
+## Textvektoren
+
+Vektoren können nicht nur Zahlen enthalten, sondern unter anderem auch
+Text.
+
+Text wird durch `"Anführungszeichen"` gekennzeichnet.
+
+Kombinieren Sie Ihre drei Lieblingstiere zu einem Vektor!
+
+```{r charvec, exercise = TRUE, chunk.name = "Textvektor"}
+# Beispiel
+c("Hund", "Katze", "Maus")
+
+# Sie sind dran
+c()
+```
+
+Perfekt! Nun kommen wir zu einer elementaren Eigenschaft von Vektoren:
+Betrachten Sie dazu dieses Beispiel:
+
+```{r coercion, exercise = TRUE}
+c(1, 2, 3, 4)
+c(1, 2, 3, "vier")  # Die ausgegebenen Zahlen stehen in Anführungszeichen
+```
+
+::: infobox
+Achtung! Vektoren können immer nur Daten des gleichen Typs enthalten!
+Sobald auch nur ein einziges Element eines Vektors Text ist, wird der
+ganze Vektor zu einem Textvektor und die Zahlen stehen nicht mehr für
+Berechnungen zur Verfügung. Diese automatische Umwandlung heißt
+**coercion**.
+:::
+
+Falls Sie über diesen Fehlertyp
+`non-numeric argument to binary operator`stolpern, untersuchen Sie ihre
+Berechnung auf solche Probleme.
+
+## Zahlenreihen
+
+Um eine Zahlenreihe zu erstellen, verwenden Sie den *colon operator* `:`
+
+```{r, echo=TRUE}
+1:10
+```
+
+Der *colon operator* erzeugt als Ergebnis einen Vektor, der eine
+ganzzahlige Zahlenreihe enthält.\
+Wir könnten das selbe Ziel auch mit `c()` erreichen, was aber sehr
+umständlich wäre:
+
+```{r, echo=TRUE}
+c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+```
+
+#### Anwendung
+
+Erstellen Sie einen Vektor namens `z`, der eine Zahlenreihe von 1 bis
+1000 enthält! Lassen Sie sich `z` ausgeben.
+
+```{r colon, exercise=TRUE, exercise.caption="colon operator"}
+
+```
+
+```{r colon-solution}
+z <- 1:1000
+z
+```
+
+## Learnings heute
+
+Sie haben gelernt, wie Sie Variablen Daten zuweisen. Variablen sind in R repräsentiert als Vektoren. Vektoren sind der fundamentale Objekttyp in R, auf dem alle anderen Objekte wie z.B. Tabellen aufbauen. Ihr Vorteil ist, dass sie mehrere Werte enthalten können.
+
+Beim Rechnen mit Vektoren haben Sie das Konzept "Recycling" kennengelernt,und erahnen ungefähr, was "Vektorisierung" ist - dass vektorisierte Funktionen wie `+` auf jedes Element eines Vektors einzeln angewendet werden, und als Ergebnis auch wieder ein Vektor steht.
+
+Beim Assigment haben Sie gelernt, Leerzeichen zu verwenden um den Assignment Operator <-`. 
+
+Das Dezimaltrennzeichen in R ist der Punkt.
+Kommata werden verwendet, um Werte in Aufzählungen voneinander zu trennen.
+
+Gute Objektnamen sind konsistent und kleingeschrieben und dürfen keine 
+Leerzeichen enthalten oder mit einer Zahl beginnen.
+
+Im Environment werden die erstellten Objekte der laufenden Sitzung angezeigt. Bei Beenden von RStudio werden sie gelöscht, was die empfohlene Einstellung ist. So wird Replizierbarkeit trainiert: Nicht die erstellten Variablen werden aufbewahrt, sondern das Rezept um sie zu erstellen - in Form eines Skripts.
+
+### Diese neuen Konzepte kennen Sie nun:
+
+-   Assignment `<-`
+
+-   Environment
+
+-   Vektoren
+
+-   Recycling und Vektorisierung
+
+-   Zahlenreihen mit `:`
+
+### neue Funktionen
+
+| Code  | Beschreibung         |
+|-------|----------------------|
+| `c()` | combine              |
+| `<-`  | assignment operator  |
+| `:`   | colon operator       |

@@ -1,0 +1,125 @@
+[
+    {
+        "ISBN": "978-3-465-04339-3",
+        "author": [
+            {
+                "family": "Schlaudt",
+                "given": "Oliver"
+            }
+        ],
+        "call-number": "JC574 .S35 2018",
+        "collection-number": "102",
+        "collection-title": "KlostermannRoteReihe",
+        "edition": "Originalausgabe",
+        "id": "schlaudt2018",
+        "issued": {
+            "date-parts": [
+                [
+                    2018
+                ]
+            ]
+        },
+        "key": "CIMIH47P",
+        "libraryid": "1",
+        "number-of-pages": "192",
+        "providerkey": "Zotero",
+        "publisher": "Vittorio Klostermann",
+        "publisher-place": "Frankfurt am Main",
+        "source": "Library of Congress ISBN",
+        "title": "Die politischen Zahlen: über Quantifizierung im Neoliberalismus",
+        "title-short": "Die politischen Zahlen",
+        "type": "book"
+    },
+    {
+        "author": [
+            {
+                "family": "Damerow",
+                "given": "Peter"
+            },
+            {
+                "family": "Nissen",
+                "given": "H. J."
+            },
+            {
+                "family": "Englund",
+                "given": "Robert K."
+            }
+        ],
+        "container-title": "Spektrum der Wissenschaft",
+        "id": "damerow1988",
+        "issued": {
+            "date-parts": [
+                [
+                    1988
+                ]
+            ]
+        },
+        "key": "ZMSC8DYT",
+        "libraryid": "1",
+        "page": "74-85",
+        "providerkey": "Zotero",
+        "title": "Die Entstehung der Schrift",
+        "type": "article-journal",
+        "volume": "2"
+    },
+    {
+        "ISBN": "978-1-4919-1039-9 978-1-4919-1036-8",
+        "author": [
+            {
+                "family": "Wickham",
+                "given": "Hadley"
+            },
+            {
+                "family": "Grolemund",
+                "given": "Garrett"
+            }
+        ],
+        "call-number": "QA276.45.R3 W53 2016",
+        "edition": "First edition",
+        "id": "wickham2016",
+        "issued": {
+            "date-parts": [
+                [
+                    2016
+                ]
+            ]
+        },
+        "key": "NYFUJ8UJ",
+        "libraryid": "1",
+        "number-of-pages": "492",
+        "oclc": "ocn968213225",
+        "providerkey": "2509FBBE-5BB0-44C4-B119-6083A81ED673",
+        "publisher": "O’Reilly",
+        "publisher-place": "Sebastopol, CA",
+        "source": "Library of Congress ISBN",
+        "title": "R for data science: import, tidy, transform, visualize, and model data",
+        "title-short": "R for data science",
+        "type": "book"
+    },
+    {
+        "URL": "https://moderndive.com/",
+        "author": [
+            {
+                "family": "Ismay",
+                "given": "Chester"
+            },
+            {
+                "family": "Kim",
+                "given": "Albert Y."
+            }
+        ],
+        "container-title-short": "Modern Dive",
+        "id": "ismay2022",
+        "issued": {
+            "date-parts": [
+                [
+                    2022
+                ]
+            ]
+        },
+        "libraryid": "",
+        "providerkey": "2509FBBE-5BB0-44C4-B119-6083A81ED673",
+        "title": "Statistical Inference via Data Science A ModernDive into R and the Tidyverse",
+        "type": "book"
+    }
+]

@@ -1,0 +1,362 @@
+---
+title: "Maße der zentralen Tendenz"
+output:
+  learnr::tutorial:
+    language: de
+    css: css/boxes.css
+    fig_caption: no
+runtime: shiny_prerendered
+bibliography: ref.json
+link-citations: TRUE
+description: eigene Funktionen schreiben mit R
+resource_files:
+- css/boxes.css
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Länge eines Vektors
+
+Um $n$ zu ermitteln, gibt es die Funktion `length()`. Sie gibt die Anzahl der Elemente eines Vektors aus.
+
+
+### Anwendung
+
+Auf meinem letzten Spaziergang habe ich alle Tiere aufgeschrieben, die mir begegnet sind. Ermitteln Sie (ohne selbst zu zählen), wie viele Tierbeobachtungen der Vektor `animals` insgesamt enthält!
+
+```{r n-solution}
+length(animals)
+```
+
+```{r n, exercise=TRUE, exercise.caption="Länge eines Vektors"}
+animals <- c("cat", "dog", "cow", "eagle", "frog", "worm", "bear",
+ "snake", "fish", "kangaroo", "honey badger", "wolf", "mouse", "sheep",
+  "goat", "squirrel", "fish", "frog", "woodpecker", "mouse", "elephant",
+   "dog", "human", "fly", "mole", "honeyguide", "duck", "goat", "goose",
+    "hen", "horse", "pig", "bull", "rooster", "bat", "reindeer", "deer",
+     "fox", "bunny", "lynx", "otter", "weasel", "wild boar", "blackbird",
+      "blackbird", "falcon", "owl", "sparrow", "sparrow", "sparrow", "swan",
+       "swallow", "trout", "lizard", "viper", "salamander", "ant", "bee",
+        "beetle", "dragonfly", "sparrow", "blackbird", "fly", "flea", "glow worm")
+```
+
+## Anzahl von Kategorien
+
+Würden Sie anstattdessen wissen wollen, wie viele **verschiedene** Tiere ich insgesamt beobachtet habe, müssen wir zunächst alle Dopplungen ausschließen.
+
+Das geht über den Befehl `unique()`. Als Ergebnis erhalten wir einen Vektor, der alle vorkommenden Kategorien enthält.
+
+### Anwendung
+
+1.  Erstellen Sie einen neuen Vektor `categories`, welcher alle vorkommenden Kategorien ein Mal enthält.
+
+2.  Ermitteln Sie dann die Anzahl der verschiedenen Kategorien!
+
+```{r categ-solution}
+categories <- unique(animals)
+length(categories)
+```
+
+```{r categ, exercise=TRUE, exercise.setup="n", exercise.caption="Anzahl an Kategorien"}
+
+```
+
+### Quizfragen Skalenniveau
+
+```{r quiz, echo=FALSE}
+question("Welches Skalenniveau hat die Tierbeobachtung?",
+         answer("Nominal", correct = TRUE),
+         answer("Ordinal"),
+         answer("Intervall"),
+         answer("Verhältnis"),
+         answer("Absolut")
+         )
+```
+
+```{r quiz2}
+question("Was trifft noch auf `animals` zu? (Mehrere Antworten möglich)",
+         answer("metrisch"),
+         answer("kardinal"),
+         answer("kategorial", correct = TRUE),
+         answer("qualitativ", correct = TRUE),
+         answer("stetig"),
+         answer("diskret", correct = TRUE),
+         answer("quantitativ")
+         )
+```
+
+## Modus
+
+Der Modus lässt sich bereits ab der Nominalskala berechnen. Um herauszufinden, welches Tier mir am häufigsten begegnet ist, ziehen wir den Modus heran.
+
+Dafür gibt es keine direkte eingebaute Funktion. Allerdings gibt es eine Funktion, mit welcher Häufigkeitstabellen erstellt werden: `table()`.
+
+Erstellen Sie eine Häufigkeitstabelle des Vektors `animals` und nennen Sie die Tabelle `tbl`!
+
+```{r tblsetup}
+animals <- c("cat", "dog", "cow", "eagle", "frog", "worm",
+ "bear", "snake", "fish", "kangaroo", "honey badger", "wolf",
+  "mouse", "sheep", "goat", "squirrel", "fish", "frog",
+   "woodpecker", "mouse", "elephant", "dog", "human", "fly", "mole",
+    "honeyguide", "duck", "goat", "goose", "hen", "horse", "pig",
+     "bull", "rooster", "bat", "reindeer", "deer", "fox", "bunny", "lynx",
+      "otter", "weasel", "wild boar", "blackbird", "blackbird", "falcon",
+       "owl", "sparrow", "sparrow", "sparrow", "swan", "swallow", "trout",
+        "lizard", "viper", "salamander", "ant", "bee", "beetle", "dragonfly",
+         "sparrow", "blackbird", "fly", "flea", "glow worm")
+```
+
+```{r tbl-solution}
+tbl <- table(animals)
+tbl
+```
+
+```{r tbl, exercise=TRUE, exercise.setup="tblsetup"}
+
+```
+
+### Sortieren mit `sort()`
+
+Die Häufigkeitstabelle ist unübersichtlich, so dass der häufigste Wert nicht direkt ins Auge springt. Wir können sie aber umsortieren mit dem Befehl `sort()`.
+
+Um eine absteigende Sortierung zu erhalten, und zu erreichen, dass der häufigste Wert ganz vorne steht, spezifizieren Sie in der Funktion `sort()` das Argument `decreasing = TRUE`.
+
+```{r sortsetup}
+animals <- c("cat", "dog", "cow", "eagle", "frog", "worm", "bear", "snake", "fish", "kangaroo", "honey badger", "wolf", "mouse", "sheep", "goat", "squirrel", "fish", "frog", "woodpecker", "mouse", "elephant", "dog", "human", "fly", "mole", "honeyguide", "duck", "goat", "goose", "hen", "horse", "pig", "bull", "rooster", "bat", "reindeer", "deer", "fox", "bunny", "lynx", "otter", "weasel", "wild boar", "blackbird", "blackbird", "falcon", "owl", "sparrow", "sparrow", "sparrow", "swan", "swallow", "trout", "lizard", "viper", "salamander", "ant", "bee", "beetle", "dragonfly", "sparrow", "blackbird", "fly", "flea", "glow worm")
+tbl <- table(animals)
+```
+
+```{r sort-solution}
+sort(tbl, decreasing = TRUE)
+```
+
+```{r sort, exercise=TRUE, exercise.setup="sortsetup"}
+
+```
+
+### Modus mit externem Paket berechnen
+
+Am einfachsten ist die Verwendung des Pakets `modeest` (mode estimation).
+
+Die Funktion `mfv()` (most frequent value) gibt die häufigsten Werte zurück.
+
+```{r modesetup}
+animals <- c("cat", "dog", "cow", "eagle", "frog", "worm", "bear",
+ "snake", "fish", "kangaroo", "honey badger", "wolf", "mouse", "sheep",
+  "goat", "squirrel", "fish", "frog", "woodpecker", "mouse", "elephant",
+   "dog", "human", "fly", "mole", "honeyguide", "duck", "goat", "goose",
+    "hen", "horse", "pig", "bull", "rooster", "bat", "reindeer", "deer",
+     "fox", "bunny", "lynx", "otter", "weasel", "wild boar", "blackbird", 
+     "blackbird", "falcon", "owl", "sparrow", "sparrow", "sparrow", "swan", 
+     "swallow", "trout", "lizard", "viper", "salamander", "ant", "bee", "beetle", 
+     "dragonfly", "sparrow", "blackbird", "fly", "flea", "glow worm")
+```
+
+```{r, echo=TRUE}
+modeest::mfv(animals)
+```
+
+::: grau-nb
+Rückblick:\
+Die Schreibweise `Paket::Funktion()` erlaubt, Funktionen aus Paketen zu verwenden, die aktuell nicht über `library()` ins Environment geladen sind.
+
+Zwischen den Doppelpunkten darf kein Leerzeichen sein.
+:::
+
+## Median
+
+```{r medi, echo=FALSE}
+question("Ab welchem Skalenniveau ist die Berechnung des Medians sinnvoll?",
+         answer("Nominal"),
+         answer("Ordinal", correct = TRUE),
+         answer("Intervall"),
+         answer("Verhältnis"),
+         answer("Absolut")
+         )
+```
+
+Zur Erinnerung: Der Median ist der Wert, vor dem 50% der Werte liegen und nach dem die anderen 50% der Werte kommen. Es geht nicht um die Werte selbst, sondern lediglich um ihre Position auf einer geordneten Liste.
+
+In R wird der Median mit `median()` berechnet.
+
+Berechnen Sie den Median von `m`!
+
+```{r medex-solution}
+median(m)
+```
+
+```{r medex, exercise=TRUE}
+m <- c(6, 3, 5, 2, 1)
+```
+
+## Summen bilden
+
+Eine essentielle Funktion bei der Berechnung statistischer Kennwerte ist die Summe $\sum$.
+
+Um die Summe aller Elemente eines Vektors zu bestimmen, gibt es die Funktion `sum()`.
+
+```{r, echo=TRUE}
+x <- c(1, 2, 3, 4, 5)
+sum(x)
+```
+
+### Anwendung
+
+$$
+{\large \sum_{i=1}^{100}i= 5050}
+$$
+
+Setzen Sie die obige mathematische Formel in R-Code um!
+
+```{r sum-hint}
+# oben auf dem Summenzeichen steht die obere Grenze der Summierung, unten steht der Startwert. 
+```
+
+```{r sum-solution}
+sum(1:100)
+```
+
+```{r sum, exercise=TRUE, exercise.caption="Summe"}
+
+```
+
+## Das arithmetische Mittel
+
+$$
+{\large \bar{x} = \frac{\sum_{i=1}^{n}{x_i}}{n}}
+$$
+
+### Selber nachdenken
+
+Wenden Sie die eben erlernten Funktionen an, um den Mittelwert des Vektors `x` zu berechnen! Orientieren Sie sich an der mathematischen Formel und überlegen, wie Sie die einzelnen Bestandteile in R umsetzen können.
+
+```{r mit-hint-1}
+# Division mit /
+```
+
+```{r mit-hint-2}
+# n = length(x) 
+# Summenzeichen = sum()
+# x_i = Vektor x
+```
+
+```{r mit-solution}
+sum(x) / length(x)
+```
+
+```{r mit, exercise=TRUE, exercise.caption = "eigene Formel"}
+x <- c(1, 1, 9, 3, 6)
+```
+
+### eingebaute Funktion
+
+Für den Mittelwert (engl. *mean*) gibt es bereits die Funktion `mean()`, damit Sie nicht jedes Mal die gesamte Formel tippen müssen.
+
+Das erste Argument ist ein Vektor, der die Zahlen enthält, deren Mittelwert ausgerechnet werden soll. Probieren Sie es aus!
+
+```{r mean-solution}
+mean(x)
+```
+
+```{r mean, exercise = TRUE, exercise.caption="mean"}
+x <- c(1, 1, 9, 3, 6)
+
+```
+
+### Skalenniveau
+
+```{r scalelevel}
+question("Ab welchem Skalenniveau kann das arithmetische Mittel sinnvoll ausgerechnet werden?",
+         answer("Nominal"),
+         answer("Ordinal"),
+         answer("Intervall", correct = TRUE),
+         answer("Verhältnis"),
+         answer("Absolut")
+)
+```
+
+## Bedingungsprüfung
+
+### Gleichheitsprüfung mit `==`
+
+Um die Ergebnisse Ihrer eigene Formel mit denen der eingebauten Formel `mean()` zu vergleichen, können Sie den `==`-Operator verwenden.
+
+```{r, echo=TRUE}
+sum(x) / length(x) == mean(x)
+```
+
+Lesen Sie den Code in Ihrem Kopf folgendermaßen:\
+"Ist das Ergebnis von `sum(x) / length(x)` identisch mit dem Ergebnis von `mean(x)`?"
+
+Da es sich um eine Ja / Nein - Frage handelt, gibt R entweder `TRUE` oder `FALSE` aus. Ein weiteres mögliches Ergebnis ist `NA`, welches wir am Ende des Tutorials genauer ansehen.
+
+Achtung! `==` gibt `FALSE` aus, wenn auch nur die kleinste Unterschiedlichkeit vorhanden ist.
+
+## Fehlende Werte `NA`
+
+`NA` bedeutet *not available* und signalisiert R, dass der betreffende Wert fehlt. Alle fehlenden Werte sollten so und nicht anders codiert werden, damit R adäquat damit umgehen kann.
+
+Das Ergebnis von Berechnungen, die `NA`s enthalten, ist eigentlich immer `NA`.
+
+```{r echo=TRUE}
+alter <- c(20, 22, NA)
+mean(alter)
+```
+
+Das hat auch einen guten Grund: Wenn ein Wert in Wirklichkeit alles mögliche sein könnte, kann auch das Ergebnis alles mögliche sein.
+
+Um trotzdem zu einem Ergebnis zu kommen, können Sie bei vielen Funktionen das Argument `na.rm = TRUE` spezifizieren. Das steht für *NA Remove*.
+
+```{r echo=TRUE}
+mean(alter, na.rm = TRUE)
+```
+
+
+
+## Überblick deskriptivstatistische Kennwerte
+
+Die Berechnung vieler statistischer Kennwerte ist in R ziemlich straight forward: Es gibt dafür oft eingebaute Funktionen, und wenn nicht, gibt es Pakete, die Funktionen enthalten. Immerhin wurde R entworfen mit dem Ziel, statistische Berechnungen zu ermöglichen.
+
+Sie kennen nun bereits einige statistische Kennwerte. Es gibt noch viele mehr, und es geht nicht darum, sich alles zu merken, sondern zu wissen, wo Sie die passende Funktion für das gewünschte Maß finden. Oft reicht dafür eine kurze Suche im Internet.\
+\
+Alle diese Funktionen sind sich ähnlich: Sie nehmen als erstes Argument einen Vektor, der die Werte enthält, mit denen gerechnet werden soll. Deswegen haben Sie im ersten Teil gelernt, wie Sie Vektoren erstellen und speichern.
+
+Hier nochmal eine Übersicht über deskriptivstatistische Kennwerte mit ihren eingebauten Funktionen:
+
++-----------------------+---------------------------+----------------+
+| Name                  | Code                      | Skalenniveau   |
++=======================+===========================+================+
+| arithmetisches Mittel | `mean()`                  | Intervall      |
++-----------------------+---------------------------+----------------+
+| Median                | `median()`                | Ordinal        |
++-----------------------+---------------------------+----------------+
+| Modus                 | `table()`\                | Nominal        |
+|                       | oder mit externem Paket:\ |                |
+|                       | `modeest::mfv()`          |                |
++-----------------------+---------------------------+----------------+
+
+: Übersicht: Maße der zentralen Tendenz in R
+
+## Learnings
+
+### neue Konzepte
+
+-   nötige Skalenniveaus für Modus, Median und Mittelwert
+
+### neue Funktionen
+
+| Code               | Beschreibung                    |
+|--------------------|---------------------------------|
+| `length()`         | Länge eines Vektors             |
+| `sum()`            | Summe eines Vektors             |
+| `unique()`         | Entfernen von Duplikaten        |
+| `length(unique())` | Anzahl der versch. Ausprägungen |
+| `table()`          | Häufigkeitstabelle              |
+| `sort()`           | Sortieren                       |
+| `modeest::mfv()`   | most frequent value (Modus)     |
+| `median()`         | Median                          |
+| `mean()`           | arithmetisches Mittel           |
+| `function(){}`     | Funktionen schreiben            |

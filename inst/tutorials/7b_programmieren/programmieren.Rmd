@@ -1,0 +1,603 @@
+---
+title: "Programmieren Basics"
+output:
+  learnr::tutorial:
+    language: de
+    css: css/boxes.css
+    fig_caption: no
+runtime: shiny_prerendered
+bibliography: ref.json
+link-citations: TRUE
+description: "Die absoluten Basics des programmierens. Weil es immer hilfreich ist und es hier anfängt, Spaß zu machen."
+resource_files:
+- css/boxes.css
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(ggplot2)
+library(dplyr)
+knitr::opts_chunk$set(echo = FALSE)
+
+
+dat <- expand.grid(form = c("kreis", "quadrat", "dreieck"),
+                   farbe = c("lila", "türkis", "gelb"),
+                   groesse = 1:3)
+
+all_combinations <- expand.grid(form = c("kreis", "quadrat", "dreieck"),
+                   farbe = c("lila", "türkis", "gelb"),
+                                groesse = 1:3,
+                                filter = 0:1)
+
+# für die plots
+man_col <- c("lila" = "#440154FF", "türkis" = "#21908CFF", "gelb" = "#FDE725FF")
+filter_man <-  c("0" = "Nicht herausgefiltert", "1" = "Herausgefiltert")
+
+```
+
+## Inhalt
+
+kurze Beschreibung des Inhalts
+
+Verortung auf der Roadmap
+
+## Lernziele
+
+-   <input type="checkbox" unchecked> `if` Statements kennen </input>
+-   <input type="checkbox" unchecked> `for` Loops kennen </input>
+-   <input type="checkbox" unchecked> `if` Statements mit `for` Loops verbinden können </input>
+-   <input type="checkbox" unchecked> `ifelse()` Funktion kennen und anwenden können </input>
+-   <input type="checkbox" unchecked> `while` Loops anwenden können </input>
+
+## Programmieren
+
+Mittlerweile wissen wir: R macht Spaß. R ist mächtig. R ist [Turing complete](https://en.wikipedia.org/wiki/Turing_completeness) (kann also alles, was eine Programmiersprache können muss). Und R wächst:
+
+![](images/r_stackoverflow.png) [*Gefunden auf Stackoverflow*](https://stackoverflow.blog/2017/10/10/impressive-growth-r/)
+
+Neben den Basics, die wir bisher gelernt haben kann R noch ganz schön viele andere, coole Sachen: Diese Tutorials sind in R geschrieben, es lassen sich aber auch ganze Bücher (z.B. [hier](https://r4ds.had.co.nz/), [hier](https://adv-r.hadley.nz/) und [hier](https://r-graphics.org/)), Webseiten/ Blogs (z.B. [hier](https://www.tidymodels.org/), [hier](https://www.shirin-glander.de/)) und Web-Apps (z.B. [hier](https://demo.prod.appsilon.ai/content/55e17566-c4e9-472d-a78e-91caa476d415/), [hier](https://connect.appsilon.com/pixelator/) und [hier](https://connect.appsilon.com/fresh-water-resources/)) damit schreiben.
+
+Im Folgenden werden wir euch die ganz grundlegenden Basics erklären, die eigenltich immer gebraucht werden und in jeder Programmiersprache (fast) identisch funktionieren. Das heißt: Wir öffnen jetzt gemeinsam das Tor in die Welt von (\@Gesa: hier fehlt noch das Satzende,...ich denke "Programmieren"?)
+
+### Statement: if
+
+`if () {}` ist ein Statement, dass genau das beinhaltet. Es sagt dem Rechner: `wenn ... dann ...`.\
+
+-   In den runden Klammern (`()`) steht das `wenn` - Argument.\
+-   In den geschweiften Klammern (`{}`), die `dann` Anweisung.\
+-   Das ganze wird abgerundet mit einem `else {}`, also eine `sonst` Anweisung. (Wenn es nur ein einziges `wenn`-Argument gibt, kann dieser Teil einfach übersprungen werden.)
+
+#### Exkurs logische Operatoren
+
+Innerhalb dieser `if`-Statements werden die logischen Operatoren wieder wichtig. Hier einige Beispiele:
+
+-   `T` = `TRUE` = `1` = `!0`
+-   `F` = `FALSE` = `0`
+-   `==` genau gleich
+-   `>` größer als
+-   `<` kleiner als
+-   `%% x` gibt den unteilbaren Rest an, wenn durch x geteilt wird
+-   `!` Nicht (Verneinung)
+-   `&` und
+-   `|` oder: entweder A oder B oder A und B
+-   `xor(x, y)` Exklusives oder: Entweder ausschließlich x oder ausschließlich y
+-   eine ausführlichere Liste gibts [hier](https://www.datamentor.io/r-programming/operator)
+
+::: aufgabe
+**Aufgabe:**\
+Für unser (sehr stark vereinfachtes) Beispiel wollen wir wissen, ob eine zufällig generierte ganze Zahl größer oder kleiner als 4.5 ist.\
+Spiele das ganze im zweiten Schritt ein paar Mal durch und prüfe, ob das Statement so arbeitet, wie geplant.
+:::
+
+```{r if_1-solution}
+# Zufallszahl erstellen
+(zufallszahl <- sample(1:10, 1))
+
+if (zufallszahl > 4.5) {
+  print("größer")
+} else {
+  print("kleiner")
+}
+
+zufallszahl <- 1
+zufallszahl <- 9
+```
+
+```{r if_1, exercise = TRUE}
+
+```
+
+Natürlich können auch mehrere `if` Statements aneinander gehängt werden, für den Fall, dass es mehr als 2 logische Kategorien gibt. Das sieht dann so aus `if (a == T) {do()} else if (b == T) {do()} else {do()}` und kann beliebig erweitert werden. Was darin passiert kannst du dir vorstellen, wie ein Sack abgelegter Kleidung, der in der Altersreihenfolge zwischen Geschwistern weiter gegeben wird: Wenn etwas den Kriterien des größte Geschwisterkindes entspricht (zB. dass es passt), nimmt es sich das, nur wenn es etwas nicht will, gibt es das an das mittlere Geschwister, dass als nächstes nach bestimmten Kriterien aussucht (zB, dass es pink ist) und das wiederum das abgelehnte ans kleinste Geschwister (das am liebsten Leggings und Print-Shirts trägt) die von allen abgelehnte Kleidung geht (in unserer globalisierten und rassistischen Welt) in die Altkleidersammlung. Ein Argument in der ersten if Ebene wird geprüft: Wenn das Ergebnis `TRUE` ist, wird der Inhalt der geschweiften Klammern ausgeführt. Nur, wenn das Ergebnis `FALSE` ist, wird es ins `else if` oder eben `else` geschickt. Bedeutet auch: Pinke Leggings der größe 152 landen bei Geschisterkind 1, pinke Leggings jeder anderen Größe bei Kind 2 und nur alle Leggings, die weder 152 noch pink sind, landen bei Kind 3. Also auf unser Beispiel angewendet:
+
+```{r kleidung, eval=FALSE, echo=TRUE}
+if (Größe == 152) {     # 1. Geschwisterkind trägt Größe 152
+  nimm()                # ausgedachte Funktion, die beschreibt, dass das Kind das Klamottenstück behält
+} else if (Farbe == "pink") { # 2. Geschwisterkind will pinke Kleidung
+  nimm()
+} else if (Form == "Leggings" | Form == "Shirt" & Farbe == "print") { # 3. Geschwisterkind will Leggings oder Print-shirts
+  nimm()
+} else {
+  gib_weiter()          # ausgedachte Funktion um zu verdeutlichen, was mit dem Rest geschieht.   
+}
+```
+
+::: aufgabe
+**Aufgabe:**\
+In diesem Beispiel wollen wir wissen, ob eine zufällig generierte ganze Zahl größer, kleiner oder gleich 5 ist.\
+Spiele das ganze im zweiten Schritt ein paar Mal durch und prüfe, ob das Statement so arbeitet, wie geplant.
+:::
+
+```{r if_2-solution}
+# Zufallszahl erstellen
+(zufallszahl <- sample(1:10, 1))
+
+if (zufallszahl > 5) {
+  print("größer")
+} else if (zufallszahl == 5) {
+  print("gleich")
+} else {
+  print("kleiner")
+}
+```
+
+```{r if_2, exercise=TRUE}
+
+```
+
+<details>
+
+<summary><a>▼ \* Lustiger Spielkram mit logischen Operatoren </a></summary>
+
+Die oben beschriebenen logischen Operatoren erlauben uns Daten und Datensätze nach belieben zu filtern.\
+Zuerst verstehen wir, was eine logische Abfrage macht.
+
+::: aufgabe
+**Aufgabe:**
+
+1.  Erstelle einen Vektor `vec` der die ganzen Zahlen 1 bis 10 in aufsteigender Reihenfolge enthält
+2.  Lass dir anzeigen, welche Werte kleiner als 5 sind
+3.  Lass dir anzeigen, welche Werte größer als 5 sind
+4.  Lass dir anzeigen, welcher Wert genau 5 ist
+5.  Lass dir anzeigen, welche Werte nicht genau 5 sind
+6.  Finde heraus, welche Werte sich ohne Rest durch 3 teilen lassen
+:::
+
+```{r operatoren_1-solution}
+# Erstelle einen Vektor
+vec <- 1:10
+
+# Logische Operatoren anwenden
+vec < 5
+vec > 5
+vec == 5
+vec != 5
+vec %% 3
+```
+
+```{r operatoren_1, exercise = TRUE}
+
+```
+
+Nun haben wir herausgefunden, dass bei den meisten Operatoren ein Vektor von `TRUE` und `FALSE` Werten herauskommt. Sie sagen `Wahr. Dieser Eintrag entspricht deiner Anfrage` oder `Falsch. Dieser Eintrag entspricht NICHT deiner Anfrage`. Für den Rechner ist es hierbei allerdings (in den allermeisten Fällen) gleichgültig, ob wir `TRUE`, `T` oder `1` bzw. `FALSE`, `F` oder `0` schreiben. Das hat einige schöne Nebeneffekte: Zum einen lassen sich die `TRUE` Werte einfach mittels `sum()` zusammen addieren - was uns zB. im Umgang mit NAs sehr zu Nutzen kommt. Zum anderen sind diese TRUE-FALSE Vektoren wie eine Schablone, die wir auf bestehende Vektoren legen können, die uns bestimmte Werte ausgeben/anzeigen. Das nachen wir, wenn wir die Ergbnisse des logischen Auswahlprozesses zum indizieren (`[]`) verwenden.
+
+::: aufgabe
+**Aufgabe:**
+
+1.  Finde heraus, wie viele Werte den Anforderungen der logischen Anfragen aus den Punkten 2 bis 5 letzten Aufgabe entsprechen (**Hinweis:** Hier ist die Pipe (`%>%` aus dem Pakt `dplyr` sehr hilfreich))
+2.  ... und welche
+3.  Formuliere, warum diese Fragestellung nicht sinnvoll ist, für den 6 Punkt der letzten Aufgabe
+4.  Finde heraus, wie viele und welche Zahlen sich ohne Rest durch 3 teilen lassen.
+5.  Finde heraus, wie viele und welche Zahlen sich nur mit Rest durch 3 teilen lassen.
+:::
+
+```{r operatoren_2-solution}
+library(dplyr)
+vec < 5 %>% sum() # zähle die Anzahl der Zahlen unter 5 zusammen
+vec[vec < 5]      # zeige mir die Werte, die in diesem Vektor unter 5 liegen
+vec > 5 %>% sum()
+vec[vec > 5 ]
+vec == 5 %>% sum()
+vec[vec == 5]
+vec != 5 %>% sum()
+vec[vec != 5]
+
+# Das Ergebnis dieser Funktion ist KEIN logischer Vektor sondern ein numerischer, würden wir diesen einfach aufsummieren hätten wir am Ende eine Summe aller Reste, wenn wir 1 bis 10 durch 3 teilen. Das ist eher nicht sinnvoll. Trotzdem einmal zum nachvollziehen:
+vec %% 3 %>% sum()
+
+vec %% 3 == 0 %>% sum()
+vec[vec %% 3 == 0]
+vec %% 3 != 0 %>% sum()
+vec[vec %% 3 != 0]
+```
+
+```{r operatoren_2, exercise = TRUE}
+
+```
+
+Wäre ja schade, wenn wir so schöne logische Operatoren hätten und sie nicht kombinieren könnten. Dafür werden meistens folgende Operatoren verwendet: `A & B` (A UND B), `A | B` (A ODER B ODER A und B) und `xor(x = A, y = B)` (NUR EINS VON BEIDEM: A ODER B). In diesen Funktionen werden logische Vektoren (die durch die Anwendung der logischen Operatoren oben entstehen) miteinander verglichen.
+
+::: aufgabe
+**Aufgabe:**
+
+1.  Finde heraus, welche Werte sowohl kleiner als 5 als auch durch 2 teilbar sind
+2.  Finde heraus, welche Werte entweder kleiner als 5, oder durch 2 teilbar oder sowohl kleiner als 5 als auch durch 2 teilbar sind
+3.  finde heraus, welche Werte entweder kleiner als 5 oder durch 2 teilbar sind.
+:::
+
+```{r operatoren_3-solution}
+vec <- 1:10
+
+vec[vec < 5 & vec %% 2 == 0]
+vec[vec < 5 | vec %% 2 == 0]
+vec[xor(vec < 5, vec %% 2 == 0)]
+```
+
+```{r operatoren_3, exercise = TRUE}
+
+```
+
+Eine weitere wichtige Funktion von diesen logischen Operatoren ist das Filtern innerhalb von Datensätzen: Nur Menschen einbeziehen, die bestimmte Voraussetzungen erfüllen? Explizit eine bestimmte Ausprägung einer bestimmten Variable anschauen? Kein Problem!
+
+Die Funktion, die wir zum filtern brauchen heißt praktischerweise einfach `filter()`. Sie kommt aus dem Lieblingspaket `dplyr` (wichtig: ans Laden des Paketes Denken (`library(dplyr`)). Es gibt diese Funktion auch in anderen Paketen und dann funktioniert sie anders. Wenn wir ganz sicher gehen wollen, schreiben wir: `dplyr::filter()`). Sie funktioniert folgendermaßen: `filter(.data, .by = NULL, ...)`. Wir sagen also erst, welchen Datensatz wir filtern wollen und dann die Kriterien. Hier grüßt freundlich eine alte Freundin: Die Pipe (`%>%`) aus `dplyr`. Da sich noch mehr der `dplyr` Funktionen damit verbindne lassen und es der Übersichtlichkeit dient, empfiehlt sich folgende Schreibweise:
+
+```{r filter_1, eval=FALSE, echo=TRUE}
+data %>% 
+  filter(., .by = )
+```
+
+Wär ja langweilig, wenn wir das nicht auch ausprobieren würden:\
+Dafür nutzen wir einen fiktiven Datensatz (`dat`). Er hat 27 Einträge, die sich aus drei Formen (Kreis, Quadrat, Dreieck [`form`]), drei Farben (lila, türlis, gelb [`farbe`]) und 3 Größen (1, 2, 3 [`groesse`]) zusammensetzen. Eure Aufgabe ist jetzt, euch mit dem filtern vertraut zu machen. Das freie Textfeld ist quasi der Inhalt der Klammer hinter `filter()` und das Ergebnis wird euch direkt in dem Plot angezeigt. Viel Spaß :)
+
+**Hinweis:** `character` Vektoren brauchen beim Filtern der Einträge Anführungszeichen um die einzelnen Klassen. (Bsp. s. im Texteingabefeld).
+
+```{r mehrfilterspass, warning=FALSE, message=FALSE}
+dat
+
+ggplot(dat, aes(x = as.factor(groesse), y = farbe, col = farbe, shape = form, size = groesse)) +
+  geom_point() +
+  facet_wrap(~form, nrow = 3) +
+  scale_shape_manual(values = c("kreis" = 16, "quadrat" = 15, "dreieck" = 17)) +
+  scale_colour_manual(values = man_col) +
+  theme_bw() +
+  geom_tile(data = all_combinations, color = "black", fill = NA, size = 0.1) +
+  theme(legend.position = "none") +
+  labs(
+    title = "Vorhandene Formen",
+    y = "Farbe",
+    x = "Größe")
+```
+
+::: aufgabe
+**Aufgabe:**\
+
+1.  Filtere alle Figuren heraus, die kleiner als 3 sind.
+
+2.  Filtere alle Dreiecke heraus
+
+3.  Filtere alle Figuren heraus, die NICHT lila sind
+
+4.  Filtere alle Kreise heraus, die größer als 1 sind
+
+5.  Filtere alle gelben Figuren der Größe 2 raus
+
+6.  Filtere alle türkisen Quadrate heraus.
+
+7.  Filtere alle Figuren heraus, die quadratisch und/oder türkis sind
+
+8.  Filtere alle Figuren heraus, die entweder ein Quadrat sind ODER türkis (die türkisen Quadrate bleiben im ungefilterten Teil des Datensatzes)
+
+9.  Filtere das größte, lilane Dreieck
+
+10. Filtere alle lilanen, größten und dreieckigen Formen heraus
+
+11. Filtere alle lilanen 3-er und alle Dreiecke
+
+12. Gleiches Setup wie in 11 nur diesmal OHNE das größte, lilane Dreieck
+
+13. Alle 3-er sowie alle lilanen
+
+14. Gleiches Setup wie 13, ohne das größte, lilane Dreieck
+
+15. Sternchenaufgabe: Filtere alle Formen heraus die eines von dem drei sind: entweder lila ODER Größe 3 ODER dreieckig.
+:::
+
+```{r ui}
+# Inputs
+textInput("value", "Filter",  'farbe == "türkis"')
+actionButton("apply", "Filter anwenden")
+
+
+plotOutput("filtered_plot")
+```
+
+```{r server, context = "server"}
+  observeEvent(input$apply, {
+    # Filter wird nur angewendet, wenn der Action Button geklickt wird
+    filtered_data <- filter(dat, eval(parse(text = input$value)))
+    combined_data <- rbind(filtered_data %>%
+      mutate(filter = 1), anti_join(dat, filtered_data) %>%
+      mutate(filter = 0))
+    output$filtered_plot <- renderPlot({
+      ggplot(combined_data, aes(x = as.factor(groesse), y = farbe, col = farbe, shape = form, size = groesse)) +
+        geom_point() +
+        facet_grid(form ~ filter, labeller = labeller(filter = filter_man)) +
+        scale_shape_manual(values = c("kreis" = 16, "quadrat" = 15, "dreieck" = 17)) +
+        scale_colour_manual(values = man_col) +
+        theme_bw() +
+        geom_tile(data = all_combinations, color = "black", fill = NA, size = 0.1) +
+        theme(legend.position = "none") +
+        labs(
+          title = "Alle Formen",
+          y = "Farbe",
+          x = "Größe"
+        )
+    })
+  })
+
+```
+
+<details>
+
+<summary><a>▼ Lösungen </a></summary>
+
+```{r filter_loesungen, eval=FALSE, echo=TRUE}
+groesse < 3
+form == "dreieck"
+farbe != "lila"
+
+form == "kreis" & groesse > 1
+farbe == "gelb" & groesse == 2
+farbe == "türkis" & form == "quadrat"
+farbe == "türkis" | form == "quadrat"
+xor(farbe == "türkis", form == "quadrat")
+
+groesse == 3 & farbe == "lila" & form == "dreieck"
+groesse == 3 | farbe == "lila" | form == "dreieck"
+groesse == 3 & farbe == "lila" | form == "dreieck"
+xor(groesse == 3 & farbe == "lila", form == "dreieck")
+groesse == 3 | farbe == "lila" & form == "dreieck"
+xor(groesse == 3, farbe == "lila" & form == "dreieck")
+xor(xor(farbe == "lila", groesse == 3), form == "dreieck")
+```
+
+</details>
+
+</details>
+
+Aber auch die Auseinandersetzung mit Zeichenkombinationen bzw. das Herausfiltern von Zeichen wird zentral (sowohl einzelne Wortteile, Worte als auch Zahlen/ -kombinationen).
+
+-   `grepl(pattern, x, ...)` sucht ein bestimmtes Muster (`pattern`) in einer bestehenden Zeichefolge (`x`), vorzugsweise einem Vektor oä.
+-   `%in%` prüft, ob ein Wert in einem bestimmten Vektor enthalten ist ()
+
+::: aufgabe
+**Aufgabe:**\
+
+Finde mittels if-Statement heraus, ob die Zeichenkombination "do" in dem ersten Satz von ["Lorem ipsum"](https://en.wikipedia.org/wiki/Lorem_ipsum) vorkommt.
+:::
+
+```{r if_3-solution}
+# satz als Element speichern
+satz <- "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+
+# if statement mit grepl() Funktion
+if (grepl("do", satz)) {
+  print("kommt vor")
+} else {
+  print("kommt NICHT vor")
+}
+```
+
+```{r if_3, exercise=TRUE}
+
+```
+
+### Loops
+
+Wir können jetzt sowohl einzelne Werte testen als auch logische Operatoren auf Vektoren oder Datensätze anwenden. Allerdings wollen wir häufiger Daten **zeilenweise** bearbeiten. Hier kommen Schleifen (oder auf englisch: Loops) ins Spiel.
+
+![](images/frootloops.png)
+
+Die beiden prominentesten Vertreter stellen wir euch hier vor: `for` und `while`.
+
+#### for
+
+Beginnen wir mit `for (Element in Vektor) {}`. Auch diese Schleife tut genau das, was sie sagt und folgt dankenswerter Weise genau der gleichen Struktur wie weiter oben das `if`-Statement. Sie sagt: `für ...das und das... mache ...das und das...`:\
+
+-   In den runden Klammern (`()`) steht, für `welche Elemente` etwas getan werden soll.\
+-   `Element in Vektor` Beschreibt die Menge der Elemente.\
+-   In den geschweiften Klammern (`{}`), `was` genau getan werden soll.
+
+::: gelb
+**Hinweis:** Hier wird das richtige indizieren sehr wichtig!
+:::
+
+\<\br\>
+
+::: aufgabe
+**Aufgabe:**\
+Der wohl einfachste Loop: Gib für jedes Element der Zahlenfolge 1 bis 5 ihren Wert aus
+:::
+
+```{r for_1-solution}
+# also: gib für jedes Element i in der Zahlenfolge 1 bis 5 das Element i aus
+for (i in 1:5) {
+  print(i)
+}
+```
+
+```{r for_1, exercise = TRUE}
+
+```
+
+Das ganze geht auch mit bereits bestehenenden Vektoren.
+
+::: aufgabe
+**Aufgabe:**\
+Erstelle einen Vektor mit 5 Zufallszahlen. Gib jedes Element dieses Vektors mittels for-Schleife aus
+:::
+
+```{r for_2-solution}
+# Dismal erstellen wir zuerst den Vektor und schauen uns an, wie er aussieht, um nachvollziehen zu können, was im Loop passiert
+(vektor <- sample(1:10, 5))
+
+ # Gib für jedes Element j im bestehenden Zufallsvektor das Element j aus
+for (j in vektor) {
+  print(j)
+}
+```
+
+```{r for_2, exercise = TRUE}
+
+```
+
+Jetzt wollen wir ein bisschen spannender machen, was im Loop passiert: wir wollen einen neuen Vektor erstellen, in dem jeweils die Quadratzahl der Zahlenfolge steht.
+
+::: aufgabe
+**Aufgabe:**\
+Erstelle einen geordneten Vektor mit den Zahlen 1 bis 5.\
+Erstelle einen neuen leeren Ergebnisvektor.\
+Speichere mittels for Schleife die Quadratzahl jedes Elementes des geordneten Vektors im Ergebnisvektor
+:::
+
+**OBACHT:** Indizierung!
+
+```{r for_3-solution}
+# Dismal erstellen wir zuerst einen geordneten Vektor und schauen uns an, wie er aussieht, um nachvollziehen zu können, was im Loop passiert
+(vek <- 1:5)
+(ergebnis <- 0)
+
+ # Speichere die Quadratzahl von jedem Element k im Ergebnisvektor
+for (k in vek) {
+  ergebnis[k] <- k ^ 2
+}
+
+# und ergebnisvektor anschauen:
+ergebnis
+```
+
+```{r for_3, exercise = TRUE}
+
+```
+
+Sehr gut. Nun kombinieren wir `for` Loops mit `if` Statements:
+
+::: aufgabe
+**Aufgabe:**\
+Wir arbeiten wieder mit dem `publictr` Datensatz. Wir wollen eine neue Spalte hinzufügen, in der nur zwischen Nah- und Fernverkehr unterschieden wird (und nicht den einzelnen Unterarten)
+:::
+
+```{r for_4-solution}
+# laden
+data <- rtutorials::publictr
+
+# Zuallererst müssen wir die neue Spalte erstellen, damit R die Ergebnisse auch abspeichern kann
+data$nah_fern <- character(length = nrow(data))
+
+# grepl("nahverkehr", data$Typ)
+# prüft elementweise, ob die Zeichenfolge "nahverkehr" in der Spalte "Typ" vorkommt
+# if (grepl("nahverkehr", data$Typ))
+# sagt also: wenn (die Zeichenfolge "nahverkehr" in einem Element der Spalte Typ vorkommt) {dann tu das}
+for (i in 1:length(data$Typ)) {
+  if (grepl("nahverkehr", data$Typ[i])) {
+    data$nah_fern[i] <- "nah"
+  } else {
+    data$nah_fern[i] <- "fern"
+  }
+}
+
+data$nah_fern
+```
+
+```{r for_4, exercise = TRUE}
+
+```
+
+#### R Extrawurst ifelse()
+
+Weil die letzte Aufgabe ein häufiges Problem beim Programmieren ist und es relativ viele Zeilen sind dafür gibt es in R eine Möglichkeit das ganze Abzukürzen: `ifelse(test, yes, no)`:
+
+-   `ifelse()`: Die ganze `for` Schleife aus der vorherigen Aufgabe abgekürzt
+-   `test =`: Der Inhalt der runden Klammern `()` des `if` Statements der vorherigen Aufgabe
+-   `yes =`: Inhalt der ersten geschweiften Klammern `{}` des `if` Statements der vorherigen Aufgabe
+-   `no =`: Inhalt der zweiten geschweiften Klammern `{}`, also des `else` Argumentes des `if` Statements der vorherigen Aufgabe
+
+::: aufgabe
+**Aufgabe:**\
+Setze die vorherige Aufgabe mit dem `ifelse()` Befehl um. Erstelle hierfür einen neuen Vektor im Datensatz. Und überprüfe dann, ob die beiden Vektoren gleich sind oder sich unterscheiden.
+:::
+
+```{r ifelse-solution}
+# erstellen des neuen Vektors inkl. Inhalt
+data$nf <- ifelse(grepl("nahverkehr", data$Typ), "nah", "fern")
+
+# Prüfen
+# vergleiche die beiden Vektoren mit der Frage ist ungleich (!=) und summiere die ungleichen Entsprechungen auf. Wenn das Ergebnis Null ist, ist alles gelaufen wie geplant
+sum(data$nah_fern != data$nf)
+```
+
+```{r ifelse, exercise = TRUE}
+
+```
+
+#### while
+
+Die andere prominente Art der Loops sind `while () {}` Loops. Auch sie tun das, was draufsteht. Allerdings ist das hier mit dem Indizieren am Anfang etwas komplizierter.
+
+-   `while`: Während Ein Kriterium erfüllt ist
+-   `()`: Kriterium. Ähnlich formuliert wie bei if Statements und for Loops
+-   `{}`: Aktion
+
+Diese Schleife zählt nicht automatisch weiter, wie ihre bereits bekannte Schwester `for ()`, deswegen muss die Laufvariable vorher definiert werden und das Weiterspringen in ihr ins nächste Element muss Teil der Schleife sein.
+
+::: aufgaberstudio
+**Aufgabe:**\
+Um die schwierigkeit mit dem Indizieren zu verstehen: Kopiere bitte untenstehenden Code in deine Konsole in R Studio und führe ihn aus. Schau was passiert.\
+**Hinweis:** Wenn du genug gesehen hast klicke oben rechts in deiner Kosole auf das kleine Stopschild
+
+```{r while_1, eval=FALSE, echo=TRUE}
+while (TRUE) {
+  print("Dieser Loop wird immer weiter ausgeführt.")
+}
+```
+:::
+
+\<\br\>
+
+Das passiert in einem `for` Loop nicht, weil hier ein natürliches Ende gegeben ist. Deswegen wollen wir besonders sorgfältig mit Abbruchkriterien bzw. Indizes umgehen.
+
+::: aufgabe
+**Aufgabe:**\
+Erstelle eine `while()` Schleife, die in 5 Durchläufen die Zahlen 1 bis 5 ausgibt.
+:::
+
+```{r while_2-solution}
+# Erstellen des Startwertes
+index <- 1
+
+# Angabe eines Abbruchkriteriums (Wenn der Index 5 überschreitet)
+while (index <= 5) {
+  
+  # zur Kontrolle: Angabe des Indexes
+  print(index)
+  
+  # Um das Abbruchkriterium zu erreichen: Index + 1
+  index <- index + 1
+}
+
+```
+
+```{r while_2, exercise = TRUE}
+
+```
+
+### This is the beginning
+
+So, nun habt ihr das Handwerkszeug, richtig gute Programmierer\*innen zu werden und damit seid ihr noch nichtmal auf R festgelegt. Logik und Schleifen funktionieren in fast allen Programmiersprachen gleich bzw. weisen wirklich nur geringfügige Abweichungen auf. Viel Spaß!
+
+## Learnings
+
+-   <input type="checkbox" unchecked> `if` Statements kennen </input>
+-   <input type="checkbox" unchecked> `for` Loops kennen </input>
+-   <input type="checkbox" unchecked> `if` Statements mit `for` Loops verbinden können </input>
+-   <input type="checkbox" unchecked> `ifelse()` Funktion kennen und anwenden können </input>
+-   <input type="checkbox" unchecked> `while` Loops anwenden können </input>
