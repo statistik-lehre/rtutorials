@@ -1,0 +1,207 @@
+---
+title: "Wissenschaftlicher Prozess"
+output:
+  learnr::tutorial:
+    language: de
+    css: css/boxes.css
+    fig_caption: no
+runtime: shiny_prerendered
+bibliography: ref.json
+link-citations: TRUE
+description: "Ein grundlegender Überblick über den wissenschaftlichen Prozess als solchen mit Orientierung über Dinge, die wir dieses Semester behandeln."
+resource_files:
+- css/boxes.css
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+
+# data
+publictr <- rtutorials::publictr
+
+```
+
+## Inhalt
+
+In diesem Tutorial stellen wir euch die Roadmap des wissenschaftlichen
+Prozesses vor, an der wir alle weiteren Tutorials orientieren.
+
+::: aufgaberstudio
+**Aufgabe:**\
+Kopiere bitte folgenden Code in deine Konsole und drücke `Enter`:
+
+```{r pakete_installieren, message=FALSE, echo = TRUE}
+if (!require("haven")) 
+install.packages("haven")
+
+if (!require("car")) 
+install.packages("car")
+
+if (!require("psych")) 
+install.packages("psych")
+
+if (!require("mice")) 
+install.packages("mice")
+```
+
+(Hiermit werden automatisch Pakete installiert, die für dieses und die
+nächsten Tutorials gebraucht werden. Wenn ihr sie schon installiert
+habt, passiert gar nichts.)
+:::
+
+## Lernziele
+
+-   <input type="checkbox" unchecked> Ich kenne die Roadmap des
+    wissenschaftlichen Prozesses und kann mich auf ihr orientieren
+    </input>
+
+## Wissenschaftlicher Prozess
+
+Wir lieben Bilder, ihr liebt Bilder, hier gibt es Bilder:
+
+![](images/prozess){width="95%"}
+
+Die gesamten Tutorials orientieren sich an der "Roadmap des
+wissenschaftlichen Arbeitens". Sie soll euch zur Orientierung dienen und
+für zukünftige eigene Projekte einen strukturierten Ablauf vorgeben.
+
+Es gibt eine zweite Version dieses Tutorials. Dies ist die kurze und
+knappe. Die andere ist ausführlicher und auch als Nachschlagewerk
+gedacht.
+
+::: gelb
+Da wir euch quantitative Verfahren beibringen, bezieht sich die Roadmap
+speziell auf quantitative Verfahren. Solltet ihr qualitativ Forschen
+wollen, ändern sich die Schritte inhaltlich und ggf auch deren Abfolge
+teilweise.
+:::
+
+### I) Vorarbeit
+
+Ja, ein Großteil des wissenschaftlichen Arbeitens geschieht vor dem, was
+wir uns darunter Vorstellen: Mit Laborkittel und Lupe im Labor stehen
+und bunte Flüssigkeiten ineinander mixen...
+
+Die Überschriften in Klammern sind zwar zentrale Bestandteile dieses
+Prozesses, doch sie sind weder Teil der Vorlesung, noch eurer kleinen
+Forschungsarbeit in diesem Modul, deswegen gehen wir nicht weiter darauf
+ein. Nichtsdestotrotz wollen wir ihren elementaren Stellenwert in diesem
+Prozess berücksichtigen.
+
+#### 1. Einarbeiten
+
+Bevor du mit dem Forschungsvorhaben beginnst, solltest du dich in das
+Forschungsthema einlesen und dir Gedanken darüber machen, was du
+erforschen möchtest.
+
+#### 2. Fragestellung
+
+Entwickle eine klare und konkrete Forschungsfrage.
+
+#### 3. Operationalisierung der Variablen
+
+Überlege, wie du deine Forschungsfrage quantitativ umsetzen kannst.
+
+#### 4. Konkrete, testbare Hypothesen aufstellen
+
+Formuliere testbare Hypothesen, mit der du deine Forschungsfrage im
+wissenschaftlichen Verständnis überprüfen kannst.
+
+#### (5. Ethikantrag)
+
+#### (6. Aquirierung von Geldern)
+
+#### (7. Präregistrierung)
+
+### II) Messen / Generieren von Daten
+
+#### 1. Vorbereitung
+
+Bereite die Datenerhebung vor, sei es online oder offline.
+
+#### 2. Erhebung
+
+Sammle die Daten gemäß deinem Forschungsdesign.
+
+### III) Datenaufbereitung
+
+Um ehrlich zu sein: Der ätzendste und gleichzeitig wichtigste Schritt des
+ganzen Prozesses. Hier bringt ihr die Daten aus der vorhandenen in eine
+verarbeitbare Form. Das konkrete Vorgehen hängt stark von den
+vorliegenden Daten ab. Deswegen treffen nicht alle der folgenden
+Schritte auf jedes Projekt zu.
+
+#### 1. Digitalisieren
+
+Wenn die Daten analog sind, digitalisiere sie.
+
+#### 2. Datenimport
+
+Lade den Datensatz in R.
+
+#### 3. Datenaufbereitung / Cleaning
+
+Bereite die Daten auf, indem du sie bereinigst und fehlende Werte
+behandelst.
+
+### IV) Orientierung in den Daten
+
+Untersuche den Datensatz als Ganzes und einzelne Variablen numerisch.
+
+#### 1. Numerisch
+
+##### a) Kompletter Datensatz
+
+##### b) Einzelne Variablen
+
+#### 2. Grafisch (quick & dirty)
+
+#### 3. Voraussetzungen prüfen
+
+Prüfe die Voraussetzungen für statistische Analysen.
+
+### V) Auswertung / Statistik
+
+Führe die vorab geplanten statistischen Analysen durch, um deine Forschungsfrage zu
+beantworten.
+
+### VI) Schöne Visualisierungen
+
+Erstelle ansprechende und übersichtliche Grafiken, um deine Ergebnisse
+zu visualisieren.
+
+S. hierfür Unterkapitel `Visualisierung`.
+
+### VII) Report
+
+Dokumentiere deine Forschungsergebnisse und erstelle einen Bericht.
+
+## Abschlussquiz
+
+"Hast du das Gefühl, den Ablauf des wissenschaftlichen Prozesses
+verstanden zu haben?"
+
+\- <input type="checkbox" unchecked> Ja, scheint ganz simple </input>
+
+\- <input type="checkbox" unchecked> Nein, das ist alles noch zu
+abstrakt </input>
+
+Egal, ob du nun `Ja`, "Nein" oder sogar beides angekreutzt hast, wir
+sind uns sicher, in den folgenden Lektionen wirst du spielerisch mit uns
+diesen Prozess noch besser kennen lernen und verstehen, wie du deine
+eigenen Fragen wissenschaftlich untersuchen kannst.
+
+## Learnings
+
+Du hast grade im Schnelldurchlauf gelernt, wie der wissenschaftliche
+Prozess im Groben abläuft und wie dieser mit R und (Statistik) im
+Zusammenhang steht.
+
+-   Zur wissenschaftlichen Erfoschung einer Fragestellung gibt es einen
+    spezifischen Prozess
+
+-   Statistik ist die Grundlage des wissenschaftlichen Prozesses
