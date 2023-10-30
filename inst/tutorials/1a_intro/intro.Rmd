@@ -28,9 +28,7 @@ knitr::opts_chunk$set(echo = FALSE)
 -   <input type="checkbox" unchecked> Skript `01_einfuehrung` erstellen und kompilieren </input>
 
 
-## Inhalt
-
-### Herzlich Wilkommen
+## Herzlich Willkommen
 
 Moin!
 
@@ -71,6 +69,8 @@ Die Tutorials sind alle gleich aufgebaut:
 -   **Abschlussquiz**: Was von dem, was wir wichtig finden ist hängen geblieben?
 -   **Learnings**: Knappe Zusammenfassung des Kapitels
 
+### interaktive Codeblöcke
+
 Der Grund, warum wir diese Tutorials interaktiv nennen: Sie enthalten ausführbare Code-Blöcke, deren Inhalt Sie bearbeiten können.
 
 Schreib Deinen Code hinein und führe ihn aus mit `Strg + Enter` oder dem Knopf `▶ Code ausführen`.\
@@ -96,6 +96,75 @@ Es wird auch einige wenige Aufgaben geben, für die Du bitte in R wechselst. Die
 Nun kommen wir zur Magie:
 
 ![](images/jesus.jpg){width=50%}
+
+## R Demo
+
+Bevor wir weiter etwas über R erzählen, möchten wir euch einfach zeigen was alles möglich ist. Eine klassische Aufgabe ist das Sortieren, Zusammenfassen und Visualisieren von großen Datenmengen. 
+
+### R Demo 1: Visualisierung von Mobilitätsdaten
+
+Angenommen, wir sind interessiert an den Auswirkungen des Corona-Virus auf die Fahrgastzahlen. Unsere Forschungshypothese ist, dass die Fahrgastzahlen während der Pandemie zurückgegangen sind (*obviously*).
+Wir nehmen Sie nun mit durch einen stark verkürzten Analyseprozess. Führen Sie die jeweiligen Codeblöcke aus
+
+Wir nutzen zur Überprüfung frei verfügbare Daten vom statistischen Bundesamt, welche die Nutzung verschiedener Arten des Personennahverkehrs in Deutschland von 2004 bis 2022 beschreibt. Der Datensatz kann mit `publictr` aufgerufen werden.  
+
+### Überblick über die Daten
+Lassen wir uns zunächst den Datensatz anzeigen, um einen Überblick zu bekommen. 
+
+```{r data, exercise = T}
+as_tibble(publictr) |> print(n = 25)
+
+```
+Wir sehen sehr viele Datenpunkte in einem langen Format. Die Daten sind für Menschen schlecht lesbar, für den Computer allerdings ideal arrangiert. Das bedeutet, jede Zeile steht für genau eine Beobachtung, und jede Spalte repräsentiert eine Variable (auch Merkmal genannt), welche verschiedene Ausprägungen haben kann.
+
+
+### Auswahl der Daten
+Da wir uns für den ÖPNV insgesamt interessieren, und weniger für einzelne Verkehrsmittel, können wir den Datendschungel etwas lichten. 
+
+Wir möchten alle Daten behalten, wo die Variable *Typ* die Ausprägung *Liniennahverkehr insgesamt* aufweist.
+
+Dafür benutzen wir `filter()` aus dem Paket `dplyr`, welches im tidyverse enthalten ist.
+`dplyr` steht für "data plyers", was so viel bedeutet wie "Datenzange". Ein Werkzeug, um bestimmte Daten herauszuziehen.
+
+```{r filter, exercise = TRUE}
+x <- filter(publictr, Typ == "Liniennahverkehr insgesamt")
+x
+```
+Nun sind wir dem Ziel näher. Um nur die Jahre 2018 bis 2022 anzuzeigen, nutzen wir
+ebenfalls `filter()`. Dieses Mal aber bezogen auf die Variable _Jahr_. Der Operator
+`%in%` ist dem `==` Gleichheitszeichen ähnlich, und ist hier nötig, da `2018:2019`
+mehr als einen Wert enthält. `==` kann nur einen einzigen Wert gegen einen anderen prüfen,
+während `%in%` mit mehreren Werten auf beiden Seiten umgehen kann.
+
+```{r filter2-setup, echo = FALSE}
+x <- filter(publictr, Typ == "Liniennahverkehr insgesamt")
+```
+
+```{r filter2, exercise = TRUE}
+x <- filter(x, Jahr %in% 2018:2021)
+x
+```
+Sehr gut! 
+
+Nun können wir eine Grafik erstellen, um die Zahlen zu veranschaulichen.
+Dazu nutzen wir `ggplot2`.
+
+```{r visual-setup}
+x <- publictr %>%
+  filter( Typ == "Liniennahverkehr insgesamt") %>%
+  filter(Jahr %in% 2018:2021)
+
+```
+
+```{r visual, exercise = TRUE}
+ggplot(x, aes(x = Quartal, y = Personen), ) +
+  geom_bar(stat = "identity", fill ="blue", alpha = 0.5) +
+  labs(title = "Personennahverkehr in Deutschland", x = "", y = "Fahrgastzahlen") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+Wie hier zu erkennen ist, spiegelt sich der erste Lockdown Anfang 2020 auch in der
+Beförderungsleistung des ÖPNV wieder. 
 
 ### R
 
