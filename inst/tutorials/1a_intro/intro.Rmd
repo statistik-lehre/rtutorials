@@ -5,6 +5,7 @@ output:
     language: de
     css: css/boxes.css    
     fig_caption: no
+    df_print: default
 runtime: shiny_prerendered
 bibliography: ref.json
 link-citations: TRUE
@@ -15,7 +16,17 @@ resource_files:
 
 ```{r setup, include=FALSE}
 library(learnr)
+library(tidyverse)
+library(rtutorials)
+library(scales)
 knitr::opts_chunk$set(echo = FALSE)
+options(pillar.min_chars = 30)
+# Setze Tibble Ausgabe-Breite für Character Variablen
+
+options(scipen = 10)
+# Für Grafik
+
+publictr <- as_tibble(publictr)
 ```
 
 ## Lernziele
@@ -97,76 +108,146 @@ Nun kommen wir zur Magie:
 
 ![](images/jesus.jpg){width=50%}
 
-## R Demo
+## Demo 1: Visualisierung von Mobilitätsdaten
 
 Bevor wir weiter etwas über R erzählen, möchten wir euch einfach zeigen was alles möglich ist. Eine klassische Aufgabe ist das Sortieren, Zusammenfassen und Visualisieren von großen Datenmengen. 
 
-### R Demo 1: Visualisierung von Mobilitätsdaten
+::: gelb
+Das hier ist nur eine Demo der Fähigkeiten, deswegen erklären wir an dieser Stelle nichts.
+Wie genau alles funktioniert und zusammenhängt, werden Sie im Laufe des Semesters lernen. Keine Sorge, wir bringen Ihnen R von Grund auf bei.
+:::
 
-Angenommen, wir sind interessiert an den Auswirkungen des Corona-Virus auf die Fahrgastzahlen. Unsere Forschungshypothese ist, dass die Fahrgastzahlen während der Pandemie zurückgegangen sind (*obviously*).
-Wir nehmen Sie nun mit durch einen stark verkürzten Analyseprozess. Führen Sie die jeweiligen Codeblöcke aus
+<br>
 
-Wir nutzen zur Überprüfung frei verfügbare Daten vom statistischen Bundesamt, welche die Nutzung verschiedener Arten des Personennahverkehrs in Deutschland von 2004 bis 2022 beschreibt. Der Datensatz kann mit `publictr` aufgerufen werden.  
+Angenommen, wir haben eine große Menge an frei verfügbaren Mobilitätsdaten und möchten explorativ schauen, welche Muster sich darin finden lassen. Zum Beispiel könnten wir uns fragen, ob die Auswirkungen der Corona-Pandemie in den Daten zu sehen sind. 
+
+Wir nutzen Daten vom statistischen Bundesamt, welche die Nutzung verschiedener Arten des Personennahverkehrs in Deutschland von 2004 bis 2022 beschreibt. Der Datensatz heißt `publictr` (*public transport*) und ist schon in dieses Tutorial geladen.
 
 ### Überblick über die Daten
-Lassen wir uns zunächst den Datensatz anzeigen, um einen Überblick zu bekommen. 
+Lassen wir uns zunächst den Datensatz anzeigen, um einen Überblick zu bekommen. Folgen Sie der Analyse, in dem Sie die interaktiven Codeblöcke ausführen! 
 
-```{r data, exercise = T}
-as_tibble(publictr) |> print(n = 25)
+```{r data, exercise = T, exercise.cap = "Gibt die ersten 25 Zeilen des Datensatzes aus"}
+publictr |> print(n = 25)
+
+# Wörtlich:
+# Nimm Datensatz, dann drucke die ersten 25 Zeilen
 
 ```
-Wir sehen sehr viele Datenpunkte in einem langen Format. Die Daten sind für Menschen schlecht lesbar, für den Computer allerdings ideal arrangiert. Das bedeutet, jede Zeile steht für genau eine Beobachtung, und jede Spalte repräsentiert eine Variable (auch Merkmal genannt), welche verschiedene Ausprägungen haben kann.
 
+Wir sehen sehr viele Datenpunkte in einem langen Format. Die Daten sind für Menschen schlecht lesbar, für den Computer allerdings ideal arrangiert. 
 
-### Auswahl der Daten
-Da wir uns für den ÖPNV insgesamt interessieren, und weniger für einzelne Verkehrsmittel, können wir den Datendschungel etwas lichten. 
+::: blau-nb
+Jede Zeile steht für genau eine Beobachtung, und jede Spalte repräsentiert eine Variable (auch Merkmal genannt), welche verschiedene Ausprägungen haben kann.
+:::
+
+Es gibt folgende Variablen:
+
+- **Jahr** 
+- **Quartal**
+- **Typ**
+- **Personen**: Anzahl der Fahrgäste
+- **Personenkilometer**: gefahrene Kilometer * Fahrgäste
+- **Anzahl der ausgewerteten Unternehmen**
+
+Schauen wir uns die Variable **Typ** etwas genauer an. Welche Ausprägungen beinhaltet sie?
+
+```{r typ, exercise = TRUE, exercise.cap = "Variable genauer ansehen"}
+publictr$Typ |> table()
+# Nimm die Variable Typ aus dem Datensatz, dann tabelliere die Häufigkeit der einzelnen Ausprägungen
+```
+
+Aha, es gibt also 6 verschiedene Ausprägungen:
+
+- Fernverkehr
+  - Bus
+  - Bahn
+- Nahverkehr:
+  - Bus
+  - Straßenbahn
+  - Eisenbahn
+  - **insgesamt**
+
+### Filtern
+Da wir uns nur für den Nahverkehr insgesamt interessieren, können wir den Datendschungel etwas lichten. 
 
 Wir möchten alle Daten behalten, wo die Variable *Typ* die Ausprägung *Liniennahverkehr insgesamt* aufweist.
 
-Dafür benutzen wir `filter()` aus dem Paket `dplyr`, welches im tidyverse enthalten ist.
-`dplyr` steht für "data plyers", was so viel bedeutet wie "Datenzange". Ein Werkzeug, um bestimmte Daten herauszuziehen.
-
 ```{r filter, exercise = TRUE}
-x <- filter(publictr, Typ == "Liniennahverkehr insgesamt")
-x
-```
-Nun sind wir dem Ziel näher. Um nur die Jahre 2018 bis 2022 anzuzeigen, nutzen wir
-ebenfalls `filter()`. Dieses Mal aber bezogen auf die Variable _Jahr_. Der Operator
-`%in%` ist dem `==` Gleichheitszeichen ähnlich, und ist hier nötig, da `2018:2019`
-mehr als einen Wert enthält. `==` kann nur einen einzigen Wert gegen einen anderen prüfen,
-während `%in%` mit mehreren Werten auf beiden Seiten umgehen kann.
-
-```{r filter2-setup, echo = FALSE}
-x <- filter(publictr, Typ == "Liniennahverkehr insgesamt")
+publictr |> 
+  filter(Typ == "Liniennahverkehr insgesamt")
 ```
 
-```{r filter2, exercise = TRUE}
-x <- filter(x, Jahr %in% 2018:2021)
-x
+Nun sind wir dem Ziel näher. Jetzt schränken wir die Auswahl noch weiter ein auf die corona-relevanten Jahre 2018 - 2022. 
+
+```{r filter2, exercise = TRUE, exercise.cap = "Filtern und Zwischenspeichern"}
+corona <- publictr |> 
+  filter(Typ == "Liniennahverkehr insgesamt") |>
+  filter(Jahr %in% 2018:2022)
+corona
 ```
+
 Sehr gut! 
+
+### Visualisieren
 
 Nun können wir eine Grafik erstellen, um die Zahlen zu veranschaulichen.
 Dazu nutzen wir `ggplot2`.
 
-```{r visual-setup}
-x <- publictr %>%
-  filter( Typ == "Liniennahverkehr insgesamt") %>%
-  filter(Jahr %in% 2018:2021)
 
-```
-
-```{r visual, exercise = TRUE}
-ggplot(x, aes(x = Quartal, y = Personen), ) +
-  geom_bar(stat = "identity", fill ="blue", alpha = 0.5) +
-  labs(title = "Personennahverkehr in Deutschland", x = "", y = "Fahrgastzahlen") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
+```{r visual, warning=FALSE, exercise=TRUE, exercise.cap = "Visualisierung", exercise.setup = "filter2"}
+corona |>
+  mutate(Quartal = substr(Quartal, 
+                     start = 6, 
+                     stop = 6)) |>
+  ggplot(aes(x = Jahr, 
+             y = Personen,
+             group = as_factor(Quartal))) +
+        geom_bar(stat = "identity", 
+                 alpha = 0.5,
+                 position = position_dodge2(preserve = "total",
+                                            padding = 0.1),
+                 fill = "steelblue") +
+        labs(title = "Personennahverkehr in Deutschland", 
+             x = "Quartale", 
+             y = "Fahrgäste") +
+        scale_y_continuous(
+          label = scales::unit_format(unit = "Mrd.", 
+                                      scale = 1e-09)) +
+        theme_classic() +
+        theme(axis.text.x = element_text(angle = 45, 
+                                         hjust = 1))
 ```
 Wie hier zu erkennen ist, spiegelt sich der erste Lockdown Anfang 2020 auch in der
 Beförderungsleistung des ÖPNV wieder. 
 
-### R
+## Demo 2: Mandelbrot-Menge
+
+Etwas advanced und weitab von den Themen, die wir in diesem Kurs behandeln werden, ist dieses Beispiel:
+
+R Code, welcher eine animierte Grafik (GIF) erstellt, worin eine schrittweise Iteration der [Mandelbrot-Menge](https://de.wikipedia.org/wiki/Mandelbrot-Menge) gezeigt wird. 
+
+Da es etwas rechenintensiv ist, haben wir die Animation schon vorab hergestellt und zeigen den zugehörigen Quellcode, er kann aber nicht ausgeführt werden.
+
+```r
+# install.packages("caTools")  # install external package
+library(caTools)             # external package providing write.gif function
+dx <- 1500                    # define width
+dy <- 1400                    # define height
+C  <- complex(real = rep(seq(-2.2, 1.0, length.out = dx), each = dy),
+              imag = rep(seq(-1.2, 1.2, length.out = dy), dx))
+C <- matrix(C, dy, dx)       # reshape as square matrix of complex numbers
+Z <- 0                       # initialize Z to zero
+X <- array(0, c(dy, dx, 20)) # initialize output 3D array
+for (k in 1:20) {            # loop with 20 iterations
+  Z <- Z^2 + C               # the central difference equation
+  X[, , k] <- exp(-abs(Z))   # capture results
+}
+write.gif(X, "Mandelbrot.gif", col = viridis::viridis, delay = 10)
+```
+
+![Mandelbrot-Menge](images/Mandelbrot.gif){width=100%}
+
+## R
 
 R ist im Grunde ein sehr potenter Taschenrechner, der große Mengen an Daten verarbeiten und simulieren kann, schöne Grafiken und sogar diese Tutorials erstellen kann. Über das, was Dein Schultaschenrechner kann (selbst wenn es einer von denen mit grafischer Funktion ist), kann R also nur müde lächeln. Und hier, im echten Leben, haben wir es eben mit großen Datenmengen zu tun.
 
