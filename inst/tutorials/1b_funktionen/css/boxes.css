@@ -1,0 +1,67 @@
+.infobox {
+  background-color:  #eef4ff ;
+  border-left: solid  #99bdff   4px;
+  border-radius: 4px;
+  padding:0.7em;
+}
+
+.vorteile {
+  background-color:  /* #02BB0212 */ #0094000A ;
+  border-left: solid  /* #02BB0245 */ #00940047  4px;
+  border-radius: 4px;
+  padding:0.5em;
+}
+
+.nachteile {
+  background-color:  #f9ecec  ;
+  border-left: solid  #edc5c5   4px;
+  border-radius: 4px;
+  padding:0.5em;
+}
+
+.rot {
+  background-color:  #FF000008 ;
+  border-left: solid  #FF000028  4px;
+  border-radius: 4px;
+  padding:0.5em;
+}
+
+.gelb {
+  background-color:  #FFD3000A ;
+  border-left: solid  #FFD30094  4px;
+  border-radius: 4px;
+  padding:0.5em;
+}
+
+.grau {
+  background-color:  #F9F9F9 ;
+  border-left: solid  #E0E0E0  4px;
+  border-radius: 4px;
+  padding:0.5em;
+}
+
+.grau-nb {
+  background-color:  #F9F9F985 ;
+  border-radius: 4px;
+  padding:0.5em;
+}
+
+.blau-nb {
+  background-color:   #eef4ff ;
+  border-radius: 4px;
+  padding:0.5em;
+}
+
+.aufgabe {
+  background-color:  #e9e5ee ;
+  border-left: solid  #957dad   4px;
+  border-radius: 4px;
+  padding:0.7em;
+}
+
+.aufgaberstudio {
+  background-color:  #e9eee5 ;
+  border-left: solid  #95AD7D   4px;
+  border-radius: 4px;
+  padding:0.7em;
+}
