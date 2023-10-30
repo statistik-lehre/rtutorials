@@ -709,7 +709,7 @@ learnr::quiz(caption = "Testen Sie Ihr Verständnis",
              question_radio("Was ist der Standardprozess, um ein Paket von CRAN zu installieren?",
                            answer("Die Webseite von CRAN aufrufen und von dort das Paket herunterladen, entpacken, dann an den Ort Ihrer Bibliothek legen und installieren, in dem Sie den Befehl `install.packages()` verwenden.", 
                                   message = "Das ist zwar eine mögliche Art, aber sehr umständlich und eigentlich auch nur nötig, wenn Sie keine Internetverbindung haben. Ohne Internet ist es praktisch, Pakete an einem Gerät mit Internet herunterzuladen, dann über USB oder ähnliches auf das Gerät ohne Internet schieben zu können und dann installieren. Das ist aber eher selten und nicht die Standardprozedur."),
-                           answer("Es reicht aus, den Befehl `install.packages()` zu verwenden."), correct = TRUE)
+                           answer("Es reicht aus, den Befehl `install.packages()` zu verwenden.", correct = TRUE))
              )
 ```
 
