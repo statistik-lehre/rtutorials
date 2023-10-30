@@ -32,10 +32,10 @@ publictr <- as_tibble(publictr)
 ## Lernziele
 
 -   <input type="checkbox" unchecked> Bereits geleistetes feiern </input>
--   <input type="checkbox" unchecked> Überblick über den Aufbau dieses Kurses bekommen </input>
--   <input type="checkbox" unchecked> Überblick über R Tutorials bekommen </input>
--   <input type="checkbox" unchecked> Überblick über R und R Studio bekommen </input>
--   <input type="checkbox" unchecked> Projekt `Statistik-bachelor-bachelor` erstellen </input>
+-   <input type="checkbox" unchecked> Überblick über den Aufbau dieser Tutorials bekommen </input>
+-   <input type="checkbox" unchecked> Verstehen, dass R mächtig und cool ist </input>
+-   <input type="checkbox" unchecked> Das Zusammenspiel von R + RStudio verstehen </input>
+-   <input type="checkbox" unchecked> Projekt `Statistik-bachelor` erstellen </input>
 -   <input type="checkbox" unchecked> Skript `01_einfuehrung` erstellen und kompilieren </input>
 
 
@@ -268,18 +268,18 @@ Und hier kommt R Studio ins Spiel. R Studio ist für die Menschen, die gerne die
 
 Wenn Du R-Studio öffnest sieht das ungefähr so aus:
 
-![](images/R_Studio_blank.png){width=100}
+![](images/R_Studio_blank.png){width=100%}
 
 Das sieht erstmal viel und unübersichtlich aus. Aber wir brauchen (erstmal) nur einen ganz kleinen Teil davon. Und den erkläre ich dir jetzt Schritt für Schritt.
 
 
-#### Einmalig am Anfang: Projekte
+### Einmalig am Anfang: Projekte
 
 In RStudio gibt es die Möglichkeit, „Projekte“ zu erstellen. Das ist dann (wie) ein Ordner, in dem Du alles, was Du für dieses Projekt benötigst (Daten, Skripte, Plots, Tabellen, Bilder etc. [unten mehr dazu]) speichern und sammeln kannst.
 
 Im Unialltag empfinde ich es als sehr hilfreich, für jedes entsprechende Modul ein eigenes Projekt anzulegen (also: statistik-bachelor im Bachelor, statistik-master im Master, etc.). Solltest Du in die Forschung gehen wollen oder bereits Forschungsprojekte im Studium umsetzen empfiehlt es sich, auch hierfür jeweils eigene Projekte anzulegen. Wichtig ist dann, dass du schaust, immer im richtigen Projekt zu arbeiten.
 
-Ein Projekt erstellst du: Project: (None) > New Project... > New Directory > New Project > *Directory name:* > Create Project
+Ein Projekt erstellst du unter: Project: (None) > New Project... > New Directory > New Project > *Directory name:* > Create Project
 
 ![](images/rproject.jpg){width=100%}
 
@@ -297,8 +297,6 @@ Wenn du erfolgreich warst steht nun ganz oben rechts Dein Projektname:
 ![](images/rproject_5.png){width=100%}
 
 
-#### (Fast) immer am Anfang: Skripte
-
 Glückwunsch, du hast nun ein Projekt eingerichtet. (Sicherheitscheck: steht oben rechts `Statistik-bachelor`?)
 
 Jetzt brauchen wir nur noch ein `Skript`.
@@ -313,7 +311,7 @@ So, jetzt ist alles da, was wir für die nächsten Schritte brauchen.
 
 Und nun schauen wir erstmal, was du da im Einzelnen zu sehen ist. (Wir beschränken uns dabei auf die Aspekte, die Du in nächster Zeit brauchen wirst.)
 
-#### Konsole
+### Konsole
 
 **Unten links** findest Du die `Konsole`:
 
@@ -336,7 +334,7 @@ Gib in deiner Konsole verschiedene Rechnungen ein (Addition, Subtraktion etc.) u
 
 :::
 
-#### Skripteditor
+### Skripteditor
 
 **Oben links** findest du ein multifunktionales Fenster, was sich nur öffnet wenn ein Skript geladen ist oder eine Tabelle angezeigt wird. 
 
@@ -349,7 +347,7 @@ Diese Aufteilung ist total sinnvoll, da sie es ermöglicht, in der Textdatei obe
 
 ::: aufgaberstudio
 **Aufgabe:**\
-gib die gleichen Rechenoperationen wie in der Konsole oben in dem Skript ein. Drücke in jeder Zeile `Strg` + `Enter`. Schau dann unten in die Konsole. Mach dich mit den Gleichheiten und Unterschiedlichkeiten vertraut, die Skript und Konsole haben.
+Gib die gleichen Rechenoperationen wie in der Konsole oben in dem Skript ein. Drücke in jeder Zeile `Strg` + `Enter`. Schau dann unten in die Konsole. Mach dich mit den Gleichheiten und Unterschiedlichkeiten vertraut, die Skript und Konsole haben.
 :::
 
 Da du das Skript speicherst, es also später wieder öfnnen und weiternutzen und daran sogar mit anderen teilen / co-worken kannst, empfiehlt es sich sehr (**!!!**), auf einen *guten Stil* (s.u.) zu achten und deine Arbeitsschritte zu *kommentieren*.
