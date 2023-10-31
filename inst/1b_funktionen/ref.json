@@ -1,0 +1,65 @@
+[
+    {
+        "ISBN": "978-3-465-04339-3",
+        "author": [
+            {
+                "family": "Schlaudt",
+                "given": "Oliver"
+            }
+        ],
+        "call-number": "JC574 .S35 2018",
+        "collection-number": "102",
+        "collection-title": "KlostermannRoteReihe",
+        "edition": "Originalausgabe",
+        "id": "schlaudt2018",
+        "issued": {
+            "date-parts": [
+                [
+                    2018
+                ]
+            ]
+        },
+        "key": "CIMIH47P",
+        "libraryid": "1",
+        "number-of-pages": "192",
+        "providerkey": "Zotero",
+        "publisher": "Vittorio Klostermann",
+        "publisher-place": "Frankfurt am Main",
+        "source": "Library of Congress ISBN",
+        "title": "Die politischen Zahlen: über Quantifizierung im Neoliberalismus",
+        "title-short": "Die politischen Zahlen",
+        "type": "book"
+    },
+    {
+        "author": [
+            {
+                "family": "Damerow",
+                "given": "Peter"
+            },
+            {
+                "family": "Nissen",
+                "given": "H. J."
+            },
+            {
+                "family": "Englund",
+                "given": "Robert K."
+            }
+        ],
+        "container-title": "Spektrum der Wissenschaft",
+        "id": "damerow1988",
+        "issued": {
+            "date-parts": [
+                [
+                    1988
+                ]
+            ]
+        },
+        "key": "ZMSC8DYT",
+        "libraryid": "1",
+        "page": "74-85",
+        "providerkey": "Zotero",
+        "title": "Die Entstehung der Schrift",
+        "type": "article-journal",
+        "volume": "2"
+    }
+]
