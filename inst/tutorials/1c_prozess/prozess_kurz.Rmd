@@ -55,7 +55,7 @@ habt, passiert gar nichts.)
 
 ## Lernziele
 
--   <input type="checkbox" unchecked> Ich kenne die Roadmap des
+  <input type="checkbox" unchecked> Ich kenne die Roadmap des
     wissenschaftlichen Prozesses und kann mich auf ihr orientieren
     </input>
 
@@ -66,17 +66,16 @@ Wir lieben Bilder, ihr liebt Bilder, hier gibt es Bilder:
 ![](images/prozess){width="95%"}
 
 Die gesamten Tutorials orientieren sich an der "Roadmap des
-wissenschaftlichen Arbeitens". Sie soll euch zur Orientierung dienen und
+wissenschaftlichen Arbeitens". Sie soll dir zur Orientierung dienen und
 für zukünftige eigene Projekte einen strukturierten Ablauf vorgeben.
 
-Es gibt eine zweite Version dieses Tutorials. Dies ist die kurze und
-knappe. Die andere ist ausführlicher und auch als Nachschlagewerk
-gedacht.
+Es gibt eine zweite, längere Version dieses Tutorials. Dies ist die kurze und
+knappe und dient dir dazu einen ersten Überblick zu bekommen. Die andere  ausführlicher und auch als Nachschlagewerk gedacht.
 
 ::: gelb
-Da wir euch quantitative Verfahren beibringen, bezieht sich die Roadmap
-speziell auf quantitative Verfahren. Solltet ihr qualitativ Forschen
-wollen, ändern sich die Schritte inhaltlich und ggf auch deren Abfolge
+Da wir dir quantitative Verfahren beibringen, bezieht sich die Roadmap
+speziell auf quantitative Verfahren. Solltest du qualitativ Forschen
+wollen, ändern sich die Schritte inhaltlich und ggf. auch deren Abfolge
 teilweise.
 :::
 
@@ -86,11 +85,8 @@ Ja, ein Großteil des wissenschaftlichen Arbeitens geschieht vor dem, was
 wir uns darunter Vorstellen: Mit Laborkittel und Lupe im Labor stehen
 und bunte Flüssigkeiten ineinander mixen...
 
-Die Überschriften in Klammern sind zwar zentrale Bestandteile dieses
-Prozesses, doch sie sind weder Teil der Vorlesung, noch eurer kleinen
-Forschungsarbeit in diesem Modul, deswegen gehen wir nicht weiter darauf
-ein. Nichtsdestotrotz wollen wir ihren elementaren Stellenwert in diesem
-Prozess berücksichtigen.
+Die ausgeklammerten Überschriften sind zwar zentrale Bestandteile dieses
+Prozesses, sind jedoch nicht für jede Art von Forschung notwendig, weshalb wir sie in diesen Tutorials nicht behandeln werden. 
 
 #### 1. Einarbeiten
 
@@ -104,7 +100,7 @@ Entwickle eine klare und konkrete Forschungsfrage.
 
 #### 3. Operationalisierung der Variablen
 
-Überlege, wie du deine Forschungsfrage quantitativ umsetzen kannst.
+Überlege, wie du deine Forschungsfrage quantitativ umsetzen und messbar machen kannst.
 
 #### 4. Konkrete, testbare Hypothesen aufstellen
 
@@ -129,9 +125,7 @@ Sammle die Daten gemäß deinem Forschungsdesign.
 
 ### III) Datenaufbereitung
 
-Um ehrlich zu sein: Der ätzendste und gleichzeitig wichtigste Schritt des
-ganzen Prozesses. Hier bringt ihr die Daten aus der vorhandenen in eine
-verarbeitbare Form. Das konkrete Vorgehen hängt stark von den
+Um ehrlich zu sein: Der anstrengenste und gleichzeitig wichtigste Schritt des ganzen Prozesses. Hier bringt ihr die Daten aus der vorhandenen in eine weiter-verarbeitbare Form. Das konkrete Vorgehen hängt stark von den
 vorliegenden Daten ab. Deswegen treffen nicht alle der folgenden
 Schritte auf jedes Projekt zu.
 
@@ -141,7 +135,7 @@ Wenn die Daten analog sind, digitalisiere sie.
 
 #### 2. Datenimport
 
-Lade den Datensatz in R.
+Lade den Datensatz in RStudio hoch.
 
 #### 3. Datenaufbereitung / Cleaning
 
@@ -158,7 +152,7 @@ Untersuche den Datensatz als Ganzes und einzelne Variablen numerisch.
 
 ##### b) Einzelne Variablen
 
-#### 2. Grafisch (quick & dirty)
+#### 2. Grafisch 
 
 #### 3. Voraussetzungen prüfen
 
@@ -166,15 +160,13 @@ Prüfe die Voraussetzungen für statistische Analysen.
 
 ### V) Auswertung / Statistik
 
-Führe die vorab geplanten statistischen Analysen durch, um deine Forschungsfrage zu
-beantworten.
+Führe die vorab geplanten statistischen Analysen durch, um deine Forschungsfrage zu beantworten.
 
 ### VI) Schöne Visualisierungen
 
 Erstelle ansprechende und übersichtliche Grafiken, um deine Ergebnisse
 zu visualisieren.
 
-S. hierfür Unterkapitel `Visualisierung`.
 
 ### VII) Report
 
@@ -185,12 +177,12 @@ Dokumentiere deine Forschungsergebnisse und erstelle einen Bericht.
 "Hast du das Gefühl, den Ablauf des wissenschaftlichen Prozesses
 verstanden zu haben?"
 
-\- <input type="checkbox" unchecked> Ja, scheint ganz simple </input>
+<input type="checkbox" unchecked> Ja, scheint ganz simple </input>
 
-\- <input type="checkbox" unchecked> Nein, das ist alles noch zu
+ <input type="checkbox" unchecked> Nein, das ist alles noch zu
 abstrakt </input>
 
-Egal, ob du nun `Ja`, "Nein" oder sogar beides angekreutzt hast, wir
+Egal, ob du nun `Ja`, `Nein` oder sogar beides angekreutzt hast, wir
 sind uns sicher, in den folgenden Lektionen wirst du spielerisch mit uns
 diesen Prozess noch besser kennen lernen und verstehen, wie du deine
 eigenen Fragen wissenschaftlich untersuchen kannst.
