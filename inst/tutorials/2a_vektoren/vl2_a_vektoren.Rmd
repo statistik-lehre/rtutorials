@@ -100,11 +100,11 @@ wurde.
 Um zu sehen, was die Variable `x` nun enthält, tippen Sie einfach `x`:
 :::
 
-```{r x_print-setup, echo = FALSE}
+```{r x, echo = FALSE}
 x <- 2 + 3
 ```
 
-```{r x_print, exercise = TRUE}
+```{r x_print, exercise = TRUE, exercise.setup = "x"}
 
 ```
 
@@ -145,11 +145,7 @@ Lesen Sie in Ihrem Kopf:
 Multiplizieren Sie nun `x` mit 2!
 :::
 
-```{r y_creation-setup, echo = FALSE}
-x <- 2 + 3
-```
-
-```{r y_creation, exercise = TRUE}
+```{r y_creation, exercise = TRUE, exercise.setup = "x"}
 x * 2
 ```
 <br>
@@ -158,11 +154,7 @@ x * 2
 Speichern Sie nun `x * 2` in einem neuen Objekt `y`!
 :::
 
-```{r y_saving-setup, echo = FALSE}
-x <- 2 + 3
-```
-
-```{r y_saving, exercise = TRUE}
+```{r y_saving, exercise = TRUE, exercise.setup = "x"}
 x * 2
 ```
 
@@ -197,7 +189,7 @@ Lassen Sie sich nun `y` ausgeben!
 
 ```
 
-```{r y_print-setup}
+```{r y_print-setup, exercise.setup = "x"}
 y <- x * 2
 ```
 
