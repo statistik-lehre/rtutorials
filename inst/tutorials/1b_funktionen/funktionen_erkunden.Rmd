@@ -19,7 +19,7 @@ library(ggplot2)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## Was Sie in diesem Tutorial lernen:
+## Was Du in diesem Tutorial lernst:
 
 -   Pakete installieren und in die aktive Sitzung laden
 
@@ -36,7 +36,7 @@ knitr::opts_chunk$set(echo = FALSE)
 Was R so mächtig macht, sind die von der Community veröffentlichten und gepflegten Erweiterungen drum herum. Stand 2023 gibt es knapp 20.000 offiziell veröffentlichte Pakete auf CRAN.
 Dieses Akronym steht für *Comprehensive R Archive Network* und ist die offizielle Adresse für geprüfte Erweiterungen. Es sei aber erwähnt, dass es auch noch andere Orte gibt, wo Pakete veröffentlicht werden können, zum Beispiel Bioconductor, GitHub und andere. Deswegen ist die Gesamtzahl aktiv gepflegter Pakete wohl noch höher als 20.000.
 
-Pakete von CRAN reichen für unsere Anwendungszwecke vollkommen aus und können über den einfachen Befehl `install.packages("Paketname")` installiert werden - das ist unkompliziert, Sie müssen keine Internetseiten besuchen, keine Dateien irgendwo hinschieben oder ausführen, das wird alles intern von dieser Funktion erledigt.
+Pakete von CRAN reichen für unsere Anwendungszwecke vollkommen aus und können über den einfachen Befehl `install.packages("Paketname")` installiert werden - das ist unkompliziert, Du musst keine Internetseiten besuchen, keine Dateien irgendwo hinschieben oder ausführen, das wird alles intern von dieser Funktion erledigt.
 
 ```{r cran_packages_reading}
 # Für den Fall keiner Internetverbindung
@@ -71,7 +71,7 @@ ggplot(tbl, aes(x = date, y = id)) +
 
 ### Woraus bestehen Pakete?
 
-Üblicherweise enthalten Pakete neue Funktionen, die das Leben von R-Nutzenden irgendwo erleichtern sollen. Manchmal werden Pakete auch genutzt, um Datensätze bereitzustellen, oder andere, außergewöhnlichere Sachen wie z.B. die interaktiven Tutorials, die Sie im Moment betrachten - diese stammen auch aus einem Paket, was wir für Sie geschrieben und auf GitHub veröffentlicht haben. 
+Üblicherweise enthalten Pakete neue Funktionen, die das Leben von R-Nutzenden irgendwo erleichtern sollen. Manchmal werden Pakete auch genutzt, um Datensätze bereitzustellen, oder andere, außergewöhnlichere Sachen wie z.B. die interaktiven Tutorials, die Du im Moment betrachtst - diese stammen auch aus einem Paket, was wir für dich geschrieben und auf GitHub veröffentlicht haben. 
 
 #### Ein Paket installieren
 
@@ -79,9 +79,9 @@ Wir installieren und nutzen heute ein Paket, um spielerisch den typischen Umgang
 
 Es heißt `cowsay` und stellt eine einzige neue Funktion namens `say()` bereit, mit der wir lustige Tiere lustige Dinge sagen lassen können.
 
-Hier im Tutorial müssen Sie das Paket nicht mehr installieren - vermutlich wurden Sie gefragt beim Start des Tutorials, ob fehlende Pakete installiert werden sollen. Das sollten Sie bejahen, und dann erledigt RStudio das automatisch für Sie.
+Hier im Tutorial musst Du das Paket nicht mehr installieren - vermutlich wurdest Du gefragt beim Start des Tutorials, ob fehlende Pakete installiert werden sollen. Das solltest Du bejahen, und dann erledigt RStudio das automatisch für dich.
 
-Aber sollten Sie mal eigenständig ein Paket installieren wollen, ist wichtig zu wissen wie es geht:
+Aber solltest Du mal eigenständig ein Paket installieren wollen, ist wichtig zu wissen wie es geht:
 
 Der Befehl zum Installieren lautet:
 
@@ -89,38 +89,38 @@ Der Befehl zum Installieren lautet:
 install.packages("cowsay")
 ```
 
-Ersetzen Sie `cowsay` durch den Namen des gewünschten Pakets.
+Ersetze `cowsay` durch den Namen des gewünschten Pakets.
 
 ::: gelb
 
 **Häufige Fehler beim Installieren von Paketen**
 
-1. Achten Sie auf die Anführungszeichen um den Paketnamen!
+1. Achte auf die Anführungszeichen um den Paketnamen!
   
   Eine der häufigsten Fehlerquellen beim Installieren von Paketen sind vergessene Anführungszeichen.
 
 2. `installed.packages()` ist etwas anderes als `install.packages()`!
   
-  Ersteres gibt Ihnen eine Liste aller auf dem Gerät installierten Pakete, zweiteres ist das was Sie brauchen um Pakete zu installieren.
+  Ersteres gibt dir eine Liste aller auf dem Gerät installierten Pakete, zweiteres ist das was Du brauchst um Pakete zu installieren.
   
-3. Sie brauchen eine funktionierende Internetverbindung.
+3. Du brauchst eine funktionierende Internetverbindung.
 
 :::
 
 <br>
 
 ::: grau-nb
-Tipp: Dass ein länger dauernder Befehl in der Konsole fertig ausgeführt ist, wie z.B. die Installation eines Pakets, erkennen Sie daran, dass das rote Stoppzeichen ![](images/stop.PNG) oben rechts in der Konsole erlischt.
+Tipp: Dass ein länger dauernder Befehl in der Konsole fertig ausgeführt ist, wie z.B. die Installation eines Pakets, erkennst Du daran, dass das rote Stoppzeichen ![](images/stop.PNG) oben rechts in der Konsole erlischt.
 :::
 
 ### Das Paket nutzen
 
-Jetzt haben Sie also ein Paket installiert, nämlich `cowsay`, welches wir in diesem Tutorial nutzen möchten. Nun liegt es mit allen anderen installierten Paketen in einer Art „Bibliothek“ auf Ihrem Rechner. Um es tatsächlich nutzen zu können, muss der gewünschte Inhalt aus der Bibliothek geholt werden und in die aktive Sitzung geladen werden.
+Jetzt habst Du also ein Paket installiert, nämlich `cowsay`, welches wir in diesem Tutorial nutzen möchten. Nun liegt es mit allen anderen installierten Paketen in einer Art „Bibliothek“ auf deinem Rechner. Um es tatsächlich nutzen zu können, muss der gewünschte Inhalt aus der Bibliothek geholt werden und in die aktive Sitzung geladen werden.
 
 Es gibt zwei Wege, an den Inhalt eines bereits installierten Pakets zu gelangen:
 
-1. Sie laden alles aus dem gesamten Paket in die aktive Sitzung mit `library(Paketname)`.
-1. Sie addressieren nur bestimmte Inhalte aus dem Paket mit `Paketname::Inhalt`.
+1. Du lädst alles aus dem gesamten Paket in die aktive Sitzung mit `library(Paketname)`.
+1. Du addressierst nur bestimmte Inhalte aus dem Paket mit `Paketname::Inhalt`.
 
 Beide Varianten werden Ihnen begegnen. Wobei die erste (`library()`) häufiger ist, weswegen wir uns erst mal diese anschauen.
 
@@ -128,9 +128,9 @@ Beide Varianten werden Ihnen begegnen. Wobei die erste (`library()`) häufiger i
 
 **Aufgabe**
 
-Laden Sie das gesamte Paket `cowsay` in die aktive Sitzung, um im nächsten Schritt Funktionen daraus benutzen zu können!
+Lade das gesamte Paket `cowsay` in die aktive Sitzung, um im nächsten Schritt Funktionen daraus benutzen zu können!
 
-Verwenden Sie dafür die Funktion `library()`.
+Verwende dafür die Funktion `library()`.
 :::
 
 <br>
@@ -147,7 +147,7 @@ library(cowsay)
 
 `library()` funktioniert im Gegensatz zu `install.packages()` ohne Anführungszeichen um den Paketnamen. 
 
-Wenn Sie wollen, können Sie sich das erklären - ansonsten nehmen Sie es einfach hin. Hier ist meine persönliche Erklärung, die das für mich logisch macht:
+Wenn Du willst, kannst du dir das erklären lassen- ansonsten nimm es einfach hin. Hier ist meine persönliche Erklärung, die das für mich logisch macht:
 
 Text ohne Anführungszeichen wird von R als Aufruf eines Objekts verstanden. Das funktioniert nur, wenn das Objekt bereits erstellt ist und "aufrufbar" ist. Die Pakete in der Bibliothek sind bereits vorhanden, existieren also als "Objekte" für R und warten nur noch darauf, aus dem Regal geholt (aufgerufen) zu werden.
 
