@@ -526,7 +526,7 @@ Hier sind ziemlich wichtige und hilfreiche Funktionen zusammengefasst, die bishe
 
 ::: aufgaberstudio
 **Aufgabe:**\
-Gib in deiner Konsole `?mean` ein und mache dich mit der Hilfe Seite zu dieser Funktion vertraut.
+Gib in deiner Konsole `?mean` ein und mache dich mit der Hilfeseite zu dieser Funktion vertraut.
 :::
 
 ## Abschlussquiz
