@@ -18,6 +18,10 @@ editor_options:
 
 ```{r setup, include=FALSE}
 library(learnr)
+library(haven)
+library(car)
+library(psych)
+library(mice)
 knitr::opts_chunk$set(echo = FALSE)
 
 # data
@@ -29,29 +33,6 @@ publictr <- rtutorials::publictr
 
 In diesem Tutorial stellen wir euch die Roadmap des wissenschaftlichen
 Prozesses vor, an der wir alle weiteren Tutorials orientieren.
-
-::: aufgaberstudio
-**Aufgabe:**\
-Kopiere bitte folgenden Code in deine Konsole und drücke `Enter`:
-
-```{r pakete_installieren, message=FALSE, echo = TRUE}
-if (!require("haven")) 
-install.packages("haven")
-
-if (!require("car")) 
-install.packages("car")
-
-if (!require("psych")) 
-install.packages("psych")
-
-if (!require("mice")) 
-install.packages("mice")
-```
-
-(Hiermit werden automatisch Pakete installiert, die für dieses und die
-nächsten Tutorials gebraucht werden. Wenn ihr sie schon installiert
-habt, passiert gar nichts.)
-:::
 
 ## Lernziele
 
@@ -190,7 +171,7 @@ verstanden zu haben?"
 \- <input type="checkbox" unchecked> Nein, das ist alles noch zu
 abstrakt </input>
 
-Egal, ob du nun `Ja`, "Nein" oder sogar beides angekreutzt hast, wir
+Egal, ob du nun „Ja“, „Nein“ oder sogar beides angekreutzt hast, wir
 sind uns sicher, in den folgenden Lektionen wirst du spielerisch mit uns
 diesen Prozess noch besser kennen lernen und verstehen, wie du deine
 eigenen Fragen wissenschaftlich untersuchen kannst.
