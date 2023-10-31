@@ -448,7 +448,9 @@ Super! Sie haben diese wichtige Art von Indizierung gemeistert.
 Um diese Art des Subsettings zu verstehen, müssen wir uns zunächst mit 
 Attributen beschäftigen.
 
-…… to be continued. 
+…… to be continued. (Siehe Swirl-Lektion.)
+
+Erkläre was benannte Vektoren sind und wie sie funktionieren. 
 
 ## Anwendungsaufgaben
 ::: aufgabe
