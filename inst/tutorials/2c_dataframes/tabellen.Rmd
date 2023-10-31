@@ -471,9 +471,8 @@ Die anderen Datensätze aus dem Paket bieten zusätzliche Informationen, von Nac
 
 -   Airline-Abkürzungen (`airlines`)
 
-```{=html}
 <!-- -->
-```
+
 -   Flugzeugtypen (`planes`)
 
 -   Flughafenkürzel (`airports`)
@@ -524,6 +523,10 @@ mean(c(1, 2, 3, 4, 5))
 ```
 
 Pipes helfen, den Code lesbarer zu machen und komplizierte Verschachtelungen oder unnötige Zwischenspeicher-Schritte zu ersetzen.
+
+## 
+
+Achtung: Der folgende Absatz passt konzeptuell nicht so ganz rein und braucht vielleicht ein eigenes Tutorial? Ich hab das vorher mal als Idee geschrieben, es ist also alt. Viele Sachen doppeln sich. Bitte irgendwo unterbringen :)
 
 ## Von der Datenerhebung zur Analyse
 
