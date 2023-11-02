@@ -33,6 +33,15 @@ and hit Enter.
 install.packages(c("devtools", "learnr"))
 devtools::install_github("statistik-lehre/rtutorials")
 ```
+**Error**: If R reports an error like "Error in utils::download.file(url, path, method = method, quiet = quiet,  :  Herunterladen von 'https://api.github.com/repos/statistik-lehre/rtutorials/tarball/HEAD' fehlgeschlagen", this could be due to the size of the packet in relation to your download speed (`install_github()` has a default timeout of 60 seconds). Try it with this version:
+
+``` r
+# install.packages(c("devtools", "learnr"))
+# if you have made it to the error message, this line has already been executed successfully
+# so continue with:
+options(timeout=9999999)
+devtools::install_github("statistik-lehre/rtutorials")
+```
 
 ## Contents
 
