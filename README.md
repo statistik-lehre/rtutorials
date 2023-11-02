@@ -39,7 +39,7 @@ devtools::install_github("statistik-lehre/rtutorials")
 # install.packages(c("devtools", "learnr"))
 # if you have made it to the error message, this line has already been executed successfully
 # so continue with:
-options(timeout=9999999)
+options(timeout = 9999999)
 devtools::install_github("statistik-lehre/rtutorials")
 ```
 
