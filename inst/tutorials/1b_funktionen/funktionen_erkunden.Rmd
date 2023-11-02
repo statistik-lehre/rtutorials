@@ -40,9 +40,11 @@ Pakete von CRAN reichen für unsere Anwendungszwecke vollkommen aus und können 
 
 ```{r cran_packages_reading}
 # Für den Fall keiner Internetverbindung
-# tbl <- rtutorials::cranpacks
+tbl <- rtutorials::cranpacks
 
 # Im Fall einer Internetverbindung die aktuellen Daten holen
+# Verlängert die Tutorial-Ladezeit um einige Sekunden!
+
 try({tbl <- rvest::read_html("https://cran.r-project.org/web/packages/available_packages_by_date.html") |>
     rvest::html_table() |>
     purrr::pluck(1) |>

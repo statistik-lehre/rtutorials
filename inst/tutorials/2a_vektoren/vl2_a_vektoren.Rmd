@@ -100,11 +100,11 @@ wurde.
 Um zu sehen, was die Variable `x` nun enthält, tippen Sie einfach `x`:
 :::
 
-```{r x_print-setup, echo = FALSE}
+```{r x, echo = FALSE}
 x <- 2 + 3
 ```
 
-```{r x_print, exercise = TRUE}
+```{r x_print, exercise = TRUE, exercise.setup = "x"}
 
 ```
 
@@ -145,11 +145,7 @@ Lesen Sie in Ihrem Kopf:
 Multiplizieren Sie nun `x` mit 2!
 :::
 
-```{r y_creation-setup, echo = FALSE}
-x <- 2 + 3
-```
-
-```{r y_creation, exercise = TRUE}
+```{r y_creation, exercise = TRUE, exercise.setup = "x"}
 x * 2
 ```
 <br>
@@ -158,11 +154,7 @@ x * 2
 Speichern Sie nun `x * 2` in einem neuen Objekt `y`!
 :::
 
-```{r y_saving-setup, echo = FALSE}
-x <- 2 + 3
-```
-
-```{r y_saving, exercise = TRUE}
+```{r y_saving, exercise = TRUE, exercise.setup = "x"}
 x * 2
 ```
 
@@ -197,7 +189,7 @@ Lassen Sie sich nun `y` ausgeben!
 
 ```
 
-```{r y_print-setup}
+```{r y_print-setup, exercise.setup = "x"}
 y <- x * 2
 ```
 
@@ -469,6 +461,7 @@ Wenn zwei Vektoren unterschiedlicher Länge verrechnet werden, wird der
 kürzere Vektor automatisch so lange wiederholt, bis die Länge des
 anderen Vektors erreicht ist. Dieses Konzept heißt auch **Recycling**.
 :::
+<br>
 
 Letztlich geschieht dieser Mechanismus auch bei unserem ersten Beispiel
 von Rechnen mit Vektor + Zahl (`vec + 1`), weil die Zahl eigentlich auch
@@ -489,42 +482,6 @@ v + z
 Sehr gut! Sie haben jetzt bereits die wichtigsten fundamentalen
 Bestandteile der Programmiersprache R in Aktion kennengelernt.
 
-## Textvektoren
-
-Vektoren können nicht nur Zahlen enthalten, sondern unter anderem auch
-Text.
-
-Text wird durch `"Anführungszeichen"` gekennzeichnet.
-
-Kombinieren Sie Ihre drei Lieblingstiere zu einem Vektor!
-
-```{r charvec, exercise = TRUE, chunk.name = "Textvektor"}
-# Beispiel
-c("Hund", "Katze", "Maus")
-
-# Sie sind dran
-c()
-```
-
-Perfekt! Nun kommen wir zu einer elementaren Eigenschaft von Vektoren:
-Betrachten Sie dazu dieses Beispiel:
-
-```{r coercion, exercise = TRUE}
-c(1, 2, 3, 4)
-c(1, 2, 3, "vier")  # Die ausgegebenen Zahlen stehen in Anführungszeichen
-```
-
-::: infobox
-Achtung! Vektoren können immer nur Daten des gleichen Typs enthalten!
-Sobald auch nur ein einziges Element eines Vektors Text ist, wird der
-ganze Vektor zu einem Textvektor und die Zahlen stehen nicht mehr für
-Berechnungen zur Verfügung. Diese automatische Umwandlung heißt
-**coercion**.
-:::
-
-Falls Sie über diesen Fehlertyp
-`non-numeric argument to binary operator`stolpern, untersuchen Sie ihre
-Berechnung auf solche Probleme.
 
 ## Zahlenreihen
 
@@ -556,6 +513,126 @@ Erstellen Sie einen Vektor namens `z`, der eine Zahlenreihe von 1 bis
 z <- 1:1000
 z
 ```
+
+## Textvektoren
+
+Vektoren können nicht nur Zahlen enthalten, sondern unter anderem auch
+Text.
+
+Text wird durch `"Anführungszeichen"` gekennzeichnet.
+
+::: aufgabe
+Schreiben Sie ein Programm, das den Textvektor "Hello World!" als Ergebnis ausgibt! 
+:::
+
+```{r charvec, exercise = TRUE, chunk.name = "Textvektor"}
+
+```
+
+```{r charvec-solution}
+"Hello World!"
+# Erstaunlich einfach, oder?
+
+# Es geht natürlich auch umständlicher mit Zwischenspeichern:
+text <- "Hello World!"
+text
+```
+
+### atomic vectors
+
+Perfekt! Nun kommen wir zu einer elementaren Eigenschaft von Vektoren:
+Betrachten Sie dazu dieses Beispiel:
+
+```{r coercion, exercise = TRUE}
+c(1, 2, 3, 4)
+c(1, 2, 3, "vier")  # Die ausgegebenen Zahlen stehen in Anführungszeichen
+```
+
+::: infobox
+Achtung! Vektoren können immer nur Daten des gleichen Typs enthalten! Also entweder Text oder Zahlen. Dazu wird auf Englisch gesagt, es sind *atomic vectors*. 
+
+Sobald auch nur ein einziges Element eines Zahlen-Vektors Text ist, wird der
+ganze Vektor zu einem Textvektor umgewandelt und die Zahlen stehen nicht mehr für
+Berechnungen zur Verfügung. Diese automatische Umwandlung heißt *coercion*.
+:::
+<br>
+
+Falls Sie über den Fehler:
+`non-numeric argument to binary operator` stolpern, untersuchen Sie ihre
+Berechnung auf solche Probleme.
+
+::: aufgabe
+Ändern Sie den Code, so dass die Berechnung fehlerfrei ausgeführt werden kann!
+:::
+
+```{r coercion_error, exercise = TRUE, exercise.cap = "Fehler durch Mathe mit Textvektor"}
+id <- c(1, 2, 3, "vier")
+id + 1
+```
+
+```{r coercion_error-solution}
+# Lösungsansatz A
+id <- c(1, 2, 3, 4)
+id + 1
+
+# es gibt auch andere Lösungen, z.B. "vier" ganz zu entfernen und durch einen fehlenden Wert `NA` zu ersetzen. Das würde auch eine Funktion tun, die automatisch versucht, Textvektoren in numerische Vektoren umzuwandeln: 
+as.numeric(id)
+# Diese Funktion haben wir aber noch nicht vorgestellt.
+```
+
+## Datentypen
+
+Es gibt *atomic vectors* in insgesamt sechs Datentypen, von denen wir aber nur vier wirklich verwenden. Aber damit du es einmal gesehen hast, zeigen wir der Vollständigkeit halber alle. 
+
+1. numeric: Typ **integer**
+2. numeric: Typ **double**
+3. **character**
+4. **logical**
+5. (complex)
+6. (raw)
+
+### Unterschied `double` und `integer`
+
+Siehe R Kurs 2022, **Präsentation 3: Datentypen** Füge Sachen aus der zugehörigen Folie ein (24)
+
+### Präzision
+
+Siehe R Kurs 2022, **Präsentation 3: Datentypen** Füge Sachen aus der zugehörigen Folie ein (25)
+
+### Datentyp eines Vektors bestimmen
+
+mit `typeof()`
+
+Übung didaktisch noch ändern / übersichtlicher machen, mehr eigenanteil, vielleicht Quiz einfügen. Erklären wie 1L ein `integer` erzeugt. Vielleicht. Erklären was `NA` ist? Vielleicht.
+
+- Erklären, dass Zahlenreihen immer Integer erzeugen. 
+- Erklären, dass der Unterschied für uns eigentlich egal sein kann, dass es nur schon mal gesehen sein sollte. Hauptsache Unterschied "numeric" und "character" und "logic" ist klar. 
+
+```{r typeof, exercise = TRUE, exercise.cap = "Datentyp bestimmen"}
+typeof(TRUE)
+typeof(1+10i)
+typeof(1:100)
+typeof(5.78)
+typeof(1)
+typeof(1L)
+typeof(NA)
+typeof("1")
+typeof("Hello World")
+```
+
+### Umwandlungen
+
+`as.numeric()`, `as.character`, `as.integer()`, `as.logical()`... Erklären. 
+
+```{r as, echo = TRUE}
+as.logical(c(1, 0))
+as.character(5)
+as.integer(5.999)
+as.numeric("5")
+as.numeric("fünf")
+```
+
+NAs erklären. Eventuell in eigenem Kapitel
 
 ## Learnings heute
 
@@ -592,3 +669,4 @@ Im Environment werden die erstellten Objekte der laufenden Sitzung angezeigt. Be
 | `c()` | combine              |
 | `<-`  | assignment operator  |
 | `:`   | colon operator       |
+| `typeof()` | Datentyp bestimmen |

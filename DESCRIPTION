@@ -1,6 +1,6 @@
 Package: rtutorials
 Title: Interactive R And Statistics Tutorials In German
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: 
     c(
     person("Lukas", "Bruelheide", , "lukas.bruelheide@student.uni-kassel.de", 
