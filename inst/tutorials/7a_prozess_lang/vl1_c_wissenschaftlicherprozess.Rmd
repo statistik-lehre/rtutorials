@@ -63,7 +63,7 @@ habt, passiert gar nichts.)
 
 Wir lieben Bilder, ihr liebt Bilder, hier gibt es Bilder:
 
-![](images/prozess){width="95%"}
+![](images/prozess.png){width="95%"}
 
 Die gesamten Tutorials orientieren sich an der "Roadmap des
 wissenschaftlichen Arbeitens". Sie soll euch zur Orientierung dienen und
