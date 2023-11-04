@@ -44,7 +44,7 @@ Prozesses vor, an der wir alle weiteren Tutorials orientieren.
 
 Wir lieben Bilder, ihr liebt Bilder, hier gibt es Bilder:
 
-![](images/prozess){width="95%"}
+![](images/prozess.png){width="95%"}
 
 Die gesamten Tutorials orientieren sich an der "Roadmap des
 wissenschaftlichen Arbeitens". Sie soll dir zur Orientierung dienen und
