@@ -499,11 +499,16 @@ umständlich wäre:
 ```{r, echo=TRUE}
 c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 ```
+<br>
 
-#### Anwendung
+:::aufgabe
+**Anwendung**
 
-Erstellen Sie einen Vektor namens `z`, der eine Zahlenreihe von 1 bis
-1000 enthält! Lassen Sie sich `z` ausgeben.
+Erstelle einen Vektor namens `z`, der eine Zahlenreihe von 1 bis
+1000 enthält! 
+
+Lass dir daraufhin `z` ausgeben.
+:::
 
 ```{r colon, exercise=TRUE, exercise.caption="colon operator"}
 
@@ -519,13 +524,16 @@ z
 Vektoren können nicht nur Zahlen enthalten, sondern unter anderem auch
 Text.
 
-Text wird durch `"Anführungszeichen"` gekennzeichnet.
+Texteingabe wird für durch `"Anführungszeichen"` gekennzeichnet. 
+Achtung! Es sollten genau diese Anführungszeichen sein `" "`, die normalerweise bei QWERTZ-Tastaturen mit `Shift` + `2` erreichbar sind. Es darf kein `„ “` oder `» «` sein, da das nicht erkannt wird. 
 
 ::: aufgabe
-Schreiben Sie ein Programm, das den Textvektor "Hello World!" als Ergebnis ausgibt! 
+Das ist schon das vierte Tutorial, und Sie haben noch kein "Hello World"-Programm geschrieben... Das holen wir jetzt nach. 
+
+Schreiben Sie ein Programm, das den Text `Hello World!` als Ergebnis ausgibt! 
 :::
 
-```{r charvec, exercise = TRUE, chunk.name = "Textvektor"}
+```{r charvec, exercise = TRUE, exercise.cap = "Hello World!"}
 
 ```
 
@@ -538,10 +546,80 @@ text <- "Hello World!"
 text
 ```
 
-### atomic vectors
+"Hello World" ist ein Textvektor der Länge 1, das heißt, dass er nur ein Element enthält. Wollen wir mehrere Texte in einem Vektor kombinieren, brauchen wir wieder `c()`. 
 
-Perfekt! Nun kommen wir zu einer elementaren Eigenschaft von Vektoren:
-Betrachten Sie dazu dieses Beispiel:
+::: aufgabe
+Kombinieren Sie die Texte:
+
+- "Hund"
+- "Katze"
+- "Maus"
+
+zu einem Vektor namens `tiere`. 
+
+Lassen Sie sich den Vektor dann anzeigen.
+:::
+
+```{r char_animals, exercise = TRUE, exercise.cap = "Textvektor erstellen"}
+
+```
+
+```{r char_animals-solution}
+tiere <- c("Hund", "Katze", "Maus")
+tiere
+```
+
+### Länge bestimmen
+
+```{r lengthquiz}
+question_numeric("Welche Länge hat der Vektor `tiere`? Anders gesagt, wie viele Elemente enthält er?",
+                 answer(3, correct = TRUE),
+                 allow_retry = TRUE)
+```
+
+Die Länge eines Vektors kann mit der Funktion `length()` bestimmt werden. Jetzt konntest du die Anzahl der Elemente noch selbst zählen, aber die meisten Daten mit denen im Alltag gearbeitet wird, sind dafür zu groß. 
+
+::: aufgabe
+Ermitteln Sie nun noch mal auf programmatischem Weg die Länge Ihres eben erstellten Vektors `tiere`! Nutzen Sie die Funktion `length()`!
+:::
+
+```{r tiere}
+tiere <- c("Hund", "Katze", "Maus")
+tiere
+```
+
+```{r lengthex, exercise.setup = "tiere", exercise = TRUE, exercise.cap = "Länge eines Vektors bestimmen"}
+
+```
+
+```{r lengthex-solution}
+length(tiere)
+```
+
+### Fehlermeldung: Mathe mit Textvektoren
+
+Solltest du irgendwann mal versuchen, eine numerische Rechnung mit einem Textvektor durchzuführen, gibt R eine Fehlermeldung aus. 
+
+:::aufgabe
+Mach dich mit der Fehlermeldung vertraut! 
+:::
+
+```{r matherror, exercise = TRUE, exercise.cap = "Fehlermeldung", exercise.setup = "tiere"}
+tiere + 1
+```
+
+> "non-numeric argument to binary operator"
+
+bedeutet so viel wie: Keine Zahl eingegeben, wo eigentlich eine Zahl für erwartet wurde. Der „binary operator“ ist hier das `+`.
+
+Perfekt! Jetzt bist du gewappnet, falls es dir diese Meldung in Zukunft unterkommen sollte. 
+
+
+## atomic vectors
+
+Nun kommen wir zu einer elementaren Eigenschaft von Vektoren.
+
+Betrachte dazu dieses Beispiel:
 
 ```{r coercion, exercise = TRUE}
 c(1, 2, 3, 4)
@@ -557,27 +635,25 @@ Berechnungen zur Verfügung. Diese automatische Umwandlung heißt *coercion*.
 :::
 <br>
 
-Falls Sie über den Fehler:
-`non-numeric argument to binary operator` stolpern, untersuchen Sie ihre
-Berechnung auf solche Probleme.
+Der im letzten Abschnitt vorgestellte Fehler
+`non-numeric argument to binary operator` entsteht oft, wenn numerische Vektoren irgendwo automatisch in Textvektoren umgewandelt werden. 
 
 ::: aufgabe
-Ändern Sie den Code, so dass die Berechnung fehlerfrei ausgeführt werden kann!
+Führe den Code aus. Die Zahlen in `id` werden in Text *coerced* und die Berechnung schlägt fehl. 
+
+Ändere den Code, so dass die Berechnung fehlerfrei ausgeführt werden kann!
 :::
 
 ```{r coercion_error, exercise = TRUE, exercise.cap = "Fehler durch Mathe mit Textvektor"}
-id <- c(1, 2, 3, "vier")
+id <- c(1, 2, 3, "4")
 id + 1
 ```
 
 ```{r coercion_error-solution}
-# Lösungsansatz A
 id <- c(1, 2, 3, 4)
 id + 1
 
-# es gibt auch andere Lösungen, z.B. "vier" ganz zu entfernen und durch einen fehlenden Wert `NA` zu ersetzen. Das würde auch eine Funktion tun, die automatisch versucht, Textvektoren in numerische Vektoren umzuwandeln: 
-as.numeric(id)
-# Diese Funktion haben wir aber noch nicht vorgestellt.
+# ohne die Anführungszeichen kann der Text als Zahl erkannt werden.
 ```
 
 ## Datentypen
@@ -634,13 +710,122 @@ as.numeric("fünf")
 
 NAs erklären. Eventuell in eigenem Kapitel
 
+## Abschlussquiz
+
+```{r abschlussquiz}
+quiz(caption = "Teste dein Wissen!",
+     question_checkbox("Warum sollte die Option, das Environment auch zwischen
+                       den Sitzungen zu speichern, deaktiviert werden?",
+                    answer("Um uns das Leben nicht unnötig leicht zu machen.",
+                           message = "Alles in R ist mit dem Ziel entstanden, 
+                           das Leben von Forschenden etwas leichter zu machen,
+                           auch wenn es manchmal nicht so scheint."),
+                    answer("Um Replizierbarkeit zu fördern.", 
+                           correct = TRUE,
+                           message = "Wenn alle Objekte (z.B. Variablen), die 
+                           für ein Skript nötig sind, immer im Skript definiert
+                           werden, kann es nicht zu Verwechslungen kommen und 
+                           auch andere, die das Skript bekommen, können es
+                           ausführen, ohne zu wissen was alles vorher in deinem
+                           Environment war."),
+                    answer("Um nicht ausversehen mit alten Werten aus der 
+                           letzten Sitzung zu rechnen.", 
+                           correct = TRUE, 
+                           message = "Wenn du in einer vorherigen Sitzung `x`
+                           definiert hast, und in der neuen Sitzung an einem
+                           anderen Skript arbeitest, wo es auch eine Variable
+                           namens `x` gibt, könntest du ausversehen mit den
+                           falschen Werten arbeiten, wenn `x` 
+                           zwischengespeichert wird."),
+                    answer("Um Arbeitsspeicher zu sparen und Abstürze zu
+                           verhindern.", 
+                           message = "Diese Option blockiert keinen
+                           Arbeitsspeicher, wenn sie aktiviert sind"),
+                    answer("Um nicht immer wieder das ganze Skript ausführen zu
+                           müssen, um an meine Berechnungsergebnisse 
+                           zu kommen.", 
+                           message = "Selbst wenn das ganze Skript sehr
+                           rechenintensiv ist, meinetwegen 3 Tage auf einem
+                           Super-Computer laufen muss um die Ergebnisse zu
+                           erhalten, würdest du diese nicht im Environment
+                           speichern wollen, sondern dann lieber am Ende des
+                           Skripts mit einem Befehl in eine Datei auf der
+                           Festplatte schreiben."),
+                    random_answer_order = TRUE),
+     question_text("Wie heißt dieser Operator `<-` auf Englisch?",
+                   answer("assignment operator", correct = TRUE),
+                   answer("Assignment Operator", correct = TRUE)),
+     question_radio("Worauf könnte dieser Fehler hinweisen? \n`non-numeric argument to binary operator`",
+                    answer("Dass einer Funktion wie z.B. `+` oder `-`, die Zahlen zum Rechnen braucht, Text als Input gegeben wurde.", correct = TRUE),
+                    answer("Dass einer Funktion die Text erwartet, fälschlicherweise Zahlen als Input gegeben wurden"),
+                    answer("Dass der PC so kaputt ist, dass nicht einmal mehr die Grundrechenarten funktionieren."))
+     
+# Noch mehr Fragen erstellen
+
+     )
+```
+
 ## Learnings heute
 
-Sie haben gelernt, wie Sie Variablen Daten zuweisen. Variablen sind in R repräsentiert als Vektoren. Vektoren sind der fundamentale Objekttyp in R, auf dem alle anderen Objekte wie z.B. Tabellen aufbauen. Ihr Vorteil ist, dass sie mehrere Werte enthalten können.
+```{r context="server"}
+# Shiny App um die Anzahl richtig beantworteter Fragen anzuzeigen. 
+# Funktioniert in jedem Tutorial
 
-Beim Rechnen mit Vektoren haben Sie das Konzept "Recycling" kennengelernt,und erahnen ungefähr, was "Vektorisierung" ist - dass vektorisierte Funktionen wie `+` auf jedes Element eines Vektors einzeln angewendet werden, und als Ergebnis auch wieder ein Vektor steht.
+shiny::observeEvent(
+  input$get_score, 
+  {
+    objs2 = learnr:::get_tutorial_state()
+    
+    # Number of correct questions
+    
+    n_correct <- 
+      # Access the $correct sublist item in each list item
+        lapply(objs2, purrr::pluck, "correct") |>
+           # make it a vector containing: TRUE and FALSE and NAs
+           # NA is appearing for list items which don't have
+           # a $correct subitem
+                unlist() |> 
+           # Taking the sum of a logical Vector returns the number of TRUEs
+                sum(na.rm=TRUE)
+    
+    # Number of total questions
+    
+    total_questions <- 
+      # 1. Access $type in each list item and make it a vector of types
+      lapply(objs2, purrr::pluck, "type") |> unlist()
+    
+    # 2. Count the number of "question" in that vector
+    total_questions <- total_questions[total_questions == "question"] |> 
+      length()
+      
+      
+    output$score = shiny::renderText(
+      paste0(n_correct, " von ", total_questions,
+        " im gesamten Tutorial beantworteten Fragen waren richtig.")
+)
+    invisible()
+  }
+)
+```
 
-Beim Assigment haben Sie gelernt, Leerzeichen zu verwenden um den Assignment Operator <-`. 
+```{r score, echo=FALSE}
+shiny::br()
+shiny::actionButton("get_score", "Auswertung!")
+shiny::br()
+shiny::br()
+shiny::textOutput("score")
+shiny::br()
+```
+
+### Zusammenfassung
+
+Du hast gelernt, wie du Variablen Daten zuweisen kannst.
+
+Variablen sind in R repräsentiert als Vektoren. Vektoren sind der fundamentale Objekttyp in R, auf dem alle anderen Objekte wie z.B. Tabellen aufbauen. Ihr Vorteil ist, dass sie viele Elemente enthalten können.
+
+Beim Rechnen mit Vektoren hast du das Konzept "Recycling" kennengelernt,und erahnst ungefähr, was "Vektorisierung" ist - dass vektorisierte Funktionen wie `+` auf jedes Element eines Vektors einzeln angewendet werden, und als Ergebnis auch wieder ein Vektor steht.
+
+Beim Assigment hast du gelernt, Leerzeichen zu verwenden um den Assignment Operator `<-`. 
 
 Das Dezimaltrennzeichen in R ist der Punkt.
 Kommata werden verwendet, um Werte in Aufzählungen voneinander zu trennen.
@@ -666,7 +851,9 @@ Im Environment werden die erstellten Objekte der laufenden Sitzung angezeigt. Be
 
 | Code  | Beschreibung         |
 |-------|----------------------|
-| `c()` | combine              |
-| `<-`  | assignment operator  |
-| `:`   | colon operator       |
+| `c()` | combine, Vektor erstellen |
+| `<-`  | assignment operator: Objekte speichern |
+| `:`   | colon operator: Zahlenreihen erstellen |
 | `typeof()` | Datentyp bestimmen |
+| `length()` | Länge eines Vektors |
+| `as.numeric()` | Umwandlung in Zahlenvektor |
