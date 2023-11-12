@@ -24,14 +24,14 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Was Sie in diesem Tutorial lernen:
 
-Im letzten Tutorial haben Sie sich spielerisch mit der allgemeinen
-Syntax von Funktionen in R beschäftigt. Darauf bauen wir hier auf:
+Im letzten Tutorial hast du dich spielerisch mit der allgemeinen
+Syntax von Funktionen in R beschäftigt. Dieses Tutorial baut darauf auf:
 
 -   Wie erstelle ich ein Objekt in R? (Assignment)
 
 -   Was ist das Environment?
 
--   Wozu brauchen wir Vektoren?
+-   Wozu werden Vektoren benötigt?
 
 -   Wie kann ich auf einzelne Elemente eines Vektors zugreifen?
     (Indizierung)
@@ -43,13 +43,14 @@ question("Wie kennzeichnen Sie einen Kommentar in R?",
   answer("`#` mit der Raute", correct = TRUE),
   answer("`;` mit einem Semikolon "),
   answer("`>` mit dem Größer-als-Zeichen"),
-  answer(" `“` mit Anführungszeichen")
+  answer(" `“` mit Anführungszeichen"),
+  allow_retry = TRUE
 )
 ```
 
 Außerdem:
 
--   Text wird durch Anführungszeichen `"` gekennzeichnet.
+-   Text wird durch Anführungszeichen `"` gekennzeichnet. Auch einfache Anführungszeichen `'` sind möglich.
 
 -   Argumente werden durch Kommata getrennt (Argument1 `,` Argument2)
 
@@ -59,7 +60,7 @@ Außerdem:
 
 -   Hilfe wird über F1 / `?`Funktionsname / `help()` aufgerufen
 
--   R Skript = Drehbuch für Code
+-   R Skript = Drehbuch/ Choreografie für Code 
 
 -   R Notebook = gut lesbare Mischung aus Code, Erläuterungen und
     Ergebnissen
@@ -69,7 +70,7 @@ Außerdem:
 :::{.aufgabe}
 Fangen wir einfach an:
 
-Berechnen Sie 2 + 3 im Codeblock!
+Berechne 2 + 3 im Codeblock!
 :::
 
 ```{r rechner, exercise = TRUE}
@@ -97,7 +98,7 @@ liegt daran, dass der Wert von `2 + 3` in der Variable `x` gespeichert
 wurde. 
 
 :::{.aufgabe}
-Um zu sehen, was die Variable `x` nun enthält, tippen Sie einfach `x`:
+Um zu sehen, was die Variable `x` nun enthält, tippe einfach `x`:
 :::
 
 ```{r x, echo = FALSE}
@@ -112,7 +113,7 @@ x <- 2 + 3
 x
 ```
 
-Sehr gut! Im nächsten Abschnitt erfahren Sie mehr über die Zuweisung mit
+Sehr gut! Im nächsten Abschnitt erfährst du mehr über die Zuweisung mit
 `<-`.
 
 ## Assignment
@@ -142,20 +143,24 @@ Lesen Sie in Ihrem Kopf:
 <br>
 
 ::: aufgabe
-Multiplizieren Sie nun `x` mit 2!
+Multipliziere nun `x` mit 2!
 :::
 
 ```{r y_creation, exercise = TRUE, exercise.setup = "x"}
+
+```
+<br>
+```{r y_creation-solution}
 x * 2
 ```
 <br>
 
 ::: aufgabe
-Speichern Sie nun `x * 2` in einem neuen Objekt `y`!
+Speichere nun `x * 2` in einem neuen Objekt `y`!
 :::
 
 ```{r y_saving, exercise = TRUE, exercise.setup = "x"}
-x * 2
+
 ```
 
 ```{r y_saving-solution}
@@ -163,7 +168,7 @@ y <- x * 2
 ```
 
 ::: blau-nb
-**Tipp**: Nutzen Sie die Tastenkombination `Alt` + `-`, um den
+**Tipp**: Nutze die Tastenkombination `Alt` + `-`, um den
 *assignment operator* `<-` zu erzeugen!
 
 Das hat den Vorteil, dass der Pfeil automatisch von Leerzeichen umgeben
@@ -183,21 +188,21 @@ Ersteres heißt: "Ist `x` kleiner als `-2 + 3`?", letzteres bedeutet:
 <br>
 
 ::: aufgabe
-Lassen Sie sich nun `y` ausgeben!
+Lasse dir nun `y` ausgeben!
 :::
 ```{r y_print, exercise = TRUE, setup.chunk = "y_saving-solution"}
 
 ```
 
-```{r y_print-setup, exercise.setup = "x"}
-y <- x * 2
+```{r y_print-setup}
+y
 ```
 
 ::: grau-nb
 Übrigens:
 
 Der Pfeil funktioniert auch in umgedrehter Form: `5 -> x`, das ist aber
-unkonventionell.
+unkonventionell und wird schnell unübersichtlich.
 :::
 
 ### printed and lost
@@ -242,9 +247,9 @@ Gute Namen:
 
 -   **sind leicht zu tippen**
 
--   verwenden konsistent `_` oder `.` oder `-` als Leerzeichen
+-   verwenden **konsistent** `_` oder `.` oder `-` als Leerzeichen
 
--   sind konsequent kleingeschrieben (hilft Verwechslungen zu vermeiden)
+-   sind **konsequent** kleingeschrieben (hilft Verwechslungen zu vermeiden)
 
 -   sind nicht identisch mit internen Objekten
 
@@ -281,15 +286,15 @@ werden.
 
 ![](images/environment.png)
 
-Sie können natürlich nur Objekte aufrufen, die auch vorher definiert
+Es können natürlich nur Objekte aufgerufen werden, die auch vorher definiert
 `<-` wurden und deswegen in der Umgebung verfügbar sind. Ansonsten
-bekommen Sie folgenden Fehler:
+bekommst du folgenden Fehler:
 
 ```{r def, message=TRUE, warning=TRUE, exercise=TRUE, exercise.caption="Fehlermeldung"}
 obj           # nicht vorher definiert, deswegen Fehler
 ```
 
-Das lässt sich dadurch lösen, dass Sie das Objekt vorher definieren:
+Das lässt sich dadurch lösen, dass du das Objekt vorher definierst:
 
 ```{r def2, exercise = TRUE}
 obj <- 100
@@ -302,25 +307,25 @@ obj
 
 ::: aufgaberstudio
 
-Setzen Sie bitte Ihre RStudio-Einstellungen unter Tools / Global Options
+Setze bitte die RStudio-Einstellungen unter Tools / Global Options
 auf diese Werte! Dadurch wird das Environment mit dem Beenden von
 RStudio automatisch gelöscht und nicht zwischen Sitzungen gespeichert.
 :::
 <br>
-Das soll Sie dazu animieren, alle Objekte die Sie benutzen auch
+Das soll dazu animieren, alle Objekte die benutzen werden auch
 tatsächlich selbst zu definieren.
 
-Das dient der Replizierbarkeit - Stellen Sie sich vor, Sie haben `x` gar
-nicht definiert, Ihre Berechnungen werden aber trotzdem ohne Warnung
+Das dient der Replizierbarkeit - Stell dir vor, du hast `x` gar
+nicht definiert, die Berechnungen werden aber trotzdem ohne Warnung
 ausgeführt, weil noch ein anderes `x` aus der letzten Sitzung
-zwischengespeichert ist. Dann bekommen Sie falsche Ergebnisse und merken
+zwischengespeichert ist. Dann bekommst du falsche Ergebnisse und merkst
 es eventuell nicht.
 
 
 ## Vektoren
 
-Wir haben bereits die ganze Zeit mit Vektoren gearbeitet. Zum Beispiel
-ist `obj` ein Vektor mit der Länge 1 - enthält also nur eine Zahl.
+Es ging bereits die ganze Zeit um Vektoren. Zum Beispiel
+ist `obj` ein Vektor mit der Länge 1 - enthält also nur **eine** Zahl.
 
 ```{r, echo=TRUE}
 obj <- 100
@@ -356,7 +361,7 @@ Sie die Funktion `c()`.
 -   das Dezimalzeichen in R ist der Punkt!
 
 ::: aufgabe
-**1.** Verketten sie 1.5, 2.5 und 3 mithilfe von `c()`!
+**1.** Verkette 1.5, 2.5 und 3 mithilfe von `c()`!
 :::
 
 ```{r concatenate, exercise = TRUE}
@@ -368,8 +373,7 @@ c(1.5, 2.5, 3)
 ```
 
 ::: aufgabe
-**2.** Mit `c()` lassen sich auch mehrere Vektoren aneinander binden. Kombinieren
-Sie `x`, `y` und `z` zu einem neuen Vektor!
+**2.** Mit `c()` lassen sich auch mehrere Vektoren aneinander binden. Kombiniere `x`, `y` und `z` zu einem neuen Vektor!
 :::
 
 ```{r vectorc, exercise = TRUE}
@@ -387,13 +391,13 @@ c()
 c(x, y, z)
 ```
 
-Sehr gut! Nun beschäftigen wir uns damit, wie das Rechnen mit Vektoren
+Sehr gut! Als nächstes wird es daraum gehen, wie das Rechnen mit Vektoren
 funktioniert.
 
 ## Rechnen mit Vektoren
 
-Betrachten Sie das folgende Beispiel. Welchen Schluss können wir daraus
-über das Rechnen mit Vektoren ziehen?
+Betrachte das folgende Beispiel. Welchen Schluss kann daraus
+über das Rechnen mit Vektoren gezogen werden?
 
 ```{r vecmath, exercise = TRUE}
 vec <- c(1, 2, 3) 
@@ -417,15 +421,18 @@ vec + 10
 ```
 
 ```{r vecq}
-question( "Was erwarten Sie als Ergebnis dieser Berechnung?",
+question( "Was erwartest du als Ergebnis dieser Berechnung?",
   answer("Einen Vektor der Länge 1 mit dem Wert 15"),
   answer("Einen Vektor der Länge von `vec`, wo jedes Element mit 10 addiert 
    wurde", correct = TRUE),
-  answer("Einen leeren Vektor")
+  answer("Einen leeren Vektor"),
+  answer("Einen Vektor mit 13 Elementen: 3 aus dem ursprünglichen plus 10 dazugefügte"),
+  allow_retry = TRUE,
+  random_answer_order = TRUE
 )
 ```
 
-Schauen wir uns ein paar weitere Beispiele an:
+Im folgenden ein paar weitere Beispiele.
 
 ### Vektor + Vektor
 
@@ -479,7 +486,7 @@ z <- c(1, 2, 3, 4, 5)
 v + z
 ```
 
-Sehr gut! Sie haben jetzt bereits die wichtigsten fundamentalen
+Sehr gut! du hast jetzt bereits die wichtigsten fundamentalen
 Bestandteile der Programmiersprache R in Aktion kennengelernt.
 
 
@@ -528,9 +535,9 @@ Texteingabe wird für durch `"Anführungszeichen"` gekennzeichnet.
 Achtung! Es sollten genau diese Anführungszeichen sein `" "`, die normalerweise bei QWERTZ-Tastaturen mit `Shift` + `2` erreichbar sind. Es darf kein `„ “` oder `» «` sein, da das nicht erkannt wird. 
 
 ::: aufgabe
-Das ist schon das vierte Tutorial, und Sie haben noch kein "Hello World"-Programm geschrieben... Das holen wir jetzt nach. 
+Das ist schon das vierte Tutorial, und du hast noch kein "Hello World"-Programm geschrieben... Das wird jetzt nachgeholt. 
 
-Schreiben Sie ein Programm, das den Text `Hello World!` als Ergebnis ausgibt! 
+Schreibe ein Programm, das den Text `Hello World!` als Ergebnis ausgibt! 
 :::
 
 ```{r charvec, exercise = TRUE, exercise.cap = "Hello World!"}
@@ -546,10 +553,10 @@ text <- "Hello World!"
 text
 ```
 
-"Hello World" ist ein Textvektor der Länge 1, das heißt, dass er nur ein Element enthält. Wollen wir mehrere Texte in einem Vektor kombinieren, brauchen wir wieder `c()`. 
+"Hello World" ist ein Textvektor der Länge 1, das heißt, dass er nur ein Element enthält. Sollen mehrere Texte in einem Vektor kombiniert werden, wird wieder `c()` benötigt. 
 
 ::: aufgabe
-Kombinieren Sie die Texte:
+Kombiniere die Texte:
 
 - "Hund"
 - "Katze"
@@ -557,7 +564,7 @@ Kombinieren Sie die Texte:
 
 zu einem Vektor namens `tiere`. 
 
-Lassen Sie sich den Vektor dann anzeigen.
+Lasse dir den Vektor dann anzeigen.
 :::
 
 ```{r char_animals, exercise = TRUE, exercise.cap = "Textvektor erstellen"}
@@ -617,7 +624,7 @@ Perfekt! Jetzt bist du gewappnet, falls es dir diese Meldung in Zukunft unterkom
 
 ## atomic vectors
 
-Nun kommen wir zu einer elementaren Eigenschaft von Vektoren.
+Nun zu einer elementaren Eigenschaft von Vektoren:
 
 Betrachte dazu dieses Beispiel:
 
@@ -656,9 +663,21 @@ id + 1
 # ohne die Anführungszeichen kann der Text als Zahl erkannt werden.
 ```
 
-## Datentypen
+## Typen und Klassen
 
-Es gibt *atomic vectors* in insgesamt sechs Datentypen, von denen wir aber nur vier wirklich verwenden. Aber damit du es einmal gesehen hast, zeigen wir der Vollständigkeit halber alle. 
+![](images/class.png){width="50%"}
+
+Wie es im Fantasy RPG (Role Play Game) deiner Wahl in der Regel die Auswahl aus verschiedenen Klassen (Ritter\*in, Heiler\*in, Zauber\*in etc.) und Rassen (Mensch, Elfe, Zwerg etc.) gibt haben auch in der Informatik verschiedene Klassen und Typen. **Achtung: zwar gibt es auch in anderen Programmiersprachen Klassen und Typen, doch unterscheiden diese sich ggf. von denen in R.** Das Bild von Klasse und Rasse ist rein methaphorisch für eine grundlegende Idee der Zusammenhänge zu verstehen.
+
+Die *Datentypen* sind sowas wie die "Rasse". Also wie sieht ein Chracter aus (Zwerg, Elfe, Mensch) bzw. ein Dateneintrag: Zahlenart, Buchstabe, binär etc. Die *Objektklassen* entsprechen grob den "Rassen" in RPGs. Also wie sind die Charaktere organisiert: in Heiler\*innengilden, Ritter\*innenorden, Hofzauber*in etc. bzw. in Objekten: numerisch, Liste, Fakto etc.
+
+Auf dem Level, auf dem wir R nutzen ist die ganz genaue Unterscheidung zwischen Typen und Klassen nicht wichtig. Nur gut, es einfach schonal gehört zu haben, da hier manchmal Probleme auftauchen die sich dann einfacher lösen lassen. 
+
+
+### Typen
+
+
+Es gibt *atomic vectors* in insgesamt sechs Datentypen, von denen wir aber nur vier wirklich verwenden. Aber damit du es einmal gesehen hast, werden der Vollständigkeit halber einmal alle gezeigt. 
 
 1. numeric: Typ **integer**
 2. numeric: Typ **double**
@@ -667,9 +686,21 @@ Es gibt *atomic vectors* in insgesamt sechs Datentypen, von denen wir aber nur v
 5. (complex)
 6. (raw)
 
-### Unterschied `double` und `integer`
+#### Unterschied `double` und `integer`
 
-Siehe R Kurs 2022, **Präsentation 3: Datentypen** Füge Sachen aus der zugehörigen Folie ein (24)
+Sowohl `double` als auch `integer` beinhalten Zahlen. Wo ist nun der Unterschied und warum gibt es ihn?
+
+
+**Double** sind Fließkommazahlen bzw. Dezimalzahlen, auch *floating point numbers*.
+
+**Integer** sind ganze Zahlen. 
+
+Das ist wichtig zu erwähnen, denn das ist krass: Computer runden anders als wir Menschen. Menschen denken *dezimal* und Computer *binär*. Für uns sieht eine `0.1` so aus: 0.1 bzw. 1/10. Für einen Rechner sieht eine `0.1` so aus: $$0.0 \overline{0011}$$. Allerdings können Rechner pro Zahl nur 32 bzw. 64 Ziffern speichern, danach wird die Zahl einfach abgeschnitten. Das führt unweigerlich zu Fehlern. 
+
+```{r}
+
+```
+
 
 ### Präzision
 

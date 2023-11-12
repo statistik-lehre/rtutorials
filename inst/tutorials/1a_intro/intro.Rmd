@@ -237,7 +237,7 @@ Quelle für den Code: [R Programming Language Wikipedia](https://en.wikipedia.or
 
 ``` r
 # install.packages("caTools")  # install external package
-library(caTools)             # external package providing write.gif function
+library(caTools)              # external package providing write.gif function
 dx <- 1500                    # define width
 dy <- 1400                    # define height
 C  <- complex(real = rep(seq(-2.2, 1.0, length.out = dx), each = dy),
