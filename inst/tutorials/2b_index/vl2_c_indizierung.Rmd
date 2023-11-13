@@ -516,13 +516,19 @@ Angenommen, wir haben einen Vektor von Temperaturen, die verschiedenen Monaten z
 
 ```{r bV2, exercise = TRUE}
 # Erstellung eines benannten Vektors für Temperaturen
-temperature <- c("Januar" = 23, "Februar" = 26, "März" = 24, "April" = 28, "Mai" = 22)
+temperature <- c("Januar" = 23, 
+                 "Februar" = 26, 
+                 "März" = 24, 
+                 "April" = 28, 
+                 "Mai" = 22)
 temperature
 ```
 
 Jeder numerische Wert bekommt hier also einen benennenden *character* Wert zugewiesen. Das siehst du auch schon bei der Darstellung der Variable, bei der das Wertpaar aus *character* und *numeric* untereinander darstellt wird.
 
-::: gelb
+::: infobox
+Für den Fall, dass eine Funktion mehrere benannte Argumente hat, ist es guter Stil, jedes auf eine neue Zeile zu setzen. RStudio rückt die Elemente automatisch so weit ein, das klar ist, wo sie hingehören. 
+
 Wie Variablennamen sollten auch benannte Vektoren nur einmal im Datensatz existieren. Wird ein benannter Vektor mehrmals verwendet, führt dies zu Problemen. Wollen wir oder R dann mittels `[]`Indizierung auf die Daten zugreifen, so wird stets nur der erste Treffer ausgegeben. 
 :::
 
@@ -730,3 +736,4 @@ Du hast heute wichtige Grundlagen für die Arbeit mit Daten in R gelernt. Jetzt 
 
 ## Credits
 Dieses Tutorial wurde (größtenteils) von Lukas Bruelheide sowie in Teilen von Marie Klosterkamp geschrieben. Bei der Erstellung (u.a. der Beispiele, Aufgaben und Zusammenfassung) wurde teilweise von ChatGPT gebrauch gemacht.
+
