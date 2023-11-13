@@ -155,7 +155,7 @@ wg$quadratmeter <- c(12, 14, 20, 15)
 wg
 ```
 
-Auch hier gilt wieder das Schema `Alt <- Neu`.
+Auch hier gilt wieder das Schema `Neu <- Alt`.
 
 ::: aufgabe
 Sie sind dran!
