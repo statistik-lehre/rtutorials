@@ -452,7 +452,42 @@ Attributen beschäftigen.
 
 Erkläre was benannte Vektoren sind und wie sie funktionieren. 
 
+## Benannte Elemente
+
+```{r named_vec, exercise=TRUE, exercise.cap = "Vektor mit benannten Elementen erstellen"}
+height <- c(Paul = 178,
+            Helmut = 182,
+            Kathrin = 169,
+            Amadou = 184)
+height
+```
+
+::: infobox
+Für den Fall, dass eine Funktion mehrere benannte Argumente hat, ist es guter Stil, jedes auf eine neue Zeile zu setzen. RStudio rückt die Elemente automatisch so weit ein, das klar ist, wo sie hingehören. 
+:::
+
+## To be continued
+
+... Indizieren mit Namen der Elemente
+
+```{r name_index, exercise = TRUE, exercise.setup = "named_vec"}
+height["Amadou"]
+height[c("Kathrin", "Paul")]
+```
+
+## Exkurs: Attribute
+
+```{r attributes, exercise.setup = "named_vec"}
+attributes(height)
+names(height)
+names(height) <- c("Lisa", "Petra", "Aisha", "Maria")
+names(height)
+height
+```
+
+
 ## Anwendungsaufgaben
+
 ::: aufgabe
 
 a.  Erstellen Sie eine absteigende Zahlenreihe von 100 bis 1. Geben Sie der Reihe den Namen x.
@@ -482,3 +517,6 @@ Hinweis: Falls beim Wert von `y` ein `L` dahinter steht, ist völlig normal. Das
 :::
 
 
+## Abschlussquiz
+
+## Learnings
