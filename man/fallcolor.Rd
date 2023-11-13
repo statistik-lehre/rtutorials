@@ -3,9 +3,10 @@
 \docType{data}
 \name{fallcolor}
 \alias{fallcolor}
+\alias{fallcolor_wide}
 \title{Annual Averages of Fall Color by Species}
 \format{
-16380 observations of 5 variables
+\code{fallcolor} has 16380 observations of 5 variables
 \itemize{
 \item \strong{year}: factor, 1991-2018
 \item \strong{elevation}: factor with levels: 1400, 2200, 2600 feet
@@ -17,6 +18,7 @@
 \item "Yellow Birch", (Betula alleghaniensis)
 \item "White Ash", (Fraxinus americana)
 \item "Sugar Maple" (Acer saccharum)}
+\item \strong{day} numeric, day of the year, ranging from 246-310 (65 days)
 \item \strong{value}: numeric, Percentage 0-100.
 
 Averaged amount of coloured leaves per species per site.
@@ -26,6 +28,8 @@ coloured means "not green" and "not dropped yet".
 Total of coloured leaves + green leaves + dropped leaves = 100\%
 
 }
+
+An object of class \code{data.frame} with 252 rows and 68 columns.
 }
 \source{
 remotely readable csv:  https://query.data.world/s/6fhycjztl6c72mzpjrxfguca4xgufg?dws=00000
@@ -34,6 +38,8 @@ This dataset was released by The Forest Ecosystem Monitoring Cooperative. It has
 }
 \usage{
 fallcolor
+
+fallcolor_wide
 }
 \description{
 Daily percentage of fall tree color in Mount Mansfield State Forest,
@@ -41,6 +47,8 @@ Vermont 1991 to 2021 (days 246 - 310 each year).
 Annual measurements of fall color to establish the timing of developmental
 events and trends, as a measure of forest condition (ie effects of stress
 events) and long-term changes (i.e. effects of global climate change).
+
+\code{fallcolor_wide} is a wide version of \code{fallcolor} and has 65 additional columns that stand for one of 65 measurement days.
 }
 \details{
 Geographic Coverage:
