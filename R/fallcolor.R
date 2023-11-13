@@ -6,23 +6,76 @@
 #' events and trends, as a measure of forest condition (ie effects of stress
 #' events) and long-term changes (i.e. effects of global climate change).
 #'
-#' @author New York City Department of Health & Mental Hygiene
-#'
-#' @format 16380 Beobachtungen von 5 Variablen
+#' @format 16380 observations of 5 variables
 #' \itemize{
-#'  \item year: 1991-2013
-#'  \item species:
-#'  \item maxtemp: The maximum daily temperature is the heat index or temperature, whichever is higher, as recorded by the National Weather Service weather station at La Guardia Airport.
+#'  \item **year**: factor, 1991-2018
+#'  \item **elevation**: factor with levels: 1400, 2200, 2600 feet
+#'  \item **species**: factor with levels:
+#'   \itemize{
+#'    \item "Red Maple (F)" (Acer rubrum) female
+#'    \item "Red Maple (M)" (Acer rubrum) male
+#'    \item "White Birch" aka paper birch (Betula papyrifera)
+#'    \item "Yellow Birch", (Betula alleghaniensis)
+#'    \item "White Ash", (Fraxinus americana)
+#'    \item "Sugar Maple" (Acer saccharum)}
+#'  \item **value**: numeric, Percentage 0-100.
+#'
+#'  Averaged amount of coloured leaves per species per site.
+#'
+#'  coloured means "not green" and "not dropped yet".
+#'
+#'  Total of coloured leaves + green leaves + dropped leaves = 100%
+#'
 #' }
 #'
 #' @details
-#' The heat syndrome is identified in surveillance data by looking for diagnostic codes for heat-related illness and by searching chief complaints (descriptions of why patients are at the ED) for words related to heat, such as overheating, sunstroke, and similar terms.
+#' Geographic Coverage:
 #'
-#' Syndrome data are inherently non-specific and are not based on diagnostic testing. While the NYC syndromic surveillance system captures data on 100% of ED visits in the city (as of 5/1/16), the data are not comprehensive because some residents seek care outside the city. These data are not exact measures and should be used to understand trends, rather than to count cases. In addition, recent data are not final and are subject to change.
+#' Coordinates
+#' \itemize{
+#'  \item -72.865715, 44.525266
+#'  \item -72.82626, 44.525266
+#'  \item -72.82626, 44.532476
+#'  \item -72.865715, 44.532476
+#'  \item -72.865715, 44.525266}
 #'
-#' Tracking heat-related illness (HRI) in near-real time can help provide situational awareness, supplementing the weather forecast as an indicator of public health risk. HRI detected in emergency department syndromic surveillance data are strongly associated with hot weather and highly correlated with daily counts of HRI hospital discharge data. However, HRI counts detected in the ED syndromic surveillance data represent suspected rather than confirmed illness and is useful to track trends. Some records may be counted as cases when they are not HRI, while other HRI cases may go undetected due to differences in hospital coding practices or because of what patients say when they describe what is bothering them.
+#' **Differences in Monitoring Methods**
+#'
+#' **1991**: New color and leaf drop: Visual crown ratings consist of percent color other than green, transparency (%), dieback-loss of leaves (%).
+#'
+#' **1992**: Monitoring on Mount Mansfield: Sugar maple and yellow birch are monitored at 1400 and 2200 feet on Mansfield
+#'
+#' **1995**: Red maple (male and female) and white ash are monitored at 1400 feet, only.
+#'
+#' **1999**: Yellow birch and paper birch at 2600 feet on Mansfield were added to represent high elevation fall phenology.
+#'
+#'
+#' **1991** Initial crown ratings are recorded in July, then every other week until color and drop changes rapidly (end of September) when weekly measurements are made. Full leaf off density is used to calculate percent leaf drop at each visit.
+#'
+#' **2001**: New color and leaf drop methods added to existing methods for testing. Color based on % color visible regardless of leaf drop. Added % green. Leaf drop based on visual estimate rather than measures of density, transparency or dieback. Total of color, green and leaf drop to equal 100%.
+#'
+#' **no date**: Monitoring at Lye Brook: Red maple at 1400 feet in the Lye Brook Wilderness Area was added as a southern Vermont monitoring site.
+#'
+#' **no date**: Site description: Upper elevation site (2200 ft.) added in the Underhill State Park.
+#'
+#' **no date**: Site description West slope of Mount Mansfield in the Browns River watershed at low elevation site (1400 ft.) at the Proctor Maple Research Center
 #'
 #' @docType data
+#'
+#' @author
+#' Joshua Halman: Principal Investigator
+#'
+#' Michael Johnson: Content Provider
+#'
+#' Tom Simmons: Content Provider
+#'
+#' Sandra Wilmot: Principal Investigator
+#'
+#' Barbara Schultz: Content Provider
+#'
+#' Sean Lawson: Content Provider
+#'
+#' Dan Dillner: Content Provider
 #'
 #' @source remotely readable csv:  https://query.data.world/s/6fhycjztl6c72mzpjrxfguca4xgufg?dws=00000
 #'
@@ -35,3 +88,4 @@
 #'
 
 "fallcolor"
+"fallcolor_wide"

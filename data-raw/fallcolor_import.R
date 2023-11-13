@@ -1,3 +1,9 @@
+library(dplyr)
+library(ggplot2)
+library(forcats)
+
+# Read Dataset from remote source
+
 df <- read.csv("https://query.data.world/s/6fhycjztl6c72mzpjrxfguca4xgufg?dws=00000",
                header=TRUE,
                stringsAsFactors=FALSE)
@@ -5,36 +11,65 @@ df <- read.csv("https://query.data.world/s/6fhycjztl6c72mzpjrxfguca4xgufg?dws=00
 
 glimpse(df)
 # data is not in long format
-# making it longer by putting days columns in a a column for the
-# respective variable "day".
+# save this as a dataset for exercising pivot_longer
 
 fallcolor_wide <- df
+usethis::use_data(fallcolor_wide)
+
+# Pivot Longer
+# by putting days columns in a a column for the
+# respective variable "day".
 
 fallcolor <- df |> tidyr::pivot_longer(cols = !c(Year, Species, Elevation),
                           names_to = "day",
                           names_prefix = "day",
                           values_to = "value") |>
+  # snake case
   rename(year = Year,
          species = Species,
          elevation = Elevation) |>
+  # make factors, specify whole names instead of abbreviations
   mutate(species = dplyr::case_when(species == "SM" ~ "Sugar Maple",
                                     species == "WB" ~ "White Birch",
                                     species == "YB" ~ "Yellow Birch",
-                                    species == "RMS" ~ "Female Red Maple",
+                                    species == "RMS" ~ "Red Maple (F)",
                                     species == "WA" ~ "White Ash",
-                                    species == "RMP" ~ "Male Red Maple")) |>
-  mutate(year = forcats::as_factor(year),
-         species = forcats::as_factor(species),
-         elevation = forcats::as_factor(elevation))
+                                    species == "RMP" ~ "Red Maple (M)") |>
+                   as.factor(),
+         year = forcats::as_factor(year),
+         elevation = forcats::as_factor(elevation)) |>
+  # Only keep groups that have at least one non-zero value
+  # it is not possible to have 0% leaf coloration during all autumn
+  # so this should be NA. I decide to instead delete those only zero groups
+  # because some other possible combinations of keys are also just
+  # absent.
+  filter(!(all(value == 0)),
+         .by = c(year, species, elevation))
 
-fallcolor$species
+# save current version as .rda in /data
+usethis::use_data(fallcolor, overwrite = TRUE)
 
-usethis::use_data(fallcolor)
+
+
+# alternative, bulky code for removing groups with only 0:
+
+# mutate(obsolete = case_when(all(value == 0) ~ rep(TRUE, n()),
+#                          .default = FALSE),
+#                          .by = c(year, species, elevation)) |>
+# filter(obsolete == FALSE)
+
+### Exploration
+
+sum(is.na(fallcolor$value))
 
 levels(fallcolor$species)
+# alphabetically ordered because as.factor() was used
 
-library(ggplot2)
-library(forcats)
+glimpse(fallcolor)
+
+
+
+
 fallcolor |>
   #dplyr::filter(elevation == 1400) |>
 
@@ -57,29 +92,18 @@ ggplot() +
 # Man kann sehen, dass die Herbstfärbung in jüngeren Jahren später eintritt (gelb)
 # als in den 90ern (violett)
 
-new_fallcolor <- fallcolor |>
-  group_by(year, species, elevation) |>
-  mutate(value = dplyr::case_match(rep(0, 65) ~ NA)) |>
-  arrange(desc(value)) |>
-           print(n = 20)
 
-unique(new_fallcolor$value)
-
-new_fallcolor |>
+fallcolor |>
   #filter(year == 1994, species == "White Ash", elevation == 1400) |>
   group_by(year, elevation, species) |>
   summarise(maxday = paste(collapse = "-", range(day[value == max(value, na.rm = TRUE)])),
-            NAs = sum(is.na(value)),
-            zeros = sum(value == 0)) |>
-  #filter(zeros == 65) |>
+            NAs = sum(is.na(value))) |>
   arrange(desc(NAs)) |>
-  print(n = 100)
+  print(n = 10)
 
 
 fallcolor |>
  filter(year == 2018, elevation == 2600, species == "Yellow Birch") |>
- print(n = 65)
-
   ggplot(aes(x = day,
              y = value,
              group = species,
@@ -87,13 +111,4 @@ fallcolor |>
   geom_jitter(alpha = 0.3) +
   viridis::scale_fill_viridis(discrete = T) +
   facet_wrap(~ year)
-
-fallcolor |>
-  filter(year == 1994, species == "White Ash", elevation == 1400) |>
-  summarise(max = max(value))
-
-# example data for SO
-df <- data.frame(id = rep(1:2, each = 4),
-                 value = c(0, 0, 0, 0, 10, 20, 10, 0))
-
 
