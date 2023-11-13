@@ -665,7 +665,9 @@ id + 1
 
 ## Typen und Klassen
 
-![](images/class.png){width="50%"}
+Als nächstes schauen wir und die Typen und Klasse von Daten etwas genauer an.
+
+![](images/class.png){width="40%"}
 
 Wie es im Fantasy RPG (Role Play Game) deiner Wahl in der Regel die Auswahl aus verschiedenen Klassen (Ritter\*in, Heiler\*in, Zauber\*in etc.) und Rassen (Mensch, Elfe, Zwerg etc.) gibt haben auch in der Informatik verschiedene Klassen und Typen. **Achtung: zwar gibt es auch in anderen Programmiersprachen Klassen und Typen, doch unterscheiden diese sich ggf. von denen in R.** Das Bild von Klasse und Rasse ist rein methaphorisch für eine grundlegende Idee der Zusammenhänge zu verstehen.
 
@@ -777,7 +779,9 @@ Zuerst fällt auf: Die Umwandlung hat trotzdem funktioniert und alle Zahlen wurd
 
 Dann fällt auf: Puh! Alle nach unten gerundet! Gut beobachtet. So verwandelt R doubles in integers. Isso.
 
-Puh! Die Zahlentypen sind geschafft! Das war das komplizierteste (und spannedste). Folgen noch die anderen.
+Puh! Die Zahlentypen sind geschafft! Das war das komplizierteste (und spannedste). Jetzt solltest du folgendes Meme verstehen:
+
+![](images/integer.jpg){width="50%"}
 
 #### Buchstaben: `charakter`
 
@@ -847,7 +851,9 @@ as.character(vec_log_num)
 
 #### Ferner liefen: `complex` und `raw`
 
-Daten des Typen `complex` sind, wie der Name schon sagt: [Komplex](https://de.wikipedia.org/wiki/Komplexe_Zahl). Das bedeutet: [Reelle](https://de.wikipedia.org/wiki/Reelle_Zahl) plus [imaginäre](https://de.wikipedia.org/wiki/Imagin%C3%A4re_Zahl) Zahlen. Also Zahlen, die sich nicht durch ganzzahlige Brühe darstellen lassen. Die bekannstesten sind wohl: $\Pi$, $e$ und $i$. Also die [Kreiszahl](https://de.wikipedia.org/wiki/Kreiszahl), die [eulersche Zahl](https://de.wikipedia.org/wiki/Eulersche_Zahl) und die [imaginäre Zahl](https://de.wikipedia.org/wiki/Imagin%C3%A4re_Zahl). In R: `pi`, `exp()` und `0i`. Damit werdet ihr so gut wie nie konfrontiert werden.
+![](images/complex.jpg){width="50%"}
+
+Daten des Typen `complex` sind, wie der Name schon sagt: [Komplex](https://de.wikipedia.org/wiki/Komplexe_Zahl). Das bedeutet: [Reelle](https://de.wikipedia.org/wiki/Reelle_Zahl) plus [imaginäre](https://de.wikipedia.org/wiki/Imagin%C3%A4re_Zahl) Zahlen (also solche, die sich nicht durch ganzzahlige Brühe darstellen lassen).
 
 Daten des Typen `raw` zeigen binäre Zahlen umgerechnet als hexadezimalzahlen an.
 
@@ -855,40 +861,34 @@ Wenn du, warum auch immer, das mal brauchen solltest: natürlich funktionieren a
 
 Beide Typen sind mir in meiner kompletten R Laufbahn noch nie in der Praxis über den Weg gelaufen. Solltest du ihnen begegnen, kannst du es jetzt aber einordnen.
 
-### Datentyp eines Vektors bestimmen
+#### Zusammenfassung Typen
 
-mit `typeof()`
+Nochmal zusammengefasst: Es gibt 6 Datentypen (2 numerische: `double` (mit Komma), `integer` (ohne Komma), Buchstaben (`character`), logische Werte (`logical`), Zahlen, die genau genommen keine richtigen Zahlen sind (`complex`) und irgendwie komisch dargestellte binärcodes (`raw`)). Welchen Typ die Daten habe kann mit der Funktio `typeof()` in Erfahrung gebracht werden und unter bestimmten Voraussetzungen lassen sich die Typen auch ineinander übersetzen `as.neuertyp()`. Ob ein bestimmter Typ vorliegt findest du mit `is.datentyp()` heraus.
 
-Übung didaktisch noch ändern / übersichtlicher machen, mehr eigenanteil, vielleicht Quiz einfügen. Erklären wie 1L ein `integer` erzeugt. Vielleicht. Erklären was `NA` ist? Vielleicht.
+### Klassen
 
-- Erklären, dass Zahlenreihen immer Integer erzeugen. 
-- Erklären, dass der Unterschied für uns eigentlich egal sein kann, dass es nur schon mal gesehen sein sollte. Hauptsache Unterschied "numeric" und "character" und "logic" ist klar. 
+Nun sind die Typen der der Daten ("Rasse" im RPG) dir bereits ein Begriff. Fehlt noch die Klasse.
 
-```{r typeof, exercise = TRUE, exercise.cap = "Datentyp bestimmen"}
-typeof(TRUE)
-typeof(1+10i)
-typeof(1:100)
-typeof(5.78)
-typeof(1)
-typeof(1L)
-typeof(NA)
-typeof("1")
-typeof("Hello World")
+Hier fängt das Beispiel mit den RPGs an, etwas zu hinken. Den nicht *Daten* haben eine Klasse sondern *Objekte*. Daten sind allerdings **in** Objekte gespeichert.
+
+Es gibt sehr viele Klassen in R und manche Funktionen funktionieren oder funktionieren nicht oder werfen andere Ergebnisse aus, abhängig davon, in welcher Klasse von Objekt die Daten stecken. Häufig werden Klassen explizit festgelegt. Wenn das nicht der Fall ist, haben die Objekte ein implizites Klassenattribut und manchmal einfach den Datentyp.
+
+Klingt kompliziert? Ist es auch. Und das ist total okay. Wir bringen gemeinsam Schritt für Schritt etwas Licht ins Dunkel.
+
+In einem Objekt können mehrere Daten gespeichert werden. Die Klasse sagt nun etwas darüber aus, wie das Objekt intern organisiert ist. 
+
+```{r}
+vec <- as.double(1:10)
+
+
+vec
+
+
+typeof(vec)
+
+class(vec)
 ```
 
-### Umwandlungen
-
-`as.numeric()`, `as.character`, `as.integer()`, `as.logical()`... Erklären. 
-
-```{r as, echo = TRUE}
-as.logical(c(1, 0))
-as.character(5)
-as.integer(5.999)
-as.numeric("5")
-as.numeric("fünf")
-```
-
-NAs erklären. Eventuell in eigenem Kapitel
 
 ## Abschlussquiz
 
