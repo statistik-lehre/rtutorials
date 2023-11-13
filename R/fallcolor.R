@@ -6,7 +6,7 @@
 #' events and trends, as a measure of forest condition (ie effects of stress
 #' events) and long-term changes (i.e. effects of global climate change).
 #'
-#' @format 16380 observations of 5 variables
+#' @format `fallcolor` has 16380 observations of 5 variables
 #' \itemize{
 #'  \item **year**: factor, 1991-2018
 #'  \item **elevation**: factor with levels: 1400, 2200, 2600 feet
@@ -18,6 +18,7 @@
 #'    \item "Yellow Birch", (Betula alleghaniensis)
 #'    \item "White Ash", (Fraxinus americana)
 #'    \item "Sugar Maple" (Acer saccharum)}
+#'  \item **day** numeric, day of the year, ranging from 246-310 (65 days)
 #'  \item **value**: numeric, Percentage 0-100.
 #'
 #'  Averaged amount of coloured leaves per species per site.
@@ -88,4 +89,14 @@
 #'
 
 "fallcolor"
+
+
+#' Annual Averages of Fall Color by Species
+#'
+#' `fallcolor_wide` is a wide version of `fallcolor` and has 65 additional columns that stand for one of 65 measurement days.
+#'
+#' @docType data
+#'
+#' @rdname fallcolor
+#'
 "fallcolor_wide"
