@@ -686,7 +686,9 @@ Es gibt *atomic vectors* in insgesamt sechs Datentypen, von denen wir aber nur v
 5. (complex)
 6. (raw)
 
-#### Unterschied `double` und `integer`
+R sagt dir, mit welchem Datentyp es zu tun hast wenn du `typeof(x)` eingibst (s.u.).
+
+#### Zahlen: Unterschied `double` und `integer`
 
 Sowohl `double` als auch `integer` beinhalten Zahlen. Wo ist nun der Unterschied und warum gibt es ihn?
 
@@ -695,16 +697,163 @@ Sowohl `double` als auch `integer` beinhalten Zahlen. Wo ist nun der Unterschied
 
 **Integer** sind ganze Zahlen. 
 
-Das ist wichtig zu erwähnen, denn das ist krass: Computer runden anders als wir Menschen. Menschen denken *dezimal* und Computer *binär*. Für uns sieht eine `0.1` so aus: 0.1 bzw. 1/10. Für einen Rechner sieht eine `0.1` so aus: $$0.0 \overline{0011}$$. Allerdings können Rechner pro Zahl nur 32 bzw. 64 Ziffern speichern, danach wird die Zahl einfach abgeschnitten. Das führt unweigerlich zu Fehlern. 
 
-```{r}
+Das ist wichtig zu erwähnen, denn das ist krass: Computer merken sich Zahlen anders als wir Menschen. Menschen denken *dezimal* (also in Zehnerschritten) und Computer *binär* (die klassischen 1 und 0). Für den Menschen sieht eine `0.1` so aus: 0.1 bzw. $$\frac{1}{10}$$ Für einen Rechner sieht eine `0.1` so aus: $$0.0 \overline{0011}$$. Rechner können je nach Hardware pro Zahl nur [23](https://de.wikipedia.org/wiki/Einfache_Genauigkeit) bzw. [52](https://de.wikipedia.org/wiki/Doppelte_Genauigkeit) binäre Nachkommastellen speichern. Das entspricht ca 8 bzw. 16 dezimalen Nachkommastellen. (*Siehe dazu auch dieses wunderbare [Video](https://www.youtube.com/watch?v=PZRI1IfStY0)). Danach wird die Zahl einfach abgeschnitten - mit fatalen Folgen.
+
+<details>
+<summary><a>▼ \* Rumgenerde bzgl. des Datentyps double.
+</a></summary>
+
+Ob 23 oder 52 binäre Nachkommastellen hat mit dem Arbeitsspeicher des Rechners und der heruntergeladenen Version von R zu tun. Du wurdest beim Runterladen gefragt, ob du eine 32 oder 64 bit möchtest und du wirst 64 gewählt haben. Falls du das gegenchecken möchtest, tippe `sessionInfo()` in deine Konsole. In der zweiten Reihe steht hinter `Platform:` dein Betriebssystem sowie die Zahl der Bits, für die du dich entschieden hast. Das ist im übrigen auch gemeint, wenn du Technik kaufst und da 64 bit steht. Das hat dann was mit der Genauigkeit zu tun, die das Gerät überhaupt rechnen kann.
+
+Das Format von Zahlen, die mit 32 Bit gespeichert sind heißt auch *"Single-precision floating-point format"*. Das wird dir in der freien Wilbahn eher nicht begegnen. Das Format von mit 64 Bit gespeicherte Daten heißt *"Double-precision floating-point format"*. Hier schließt sich der Kreis, dennn exakt das sagt der Datentyp **double`**.
+
+Für den Alltag reicht zu merken: **double** bedeutet Kommazahl.
+
+</details>
+
+Während für den Menschen die Dezimalzahl $$0.1$$ eben so aussieht: $$0.1$$ sieht sie für den Rechner so aus: $$0.000110011001100110011001100110011001100110$$ was umgerechnet wiederum $$0.09999999999990905053$$. Genauer kann dein PC 0.1 nicht abbilden. Punkt. 
+
+Im Alltag rundet R das ganz freundlich, ist also häufig echt egal:
+
+```{r double, exercise = T}
+0.1 + 0.2
+```
+
+Ist doch alles so wie ich das auch per Hand rechnen würde!
+
+Ja, stimmt. R hat gut gerundet. Was passiert allerdings, wenn du R fragst: "Ist 0.1 + 0.2 ganz genau gleich 0.3?"(damit R es versteht, bitte so formulieren: `0.1 + 0.2 == .3`)?
+
+```{r double2, exercise = T}
+0.1 + 0.2 == 0.3
+```
+
+HUCH?
+
+und weiter: 
+
+```{r double3, exercise = T}
+(0.1 + 0.2) - 0.3
 
 ```
 
+Das ist eine absurd kleine Zahl, aber sie ist eben unterschiedlich von Null, was sie genau genommen nicht sein dürfte.
 
-### Präzision
+Bei den Rechenoperationen, die wir durchführen reicht diese Genauigkeit aus. Wenn es genauer sein soll, auch bei kleineren Zahlen (im Bankenwesen würden große Verluste zustande kommen, wenn so ungenau gerundet wird), gibt es `integer` Zahlen. Die heißen so, weil sie eben integer sind. Ganze Zahlen eben. Grundsätzlich geht R von Fließkommazahlen aus. Wenn du eine integer Zahl möchtest, musst du das R ganz konkret sagen. Das machst du mit einem großen `L` an der Zahl ohne Leerzeichen dazwischen.
 
-Siehe R Kurs 2022, **Präsentation 3: Datentypen** Füge Sachen aus der zugehörigen Folie ein (25)
+```{r typen_num, exercise = T}
+vec_dou <- c(1, 2, 3)
+vec_int <- c(1L, 2L, 3L)
+
+# Gib der Vollständigkeit halber folgende Zeile einmal ohne Hashtag in deine Konsole ein:
+# vec_schmu <- c(1 L, 2 L, 3 L) 
+# hier wird ein Fehler geworfen werden. Dieser Vektor dient zum verdeutlichen, dass das L direkt an die Zahl anschließen MUSS
+
+# Nun schauen wir uns die Datentypen an:
+typeof(vec_dou)
+typeof(vec_int)
+```
+
+Okay, also Zusammenfassend lässt sich sagen: Es gibt zwei Typen von Zahlen. Ganze Zahlen bzw. `integer` und Fließkommazahlen bzw `double`. So weit so einfach.
+
+Sollte, warum auch immer, der Fall eintreten, das du den einen Typen in den anderen umwandeln möchtest, ist das natürlich auch möglich: `as.integer()` bzw. `as.double()` sind hier deine Friends.
+
+```{r typen_num2, exercise = T, setup.chunk = "typen_num"}
+typeof(as.integer(vec_dou))
+typeof(as.double(vec_int))
+```
+
+So weit so gut. Was passiert nun aber, wenn im double Vektor auch tatsächlich Kommazahlen gespeichert sind?
+
+```{r typen_num3, exercise = T, setup.chunk = "typen_num"}
+# zuerst vec_dou neu definieren
+vec_dou <- c(1, 2.4, 3.5, 4.5, 5.6, 6.9, 7)
+typeof(vec_dou)
+as.integer(vec_dou)
+typeof(as.integer(vec_dou))
+```
+
+Zuerst fällt auf: Die Umwandlung hat trotzdem funktioniert und alle Zahlen wurden auf eine ganze Zahl gerundet.
+
+Dann fällt auf: Puh! Alle nach unten gerundet! Gut beobachtet. So verwandelt R doubles in integers. Isso.
+
+Puh! Die Zahlentypen sind geschafft! Das war das komplizierteste (und spannedste). Folgen noch die anderen.
+
+#### Buchstaben: `charakter`
+
+Dieser Datentyp sind literally Zeichenfolgen. Du sagst R, dass es das als character behandeln soll, indem du Inhalte in Anführungszeichen setzt. Dann ist es R auch egal, WAS du darein schreibst.
+
+```{r character, exercise = T}
+vec_cha <- c("Hund", "Katze", "Maus")
+# probiere auch einmal, was passiert, wenn du den Vektor versuchst ohne Anführungszeichen zu speichern, also:
+# vec_schmu <- c(Hund, Katze, Maus)
+
+# Typ herausfinden:
+typeof(vec_cha)
+```
+
+Juhuu, soweit so logisch. Aber wie ist das mit Zahlen?
+
+:::aufgabe
+Finde den Typen der Vektoren heraus und konvertiere den double und charakter Vektor in das jeweilige andere (neu: `as.character()`). Betrachte auch explizit den vierten Eintrag des 1. Vektors.
+:::
+
+```{r character2, exercise = T}
+vec_cha <- c("1", "2", "3", "vier")
+vec_num <- c(5, 6, 7)
+
+```
+
+```{r character2-solution}
+vec_cha <- c("1", "2", "3")
+vec_num <- c(4, 5)
+
+typeof(vec_cha)
+typeof(vec_num)
+
+as.double(vec_cha)
+as.character(vec_num)
+```
+
+Also: Zahlen, die wirklich nur Zahlen sind und als charakter gespeichert sind lassen sich problemlos numerisch verwenden. Ist allerdings ein geschriebenes Wort dazwischen wird es in ein `NA`, also `Not Available` verändert.
+
+#### Logische Werte: `logical`
+
+R kennt zwei logische Werte: Wahr und Falsch, bzw. `TRUE` und `FALSE` oder `T` und `F` oder auch `1` und `0`. Die sind meist vor allem interessant, wenn Werte gefiltert werden. Dazu gibt es im letzten Block nochmal ein ausführlicheres Tutorial.
+
+Für jetzt:
+
+```{r logical, exercise = TRUE}
+vec_log <- c(T, T, F) 
+# Achtung: Wenn du die Buchstaben in Anführungszeichen steckst, kommt ein charakter Vektor raus
+vec_cha <- c("T", "T", "F")
+vec_log_num <- c(1, 1, 0)
+
+typeof(vec_log)
+typeof(vec_cha)
+typeof(vec_log_num)
+
+# Auch hier lässt sich fröhlich transformieren
+as.character(vec_log)
+as.double(vec_log)
+
+as.logical(vec_cha)
+as.double(vec_cha)
+# kannst du erklären, warum das nicht klappt? und wie könnte es klappen?
+
+as.logical(vec_log_num)
+as.character(vec_log_num)
+```
+
+#### Ferner liefen: `complex` und `raw`
+
+Daten des Typen `complex` sind, wie der Name schon sagt: [Komplex](https://de.wikipedia.org/wiki/Komplexe_Zahl). Das bedeutet: [Reelle](https://de.wikipedia.org/wiki/Reelle_Zahl) plus [imaginäre](https://de.wikipedia.org/wiki/Imagin%C3%A4re_Zahl) Zahlen. Also Zahlen, die sich nicht durch ganzzahlige Brühe darstellen lassen. Die bekannstesten sind wohl: $\Pi$, $e$ und $i$. Also die [Kreiszahl](https://de.wikipedia.org/wiki/Kreiszahl), die [eulersche Zahl](https://de.wikipedia.org/wiki/Eulersche_Zahl) und die [imaginäre Zahl](https://de.wikipedia.org/wiki/Imagin%C3%A4re_Zahl). In R: `pi`, `exp()` und `0i`. Damit werdet ihr so gut wie nie konfrontiert werden.
+
+Daten des Typen `raw` zeigen binäre Zahlen umgerechnet als hexadezimalzahlen an.
+
+Wenn du, warum auch immer, das mal brauchen solltest: natürlich funktionieren auch hier die Funktionen `as.complex()` bzw. `as.raw()`.
+
+Beide Typen sind mir in meiner kompletten R Laufbahn noch nie in der Praxis über den Weg gelaufen. Solltest du ihnen begegnen, kannst du es jetzt aber einordnen.
 
 ### Datentyp eines Vektors bestimmen
 
