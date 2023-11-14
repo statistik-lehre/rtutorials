@@ -33,8 +33,6 @@ Syntax von Funktionen in R beschäftigt. Dieses Tutorial baut darauf auf:
 
 -   Wozu werden Vektoren benötigt?
 
--   Wie kann ich auf einzelne Elemente eines Vektors zugreifen?
-    (Indizierung)
 
 ## kurze Wiederholung
 
@@ -486,13 +484,13 @@ z <- c(1, 2, 3, 4, 5)
 v + z
 ```
 
-Sehr gut! du hast jetzt bereits die wichtigsten fundamentalen
+Sehr gut! Du hast jetzt bereits die wichtigsten fundamentalen
 Bestandteile der Programmiersprache R in Aktion kennengelernt.
 
 
 ## Zahlenreihen
 
-Um eine Zahlenreihe zu erstellen, verwenden Sie den *colon operator* `:`
+Um eine Zahlenreihe zu erstellen, kannst du den *colon operator* `:` verwenden.
 
 ```{r, echo=TRUE}
 1:10
@@ -665,7 +663,7 @@ id + 1
 
 ## Typen und Klassen
 
-Als nächstes schauen wir und die Typen und Klasse von Daten etwas genauer an.
+Als nächstes schauen wir uns die Typen und Klasse von Daten etwas genauer an.
 
 ![](images/class.png){width="40%"}
 
@@ -688,7 +686,7 @@ Es gibt *atomic vectors* in insgesamt sechs Datentypen, von denen wir aber nur v
 5. (complex)
 6. (raw)
 
-R sagt dir, mit welchem Datentyp es zu tun hast wenn du `typeof(x)` eingibst (s.u.).
+R sagt dir, mit welchem Datentyp du es zu tun hast wenn du `typeof(x)` eingibst (siehe unten).
 
 #### Zahlen: Unterschied `double` und `integer`
 
@@ -700,7 +698,13 @@ Sowohl `double` als auch `integer` beinhalten Zahlen. Wo ist nun der Unterschied
 **Integer** sind postive und negative ganze Zahlen sowie Null. 
 
 
-Das ist wichtig zu erwähnen, denn das ist krass: Computer merken sich Zahlen anders als wir Menschen. Menschen denken *dezimal* (also in Zehnerschritten) und Computer *binär* (die klassischen 1 und 0). Für den Menschen sieht eine `0.1` so aus: 0.1 bzw. $$\frac{1}{10}$$ Für einen Rechner sieht eine `0.1` so aus: $$0.0 \overline{0011}$$. Rechner können je nach Programmeinstellung und in sehr hardcore Fällen auch aufgrund der Hardware pro Zahl nur  [23](https://de.wikipedia.org/wiki/Einfache_Genauigkeit) bzw. [52](https://de.wikipedia.org/wiki/Doppelte_Genauigkeit) binäre [signifikante Stellen](https://de.wikipedia.org/wiki/Signifikante_Stellen). Das entspricht ca 8 bzw. 16 dezimalen Ziffern (*Siehe dazu auch dieses wunderbare [Video](https://www.youtube.com/watch?v=PZRI1IfStY0)). Danach wird die Zahl einfach abgeschnitten - mit fatalen Folgen.
+Das ist wichtig zu erwähnen, denn das ist krass: Computer merken sich Zahlen anders als Menschen. Die meisten Menschen denken *dezimal* (also in Zehnerschritten) und Computer *binär* (die klassischen 1 und 0). 
+
+Für den Menschen sieht eine `0.1` so aus: $0.1$ bzw. $\frac{1}{10}$.
+
+Für einen Rechner sieht eine `0.1` so aus: $0.0 \overline{0011}$. 
+
+Rechner können je nach Programmeinstellung und in sehr hardcore Fällen auch aufgrund der Hardware pro Zahl nur  [23](https://de.wikipedia.org/wiki/Einfache_Genauigkeit) bzw. [52](https://de.wikipedia.org/wiki/Doppelte_Genauigkeit) binäre [signifikante Stellen](https://de.wikipedia.org/wiki/Signifikante_Stellen). Das entspricht ca 8 bzw. 16 dezimalen Ziffern (*Siehe dazu auch dieses wunderbare [Video](https://www.youtube.com/watch?v=PZRI1IfStY0)). Danach wird die Zahl einfach abgeschnitten - mit fatalen Folgen.
 
 <details>
 <summary><a>▼ \* Rumgenerde bzgl. des Datentyps double.
@@ -783,7 +787,7 @@ Puh! Die Zahlentypen sind geschafft! Das war das komplizierteste (und spannedste
 
 ![](images/integer.jpg){width="50%"}
 
-#### Buchstaben: `charakter`
+#### Buchstaben: `character`
 
 Dieser Datentyp sind literally Zeichenfolgen. Du sagst R, dass es das als character behandeln soll, indem du Inhalte in Anführungszeichen setzt. Dann ist es R auch egal, WAS du darein schreibst.
 
