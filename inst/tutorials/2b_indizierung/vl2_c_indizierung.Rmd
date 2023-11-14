@@ -55,21 +55,21 @@ Du hast bereits gelernt, wie Vektoren erstellt werden und dass sie mehrere Eleme
 
 Es gibt insgesamt 3 verschiedene Arten:
 
-1.  Indizierung mit ganzen Zahlen
+1.  Indizierung nach Position
 
 ```{r ganzzahlig, exercise = TRUE}
 # Die ersten 6 Einträge der Spalte mpg 
 mtcars$mpg[1:6] 
 ```
 
-2.  Indizierung mit Logik
+2.  Indizierung nach Werten
 
 ```{r logisch1, exercise = TRUE}
 # Alle Autos, die mehr als 25 Meilen schaffen
 mtcars$mpg[mtcars$mpg > 25] 
 ```
 
-3.  Indizierung mit Text
+3.  Indizierung nach Namen
 
 ```{r logisch2, exercise = TRUE}
 # Wie weit kommt ein Honda Civic mit einer Gallone Treibstoff?
@@ -104,7 +104,7 @@ mtcars$lp100km <- 235.214583 / mtcars$mpg
 
 Das war ein kurzer Überblick über die drei verschiedenen Methoden. Es klingt jetzt erst mal technisch, ist es auch. Um R wirklich zu verstehen ist es einfach total hilfreich, zu wissen, wie Indizierung funktioniert, und welche verschiedenen Arten es gibt. Denn die drei verschiedenen Arten funktionieren alle ähnlich, aber unterscheiden sich in ihrem Aufbau fundamental. Der nächste Abschnitt demonstriert das Konzept zunächst mit ganzzahligen Vektoren.
 
-## Indizieren mit ganzzahligen Vektoren
+## Indizieren nach Position
 
 ### Anwendungsbeispiel
 
@@ -126,7 +126,7 @@ Dafür benötigen wir eine neue Funktion, den sogenannten *index operator* `[]`.
 x[1:10]
 ```
 
-Innerhalb der eckigen Klammern wird ein Vektor angegeben. In diesem Fall die Zahlenreihe `1:10`, um die ersten 10 Elemente auszuwählen.
+Innerhalb der eckigen Klammern wird ein Vektor angegeben. In diesem Fall die Zahlenreihe `1:10`. Diese wählt *Element an Positon 1* bis *Element an Positon 10* aus. 
 
 ::: grau
 #### Verbalisierung
@@ -254,7 +254,7 @@ abc[]
 Mit negativen Zahlen können bestimmte Elemente ausgeschlossen werden.
 
 ```{r neg, exercise = TRUE, exercise.setup = "ex"}
-x[-(10:20)]   # schließt Messung 10 bis 20 aus. 
+x[-(11:20)]   # schließt Messung 11 bis 20 aus. 
 ```
 :::
 
@@ -274,11 +274,11 @@ Die Konsole nutzt auch die Index-Schreibweise, um langen Output zu strukturieren
 
 ### Zusammenfassung
 
-Sehr gut! In diesem Abschnitt hast du gelernt, wie Indizierung mit Zahlenvektoren funktioniert. Das ist nur einer von drei möglichen Wegen. Im nächsten Abschnitt wirst du lernen, mittels **logischer Vektoren** zu indizieren.
+Sehr gut! In diesem Abschnitt hast du gelernt, wie Indizierung nach Position der Elemente funktioniert. Das ist nur einer von drei möglichen Wegen. Im nächsten Abschnitt wirst du lernen, wie Indizierung nach Inhalt (Wert) der Elemente funktioniert.
 
-## Indizierung mit logischen Vektoren
+## Indizierung nach Werten
 
-Bisher hast du Indexierung mit Zahlenvektoren kennengelernt. Wie du im Tutorial "Vektoren" gelernt hast, gibt es auch logische Vektoren, die auch zur Indizierung genutzt werden können. Die sehen so aus:
+Im vorherigen Abschnitt hast du Zahlenvektoren verwendet, um die Position der gewünschten Elemente anzugeben. Wie du im Tutorial "Vektoren" gelernt hast, gibt es logische Vektoren. So sieht zum Beispiel einer aus:
 
 ```{r logidemo, exercise = TRUE}
 c(TRUE, FALSE, TRUE)
@@ -314,7 +314,18 @@ Beispielsweise könnten wir prüfen, welche Wettermessungen in `x` *nicht* den f
 x != 1000
 ```
 
-Dieser Code prüft für jedes Element von `x`, ob es der Bedingung "ungleich 1000" entspricht. Das Ergebnis wird als logischer Vektor ausgegeben. Nur die ersten 10 Elemente sind TRUE, während die letzten 20 Elemente FALSE sind.
+Dieser Code prüft für *jedes* Element von `x`, ob es der Bedingung "ungleich 1000" entspricht. Das Ergebnis wird als logischer Vektor ausgegeben. Nur die ersten 10 Elemente sind TRUE, während die letzten 20 Elemente FALSE sind.
+
+```{r condiquest}
+question_radio("Ist der `!=`-Operator eine vektorisierte Funktion?",
+               answer("Ja",
+                      correct = TRUE,
+                      message = "Richtig, da die Prüfung auf jedes Element des gesamten Vektors angewendet wird, und auch als Ergebnis wieder ein Vektor mit der gleichen Länge wie der Input steht."),
+               answer("Nein",
+                      message = "Leider falsch, da die Prüfung automatisch auf `!=` jedes Element im Vektor `x` angewandt wird."),
+               allow_retry = TRUE)
+```
+
 
 ::: blau-nb
 #### Vergleichsoperatoren
@@ -435,20 +446,21 @@ Wir haben bereits gelernt, wie wir logische Vektoren für die Indizierung verwen
 
 Nehmen wir wieder unseren Vektor, der Temperaturen von der Wetterstation darstellt, diesmal wurden auch einige extremere Temperaturen aufgezeichnet. Nun möchten wir alle Temperaturen über `25` und unter `30` extrahieren, um zu schauen an welchen Tagen wir gutes Badewetter hatten. 
 
-```{r Operators, exercise = TRUE}
-# Erstellung eines Beispielvektors temperature
-temperature <- c(23, 26, 24, 28, 22, 30, 18, 27, 25, 22, 0, 45, 2, 5, -2, 11, 16, 42)
+```{r operators, exercise = TRUE}
+# Erstellung eines Beispielvektors 
+temp <- c(23, 26, 24, 28, 22, 30, 18, 27, 25, 22, 0, 45, 2, 5, -2, 11, 16, 42)
+temp
 
 # Subset erstellen: Temperaturen zwischen 25 und 30
-selected_temperatures <- temperature[temperature > 25 & temperature < 30]
-selected_temperatures # Ausgabe der Temperaturen
+temp_subset <- temp[temp > 25 & temp < 30]
+temp_subset
 ```
 
 ##### Gut zu wissen:
 Durch das Speichern des Idizierungsergebnisses in einer Variable mittels des *assignment operators* `<-` wird hier ein *Subset* erstellt, welches nur die Temperaturen enthält, die sowohl über 25 als auch unter 30 liegen. 
 
 ::: blau-nb
-Ein Subset ist dabei nichts anderes als eine Teilmenge von Daten, die durch die Auswahl bestimmter Elemente aus einem größeren Datensatz gebildet wird. In unserem Fall ist `selected_temperatures` also ein Subset von `temperature`. Dank des Subsets ist es dann möglich, nur mit einer Teilmenge der ursprünglichen Daten weiterzurechnen. 
+Ein Subset ist dabei nichts anderes als eine Teilmenge von Daten, die durch die Auswahl bestimmter Elemente aus einem größeren Datensatz gebildet wird. In unserem Fall ist `temp_subset` also ein Subset von `temp`. Dank des Subsets ist es dann möglich, nur mit einer Teilmenge der ursprünglichen Daten weiterzurechnen. 
 :::
 
 #### Übungsaufgabe: 
@@ -456,16 +468,16 @@ Ein Subset ist dabei nichts anderes als eine Teilmenge von Daten, die durch die 
 Jetzt bist du dran:
 
 ::: aufgabe
-Verwende den Vektor `temperature` und lasse dir alle Temperaturen über 26 sowie unter 20 mit Hilfe des ODER-Operators ausgeben.
+Verwende den Vektor `temp` und lasse dir alle Temperaturen über 26 sowie unter 20 mit Hilfe des ODER-Operators ausgeben.
 :::
 
-```{r Ops1, exercise = TRUE, exercise.setup = "Operators", exercise.cap = "Temperaturen > 20 ODER < 26"}
-temperature[]
+```{r Ops1, exercise = TRUE, exercise.setup = "operators", exercise.cap = "Temperaturen > 20 ODER < 26"}
+temp[]
 ```
 
 ```{r Ops1-solution}
-# Vom Vektor temperature nimm alle Temperaturen, die unter 20 ODER über 26 liegen
-temperature[temperature > 26 | temperature < 20]
+# Vom Vektor temp nimm alle Temperaturen, die unter 20 ODER über 26 liegen
+temp[temp > 26 | temp < 20]
 
 ```
 
@@ -473,21 +485,27 @@ temperature[temperature > 26 | temperature < 20]
 
 Was denkst du passiert, wenn wir anstelle des ODER-Operators in der letzten Aufgabe den UND-Operator genutzt hätten? Probiere es hier gerne aus indem du den Operator wechselst:
 
-```{r Ops2, exercise = TRUE, exercise.setup = "Operators", exercise.cap = "Zum Herausfinden" }
-temperature[temperature > 26 | temperature < 20]
+```{r Ops2, exercise = TRUE, exercise.setup = "operators", exercise.cap = "Zum Herausfinden" }
+temp[temp > 26 | temp < 20]
 ```
 
 ```{r Ops2-solution}
-# alle Temperaturen des Vektors temperature, die unter 20 UND über 26 liegen
-temperature[temperature > 26 & temperature < 20]
-# Das Ergebnis ist ein leeres Subset, da Temperaturen nicht gleichzeitig über 26 und unter 20 sein können. R gibt also ein leeres Subset `numeric(0)` zurück.
+# alle Temperaturen, die unter 20 UND über 26 liegen
+temp[temp > 26 & temp < 20]
+
+# Output:
+# numeric(0): Ein numerischer Vektor der Länge Null.
+
+# Das Ergebnis ist ein leeres Subset, 
+# da die Temperatur nicht gleichzeitig über 26 
+# und unter 20 sein kann (zumindest nicht in einem einzelnen Universum).
 ```
 
 Für die Erklärung kannst du den `Lösung`s-Knopf drücken.
 
 Super! Du hast diese wichtige Art von Indizierung gemeistert.
 
-## Indizierung mit Textvektoren
+## Indizierung nach Namen
 
 In den vorherigen Abschnitten hast du gelernt, wie du numerische Vektoren mithilfe von Indizierung und logischen Operatoren filtern kannst. Jetzt werfen wir noch einen Blick auf die Indizierung von Textvektoren.
 
@@ -579,7 +597,8 @@ c.  Lasse dir `y` ausgeben.
 ```{r anw-solution}
 x <- 100:1
 y <- x[3] + x[7]
-y
+y 
+# 192
 ```
 
 ```{r anw, exercise = TRUE, exercise.caption = "Indizierung"}
@@ -590,7 +609,7 @@ Gut gemacht! So kann es weitergehen! 🚀
 
 
 ::: grau-nb
-Hinweis: Falls beim Wert von `y` ein `L` dahinter steht, ist völlig normal. Das `L` steht für *Long* und bezeichnet einen Datentyp.
+Hinweis: Falls du dich fragst, warum beim Wert von `y` ein `L` dahinter steht: Das ist völlig normal. Das `L` steht für *Long* und signalisiert einen Datentyp, nämlich `integer`. 
 :::
 
 ## Abschlussquiz
@@ -601,20 +620,22 @@ Los gehts:
 
 ```{r abschlussquiz_01}
 question_checkbox("Wie wählt man die Elemente 5 bis 8 eines Vektors aus?",
-         answer("vector[5, 8]", correct = FALSE),
-         answer("vector[c(5, 8)]", correct = FALSE),
-         answer("vector[5:8]", correct = TRUE),
-         answer("vector[-(5:8)]", correct = FALSE),
-         allow_retry = TRUE
+         answer("`vector[5, 8]`"),
+         answer("`vector[c(5, 8)]`",
+                message = "`c(5, 8)` gibt nur das 5. und das 8. Element aus. "),
+         answer("`vector[5:8]`", correct = TRUE),
+         answer("`vector[-(5:8)]`"),
+         allow_retry = TRUE,
+         random_answer_order = TRUE
          )
 ```
 
 ```{r abschlussquiz_02}
-question_checkbox("Wie erstellt man einen logischen Vektor, der TRUE für Werte gleich 30 ist?",
-         answer("logical_vector <- numeric_vector > 30", correct = FALSE),
-         answer("logical_vector <- numeric_vector == 30", correct = TRUE),
-         answer("logical_vector <- numeric_vector < 30", correct = FALSE),
-         answer("logical_vector <- numeric_vector >= 30", correct = FALSE),
+question_checkbox("Wie erstellt man einen logischen Vektor, der `TRUE` für Werte gleich 30 ist?",
+         answer("`logical_vector <- numeric_vector > 30`", correct = FALSE),
+         answer("`logical_vector <- numeric_vector == 30`", correct = TRUE),
+         answer("`logical_vector <- numeric_vector < 30`", correct = FALSE),
+         answer("`logical_vector <- numeric_vector >= 30`", correct = FALSE),
          allow_retry = TRUE
          )
 ```
