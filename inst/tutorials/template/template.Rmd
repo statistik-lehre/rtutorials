@@ -453,29 +453,73 @@ Für mehr Infos für Hintergründe der Entstehung von Chained Setup Chunks:
 
 **Wichtig:** Argument setzen: `allow_retry = TRUE`
 
-```{r abschlussquiz_01}
-question_checkbox("Hier ist eine typische Frage für ein Abschlussquiz",
-         answer("mit einer Antwort"),
-         answer("und noch einer Antwort"),
-         answer("und einer korrekten Antwort", correct = T), 
-         answer("und einer weiteren korrekten Antwort", correct = T), 
-         answer("und noch einer falschen Antwort"),
-         allow_retry = TRUE
-         )
+
+```{r abschlussquiz_01, echo = FALSE}
+learnr::question_radio("Was vermutest du: Was wird ausgegeben durch `wg$name`?",
+                       answer("Ein Data Frame",
+                              message = "Es ist kein Data Frame, weil die Werte dann untereinander in einer Spalte ausgegeben würden und nicht nebeneinander."),
+                       answer("Ein Vektor",
+                              correct = TRUE,
+                              message = "Genau. Es ist ein Vektor, denn bei einem Data Frame würden die Werte untereinander in einer Spalte ausgegeben statt horizontal."),
+                       allow_retry = TRUE)
 ```
 
-```{r abschlussquiz_02}
-question_checkbox("Wichtig, für eine neue Frage, brauchen wir einen neuen Codechunk",
-         answer("mit einer Antwort"),
-         answer("und noch einer Antwort"),
-         answer("und einer korrekten Antwort", correct = T), 
-         answer("und einer weiteren korrekten Antwort", correct = T), 
-         answer("und noch einer falschen Antwort"),
-         allow_retry = TRUE
-         )
-```
 
 ## Learnings
+
+So hast du heute abgeschnitten:
+
+```{r context="server"}
+# Shiny App um die Anzahl richtig beantworteter Fragen anzuzeigen. 
+# Funktioniert in jedem Tutorial
+
+shiny::observeEvent(
+  input$get_score, 
+  {
+    objs2 = learnr:::get_tutorial_state()
+    
+    # Number of correct questions
+    
+    n_correct <- 
+      # Access the $correct sublist item in each list item
+        lapply(objs2, purrr::pluck, "correct") |>
+           # make it a vector containing: TRUE and FALSE and NAs
+           # NA is appearing for list items which don't have
+           # a $correct subitem
+                unlist() |> 
+           # Taking the sum of a logical Vector returns the number of TRUEs
+                sum(na.rm=TRUE)
+    
+    # Number of total questions
+    
+    total_questions <- 
+      # 1. Access $type in each list item and make it a vector of types
+      lapply(objs2, purrr::pluck, "type") |> unlist()
+    
+    # 2. Count the number of "question" in that vector
+    total_questions <- total_questions[total_questions == "question"] |> 
+      length()
+      
+      
+    output$score = shiny::renderText(
+      paste0(n_correct, " von ", total_questions,
+        " im gesamten Tutorial beantworteten Fragen waren richtig.")
+)
+    invisible()
+  }
+)
+```
+
+```{r score, echo=FALSE}
+shiny::br()
+shiny::actionButton("get_score", "Auswertung!")
+shiny::br()
+shiny::br()
+shiny::textOutput("score")
+shiny::br()
+```
+
+
 
 ### Zusammenfassung
 
