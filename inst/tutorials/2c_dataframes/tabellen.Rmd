@@ -28,15 +28,15 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### Einführung
 
-Dieses Kapitel zeigt Ihnen die Objektklasse, mit welcher Sie hauptsächlich arbeiten werden. Ein *Data Frame* ist die Struktur, mit der **Tabellen** in R repräsentiert werden.
+Dieses Kapitel zeigt dir die Objektklasse, mit welcher du hauptsächlich arbeiten wirst. Ein *Data Frame* ist die Struktur, mit der **Tabellen** in R repräsentiert werden.
 
-Wenn Sie mit Tabellen in R zu tun haben werden - und das wird oft sein - wird es sich meist um *Data Frames* oder eine spezielle Unterform davon, *Tibbles*, handeln. Beides werden Sie in diesem Tutorial kennenlernen.
+Wenn du mit Tabellen in R zu tun haben wirst - und das wird oft sein - wird es sich meist um *Data Frames* oder eine spezielle Unterform davon, *Tibbles*, handeln. Beides wirst du in diesem Tutorial kennenlernen.
 
-Dass Sie den Umgang mit Tabellen in R lernen, ist essentiell, da die meisten Daten auf dieser Welt irgendwie in Tabellen dargestellt werden.
+Dass Du den Umgang mit Tabellen in R lernst, ist essentiell, da die meisten Daten auf dieser Welt irgendwie in Tabellen dargestellt werden.
 
-Im Tutorial "Vektoren" haben Sie gelernt, dass Vektoren Variablen darstellen und mehrere Werte enthalten können.
+Im Tutorial "Vektoren" hast du gelernt, dass Vektoren Variablen darstellen und mehrere Werte enthalten können.
 
-In nächsten Abschnitt lernen Sie, wie Sie mehrere Vektoren in einer Tabelle zusammenbringen können.
+In nächsten Abschnitt lernst du, wie du mehrere Vektoren in einer Tabelle zusammenbringen kannst.
 
 ::: blau-nb
 Übrigens: Wir verwenden hier für die Eindeutschung "der" Data Frame, die innerliche Begründung lautet: *Frame* = Rahmen, "der" Rahmen :)
@@ -68,14 +68,14 @@ Erstellt aus einzelnen Vektoren eine Tabelle. Die Vektoren müssen gleich lang s
 
 Die Idee eines Data Frames ist, einen Haufen Vektoren gleicher Länge zu nehmen und damit eine Tabelle zu bauen. Dabei ist **jede Spalte ein Vektor**. Anders ausgedrückt: jede Spalte ist eine Variable.
 
-Das ist eine wichtige Grundstruktur, die Sie sich merken sollten, denn es bedeutet dass für die Spalten einer Tabelle die gleichen Mechanismen greifen wie bei Vektoren.
+Das ist eine wichtige Grundstruktur, die du dir merken solltest, denn es bedeutet dass für die Spalten einer Tabelle die gleichen Mechanismen greifen wie bei Vektoren.
 
 ::: gelb
 **Disclaimer**
 
-In der Praxis werden Sie zur Dateneingabe ein grafisches Programm wie Excel verwenden, und die fertige Tabelle dann für die Verwendung mit R importieren. Das lernen Sie im Tutorial "Datenimport".
+In der Praxis wirst du zur Dateneingabe ein grafisches Programm wie Excel verwenden, und die fertige Tabelle dann für die Verwendung mit R importieren. Das wirst du im Tutorial "Datenimport" lernen.
 
-Wir fokussieren uns hier auf das Hantieren mit Data Frames, denn egal wie Sie die Tabelle erstellt haben - durch Import aus Excel oder Zusammensetzen einzelner Vektoren, es wird immer ein Data Frame sein in R.
+Wir fokussieren uns hier auf das Hantieren mit Data Frames, denn egal wie du die Tabelle erstellt hast - durch Import aus Excel oder Zusammensetzen einzelner Vektoren, es wird immer ein Data Frame sein in R.
 
 Wenn im Folgenden immer wieder kleine Data Frames aus Vektoren erstellt werden, dient das nur dazu, Beispiele zu konstruieren um den Umgang zu erlernen, aber nicht weil das die übliche Methode ist, wie Daten in R eingegeben werden.
 :::
@@ -84,11 +84,11 @@ Wenn im Folgenden immer wieder kleine Data Frames aus Vektoren erstellt werden, 
 
 Eine in R übliche Konvention für Namensgebungs-Situationen ist die Reihenfolge `NEW = OLD`.
 
-Bei der Verwendung von `data.frame()` kommen wir in eine solche Situation, weil wir während der Erstellung Spaltennamen vergeben können. Betrachten Sie dazu das folgende Beispiel, wo wir eine Tabelle mit Daten über eine WG erstellen.
+Bei der Verwendung von `data.frame()` kommen wir in eine solche Situation, weil wir während der Erstellung Spaltennamen vergeben können. Betrachte dazu das folgende Beispiel, wo wir eine Tabelle mit Daten über eine WG erstellen.
 
 Schon beim Assignment, was ja auch eine Namensgebungs-Situation ist, gilt: Links steht immer der neue Name, rechts immer der alte Name oder Inhalt.
 
-Achten Sie auf die Argumente von `data.frame()`: Dort gilt das gleiche Schema. Die "neuen" Spaltennamen stehen jeweils auf der linken Seite des Gleichheitszeichens, der "alte" Name des bereits vorhandenen Vektors auf der rechten.
+Achte auf die Argumente von `data.frame()`: Dort gilt das gleiche Schema. Die "neuen" Spaltennamen stehen jeweils auf der linken Seite des Gleichheitszeichens, der "alte" Name des bereits vorhandenen Vektors auf der rechten.
 
 ```{r new_is_old, exercise = TRUE, exercise.caption = "Neu ist Alt"}
 # Mitbewohnis in einer WG
@@ -111,9 +111,9 @@ Das ist gut zu wissen, denn dieses Schema gilt als Konvention für die meisten B
 
 #### Lerntest
 
-Haben Sie im Tutorial "Vektoren" gut aufgepasst?
+Hast du im Tutorial "Vektoren" gut aufgepasst?
 
-Eigentlich haben Sie eben gelernt, alle Vektoren müssen gleich lang sein um einen Data Frame zu erstellen. Warum funktioniert es oben trotzdem, obwohl Vektor `z` nur Länge 1 hat und nicht ebenfalls 4?
+Eigentlich hast du eben gelernt, alle Vektoren müssen gleich lang sein um einen Data Frame zu erstellen. Warum funktioniert es oben trotzdem, obwohl Vektor `z` nur Länge 1 hat und nicht ebenfalls 4?
 
 ```{r recyc-quiz, echo = FALSE}
 learnr::question_radio(
@@ -138,7 +138,7 @@ learnr::question_radio(
 
 Nun wollen wir noch die Zimmergröße der WG-Mitbewohnis mit erfassen. Ein einfacher Weg, dem Data Frame eine neue Spalte hinzuzufügen, ist der `$`-Operator.
 
-Sehen Sie sich folgendes Beispiel an:
+Sieh dir folgendes Beispiel an:
 
 ```{r wg_setupchunk, echo=FALSE}
 x <- c("Amadou", "Mira", "Luisa", "Alex")
@@ -158,11 +158,11 @@ wg
 Auch hier gilt wieder das Schema `Neu <- Alt`.
 
 ::: aufgabe
-Sie sind dran!
+Du bist dran!
 
-Erstellen Sie mittels `$` im `wg`-Datensatz eine neue Spalte `balkon`, die angibt ob die Zimmer Zugang zu einem Balkon haben. Geben Sie erfundene Werte ein. `TRUE` bedeutet "mit Balkon", `FALSE` "ohne Balkon".
+Erstelle mittels `$` im `wg`-Datensatz eine neue Spalte `balkon`, die angibt ob die Zimmer Zugang zu einem Balkon haben. Gib erfundene Werte ein. `TRUE` bedeutet "mit Balkon", `FALSE` "ohne Balkon".
 
-Lassen Sie sich `wg` danach anzeigen, um zu überprüfen ob die neue Spalte da ist.
+Lasse dir `wg` danach anzeigen, um zu überprüfen ob die neue Spalte da ist.
 :::
 
 ```{r balkon, exercise = TRUE, exercise.setup = "dollar", exercise.caption = "Balkon"}
@@ -178,9 +178,9 @@ wg
 
 #### auf Spalten zugreifen
 
-Sie können `$` nicht nur verwenden, um neue Spalten zu erstellen, sondern auch um sich Spalten einzeln ausgeben zu lassen und damit Berechnungen anzustellen.
+Du kannst `$` nicht nur verwenden, um neue Spalten zu erstellen, sondern auch um dir Spalten einzeln ausgeben zu lassen und damit Berechnungen anzustellen.
 
-Testen Sie, was der folgende Code zurückgibt.
+Teste mal, was der folgende Code zurückgibt.
 
 ```{r name, exercise = TRUE, exercise.caption = "Ausgabe mit $", exercise.setup = "balkon"}
 wg$name
@@ -189,7 +189,7 @@ wg$name
 Preisfrage:
 
 ```{r preisfrage, echo = FALSE}
-learnr::question_radio("Was vermuten Sie: Was wird ausgegeben durch `wg$name`?",
+learnr::question_radio("Was vermutest du: Was wird ausgegeben durch `wg$name`?",
                        answer("Ein Data Frame",
                               message = "Es ist kein Data Frame, weil die Werte dann untereinander in einer Spalte ausgegeben würden und nicht nebeneinander."),
                        answer("Ein Vektor",
@@ -200,16 +200,29 @@ learnr::question_radio("Was vermuten Sie: Was wird ausgegeben durch `wg$name`?",
 
 ### Berechnungen mit Spalten
 
-Jetzt wo Sie wissen, wie Sie auf eine Spalte zugreifen können, üben wir das ein bisschen.
+Jetzt wo du weißt, wie du auf eine Spalte zugreifen kannst, üben wir das ein bisschen.
 
 ::: aufgabe
-(Beispiel einfügen)
+a)  Versuche auf die Spalte *quadratmeter* zuzugreifen und sie dir anzeigen zu lassen.
+b)  Greife gleichzeitig auf den zweiten und dritten Eintrag für die Spalte *jahrgang* und lasse sie dir anzeigen.
 :::
 
-::: aufgabe
-Berechnen Sie eine neue Spalte namens `miete`, in dem Sie den Quadratmeterpreis `grundpreis` mit der Zimmergröße `quadratmeter` multiplizieren.
+```{r spaltengriff, exercise = TRUE, exercise.setup = wg_setupchunk}
 
-Lassen Sie sich dann die gesamte Tabelle anzeigen!
+```
+
+```{r spaltengriff-solution}
+# Auf 'quadratmeter' zugreifen und anzeigen lassen
+wg$quadratmeter
+
+# In der Spalte 'jahrgang' auf den 2 - 3 Eintrag zugreifen
+wg$jahrgang[2:3]
+```
+
+::: aufgabe
+Berechne eine neue Spalte namens `miete`, in dem du den Quadratmeterpreis `grundpreis` mit der Zimmergröße `quadratmeter` multiplizierst.
+
+Lasse dir dann die gesamte Tabelle anzeigen!
 :::
 
 ```{r wg_setupchunk_2, echo=FALSE}
@@ -234,17 +247,59 @@ wg$miete <- wg$grundpreis * wg$quadratmeter
 wg
 ```
 
-Da die einzelnen Spalten fundamental Vektoren sind, ist alles genau wie beim Rechnen mit Vektoren. Sie verwenden `$`, um bestimmte Spalten aus dem Data Frame einzeln als Vektoren zu adressieren.
+Da die einzelnen Spalten fundamental Vektoren sind, ist alles genau wie beim Rechnen mit Vektoren. Du verwendest `$`, um bestimmte Spalten aus dem Data Frame einzeln als Vektoren zu adressieren.
 
-(Mehr Aufgaben einfügen, eventuell auch eine, die den Balkon mit einbezieht.)
+<!-- Die Aufgabe ist ganz ohne ifelse oder sum() oder sonstigen Hilfen echt schwer, daher erstmal weglassen -->
 
-Super! Nun haben Sie `$` schon mal einfach so verwendet, ohne zu erfahren, warum das eigentlich geht. Im nächsten Kapitel erfahren Sie mehr über die technischen Hintergründe des Indizierens mit `$`, wenn Sie das interessiert.
+<!-- ::: aufgabe -->
+
+<!-- Für dieses Beispiel haben Amadou und Luisa beide einen Balkon. Dies soll sich auch in deren Miete widerspiegeln.  -->
+
+<!-- a) Überlege dir einen fairen Anteil an Miete, den die Beiden für ihren Balkon draufzahlen. Z.B. 10% -->
+
+<!-- c) Erstelle eine Berechnung mit wg$miete, welche die Miete für   -->
+
+<!-- ::: -->
+
+<!-- ```{r balkon_preise-setup} -->
+
+<!-- x <- c("Amadou", "Mira", "Luisa", "Alex") -->
+
+<!-- y <- c(2000, 2001, 1990, 1995) -->
+
+<!-- z <- 5.23  -->
+
+<!-- wg <- data.frame( -->
+
+<!--   name = x,  -->
+
+<!--   jahrgang = y,  -->
+
+<!--   grundpreis = z)  -->
+
+<!-- wg$quadratmeter <- c(12, 14, 20, 15) -->
+
+<!-- wg$balkon <- c(TRUE, FALSE, TRUE, FALSE) -->
+
+<!-- wg$miete <- wg$grundpreis * wg$quadratmeter -->
+
+<!-- wg$name -->
+
+<!-- wg$miete -->
+
+<!-- ``` -->
+
+<!-- ```{r balkon_preise, exercise = TRUE, exercise.setup = "balkon_preise", exercise.caption = "Balkon Preise"} -->
+
+<!-- ``` -->
+
+Super! Nun hast du `$` schon mal einfach so verwendet, ohne zu erfahren, warum das eigentlich geht. Im nächsten Kapitel erfährst du mehr über die technischen Hintergründe des Indizierens mit `$`, wenn dich das interessiert.
 
 ## Listen und der `$`-Operator {data-progressive="TRUE"}
 
-Wir werden in diesem Kapitel vom Allgemeinen auf das Spezifische schließen, das heißt, Sie lernen eventuell mehr als Sie müssen, haben aber danach eine bessere Ausgangslage um auch andere spezifische Situationen einzuordnen.
+Wir werden in diesem Kapitel vom Allgemeinen auf das Spezifische schließen, das heißt, du lernst eventuell mehr als du müsstest, hast danach aber eine bessere Ausgangslage, um auch andere spezifische Situationen einzuordnen.
 
-In diesem Kapitel haben Sie die Chance im Schnelldurchlauf zu verstehen:
+In diesem Kapitel hast du die Chance im Schnelldurchlauf zu verstehen:
 
 -   warum ein Data Frame eine Art von Liste ist
 -   was eine Liste in R ist
@@ -253,7 +308,7 @@ In diesem Kapitel haben Sie die Chance im Schnelldurchlauf zu verstehen:
 
 ### Warum ein Data Frame eine Liste ist
 
-Einen Data Frame können Sie als einen Vektor auffassen, der als Teilemente andere Vektoren enthält. Die grundlegende Datenstruktur in R dafür heißt *Liste*.
+Einen Data Frame kannst du als einen Vektor auffassen, der als Teilemente andere Vektoren enthält (s. Tutorial "Vektoren"). Die grundlegende Datenstruktur in R dafür heißt *Liste*.
 
 Die Listen-Artige Struktur eines Data Frames wird deutlich, wenn wir uns die Struktur mit `str()` anzeigen lassen:
 
@@ -311,9 +366,9 @@ Der Vektor (oben im Output) kann nur Daten eines einzigen Typs enthalten. Da er 
 
 Die Liste (unten) hingegen kann problemlos Text und Zahlen gleichzeitig aufnehmen.
 
-Ein weitere Vorteil von Listen ist, dass sie auch Elemente unterschiedlicher Länge enthalten darf.
+Ein weiterer Vorteil von Listen ist, dass sie auch Elemente unterschiedlicher Länge enthalten darf.
 
-Data Frames sind dann eine spezielle Art von Liste - das charakterisierende Merkmal ist, dass alle Elemente die gleiche Länge haben müssen, während das für Listen generell nicht so sein muss. Und sie werden anders gedruckt als Listen
+Data Frames sind dann eine spezielle Art von Liste - das charakterisierende Merkmal ist, dass alle Elemente die gleiche Länge haben müssen, während das für Listen generell nicht so sein muss. Und Data Frames werden anders ausgegeben als Listen.
 
 ### Listen verwenden `$` zum Indizieren
 
@@ -328,7 +383,7 @@ named_li$birnen
 <br>
 
 ::: aufgabe
-Finden Sie heraus, was das Listenelement namens "pflaumen" aus der Liste `named_li` enthält! Verwenden Sie den `$`-Operator.
+Finde heraus, was das Listenelement namens "pflaumen" aus der Liste `named_li` enthält! Verwende dafür den `$`-Operator.
 :::
 
 ```{r dollar_exercise, exercise = TRUE, exercise.setup = "list_example"}
@@ -339,23 +394,23 @@ Finden Sie heraus, was das Listenelement namens "pflaumen" aus der Liste `named_
 named_li$pflaumen
 ```
 
-`$` ist ein Werkzeug, um Bestandteile einer Liste mit ihrem Namen aufzurufen. Das ist Hintergrundwissen, dass Sie nur benötigen, um Verbindungslinien zu ziehen zu anderen Situationen, in denen der `$`-Operator auch auf den Plan tritt.
+`$` ist für uns ein werkzeug, um Bestandteile einer Liste mit ihrem Namen aufzurufen. Das ist Hintergrundwissen, dass du nur benötigst, um Verbindungslinien zu ziehen zu anderen Situationen, in denen der `$`-Operator auch auf den Plan tritt.
 
-Wenn Sie andere Objektklassen kennenlernen, die auch fundamental Listen sind, wie zum Beispiel `fit`-Objekte (siehe Tutorial Regression), wird das Erscheinen von `$` Sinn ergeben.
+Wenn du andere Objektklassen kennenlernst, die auch fundamental Listen sind, wie zum Beispiel `fit`-Objekte (siehe Tutorial "Regression"), wird für dich das Erscheinen von `$` Sinn ergeben.
 
 ### Data Frames verwenden `$` zum Indizieren
 
-Sie haben gelernt: - Data Frames sind der Struktur nach benannte Listen - benannte Listen verwenden `$` zum Indizieren - Folglich verwenden Data Frames `$` zum Indizieren.
+Du hast gelernt: - Data Frames sind der Struktur nach benannte Listen - benannte Listen verwenden `$` zum Indizieren - Folglich verwenden Data Frames `$` zum Indizieren.
 
 Um das Ganze etwas praktischer zu gestalten, verwenden wir nun mal einen realen Datensatz, der als Data Frame mit im `rtutorials`-Paket enthalten ist.
 
 Erfasst sind dort die tägliche Maximaltemperatur in Grad Fahrenheit, und die Anzahl von durch Überhitzung verursachten Notaufnahme-Fällen in den Krankenhäusern von New York für den jeweiligen Tag.
 
-Um sich einen Überblick über
+Um dir einen Überblick über die den Datensatz zu verschaffen, ist es stets ratsam, diesen zunächt anzeigen zu lassen
 
-### Learnings
-
--   `$` ist ein Werkzeug, um Bestandteile einer Liste mit ihrem Namen aufzurufen.
+```{r heated}
+rtutorials::heated
+```
 
 ## Indizierung bei Data Frames
 
@@ -391,7 +446,7 @@ Deswegen brauchen wir für Data Frames auch zwei Positionsangaben, mit einem Kom
 
 Bemerken Sie, dass Sie mit `[ , ]` immer einen Data Frame zurückbekommen, während Sie mit `$` nur den jeweiligen Vektor ausgegeben bekommen der die Spalte darstellt.
 
-## Learnings
+### Learnings
 
 Data Frames sind Listen von gleichlangen Vektoren.
 
@@ -624,6 +679,97 @@ Der obige Code funktioniert nicht. Das liegt daran, dass der Datensatz aus dem P
     `rtutorials::einkaufen`
 :::
 
-Warum sind Beispieldatensätze wichtig???
+In dem folgenden Tutorial "Datenimport" wirst du lernen, wie du selbst deine Daten in einen R Datensatz verwandeln kannst. Dann kannst du endlich deinen eigenen Daten erforschen.
 
-## Literatur
+## Abschlussquiz
+
+```{r abschlussquiz_01, echo = FALSE}
+learnr::question_radio("Was vermutest du: Was wird ausgegeben durch `wg$name`?",
+                       answer("Ein Data Frame",
+                              message = "Es ist kein Data Frame, weil die Werte dann untereinander in einer Spalte ausgegeben würden und nicht nebeneinander."),
+                       answer("Ein Vektor",
+                              correct = TRUE,
+                              message = "Genau. Es ist ein Vektor, denn bei einem Data Frame würden die Werte untereinander in einer Spalte ausgegeben statt horizontal."),
+                       allow_retry = TRUE)
+```
+
+## Learnings
+
+So hast du heute abgeschnitten:
+
+```{r context="server"}
+# Shiny App um die Anzahl richtig beantworteter Fragen anzuzeigen. 
+# Funktioniert in jedem Tutorial
+
+shiny::observeEvent(
+  input$get_score, 
+  {
+    objs2 = learnr:::get_tutorial_state()
+    
+    # Number of correct questions
+    
+    n_correct <- 
+      # Access the $correct sublist item in each list item
+        lapply(objs2, purrr::pluck, "correct") |>
+           # make it a vector containing: TRUE and FALSE and NAs
+           # NA is appearing for list items which don't have
+           # a $correct subitem
+                unlist() |> 
+           # Taking the sum of a logical Vector returns the number of TRUEs
+                sum(na.rm=TRUE)
+    
+    # Number of total questions
+    
+    total_questions <- 
+      # 1. Access $type in each list item and make it a vector of types
+      lapply(objs2, purrr::pluck, "type") |> unlist()
+    
+    # 2. Count the number of "question" in that vector
+    total_questions <- total_questions[total_questions == "question"] |> 
+      length()
+      
+      
+    output$score = shiny::renderText(
+      paste0(n_correct, " von ", total_questions,
+        " im gesamten Tutorial beantworteten Fragen waren richtig.")
+)
+    invisible()
+  }
+)
+```
+
+```{r score, echo=FALSE}
+shiny::br()
+shiny::actionButton("get_score", "Auswertung!")
+shiny::br()
+shiny::br()
+shiny::textOutput("score")
+shiny::br()
+```
+
+### Zusammenfassung
+
+Du hast gelernt: - Data Frames sind der Struktur nach benannte Listen - benannte Listen verwenden `$` zum Indizieren - Folglich verwenden Data Frames `$` zum Indizieren.
+
+-   `$` ist ein Werkzeug, um Bestandteile einer Liste mit ihrem Namen aufzurufen.
+
+### Diese neuen Konzepte kennst du nun:
+
+-   
+
+    ```         
+    Stichpunktartige Beschreibung
+    ```
+
+### Neue Funktionen
+
+eine Tabelle mit den wichtigesten Codes des Tutorials \| Code \| Beschreibung \| \|----------------\|----------------------------------------\| \| `[ ]` \| Indizierung \| \| `&` \| UND-Operator für logische Indizierung \|
+
+## Credit
+
+<!-- vielleicht in diese Richtung? -->
+
+Dieses Tutorial wurde (größtenteils) von Lukas Bruelheide sowie in Teilen von Marie Klosterkamp geschrieben.
+
+ggf.: Bei der Erstellung (u.a. der Beispiele, Aufgaben und Zusammenfassung) wurde teilweise von ChatGPT gebrauch gemacht.
+
