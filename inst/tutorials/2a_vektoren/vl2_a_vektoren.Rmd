@@ -671,9 +671,9 @@ Als nächstes schauen wir und die Typen und Klasse von Daten etwas genauer an.
 
 Wie es im Fantasy RPG (Role Play Game) deiner Wahl in der Regel die Auswahl aus verschiedenen Klassen (Ritter\*in, Heiler\*in, Zauber\*in etc.) und Rassen (Mensch, Elfe, Zwerg etc.) gibt haben auch in der Informatik verschiedene Klassen und Typen. **Achtung: zwar gibt es auch in anderen Programmiersprachen Klassen und Typen, doch unterscheiden diese sich ggf. von denen in R.** Das Bild von Klasse und Rasse ist rein methaphorisch für eine grundlegende Idee der Zusammenhänge zu verstehen.
 
-Die *Datentypen* sind sowas wie die "Rasse". Also wie sieht ein Chracter aus (Zwerg, Elfe, Mensch) bzw. ein Dateneintrag: Zahlenart, Buchstabe, binär etc. Die *Objektklassen* entsprechen grob den "Rassen" in RPGs. Also wie sind die Charaktere organisiert: in Heiler\*innengilden, Ritter\*innenorden, Hofzauber*in etc. bzw. in Objekten: numerisch, Liste, Fakto etc.
+Die *Datentypen* sind sowas wie die "Rasse". Also wie sieht ein Chracter aus (Zwerg, Elfe, Mensch) bzw. ein Dateneintrag aus: Zahlenart, Buchstabe, binär etc. Die *Objektklassen* entsprechen grob den "Rassen" in RPGs. Also wie sind die Charaktere organisiert: in Heiler\*innengilden, Ritter\*innenorden, Hofzauber*in etc. bzw. in Objekten: Vektor, Dataframe, Matrix etc.
 
-Auf dem Level, auf dem wir R nutzen ist die ganz genaue Unterscheidung zwischen Typen und Klassen nicht wichtig. Nur gut, es einfach schonal gehört zu haben, da hier manchmal Probleme auftauchen die sich dann einfacher lösen lassen. 
+Auf dem Level, auf dem wir R nutzen ist die ganz genaue Unterscheidung zwischen Typen und Klassen nicht notwendig. Nur gut, es einfach schonal gehört zu haben, da hier manchmal Probleme auftauchen die sich dann meist relativ einfach lösen lasse.
 
 
 ### Typen
@@ -697,24 +697,24 @@ Sowohl `double` als auch `integer` beinhalten Zahlen. Wo ist nun der Unterschied
 
 **Double** sind Fließkommazahlen bzw. Dezimalzahlen, auch *floating point numbers*.
 
-**Integer** sind ganze Zahlen. 
+**Integer** sind postive und negative ganze Zahlen sowie Null. 
 
 
-Das ist wichtig zu erwähnen, denn das ist krass: Computer merken sich Zahlen anders als wir Menschen. Menschen denken *dezimal* (also in Zehnerschritten) und Computer *binär* (die klassischen 1 und 0). Für den Menschen sieht eine `0.1` so aus: 0.1 bzw. $$\frac{1}{10}$$ Für einen Rechner sieht eine `0.1` so aus: $$0.0 \overline{0011}$$. Rechner können je nach Hardware pro Zahl nur [23](https://de.wikipedia.org/wiki/Einfache_Genauigkeit) bzw. [52](https://de.wikipedia.org/wiki/Doppelte_Genauigkeit) binäre Nachkommastellen speichern. Das entspricht ca 8 bzw. 16 dezimalen Nachkommastellen. (*Siehe dazu auch dieses wunderbare [Video](https://www.youtube.com/watch?v=PZRI1IfStY0)). Danach wird die Zahl einfach abgeschnitten - mit fatalen Folgen.
+Das ist wichtig zu erwähnen, denn das ist krass: Computer merken sich Zahlen anders als wir Menschen. Menschen denken *dezimal* (also in Zehnerschritten) und Computer *binär* (die klassischen 1 und 0). Für den Menschen sieht eine `0.1` so aus: 0.1 bzw. $$\frac{1}{10}$$ Für einen Rechner sieht eine `0.1` so aus: $$0.0 \overline{0011}$$. Rechner können je nach Programmeinstellung und in sehr hardcore Fällen auch aufgrund der Hardware pro Zahl nur  [23](https://de.wikipedia.org/wiki/Einfache_Genauigkeit) bzw. [52](https://de.wikipedia.org/wiki/Doppelte_Genauigkeit) binäre [signifikante Stellen](https://de.wikipedia.org/wiki/Signifikante_Stellen). Das entspricht ca 8 bzw. 16 dezimalen Ziffern (*Siehe dazu auch dieses wunderbare [Video](https://www.youtube.com/watch?v=PZRI1IfStY0)). Danach wird die Zahl einfach abgeschnitten - mit fatalen Folgen.
 
 <details>
 <summary><a>▼ \* Rumgenerde bzgl. des Datentyps double.
 </a></summary>
 
-Ob 23 oder 52 binäre Nachkommastellen hat mit dem Arbeitsspeicher des Rechners und der heruntergeladenen Version von R zu tun. Du wurdest beim Runterladen gefragt, ob du eine 32 oder 64 bit möchtest und du wirst 64 gewählt haben. Falls du das gegenchecken möchtest, tippe `sessionInfo()` in deine Konsole. In der zweiten Reihe steht hinter `Platform:` dein Betriebssystem sowie die Zahl der Bits, für die du dich entschieden hast. Das ist im übrigen auch gemeint, wenn du Technik kaufst und da 64 bit steht. Das hat dann was mit der Genauigkeit zu tun, die das Gerät überhaupt rechnen kann.
+Ob 23 oder 52 binäre signifikante Stellen hat was mit einen Programmeinstellungen zu tun. Du wurdest beim Runterladen gefragt, ob du eine 32 oder 64 bit Version von R möchtest und du wirst 64 gewählt haben. Im grunde hast du da ausgewählt, wie Präzise R Zahlen abbilden kann. Falls du das gegenchecken möchtest, tippe `sessionInfo()` in deine Konsole. In der zweiten Reihe steht hinter `Platform:` dein Betriebssystem sowie die Zahl der Bits, für die du dich entschieden hast.
 
 Das Format von Zahlen, die mit 32 Bit gespeichert sind heißt auch *"Single-precision floating-point format"*. Das wird dir in der freien Wilbahn eher nicht begegnen. Das Format von mit 64 Bit gespeicherte Daten heißt *"Double-precision floating-point format"*. Hier schließt sich der Kreis, dennn exakt das sagt der Datentyp **double`**.
 
-Für den Alltag reicht zu merken: **double** bedeutet Kommazahl.
+Für den Alltag reicht zu merken: **double** bedeutet Kommazahl (mit einer bestimmten Präziszion).
 
 </details>
 
-Während für den Menschen die Dezimalzahl $$0.1$$ eben so aussieht: $$0.1$$ sieht sie für den Rechner so aus: $$0.000110011001100110011001100110011001100110$$ was umgerechnet wiederum $$0.09999999999990905053$$. Genauer kann dein PC 0.1 nicht abbilden. Punkt. 
+Während für den Menschen die Dezimalzahl $0.1$ eben so aussieht: $0.1$ sieht sie für den Rechner (vereinfacht) so aus: $0.000110011001100110011001100110011001100110011$ was umgerechnet wiederum $0.09999999999999431566$. Genauer kann dein PC 0.1 nicht abbilden. Punkt. 
 
 Im Alltag rundet R das ganz freundlich, ist also häufig echt egal:
 
@@ -724,7 +724,7 @@ Im Alltag rundet R das ganz freundlich, ist also häufig echt egal:
 
 Ist doch alles so wie ich das auch per Hand rechnen würde!
 
-Ja, stimmt. R hat gut gerundet. Was passiert allerdings, wenn du R fragst: "Ist 0.1 + 0.2 ganz genau gleich 0.3?"(damit R es versteht, bitte so formulieren: `0.1 + 0.2 == .3`)?
+Ja, stimmt. R hat gut gerundet, was für diesen Anwendungsfall auch wirklich total okay ist!. Was passiert allerdings, wenn du R fragst: "Ist 0.1 + 0.2 ganz genau gleich 0.3?"(damit R es versteht, bitte so formulieren: `0.1 + 0.2 == .3`)?
 
 ```{r double2, exercise = T}
 0.1 + 0.2 == 0.3
@@ -756,7 +756,7 @@ typeof(vec_dou)
 typeof(vec_int)
 ```
 
-Okay, also Zusammenfassend lässt sich sagen: Es gibt zwei Typen von Zahlen. Ganze Zahlen bzw. `integer` und Fließkommazahlen bzw `double`. So weit so einfach.
+Okay, also Zusammenfassend lässt sich sagen: Es gibt zwei Typen von Zahlen. Ganze Zahlen bzw. `integer` und Fließkommazahlen bzw `double`. So weit, so einfach.
 
 Sollte, warum auch immer, der Fall eintreten, das du den einen Typen in den anderen umwandeln möchtest, ist das natürlich auch möglich: `as.integer()` bzw. `as.double()` sind hier deine Friends.
 
@@ -777,7 +777,7 @@ typeof(as.integer(vec_dou))
 
 Zuerst fällt auf: Die Umwandlung hat trotzdem funktioniert und alle Zahlen wurden auf eine ganze Zahl gerundet.
 
-Dann fällt auf: Puh! Alle nach unten gerundet! Gut beobachtet. So verwandelt R doubles in integers. Isso.
+Dann fällt auf: Puh! Alle nach unten gerundet! Gut beobachtet. So verwandeln Rechner doubles in integers. Isso.
 
 Puh! Die Zahlentypen sind geschafft! Das war das komplizierteste (und spannedste). Jetzt solltest du folgendes Meme verstehen:
 
@@ -853,13 +853,13 @@ as.character(vec_log_num)
 
 ![](images/complex.jpg){width="50%"}
 
-Daten des Typen `complex` sind, wie der Name schon sagt: [Komplex](https://de.wikipedia.org/wiki/Komplexe_Zahl). Das bedeutet: [Reelle](https://de.wikipedia.org/wiki/Reelle_Zahl) plus [imaginäre](https://de.wikipedia.org/wiki/Imagin%C3%A4re_Zahl) Zahlen (also solche, die sich nicht durch ganzzahlige Brühe darstellen lassen).
+Daten des Typen `complex` sind, wie der Name schon sagt: [Komplex](https://de.wikipedia.org/wiki/Komplexe_Zahl). Das bedeutet: [Reelle](https://de.wikipedia.org/wiki/Reelle_Zahl) plus [imaginäre](https://de.wikipedia.org/wiki/Imagin%C3%A4re_Zahl) Zahlen.
 
-Daten des Typen `raw` zeigen binäre Zahlen umgerechnet als hexadezimalzahlen an.
+Daten des Typen `raw` zeigen binäre Zahlen umgerechnet als Hexadezimalzahlen an.
 
 Wenn du, warum auch immer, das mal brauchen solltest: natürlich funktionieren auch hier die Funktionen `as.complex()` bzw. `as.raw()`.
 
-Beide Typen sind mir in meiner kompletten R Laufbahn noch nie in der Praxis über den Weg gelaufen. Solltest du ihnen begegnen, kannst du es jetzt aber einordnen.
+Beide Typen sind mir in meiner kompletten R Laufbahn noch nie in der Praxis über den Weg gelaufen. Solltest du ihnen begegnen, kannst du sie jetzt aber einordnen.
 
 #### Zusammenfassung Typen
 
@@ -875,20 +875,236 @@ Es gibt sehr viele Klassen in R und manche Funktionen funktionieren oder funktio
 
 Klingt kompliziert? Ist es auch. Und das ist total okay. Wir bringen gemeinsam Schritt für Schritt etwas Licht ins Dunkel.
 
-In einem Objekt können mehrere Daten gespeichert werden. Die Klasse sagt nun etwas darüber aus, wie das Objekt intern organisiert ist. 
+In einem Objekt können mehrere Daten gespeichert werden. Die Klasse sagt nun etwas darüber aus, wie das Objekt intern organisiert ist.
 
-```{r}
-vec <- as.double(1:10)
+Die Funktion `class()` gibt aus, welche Klasse das besagte Objekt hat.
 
+#### Eine Dimension
 
-vec
+##### Vektor
 
+![](images/victor.jpg){width="25%"}
 
-typeof(vec)
+Ein Vektor ist die einfachste Datenstruktur. Es ist quasi eine Aneinanderreihung von Zahlen. Einfache Zahlen werden als Vektor mit einem Eintrag gewertet. Wenn die Daten in einem Vektor Objekt organisiert sind, wirft die Funktion `class()` im groben und ganze den Typen der darin gespeicherten Daten aus.
 
-class(vec)
+:::aufgabe
+Finde für die aufgeführten Vektore de Datentyp und Objektklasse heraus. Mach dich mit den Gleichheiten und Unterschieden vertraut.
+:::
+
+```{r class1, exercise = TRUE}
+# im Folgenden werde aus oben genannten Gründen nur die vier Häufigsten Datentypen besprochen
+vec_dou <- c(0, 1, 2.3, -4, -5.6)
+vec_int <- c(0L, 7L, -8L)
+vec_cha <- c("das", "sind", "ein paar Worte")
+vec_log <- c(T, F, T, F)
 ```
 
+
+```{r class1-solution, setup.chunk = "class1"}
+# Zur Erinnerung die Datentypen:
+typeof(vec_dou)
+typeof(vec_int)
+typeof(vec_cha)
+typeof(vec_log)
+
+# Klassen
+class(vec_dou)
+class(vec_int)
+class(vec_cha)
+class(vec_log)
+```
+
+Huch? Datentyp `double` und Klasse `numerisch` - wie kommt das denn zustande?
+
+Tatsächlich liegt die unterschiedliche Antwort in der unterschiedlichen Frage: `typeof()` fragt nach dem grundlegenden **Datentyp** (also wie ist die Zahl im Rechner repräsentiert? $\to$ In diesem Fall eben als Fließkommazahl mit doppelter Genauigkeit) während `class()`die Klasse des Objekts anfragt, die angibt, wie R damit umgehen soll. (Das ist eine gröbere Unterteilung, es reicht die Info, dass es numerische Daten sind (und eben keine Buchstaben oä)).
+
+Und was ist bei gemischten Vektoren?
+
+```{r class2, exercise = T}
+# ein gemischter Vektor
+vec1 <- c(0, 2.3, -4, "manche Worte", TRUE, FALSE, 9L)
+
+typeof(vec1)
+class(vec1)
+
+# ein gemischter Vektor ohne characters
+vec2 <- c(0, 2.3, -4, TRUE, FALSE, 9L)
+
+typeof(vec2)
+class(vec2)
+
+# ein gemischter Vektor ohne characters und doubles
+vec3 <- c(TRUE, FALSE, 9L)
+
+typeof(vec3)
+class(vec3)
+
+# huch, integer?
+# Wir erinnern uns: 1 = TRUE, 0 = FALSE; integer sind ganze Zahlen; 0 und 1 sind ganze Zahlen
+# einmal prüfen:
+vec3 + 1
+
+# Das Ergebnis zeigt ganz klar, das TRUE und FALSE als 1 und 0 und deswegen als integers behandelt werden
+```
+
+
+Ein Vektor hat 1 Dimension. Nun werden Objekttypen besprochen, die mehr als 1 Dimension haben.
+
+##### Factor
+
+<details>
+<summary><a>▼ \* Für alle, dies wissen wollen.
+</a></summary>
+
+Factoren in R sind ne feine Angelegenheit. Auf den ersten Blick recht kompliziert und unintuitiv ermöglichen sie dem geübten Händchen vor allem hintenraus doch eine schnelles und einfaches Arbeiten. **Bitte trotz gleichem wording im Kopf konzeptuell trennen von dem statistischen Konzept Faktor aus der Faktorenanalyse, das ist was grundlegend anderes!** (Deswegen wird in diesem Kurs der Factor in R auch mit c geschrieben.)
+
+Ein Factor ist genau genommen ein Spezialfall eines Vektors für **kategoriale** Daten (also denen, die sich in nicht hierarchisch sortierbare Gruppen einteilen lassen (z.B. Farben, Städte, Studiengang etc.)) und **ordinale** Daten (also denen, wo sich die Gruppen zwar hierarchisieren lassen, die Abstände aber nicht interpretierbar sind (z.B. Rangfolgen von Lieblingssüßigkeiten, Filmen etc., Bildungsniveau, Plätze bei einem Sportwettkampf etc.)).
+
+Der einfachste Factor sieht aus wie ein Vektor:
+
+```{r class_fac1, exercise = TRUE}
+# Für dieses Beispiel mit Schulabschlüssen
+vec <- c("abi", "real", "ba", "real", "ba")
+fac <- factor(c("abi", "real", "ba", "real", "ba"))
+
+vec
+fac
+
+typeof(vec)
+typeof(fac)
+class(vec)
+class(fac)
+```
+
+Huch? Facort mit typ integer, obwohl es doch zweifelsfrei character sind?
+
+In R wird ein Factor intern als ganzzahliges (integer) Vektorobjekt repräsentiert. Wenn du einen Faktor erstellst, ordnet R den verschiedenen Kategorien im Faktor Ganzzahlen zu, die als Indizes oder Levels bezeichnet werden.
+
+Zu den schönen Facts von Factoren: Es ist möglich, die Inhalte des Factors zu sortieren und ihnen Labels zuzuweisen. Ersteres vereinfacht bestimmte Statistiken später zweiteres vereinfach viele Darstellungsmöglichkeiten.
+
+```{r class_fac2, exercise = TRUE, setup.chunk = "class_fac1"}
+fac <- factor(fac,                               # nimmt den alten Factor
+              levels = c("real", "abi", "ba"),   # hier wird die Reihenfolge bestimmt
+              ordered = TRUE,                    # und R mitgeteilt, dass diese auch bitte beachtet werden soll
+              labels = c("Realschulabschluss", "Abitur", "Bacholor") # Hier werden die Anzeigenamen bestimmt
+              )
+```
+
+Manche Funktionen kommen nicht mit einem klassichen Vektor klar, andere nicht mit einem Factor. Hier ist es relativ einfach möglich `as.numeric()` bzw. `as.factor()` zu verwenden.
+
+</details>
+
+
+#### Zwei-dimensionale Objekte: Data Frames, Matrizen, Tibbles
+
+2 Dimensionen in Daten heißt: Zeilen UND Spalten. Also im Grunde ist jede klassische Tabelle.
+
+R unterscheidet: Data Frames, Matritzen und Tibbles.
+
+**Data Frames**: Sind die mehrdimensionale Datenstruktur, die dir am häufigsten begegnen wird, mit der eigentlich standardmäßig gearbeitet wird. Wie eine Tabelle. Im Grunde mehrere nebeneinander geklebte Vektoren. Sie werden folgendermaßen erstellt:
+
+```{r class_df, exercise = TRUE}
+# Das Objekt wird benannt; es folgt ein Zuweisungspfeil; und die Funktion, die einen Dataframe erstellt
+data_df <- data.frame(
+  # Variablennamen für die erste Variable festlegen; hier folgt ein Gleichzeichen, kein Pfeil; Inhalt festlegen
+  namen = c("Joh", "Ma", "Lio"),
+  weg_km = c(1, 5, 2),
+  fahrzeug = c("Fuss", "Tram", "Rad")
+)
+
+data_df
+
+typeof(data_df)
+class(data_df)
+```
+
+Das `list` weist darauf hin, dass es verschiedene Datentypen in diesem Objekt gibt. Die Objektklasse `data.frame` ist genau die erwartete.
+
+Eine **Matrix** ist eine andere zweidimensionale Datenstruktur, die im Gegensatz zu einem Dataframe nur aus einem Datentyp besteht (z. B. numerisch, character). Sie wird dir nicht so häufig über den Weg laufen - dafür kannst du auch lineare Algebra etc. mit ihr rechnen.
+
+```{r class_mat, exercise = TRUE}
+# matrix() erstellt eine Matrix; 
+# data: EIN atomic Vector oder wird (meist mit viel Datenverlus in einen atomic Vector hinein gezwungen/ coerced); 
+# nrow: Reihenanzahl; ncol: Spaltenanzahl
+data_mat_1 <- matrix(data = 1:6, nrow = 2, ncol = 3)
+data_mat_2 <- matrix(1:6, nrow = 3, ncol = 2)
+
+data_mat_1
+data_mat_2
+
+typeof(data_mat_1)
+class(data_mat_1)
+```
+
+Da Matritzen nur einen Datentyp haben zeigt `typeof()` diesen auch an. Und `class()` sagt, wie erwartet, dass es sich um eine Matrix handelt.
+
+**Tibbles** sind eine sonderangelegenheit von R, die im Tidyverse mitgeliefert werden. Es sind quasi Data Frames nur in gemütlich.
+
+```{r class_tbl, exercise = TRUE}
+# notwendiges Paket laden
+library(tibble)
+
+data_tbl <- tibble(
+  namen = c("Joh", "Ma", "Lio"),
+  weg_km = c(1, 5, 2),
+  fahrzeug = c("Fuss", "Tram", "Rad")
+)
+
+data_tbl
+# gibt auf einen Blick mehr Infos aus
+
+typeof(data_tbl)
+class(data_tbl)
+```
+
+#### Mehrdimensionale Objekte: Listen und Arrays
+
+**Listen** sind grob gesagt mehrdimensionales Dataframes - es können also mehrere Dataframesin einem Objekt gespeichert werden. Die sind besonders wichtig, wenn das Arbeiten mit R noch mehr ins programmieren geht und Schrittweise Dinge abgespeichert werden sollen, sehr komplexe Daten berechnet werden oder auch häufig die Ausgabe von komplexeren Funktionen. Der Einfachheit halber
+
+
+
+```{r class_setup, include = FALSE}
+data_df <- data.frame(
+  # Variablennamen für die erste Variable festlegen; hier folgt ein Gleichzeichen, kein Pfeil; Inhalt festlegen
+  namen = c("Joh", "Ma", "Lio"),
+  weg_km = c(1, 5, 2),
+  fahrzeug = c("Fuss", "Tram", "Rad")
+)
+
+data_mat_1 <- matrix(data = 1:6, nrow = 2, ncol = 3)
+data_mat_2 <- matrix(1:6, nrow = 3, ncol = 2)
+
+```
+
+```{r class_lis, exercise = TRUE, setup.chunk = "class_setup"}
+data_lis <-list(
+  df_alt = data_df,
+  mat_1_alt = data_mat_1,
+  mat_2_alt = data_mat_2,
+  neue_daten_1 = 1:10,
+  neue_daten_2 = "Hier kommt einfach ein bisschen random Text hin."
+)
+
+data_lis
+
+typeof(data_lis)
+class(data_lis)
+```
+
+Um auf einzelne Listenelemente zugreifen zu können schaue gern auch in das Tutorial Indizierung.
+
+**Arrays** verhalten sich zu Listen wie Dataframes zu Matrizenn: Sie bestehen ebenfalls aus lediglich einem Datentypen und sind mehrdimensional. Auch diese sind eine eher selten vorkommende Klasse.
+
+```{r class_arr, exercise = TRUE}
+data_arr <- array(1:24, dim = c(2, 3, 4))
+
+data_arr
+
+typeof(data_arr)
+class(data_arr)
+```
+
+Das waren die am häufigsten vorkommenden Objektklassen.
 
 ## Abschlussquiz
 
@@ -931,18 +1147,33 @@ quiz(caption = "Teste dein Wissen!",
                            speichern wollen, sondern dann lieber am Ende des
                            Skripts mit einem Befehl in eine Datei auf der
                            Festplatte schreiben."),
-                    random_answer_order = TRUE),
+                    random_answer_order = TRUE,
+                    allow_retry = TRUE),
      question_text("Wie heißt dieser Operator `<-` auf Englisch?",
                    answer("assignment operator", correct = TRUE),
-                   answer("Assignment Operator", correct = TRUE)),
+                   answer("Assignment Operator", correct = TRUE), allow_retry = T),
      question_radio("Worauf könnte dieser Fehler hinweisen? \n`non-numeric argument to binary operator`",
                     answer("Dass einer Funktion wie z.B. `+` oder `-`, die Zahlen zum Rechnen braucht, Text als Input gegeben wurde.", correct = TRUE),
                     answer("Dass einer Funktion die Text erwartet, fälschlicherweise Zahlen als Input gegeben wurden"),
-                    answer("Dass der PC so kaputt ist, dass nicht einmal mehr die Grundrechenarten funktionieren."))
-     
-# Noch mehr Fragen erstellen
+                    answer("Dass der PC so kaputt ist, dass nicht einmal mehr die Grundrechenarten funktionieren."), allow_retry = TRUE),
+      question_checkbox("Welches sind am häufigsten verwendeten Datentypen in R?",
+                    answer("character", correct = T),
+                    answer("single", message = "Das ist zwar ein Datentyp in R aber sehrsehr selten, da R default mäßig Daten in doppelter Präzision (double precision/ 64 bit) speichert."),
+                    answer("double", correct = TRUE),
+                    answer("vector", message = "Das ist eine Objektklasse, kein Datentyp."),
+                    answer("numeric", message = "Das ist eine Objektklasse, kein Datentyp"),
+                    random_answer_order = TRUE,
+                    allow_retry = TRUE),
+     question_checkbox("Was kann R alles als logischen Vektor verarbeiten?",
+                       answer("1 und 0", correct = T),
+                       answer("T und F", correct = T),
+                       answer("WAHR und FALSCH", message = "Das ist schon nah dran. Jetzt noch einmal ins englische übersetzen, dann hast du es :)"),
+                       answer("TRUE und FALSE", correct = T),
+                      answer("W und F", message = "Das ist schon nah dran. Jetzt noch einmal ins englische übersetzen, dann hast du es :)"),
+                      random_answer_order = TRUE,
+                    allow_retry = TRUE)
+                       )
 
-     )
 ```
 
 ## Learnings heute
@@ -1015,7 +1246,7 @@ Leerzeichen enthalten oder mit einer Zahl beginnen.
 
 Im Environment werden die erstellten Objekte der laufenden Sitzung angezeigt. Bei Beenden von RStudio werden sie gelöscht, was die empfohlene Einstellung ist. So wird Replizierbarkeit trainiert: Nicht die erstellten Variablen werden aufbewahrt, sondern das Rezept um sie zu erstellen - in Form eines Skripts.
 
-### Diese neuen Konzepte kennen Sie nun:
+### Diese neuen Konzepte kennst du nun:
 
 -   Assignment `<-`
 
@@ -1027,6 +1258,10 @@ Im Environment werden die erstellten Objekte der laufenden Sitzung angezeigt. Be
 
 -   Zahlenreihen mit `:`
 
+-   Datentypen
+
+-   Objektklassen
+
 ### neue Funktionen
 
 | Code  | Beschreibung         |
@@ -1035,5 +1270,18 @@ Im Environment werden die erstellten Objekte der laufenden Sitzung angezeigt. Be
 | `<-`  | assignment operator: Objekte speichern |
 | `:`   | colon operator: Zahlenreihen erstellen |
 | `typeof()` | Datentyp bestimmen |
+| `class()`   | Objektklasse bestimmen |
 | `length()` | Länge eines Vektors |
-| `as.numeric()` | Umwandlung in Zahlenvektor |
+| `as.double()` | Umwandlung in logischen Vektor |
+| `as.integer()` | Umwandlung in Integer-Vektor (**Achtung: Fließkommazahlen werden immer nach unten gerundet!**) |
+| `as.character()` | Umwandlung in Buchstabenvektor |
+| `as.logical()` | Umwandlung in logischen Vektor |
+| `as.numeric()` | Umwandlung in Zahlenvektor (*häufiger verwendet als `as.double()`) |
+| `as.factor()`  | Umwandlung in Factor |
+| `as.data.frame()` | Umwandlung in data frame |
+| `as.matrix()` | Umwandlung in Matrix |
+| `as.tibble()` | Umwandlung in tibble |
+| `as.list()`   | Umwandlung in Liste |
+| `as.array()` | Umwandlung in Array |
+|`is.double()` | Logische Abfrage, analog zu den anderen Typen und Klassen abwandelbar |
+
