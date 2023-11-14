@@ -7,5 +7,6 @@
 inst/tutorials/template$
 \.html$
 figure-html$
-
+inst/studienleistungen$
+studienleistungen$
 ^\.github$
