@@ -406,7 +406,7 @@ Um das Ganze etwas praktischer zu gestalten, verwenden wir nun mal einen realen 
 
 Erfasst sind dort die tägliche Maximaltemperatur in Grad Fahrenheit, und die Anzahl von durch Überhitzung verursachten Notaufnahme-Fällen in den Krankenhäusern von New York für den jeweiligen Tag.
 
-Um dir einen Überblick über die den Datensatz zu verschaffen, ist es stets ratsam, diesen zunächt anzeigen zu lassen
+Um dir einen Überblick über die den Datensatz zu verschaffen, ist es stets ratsam, diesen zunächt anzeigen zu lassen, führe dafür den Codeblock aus.
 
 ```{r heated}
 rtutorials::heated
@@ -414,19 +414,19 @@ rtutorials::heated
 
 ## Indizierung bei Data Frames
 
-Um gezielt eine bestimmte Spalte anzusteuern, benötigen Sie den `$`-Operator.
+Um gezielt eine bestimmte Spalte anzusteuern, benötigen du also den `$`-Operator.
 
 (Beispiel einfügen)
 
 (Exercise einfügen)
 
-An sich können Sie für die Spalten die gleichen Mechanismen verwenden wie für Vektoren, denn es *sind* Vektoren.
+An sich kannst du für die Spalten die gleichen Mechanismen verwenden wie für Vektoren, denn es *sind* Vektoren.
 
 (Beispiel einfügen)
 
 (Exercise)
 
-Bemerken Sie, dass bei Data Frames der Output beim Indizieren mit dem `$`-Operator immer ein Vektor ist.
+Du siehst, dass bei Data Frames der Output beim Indizieren mit dem `$`-Operator immer ein Vektor ist.
 
 Es gibt noch eine andere Methode, die bei Data Frames immer auch einen Data Frame zurückgibt.
 
@@ -444,7 +444,7 @@ Deswegen brauchen wir für Data Frames auch zwei Positionsangaben, mit einem Kom
 
 (Exercise)
 
-Bemerken Sie, dass Sie mit `[ , ]` immer einen Data Frame zurückbekommen, während Sie mit `$` nur den jeweiligen Vektor ausgegeben bekommen der die Spalte darstellt.
+Du siehst, dass du mit `[ , ]` immer einen Data Frame zurückbekommst, während du mit `$` nur den jeweiligen Vektor ausgegeben bekommst der die Spalte darstellt.
 
 ### Learnings
 
@@ -459,7 +459,7 @@ Hier ist ein Beispiel: 2022 hat der Fachbereich 14 der Uni Kassel eine groß ang
 -   `alter` (selbsterklärend)
 -   `nutzung`: die Gesamtanzahl von Tagen pro Monat, an denen das Ticket genutzt wurde.
 
-Lassen Sie sich den Datensatz `net` ausgeben!
+Lasse dir den Datensatz `net` ausgeben!
 
 ```{r net, exercise = TRUE, exercise.caption = "Neun-Euro-Ticket"}
 rtutorials::net
@@ -763,7 +763,9 @@ Du hast gelernt: - Data Frames sind der Struktur nach benannte Listen - benannte
 
 ### Neue Funktionen
 
-eine Tabelle mit den wichtigesten Codes des Tutorials \| Code \| Beschreibung \| \|----------------\|----------------------------------------\| \| `[ ]` \| Indizierung \| \| `&` \| UND-Operator für logische Indizierung \|
+eine Tabelle mit den wichtigesten Codes des Tutorials \| Code \| Beschreibung \| \|-------\|--------------\| \| `[ ]` \| Indizierung \| \| `&` \| UND-Operator für logische Indizierung \|
+
+`as_tibble()`
 
 ## Credit
 
@@ -772,4 +774,3 @@ eine Tabelle mit den wichtigesten Codes des Tutorials \| Code \| Beschreibung \|
 Dieses Tutorial wurde (größtenteils) von Lukas Bruelheide sowie in Teilen von Marie Klosterkamp geschrieben.
 
 ggf.: Bei der Erstellung (u.a. der Beispiele, Aufgaben und Zusammenfassung) wurde teilweise von ChatGPT gebrauch gemacht.
-
