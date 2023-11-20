@@ -68,14 +68,14 @@ Erstellt aus einzelnen Vektoren eine Tabelle. Die Vektoren müssen gleich lang s
 
 Die Idee eines Data Frames ist, einen Haufen Vektoren gleicher Länge zu nehmen und damit eine Tabelle zu bauen. Dabei ist **jede Spalte ein Vektor**. Anders ausgedrückt: jede Spalte ist eine Variable.
 
-Das ist eine wichtige Grundstruktur, die du dir merken solltest, denn es bedeutet dass für die Spalten einer Tabelle die gleichen Mechanismen greifen wie bei Vektoren.
+Das ist eine wichtige Grundstruktur, die du dir merken solltest, denn es bedeutet, dass für die Spalten einer Tabelle die gleichen Mechanismen greifen wie bei Vektoren.
 
 ::: gelb
 **Disclaimer**
 
-In der Praxis wirst du zur Dateneingabe ein grafisches Programm wie Excel verwenden, und die fertige Tabelle dann für die Verwendung mit R importieren. Das wirst du im Tutorial "Datenimport" lernen.
+In der Praxis wirst du zur Dateneingabe ein grafisches Programm wie Excel verwenden, und die fertige Tabelle dann für die Verwendung mit R importieren. Das wirst du im nächsten Tutorial "Datenimport" lernen.
 
-Wir fokussieren uns hier auf das Hantieren mit Data Frames, denn egal wie du die Tabelle erstellt hast - durch Import aus Excel oder Zusammensetzen einzelner Vektoren, es wird immer ein Data Frame sein in R.
+Wir fokussieren uns hier darauf das Hantieren mit Data Frames, denn egal wie du die Tabelle erstellt hast - durch Import aus Excel oder Zusammensetzen einzelner Vektoren, es wird immer ein Data Frame in R sein.
 
 Wenn im Folgenden immer wieder kleine Data Frames aus Vektoren erstellt werden, dient das nur dazu, Beispiele zu konstruieren um den Umgang zu erlernen, aber nicht weil das die übliche Methode ist, wie Daten in R eingegeben werden.
 :::
