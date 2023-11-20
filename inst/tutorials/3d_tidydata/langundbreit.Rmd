@@ -5,6 +5,7 @@ output:
     language: de
     css: css/boxes.css
     fig_caption: no
+    df_print: default
 runtime: shiny_prerendered
 bibliography: ref.json
 link-citations: TRUE
@@ -16,13 +17,47 @@ resource_files:
 ```{r setup, include=FALSE}
 library(learnr)
 knitr::opts_chunk$set(echo = FALSE)
+library(rtutorials)
+library(tidyr)
+library(tibble)
 ```
 
-## Inhalt 
-
-Dieses Tutorial ist zum allergrößten Teil eine Übersetzung + Adaption des Buchkapitels [Tidy Data](https://r4ds.had.co.nz/tidy-data.html) aus Hadley Wickhams "R for Data Science". 
-
 ## Lernziele
+
+In diesem Tutorial lernst du:
+
+- Was es mit den Begriffen *long* und *wide* in Bezug auf Daten auf sich hat
+- Wie du aus dem *wide*-Format in ein *long*-Format umwandeln kannst
+- und warum das *long*-Format für Rechnungen mit R oft notwendig ist
+
+## Umwandlung *wide* nach *long*
+
+Wir nutzen dafür die Funktion `pivot_longer()` aus dem Paket `tidyr`.
+
+::: aufgabe
+Erster Schritt: Lade das Paket `tidyr` in die aktive Sitzung!
+:::
+
+```{r loadplyr, exercise = TRUE, exercise.cap = "benötigtes Paket laden" }
+
+```
+
+```{r loadplyr-solution}
+library(tidyr)
+```
+
+### Daten
+
+```{r dataexplorer, exercise = TRUE}
+fallcolor_wide |> tibble::as_tibble()
+```
+
+```{r dataquiz}
+question_numeric("Wie viele Spalten hat der Datensatz `fallcolor_wide`?",
+                 answer(68, correct = TRUE,
+                        message = "Kann z.B. herausgefunden werden über `ncol()`. "))
+```
+
 
 ## Abschlussquiz
 
