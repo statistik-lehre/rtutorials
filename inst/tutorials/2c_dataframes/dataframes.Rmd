@@ -170,9 +170,9 @@ Die Matrix ist dir vielleicht noch ein Begriff aus der Filmwelt und hoffentlich 
 
 ![](images/matrix.png){width="80%"}
 
-### Matrix erstellen
+#### Matrix erstellen
 
-Eine Matrix in R ist eine flexible Datenstruktur, die es dir ermöglicht, verschiedene Datentypen zu speichern. Sie wird durch den Befehl `matrix()` erstellt. Von der Dokumentation (Hilfe) kannst du erfahren, dass dieser Befehl folgende Argumente ermöglicht: `matrix(data = NA, nrow = 1, ncol = 1, byrow = FALSE,dimnames = NULL)`
+Eine Matrix in R ist eine flexible Datenstruktur, die es dir ermöglicht, verschiedene Datentypen zu speichern. Sie wird durch den Befehl `matrix()` erstellt. Von der Dokumentation (Hilfe) kannst du erfahren, dass dieser Befehl folgende Argumente ermöglicht: `matrix(data = NA, nrow = 1, ncol = 1)`
 
 ```{r matrix, exercise = TRUE, exercise.caption = "Beispiel: Erstellen einer Matrix"}
 # unsere bekannten WG-Daten
@@ -229,23 +229,146 @@ Merke auf eine Matrix greifst du wie folgt zu: `matrix[Zeile, Spalte]`
 
 Da es visuell leichter zu verstehen ist, auch hier ein kurzer Ausschnitt aus dem `Cheat Sheet`.
 
-![](images/matrix_subsetting.png){width = "20%"} source: [Base R cheat sheet by Mhairi McNeil](https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf)
+![](images/matrix_index.png){width="50%"} source:[Base R cheat sheet by Mhairi McNeil](https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf)
 
 ### Listen
 
-\<\<<Erklärung anfügen>\>\>
+Eine Liste kann verstanden werden als ein "allgemeiner Vektor", welcher normale Vektoren enthalten kann - und sogar andere Listen (das wird dann aber schnell sehr unübersichtlich).
 
-### Listen erstellen
+Ein ganz zentraler Punkt: Während normale Vektoren *atomic* sind, also immer nur Daten des gleichen Typs beherbergen können, können Listen gemischte Daten enthalten und Daten verschiedener Länge.
 
-Eine Liste ist eine flexible Datenstruktur, die es dir ermöglicht, verschiedene Datentypen zu speichern. Hier ist ein Beispiel:
+Hier ein Beispiel:
 
-\<\<<Beispiel anfügen>\>\>
+```{r list_example, exercise = TRUE}
+# named vector:
+named_vec <- c(
+  aepfel = 10,
+  birnen = "zwanzig",
+  pflaumen = 30)
 
-\<\<<Aufgabe anfügen>\>\>
+# Liste:
+named_li <- list(
+  aepfel = 10,
+  birnen = "zwanzig",
+  pflaumen = 30)
+
+named_vec
+named_li
+```
+
+Der Vektor (oben im Output) kann nur Daten eines einzigen Typs enthalten. Da er den Text "zwanzig" enthält, werden die Zahlen automatisch auch zu Text umgeformt und mit Anführungszeichen umgeben. (Siehe auch Tutorial "Vektoren").
+
+Die Liste (unten) hingegen kann problemlos Text und Zahlen gleichzeitig aufnehmen.
+
+Ein weiterer Vorteil von Listen ist, dass sie auch Elemente unterschiedlicher Länge enthalten darf.
+
+#### Listen erstellen
+
+Eine Liste ist dadurch eine sehr flexible Datenstruktur, die es dir ermöglicht, verschiedene Datentypen mit verschieden vielen Einträgen zu speichern.
+
+Du erstellst eine Liste mit dem `list()` Befehl. Als Argumente gibts du lediglich deine Variablen nacheinander ein.
+
+```{r liste1, exercise = TRUE, exercise.setup="matrix", exercise.caption = "Beispiel: Erstellen einer Matrix"}
+x <- c("Amadou", "Mira", "Luisa", "Alex")
+y <- c(2000, 2001, 1990, 1995)
+z <- 5.23 
+
+# zum Vergleich 
+wg_matrix # unsere matrix
+
+wg_list <- list(x,y,z)
+wg_list # unsere Liste
+```
+
+Du siehst die Variablen (Spalten) bekommen doppelte eckige Klammern und die Einträge (Zeilen) einfache eckige Klammern. Wenn wir so auf eine Variable zugreifen wollen wird es schnell unübersichtlich. Wollen wir z.B. auf den Jahrgang von Amadou zugreifen wäre das wg_list[[2]][1]. Probiere es gerne mal aus:
+
+```{r liste2, exercise = TRUE, exercise.setup="liste1", exercise.caption = "Beispiel: Erstellen einer Matrix"}
+# ersetze die "Spalte" und "Zeile", um das Prinzip zu verstehen
+wg_list[[Spalte]][Zeile]
+```
+
+Wie gesagt, ist dies etwas mühsam. Listen können jedoch viel mehr! Sie erlauben die Benutzung eines speziellen Operators zur Indizierung: Der `$`- Operator. Er ist speziell für das Indizieren bei benannten Listen gedacht. Hat eine Tabelle überschriften so werden diese übernommen, für unsere Vektoren müssen wir erneut auf die explizite Namensgebung zurückgreifen.
+
+Jetzt bist du dran! Erinnerst du dich noch wie die Namensgebung in R funktioniert?
+
+::: Aufgabe
+1)  Füttere die Vektoren `x`, `y` und `z` in die Liste und gib Ihnen die Namen `name`, `jahrgang` und `grundpreis`.
+2)  lass dir wg_liste anzeigen
+:::
+
+```{r listennamen, exercise = TRUE}
+x <- c("Amadou", "Mira", "Luisa", "Alex")
+y <- c(2000, 2001, 1990, 1995)
+z <- 5.23 
+wg_liste <- list()
+
+```
+
+```{r listennamen-hint-01}
+wg_liste <- list(
+  name , # sage R, dass name dem Vektor x entspricht
+  jahrgang , # sage R, dass jahrgang dem Vektor y entspricht
+  grundpreis  # sage R, dass grundpreis dem Vektor z entspricht
+) 
+# Anzeigen über Nennug des Objektes
+```
+
+```{r listennamen-solution}
+x <- c("Amadou", "Mira", "Luisa", "Alex")
+y <- c(2000, 2001, 1990, 1995)
+z <- 5.23 
+wg_liste <- list(
+  name = x,
+  jahrgang = y, 
+  grundpreis = z 
+) 
+wg_liste
+```
+
+In der Ausgabe solltest du jetzt also sehen, dass sich die `[[1]]`,`[[2]]` und `[[3]]` respektive in `$name`, `$jahrgang` und `$grundpreis` gewandelt haben.
+
+Wollen wir jetzt auf einen Eintrag in der Liste zugreifen können wir dies ganz bequem über den `$`- Operator, ganz ohne eckige Klammern. Es verhält sich dann wieder so als wäre es nur ein einzelner Vektor
+
+```{r dollarsign1, exercise = TRUE, exercise.setup = "listennamen"}
+wg_liste$name
+wg_liste$jahrgang[3]
+```
+
+#### Listen bearbeiten
+
+Aber es kommt noch besser! Wir können neue Variablen auch mit dem `$`-Operator ganz einfach zur Liste hinzufügen:
+
+Bei so viel Arbeit, hat sich die WG doch ein paar Balkone verdient. Führe den Code aus und finde heraus, wer bei der Renovierung einen Balkon an sein Zimmer bekommen hat.
+
+```{r dollarsign2, exercise = TRUE, exercise.setup = "listennamen"}
+wg_liste$balkon <- c(TRUE, TRUE, FALSE, FALSE)
+wg_liste
+```
+
+Jetzt bist du dran!Übe ein bisschen mit den folgenden Aufgaben:
+
+::: Aufagabe
+1)  Füge der Liste die Informationen zu der Zimmergröße der Mitbewohnenden hinzu. Nutze dafür den Variablennamen `qm`. Die Werte darfst du dir gerne selbst aussuchen.
+2)  Lass dir den zweiten und dritten Eintrag für die Variable *qm* gleichzeitig anzeigen.
+:::
+
+```{r dollarsign3, exercise = TRUE, exercise.setup = "dollarsign2"}
+
+```
+
+```{r dollarsign3-hint-01}
+wg_liste$qm <- c() # erstell einen Vektor in der Liste wg mit den Quadratmeterangaben 
+wg_liste$qm[] # greife auf das 2 und 3 Element des Vektors qm der Liste wg_liste zu 
+```
+
+```{r dollarsign3-hint-02}
+wg_liste$qm <- c(33, 15, 10, 20) # erstellt einen neuen Vektor in der Liste wg mit den Quadratmeterangaben 
+wg_liste$qm[2:3] # greift auf das 2 und 3 Element des Vektors qm der Liste wg_liste zu 
+```
 
 ### Data Frames
 
-Eine besondere Art von Liste ist der Data Frame. Ein Data Frame organisiert Daten in tabellarischer Form.
+Eine besondere Art von Liste bzw. Matrix ist der Data Frame. Ein Data Frame organisiert Daten in tabellarischer Form. Das charakterisierende Merkmal ist, dass alle Elemente die gleiche Länge haben müssen, während das für Listen generell nicht so sein muss.
 
 \<\<<Erklärung anfügen>\>\>
 
@@ -272,6 +395,16 @@ Manchmal möchtest du Spalten oder Zeilen hinzufügen oder entfernen.
 ::: aufgabe
 Füge dem Data Frame wg_df eine neue Spalte namens miete hinzu, indem du den grundpreis mit der quadratmeter multiplizierst. Entferne die Spalte balkon aus dem Data Frame wg_df.
 :::
+
+## Abschlussquizz
+
+## Learnings
+
+### Zusammenfassung
+
+### Diese neuen Konzepte kennst du jetzt
+
+### Neue Funktionen
 
 ## Credit
 
