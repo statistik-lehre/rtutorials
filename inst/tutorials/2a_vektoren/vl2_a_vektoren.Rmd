@@ -193,7 +193,7 @@ Lasse dir nun `y` ausgeben!
 ```
 
 ```{r y_print-setup}
-y
+y <- 10
 ```
 
 ::: grau-nb
@@ -1078,7 +1078,7 @@ class(data_tbl)
 
 **Listen** sind grob gesagt mehrdimensionale Dataframes - es können also mehrere Dataframes in einem Objekt gespeichert werden. Die sind besonders wichtig, wenn das Arbeiten mit R noch mehr ins Programmieren geht und Schrittweise Dinge abgespeichert werden sollen, sehr komplexe Daten berechnet werden oder auch häufig die Ausgabe von komplexeren Funktionen benötigt wird. 
 
-```{r class-setup, include = FALSE}
+```{r class-setup}
 data_df <- data.frame(
   # Variablennamen für die erste Variable festlegen; hier folgt ein Gleichzeichen, kein Pfeil; Inhalt festlegen
   namen = c("Joh", "Ma", "Lio"),
@@ -1091,7 +1091,7 @@ data_mat_2 <- matrix(1:6, nrow = 3, ncol = 2)
 
 ```
 
-```{r class_lis, exercise = TRUE, setup.chunk = "class_setup"}
+```{r class, exercise = TRUE}
 data_lis <-list(
   df_alt = data_df,
   mat_1_alt = data_mat_1,
