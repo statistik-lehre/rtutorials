@@ -424,7 +424,7 @@ Wie du jetzt schon gelernt hast können wir für Data Frames sowohl Matrix- als 
 Falls du dich fragst, was `Subsetting` eigentlich heißt: Subsetting in Data Frames ermöglicht es dir, spezifische Teile deiner Daten zu extrahieren und mit diesem Teilbereich damit weiter zu rechnen bzw. in einem neuen Data Frame zu speichern.
 :::
 
-Lass es uns doch gemeinsam ausprobieren.
+Lass es uns doch gemeinsam in den nächsten Schritten ausprobieren.
 
 ##### Matrix Subsetting
 
@@ -528,6 +528,8 @@ Merke: List Subsetting mit dem \$-Operator ist sehr nützlich, um auf Variablen 
 :::
 
 ##### Untersuchen des Data Frames
+
+Es gibt 3 wesentliche Funktionen, um deinen Data Frame zu betrachten. - nrow() - ncol() - dim()
 
 ##### Hinzufügen oder entfernen von Daten
 
