@@ -447,13 +447,13 @@ wg_df <- data.frame(
 
 Jetzt bist du dran!
 
-::: Aufgabe
+::: aufgabe
 1)  Führe zunächst den Code aus, um dir den Data Frame anzeigen zu lassen.
 2)  Nutze nun Matrix Subsetting um auf die `qm` Angaben der gesamten WG zuzugreifen
 3)  Greife nur auf die `qm` von Mira zu.
 :::
 
-```{r dfm1, exercise = TRUE, exercise.caption = "Beispiel: Matrix subsetting"}
+```{r dfm1, exercise = TRUE, exercise.caption = "Beispiel: Matrix subsetting", exercise.setup= "dfm" }
 # Aufgabe 1 
 wg_df # Anzeigen des Data Frames
 ```
@@ -480,9 +480,15 @@ Beim List Subsetting wird ein Data Frame als Liste von Vektoren betrachtet. Jede
 
 Diese Art der Indizierung ist besonders praktisch, wenn du auf bestimmte Variablen zugreifen möchtest, da es die Lesbarkeit deines Codes erhöht.
 
-Versuch es direkt mal aus, wie können wir mit List Subsetting auf die gleichen Daten zugreifen? ::: Aufgabe 1) Führe zunächst den Code aus, um dir den Data Frame anzeigen zu lassen. 2) Nutze nun List Subsetting um auf die `qm` Angaben der gesamten WG zuzugreifen 3) Greife nur auf die `qm` von Mira zu. :::
+Versuch es direkt mal aus, wie können wir mit List Subsetting auf die gleichen Daten zugreifen?
 
-```{r dfm2, exercise = TRUE, exercise.caption = "Beispiel: Matrix subsetting"}
+::: aufgabe
+1)  Führe zunächst den Code aus, um dir den Data Frame anzeigen zu lassen.
+2)  Nutze nun List Subsetting um auf die `qm` Angaben der gesamten WG zuzugreifen
+3)  Greife nur auf die `qm` von Mira zu.
+:::
+
+```{r dfm2, exercise = TRUE, exercise.caption = "Beispiel: Matrix subsetting", exercise.setup= "dfm"}
 wg_df # Anzeige des Data Frames
 ```
 
@@ -529,32 +535,219 @@ Merke: List Subsetting mit dem \$-Operator ist sehr nützlich, um auf Variablen 
 
 ##### Untersuchen des Data Frames
 
-Es gibt 3 wesentliche Funktionen, um deinen Data Frame zu betrachten. - nrow() - ncol() - dim()
+Es gibt 3 wesentliche Funktionen, um deinen Data Frame zu betrachten.
+
+-   `nrow()`
+-   `ncol()`
+-   `dim()`
+
+Was sie dir über den Data Framen sagen, kannst du hier ausprobieren:
+
+wir nuzten wieder den WG-Data Frame, dessen Daten du dir nochmal ausgeben lassen kannst, indem du den Code zunächst ausführst und dann an den Code änderst.
+
+::: aufgabe
+nutze die Funktionen `ncol()`und `dim()` ebenfalls für den Data Frame wg_df.
+:::
+
+```{r dfm3, exercise = TRUE, exercise.caption = "Beispiel: Matrix subsetting", , exercise.setup= "dfm"}
+# Anzeige des Data Frames
+wg_df
+# nutze nrow()
+nrow(wg_df)
+# Nutze ncol()
+
+# Nutze dim()
+
+```
+
+```{r dfm3-solution}
+# Anzeige des Data Frames
+wg_df
+# nutze nrow()
+nrow(wg_df)
+# Nutze ncol()
+
+# Nutze dim()
+
+```
+
+Wenn alles geklappt hat, hast du jetzt rausgefunden: 1) wie viele **Zeilen** der Data Frame hat 2) wie viele **Spalten** der Data Frame hat 3) hast dir in einem Vektor **Zeilen** und **Spaltenzahl** ausgeben lassen
+
+"Wofür brauchen wir das?" - Wenn wir später mit unseren eigenen Daten arbeiten können wir so schnell sehen, wie viele Versuchspersonen oder Beobachtungen wir erhoben haben und wie viele Variablen wir haben. Wenn du gut aufgepasst hast, kannst du im Quizz dein Wissen testen:
+
+```{r dimension-quiz, echo = FALSE}
+learnr::question_checkbox(
+  "Wofür stehen die Dimensionen des Data Frames?",
+  answer("Die Spaltenanzahl sagt uns, wie viele Beobachtungen wir haben",
+         ),
+  answer("Die Zeilenanzahl sagt uns, wie viele Beobachtungen wir haben",
+         correct = TRUE),
+  answer("Die Spaltenanzahl sagt uns wie viele Variablen in dem Datenset sind",
+         correct = TRUE),
+  answer("Die Zeilenanzahl sagt uns, wie viele Variablen in dem Datenset sind",
+         ),
+  allow_retry = TRUE
+)
+```
+
+::: blue-nb
+Merke: mit `dim()` kannst du dir die Dimensionen deines Data Frames anzeigen lassen
+:::
 
 ##### Hinzufügen oder entfernen von Daten
 
-Data Frames können aber noch mehr! Es gibt zwei
+Manchmal möchtest du weitere Variablen (Spalten) oder auch Beobachtungen (Zeilen) zu einem bestehenden Data Frame hinzufügen. Dafür gibt es die zwei nützlichen Befehle `cbind()`n und `rbind()`.
 
-Manchmal möchtest du Spalten oder Zeilen hinzufügen oder entfernen.
+Was diese tun kannst du aus dieser Abbildung schließen:
 
-\<\<<Erklärung anfügen>\>\>
+![](images/cbind.png){width="40%"}
 
-\<\<<Beispiel anfügen>\>\>
+![](images/rbind.png){width="40%"}
+
+source: [Base R cheat sheet by Mhairi McNeil](https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf)
+
+Beide Befehle nehmen die selben Argumente. `cbind(dataframe, variable_to_add)` `rbind(dataframe, data_to_add)`
+
+Das erste Argument ist der bestehende Data Frame, das zweite die hinzuzufügende Spalte (cbind) oder Zeile (nrow). Schau es dir doch einfach im Beispiel einmal an. Denk dran, die Argumente der Funktion werden durch `,` getrennt.
+
+Beispiel:
+
+```{r cbind, exercise = TRUE, exercise.setup = "dfm", exercise.caption = "Hautiere"}
+# Nutzung von cbind um die Spalte 'haustier' hinzuzufügen
+wg_df <- cbind(wg_df, haustier = c(TRUE, FALSE, TRUE, FALSE))
+wg_df
+```
+
+::: info
+Vorsicht! Denk dran, dass Data Frames nur Variablen gleicher Länge aufnehmen können.
+:::
+
+Du bist dran!
 
 ::: aufgabe
-Füge dem Data Frame wg_df eine neue Spalte namens miete hinzu, indem du den grundpreis mit der quadratmeter multiplizierst. Entferne die Spalte balkon aus dem Data Frame wg_df.
+Die Wg wurde renoviert und hat ein Zimmer mehr zur Verfügung. Bei dem heutigen Mietmarkt dauert es auch nicht lang und ein neues WG Mitglied zieht ein. Von der Bewerbung und mittels eurer Unterlagen hast du folgende Daten die hinzugefügt werden müssen: - `Fin`, wurde `1992` geboren, hat `kein Haustier` - das Zimmer ist `13qm` groß und `hat einen Balkon` - die Grundmiete ist weiterhin `5.23`
+
+Lasse dir `wg_df` danach anzeigen, um zu überprüfen ob das neue WG Mitglied da ist.
 :::
+
+```{r rbind, exercise = TRUE, exercise.setup = "cbind", exercise.caption = "Neues Mitglied"}
+wg_df <- rbind(wg_df, haustier = c(TRUE, FALSE, TRUE, FALSE))
+
+```
+
+```{r rbind-hint}
+# füge die Informationen in der richtigen Reihenfolge und durch Kommata getrennt ein. 
+# beachte die " " für Daten des Typs charakter
+wg_df <- rbind(wg_df, c("", , , , , ))
+wg_df
+```
+
+```{r rbind-solution}
+# füge die Informationen in der richtigen Reihenfolge und durch Kommata getrennt ein. 
+# beachte die " " für Daten des Typs charakter
+wg_df <- rbind(wg_df, c("Fin", 1992, 5.23, 13, TRUE, FALSE))
+wg_df # Anzeige des neuen data frames
+```
+
+<br>
+
+Hast du es geschafft? Dann kannst du wirklich stolz sein! Das war nicht einfach! 🚀 Damit beherrscht du nun die Grundlagen für das Hantieren mit Data Frames.
 
 ## Abschlussquizz
 
+```{r Abschluss-quiz, echo = FALSE}
+learnr::question_checkbox("Was hast du über Data Frames gelernt?",
+         answer("Data Frames in R sind eine flexible Datenstruktur, die es erlauben, verschiedene Datentypen zu speichern."),
+         answer("Data Frames können durch den Befehl `data.frame()` erstellt werden.", 
+                 correct = TRUE,
+                 message = "Richtig! Der Befehl `data.frame()` erstellt Data Frames."),
+         answer("In einem Data Frame müssen alle Spalten den gleichen Datentyp haben.",
+                 message = "Falsch. Data Frames können verschiedene Datentypen in unterschiedlichen Spalten haben."),
+         answer("Mit `cbind()` können Spalten zu einem Data Frame hinzugefügt werden.",
+                 correct = TRUE,
+                 message = "Richtig! `cbind()` wird genutzt, um Spalten hinzuzufügen."),
+         allow_retry = TRUE
+         )
+```
+
 ## Learnings
+
+So hast du heute abgeschnitten:
+
+```{r context="server"}
+# Shiny App um die Anzahl richtig beantworteter Fragen anzuzeigen. 
+# Funktioniert in jedem Tutorial
+
+shiny::observeEvent(
+  input$get_score, 
+  {
+    objs2 = learnr:::get_tutorial_state()
+    
+    # Number of correct questions
+    
+    n_correct <- 
+      # Access the $correct sublist item in each list item
+        lapply(objs2, purrr::pluck, "correct") |>
+           # make it a vector containing: TRUE and FALSE and NAs
+           # NA is appearing for list items which don't have
+           # a $correct subitem
+                unlist() |> 
+           # Taking the sum of a logical Vector returns the number of TRUEs
+                sum(na.rm=TRUE)
+    
+    # Number of total questions
+    
+    total_questions <- 
+      # 1. Access $type in each list item and make it a vector of types
+      lapply(objs2, purrr::pluck, "type") |> unlist()
+    
+    # 2. Count the number of "question" in that vector
+    total_questions <- total_questions[total_questions == "question"] |> 
+      length()
+      
+      
+    output$score = shiny::renderText(
+      paste0(n_correct, " von ", total_questions,
+        " im gesamten Tutorial beantworteten Fragen waren richtig.")
+)
+    invisible()
+  }
+)
+```
+
+```{r score, echo=FALSE}
+shiny::br()
+shiny::actionButton("get_score", "Auswertung!")
+shiny::br()
+shiny::br()
+shiny::textOutput("score")
+shiny::br()
+```
 
 ### Zusammenfassung
 
-### Diese neuen Konzepte kennst du jetzt
+Du hast gelernt:
+
+-   **Data Frames:** Du hast gelernt, dass Data Frames in R flexible Datenstrukturen sind, die es erlauben, verschiedene Datentypen in tabellenartiger Form zu speichern.
+-   **Erstellung:** Die Erstellung von Data Frames mithilfe des Befehls `data.frame()` wurde eingeführt.
+-   **Subsetting:** Du hast verstanden, dass Data Frames sowohl mit Listen- als auch Matrix-Subsetting-Techniken manipuliert werden können.
+-   **Spalten hinzufügen:** Die Funktion `cbind()` wird verwendet, um neue Spalten zu einem Data Frame hinzuzufügen.
+-   **Zeilen hinzufügen:** Die Funktion `rbind` wird verwendet, um neue Zeilen zu einem Data Frame hinzuzufügen.
 
 ### Neue Funktionen
 
+| Funktion               | Beschreibung                                                                   |
+|------------------------|--------------------------------------------------------------------------------|
+| `data.frame()`         | Erstellt einen Data Frame aus einzelnen Vektoren.                              |
+| `list()`               | Erstellt eine Liste                                                            |
+| `matrix()`             | Erstellt eine Matrix                                                           |
+| `nrow()`, `ncol()`     | Gibt die Anzahl der Zeilen bzw. Spalten eines Data Frames zurück.              |
+| `dim()`                | Gibt die Dimensionen (Anzahl der Zeilen und Spalten) eines Data Frames zurück. |
+| `cbind()`              | Fügt neue Spalten zu einem Data Frame hinzu.                                   |
+| `rbind()`              | Fügt neue Zeilen zu einem Data Frame hinzu.                                    |
+| `liste$name[Zeile]`    | Auswahl von Elementen in einer Liste durch Index oder Namen.                   |
+| `matrix[Spalte,Zeile]` | Auswahl von Elementen in einer Matrix durch Zeilen und Spaltenindex.           |
+
 ## Credit
 
-Dieses Tutorial wurde (größtenteils) von Marie Klosterkamp sowie in Teilen von Lukas Bruelheide geschrieben. Bei der Erstellung (u.a. der Beispiele, Aufgaben, Bilder und Zusammenfassung) wurde teilweise von ChatGPT gebrauch gemacht.
+Dieses Tutorial wurde (größtenteils) von Marie Klosterkamp sowie in Teilen von Lukas Bruelheide geschrieben. Bei der Erstellung (u.a. der Bilder, Beispielen, Aufgaben und Zusammenfassung) wurde teilweise von ChatGPT und Bing AI gebrauch gemacht.
