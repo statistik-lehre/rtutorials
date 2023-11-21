@@ -749,28 +749,28 @@ shiny::br()
 
 ### Zusammenfassung
 
-Du hast gelernt: - Data Frames sind der Struktur nach benannte Listen - benannte Listen verwenden `$` zum Indizieren - Folglich verwenden Data Frames `$` zum Indizieren.
+Du hast gelernt:
 
--   `$` ist ein Werkzeug, um Bestandteile einer Liste mit ihrem Namen aufzurufen.
-
-### Diese neuen Konzepte kennst du nun:
-
--   
-
-    ```         
-    Stichpunktartige Beschreibung
-    ```
+-   **Data Frames:** Du hast gelernt, dass Data Frames in R flexible Datenstrukturen sind, die es erlauben, verschiedene Datentypen in tabellenartiger Form zu speichern.
+-   **Erstellung:** Die Erstellung von Data Frames mithilfe des Befehls `data.frame()` wurde eingeführt.
+-   **Subsetting:** DU hast verstanden, dass Data Frames sowohl mit Listen- als auch Matrix-Subsetting-Techniken manipuliert werden können.
+-   **Spalten hinzufügen:** Die Funktion `cbind()` wurde verwendet, um neue Spalten zu einem Data Frame hinzuzufügen.
+-   **Zeilen hinzufügen:** Die Funktion `rbind` wird verwendet, um neue Zeilen zu einem Data Frame hinzuzufügen.
 
 ### Neue Funktionen
 
-eine Tabelle mit den wichtigesten Codes des Tutorials \| Code \| Beschreibung \| \|-------\|--------------\| \| `[ ]` \| Indizierung \| \| `&` \| UND-Operator für logische Indizierung \|
-
-`as_tibble()`
+| Funktion               | Beschreibung                                                                   |
+|------------------------|--------------------------------------------------------------------------------|
+| `data.frame()`         | Erstellt einen Data Frame aus einzelnen Vektoren.                              |
+| `list()`               | Erstellt eine Liste                                                            |
+| `matrix()`             | Erstellt eine Matrix                                                           |
+| `nrow()`, `ncol()`     | Gibt die Anzahl der Zeilen bzw. Spalten eines Data Frames zurück.              |
+| `dim()`                | Gibt die Dimensionen (Anzahl der Zeilen und Spalten) eines Data Frames zurück. |
+| `cbind()`              | Fügt neue Spalten zu einem Data Frame hinzu.                                   |
+| `rbind()`              | Fügt neue Zeilen zu einem Data Frame hinzu.                                    |
+| `liste$name[Zeile]`    | Auswahl von Elementen in einer Liste durch Index oder Namen.                   |
+| `matrix[Spalte,Zeile]` | Auswahl von Elementen in einer Matrix durch Zeilen und Spaltenindex.           |
 
 ## Credit
 
-<!-- vielleicht in diese Richtung? -->
-
-Dieses Tutorial wurde (größtenteils) von Lukas Bruelheide sowie in Teilen von Marie Klosterkamp geschrieben.
-
-ggf.: Bei der Erstellung (u.a. der Beispiele, Aufgaben und Zusammenfassung) wurde teilweise von ChatGPT gebrauch gemacht.
+Dieses Tutorial wurde (größtenteils) von Marie Klosterkamp sowie in Teilen von Lukas Bruelheide geschrieben. Bei der Erstellung (u.a. der Bilder, Beispielen, Aufgaben und Zusammenfassung) wurde teilweise von ChatGPT und Bing AI gebrauch gemacht.
