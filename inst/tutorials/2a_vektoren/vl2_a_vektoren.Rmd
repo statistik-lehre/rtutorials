@@ -1078,7 +1078,7 @@ class(data_tbl)
 
 **Listen** sind grob gesagt mehrdimensionale Dataframes - es können also mehrere Dataframes in einem Objekt gespeichert werden. Die sind besonders wichtig, wenn das Arbeiten mit R noch mehr ins Programmieren geht und Schrittweise Dinge abgespeichert werden sollen, sehr komplexe Daten berechnet werden oder auch häufig die Ausgabe von komplexeren Funktionen benötigt wird. 
 
-```{r class_setup, include = FALSE}
+```{r class-setup, include = FALSE}
 data_df <- data.frame(
   # Variablennamen für die erste Variable festlegen; hier folgt ein Gleichzeichen, kein Pfeil; Inhalt festlegen
   namen = c("Joh", "Ma", "Lio"),
