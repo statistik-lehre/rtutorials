@@ -36,13 +36,17 @@ Dass du den Umgang mit Tabellen in R lernst, ist essentiell, da die meisten Date
 
 Im laufe des Tutorials wirst du...
 
-<input type="checkbox" unchecked> verstehen wie Daten in Tabellen gelistet sind </input> <input type="checkbox" unchecked> verstehen warum Data Frames hilfreich sind </input> <input type="checkbox" unchecked> das Erstellen von Data Frames erlernen</input> <input type="checkbox" unchecked> das Zugreifen auf Variablen in Data Frames erlernen </input> <input type="checkbox" unchecked> das hinzufügen und löschen von Variablen in Data Frames erlernen </input>
+-   <input type="checkbox" unchecked> verstehen wie Daten in Tabellen gelistet sind </input>
+-   <input type="checkbox" unchecked> verstehen warum Data Frames hilfreich sind </input>
+-   <input type="checkbox" unchecked> das Erstellen von Data Frames erlernen</input>
+-   <input type="checkbox" unchecked> das Zugreifen auf Variablen in Data Frames erlernen </input>
+-   <input type="checkbox" unchecked> das hinzufügen und löschen von Variablen in Data Frames erlernen </input>
 
 ::: blau-nb
 Übrigens: Wir verwenden hier für die Eindeutschung "der" Data Frame, die innerliche Begründung lautet: *Frame* = Rahmen, "der" Rahmen :)
 :::
 
-## Data Frames
+## Einführung in Data Frames
 
 Im Tutorial "Vektoren" hast du bereits gelernt, dass Vektoren Variablen darstellen und mehrere Werte enthalten können. Im folgenden lernst du, wie du mehrere Vektoren in einer Tabelle (einem Data Frame) zusammenbringen kannst.
 
@@ -60,11 +64,13 @@ df <- data.frame(alter, tier)
 df
 ```
 
-In der ersten Spalte siehst die Variable `alter` und in der zweiten Spalte die Variable `tier`. Die Werte werden wie bei einem einzelnen Vector untereinander angezeigt. Die Zeile sagt dir nun jedoch das Alter für das entsprechende Tier - ist also 1 Beobachtungsobjekt.
+In der ersten Spalte siehst die Variable `alter` und in der zweiten Spalte die Variable `tier`. Die Werte werden wie bei einem einzelnen Vektor untereinander angezeigt. Die Zeile sagt dir nun jedoch das Alter für das entsprechende Tier - ist also 1 Beobachtungsobjekt.
 
 ::: infobox
 Neue Funktion: `data.frame()` Erstellt aus einzelnen *gleichlangen* Vektoren eine Tabelle.
 :::
+
+</br>
 
 ::: gelb
 **Disclaimer**
@@ -80,6 +86,8 @@ Wenn im Folgenden immer wieder kleine Data Frames aus Vektoren erstellt werden, 
 Die Idee eines Data Frames ist es, einen Haufen Vektoren gleicher Länge zu nehmen und damit eine Tabelle zu bauen. Dabei ist **jede Spalte ein Vektor**. Anders ausgedrückt: jede Spalte ist eine Variable.
 :::
 
+</br>
+
 Das ist eine wichtige Grundstruktur, die du dir merken solltest, denn es bedeutet, dass für die Spalten einer Tabelle die gleichen Mechanismen greifen wie bei Vektoren. Das kannst du dir für den späteren Abschnitt zur Indizierung in Data Frames im Hinterkopf behalten.
 
 Einen sehr simplen Data Frame mit den Variablen `X`und `Y`, die jeweils drei Werte enthalten, kannst du dir demnach so vorstellen:
@@ -91,7 +99,7 @@ source: [Base R cheat sheet by Mhairi McNeil](https://iqss.github.io/dss-worksho
 </br>
 
 ::: blau-nb
-Dieses Bild ist Teil des super nützlichen `cheat sheets` für Base R (also die Programmiersprache R). Ein Blick darauf lohnt sich, wenn die Sprache für dich komplett neu ist oder du mal längere Zeit nicht mit R gearbeitet hast. Dort sind alle wichtigen Funktionen zusammengefasst und deren Funktionen teilweise grafisch dargestellt. `Cheat Sheets` gibt es für nahezu jede Programmiersprache.
+Dieses Bild ist Teil des super nützlichen `cheat sheets` für Base R (also die Programmiersprache R). Ein Blick darauf lohnt sich, wenn die Sprache für dich komplett neu ist oder du mal längere Zeit nicht mit R gearbeitet hast. Dort sind alle wichtigen Funktionen zusammengefasst und deren Funktionen teilweise grafisch dargestellt. `Cheat sheets` gibt es für nahezu jede Programmiersprache.
 :::
 
 ### Erstellung eines Data Frames
@@ -128,6 +136,10 @@ wg
 ```
 
 Das ist gut zu wissen, denn dieses Schema gilt als Konvention für die meisten Bennennungssituationen in R.
+
+::: blau-nb
+Eine Konvention für Data Frames ist es diesen als `df` abzukürzen. Da wir jedoch mehr als einen Data Frame erstellen werden, wird in diesem Tutorial davon abgewichen. Es steht dir natürlich auch immer frei, eigene Namen für deine Objekte zu wählen.
+:::
 
 ### Lerntest
 
@@ -169,6 +181,8 @@ Fangen wir mit dem Prinzip von Matrizen an.
 Die Matrix ist dir vielleicht noch ein Begriff aus der Filmwelt und hoffentlich auch aus dem Matheunterricht. Simple gesprochen ist sie eine zweidimensionale Datenstruktur mit Spalten und Zeilen. Sie kann Zahlen oder Text enthalten. Aber keine Angst, wir werden hier keine Matrizen multiplizieren oder Gleichungen nach X aufgelösen.
 
 ![](images/matrix.png){width="80%"}
+
+source: Erstellt mit [BingAI image creator](https://www.bing.com/images/create).
 
 #### Matrix erstellen
 
@@ -224,18 +238,26 @@ wg_matrix[x,y] # erstetze x und y durch die entsprechenden Zeilen und Spalten
 Da die Matrix 2 Dimensionen hat, hat auch die eckige Klammer zwei Positionen, die du für das Zugreifen verwenden kannst. Dabei bezieht sich der erste Wert auf die Zeile und der zweite auf die Spalte.
 
 ::: blau-nb
-Merke auf eine Matrix greifst du wie folgt zu: `matrix[Zeile, Spalte]`
+Merke: Eine Matrix wird durch den Befehl `matrix()` erstellt
+
+Auf eine Matrix greifst du wie folgt zu: `matrix[Zeile, Spalte]`
 :::
+
+</br>
 
 Da es visuell leichter zu verstehen ist, auch hier ein kurzer Ausschnitt aus dem `Cheat Sheet`.
 
-![](images/matrix_index.png){width="50%"} source:[Base R cheat sheet by Mhairi McNeil](https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf)
+![](images/matrix_index.png){width="50%"}
+
+source:[Base R cheat sheet by Mhairi McNeil](https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf)
+
+Jetzt hast du schon einen ersten Einblick ins Thema Matrizen bekommen. Dieser sollte für unsere Zwecke reichen. Gehen wir also weiter im Programm und schauen uns gemeinsam an, wie wir Listen nutzen können und was das überhaupt ist.
 
 ### Listen
 
 Eine Liste kann verstanden werden als ein "allgemeiner Vektor", welcher normale Vektoren enthalten kann - und sogar andere Listen (das wird dann aber schnell sehr unübersichtlich).
 
-Ein ganz zentraler Punkt: Während normale Vektoren *atomic* sind, also immer nur Daten des gleichen Typs beherbergen können, können Listen gemischte Daten enthalten und Daten verschiedener Länge.
+Ein ganz zentraler Punkt: Während normale Vektoren *atomic* sind, also immer nur Daten des gleichen Typs beherbergen können, können Listen gemischte Daten enthalten und Vektoren verschiedener Länge.
 
 Hier ein Beispiel:
 
@@ -248,7 +270,7 @@ named_vec <- c(
 
 # Liste:
 named_li <- list(
-  aepfel = 10,
+  aepfel = c(10,20),
   birnen = "zwanzig",
   pflaumen = 30)
 
@@ -256,11 +278,15 @@ named_vec
 named_li
 ```
 
-Der Vektor (oben im Output) kann nur Daten eines einzigen Typs enthalten. Da er den Text "zwanzig" enthält, werden die Zahlen automatisch auch zu Text umgeformt und mit Anführungszeichen umgeben. (Siehe auch Tutorial "Vektoren").
+Der Vektor (oben in der Ausgabe) kann nur Daten eines einzigen Typs enthalten. Da er den Text "zwanzig" enthält, werden die Zahlen automatisch auch zu Text umgeformt und mit Anführungszeichen umgeben. (Siehe auch Tutorial "Vektoren").
 
-Die Liste (unten) hingegen kann problemlos Text und Zahlen gleichzeitig aufnehmen.
+Die Liste (unten in der Ausgabe) hingegen kann problemlos Text und Zahlen gleichzeitig aufnehmen.
 
-Ein weiterer Vorteil von Listen ist, dass sie auch Elemente unterschiedlicher Länge enthalten darf.
+Ein weiterer Vorteil von Listen ist, dass sie auch Elemente unterschiedlicher Länge enthalten darf. Das siehst du beim Vektor 'aepfel'.
+
+::: blau-nb
+Merke: Listen sind in der Lage Vektoren bzw. Daten unterschiedlicher Länge und unterschiedlicher Typen (character, double, integer, date...) zu fassen.
+:::
 
 #### Listen erstellen
 
@@ -280,20 +306,22 @@ wg_list <- list(x,y,z)
 wg_list # unsere Liste
 ```
 
-Du siehst die Variablen (Spalten) bekommen doppelte eckige Klammern und die Einträge (Zeilen) einfache eckige Klammern. Wenn wir so auf eine Variable zugreifen wollen wird es schnell unübersichtlich. Wollen wir z.B. auf den Jahrgang von Amadou zugreifen wäre das wg_list[[2]][1]. Probiere es gerne mal aus:
+Du siehst die Variablen (Spalten) bekommen doppelte eckige Klammern und die Einträge (Zeilen) einfache eckige Klammern. Wenn wir so auf eine Variable zugreifen wollen wird es schnell unübersichtlich. Wollen wir z.B. auf den Jahrgang von Amadou zugreifen wäre das `wg_list[[2]][1]`.
+
+Probiere es gerne mal aus:
 
 ```{r liste2, exercise = TRUE, exercise.setup="liste1", exercise.caption = "Beispiel: Erstellen einer Matrix"}
 # ersetze die "Spalte" und "Zeile", um das Prinzip zu verstehen
 wg_list[[Spalte]][Zeile]
 ```
 
-Wie gesagt, ist dies etwas mühsam. Listen können jedoch viel mehr! Sie erlauben die Benutzung eines speziellen Operators zur Indizierung: Der `$`- Operator. Er ist speziell für das Indizieren bei benannten Listen gedacht. Hat eine Tabelle überschriften so werden diese übernommen, für unsere Vektoren müssen wir erneut auf die explizite Namensgebung zurückgreifen.
+Wie gesagt, ist dies etwas mühsam. Listen können jedoch viel mehr! Sie erlauben die Benutzung eines speziellen Operators zur Indizierung: Der `$`- Operator. Er ist speziell für das Indizieren bei benannten Listen gedacht. Hat eine Tabelle überschriften so können diese übernommen werden, für unsere Vektoren müssen wir jedoch erneut auf die explizite Namensgebung zurückgreifen.
 
 Jetzt bist du dran! Erinnerst du dich noch wie die Namensgebung in R funktioniert?
 
 ::: Aufgabe
 1)  Füttere die Vektoren `x`, `y` und `z` in die Liste und gib Ihnen die Namen `name`, `jahrgang` und `grundpreis`.
-2)  lass dir wg_liste anzeigen
+2)  lass dir `wg_liste` anzeigen
 :::
 
 ```{r listennamen, exercise = TRUE}
@@ -304,7 +332,7 @@ wg_liste <- list()
 
 ```
 
-```{r listennamen-hint-01}
+```{r listennamen-hint}
 wg_liste <- list(
   name , # sage R, dass name dem Vektor x entspricht
   jahrgang , # sage R, dass jahrgang dem Vektor y entspricht
@@ -329,7 +357,7 @@ In der Ausgabe solltest du jetzt also sehen, dass sich die `[[1]]`,`[[2]]` und `
 
 Wollen wir jetzt auf einen Eintrag in der Liste zugreifen können wir dies ganz bequem über den `$`- Operator, ganz ohne eckige Klammern. Es verhält sich dann wieder so als wäre es nur ein einzelner Vektor
 
-```{r dollarsign1, exercise = TRUE, exercise.setup = "listennamen"}
+```{r dollarsign1, exercise = TRUE, exercise.setup = "listennamen-solution"}
 wg_liste$name
 wg_liste$jahrgang[3]
 ```
@@ -340,51 +368,170 @@ Aber es kommt noch besser! Wir können neue Variablen auch mit dem `$`-Operator 
 
 Bei so viel Arbeit, hat sich die WG doch ein paar Balkone verdient. Führe den Code aus und finde heraus, wer bei der Renovierung einen Balkon an sein Zimmer bekommen hat.
 
-```{r dollarsign2, exercise = TRUE, exercise.setup = "listennamen"}
+```{r dollarsign2, exercise = TRUE, exercise.setup = "listennamen-solution"}
 wg_liste$balkon <- c(TRUE, TRUE, FALSE, FALSE)
 wg_liste
 ```
 
-Jetzt bist du dran!Übe ein bisschen mit den folgenden Aufgaben:
+Jetzt bist du dran! Übe ein bisschen mit den folgenden Aufgaben:
 
 ::: Aufagabe
 1)  Füge der Liste die Informationen zu der Zimmergröße der Mitbewohnenden hinzu. Nutze dafür den Variablennamen `qm`. Die Werte darfst du dir gerne selbst aussuchen.
-2)  Lass dir den zweiten und dritten Eintrag für die Variable *qm* gleichzeitig anzeigen.
+2)  Lass dir den zweiten und dritten Eintrag für die Variable `qm` gleichzeitig anzeigen.
 :::
 
 ```{r dollarsign3, exercise = TRUE, exercise.setup = "dollarsign2"}
 
 ```
 
-```{r dollarsign3-hint-01}
-wg_liste$qm <- c() # erstell einen Vektor in der Liste wg mit den Quadratmeterangaben 
+```{r dollarsign3-hint}
+wg_liste$qm <- c() # erstelle einen Vektor in der Liste wg mit den Quadratmeterangaben 
 wg_liste$qm[] # greife auf das 2 und 3 Element des Vektors qm der Liste wg_liste zu 
 ```
 
-```{r dollarsign3-hint-02}
+```{r dollarsign3-solution}
 wg_liste$qm <- c(33, 15, 10, 20) # erstellt einen neuen Vektor in der Liste wg mit den Quadratmeterangaben 
 wg_liste$qm[2:3] # greift auf das 2 und 3 Element des Vektors qm der Liste wg_liste zu 
 ```
 
-### Data Frames
+Fassen wir nochmal zusammen:
+
+::: blau-nb
+Listen erstellst du mit dem Befehl `list()` Auf Listen kannst du am besten mit dem Variablennamen und dem `$`-Operator zugreifen: `liste$variable[Zeilen]` Der Ausdruck verhält sich dann wie ein Vektor.
+:::
+
+Damit hast du schon die Grundlage für die Arbeit mit Data Frames gelegt! Jetzt können wir diese Mechaniken im nächsten Kaptiel auf Data Frames übertragen.
+
+## Arbeiten mit Data Frames
 
 Eine besondere Art von Liste bzw. Matrix ist der Data Frame. Ein Data Frame organisiert Daten in tabellarischer Form. Das charakterisierende Merkmal ist, dass alle Elemente die gleiche Länge haben müssen, während das für Listen generell nicht so sein muss.
 
-\<\<<Erklärung anfügen>\>\>
+![Was ist ein Data Frame?](images/data_frame_elefant.png){width="100%"}
 
-\<\<<Beispiel anfügen>\>\>
+source: Erstellt mit [BingAI image creator](https://www.bing.com/images/create).
 
-\<\<<Aufgabe anfügen>\>\>
+Ein Data Frame hat also nicht die exakt gleiche Funktionalität wie eine Liste und ist auch keine reine Matrix, sondern ist seine ganz eigene Kategorie, die aber auf diesen Konzepten basiert.
+
+Falls du dir noch einmal anschauen möchtest, wie ein Data Frame erstellt wird wechsle zu "Einführung in Data Frames".
+
+Wir steigen hier jetzt direkt in die Arbeit mit Data Frames ein.
 
 #### Data Frame Subsetting
 
-\<\<<Erklärung anfügen>\>\>
+Wie du jetzt schon gelernt hast können wir für Data Frames sowohl Matrix- als auch List Subsetting nutzen, um auf unsere Daten zuzugreifen.
+
+::: info
+Falls du dich fragst, was `Subsetting` eigentlich heißt: Subsetting in Data Frames ermöglicht es dir, spezifische Teile deiner Daten zu extrahieren und mit diesem Teilbereich damit weiter zu rechnen bzw. in einem neuen Data Frame zu speichern.
+:::
+
+Lass es uns doch gemeinsam ausprobieren.
 
 ##### Matrix Subsetting
 
+Matrix Subsetting behandelt den Data Frame als Matrix, in der jede Spalte als Vektor betrachtet wird. Hierbei werden Zeilen und Spalten durch Indexierung angesprochen.
+
+Diese Art der Indizierung ist besonders praktisch, wenn du spezifische Bereiche des Data Frames benötigst, z. B. bestimmte Zeilen und Spalten.
+
+Beispiel: Nehmen wir wieder unsere WG. Hier wird nochmal der Data Frame `wg_df` erstellt indem die Vektoren mit jeweiligem Namen in den Data Frame Befehl `data.frame()` eingegeben werden.
+
+```{r dfm, exercise = TRUE, exercise.caption = "Beispiel: Matrix subsetting"}
+# Beispiel Data Frame
+wg_df <- data.frame(
+  name = c("Amadou", "Mira", "Luisa", "Alex"),
+  jahrgang = c(2000, 2001, 1990, 1995),
+  grundpreis = c(5.23, 5.23, 5.23, 5.23),
+  qm = c(12, 14, 20, 15),
+  balkon = c(TRUE, FALSE, FALSE, FALSE)
+)
+```
+
+Jetzt bist du dran!
+
+::: Aufgabe
+1)  Führe zunächst den Code aus, um dir den Data Frame anzeigen zu lassen.
+2)  Nutze nun Matrix Subsetting um auf die `qm` Angaben der gesamten WG zuzugreifen
+3)  Greife nur auf die `qm` von Mira zu.
+:::
+
+```{r dfm1, exercise = TRUE, exercise.caption = "Beispiel: Matrix subsetting"}
+# Aufgabe 1 
+wg_df # Anzeigen des Data Frames
+```
+
+```{r dfm1-hint}
+# Aufgabe 2
+wg_df[] # qm ist das vierte Element der Zeilen
+# Aufgabe 3
+wg_df[] # Mira ist das zweite Element der Spalten
+```
+
+```{r dfm1-solution}
+# Aufgabe 2
+wg_df[,4] # qm ist das vierte Element der Zeilen
+# Aufgabe 3
+wg_df[2,4] # Mira ist das zweite Element der Spalten
+```
+
+Das sollte geklappt haben. Aber was wenn unser Data Frame noch viel mehr Elemente hat? Dann wird es schwieriger nachzuvollziehen, an welcher Stelle das Element unserer Wahl liegt. Dafür eignet sich daher das List Subsetting besser.
+
 ##### List Subsetting
 
-##### Data Frame verändern
+Beim List Subsetting wird ein Data Frame als Liste von Vektoren betrachtet. Jede Spalte ist ein Vektor, und der Zugriff auf eine Spalte erfolgt wie bei einer Liste durch Verwendung des \$-Operators (oder doppelter eckiger Klammern [[ ]]). Diese Methode ist besonders nützlich, wenn du auf spezifische Variablen bzw. Spalten zugreifen möchtest.
+
+Diese Art der Indizierung ist besonders praktisch, wenn du auf bestimmte Variablen zugreifen möchtest, da es die Lesbarkeit deines Codes erhöht.
+
+Versuch es direkt mal aus, wie können wir mit List Subsetting auf die gleichen Daten zugreifen? ::: Aufgabe 1) Führe zunächst den Code aus, um dir den Data Frame anzeigen zu lassen. 2) Nutze nun List Subsetting um auf die `qm` Angaben der gesamten WG zuzugreifen 3) Greife nur auf die `qm` von Mira zu. :::
+
+```{r dfm2, exercise = TRUE, exercise.caption = "Beispiel: Matrix subsetting"}
+wg_df # Anzeige des Data Frames
+```
+
+```{r dfm2-hint}
+# Aufgabe 2
+wg_df$qm # der Vektor qm kann durch den $-Operator gewählt werden
+# Aufgabe 3
+wg_df$qm[2] # Mira ist das zweite Element der Spalten
+```
+
+Was würdest du mit dem jetzigen Wissen über die beiden Indizierungsweisen sagen:
+
+```{r dataframe-quiz, echo = FALSE}
+learnr::question_checkbox(
+  "Ich vermute, dass ...",
+  answer("Matrix Subsetting einfacher ist, um auf ein bestimmtes Element zuzugreifen",
+         message = "Dank Matrix Subsetting kannst du mit hilfe der eckigen Klammern direkt auf Zeilen und Spalten zugreifen, solange du deren Index kennst", 
+         correct = TRUE,
+         ),
+  answer("List Subsetting es erlaubt, besonders einfach auf die Zeilen zuzugreifen",
+         message = "Leider nicht. Mit List Subsetting kannst du dafür umso besser auf die Vektoren bzw. Spalten zugreifen"),
+  answer("Matrix Subsetting sollte bevorzugt genutzt werden, um gute Lesbarkeit zu erhalten",
+         message = "Für gute Lesbarkeit eignet sich List Subsetting wesentlich besser, da hier mit den Variablennamen hantiert werden kann"),
+  answer("List Subsetting es erlaubt, besonders einfach auf die Spalten zuzugreifen",
+         message = "Genau, dank des $-Operators kannst du die Variablennamen verwenden, um auf die Spalten zuzugreifen ",
+         correct = TRUE),
+  allow_retry = TRUE
+)
+```
+
+##### Subsetting Zusammenfassung
+
+Fassen wir nochmal graphisch zusammen, um die Stärken und Schwächen der beiden Subsetting Arten zu verstehen:
+
+![](images/matrix_subsetting.png){width="25%"}
+
+![](images/list_subsetting.png){width="40%"}
+
+source: [Base R cheat sheet by Mhairi McNeil](https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf)
+
+::: info-nb
+Merke: List Subsetting mit dem \$-Operator ist sehr nützlich, um auf Variablen zuzugreifen - was wir die meiste Zeit tun. Matrix Subsetting hingegen kann für gezieltes Ansteuern isbesondere von Zeilen und einzelnen Werten hilfreich sein.
+:::
+
+##### Untersuchen des Data Frames
+
+##### Hinzufügen oder entfernen von Daten
+
+Data Frames können aber noch mehr! Es gibt zwei
 
 Manchmal möchtest du Spalten oder Zeilen hinzufügen oder entfernen.
 
