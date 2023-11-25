@@ -92,7 +92,7 @@ Das ist eine wichtige Grundstruktur, die du dir merken solltest, denn es bedeute
 
 Einen sehr simplen Data Frame mit den Variablen `X`und `Y`, die jeweils drei Werte enthalten, kannst du dir demnach so vorstellen:
 
-![](images/data_frame.png){width="30%"}
+![](images/data_frame.PNG){width="30%"}
 
 source: [Base R cheat sheet by Mhairi McNeil](https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf)
 
