@@ -111,7 +111,7 @@ Für den Anfang was Süßes:
 
 <details>
 
-<summary><a>▼ Falls das bis jetzt alles zu verwirrend war und zu schnell ging hier ein freundlicher guide durch all diese Worte </a></summary>
+<summary><a>▼ Falls das bis jetzt alles zu verwirrend war und zu schnell ging hier ein freundlicher Guide durch all diese Worte </a></summary>
 
 
 Das Schokobild fasst eigentlich alles zusammen. Für die Menschen, die das gerne nochmal mit den Worten der Vorlesung und etwas ausführlicher sehen wollen folgt ein Entscheidungsbaum. Er ist als Gespräch mit einer Variablen über ihre Inhalte aufgebaut.
@@ -133,7 +133,7 @@ Und jetzt nochmal bisschen ausführlicher
     - **Kommentar:** Deswegen werden die unterschiedlichen Skalenniveaus erst unterschieden: Von dem Skalenniveau hängt ab, was du damit rechnen kannst und darfst.
   - **Variable:** *"Hi! Du stellst Fragen und ich Antworte!"*
   - **F:** *Welche Art von Werten kannst du annehmen?/ Sind die (gesetzten) Intervalle gleich groß ("äquidistant")?*
-    - **Kommentar:** zu 2. Bei so ungewohnten und teilweise neuen Wörtern hilft es mir immer, mir deren Ursprung klar zu machen. Hier: **äquidistant** = gleich weit voneinander entfernt. Das ergibt total viel Sinn:
+    - **Kommentar:** zu 2. Bei so ungewohnten und teilweise neuen Wörtern hilft es mir immer, mir deren Ursprung klar zu machen. Hier: **äquidistant:** gleich weit voneinander entfernt. Das ergibt total viel Sinn:
       - *äqui* kennst du aus "*Äquivalenz*" = "*gleich*" 
       - *distant*: kennst du aus "*Distanz*" = "*Entfernung*"
       - bedeutet also, dass die Einheiten der Skala *gleich weit voneinander entfernt* sind - z.B. bei einem Lineal sind ja alle Striche gleich weit voneinander entfernt, in schlau also "die Striche sind äquidistant"
@@ -161,21 +161,20 @@ Und jetzt nochmal bisschen ausführlicher
 
 ![](images/flowchart_3.jpg){width="100%"}
 
-  - $\to$ _**NOMINALSKALA**_
-    - **Komentar:** **Nomen**: Namen. Daten können anhand von namentlichen (nicht zahlenmäßigen) Einheiten unterschieden werden
+  - $\to$ __**NOMINALSKALA**__
+    - **Nomen**: Namen. Daten können anhand von namentlichen (nicht zahlenmäßigen) Einheiten unterschieden werden
     - Die Charakteristiken der Nominalskala:
       - Die Merkmalsausprägungen liegen in **Kategorien** vor.
       - Es gibt **keine** logische Rangfolge
       - Beispiele: Prüfung bestanden? Farbe deine Fahrrades?
       - Zugelassene logische Operaturen sind gleich ($=$) und ungleich ($\neq$)
-        - also: 
-          - rot $=$ rot
-          - rot $\neq$ grün
-      - Es wird noch einmal zwischen **binären** und **multinominalen** Skalen unterschieden. Das ist so, weil manche Statistiken sich nur mit binären bzw. multinominalen Variablen rechnen lassen.
-        - **binär**: zwei Ausprägungen verwendend; Wortstamm: Bi: Zwei (wie in **Bi**närcode, **Bi**sexualität oder auch non-**bi**när)
-        - **multinominal**: mehrere Ausprägungen verwendend
-          - Multi: Viel (Multivitaminsaft)
-          - nominal: den Nennwert betreffend; s. Nomen weiter oben
+        - rot $=$ rot
+        - rot $\neq$ grün
+    - Es wird noch einmal zwischen **binären** und **multinominalen** Skalen unterschieden. Das ist so, weil manche Statistiken sich nur mit binären bzw. multinominalen Variablen rechnen lassen.
+      - **binär**: zwei Ausprägungen verwendend; Wortstamm: Bi: Zwei (wie in **Bi**närcode, **Bi**sexualität oder auch non-**bi**när)
+      - **multinominal**: mehrere Ausprägungen verwendend
+        - Multi: Viel (Multivitaminsaft)
+        - nominal: den Nennwert betreffend; s. Nomen weiter oben
 
 ![](images/nominal.jpg)
 
@@ -185,17 +184,16 @@ Und jetzt nochmal bisschen ausführlicher
 
   - **Forschende:** *"Okay, also deine Werte sind diskret. Lassen sie sich in eine logische Rangfolge bringen?"*
   - **V:** *"JA!"*
-  - $\to$ _**ORDINAL- / RANGSKALA**_
-    - **Kommentar:** **Ordinal**: eine Ordnung (Rangfolge) anzeigend
+  - $\to$ __**ORDINAL- / RANGSKALA**__
+    - **Ordinal**: eine Ordnung (Rangfolge) anzeigend
     - Die Charakteristiken der Ordinalskala:
       - Die Merkmalsausprägungen liegen in **Kategorien** vor, welche eine logische Rangfolge haben
       - Beispiele: Kleidergrößen (S < M < L), Plätze bei Wettkämpfen (1 < 2 < 3)
       - Zugelassene logische Operaturen sind neben gleich ($=$) und ungleich ($\neq$) auch kleiner ($<$) und größer ($>$)
-        - also: 
-          - S $=$ S
-          - S $\neq$ M
-          - S $<$ L
-          - L $>$ M
+        - S $=$ S
+        - S $\neq$ M
+        - S $<$ L
+        - L $>$ M
 
 ![](images/ranktest.png){width="50%"}
 
@@ -205,7 +203,7 @@ Und jetzt nochmal bisschen ausführlicher
 
   - **Forschende:** *"Ich mal wieder. 1. Welche Art von Werten kannst du annehmen?/ 2. Sind die (gesetzten) Intervalle gleich groß ("äquidistant")?"*
   - **Variable:** *"1. quantitativ/ metrisch/ numerisch/ stetig/ kontinuierlich. 2. ja"*
-  - $\to$ _**Kardinalskalen**_: Ein Zwischenschritt ist erreicht: die Kardninalskalen
+  - $\to$ __**KARDINALSKALEN**__:
     - **kardinal**: besonders wichtig, vorzüglich (weil wir damit besonders viele besonders gute Statistiken rechnen können)
     - zum merken: ein Kardinal in der katholischen Kirche ist der höchste Würdenträger nach dem Papst - also auch besonders wichtig
   - **F:** *"Okay, eine letzte Frage noch: Hast du einen natürlichen Nullpunkt?"*
@@ -213,19 +211,18 @@ Und jetzt nochmal bisschen ausführlicher
 
 ![](images/flowchart_6.jpg)
 
-  - $\to$ _**INTERVALLSKALA**_: 
-    - **Kommentar:** **Intervall**: Bereich zwischen zwei Punkten auf einer Strecke oder Skala. Die Unterschiede auf dieser Skala werden in Intervallen angegeben und sind alle gleich groß.
+  - $\to$ __**INTERVALLSKALA**__: 
+    - **Intervall**: Bereich zwischen zwei Punkten auf einer Strecke oder Skala. Die Unterschiede auf dieser Skala werden in Intervallen angegeben und sind alle gleich groß.
     - Die Charakteristiken der Intervallskala:
       - Die Merkmalsausprägungen liegen äquidistanten (gleichgroßen) Intervallen vor
       - Beispiele: Temperatur in Grad Celsius, Jahreszahlen
       - Zugelassene logische Operaturen sind neben gleich ($=$), ungleich ($\neq$), kleiner ($<$) und größer ($>$) auch Plus ($+$) und Minus ($-$)
-        - also: 
-          - 10°C $=$ 10°C
-          - 10°C $\neq$ 15°C
-          - 10°C $<$ 20°C
-          - 10°C $>$ 5°C
-          - 10°C $+$ 1°C $=$ 11°C
-          - 10°C $-$ 2°C $=$ 8°C
+        - 10°C $=$ 10°C
+        - 10°C $\neq$ 15°C
+        - 10°C $<$ 20°C
+        - 10°C $>$ 5°C
+        - 10°C $+$ 1°C $=$ 11°C
+        - 10°C $-$ 2°C $=$ 8°C
           
 ![](images/continous_discrete.png)
 
@@ -240,8 +237,10 @@ Und jetzt nochmal bisschen ausführlicher
   
 ![](images/flowchart_8.jpg)
 
-  - $\to$ _**RATIONAL-/ VERHÄLTNISSKALA**_
-    - **Ratio**: Vernunft; rational: vernünftig; Eselsbrücke: Wer vernünftig ist, ist verhältnismäßig.
+  - $\to$ __**RATIONAL-/ VERHÄLTNISSKALA**__
+    - **Ratio**: Vernunft
+      - rational: vernünftig
+      - Eselsbrücke: Wer vernünftig ist, ist verhältnismäßig.
     - Charakteristiken der Verhältnisskala:
       - bildet Verhältnisse von Zahlen adäquat ab
       - Hat einen absoluten Nullpunkt
@@ -260,16 +259,16 @@ Und jetzt nochmal bisschen ausführlicher
 
 ![](images/flowchart_9.jpg)
 
-  - **Forschende:** "Okay, deine Daten sind numerisch. Haben sie einen absoluten Nullpunkt?"
-  - **Variable:** "Ja!"
-  - **F:** Messen oder zählen?
-  - **V:** Zählen!
-  - $\to$ _**Absolutskala**_
-  - absolut: ganz und gar -> es geht um ganze Zahlen/ Dinge/ natürliche Einheiten/ Stück
+  - **Forschende:** *"Okay, deine Daten sind numerisch. Haben sie einen absoluten Nullpunkt?"*
+  - **Variable:** *"Ja!"*
+  - **F:** *"Messen oder zählen?"*
+  - **V:** *"Zählen!"*
+  - $\to$ __**ABSOLUTSKALA**__
+  - **absolut**: ganz und gar (es geht um ganze Zahlen/ Dinge/ natürliche Einheiten/ Stück)
   - bildet Verhältnisse von Zahlen adäquat ab
   - Hat einen absoluten Nullpunkt
   - Beispiele: Menschen, Fahrräder, Münzen etc.
-  - Zugelassene logische Operatoren: neben $=$, $\neq$, $<$, $>$, $+$ und $-$ auch Multiplikationen $\cdot$ und Divisionen $:$
+  - Zugelassene logische Operatoren (wie Rationalskala): neben $=$, $\neq$, $<$, $>$, $+$ und $-$ auch Multiplikationen $\cdot$ und Divisionen $:$
     - 1 Fahrrad $=$ 1 Fahrrad
     - 1 Fahrrad $\neq$ 2  Fahrräder
     - 1 Fahrrad $<$ 3  Fahrräder
@@ -280,8 +279,10 @@ Und jetzt nochmal bisschen ausführlicher
     - 20 Fahrrad $:$ 10 $=$ 2  Fahrräder
 
 
+Zusammenfassung: Daten sind entweder in Kategorien, geordneten Kategorien oder Zahlen da. Das nennt sich: nominal, ordinal, metrisch.
 
-<\details\>
+
+<\details>
 
 
 
@@ -351,15 +352,17 @@ quiz(caption = "Wofür könnten die Abkürzungen stehen?",
 
 Bei `character`-Variablen werden die Inhalte als reiner Text gespeichert.
 
+### Nominale Daten 
+
 Die Variable Verkehrsmittel enthält eine handvoll verschiedener Ausprägungen, auch Stufen genannt. Die ersten 20 Werte sehen so aus:
 
 ```{r}
 rtutorials::einkaufen$Verkehrsmittel |> as.character() |> head(20)
 ```
 
-```{r eink}
+```{r verkehrsmittel}
 quiz(
-  question(text = "Welches Skalenniveau hat die Variable *Einkaufen*?",
+  question(text = "Welches Skalenniveau hat die Variable *Verkehrsmittel*?",
          answer("Nominal", correct = T),
          answer("Ordinal"),
          answer("Intervall"),
@@ -367,24 +370,123 @@ quiz(
          answer("Absolut"),
          allow_retry = T
          ),
-  question("Was trifft noch auf die Variable *Einkaufen* zu?",
+  question("Was trifft noch auf die Variable *Verkehrsmittel* zu?",
            answer("kategorial", correct = T),
            answer("kardinal / metrisch"),
            answer("qualitativ", correct = T),
            answer("quantitativ"),
            answer("diskret", correct = T),
-           answer("stetig")
+           answer("stetig"),
+           allow_retry = T
   )
 )
   
 ```
 
-Bei kategorialen Variablen ist es oft sinnvoll, die Variable in einen `factor` umzuwandeln. Intern werden die verschiedenen Stufen oder engl. "Levels" mit Zahlen codiert, die weniger Speicherplatz brauchen als immer wieder den gesamten Text zu speichern. Das vermeidet unnötige Dopplung und macht das Ganze effizienter. Zusätzlich wird noch einmal mit abgespeichert, welche Zahl welches "Level" codiert.
+
+Bei Kategorialen Variablen ist es oft sinnvoll, die Variable in einen `factor` umzuwandeln. Intern werden die verschiedenen Stufen oder engl. "Levels" mit Zahlen codiert, die weniger Speicherplatz brauchen als immer wieder den gesamten Text zu speichern. Das vermeidet unnötige Dopplung und macht das Ganze effizienter. Zusätzlich wird noch einmal mit abgespeichert, welche Zahl welches "Level" codiert. Das praktische ist, dass du die Zahlen nicht zu Gesicht bekommst. Es ist also so gemütlich, als würdest du mit einem charakter Vektor arbeiten und gliechzeitig für den Rechner chilliger.
 
 Auf der Oberfläche wird es gleich dargestellt, weil R für die Zahlen automatisch wieder den richtigen Text einsetzt, aber unter der Oberfläche wird mit Zahlen gearbeitet, was gerade bei großen Datenmengen deutlich effizienter ist.
 
-" Fahrräder" wird dann codiert als 1, "ÖPNV" als 2
+Faktor ist eine Objektklasse (s. 2a_vektoren). Um herauszufinden, wie R die entsprechende Variable repräsentiert, kannst du R mit `class(dataframe$vektor)` danach fragen.
+
+Finde heraus, in welcher Objektklasse R die Variable Verkehrsmittel gespeichert hat. Achtung: die Variable wird - ungewöhnlicher Weise - groß geschrieben. (Klassische Quelle für Fehler, da R ja case sensitiven ist.)
+
+```{r nominal-solution}
+class(rtutorials::einkaufen$Verkehrsmittel)
+```
+
+
+```{r nominal, exercise = T}
+
+```
+
+Perfekt, ist schon ein Faktor. Für den Fall, dass es eine andere Klasse gewesen wäre es möglich für temporäre Veränderung `as.factor()` zu verändern oder besser gleich das ganze als Faktor umzucodieren: `data$variable <- factor(data$variable)`. Später noch mehr dazu
+
+Um die Levels eines Faktors herauszufinden kannst du die Funktion `levels()` verwenden. In diesem Fall sieht das Ergebnis so aus:
 
 ```{r}
 levels(rtutorials::einkaufen$Verkehrsmittel)
 ```
+
+
+
+### Ordinale Daten
+
+Da auch ordinale Daten kategorial sind, sind auch hier Faktoren empfehlenswert. Du kannst die Werte nämlich mittels des Argumentes `ordered = T` auch sortieren. Faktoren sind auch deshalb spannend, da du zu den Werten auch noch Bezeichnungen speichern kannst.
+
+Die Variable Frequenz ist ordinalskaliert und die ersten 20 Einträge sehen so aus:
+
+```{r frequenz}
+head(rtutorials::einkaufen$Frequenz, 20)
+```
+
+Die Objektklasse und die Level sind:
+
+```{r ordered_factor}
+class(rtutorials::einkaufen$Frequenz)
+levels(rtutorials::einkaufen$Frequenz)
+```
+
+Wie erwartet ein geordneter Faktor. Das bedeutet, dass R, dem ja sonst Charakterstringt egal sind bzw inhaltlich nicht verarbeiten kann, weiß, dass einmal die Woche weniger ist als alle zwei Wochen. Das ist praktisch. In der Funktion `factor()` gibt es das Argument `ordered = `. Wenn du das auf TRUE setzt, dann speichert R die Levels in einer Reihenfolge. Doch Obacht: R kann ja die Inhalte nicht lesen. Das bedeutet, dass R das nach dem zweitlogischsten Schema sortiert: Anfangsbuchstaben (kommen ja keine Zahlen vor). Deswegen musst du R auch noch sagen, in welcher Reihenfolge die Level gespeichert werden sollen. Das machst du mit dem Argument `levels = c()", und gibst dort die Reihenfolge ein. Um das zu demonstrieren habe ich die Variable Frequenz zurücktransformiert in einen schlichten unsortierten character Vektor mit dem Namen frequenz
+
+```{r of-setup}
+frequenz <- as.character(rtutorials::einkaufen$Frequenz)
+```
+
+
+```{r of, exercise = TRUE}
+head(frequenz, 20)
+class(frequenz)              # es ist definitiv wieder ein charaktervektor
+frequenz <- factor(frequenz) # als faktor speichern.
+class(frequenz)              # yay, erstmal richtig. Doch dann:
+levels(frequenz)             # oh no! das ist ja die falsche Reihenfolge. Deswegen nochmal von vorn:
+frequenz <- factor(frequenz, 
+                   levels = c("einmal die Woche","mehrfach die Woche", "alle zwei Wochen",  "einmal im Monat", "seltener"), 
+                   ordered = T)
+levels(frequenz)            # Puh! jetzt ist ja alles gut :)
+```
+
+### Numerisch
+
+R ist ziemlich egal, welche Kardnalskala du da hast (also ob sie einen Nullpunkt hat oder nicht). Das ist zwar für dich als Forschende Person ziemlich relevant (was darf ich mit den Zahlen, was nicht) aber für R ist das ziemlich egal. Der entsprechende Datentyp ist `double`. Genau genommen wird die Rationalskala durch `integer` abgebildet. Aber im Grunde kannst du beides auch mit dem jeweils anderem berechnen. Im Datensatz ist das die Variable Weg (in km). Damit kannst du alle Berechnungen durchführen und diese Art der Variable haben wir in den letzten Tutorien schon eingehend erläutert. Das einzige, was da jetzt neu hinzukommt ist für dich das Wissen: "Aha! Bei den numerischen Vektoren handelt es sich also auch um numerische Skalen".
+
+## Abschlussquiz
+
+```{r abschluss}
+
+quiz(
+  question(text = "Welche Qualitäten lassen sich der Nominalskala zuordnen?",
+         answer("qualitativ", correct = T),
+         answer("quantitativ"),
+         answer("kategorial", correct = T),
+         answer("metrisch"),
+         answer("diskret", correct = T),
+         allow_retry = T, random_answer_order = T
+         ),
+  question("Welche Qualitäten lassen sich der Intervallskala zuordnen?",
+           answer("stetig", correct = T),
+           answer("diskontinuierlich"),
+           answer("kontinuierlich", correct = T),
+           answer("Intervalle sind nicht äquidistant"),
+           answer("Intervalle sind äquidistant", correct = T),
+           allow_retry = T, random_answer_order = T
+  ),
+  question("Welche Qualitäten lassen sich der Ordinalskala zuordnen?",
+           answer("stetig"),
+           answer("kategorial", correct = T),
+           answer("kontinuierlich"),
+           answer("Intervalle sind nicht äquidistant", correct = T),
+           answer("Intervalle sind äquidistant"),
+           allow_retry = T, random_answer_order = T
+  ),
+  question("Welche Zahlenfolgen sind aus Sicht der Ordinalskala absolut gleich zu c(1, 2, 3)",
+           answer("0, 1, 2", correct = T),
+           answer("109, 100, 320"),
+           answer("100348, 100349, 1000349", correct = T),
+           answer("rot, grün, blau"),
+           allow_retry = T, random_answer_order = T
+           )
+)
+```
+
