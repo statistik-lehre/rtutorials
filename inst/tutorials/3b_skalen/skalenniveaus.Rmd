@@ -35,7 +35,8 @@ question("Welche Beziehungen können auf dem Ordinalskalenniveau abgebildet werd
   answer("Ungleichheit", correct = TRUE),
   answer("Rangfolge", correct = TRUE),
   answer("Proportionen"),
-  answer("Abstände")
+  answer("Abstände"),
+  allow_retry = T
 )
 ```
 
@@ -45,13 +46,13 @@ question("Welche der folgenden Skalen werden unter dem Begriff *metrisch* zusamm
   answer("Ordinal"),
   answer("Intervall", correct = TRUE),
   answer("Verhältnis", correct = TRUE),
-  answer("Absolut", correct = TRUE)
+  answer("Absolut", correct = TRUE),
+  allow_retry = T
 )
 ```
 
 ```{r sk3, echo=FALSE}
-question("Welche Eigenschaften treffen auf den erreichten Rang in einem Wettkamp zu? (mehrere Antworten)",
-         allow_retry = TRUE,
+question("Welche Eigenschaften treffen auf den erreichten Rang in einem Wettkampf zu? (mehrere Antworten)",
   answer("metrisch"),
   answer("kategorial", correct = TRUE),
   answer("kardinal"),
@@ -66,11 +67,14 @@ question("Welche Eigenschaften treffen auf den erreichten Rang in einem Wettkamp
   - kategorial, da die Ränge mit abgrenzbaren Kategorien gleichzusetzen sind
   - ordinal, da Rangfolge die höchste abgebildete Relation ist - Abstände zwischen den Plätzen können nicht sinnvoll interpretiert werden, bzw. wir wissen nicht, wie viel schneller der erste Platz als der zweite Platz geschwommen ist. 
   - quantitativ, da der Rang sinnvoll numerisch interpretierbar ist - qualitativ wäre hingegen, wenn der Medaillenname angegeben wird (Gold, Silber, Bronze)
-  - diskret, da es keine Plätze zwischen dem ersten und zweiten Platz gibt"
+  - diskret, da es keine Plätze zwischen dem ersten und zweiten Platz gibt",
+    allow_retry = T
   )
 ```
 
 ## Skalenniveaus
+
+### short
 
 > „Messen ist eine strukturerhaltende Abbildung eines empirischen in ein numerisches Relativ"
 
@@ -91,9 +95,197 @@ question("Studierende haben erhoben, an wie vielen Tagen in der Woche Menschen s
   Eine Absolutskala ist gekennzeichnet durch \n
   - **natürliche Einheiten, die nicht umrechenbar sind (Anzahlen, Stück)** \n
   - enthält die Merkmale aller vorherigen Skalenniveaus, beispielsweise einen natürlichen Nullpunkt.
-  "
+  ",
+    allow_retry = T
 )
 ```
+
+### genauestens erklärt
+
+
+Das sind erstmal sehr viele Worte, die unglaublich verwirrend klingen und das ist total okay, immerhin ist das ein organisch gewachsenes Feld, wo immer mal wieder eine Person dachte: "Hey, da bring ich doch nochmal etwas Licht ins Dunkle". Das Resultat liegt vor uns und ist zwar hell erleuchtet aber erstmal eher verwirrend als einleuchtend. Keine Sorge, es ist nicht so kompliziert, wie es erstmal wirkt. Wichtig ist, dass du am Ende eine Idee davon hast, was **nominale**, **ordinale** und **metrische** Daten sind (die, die es besonders ernst nehmen können sich noch den Unterschied zwischen Intervall- und Verhältnisskala merken) und du die besprochenen Worte einer der drei Skalen zuordnen kannst (nicht groß weiter erklären, einfach vertstehen). 
+
+Für den Anfang was Süßes:
+
+![](images/scales_choclate.webp)
+
+<details>
+
+<summary><a>▼ Falls das bis jetzt alles zu verwirrend war und zu schnell ging hier ein freundlicher guide durch all diese Worte </a></summary>
+
+
+Das Schokobild fasst eigentlich alles zusammen. Für die Menschen, die das gerne nochmal mit den Worten der Vorlesung und etwas ausführlicher sehen wollen folgt ein Entscheidungsbaum. Er ist als Gespräch mit einer Variablen über ihre Inhalte aufgebaut.
+
+
+![](images/flowchart.jpg){width="100%"}
+
+#### Fall 1: Nominalskala
+
+Und auch hier was Süßes für den Anfang:
+
+![](images/skalen.png)
+
+Und jetzt nochmal bisschen ausführlicher
+
+![](images/flowchart_1.jpg)
+ 
+  - **Forschende:** *"Mit welchen Daten habe ich es hier zu tun? Welche Statistiken sind damit möglich?"*
+    - **Kommentar:** Deswegen werden die unterschiedlichen Skalenniveaus erst unterschieden: Von dem Skalenniveau hängt ab, was du damit rechnen kannst und darfst.
+  - **Variable:** *"Hi! Du stellst Fragen und ich Antworte!"*
+  - **F:** *Welche Art von Werten kannst du annehmen?/ Sind die (gesetzten) Intervalle gleich groß ("äquidistant")?*
+    - **Kommentar:** zu 2. Bei so ungewohnten und teilweise neuen Wörtern hilft es mir immer, mir deren Ursprung klar zu machen. Hier: **äquidistant** = gleich weit voneinander entfernt. Das ergibt total viel Sinn:
+      - *äqui* kennst du aus "*Äquivalenz*" = "*gleich*" 
+      - *distant*: kennst du aus "*Distanz*" = "*Entfernung*"
+      - bedeutet also, dass die Einheiten der Skala *gleich weit voneinander entfernt* sind - z.B. bei einem Lineal sind ja alle Striche gleich weit voneinander entfernt, in schlau also "die Striche sind äquidistant"
+       
+  - **Variable:** <i>"In diesem Fall: 1.: Meine Werte können **qualitativ bzw. kategorial bzw. factor bzw. diskret bzw. diskontinuierlich** sein und sind damit automatisch 2. **nicht** äquidistant"</i>
+    - **Kommentar:** Diese Worte bedeuten für das Level auf dem du arbeitest erstmal alle das gleiche (du kannst sie also äquivalent benutzen, lol.) Falls es dich interessiert:
+      - **qualitativ:** eine (charakteristische) Qualität (= Eigenschaft, Beschaffenheit) aufweisend
+        - Gegensatz: quantitativ: die Quantität (= Menge) betreffend
+      - **kategorial:** Kategorien (= Klasse, Gattung) betreffend
+        - Gegentsatz: metrisch: messbar (gleicher Wortstamm wie Meter, deshalb als Eselbrücke: Ein Meter ist metrisch!)
+      - **factor/ faktoriell:** nach Faktoren (= Aspekten/ Bestandteilen) aufgeschlüsselt UND: zentrale Objektklasse in R zur Berechnung genau dieser Skalen brauchen
+        - Gegensatz: numerisch: eine Nummer (= Zahl) betreffend; Datentyp in R
+      - **diskret:** durch _endliche_ Intervalle oder Abstände _voneinander getrennt_. 
+        - Ein bisschen wie Sekret: etwas das abgesondert wird. 
+        - Eselsbrücke: diskret = konkret.
+        - Gegensatz: stetig: beständig, kontinuierlich; (wie du es auch im Alltag nutzt)
+      - **diskontinuierlich**: _nicht_ kontinuierlich, unterbrochen
+        - Gegensatz: kontinuierlich: ununterbrochen, stetig (so wie du es auch im Alltag benutzt; auch: Kontinuum)
+    
+![](images/flowchart_2.jpg)  
+  
+  - **Variable:** *"Will sagen: meine Werte lassen sich in ein Kategoriensystem einordnen"*
+  - **Forschende:** *"Ok, cool! Lassen deine Werte sich in eine logische Reihenfolge bringen?"*
+  - **V:** *"Nein!"*
+
+![](images/flowchart_3.jpg){width="100%"}
+
+  - $\to$ _**NOMINALSKALA**_
+    - **Komentar:** **Nomen**: Namen. Daten können anhand von namentlichen (nicht zahlenmäßigen) Einheiten unterschieden werden
+    - Die Charakteristiken der Nominalskala:
+      - Die Merkmalsausprägungen liegen in **Kategorien** vor.
+      - Es gibt **keine** logische Rangfolge
+      - Beispiele: Prüfung bestanden? Farbe deine Fahrrades?
+      - Zugelassene logische Operaturen sind gleich ($=$) und ungleich ($\neq$)
+        - also: 
+          - rot $=$ rot
+          - rot $\neq$ grün
+      - Es wird noch einmal zwischen **binären** und **multinominalen** Skalen unterschieden. Das ist so, weil manche Statistiken sich nur mit binären bzw. multinominalen Variablen rechnen lassen.
+        - **binär**: zwei Ausprägungen verwendend; Wortstamm: Bi: Zwei (wie in **Bi**närcode, **Bi**sexualität oder auch non-**bi**när)
+        - **multinominal**: mehrere Ausprägungen verwendend
+          - Multi: Viel (Multivitaminsaft)
+          - nominal: den Nennwert betreffend; s. Nomen weiter oben
+
+![](images/nominal.jpg)
+
+#### Fall 2: Ordinalskala
+
+![](images/flowchart_4.jpg){width="100%"}
+
+  - **Forschende:** *"Okay, also deine Werte sind diskret. Lassen sie sich in eine logische Rangfolge bringen?"*
+  - **V:** *"JA!"*
+  - $\to$ _**ORDINAL- / RANGSKALA**_
+    - **Kommentar:** **Ordinal**: eine Ordnung (Rangfolge) anzeigend
+    - Die Charakteristiken der Ordinalskala:
+      - Die Merkmalsausprägungen liegen in **Kategorien** vor, welche eine logische Rangfolge haben
+      - Beispiele: Kleidergrößen (S < M < L), Plätze bei Wettkämpfen (1 < 2 < 3)
+      - Zugelassene logische Operaturen sind neben gleich ($=$) und ungleich ($\neq$) auch kleiner ($<$) und größer ($>$)
+        - also: 
+          - S $=$ S
+          - S $\neq$ M
+          - S $<$ L
+          - L $>$ M
+
+![](images/ranktest.png){width="50%"}
+
+#### Fall 3: Intervallskala
+
+![](images/flowchart_5.jpg){width="100%"}
+
+  - **Forschende:** *"Ich mal wieder. 1. Welche Art von Werten kannst du annehmen?/ 2. Sind die (gesetzten) Intervalle gleich groß ("äquidistant")?"*
+  - **Variable:** *"1. quantitativ/ metrisch/ numerisch/ stetig/ kontinuierlich. 2. ja"*
+  - $\to$ _**Kardinalskalen**_: Ein Zwischenschritt ist erreicht: die Kardninalskalen
+    - **kardinal**: besonders wichtig, vorzüglich (weil wir damit besonders viele besonders gute Statistiken rechnen können)
+    - zum merken: ein Kardinal in der katholischen Kirche ist der höchste Würdenträger nach dem Papst - also auch besonders wichtig
+  - **F:** *"Okay, eine letzte Frage noch: Hast du einen natürlichen Nullpunkt?"*
+  - **V:** *"Nö!"*
+
+![](images/flowchart_6.jpg)
+
+  - $\to$ _**INTERVALLSKALA**_: 
+    - **Kommentar:** **Intervall**: Bereich zwischen zwei Punkten auf einer Strecke oder Skala. Die Unterschiede auf dieser Skala werden in Intervallen angegeben und sind alle gleich groß.
+    - Die Charakteristiken der Intervallskala:
+      - Die Merkmalsausprägungen liegen äquidistanten (gleichgroßen) Intervallen vor
+      - Beispiele: Temperatur in Grad Celsius, Jahreszahlen
+      - Zugelassene logische Operaturen sind neben gleich ($=$), ungleich ($\neq$), kleiner ($<$) und größer ($>$) auch Plus ($+$) und Minus ($-$)
+        - also: 
+          - 10°C $=$ 10°C
+          - 10°C $\neq$ 15°C
+          - 10°C $<$ 20°C
+          - 10°C $>$ 5°C
+          - 10°C $+$ 1°C $=$ 11°C
+          - 10°C $-$ 2°C $=$ 8°C
+          
+![](images/continous_discrete.png)
+
+#### Fall 4: Verhältnisskala/ Rationalskala
+
+![](images/flowchart_7.jpg)
+
+  - **Forschende:** *"Okay, deine Daten sind numerisch. Haben sie einen absoluten Nullpunkt?"*
+  - **Variable:** *"Ja!"*
+  - **F:** *"Erhebe ich deine Daten mit messen oder zählen?"*
+  - **V:** *"Messen."*
+  
+![](images/flowchart_8.jpg)
+
+  - $\to$ _**RATIONAL-/ VERHÄLTNISSKALA**_
+    - **Ratio**: Vernunft; rational: vernünftig; Eselsbrücke: Wer vernünftig ist, ist verhältnismäßig.
+    - Charakteristiken der Verhältnisskala:
+      - bildet Verhältnisse von Zahlen adäquat ab
+      - Hat einen absoluten Nullpunkt
+      - Beispiele: physikalische Größen wie Meter, Kilogramm, Temperaturen in Kelvin
+      - Zugelassene logische Operatoren: neben $=$, $\neq$, $<$, $>$, $+$ und $-$ auch Multiplikationen $\cdot$ und Divisionen $:$
+        - 1m $=$ 1m
+        - 1m $\neq$ 2m
+        - 1m $<$ 3m
+        - 1m $>$ 0.5m
+        - 1m $+$ 4m $=$ 5m
+        - 1m $-$ 0.3m $=$ 0.7m
+        - 1m $\cdot$ 6 $=$ 6m
+        - 1m $:$ 10 $=$ 0.1m
+
+#### Fall 5: Absolutskala
+
+![](images/flowchart_9.jpg)
+
+  - **Forschende:** "Okay, deine Daten sind numerisch. Haben sie einen absoluten Nullpunkt?"
+  - **Variable:** "Ja!"
+  - **F:** Messen oder zählen?
+  - **V:** Zählen!
+  - $\to$ _**Absolutskala**_
+  - absolut: ganz und gar -> es geht um ganze Zahlen/ Dinge/ natürliche Einheiten/ Stück
+  - bildet Verhältnisse von Zahlen adäquat ab
+  - Hat einen absoluten Nullpunkt
+  - Beispiele: Menschen, Fahrräder, Münzen etc.
+  - Zugelassene logische Operatoren: neben $=$, $\neq$, $<$, $>$, $+$ und $-$ auch Multiplikationen $\cdot$ und Divisionen $:$
+    - 1 Fahrrad $=$ 1 Fahrrad
+    - 1 Fahrrad $\neq$ 2  Fahrräder
+    - 1 Fahrrad $<$ 3  Fahrräder
+    - 1 Fahrrad $>$ kein Fahrrad
+    - 1 Fahrrad $+$ 4  Fahrräder $=$ 5  Fahrräder
+    - 30  Fahrräder $-$ 6  Fahrräder $=$ 24  Fahrräder
+    - 1 Fahrrad $\cdot$ 6 $=$ 6  Fahrräder
+    - 20 Fahrrad $:$ 10 $=$ 2  Fahrräder
+
+
+
+<\details\>
+
+
+
+
 
 ## Skalenniveaus in R
 
@@ -191,7 +383,7 @@ Bei kategorialen Variablen ist es oft sinnvoll, die Variable in einen `factor` u
 
 Auf der Oberfläche wird es gleich dargestellt, weil R für die Zahlen automatisch wieder den richtigen Text einsetzt, aber unter der Oberfläche wird mit Zahlen gearbeitet, was gerade bei großen Datenmengen deutlich effizienter ist.
 
-"Fahrrad" wird dann codiert als 1, "ÖPNV" als 2
+" Fahrräder" wird dann codiert als 1, "ÖPNV" als 2
 
 ```{r}
 levels(rtutorials::einkaufen$Verkehrsmittel)
