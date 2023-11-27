@@ -19,3 +19,240 @@ library(tidyverse)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
+
+## Inhalt
+
+kurze Beschreibung des Inhalts
+
+Verortung auf der Roadmap
+
+## Lernziele
+
+kleine Checkliste mit abhakbaren Checkboxen:
+
+-   <input type="checkbox" unchecked> Wie verschiedene Überschriften
+    gerendert werden </input>
+-   <input type="checkbox" unchecked> farbige HTML-Boxen </input>
+-   <input type="checkbox" unchecked> HTML-Tag für Absätze </input>
+-   <input type="checkbox" unchecked> ausklappbare Abschnitte </input>
+-   <input type="checkbox" unchecked> LaTex </input>
+
+
+## Kapitel
+
+Als erstes wird der (digitalisierte) Datensatz in R eingelesen.
+
+<details>
+
+<summary><a>▼ \* Übersicht über Datenformate </a></summary>
+
+Zuerst brauchen wir ein grundlegendes Verständnis davon, wie Daten für R
+aussehen:
+
+![](images/csv.png){width="95%" style="display:block; margin:auto;"}
+![](images/rda.png){width="95%" style="display:block; margin:auto;"}
+![](images/sav.png){width="95%" style="display:block; margin:auto;"}
+
+Oben seht ihr ein und denselben Datensatz in drei verschiedenen Formaten
+und wie er aussieht, wenn er nicht in R eingelesen ist.
+
+1.  **CSV (Excel)**: Ergibt einigermaßen Sinn für unser menschliches
+    Auge.
+2.  **RDA (R)**: Viele nicht lesbare Zeichen. Ist binär und enthält
+    spezifische Informationen für R.
+3.  **SAV (SPSS)**: Hier wirds richtig crazy für uns: Das ist eine
+    Mischung aus binär-Code und Metainformationen, die nur SPSS
+    entschlüsseln kann.
+
+Zum Glück müssen wir uns damit nicht weiter auseinander setzen. Es
+reicht, dass ihr das einmal gesehen habt.
+
+Wie ein und der selbe Code je nach Sprache schon für uns Menschen
+unterschiedlich aussieht, geht es auch R. Um Daten in R einzulesen,
+brauchen wir verschiedene Befehle. Quasi um R zu sagen, welche
+Übersetzungsprozesse R machen muss, um die Daten lesen und für uns
+Menschen verständlich anzeigen zu können.
+
+</details>
+
+<details>
+
+<summary><a>▼  Und deren Import **(mit Aufgabe)**</a></summary>
+
+Alle Datensätze, die wir in dieser gesamten Veranstaltung verwenden, hat
+Lukas netterweise direkt ins Paket eingebunden, das heißt, ihr müsst für
+die Tutorials und Abgaben gar nichts tun, da die Daten bereits
+eingelesen sind. Um R eine Orientierung zu geben, welchen Datensatz ihr
+verwenden wollt tippt folgendes: `rtutorials::datensatz`\
+Sobald ihr das warme Nest dieses Tutoriums verlasst, werdet ihr
+allerdings mit anderen Datenformaten konfrontiert sein. Desewgen wollen
+wir euch die drei wichtigsten Befehle mit auf den Weg geben:
+
+1.  CSV: `daten <- read.csv("data/datensatz.csv")`
+2.  RDA: `daten <- load("data/datensatz.rda")`
+3.  SAV: `daten <- haven::read_sav("data/datensatz.csv")`
+
+::: aufgaberstudio
+**Aufgabe:**\
+Lies den Datensatz `publictr.rda` aus dem Ordner `data` in dein Skript
+zu dieser Veranstaltung ein.\
+(Du könntest auch einfach `rtutorials::publictr` nutzen. Für
+Übungszwecke gehen wir aber hier den längeren Weg.)
+:::
+
+</details>
+
+<details>
+
+<summary><a>▼ \* Was passiert in dem Code? </a></summary>
+
+-   `data`: Zuerst erstellen wir ein Objekt, dass wir in diesem Fall
+    `data` nennen. Bis jetzt ist es wie eine leere Box.
+-   `<-`: Dann sagen wir R, das es was in die Box tun soll. Das ist eine
+    sehr einfache Funktion.
+-   `load()`: Auch das ist eine Funktion, es läd einen `rda` Datensatz.
+-   `"data/publictr.rda"`: Der Datensatz (`"publictr.rda"`) und wo er
+    liegt (`"data/"`)
+
+Also nochmal in langsam und zum mitschreiben. Wir sagen zu R: Gehe bitte
+diesen Weg (`"data/"`) und nimm diesen spezifischen, dort gespeicherten
+Datensatz (`"publictr.rda"`) und lade ihn ein (`load()`). Dann speichere
+ihn im Arbeitsspeicher (`<-`) unter diesem Namen (`data`).
+
+</details>
+
+<details>
+
+<summary><a>▼ \* Bennenung von Datensätzen </a></summary>
+
+Im Grunde ist es echt egal, wie ihr eure Datensätze in R nennt.
+
+Es gibt klassischerweise zwei Heransgehensweisen: sehr allgemein `data`
+oder sehr spezifisch den Namen, also `publictr`.
+
+**Verwendung von "data":** - Vorteile: - *Allgemeiner Begriff:* Der Name
+"data" ist ein allgemeiner Begriff, der leicht zu merken (und tippen)
+ist. - *Einfachheit:* Die Verwendung von "data" kann den Code einfach
+halten, da der Name kurz und prägnant ist. - *Wiederverwendbarkeit:* Da
+"data" so allgemein ist, könnte der Name für verschiedene Arten von
+Datensätzen verwendet werden.
+
+-   Nachteile:
+    -   *Verwechslungsgefahr:* Da "data" ein häufig verwendetes Wort
+        ist, könnten Verwechslungen oder Konflikte mit anderen
+        Variablennamen und Argumenten in Funktionen auftreten.
+    -   *Mangelnde Beschreibung:* Der Name "data" gibt keine Hinweise
+        auf den Inhalt oder Zweck des Datensatzes, was zu Verwirrung
+        führen könnte.
+    -   *Kollisionen:* Wenn mehrere Datensätze "data" heißen, könnte es
+        zu unerwarteten Konflikten führen.
+
+**Verwendung von "publictr":** - Vorteile: - *Spezifizität:* Der Name
+"publictr" ist spezifisch und weist auf den Inhalt des Datensatzes
+hin. - *Vermeidung von Verwechslungen:* Ein spezifischer Name wie
+"publictr" kann Verwechslungen mit anderen Variablennamen reduzieren. -
+*Kontextbetonung:* Der Name kann den Fokus auf den Kontext des
+Datensatzes legen.
+
+-   Nachteile:
+    -   *Mögliche Überkomplexität:* Sehr spezifische Namen könnten zu
+        lang oder komplex werden und das Schreiben von Code erschweren.
+    -   *Mögliche Vergessenheit*: Ein komplexer Name wie "publictr"
+        könnte schwer zu merken sein, insbesondere wenn er selten
+        verwendet wird.
+    -   *Eingeschränkte Wiederverwendbarkeit:* Ein sehr spezifischer
+        Name macht das kopieren von Code fürs nächste Projekt
+        anstrengender.
+
+</details>
+
+
+
+## Abschlussquiz
+
+```{r abschlussquiz_01, echo = FALSE}
+learnr::question_radio("Was vermutest du: Was wird ausgegeben durch `wg$name`?",
+                       answer("Ein Data Frame",
+                              message = "Es ist kein Data Frame, weil die Werte dann untereinander in einer Spalte ausgegeben würden und nicht nebeneinander."),
+                       answer("Ein Vektor",
+                              correct = TRUE,
+                              message = "Genau. Es ist ein Vektor, denn bei einem Data Frame würden die Werte untereinander in einer Spalte ausgegeben statt horizontal."),
+                       allow_retry = TRUE)
+```
+
+
+## Learnings
+
+So hast du heute abgeschnitten:
+
+```{r context="server"}
+# Shiny App um die Anzahl richtig beantworteter Fragen anzuzeigen. 
+# Funktioniert in jedem Tutorial
+
+shiny::observeEvent(
+  input$get_score, 
+  {
+    objs2 = learnr:::get_tutorial_state()
+    
+    # Number of correct questions
+    
+    n_correct <- 
+      # Access the $correct sublist item in each list item
+        lapply(objs2, purrr::pluck, "correct") |>
+           # make it a vector containing: TRUE and FALSE and NAs
+           # NA is appearing for list items which don't have
+           # a $correct subitem
+                unlist() |> 
+           # Taking the sum of a logical Vector returns the number of TRUEs
+                sum(na.rm=TRUE)
+    
+    # Number of total questions
+    
+    total_questions <- 
+      # 1. Access $type in each list item and make it a vector of types
+      lapply(objs2, purrr::pluck, "type") |> unlist()
+    
+    # 2. Count the number of "question" in that vector
+    total_questions <- total_questions[total_questions == "question"] |> 
+      length()
+      
+      
+    output$score = shiny::renderText(
+      paste0(n_correct, " von ", total_questions,
+        " im gesamten Tutorial beantworteten Fragen waren richtig.")
+)
+    invisible()
+  }
+)
+```
+
+```{r score, echo=FALSE}
+shiny::br()
+shiny::actionButton("get_score", "Auswertung!")
+shiny::br()
+shiny::br()
+shiny::textOutput("score")
+shiny::br()
+```
+
+
+
+### Zusammenfassung
+
+Hier ein kleiner Text, was gelernt wurde und vlt. auch warum das wichtig ist.
+
+### Diese neuen Konzepte kennst du nun:
+-     Stichpunktartige Beschreibung
+
+### Neue Funktionen
+eine Tabelle mit den wichtigesten Codes des Tutorials
+| Code           | Beschreibung                           |
+|----------------|----------------------------------------|
+| `[ ]`          | Indizierung                            |
+| `&`            | UND-Operator für logische Indizierung  |
+
+## Credit
+<!-- vielleicht in diese Richtung? -->
+Dieses Tutorial wurde (größtenteils) von Lukas Bruelheide sowie in Teilen von Marie Klosterkamp geschrieben. 
+
+ggf.: Bei der Erstellung (u.a. der Beispiele, Aufgaben und Zusammenfassung) wurde teilweise von ChatGPT gebrauch gemacht.
