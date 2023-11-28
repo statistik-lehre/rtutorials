@@ -19,11 +19,11 @@ library(tidyverse)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## Was Sie in diesem Tutorial lernen:
+## Was du in diesem Tutorial lernst:
 
-In den letzten Tutorials haben Sie gelernt, was ein Vektor und was ein Data Frame ist, und wie Sie damit in R arbeiten können. Nun tauchen wir tiefer in diese Konzepte ein und untersuchen die hinterliegenden Strukuren.
+In den letzten Tutorials hast du gelernt, was ein Vektor und was ein Data Frame ist, und wie du damit in R arbeiten kannst. 
 
-In diesem Tutorial werden wir unsere Kenntnisse über Objekt- und Datentypen vertiefen. Insbesondere werden wir uns mit den Skalenniveaus auseinandersetzen, um ein umfassenderes Verständnis für die Arbeit mit verschiedenen Datentypen in R zu entwickeln. Wir werden lernen, wie man kategoriale Variablen erstellt und zusätzlich werfen wir einen Blick auf ordinale Vektoren und verstehen, wie man sie ordnet. Am Ende dieses Tutorials werden wir uns bewusst sein, warum diese Konzepte wichtig sind und wie sie die Arbeit mit R effizienter und effektiver gestalten können.
+In diesem Tutorial werden wir unsere Kenntnisse über Objekt- und Datentypen vertiefen. Insbesondere werden wir uns mit den Skalenniveaus auseinandersetzen, um ein umfassenderes Verständnis für die Arbeit mit verschiedenen Datentypen in R zu entwickeln. Wir werden lernen, wie man kategoriale Variablen erstellt und zusätzlich werfen wir einen genaueren Blick auf ordinale Variablen und lernen, wie man diese ordnet. Am Ende dieses Tutorials wirst du gelernt haben, warum diese Konzepte wichtig sind und wie sie deine Arbeit mit R effizienter und effektiver gestalten können.
 
 ## Skalenniveaus
 
@@ -47,7 +47,7 @@ question("Studierende haben erhoben, an wie vielen Tagen in der Woche Menschen s
   post_message = "Da es sich um eine Anzahl handelt, befinden wir uns auf der Absolutskala. Ginge es hingegen um die Zeit in Stunden oder Tagen, die innerhalb einer Woche für Kochen aufgewendet wird, wären wir auf der Verhältnisskala. \n
   Eine Absolutskala ist gekennzeichnet durch \n
   - **natürliche Einheiten, die nicht umrechenbar sind (Anzahlen, Stück)** \n
-  - enthält die Merkmale aller vorherigen Skalenniveaus, beispielsweise einen natürlichen Nullpunkt.
+  - enthält die Merkmale aller niedrigeren Skalenniveaus, beispielsweise einen natürlichen Nullpunkt.
   ",
     allow_retry = T
 )
@@ -55,15 +55,19 @@ question("Studierende haben erhoben, an wie vielen Tagen in der Woche Menschen s
 
 ### Genauestens erklärt
 
-Das sind erstmal sehr viele Worte, die unglaublich verwirrend klingen und das ist total okay, immerhin ist das ein organisch gewachsenes Feld, wo immer mal wieder eine Person dachte: "Hey, da bring ich doch nochmal etwas Licht ins Dunkle". Das Resultat liegt vor uns und ist zwar hell erleuchtet aber erstmal eher verwirrend als einleuchtend. Keine Sorge, es ist nicht so kompliziert, wie es erstmal wirkt. Wichtig ist, dass du am Ende eine Idee davon hast, was **nominale**, **ordinale** und **metrische** Daten sind (die, die es besonders ernst nehmen können sich noch den Unterschied zwischen Intervall- und Verhältnisskala merken) und du die richtigen Begriffe einer der drei Skalen zuordnen kannst (nicht groß weiter erklären, einfach vertstehen). 
+Das sind erstmal sehr viele Begriffe, die unglaublich verwirrend klingen und das ist total okay, immerhin ist das ein organisch gewachsenes Feld, wo immer mal wieder eine Person dachte: "Hey, da bring ich doch nochmal etwas Licht ins Dunkel". Das Resultat liegt vor uns und ist zwar hell erleuchtet, aber erstmal eher verwirrend als einleuchtend. Keine Sorge, es ist nicht so kompliziert, wie es zunächst wirkt. 
 
-Für den Anfang was Süßes:
+Wichtig ist, dass du am Ende eine Idee davon hast, was **nominale**, **ordinale** und **metrische** Daten sind (die, die es besonders ernst nehmen können sich noch den Unterschied zwischen Intervall-, Verhältnis- und Absolutsskala merken) und du die richtigen Begriffe einer der drei Skalenarten zuordnen kannst (nicht groß weiter erklären, einfach vertstehen). 
 
-![](images/scales_choclate.webp)
+Für den Einstieg was Süßes:
+
+![](images/scales_choclate.webp){width="80%"}
+
+Dieses Beispiel soll die Unterschiede der verschiedenen Skalen für dich greifbar machen.
 
 <details>
 
-<summary><a>▼ Falls das bis jetzt alles zu verwirrend war und zu schnell ging hier ein freundlicher Guide durch all diese Worte </a></summary>
+<summary><a>▼ Hier kannst du dein Verständnis mit weiteren Beispielen sowie einem freundlichen Guide durch all diese Begriffe vertiefen </a></summary>
 
 
 Das Schokobild fasst eigentlich alles zusammen. Für die Menschen, die das gerne nochmal etwas ausführlicher sehen wollen, folgt ein Entscheidungsbaum. Er ist als Gespräch mit einer Variablen über ihre Inhalte aufgebaut.
@@ -79,7 +83,7 @@ Und auch hier was Süßes für den Anfang:
 
 Und jetzt nochmal bisschen ausführlicher...
 
-![](images/flowchart_1.jpg)
+![](images/flowchart_1.jpg){width="90%"}
  
   - **Forschende:** *"Mit welchen Daten habe ich es hier zu tun? Welche Statistiken sind damit möglich?"*
     - **Kommentar:** Deswegen werden die unterschiedlichen Skalenniveaus erst unterschieden: Von dem Skalenniveau hängt ab, was du damit rechnen kannst und darfst.
@@ -91,7 +95,7 @@ Und jetzt nochmal bisschen ausführlicher...
       - bedeutet also, dass die Einheiten der Skala *gleich weit voneinander entfernt* sind - z.B. bei einem Lineal sind ja alle Striche gleich weit voneinander entfernt, in schlau also "die Striche sind äquidistant"
        
   - **Variable:** <i>"In diesem Fall: 1.: Meine Werte können **qualitativ bzw. kategorial bzw. factor bzw. diskret bzw. diskontinuierlich** sein und sind damit automatisch 2. **nicht** äquidistant"</i>
-    - **Kommentar:** Diese Worte bedeuten für das Level auf dem du arbeitest erstmal alle das gleiche (du kannst sie also äquivalent benutzen, lol.) Falls es dich interessiert:
+    - **Kommentar:** Diese Begriffe bedeuten für das Level auf dem du arbeitest erstmal alle das gleiche (du kannst sie also äquivalent benutzen, lol.) Falls es dich interessiert:
       - **qualitativ:** eine (charakteristische) Qualität (= Eigenschaft, Beschaffenheit) aufweisend
         - Gegensatz: quantitativ: die Quantität (= Menge) betreffend
       - **kategorial:** Kategorien (= Klasse, Gattung) betreffend
@@ -105,7 +109,7 @@ Und jetzt nochmal bisschen ausführlicher...
       - **diskontinuierlich**: _nicht_ kontinuierlich, unterbrochen
         - Gegensatz: kontinuierlich: ununterbrochen, stetig (so wie du es auch im Alltag benutzt; auch: Kontinuum)
     
-![](images/flowchart_2.jpg)  
+![](images/flowchart_2.jpg){width="90%"}  
   
   - **Variable:** *"Will sagen: meine Werte lassen sich in ein Kategoriensystem einordnen"*
   - **Forschende:** *"Ok, cool! Lassen deine Werte sich in eine logische Reihenfolge bringen?"*
@@ -128,7 +132,8 @@ Und jetzt nochmal bisschen ausführlicher...
         - Multi: Viel (Multivitaminsaft)
         - nominal: den Nennwert betreffend; s. Nomen weiter oben
 
-![](images/nominal.jpg){width="50%"}
+![](images/nominal.jpg){width="100%"}
+</br>
 
 #### Fall 2: Ordinalskala
 
@@ -148,6 +153,8 @@ Und jetzt nochmal bisschen ausführlicher...
         - L $>$ M
 
 ![](images/ranktest.png){width="50%"}
+*Erklärung: Für den statistischen Rangtest ist dabei egal, wie groß die Abstände zwischen den Ausprägungen sind, solange diese zu den vergleichenden Ausprägungen gleich gerichtete sind (die Differenz von 1-7 das gleiche Vorzeichen wie 2-15, 3-812 usw. hat). Möchtest du mehr dazu erfahren, bietet diese [Webseite](https://www.statistik-nachhilfe.de/ratgeber/statistik/induktive-statistik/signifikanztests-hypothesentests/verteilungsunabhaengige-tests-nichtparametrische-tests/wilcoxon-vorzeichen-rang-test) eine gute Zusammenfassung.
+
 
 #### Fall 3: Intervallskala
 
@@ -161,7 +168,7 @@ Und jetzt nochmal bisschen ausführlicher...
   - **F:** *"Okay, eine letzte Frage noch: Hast du einen natürlichen Nullpunkt?"*
   - **V:** *"Nö!"*
 
-![](images/flowchart_6.jpg)
+![](images/flowchart_6.jpg){width="100%"}
 
   - $\to$ __**INTERVALLSKALA**__: 
     - **Intervall**: Bereich zwischen zwei Punkten auf einer Strecke oder Skala. Die Unterschiede auf dieser Skala werden in Intervallen angegeben und sind alle gleich groß.
@@ -180,14 +187,14 @@ Und jetzt nochmal bisschen ausführlicher...
 
 #### Fall 4: Verhältnisskala/ Rationalskala
 
-![](images/flowchart_7.jpg)
+![](images/flowchart_7.jpg){width="70%"}
 
   - **Forschende:** *"Okay, deine Daten sind numerisch. Haben sie einen absoluten Nullpunkt?"*
   - **Variable:** *"Ja!"*
   - **F:** *"Erhebe ich deine Daten mit messen oder zählen?"*
   - **V:** *"Messen."*
   
-![](images/flowchart_8.jpg)
+![](images/flowchart_8.jpg){width="70%"}
 
   - $\to$ __**RATIONAL-/ VERHÄLTNISSKALA**__
     - **Ratio**: Vernunft
@@ -209,7 +216,7 @@ Und jetzt nochmal bisschen ausführlicher...
 
 #### Fall 5: Absolutskala
 
-![](images/flowchart_9.jpg)
+![](images/flowchart_9.jpg){width="70%"}
 
   - **Forschende:** *"Okay, deine Daten sind numerisch. Haben sie einen absoluten Nullpunkt?"*
   - **Variable:** *"Ja!"*
@@ -284,7 +291,7 @@ question("Welche Skalen-Eigenschaften treffen auf den erreichten Rang in einem W
 
 ## Skalenniveaus in R
 
-Falls das Quizz noch nicht ganz erfolgreich war, nicht verzagen, wir brechen es nochmal auf das Wesentliche runter:
+Falls das Quizz noch nicht ganz erfolgreich war, nicht verzagen. Wir brechen es nochmal auf das Wesentliche runter:
 
 In R können wir verschiedene Skalenniveaus finden, darunter nominale, ordinale, Intervall-, Verhältnis- und Absolutsskala. Jedes Skalenniveau hat unterschiedliche Eigenschaften und erfordert spezifische Analysemethoden. Hier eine kurze Zusammenfassung der Skalenniveaus:
 
@@ -313,10 +320,11 @@ In R können wir verschiedene Skalenniveaus finden, darunter nominale, ordinale,
 - Eigenschaften: Bekannte Rangfolge, bekannter Abstand, absoluter Nullpunkt und **natürliche Einheiten**
 - Beispiel: Anzahl an Fahrrädern im Keller (0, 3, 12)
 
+</br>
 ::: blau-nb
 Für dich wichtig im Umgang mit R: Die nominale und orinale Skala beinhalten **kategoriale** Variablen die Intervall-, Verhältnis- und Absolutskala hingegen **metrische** Variablen.
 :::
-</br>
+
 
 R bietet hauseigene Datenformate an, um Daten in unterschiedlichen Skalenniveaus gut zu repräsentieren. Hier ist eine Auswahl davon:
 
@@ -393,11 +401,12 @@ Bei *metrischen* Variablen können wir mit den gewohnten *doubles* rechnen.
 Schauen wir uns also an, welche Datenformate für die Variablen in dem Beispieldatensatz genutzt wurden:
 
 ::: aufgabe
-Untersuche mit der Funktion class() welche Datenformate für die verschiedenen Variablen genutzt wurden
-1) `essen` (Lieblingsessen)
-2) `verkehrsmittel` (Welches Verkehrsmittel wird zum Einkauf verwendet)
-3) `frequenz` (Wie oft wird eingekauft in 5 Kategorien)
-4) `weg` (Weg in Km)
+Untersuche mit der Funktion `class()` welche Datenformate für die verschiedenen Variablen genutzt wurden:
+
+1)  `essen` (Lieblingsessen)
+2)  `verkehrsmittel` (Welches Verkehrsmittel wird zum Einkauf verwendet)
+3)  `frequenz` (Wie oft wird eingekauft in 5 Kategorien)
+4)  `weg` (Weg in Km)
 :::
 
 ```{r einkaufen}
@@ -413,6 +422,7 @@ class()
 class()
 class()
 ```
+
 ```{r class-solution}
 class(einkaufen$essen)
 class(einkaufen$verkehrsmittel)
@@ -422,26 +432,26 @@ class(einkaufen$weg)
 
 
 ```{r wassiehstdu}
-learnr::question_radio("Was kannst du erkennen??",
+learnr::question_checkbox("Was kannst du erkennen??",
                        answer("Die metrische Variable ist als `numeric` gespeichert",
                               correct = TRUE,
-                              message = "Die Variable `weg` ist metrisch skaliert und daher als numeric gespeichert"),
+                              message = "Die Variable `weg` ist metrisch skaliert und daher als numeric gespeichert."),
                        answer("Die metrische Variable ist als `factor` gespeichert",
                               message = "Metrische Variablen sollten als numeric gespeichert werden."),
-                       answer("Die nominale Variable(n) sind als `numeric` gespeichert",
+                       answer("Die nominale Variablen sind als `numeric` gespeichert",
                               message = "nominale Variablen sollten als `factor` gespeichert werden, da ihre numerischen Werte nur repräsentativ für eine Beschriftung sind."),
-                       answer("Die ordinale Variable ist als ordered factor gespeichert",
+                       answer("Die ordinale Variable ist als ordered factor gespeichert.",
                               correct = TRUE,
-                              message = "Ordinale Variable kann in einem ordered factor ihre Rangfolge aufrecht erhalten und sollte daher stets als solche abgespeichert werden."),
+                              message = "Die ordinale Variable kann in einem ordered factor ihre Rangfolge aufrecht erhalten und sollte daher stets als solche abgespeichert werden."),
                        allow_retry = TRUE)
 ```
 
 
 Was es genau mit dem Datenformat `factor` auf sich hat erfährst du im nächsten Kapitel.
 
-## kategoriale Variablen
+## Kategoriale Variablen
 
-In der Forschung werden kategoriale Variablen meist in sogenannte *Codes* übersetzt. So werden die Kategorien nicht mehr als Text, sondern als Zahlen repräsentiert. Dies ist v.a. beim händischen Erfassen oder Digitalisieren der Daten unablässlich, denn niemand möchte "ohne Schulabschluss" mehr als 25 Mal aufschreiben oder abtippen müssen. Stattdessen wird ein sog. *Codebook* erstellt, in dem die jeweiligen Codes aufgeschlüsselt werden.
+In der Forschung werden kategoriale Variablen meist in sogenannte *Codes* übersetzt. So werden die Kategorien nicht mehr als Text, sondern als Zahlen repräsentiert. Dies ist v.a. beim händischen Erfassen oder Digitalisieren der Daten unablässlich, denn niemand möchte "zu Fuß" mehr als 25 Mal aufschreiben oder abtippen müssen. Stattdessen wird ein sog. *Codebook* erstellt, in dem die jeweiligen Codes aufgeschlüsselt werden.
 
 Das könnte z.B. so aussehen:
 ```{r, echo=FALSE}
@@ -468,7 +478,7 @@ Da diese Verwendung von Codes gängige Praxis sind, gibt es in R einen Befehl, d
 
 Warum brauchen wir die `factor()`-Funktion?
 
-1. **Interpretation von Kategorien:** Kategoriale Variablen können eine begrenzte Anzahl von Kategorien haben, z. B. Farben, Geschlecht oder Verkehrsmitteltypen. Der Befehl `factor()` weist diesen Kategorien numerische Codes zu, um die Daten in einer numerischen Form darzustellen, die R verstehen kann.
+1. **Interpretation von Kategorien:** Kategoriale Variablen können eine begrenzte Anzahl von Kategorien haben, z. B. Farben, Geschlecht oder Verkehrsmitteltypen. Der Befehl `factor()` weist diesen Kategorien Beschriftungen zu, um die Daten in einer für uns leicht verständlichen Form darzustellen.
 
 2. **Ordinalität beachten:** Bei ordinalen kategorialen Variablen, bei denen die Reihenfolge der Kategorien wichtig ist (z. B. Bildungsniveau - Grundschule, Mittelschule, Hochschule), ermöglicht `factor()` die korrekte Berücksichtigung dieser Ordnung.
 
@@ -491,7 +501,7 @@ In der Hilfe-Seite siehst du, dass der Befehl verschiedene Argumente hat:
 
 #### Beispiel
 
-Nehmen wir an wir haben einen Vektor an Verkehrsmittel für den wir folgendes Codebook erstellt haben:
+Nehmen wir an wir haben einen Vektor an Verkehrsmitteln für den wir folgendes Codebook erstellt haben:
 
 | Level | Label   |
 |-------|---------|
@@ -500,50 +510,50 @@ Nehmen wir an wir haben einen Vektor an Verkehrsmittel für den wir folgendes Co
 | 3     | Fahrrad |
 | 4     | ÖPNV    |
 
-Die Level sind also die Zahlen 1-4 die wir respektive für die Kategorien Auto, Zu Fuß, Fahrrad und ÖPNV nutzen.
+Die Level sind also die Zahlen 1-4 die wir respektive für die Kategorien `Auto`, `Zu Fuß`, `Fahrrad` und `ÖPNV` nutzen.
+
+Das sieht in R dann so aus:
 
 ```{r facample, exercise = TRUE}
 # Erstellen eines Beispielvektors
-verkehrsmittel <- c(1:4)
+verkehrsmittel <- c(1,2,3,2,4,2,1,3,4,2)
 
 # den Vektor in einen Beispiel-Data-Frame laden
 df <- data.frame(verkehrsmittel)
 
 # dieser Code dient nur zur Veranschaulichung des Konzepts, dass level und label aufeinander abgestimmt sein müssen
-df$verkehrsfactor <- factor(df$verkehrsmittel, levels = c(1,2,3,4), labels = c("Auto", "Zu Fuß", "Fahrrad", "ÖPNV"))
+df$verkehrsfactor <- factor(df$verkehrsmittel, 
+                            levels = c(1,2,3,4), 
+                            labels = c("Auto", "Zu Fuß", "Fahrrad", "ÖPNV")
+                            )
 
-```
-
-Wir können uns mit dem Befehl levels() auch die entsprechenden Werte anzeigen lassen
-
-```{r facample2, exercise = TRUE, exersise.setup="facample"}
-# Beispiel 
-df$verkehrsmittel
+# levels() 
 levels(df$verkehrsfactor)
 df
 ```
 
-Wir sehen, der verkehrsfactor zeigt nun nur noch die - für uns leicht interpretierbaren -  Labels an.
+Der Befehl `levels()` zeigt dir an, welche Werte dein Factor annehmen kann. Dabei gibt R uns nun nur noch die entsprechenden `label` aus, die wir den Werten zugewiesen haben. 
 
-::: info
+Wir sehen, der `df$verkehrsfactor` zeigt ebenfalls nur noch die - für uns leicht interpretierbaren -  `Labels` des Vektors `verkehrsfactor` an.
+
+::: blau-nb
 Es ist also wirklich extrem wichtig, dass du bei der Benennung deines factors darauf achtest, dass du die Zuordnung von `levels` und `labels` mit dem jeweils richtigen Element in der richtigen Reihenfolge durchführst, denn von jetzt an wird R dir nur noch die Label anzeigen.
 :::
+</br>
 
 ### Ordinale Daten
 
 Da auch ordinale Daten kategorial sind, sollten auch hier Faktoren genutzt werden. Da hier eine Rangfolge der Kategorien herrscht, sollte diese auch in den Daten verteten sein. In R kannst du ordinal skalierte Vektoren erstellen, indem du das Argument `ordered = TRUE` im `factor()`-Befehl verwendest. Dies signalisiert R, dass die Werte eine bestimmte Ordnung haben. Setzt du das *logische Argument* `ordered =  FALSE` so geht R davon aus, dass die Werte keine Ordnung haben.
 
-::: info
+::: blau-nb
 Im Allgemeinen gilt: Wenn die Reihenfolge der Levels für die Interpretation wichtig ist (wie bei "niedrig", "mittel", "hoch"), ist es sinnvoll, den Faktor als geordnet (ordered = TRUE) zu kennzeichnen, um sicherzustellen, dass die Reihenfolge bei grafischen Darstellungen und statistischen Analysen korrekt berücksichtigt wird.
 :::
-
-![Bringing order](images/order.gif){width="60%"}
+</br>
+![Bringing order](images/order.gif){width="80%"}
 
 Source: [Youtube.com](https://www.youtube.com/channel/UCwArXqlGpT6ANMwVVtYTtLw?view_as=subscriber)
 
-</br>
-
-Schauen wir uns ein Beispiel dazu an. Hier wurden die Level nicht als numerischer Code gespeichert, sondern sind bereits als Text hinterlegt (z.B. bei online erfassten Daten nicht unüblich), daher arbeiten wir hier nur mit den `levels` und nicht mit den `labels`.  
+Schauen wir uns ein Beispiel dazu an. Hier wurden die Level nicht als numerischer Code gespeichert, sondern sind bereits als Text hinterlegt (z.B. bei online erfassten Daten nicht unüblich), daher arbeiten wir hier nur mit den `levels` und benötigen die `labels` nicht.  
 
 ```{r order, exercise = TRUE}
 # Beispielvektor
@@ -557,7 +567,7 @@ factor_vektor <- factor(beispiel_vektor, ordered = FALSE, levels = c("niedrig", 
 sortierter_vektor <- factor(factor_vektor, ordered = TRUE, levels = c("niedrig", "mittel", "hoch"))
 
 beispiel_vektor
-ordinal_vektor
+factor_vektor
 sortierter_vektor
 ```
 
@@ -568,6 +578,7 @@ sortierter_vektor
 Der Befehl hat dazu geführt, dass die Levels mit "<" versehen werden, um zu zeigen, in welcher Rangfolge diese organisiert sind.
 
 </details>
+</br>
 
 Sehen wir uns ein weiteres Beispiel an:
 
@@ -577,9 +588,9 @@ Auch hier kannst du die Werte mittels des Argumentes `ordered = TRUE` sortieren.
 head(rtutorials::einkaufen$Frequenz, 20)
 ```
 
-Wenn du das Argument `ordered = ` auf TRUE setzt, dann speichert R die Level in einer Reihenfolge. Doch Obacht: R kann ja die Inhalte nicht lesen. Das bedeutet, dass R das nach dem zweitlogischsten Schema sortiert: Anfangsbuchstaben (kommen ja keine Zahlen vor). 
+Wenn du das Argument `ordered = ` auf `TRUE` setzt, dann speichert R die Level in einer Reihenfolge. Doch Obacht: R kann ja die Inhalte nicht lesen. Das bedeutet, dass R das nach dem zweitlogischsten Schema sortiert: Anfangsbuchstaben (kommen ja keine Zahlen vor). 
 
-Deswegen musst du R auch noch sagen, in welcher Reihenfolge die Level gespeichert werden sollen. Das machst du mit dem Argument `levels = c()"`, und gibst dort die Reihenfolge ein. Um das zu demonstrieren ist die Variable Frequenz zurücktransformiert in einen schlichten unsortierten character Vektor mit dem Namen `frequenz`.
+Deswegen musst du R auch noch sagen, in welcher Reihenfolge die Level gespeichert werden sollen. Das machst du mit dem Argument `levels = c()"`. Dort gibst du die Reihenfolge vor. Um das zu demonstrieren ist die Variable Frequenz zurücktransformiert in einen schlichten unsortierten character Vektor mit dem Namen `frequenz`.
 
 ```{r of-setup, exercise.setup="einkaufen"}
 frequenz <- as.character(einkaufen$frequenz)
@@ -603,18 +614,22 @@ levels(frequenz)            # Puh! jetzt ist ja alles gut :)
 ```
 
 ::: blau-nb
-Du wirst wahrscheinlich gemerkt haben, dass R bei der Rangfolge davon ausgeht, das diese mit jedem Item steigt. 
+Du wirst wahrscheinlich gemerkt haben, dass R bei der Rangfolge davon ausgeht, das diese mit jedem Item steigt (klein < größer < am größten). Daher ist es sauberer die `levels` auch entsprechend dieser Rangfolge einzugeben. 
 :::
 
-Daher wäre es sauberer die `levels` auch entsprechend dieser Rangfolge einzugeben. Versuch es doch einmal selbst:
+ Versuch es doch einmal selbst:
 
 ::: aufgabe
-Erstelle für die Variable `datum` einen `ordered factor` namens `ordereddate`
+Erstelle für die Variable `datum` einen `ordered factor` namens `ordereddate` und lasse dir diesen anzeigen.
 :::
 
 ```{r datum1, exercise = TRUE, exercise.setup="einkaufen"}
-# lasse dir zuerst anzeigen welche Werte die Variable Datum enthält
+# lasse dir zuerst anzeigen welche Werte 
+# die Variable `datum` enthält
 table(einkaufen$datum)
+
+# erstelle hier den ordered factor
+
 ```
 
 ```{r datum1-hint}
@@ -664,6 +679,14 @@ quiz(
            answer("109, 100, 320"),
            answer("100348, 100349, 1000349", correct = T),
            answer("rot, grün, blau"),
+           allow_retry = T, random_answer_order = T
+           )
+  ,
+  question("Was solltest du bei der Erstellung von Levels und Labels beachten",
+           answer("die Anzahl an Levels = die Anzahl an Labels", correct = T),
+           answer("es kann ohne Labels keine Levels geben"),
+           answer("es kann ohne Levels keine Labels geben", correct = T),
+           answer("die Anzahl an Labels muss der Anzahl an Levels entsprechen", correct = T),
            allow_retry = T, random_answer_order = T
            )
 )
@@ -743,7 +766,7 @@ Deine Fähigkeiten im Umgang mit Skalenniveaus werden dir dabei helfen, Daten pr
 
 -  Skalenniveaus: Du verstehst die Unterschiede zwischen nominalen, ordinalen und metrischen Skalenniveaus und kannst ihre Bedeutung in statistischen Analysen erklären.
 
--  Faktoren in R: Du weißt, wie man Faktoren in R erstellt, insbesondere unter Verwendung des factor()-Befehls, um kategoriale Variablen mit Labels zu versehen.
+-  Faktoren in R: Du weißt, wie man Faktoren in R erstellt, insbesondere unter Verwendung des `factor()`-Befehls, um kategoriale Variablen mit Labels zu versehen.
 
 - Geordnete Faktoren: Du kannst Faktoren als geordnet markieren und verstehst, warum dies wichtig ist, insbesondere wenn die Reihenfolge der Kategorien relevant ist.
 
@@ -756,8 +779,7 @@ eine Tabelle mit den wichtigesten Codes des Tutorials
 | Code                          | Beschreibung                                                     |
 |-------------------------------|------------------------------------------------------------------|
 | `factor(x)`                   | Erstellt einen Faktor aus einem Vektor.                          |
-| `factor(x, levels = )`        | Erstellt einen Faktor mit spezifizierten Levels.                 |
-| `factor(x, labels = )`        | Erstellt einen Faktor mit spezifizierten Labels.                 |
+| `factor(x, levels )`        | Erstellt einen Faktor mit spezifizierten Levels.                 |
 | `factor(x, levels, labels)`   | Erstellt einen Faktor mit spezifizierten Levels und Labels.      |
 | `levels()`                    | Zeigt die Levels eines Faktors an.                               |
 
