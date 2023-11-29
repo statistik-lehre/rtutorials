@@ -90,25 +90,69 @@ Hier noch ein kleines Wort zu Dateipfaden. Für diejenigen, die nicht wissen, wa
 
 Dateipfade sind schmerzvoll und nervig, weil sie je nach Betriebssystem unterschiedliche Formate haben. 
 
-Das hier wäre zum Beispiel ein typischer Windows-Pfad: `C:\User\Nina\Documents\R\Daten\einkaufen.csv`
+Das hier wäre zum Beispiel ein typischer Windows-Pfad: \ `C:\User\Nina\Documents\R\statistik-bachelor\einkaufen.csv`
 
-Und so sieht ein typischer Mac-Pfad aus:
-`~/Nina/Documents/R/Daten/einkaufen.csv`
+Und so sieht ein typischer Mac- oder Linux-Pfad aus: \
+`~/Nina/Documents/R/statistik-bachelor/einkaufen.csv`
 
-Windows verwendet also `\` Backward-Slashes, während Mac und Linux immer `/` Forward-Slashes verwenden! Arme Windos-User, denn R akzeptiert keine Backward-Slashes.
+Windows verwendet also `\` Backward-Slashes, während Mac und Linux immer `/` Forward-Slashes verwenden! Arme Windos-User, denn R akzeptiert keine Backward-Slashes. Da gehen die Probleme schon los. Deswegen versuchen wir den direkten Kontakt mit *absoluten* Dateipfaden möglichst zu vermeiden, indem wir
 
-Nanu, was ist denn mit dieser Tabelle hier los? Offensichtlich wurde das Semikolen nicht als Trennzeichen erkannt, sondern R hat nach einem Komma gesucht, um die Spalten voneinander zu trennen, aber keins gefunden! Alles wurde in eine Spalte gezwängt.
+- grafische Benutzeroberflächen zum Importieren von Daten verwenden
+- mit Projekten arbeiten, so dass der Pfad nur noch so aussähe: `einkaufen.csv` (vorausgesetzt, man befindet sich im aktiven Projekt `statistik-bachelor`). Dieses Konzept heißt auch *relative Pfade* und sollte immer bevorzugt werden, da Skripte dann funktionieren unabhängig vom PC, an dem du dich gerade befindest.
 
-```{r zerhaeckselte_tabelle, echo = TRUE}
-# path <- "/speicherort/von/einkaufen.csv"
+Um hier im Tutorial fortfahren zu können, haben wir das Dateipfad-Problem mal beiseite gelegt, in dem wir den Textvektor `path` verwenden. Der wurde im Hintergrund von einem Skript erstellt enthält einen Pfad zu einer CSV-Datei, die mit diesem Paket zusammen auf deinen PC heruntergeladen wurde. Mit dieser Datei werden wir im Folgenden üben. 
+
+::: aufgabe
+Der Codeblock ist schon ausgefüllt, damit du sehen kannst, wie es funktioniert:
+
+1. Lasse dir `path` ausgeben, um zu sehen, wie ein Dateipfad auf deinem System aussieht.
+
+2. Lies die CSV-Datei an diesem Dateipfad ein mit `read.csv()` 
+:::
+
+```{r path}
+path <- system.file("extdata", "einkaufen.csv", package = "rtutorials")
+```
+
+```{r readcsv, exercise=TRUE, exercise.setup = "path", exercise.cap = "CSV einlesen"}
+# 1.
+path
+
+# 2.
 read.csv(path)
 ```
 
-```{r cleane_tabelle, echo = TRUE}
+
+Nanu, was ist denn mit dieser Tabelle hier los? Offensichtlich wurde das Semikolon nicht als Trennzeichen erkannt, sondern R hat nach einem Komma gesucht, um die Spalten voneinander zu trennen, aber keins gefunden! Alles wurde in eine Spalte gezwängt.
+
+::: aufgabe
+
+Versuch mal `read.csv2()` zum Einlesen der Tabelle! Das ist eine Funktion, die standardmäßig das Semikolon als Trennzeichen interpretiert.
+
+:::
+
+```{r read2, exercise = TRUE, exercise.cap = "CSV einlesen mit Semikolon", exercise.setup = "path"}
 read.csv2(path)
 ```
 
+Perfekt! Das sieht schon viel mehr nach einer Tabelle aus.
 
+Jetzt erinnere dich an das Tutorial zu Assignment und Vektoren: Alles, was nicht benannt wird mit `<-` ist *printed and lost*... Wollen wir die Tabelle also nicht nur ausgeben lassen, sondern für die weitere Verwendung im Environment speichern, musst du `<-` verwenden. 
+
+::: aufgabe
+Lies die Tabelle ein und speichere das Ergebnis unter dem Namen `df` (wie Data Frame)!
+:::
+
+
+```{r assign, exercise = TRUE, exercise.cap = "CSV einlesen und speichern", exercise.setup = "path"}
+read.csv2(path)
+```
+
+```{r assign-solution}
+df <- read.csv2(path)
+```
+
+---
 Dafür ist es zunächst hilfreich zu verstehen, wie Daten für R
 aussehen:
 
