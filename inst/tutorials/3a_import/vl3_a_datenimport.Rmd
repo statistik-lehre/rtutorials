@@ -16,13 +16,14 @@ resource_files:
 ```{r setup, include=FALSE}
 library(learnr)
 library(tidyverse)
+require(rtutorials)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
 
 ## Import von Daten
 
-Willkommen im Tutorial zum Importieren von Daten in R! In diesem Abschnitt lernst du, wie du deine Daten in R lädst, um sie für deine Analysen und Visualisierungen zu verwenden. Der Fokus liegt dabei unter anderem auf dem Import von CSV- und Excel-Dateien, zwei der gängigsten Formate für den Datenaustausch.
+Willkommen im Tutorial zum Importieren von Daten in R! In diesem Abschnitt lernst du, wie du deine Daten in R lädst, um sie für deine Analysen und Visualisierungen zu verwenden. Der Fokus liegt dabei vor allem auf dem Import von CSV- und Excel-Dateien, zwei der gängigsten Formate für den Datenaustausch.
 
 Schauen wir noch kurz auf unsere Roadmap, um zu verstehen wo wir gerade stehen:
 ![](images/prozess.png){width="100%"}
@@ -46,6 +47,67 @@ In diesem Tutorial wirst du folgendes lernen:
 
 
 ## Welche Datenformate gibt es?
+
+### CSV
+
+Diese Dateien erkennt man an der Endung `.csv`, was *comma separated values* bedeutet. Schauen wir uns mal an, wie so eine CSV-Datei aus der Nähe aussieht, wenn wir
+sie als reinen Text anzeigen lassen. Direkt darunter zum Vergleich, wie die Daten als Tabelle aussehen. 
+
+```{r}
+path <- system.file("extdata", "einkaufen.csv", package = "rtutorials")
+txt <- readChar(path, nchars = 432)
+cat(txt)
+head(einkaufen)
+```
+
+Was fällt dir auf?
+
+- Eine neue Zeile im Text ist eine neue Zeile in der Tabelle
+- Die erste Zeile enthält die Spaltennamen, also den Tabellenkopf (engl. *header*)
+- Die einzelnen Werte sind mit einem `;` getrennt! `;` ist das *Trennzeichen* in diesem Fall. 
+
+
+::: infobox
+**Gut zu wissen:**
+
+Im englischen Raum wird oft das Komma `,` als Trennzeichen verwendet, was den Namen CSV: *comma separated values* erklärt. In Deutschland würde das Komma zu Konflikten mit dem Dezimaltrenner `,` führen, weswegen dort meist das Semikolon `;` als Trennzeichen verwendet wird!
+Es heißt aber trotzdem noch CSV-Datei. 
+
+Das Trennzeichen ist die häufigste Ursache, wenn CSV-Dateien komisch oder zerhäckselt eingelesen werden.
+
+Trennzeichen heißt auf Englisch übrigens *delimiter*. 
+:::
+
+### Das Einlesen
+
+Der Prozess, aus dem rohen Text eine Tabelle zu konstruieren, heißt Einlesen oder Datenimport. Die Daten müssen in eine Tabellenform, damit wir (und R) damit weiterarbeiten können. 
+
+Für CSV-Dateien übernimmt das Einlesen die Funktion `read.csv()`.
+
+#### Dateipfade
+
+Hier noch ein kleines Wort zu Dateipfaden. Für diejenigen, die nicht wissen, was das ist: Das ist eine Adressangabe für den Computer, wo sich eine bestimmte Datei befindet.
+
+Dateipfade sind schmerzvoll und nervig, weil sie je nach Betriebssystem unterschiedliche Formate haben. 
+
+Das hier wäre zum Beispiel ein typischer Windows-Pfad: `C:\User\Nina\Documents\R\Daten\einkaufen.csv`
+
+Und so sieht ein typischer Mac-Pfad aus:
+`~/Nina/Documents/R/Daten/einkaufen.csv`
+
+Windows verwendet also `\` Backward-Slashes, während Mac und Linux immer `/` Forward-Slashes verwenden! Arme Windos-User, denn R akzeptiert keine Backward-Slashes.
+
+Nanu, was ist denn mit dieser Tabelle hier los? Offensichtlich wurde das Semikolen nicht als Trennzeichen erkannt, sondern R hat nach einem Komma gesucht, um die Spalten voneinander zu trennen, aber keins gefunden! Alles wurde in eine Spalte gezwängt.
+
+```{r zerhaeckselte_tabelle, echo = TRUE}
+# path <- "/speicherort/von/einkaufen.csv"
+read.csv(path)
+```
+
+```{r cleane_tabelle, echo = TRUE}
+read.csv2(path)
+```
+
 
 Dafür ist es zunächst hilfreich zu verstehen, wie Daten für R
 aussehen:
@@ -83,21 +145,60 @@ brauchen wir deshalb verschiedene Befehle. Quasi um R zu sagen, welche
 
 ## Der Import
 
+Wir gehen im Folgenden an einem Beispiel durch, wie eine Excel-Tabelle importiert werden kann. 
+
 Alle Datensätze, die wir in dieser gesamten Veranstaltung verwenden, hat
 Lukas netterweise direkt ins Paket eingebunden, das heißt, du musst für
 die Tutorials meist gar nichts tun, da die Daten bereits eingelesen sind. 
 
 Um R mittzuteilen, welchen Datensatz du
-verwenden willst, tippt du einfach folgendes: `rtutorials::datensatz`
+verwenden willst, tippst du einfach folgendes: `rtutorials::datensatz` oder lädst das Paket `rtutorials` und kannst dann die enthaltenen Datensätze ohne die Adresse `rtutorials::` verwenden. 
 
-```{r tutorial, exercise=TRUE}
-# neuer Name der Daten `<-`  aus dem Paket `rtutorials` nutze(::) den datensatz `einkaufen` als Data Frame (`data.frame()`)
-data <-  data.frame(rtutorials::einkaufen)
-# zeige die ersten Zeilen des Data Frames (`head()`)
-head(data)
+::: aufgabe
+
+Lade das Paket `rtutorials` in die aktive Sitzung, damit wir es im weiteren Verlauf verwenden können!
+
+:::
+
+```{r lib, exercise = TRUE}
+library()
 ```
 
-Sobald du aber das warme Nest dieses Tutoriums verlässt, wirst du
+```{r lib-solution}
+library(rtutorials)
+```
+
+Wir werden in diesem Tutorial auf den Datensatz `einkaufen` zurückgreifen, welcher Daten enthält die 2022 von Studis im Rahmen ihrer Felderhebung erhoben wurden. Als Thema haben sie sich damals "Bioläden" ausgesucht. 
+
+::: aufgabe
+
+Verwende die Funktion `dplyr::glimpse()`, um einen schnellen Überblick über den Datensatz `einkaufen` zu erlangen!
+
+:::
+
+```{r glimpse, exercise=TRUE}
+dplyr::glimpse()
+```
+
+```{r glimpse-solution}
+dplyr::glimpse(einkaufen)
+
+# oder:
+library(dplyr)
+glimpse(einkaufen)
+```
+
+**Kleine Wiederholung:**
+```{r wiederholung}
+question_checkbox("Klicke alles an, was richtig ist!",
+                  answer("`::` signalisiert, in welchem Paket R nach einem bestimmten Objekt (Funktion, Datensatz...) suchen soll", correct = TRUE),
+                  answer("`::` ist eine gute Alternative zu `library()`, wenn nur schnell mal eben ein einziges Objekt (Funktion, Datensatz...) aus einem Paket gebraucht wird.", correct = TRUE),
+                  random_answer_order = TRUE,
+                  allow_retry = TRUE)
+```
+
+
+Sobald du aber das warme Nest dieses Tutorials verlässt, wirst du
 allerdings mit anderen Datenformaten konfrontiert sein. Desewgen wollen
 wir dir die drei wichtigsten Befehle mit auf den Weg geben:
 
