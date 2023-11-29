@@ -24,53 +24,59 @@ library(nycflights13)
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Inhalt {data-progressive="TRUE"}
+## Inhalt
 
 In diesem Tutorial geht es um die Objektklasse, mit welcher du den Großteil der Zeit arbeiten wirst - Data Frames. Ein *Data Frame* ist jene Struktur, mit welcher **Tabellen** in R repräsentiert werden können.
 
-Wenn du mit Tabellen in R arbeitest - und das wird oft sein - wird es sich meist um *Data Frames* - (oder einer speziellen Unterform davon, den *Tibbles*) handeln.
+Wenn du mit Tabellen in R arbeitest - und das wird oft sein - wird es sich meist um *Data Frames* handeln, oder eine spezielle Unterform davon, sogenannte *Tibbles*.
 
 Dass du den Umgang mit Tabellen in R lernst, ist essentiell, da die meisten Daten auf dieser Welt irgendwie in Tabellen dargestellt werden.
-
-## Lernziele
-
-Im laufe des Tutorials wirst du...
-
--   <input type="checkbox" unchecked> verstehen wie Daten in Tabellen gelistet sind </input>
--   <input type="checkbox" unchecked> verstehen warum Data Frames hilfreich sind </input>
--   <input type="checkbox" unchecked> das Erstellen von Data Frames erlernen</input>
--   <input type="checkbox" unchecked> das Zugreifen auf Variablen in Data Frames erlernen </input>
--   <input type="checkbox" unchecked> das hinzufügen und löschen von Variablen in Data Frames erlernen </input>
 
 ::: blau-nb
 Übrigens: Wir verwenden hier für die Eindeutschung "der" Data Frame, die innerliche Begründung lautet: *Frame* = Rahmen, "der" Rahmen :)
 :::
 
-## Einführung in Data Frames
+## Lernziele
+
+Im Laufe des Tutorials wirst du...
+
+-   <input type="checkbox" unchecked> verstehen wie Daten in Tabellen gelistet sind </input>
+
+-   <input type="checkbox" unchecked> verstehen warum Data Frames hilfreich sind </input>
+
+-   <input type="checkbox" unchecked> das Erstellen von Data Frames erlernen</input>
+
+-   <input type="checkbox" unchecked> das Zugreifen auf Variablen in Data Frames erlernen </input>
+
+-   <input type="checkbox" unchecked> das Hinzufügen und Löschen von Variablen in Data Frames erlernen </input>
+
+## Einführung in Data Frames {data-progressive="TRUE"}
 
 Im Tutorial "Vektoren" hast du bereits gelernt, dass Vektoren Variablen darstellen und mehrere Werte enthalten können. Im folgenden lernst du, wie du mehrere Vektoren in einer Tabelle (einem Data Frame) zusammenbringen kannst.
 
-Einmal vorweg ein Beispiel für dich, wie ein Data Frame erstellt wird:
+### So sieht ein Data Frame aus
 
-Schaue dir die Vektoren `alter` und `tier` im Codeblock an: Sie enthalten jeweils drei Elemente.
+Einmal vorweg ein Beispiel für dich, wie ein Data Frame erstellt wird, und vor allem wie er dann aussieht:
+
+Schaue dir die Vektoren `x` und `y` im Codeblock an: Sie enthalten jeweils drei Elemente.
 
 Führe den Code aus, um daraus einen Data Frame zu erstellen und anzuzeigen.
 
 ```{r dataframe, exercise = TRUE, exercise.caption = "Beispiel: Data Frame erstellen"}
-alter <- c(14, 7, 1)
-tier <- c("Hund", "Katze", "Maus")
+x <- c(1, 2, 3)
+y <- c("a", "b", "c")
 
-df <- data.frame(alter, tier)
+df <- data.frame(x, y)
 df
 ```
 
-In der ersten Spalte siehst die Variable `alter` und in der zweiten Spalte die Variable `tier`. Die Werte werden wie bei einem einzelnen Vektor untereinander angezeigt. Die Zeile sagt dir nun jedoch das Alter für das entsprechende Tier - ist also 1 Beobachtungsobjekt.
+Ganz links werden Zeilennummern angezeigt. In der ersten Spalte siehst du dann die Variable `x` und in der zweiten Spalte die Variable `y`. Nun ist jeder Vektor also eine Spalte geworden im Data Frame!
 
 ::: infobox
 Neue Funktion: `data.frame()` Erstellt aus einzelnen *gleichlangen* Vektoren eine Tabelle.
 :::
 
-</br>
+<br>
 
 ::: gelb
 **Disclaimer**
@@ -92,7 +98,7 @@ Das ist eine wichtige Grundstruktur, die du dir merken solltest, denn es bedeute
 
 Einen sehr simplen Data Frame mit den Variablen `X`und `Y`, die jeweils drei Werte enthalten, kannst du dir demnach so vorstellen:
 
-![](images/data_frame.png){width="30%"}
+![](images/data_frame.PNG){width="30%"}
 
 source: [Base R cheat sheet by Mhairi McNeil](https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf)
 
@@ -138,7 +144,7 @@ wg
 Das ist gut zu wissen, denn dieses Schema gilt als Konvention für die meisten Bennennungssituationen in R.
 
 ::: blau-nb
-Eine Konvention für Data Frames ist es diesen als `df` abzukürzen. Da wir jedoch mehr als einen Data Frame erstellen werden, wird in diesem Tutorial davon abgewichen. Es steht dir natürlich auch immer frei, eigene Namen für deine Objekte zu wählen.
+Eine Konvention für Data Frames ist, als Objektname `df` zu wählen. Da wir jedoch mehr als einen Data Frame erstellen werden, wird in diesem Tutorial davon abgewichen. Es steht dir natürlich auch immer frei, eigene Namen für deine Objekte zu wählen.
 :::
 
 ### Lerntest
@@ -186,7 +192,7 @@ source: Erstellt mit [BingAI image creator](https://www.bing.com/images/create).
 
 #### Matrix erstellen
 
-Eine Matrix in R ist eine flexible Datenstruktur, die es dir ermöglicht, verschiedene Datentypen zu speichern. Sie wird durch den Befehl `matrix()` erstellt. Von der Dokumentation (Hilfe) kannst du erfahren, dass dieser Befehl folgende Argumente ermöglicht: `matrix(data = NA, nrow = 1, ncol = 1)`
+Eine Matrix eine spezielle Datenstruktur in R, **die immer nur Daten des gleichen Typs enthalten kann**. Sie wird durch den Befehl `matrix()` erstellt. Von der Dokumentation (Hilfe) kannst du erfahren, dass dieser Befehl folgende Argumente ermöglicht: `matrix(data = NA, nrow = 1, ncol = 1)`
 
 ```{r matrix, exercise = TRUE, exercise.caption = "Beispiel: Erstellen einer Matrix"}
 # unsere bekannten WG-Daten
@@ -197,6 +203,7 @@ z <- c(5.23, 5.23, 5.23, 5.23)
 # 2. Matrix erstellen und dabei Nummer an Spalten durch die Länge des Vektors(x) vorgeben:
 wg_matrix <- matrix(c(x,y,z), nrow = length(x)) 
 wg_matrix
+typeof(wg_matrix)
 ```
 
 Zur Veranschaulichung bleiben wir bei dem WG Beispiel. Als Matrix dargestellt bekommen wir den obrigen Output. Vielleicht kommen dir die eckigen Klammern bekannt vor, was meinst du können wir damit machen?
