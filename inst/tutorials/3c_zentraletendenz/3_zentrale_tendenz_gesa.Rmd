@@ -1,0 +1,223 @@
+---
+title: "Maße der zentralen Tendenz"
+output:
+  learnr::tutorial:
+    language: de
+    css: css/boxes.css
+    fig_caption: no
+runtime: shiny_prerendered
+bibliography: ref.json
+link-citations: TRUE
+description: "Maße der zentralen Tendenz sowie ihre Umsetzung in R werden erklärt"
+resource_files:
+- css/boxes.css
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+
+iq <- c(100, 103, 114, 85, 101, 91, 84, 103, 117, 102)
+
+```
+
+## Inhalt
+
+In diesem Tutorial werden die Maße der zentralen Tendenz aus der Vorlesung wiederhohlt sowie ihre Umsetzung in R besprochen.
+
+## Zentrale Tendenzen
+
+Der Datensatz ist nun erhoben und in R eingepflegt, die Analyse kann beginnen!
+
+![](images/games.png)
+<div style="text-align:left">source: https://pbs.twimg.com/media/ER24yA4XUAEGDfh.png:large</div>
+
+Wenn du einer anderen Person jetzt von deinen Daten erzählen möchtest, könntest du natürlich jeden einzelnen Datenpunkt einzeln aufzählen. Doch seien wir ehrlich: das dauert lang und das will auch kein Mensch hören. Dann stellt sich unweigerlich die Frage: Wie kann ich in möglichst kompakter Form, am besten in einer Zahl, über meine Daten sprechen und dabei möglichst genau sein?
+
+Die Antwort: Es kommt darauf an!
+
+Und worauf? Ganz genau, auf das Skalenniveau. Das ist im übrigend DER Grund, warum wir uns das ganze überhaupt erst so umfassend und genau angeschaut haben!
+
+Woher weiß ich, unabhängig von der Skala, dass ich eine gute Zahl gewählt habe, um meine Daten zu beschreiben?
+
+Daten sind bestmöglich beschrieben, wenn die zusammenfassende Zahl den kleinstmöglichen Fehlerwert aufweist!
+
+Das gehen wir jetzt gemeinsam Skala für Skala durch
+
+### Kardinalskala
+
+Als Fehler lässt sich hier gut die Abweichung von der Zusammenfassenden Zahl beschreiben.
+
+:::aufgabe
+Gegeben sei eine Stichprobe von den IQ Werten von 10 Studierenden (s. 1. Zeile im Codeblock).\
+Finde heraus, mit welcher Zahl du die Daten mit dem geringsten Fehlerwert beschreiben kannst. Damit du das nicht händisch für jeden Wert ausrechnen musst, kannst du folgende Funktion nutzen: `sum(z - iq)`
+
+  - `iq` ist die Variable
+  - `z` hier als Platzhalter verwendet für den Wert, der die Daten zusammenfassen soll
+  - `sum` summiert alle Zahlen auf
+  - Zusammenfassung: von dem Zusammenfassungswert wird jeder Wert der Varibale abgezogen. Diese Differenzen werden summiert.
+  
+Deine Aufgabe ist es nun, zuerst einmal die 1. Zeile auszuführen und so die Variable iq zu definieren. Und dann heraus zu finden, welcher Wert die wenigsten Fehler aufweist. Dies tust du, in dem du unterschiedliche Werte für z Einsetzt und schaust, welches der niedrigste ist
+:::
+
+```{r kardinal-hint-1}
+sum(84 - iq)
+```
+
+```{r kardinal-hint-2}
+sum(100 - iq)
+```
+
+```{r kardinal, exercise = T}
+iq <- c(100, 103, 114, 85, 101, 91, 84, 103, 117, 102)
+```
+
+Da es zu aufwändig wäre ausprobieren, welche Zahl die wenigsten Fehler hat, haben sich schlaue Mathematiker*innen hingesetzt und das ganze auf Formelebene gelöst. Sie fanden heraus, dass die genaueste Zahl diejenige ist, die herauskommt, wenn du alle vorhandenen summierst und durch ihre Anzahl teilst. Also kurz: das arithmetische Mittel oder der Mittelwert, auf englisch: mean.
+
+Die Funktion für den Mittelwert in R ist `mean()`.
+
+:::aufgabe
+Finde den Mittelwert der Variable IQ heraus und vergleiche ihn mit dem oben herausgefundenen Wert der geringsten Fehler
+:::
+´
+```{r mean-soltion}
+mean(iq)
+```
+
+
+```{r mean, exercise = T}
+
+```
+
+Die beiden Zahlen (oben herausgefunden und Mittelwert) sollten die gleichen sein. Zudem ist auffällig, dass der kleinste Wert für Fehler 0 ist. Das ist erstmal egal aber kannst du dir schonmal für den nächsten Block (4a_dispersion) merken, da wird das wieder wichtig.
+
+Halten wir fest: Der Mittelwert eines kardinalskalierten Vektors ist die einfachste und genaueste Zusammenfassung all seiner einzelnen Werte.
+
+### Ordnialskala
+
+Doch was tun, wenn du es mit ordinalskalierten Daten zu tun hast und du sie eben nicht einfach zusammenrechnen kannst (weil die Abstände nicht gleichbedeutend sind)?
+
+Es gibt im Grunde zwei verschiedene Ansätze
+
+  1. Du ignorierst alles, was du über Datenskalierungen gelernt hast und rechnest das arithmetische Mittel aus. Ab 5 Faktorstufen einer ordinalskalierten Skala lässt sich mathematisch zeigen, dass du sie als metrisch betrachten und entsprechende Statistiken verwenden kannst (ganz praktisches Beispiel: Schulnoten)
+  2. Du findest eine Möglichkeit die Rangplätze zu berücksichtigen.
+
+ 
+\1. kannst du schon. 2. kommt jetzt:
+
+Das gute an den rangskalierten Daten ist, dass du sie anhand ihrer Ausprägung in eine logische Reihenfolge bringen kannst:
+
+Wir tun jetzt mal so, als wäre der IQ Vektor aus der vorherigen Aufgabe ordinalskaliert. Erinnerung: `r iq`. Als Tabelle in der richtigen Reihenfolge würde das so aussehen. (R übernimmt das mit der Funktion `sort()` oder `table()`).
+
+| IQ Werte sortiert   | 
+|:--------------------|
+|84                   |
+|85                   |
+|91                   | 
+|100                  | 
+|101                  |
+|102                  |
+|103                  |
+|103                  |
+|114                  |
+|117                  |
+
+Nun werden Rangplätze vergeben. Doch: Wenn zwei Zahlen den gleichen Wert haben, werden ihre Ränge addiert und durch 2 geteilt und beiden zugewiesen. So dass in jedem Fall immer der letzte Eintrag genau den gleichen Rang hat, wie es Zahlen insgesamt gibt. (Das übernimmt R mit der Funktion `rank()`. Für die ganz Cleveren: `rank(sort())`.)
+
+| IQ Werte sortiert   | Ränge |
+|:--------------------|:------|
+|84                   |1      |
+|85                   |2      |
+|91                   |3      |
+|100                  |4      | 
+|101                  |5      |
+|102                  |6      |
+|103                  |7.5    |
+|103                  |7.5    |
+|114                  |9      |
+|117                  |10     |
+
+Bei einer ungeraden Anzahl von Rängen wird der mittlere Rang genommen. Bei einer geraden Anzahl von Rängen (wie hier) werden die beiden mittleren Ränge addiert und durch 2 geteilt. Hier: $\frac{101 + 102}{2} = 101.5$. Der Median ist also 101.5. Die Funktion in R hierfür ist: `median()`
+
+:::aufgabe
+Finde mittels median() Funktion den Median für die IQ Variable raus
+:::
+
+```{r median-solution}
+median(iq)
+```
+
+```{r median, exercise = T}
+
+```
+
+Auffällig ist, dass dieser Wert sich sehr nah am arithmethischen Mittel befindet. Es ist in manchen Fällen sinnvoll, sich beide Werte (Mittelwert und Median) anzuschauen und zu vergleichen. Wenn sie nah beieinander liegen ist es super, wenn nicht, ist es essentiell sich nochmal die Werte anzuschauen und über Außreißerwerte Gedanken zu machen und wie mit ihnen umgegangen werden soll (üblicherweise eine der drei Alternativen: rausschmeißen und Mittelwert berechnen, Ausreißer drin behalten und Mittelwert berechnen, Median berechnen)
+
+Warum Median, wenn ich doch metrische Daten habe?
+
+Er ist robuster und in manchen Fällen sogar (inhaltlich aussagekräftiger). ZB: Eine Person hat 0€ auf dem Konto, eine andere 100€ und die dritte eine Million. Der Mittelwert würde jetzt sagen, dass sie im Durchschnitt 333366.7 auf dem Konto haben. Das bildet die Realität nicht wirklich ab. Der Median hingegen würde 100€ sagen, was vom Verständnis her besser passt.
+
+Eine schnelle Übersicht bietet dir die Funktion `summary()`. Hier werden dir Mittelwert (mean), Median, Reichweite (kleinster Wert und größter Wert) sowie der Interquartilsabstan (nächster Block, Tutorial Dispersionsmaße) angezeigt.
+
+:::aufgabe
+Wende die Funktion summary() auf den Vektor iq an und mach dich mit dem Ergebnis vertraut
+:::
+
+```{r summary-solution}
+summary(iq)
+```
+
+```{r summary, exercise = T}
+
+```
+
+
+Zusammenfassend lässt sich also sagen: Der Median ist eine gute Zusammenfassungs für ordinalskalierte und in manchen Fällen (zB. viele/ krasse Ausreißer) auch intervallskalierte Daten.
+
+
+
+### Nominalskala
+
+Hier gibt es keine logische Reihenfolge. Insofern fallen Mittelwert und Median raus. Um möglichst wenige Fehler in der Vorhersage zu machen, ist es logischerweise sinnvoll, die Kategorie anzugeben, welche die meisten Werte haben. Das wird dann Modus genannt.
+
+Gegeben sei die Lieblingsfarbe von 10 anderen Studis: `c("pink", "pink", "blau", "blau", "pink", "blau", "blau", "pink", "lila", "pink")`. Da es eine nominale Variable ist, ist es wichtig, daran zu denken, sie als `factor()` zu speichern. Um heraus zu finden, welche Gruppe am größten ist, könntest du zählen und eine Strichliste machen. ODER du lässt ganz smooth R für dich arbeiten. Hierfür brauchst du wieder die Funktion `summary()`. 
+
+:::aufgabe
+  
+  1. Erstelle einen neuen Vektor namens `farben`, der ein Faktor ist und die oben angegebenen Werte enthält.
+  2. Lass dir eine Zusammenfassung der Werte mit der summary Funktion ausgeben
+:::
+
+```{r nominal-solution}
+farben <- factor(c("pink", "pink", "blau", "blau", "pink", "blau", "blau", "pink", "lila", "pink"))
+
+summary(farben)
+```
+
+```{r nominal, exercise = T}
+
+```
+
+ 
+Doch warte mal - oben hat die gleiche Funktion doch auch einen ordinalen/ metrischen Vektor bearbeitet und jetzt kann sie auch nominal? Und das Ergebnis sieht auch ganz anders aus.
+
+JA!
+
+Deswegen war das Vektoren-Tutorial auch so wichtig! R erkennt, dass es eine andere Objektklasse ist und behandelt die Daten dementsprechend anders. Wenn du möchtest, kannst du zur Überprüfung einmal den farben Vektor ohne ihn in einen Faktor zu verwandeln in die summary Funktion stecken. Es wir ein Fehler geworfen werden - dann denkt R nämlich, dass es sich um einen Zahlenvektor handelt, und kann deswegen nichts mit den Charakter-Strings anfangen. Die Funktion `table()` kann exakt das gleiche, nur dass ihr egal ist, welche Objektklasse der Vektor hat, die funktioniert immer.
+
+Zurück zum Modus: Das wäre in diesem Fall mit 5 Einträgen die Lieblingsfarbe Pink.
+
+Lange Rede, kurzer Sinn: Der Modus ist die am Häufigsten vorkommende Klasse von nominalen Daten und damit die beste Möglichkeit, diese zusammen zu fassen.
+
+## Zusammenfassung
+
+In diesem Tutorial hast du folgende Funktionen kennengelernt:
+
+| Funktion    | Inhalt                                              |
+|:------------|:----------------------------------------------------|
+| `mean()`    | Berechnet den Mittelwert.                           |
+| `median()`  | Berechnet den Median.                               |
+| `sort()`    | Sortiert einen Zahlenvektor.                        |
+| `rank()`    | Gibt die Rangplätze eines Zahlenvektors aus.        |
+| `summary()` | Gibt die zentrale Tendenz je nach Objektklasse aus. |
+| `table()`   | Fasst Daten je nach Objektklasse zusammen.          |
