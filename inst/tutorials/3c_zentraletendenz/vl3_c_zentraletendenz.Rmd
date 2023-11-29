@@ -8,7 +8,7 @@ output:
 runtime: shiny_prerendered
 bibliography: ref.json
 link-citations: TRUE
-description: eigene Funktionen schreiben mit R
+description: "Maße der zentralen Tendenz sowie ihre Umsetzung in R werden erklärt"
 resource_files:
 - css/boxes.css
 ---
@@ -17,6 +17,7 @@ resource_files:
 library(learnr)
 knitr::opts_chunk$set(echo = FALSE)
 ```
+
 
 ## Länge eines Vektors
 
