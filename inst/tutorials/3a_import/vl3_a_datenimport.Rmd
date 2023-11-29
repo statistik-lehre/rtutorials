@@ -232,14 +232,14 @@ Genug der Erklärung, hier lernst du jetzt die grafische Oberfläche kennen:
 
 3) Wähle dort die Datei in deinem `working directory` aus, die du in R importieren möchtest (hier CSV) und klicke auf "Import Dataset".
 ![](images/selectcsv.png){width="50%"}
-![](images/import_dataset.png){width="40%"}
+![](images/import_dataset.PNG){width="40%"}
 
 
 4) Ein Fenster öffnet sich in dem du eine Vorschau der Daten siehtst. 
 - Unten bei "Import Options" kannst du die Einstellungen ändern, 
 - Rechts (*blau*) kannst du den Code zum Import mit diesen Einstellungen in die Zwischenablage speichern 
 - und ganz unten rechts (*rot*) den Import durchführen
-![](images/grafisch.png){width="100%"}
+![](images/grafisch.PNG){width="100%"}
 
 5) Nutze die Zwischenablage, um diesen Code deinem Skript zuzufügen, damit du diese Schritte für das nächste Öffnen deines Datenasatzes nicht mehr benötigst.
   
