@@ -75,27 +75,14 @@ Eben haben wir festgelegt:
 Als Fehler lässt sich hier gut die summierte Abweichung von der zusammenfassenden Zahl beschreiben.
 Wir möchten diese Abweichung möglichst nahe bei 0 haben.
 
-Beispiel: 
-
-Wir haben die Zahlenreihe
-
-```{r}
-c(1, 2, 3)
-```
-
-Als zusammenfassende Zahl nehmen wir einfach mal die 3. 
-
-```{r echo = TRUE}
-
-c(1, 2, 3) - 3 
-```
-
-
-Wir nehmen eine Zahlenreihe, die wir durch eine Zahl zusammenfassen wollen. 
-Diese Zahl sollte die geringstmögliche Abweichung haben von allen Werten. 
+::: aufgabe
+Suche eine zusammenfassende Zahl, bei der sich positive und negative Abweichungen möglichst aufheben!
+:::
+<br>
 
 ```{r ui}
 fluidPage(
+  verticalLayout(
             sliderInput("zahl",
                         "zusammenfassende Zahl:",
                         min = 1,
@@ -103,46 +90,74 @@ fluidPage(
                         value = 5,
                         step = 0.5),
         mainPanel(
-           plotOutput("vis"),
-           textOutput("sum")
+           #plotOutput("vis", width = "100%"),
+           plotOutput("vis2", width = "100%"),
+           verbatimTextOutput("debug"),
+           htmlOutput("psum"),
+           htmlOutput("nsum"),
+           hr(),
+           htmlOutput("sum"),
+           br(),
+           actionButton("new",
+                        label = "Neue Zahlenreihe!",
+                        icon = icon("rotate"))
         )
+  )
 )
 ```
 
 ```{r server, context = "server"}
- x <- rnorm(10, mean = 5, sd = 2.5) |> round() |> abs() |> unique() |> sort()
-  n <- length(x)
 
-    output$vis <- renderPlot({
+ x <- reactive({
+   input$new
+   rnorm(10, mean = 5, sd = 2.5) |> round() |> abs() |> unique() |> sort()
+  })
 
-
-      z <- input$zahl
-      diff <- x - z
-      pdiff <- diff[diff >= 0]
-      ndiff <- diff[diff < 0]
-      nh <- rank(ndiff) |> sort(decreasing = T)
-      nh <- nh * (-1)
-      ph <- rank(pdiff) - 1
-      ranks <- c(nh, ph)
-      h <-  ranks * 0.1
-
-      df <- data.frame(x, y = 0, diff, h)
-
-      p <-  ggplot(df, aes(x, y)) +
+  n <- reactive({
+    length(x())
+    })
+  df <- reactive({
+    data.frame(x = x(), y = 0)
+  })
+  
+  p <-  reactive({
+    ggplot(df(), aes(x, y)) +
         geom_point(size = 4) +
-        geom_vline(xintercept = z,
-                   color = "red") +
         scale_y_continuous(name = NULL, breaks = NULL) +
         scale_x_continuous(name = NULL, breaks = 0:13) +
-        #ylim(-0.5, 0.5) +
-        theme_bw()
+        theme_bw() +
+        theme(text = element_text(size = 20))
+  })
+  output$debug <- renderPrint({df()})
 
+  diff <- reactive({
+    x() - input$zahl
+  })
+
+  pdiff <- reactive({
+    pdiff <- diff()[diff() >= 0]
+  })
+
+  ndiff <- reactive({
+    ndiff <- diff()[diff() < 0]
+    })
+    output$vis2 <- renderPlot(p())
+    
+    output$vis <- renderPlot({
+      z <- input$zahl
+      nh <- rank(ndiff()) |> sort(decreasing = T)
+      nh <- nh * (-1)
+      ph <- rank(pdiff()) - 1
+      ranks <- c(nh, ph)
+      h <-  ranks * 0.1
+      p <- p()
+      
       for (i in 1:n) {
         r <- ifelse(h[i] >= 0, 0, 180)
         p <- p +
           geom_brace(aes(x = c(z, x[!!i]),
                          y = c(h[!!i] + 0.1, h[!!i]),
-                         label = diff[!!i]),
+                         label = diff()[!!i]),
                      inherit.data = F,
                      rotate = r,
                      #bending = 0.05,
@@ -150,15 +165,36 @@ fluidPage(
                      textORlabel = "label",
                      labeldistance = 0.01)
       }
-      p
+      p + geom_vline(xintercept = z,
+                   color = "#428BCA",
+                   linewidth = 1.5)
+      }) |>
+      bindCache(input$zahl)
 
-      })
     output$sum <- renderText({
-      paste("Summe der Abweichungen: ", round(sum(x - input$zahl), digits = 3))
-      })
+      paste0("Abweichungen insgesamt: ",
+             "<b>",
+             round(sum(diff()), digits = 3),
+             "</b>")
+      }) |> bindCache(input$zahl)
+
+    output$psum <- renderText({
+      paste0("Summe positiver Abweichungen:   ",
+             "<b>", sum(pdiff()) |> round(digits = 3),
+             "</b>")
+      }) |> bindCache(input$zahl)
+
+    output$nsum <- renderText({
+      paste0("Summe negativer Abweichungen: ",
+            "<font color=\"9c1111\"><b>",
+            sum(ndiff()) |> round(digits = 3),
+            "</b></font>")
+      }) |> bindCache(input$zahl)
 ```
 
-
+<br>
+<br>
+<hr>
 :::aufgabe
 Gegeben sei eine Stichprobe von den IQ Werten von 10 Studierenden (s. 1. Zeile im Codeblock).\
 Finde heraus, mit welcher Zahl du die Daten mit dem geringsten Fehlerwert beschreiben kannst. Damit du das nicht händisch für jeden Wert ausrechnen musst, kannst du folgende Funktion nutzen: `sum(z - iq)`
