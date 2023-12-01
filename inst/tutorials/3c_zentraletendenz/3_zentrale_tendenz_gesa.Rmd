@@ -15,7 +15,14 @@ resource_files:
 
 ```{r setup, include=FALSE}
 library(learnr)
+
 library(shiny)
+library(ggplot2)
+if(!require(ggbrace)){
+  devtools::install_github("NicolasH2/ggbrace")
+  library(ggbrace)}
+library(scales)
+
 knitr::opts_chunk$set(echo = FALSE)
 
 iq <- c(100, 103, 114, 85, 101, 91, 84, 103, 117, 102)
@@ -49,26 +56,106 @@ Das gehen wir jetzt gemeinsam Skala für Skala durch.
 
 ### Kardinalskala
 
-Das Wort Kardinalskala ist ein Synonym für „metrisch“. Hier können wir die Abstände zwischen Werten sinnvoll interpretieren.
+```{r synonym}
+question_radio("Was ist ein Synonym für Kardinalskala?,",
+               answer("metrisch", 
+                      correct = TRUE,
+                      message = "Metrisch oder auch kardinalskaliert ist alles ab Intervallskala, das heißt, alles, wo Abstände sinnvoll interpretiert werden können."),
+               answer("kategorial",
+                      message = "Kategoriale Daten haben keine sinnvoll interpretierbaren Abstände, und sind deswegen nicht kardinalskaliert, auch wenn beides mit K beginnt."),
+               random_answer_order = TRUE,
+               allow_retry = TRUE)
+```
+
 
 Eben haben wir festgelegt:
 
 > Die zusammenfassende Zahl sollte den Fehler minimieren.
 
-Als Fehler lässt sich hier gut die Abweichung von der zusammenfassenden Zahl beschreiben.
-Wir möchten diese Abweichung also minimieren.
+Als Fehler lässt sich hier gut die summierte Abweichung von der zusammenfassenden Zahl beschreiben.
+Wir möchten diese Abweichung möglichst nahe bei 0 haben.
 
 Beispiel: 
+
+Wir haben die Zahlenreihe
+
+```{r}
+c(1, 2, 3)
+```
+
+Als zusammenfassende Zahl nehmen wir einfach mal die 3. 
+
+```{r echo = TRUE}
+
+c(1, 2, 3) - 3 
+```
+
 
 Wir nehmen eine Zahlenreihe, die wir durch eine Zahl zusammenfassen wollen. 
 Diese Zahl sollte die geringstmögliche Abweichung haben von allen Werten. 
 
 ```{r ui}
-
+fluidPage(
+            sliderInput("zahl",
+                        "zusammenfassende Zahl:",
+                        min = 1,
+                        max = 10,
+                        value = 5,
+                        step = 0.5),
+        mainPanel(
+           plotOutput("vis"),
+           textOutput("sum")
+        )
+)
 ```
 
 ```{r server, context = "server"}
+ x <- rnorm(10, mean = 5, sd = 2.5) |> round() |> abs() |> unique() |> sort()
+  n <- length(x)
 
+    output$vis <- renderPlot({
+
+
+      z <- input$zahl
+      diff <- x - z
+      pdiff <- diff[diff >= 0]
+      ndiff <- diff[diff < 0]
+      nh <- rank(ndiff) |> sort(decreasing = T)
+      nh <- nh * (-1)
+      ph <- rank(pdiff) - 1
+      ranks <- c(nh, ph)
+      h <-  ranks * 0.1
+
+      df <- data.frame(x, y = 0, diff, h)
+
+      p <-  ggplot(df, aes(x, y)) +
+        geom_point(size = 4) +
+        geom_vline(xintercept = z,
+                   color = "red") +
+        scale_y_continuous(name = NULL, breaks = NULL) +
+        scale_x_continuous(name = NULL, breaks = 0:13) +
+        #ylim(-0.5, 0.5) +
+        theme_bw()
+
+      for (i in 1:n) {
+        r <- ifelse(h[i] >= 0, 0, 180)
+        p <- p +
+          geom_brace(aes(x = c(z, x[!!i]),
+                         y = c(h[!!i] + 0.1, h[!!i]),
+                         label = diff[!!i]),
+                     inherit.data = F,
+                     rotate = r,
+                     #bending = 0.05,
+                     labelsize = 4,
+                     textORlabel = "label",
+                     labeldistance = 0.01)
+      }
+      p
+
+      })
+    output$sum <- renderText({
+      paste("Summe der Abweichungen: ", round(sum(x - input$zahl), digits = 3))
+      })
 ```
 
 
