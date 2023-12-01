@@ -15,6 +15,7 @@ resource_files:
 
 ```{r setup, include=FALSE}
 library(learnr)
+library(shiny)
 knitr::opts_chunk$set(echo = FALSE)
 
 iq <- c(100, 103, 114, 85, 101, 91, 84, 103, 117, 102)
@@ -23,14 +24,16 @@ iq <- c(100, 103, 114, 85, 101, 91, 84, 103, 117, 102)
 
 ## Inhalt
 
-In diesem Tutorial werden die Maße der zentralen Tendenz aus der Vorlesung wiederhohlt sowie ihre Umsetzung in R besprochen.
+In diesem Tutorial werden die Maße der zentralen Tendenz aus der Vorlesung wiederholt sowie ihre Umsetzung in R besprochen.
 
 ## Zentrale Tendenzen
 
-Der Datensatz ist nun erhoben und in R eingepflegt, die Analyse kann beginnen!
+Zur Orientierung, wo wir uns im Prozess befinden: Der Datensatz ist nun erhoben und in R eingepflegt, die Analyse kann beginnen!
 
 ![](images/games.png)
 <div style="text-align:left">source: https://pbs.twimg.com/media/ER24yA4XUAEGDfh.png:large</div>
+
+<br>
 
 Wenn du einer anderen Person jetzt von deinen Daten erzählen möchtest, könntest du natürlich jeden einzelnen Datenpunkt einzeln aufzählen. Doch seien wir ehrlich: das dauert lang und das will auch kein Mensch hören. Dann stellt sich unweigerlich die Frage: Wie kann ich in möglichst kompakter Form, am besten in einer Zahl, über meine Daten sprechen und dabei möglichst genau sein?
 
@@ -42,11 +45,32 @@ Woher weiß ich, unabhängig von der Skala, dass ich eine gute Zahl gewählt hab
 
 Daten sind bestmöglich beschrieben, wenn die zusammenfassende Zahl den kleinstmöglichen Fehlerwert aufweist!
 
-Das gehen wir jetzt gemeinsam Skala für Skala durch
+Das gehen wir jetzt gemeinsam Skala für Skala durch.
 
 ### Kardinalskala
 
-Als Fehler lässt sich hier gut die Abweichung von der Zusammenfassenden Zahl beschreiben.
+Das Wort Kardinalskala ist ein Synonym für „metrisch“. Hier können wir die Abstände zwischen Werten sinnvoll interpretieren.
+
+Eben haben wir festgelegt:
+
+> Die zusammenfassende Zahl sollte den Fehler minimieren.
+
+Als Fehler lässt sich hier gut die Abweichung von der zusammenfassenden Zahl beschreiben.
+Wir möchten diese Abweichung also minimieren.
+
+Beispiel: 
+
+Wir nehmen eine Zahlenreihe, die wir durch eine Zahl zusammenfassen wollen. 
+Diese Zahl sollte die geringstmögliche Abweichung haben von allen Werten. 
+
+```{r ui}
+
+```
+
+```{r server, context = "server"}
+
+```
+
 
 :::aufgabe
 Gegeben sei eine Stichprobe von den IQ Werten von 10 Studierenden (s. 1. Zeile im Codeblock).\
