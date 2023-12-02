@@ -83,52 +83,48 @@ Suche eine zusammenfassende Zahl, bei der sich positive und negative Abweichunge
 ```{r ui}
 fluidPage(
   verticalLayout(
-            sliderInput("zahl",
-                        "zusammenfassende Zahl:",
-                        min = 1,
-                        max = 10,
-                        value = 5,
-                        step = 0.5),
-        mainPanel(
-           #plotOutput("vis", width = "100%"),
-           plotOutput("vis2", width = "100%"),
-           verbatimTextOutput("debug"),
-           htmlOutput("psum"),
-           htmlOutput("nsum"),
-           hr(),
-           htmlOutput("sum"),
-           br(),
-           actionButton("new",
-                        label = "Neue Zahlenreihe!",
-                        icon = icon("rotate"))
-        )
+    sliderInput("zahl",
+                "zusammenfassende Zahl:",
+                min = 1,
+                max = 10,
+                value = 5,
+                step = 0.5),
+    mainPanel(
+      plotOutput("vis", width = "100%"),
+      htmlOutput("psum"),
+      htmlOutput("nsum"),
+      hr(),
+      htmlOutput("sum"),
+      br(),
+      actionButton("new",
+                   label = "Neue Zahlenreihe!",
+                   icon = icon("rotate"))
+    )
   )
 )
 ```
 
 ```{r server, context = "server"}
-
- x <- reactive({
-   input$new
-   rnorm(10, mean = 5, sd = 2.5) |> round() |> abs() |> unique() |> sort()
+  x <- reactive({
+    input$new
+    rnorm(10, mean = 5, sd = 2.5) |> round() |> abs() |> unique() |> sort()
   })
 
   n <- reactive({
     length(x())
-    })
+  })
   df <- reactive({
     data.frame(x = x(), y = 0)
   })
-  
+
   p <-  reactive({
     ggplot(df(), aes(x, y)) +
-        geom_point(size = 4) +
-        scale_y_continuous(name = NULL, breaks = NULL) +
-        scale_x_continuous(name = NULL, breaks = 0:13) +
-        theme_bw() +
-        theme(text = element_text(size = 20))
+      geom_point(size = 4) +
+      scale_y_continuous(name = NULL, breaks = NULL) +
+      scale_x_continuous(name = NULL, breaks = 0:13) +
+      theme_bw() +
+      theme(text = element_text(size = 20))
   })
-  output$debug <- renderPrint({df()})
 
   diff <- reactive({
     x() - input$zahl
@@ -140,56 +136,56 @@ fluidPage(
 
   ndiff <- reactive({
     ndiff <- diff()[diff() < 0]
-    })
-    output$vis2 <- renderPlot(p())
-    
-    output$vis <- renderPlot({
-      z <- input$zahl
-      nh <- rank(ndiff()) |> sort(decreasing = T)
-      nh <- nh * (-1)
-      ph <- rank(pdiff()) - 1
-      ranks <- c(nh, ph)
-      h <-  ranks * 0.1
-      p <- p()
-      
-      for (i in 1:n) {
-        r <- ifelse(h[i] >= 0, 0, 180)
-        p <- p +
-          geom_brace(aes(x = c(z, x[!!i]),
-                         y = c(h[!!i] + 0.1, h[!!i]),
-                         label = diff()[!!i]),
-                     inherit.data = F,
-                     rotate = r,
-                     #bending = 0.05,
-                     labelsize = 4,
-                     textORlabel = "label",
-                     labeldistance = 0.01)
-      }
-      p + geom_vline(xintercept = z,
+  })
+
+  output$vis <- renderPlot({
+    input$new
+    z <- input$zahl
+    nh <- rank(ndiff()) |> sort(decreasing = T)
+    nh <- nh * (-1)
+    ph <- rank(pdiff()) - 1
+    ranks <- c(nh, ph)
+    h <-  ranks * 0.1
+    pl <- p()
+
+    for (i in 1:n()) {
+      r <- ifelse(h[i] >= 0, 0, 180)
+      pl <- pl +
+        geom_brace(aes(x = c(z, x()[!!i]),
+                       y = c(h[!!i] + 0.1, h[!!i]),
+                       label = diff()[!!i]),
+                   inherit.data = F,
+                   rotate = r,
+                   #bending = 0.05,
+                   labelsize = 4,
+                   textORlabel = "label",
+                   labeldistance = 0.01)
+    }
+    pl + geom_vline(xintercept = z,
                    color = "#428BCA",
                    linewidth = 1.5)
-      }) |>
-      bindCache(input$zahl)
+  }) |>
+    bindCache(input$zahl, input$new)
 
-    output$sum <- renderText({
-      paste0("Abweichungen insgesamt: ",
-             "<b>",
-             round(sum(diff()), digits = 3),
-             "</b>")
-      }) |> bindCache(input$zahl)
+  output$sum <- renderText({
+    paste0("Abweichungen insgesamt: ",
+           "<b>",
+           round(sum(diff()), digits = 3),
+           "</b>")
+  }) |> bindCache(input$zahl, input$new)
 
-    output$psum <- renderText({
-      paste0("Summe positiver Abweichungen:   ",
-             "<b>", sum(pdiff()) |> round(digits = 3),
-             "</b>")
-      }) |> bindCache(input$zahl)
+  output$psum <- renderText({
+    paste0("Summe positiver Abweichungen:   ",
+           "<b>", sum(pdiff()) |> round(digits = 3),
+           "</b>")
+  }) |> bindCache(input$zahl, input$new)
 
-    output$nsum <- renderText({
-      paste0("Summe negativer Abweichungen: ",
-            "<font color=\"9c1111\"><b>",
-            sum(ndiff()) |> round(digits = 3),
-            "</b></font>")
-      }) |> bindCache(input$zahl)
+  output$nsum <- renderText({
+    paste0("Summe negativer Abweichungen: ",
+           "<font color=\"9c1111\"><b>",
+           sum(ndiff()) |> round(digits = 3),
+           "</b></font>")
+  }) |> bindCache(input$zahl, input$new)
 ```
 
 <br>
