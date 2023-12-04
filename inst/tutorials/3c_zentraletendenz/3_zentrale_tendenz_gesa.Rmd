@@ -35,38 +35,57 @@ iq <- c(100, 103, 114, 85, 101, 91, 84, 103, 117, 102)
 
 ## Inhalt
 
-In diesem Tutorial werden die Maße der zentralen Tendenz aus der Vorlesung wiederholt sowie ihre Umsetzung in R besprochen.
+In diesem Tutorial werden die Maße der zentralen Tendenz aus der Vorlesung 
+wiederholt sowie ihre Umsetzung in R besprochen.
 
-## Zentrale Tendenzen {data-progressive=TRUE}
+Am Ende kannst du:
 
-Zur Orientierung, wo wir uns im Prozess befinden: Der Datensatz ist nun erhoben und in R eingepflegt, die Analyse kann beginnen!
+-   <input type="checkbox" unchecked> Den Mittelwert mit `mean()` berechnen </input>
+-   <input type="checkbox" unchecked> Den Median mit `median()` berechnen </input>
+-   <input type="checkbox" unchecked> Den Modus mit `table()` herausfinden </input>
+-   <input type="checkbox" unchecked> Verstehen, wann welches Maß angewandt wird </input>
+
+## Zentrale Tendenzen
+
+Zur Orientierung, wo wir uns im Prozess befinden: Der Datensatz ist nun erhoben 
+und in R eingepflegt, die Analyse kann beginnen! 
 
 ![](images/games.png)
-<div style="text-align:left">source: https://pbs.twimg.com/media/ER24yA4XUAEGDfh.png:large</div>
+
+[image source: twimg.com](https://pbs.twimg.com/media/ER24yA4XUAEGDfh.png:large)
 
 <br>
 
-Wenn du einer anderen Person jetzt von deinen Daten erzählen möchtest, könntest du natürlich jeden einzelnen Datenpunkt einzeln aufzählen. Doch seien wir ehrlich: das dauert lang und das will auch kein Mensch hören. Dann stellt sich unweigerlich die Frage: Wie kann ich in möglichst kompakter Form, am besten in einer Zahl, über meine Daten sprechen und dabei möglichst genau sein?
+Wenn du einer anderen Person jetzt von deinen Daten erzählen möchtest, könntest 
+du natürlich jeden einzelnen Datenpunkt aufzählen. 
+Doch seien wir ehrlich: das dauert lang und das will auch kein Mensch hören. 
+Dann stellt sich unweigerlich die Frage: Wie kann ich in möglichst kompakter
+Form, am besten in einer Zahl, über meine Daten sprechen und dabei möglichst genau sein?
 
 Die Antwort: Es kommt darauf an!
 
-Und worauf? Ganz genau, auf das Skalenniveau. Das ist im übrigend DER Grund, warum wir uns das ganze überhaupt erst so umfassend und genau angeschaut haben!
+Und worauf? Ganz genau, auf das Skalenniveau. Das ist im übrigend DER Grund, warum
+wir uns das ganze überhaupt erst so umfassend und genau angeschaut haben!
+
+### Was kennzeichnet eine gute Zusammenfassung?
 
 Woher weiß ich, unabhängig von der Skala, dass ich eine gute Zahl gewählt habe, um meine Daten zu beschreiben?
 
-Daten sind bestmöglich beschrieben, wenn die zusammenfassende Zahl den kleinstmöglichen Fehlerwert aufweist!
+> Daten sind bestmöglich beschrieben, wenn die zusammenfassende Zahl den kleinstmöglichen Fehlerwert aufweist!
 
 Das gehen wir jetzt gemeinsam Skala für Skala durch.
 
 ## Kardinalskala {data-progressive=TRUE}
 
 ```{r synonym}
-question_radio("Was ist ein Synonym für Kardinalskala?,",
+question_checkbox("Was ist ein Synonym für Kardinalskala?,",
                answer("metrisch", 
                       correct = TRUE,
                       message = "Metrisch oder auch kardinalskaliert ist alles ab Intervallskala, das heißt, alles, wo Abstände sinnvoll interpretiert werden können."),
                answer("kategorial",
                       message = "Kategoriale Daten haben keine sinnvoll interpretierbaren Abstände, und sind deswegen nicht kardinalskaliert, auch wenn beides mit K beginnt."),
+               answer("Intervallskala",
+                      correct = TRUE),
                random_answer_order = TRUE,
                allow_retry = TRUE)
 ```
@@ -283,19 +302,17 @@ mean()
 
 ### Mittelwert einer Tabellenspalte
 
-::: aufgabe
 Nun wenden wir das auf eine Tabellenspalte an. Als Daten dient uns der Datensatz
 `rtutorials::einkaufen`, welcher von Studierenden 2022 in ihrer Felderhebung erstellt wurde. Das Ziel ist, den Mittelwert der Spalte `Alter` zu berechnen.
 
-So sieht der Datensatz aus (reduziert auf die Spalten Alter, Verkehrsmittel, Weg, Frequenz):
+So sieht der Datensatz `einkaufen` aus (reduziert auf die Spalten Alter, Verkehrsmittel, Weg, Frequenz):
 
 ```{r preview, echo = FALSE}
 rtutorials::einkaufen |> dplyr::select(Alter, Verkehrsmittel, Weg, Frequenz)
 ```
 
-**Tipp:** Auf die Spalte `Alter` greifst du zu mittels `einkaufen$Alter`. 
-
-Berechne den Mittelwert der Spalte `Alter`!
+::: aufgabe
+Berechne den Mittelwert der Spalte `Alter` im Data Frame `einkaufen`!
 :::
 
 ```{r dfmean, exercise = TRUE, exercise.cap = "Mittelwert einer Tabellenspalte"}
@@ -334,7 +351,8 @@ Juhu! Es hat funktioniert!
 question_numeric("Was ist das durchschnittliche Alter im `einkaufen`-Datensatz? (Auf eine ganze Zahl gerundet)",
                  answer(43, 
                         correct = TRUE),
-                 tolerance = 0.5)
+                 tolerance = 0.5,
+                 allow_retry = TRUE)
 ```
 
 <br>
@@ -342,7 +360,8 @@ question_numeric("Was ist das durchschnittliche Alter im `einkaufen`-Datensatz? 
 ### Die Summe der Abweichungen vom Mittelwert ist immer 0
 
 Nun beweisen wir quasi rückwärts, dass das arithmetische Mittel immer der Wert ist, wo sich positive und negative Abweichungen
-gegenseitig aufheben. Es gilt:
+gegenseitig aufheben. Dafür gehen wir zurück zu unserem einfachen IQ-Beispiel.
+Es gilt:
 
 ```
 sum(iq - mean(iq)) == 0
@@ -375,7 +394,8 @@ sum(iq - mean(iq)) == 0
 ::: infobox
 **Take-Away**
 
-Halten wir fest: Der Mittelwert eines kardinalskalierten Vektors ist die einfachste und genaueste Zusammenfassung all seiner einzelnen Werte!
+Halten wir fest: Der Mittelwert eines kardinalskalierten Vektors ist die einfachste und genaueste Zusammenfassung all seiner einzelnen Werte! Wie wir im nächsten Abschnitt sehen werden, ist
+er aber sehr empfindlich gegenüber extremen Werten und manchmal deswegen ein ungeeignetes Maß. 
 :::
 
 ## Ordinalskala {data-progressive=TRUE}
@@ -387,7 +407,8 @@ Es gibt im Grunde zwei verschiedene Ansätze
   1. Du ignorierst alles, was du über Skalenniveaus gelernt hast und rechnest das arithmetische Mittel trotzdem aus. Ab 5 Faktorstufen einer ordinalskalierten Skala lässt sich mathematisch zeigen, dass du sie als metrisch betrachten und entsprechende Statistiken verwenden kannst (ganz praktisches Beispiel: Schulnoten)
   2. Du findest eine Möglichkeit die Rangplätze zu berücksichtigen.
 
-\1. kannst du schon. 2. kommt jetzt:
+ 
+Ansatz 1 kannst du schon. Ansatz 2 kommt jetzt:
 
 Das Gute an den rangskalierten Daten ist, dass du sie anhand ihrer Ausprägung in eine logische Reihenfolge bringen kannst.
 
@@ -423,13 +444,77 @@ Nun werden Rangplätze vergeben. Doch: Wenn zwei Zahlen den gleichen Wert haben,
 |114                  |9      |
 |117                  |10     |
 
-#### Median berechnen
+### Median berechnen
 
-Bei einer ungeraden Anzahl von Werten gibt es einen, der genau in der Mitte liegt. Hätten wir nur 9 IQ-Werte, wäre der Median der 5. Wert. Oberhalb liegen 4 höhere Werte und unterhalb 4 niedrigere. 
+Der Median ist der Wert, wo gleich viele Werte drüber und drunter liegen. 
+Je nachdem, ob wir eine gerade Anzahl von Werten haben, unterscheidet sich die Berechnung:
 
-Wir haben aber 10 Werte, also eine gerade Anzahl.
+**ungerade Anzahl**
 
-Bei einer geraden Anzahl von Rängen (wie hier), wo es keine klare Mitte gibt, werden die beiden Werte direkt über und unter der Mitte addiert und durch 2 geteilt. Hier: $\frac{101 + 102}{2} = 101.5$. Der Median ist also 101.5. 
+Bei einer ungeraden Anzahl von Werten gibt es einen, der genau in der Mitte liegt.
+Der ist dann auch der Median. Sehr praktisch.
+
+```{r fig.height=1}
+dfu <- data.frame(x = 1:5, y = 1)
+ggplot(dfu) +
+  geom_vline(xintercept = 3, color = "blue") +
+  geom_point(aes(x, y = 1), 
+             size = 4) +
+  theme_bw() +
+  scale_y_continuous(name = NULL,
+                     breaks = NULL) +
+  labs(x = "Rangplatz")
+```
+
+**gerade Anzahl**
+
+Das ist bei einer geraden Anzahl nicht der Fall, und der Median ist dann der Mittelwert beider Werte
+die in der Mitte sind. 
+
+```{r fig.height=1}
+dfu <- data.frame(x = 1:4, y = 1)
+ggplot(dfu) +
+  geom_vline(xintercept = 2.5, color = "blue") +
+  geom_point(aes(x, y = 1), 
+             size = 4) +
+  theme_bw() +
+  scale_y_continuous(name = NULL,
+                     breaks = NULL) +
+  labs(x = "Rangplatz")
+```
+
+Für dieses Beispiel konkret: $Median = (2 + 3)/2 = 2.5$
+
+<br>
+
+#### Anwendung auf das IQ-Beispiel
+
+Auch im IQ-Beispiel haben wir 10 Werte, also eine gerade Anzahl.
+
+Bei einer geraden Anzahl von Rängen (wie hier), wo es zwei Werte in der Mitte gibt, 
+werden die beiden Werte addiert und durch 2 geteilt.\
+Hier: $Median = \frac{101 + 102}{2} = 101.5$.
+
+```{r fig.height=2}
+dfu <- data.frame(x = rank(iq), y = 1, iq = iq)
+ggplot(dfu) +
+  geom_vline(xintercept = 5.5, color = "blue") +
+  geom_point(aes(x, y = 1), 
+             size = 4) +
+  geom_point(aes(x = 7.5, y = 1.05), 
+             size = 4) +
+  annotate(geom = "text", x = rank(iq), y = 1.1, label = iq) +
+  theme_bw() +
+  scale_y_continuous(name = NULL,
+                     breaks = NULL,
+                     limits = c(0.9, 1.2)) +
+  scale_x_continuous(name = "Rangplatz",
+                     breaks = 1:10)
+```
+
+Die Grafik zeigt sehr gut, dass der Median nicht die Werte selbst interpretiert, sondern lediglich ihre Rangplätze!
+Die Abstände zwischen den einzelnen IQ-Werten sind zwar eigentlich unterschiedlich groß, aber da wir ordinales Skalenniveau haben,
+fällt diese Information weg. 
 
 ::: infobox
 Die Funktion in R für die Berechnung des Medians ist: `median()`
@@ -449,7 +534,7 @@ median(iq)
 iq
 ```
 
-Klasse! Das ist genau das gleiche, wie wir ihn auch per Hand berechnet haben. 
+Klasse! Das ist genau das Gleiche, was wir auch per Hand berechnet haben. 
 
 ### Median einer Tabellenspalte berechnen
 
@@ -537,14 +622,14 @@ Wende die Funktion summary() auf den Vektor `iq` an und mach dich mit dem Ergebn
 summary(iq)
 ```
 
-```{r summary, exercise = T}
+```{r summary, exercise = TRUE}
 iq
 ```
 
 
 Zusammenfassend lässt sich also sagen: Der Median ist eine gute Zusammenfassung für ordinalskalierte und in manchen Fällen (zB. viele/ krasse Ausreißer) auch intervallskalierte Daten.
 
-### Nominalskala
+## Nominalskala
 
 Hier gibt es keine logische Reihenfolge. Insofern fallen Mittelwert und Median raus. Um möglichst wenige Fehler in der Vorhersage zu machen, ist es logischerweise sinnvoll, die Kategorie anzugeben, welche die meisten Werte haben. Das wird dann **Modus** genannt.
 
@@ -553,12 +638,17 @@ Gegeben sei die Lieblingsfarbe von 10 anderen Studis:
 ```
 c("pink", "pink", "blau", "blau", "pink", "blau", "blau", "pink", "lila", "pink")
 ```
-Da es eine nominale Variable ist, ist es wichtig, daran zu denken, sie als `factor()` zu speichern. Um heraus zu finden, welche Gruppe am größten ist, könntest du zählen und eine Strichliste machen. ODER du lässt ganz smooth R für dich arbeiten. Hierfür brauchst du wieder die Funktion `summary()`. 
+Da es eine nominale Variable mit wiederkehrenden Kategorien ist, 
+sollten wir sie als `factor()` zu speichern. 
+
+Um heraus zu finden, welche Gruppe am größten ist, könntest du zählen und 
+eine Strichliste machen. ODER du lässt ganz smooth R für dich arbeiten. 
+Hierfür brauchst du wieder die Funktion `summary()`. 
 
 :::aufgabe
   
-  1. Erstelle einen neuen Vektor namens `farben`, der ein Faktor ist und die oben angegebenen Werte enthält.
-  2. Lass dir eine Zusammenfassung der Werte mit der summary Funktion ausgeben
+  1. Erstelle einen neuen Vektor namens `farben`, der ein Faktor ist und die oben angegebenen Werte enthält!
+  2. Lass dir eine Zusammenfassung der Werte mit der `summary()`-Funktion ausgeben!
 :::
 
 ```{r nominal-solution}
@@ -567,12 +657,13 @@ farben <- factor(c("pink", "pink", "blau", "blau", "pink", "blau", "blau", "pink
 summary(farben)
 ```
 
-```{r nominal, exercise = T}
+```{r nominal, exercise = TRUE}
 
 ```
 
  
-Doch warte mal - oben hat die gleiche Funktion doch auch einen ordinalen/ metrischen Vektor bearbeitet und jetzt kann sie auch nominal? Und das Ergebnis sieht auch ganz anders aus.
+Doch warte mal - oben hat die gleiche Funktion doch auch einen numerischen Vektor
+bearbeitet und jetzt kann sie auch mit einem `factor` umgehen? Und das Ergebnis sieht auch ganz anders aus.
 
 JA!
 
@@ -590,10 +681,9 @@ Die Funktion `table()` kann exakt das gleiche, nur dass ihr egal ist, welche Obj
 
 Zurück zum Modus: 
 
-Das wäre in diesem Fall mit 5 Einträgen die Lieblingsfarbe Pink.
 ```{r modequest}
-question_text("Was ist der Modus des Vektors `farben`?",
-                 answer("pink", correct = TRUE, message = "Genau, Pink kommt 5 mal vor."),
+question_text("Was ist die häufigste Lieblingsfarbe bei den 10 Studis?",
+                 answer("pink", correct = TRUE, message = "Genau, Pink kommt mit 5 mal am meisten vor."),
               allow_retry = TRUE)
 ```
 
@@ -618,3 +708,9 @@ In diesem Tutorial hast du folgende Funktionen kennengelernt:
 | `summary()` | Gibt die zentrale Tendenz je nach Objektklasse aus. |
 | `table()`   | Fasst Daten je nach Objektklasse zusammen.          |
 | `sum()`     | Summiert die Elemente eines Vektors.                |
+
+### Credit
+
+Dieses Tutorial wurde von Gesa Graf verfasst, von Lukas Bruelheide erweitert und
+von Marie Klosterkamp reviewt.
+
