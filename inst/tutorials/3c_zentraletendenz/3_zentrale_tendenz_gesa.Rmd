@@ -18,10 +18,14 @@ library(learnr)
 
 library(shiny)
 library(ggplot2)
-if(!require(ggbrace)){
-  devtools::install_github("NicolasH2/ggbrace")
-  library(ggbrace)}
-library(scales)
+if(!require(ggbrace, quietly = TRUE)){
+  message("\nVersuche Paket 'ggbrace' von GitHub zu installieren. Benötigt eine Internetverbindung. \nOhne dieses Paket funktioniert eine interaktive Grafik nicht.")
+  try(devtools::install_github("NicolasH2/ggbrace"))
+  require(ggbrace)
+}else{
+    require(ggbrace)
+}
+require(scales)
 
 knitr::opts_chunk$set(echo = FALSE)
 
@@ -76,11 +80,15 @@ Als Fehler lässt sich hier gut die summierte Abweichung von der zusammenfassend
 Wir möchten diese Abweichung möglichst nahe bei 0 haben.
 
 ::: aufgabe
-Suche eine zusammenfassende Zahl, bei der sich positive und negative Abweichungen möglichst aufheben!
+Unten siehst du eine interaktive Grafik, die das Konzept der Abweichung von der zusammenfassenden Zahl visualisieren soll.
+
+Nutze den Slider, um eine Zahl zu finden, wo sich die positiven und negativen Abweichungen ausbalancieren!
 :::
 <br>
 
 ```{r ui}
+# Shiny App zum Finden des Mittelwerts
+
 fluidPage(
   verticalLayout(
     sliderInput("zahl",
@@ -105,23 +113,41 @@ fluidPage(
 ```
 
 ```{r server, context = "server"}
-  x <- reactive({
-    input$new
-    rnorm(10, mean = 5, sd = 2.5) |> round() |> abs() |> unique() |> sort()
-  })
+# Mögliche Zahlenreihen-Längen
+sizes <- 3:7
+
+# Mögliche Zahlen: 1 - 9, ganzzahlig
+sampler <- function() sample(1:9, size = sample(sizes, size = 1))
+
+# Vektor mit allen erlaubten Mittelwerten
+test_vec <- seq(from = 1, to = 9, by = 0.5)
+
+# Zahlenreihen-Generierung
+x <- reactive({
+  # Nehme Abhängigkeit vom Neue Zahlenreihe Knopf
+  input$new
+  
+  # Wiederhole Sampling, bis Mittelwert erlaubt ist
+  x <- sampler()
+  while(!(mean(x) %in% test_vec)){
+    x <- sampler()
+  }
+  x |> sort()
+})
 
   n <- reactive({
     length(x())
   })
-  df <- reactive({
+  
+df <- reactive({
     data.frame(x = x(), y = 0)
   })
 
+# Konstruiere Basic Plot, der sich nur ändern muss wenn neue Zahlenreihe gedrückt wird. 
   p <-  reactive({
     ggplot(df(), aes(x, y)) +
       geom_point(size = 4) +
       scale_y_continuous(name = NULL, breaks = NULL) +
-      scale_x_continuous(name = NULL, breaks = 0:13) +
       theme_bw() +
       theme(text = element_text(size = 20))
   })
@@ -130,24 +156,41 @@ fluidPage(
     x() - input$zahl
   })
 
+# Positive Abweichungen
   pdiff <- reactive({
     pdiff <- diff()[diff() >= 0]
   })
 
+# negative Abweichungen
   ndiff <- reactive({
     ndiff <- diff()[diff() < 0]
   })
 
+# Achsenbeschriftungen 
+  breaks <- reactive({
+    # Kombiniere Zahlenreihe + SliderInput
+    c(x(), input$zahl) |> sort() 
+  })
+
   output$vis <- renderPlot({
+    # Regeneriere Plot, wenn "neue Zahlenreihe" gedrückt wird
     input$new
     z <- input$zahl
+    
+    # Konstruiere Vektor h, der die Höhen der Braces enthält
+    # 1. Rangfolge der negativen Abw. absteigend sortieren und * -1
     nh <- rank(ndiff()) |> sort(decreasing = T)
     nh <- nh * (-1)
+    # Rangfolge der positiven Abw., startet bei 0.
     ph <- rank(pdiff()) - 1
+    # Rangfolge mit dem Rang von z aus gesehen.
     ranks <- c(nh, ph)
+    # Rescaling für visuelle Verhältnisse
     h <-  ranks * 0.1
+    
+    # Initialisiere Plot
     pl <- p()
-
+    # Füge iterativ Braces hinzu
     for (i in 1:n()) {
       r <- ifelse(h[i] >= 0, 0, 180)
       pl <- pl +
@@ -161,25 +204,43 @@ fluidPage(
                    textORlabel = "label",
                    labeldistance = 0.01)
     }
+    # Letzte Schritte beim Plotten: Füge SliderInput hinzu
     pl + geom_vline(xintercept = z,
                    color = "#428BCA",
-                   linewidth = 1.5)
+                   linewidth = 1.5) +
+      # Füge Achsenbeschriftungen hinzu
+      scale_x_continuous(name = NULL, breaks = breaks(), minor_breaks = NULL,
+                         labels = scales::label_number(accuracy = 0.5))
   }) |>
-    bindCache(input$zahl, input$new)
+    bindCache(input$zahl, input$new) # Cache den Plot-Output für mehr Schnelligkeit
 
+
+  # Abweichungen insgesamt
   output$sum <- renderText({
-    paste0("Abweichungen insgesamt: ",
+    totalsum <- sum(diff())
+    
+    # Wenn Abweichungen == 0, mache den Text Grün, ansonsten schwarz
+    if(totalsum == 0){
+      paste0("Abweichungen insgesamt: ",
+           "<font color=\"#008000\"><b>",
+           round(totalsum, digits = 3),
+           "</b></font>")
+    } else {
+       paste0("Abweichungen insgesamt: ",
            "<b>",
-           round(sum(diff()), digits = 3),
+           round(totalsum, digits = 3),
            "</b>")
+    }
   }) |> bindCache(input$zahl, input$new)
 
+  # pos. Abw.
   output$psum <- renderText({
     paste0("Summe positiver Abweichungen:   ",
            "<b>", sum(pdiff()) |> round(digits = 3),
            "</b>")
   }) |> bindCache(input$zahl, input$new)
 
+  # neg. Abw.
   output$nsum <- renderText({
     paste0("Summe negativer Abweichungen: ",
            "<font color=\"9c1111\"><b>",
@@ -191,58 +252,81 @@ fluidPage(
 <br>
 <br>
 <hr>
-:::aufgabe
-Gegeben sei eine Stichprobe von den IQ Werten von 10 Studierenden (s. 1. Zeile im Codeblock).\
-Finde heraus, mit welcher Zahl du die Daten mit dem geringsten Fehlerwert beschreiben kannst. Damit du das nicht händisch für jeden Wert ausrechnen musst, kannst du folgende Funktion nutzen: `sum(z - iq)`
 
-  - `iq` ist die Variable
-  - `z` hier als Platzhalter verwendet für den Wert, der die Daten zusammenfassen soll
-  - `sum` summiert alle Zahlen auf
-  - Zusammenfassung: von dem Zusammenfassungswert wird jeder Wert der Varibale abgezogen. Diese Differenzen werden summiert.
-  
-Deine Aufgabe ist es nun, zuerst einmal die 1. Zeile auszuführen und so die Variable iq zu definieren. Und dann heraus zu finden, welcher Wert die wenigsten Fehler aufweist. Dies tust du, in dem du unterschiedliche Werte für z Einsetzt und schaust, welches der niedrigste ist
-:::
+Klasse! Du hast eben durch Ausprobieren diejenige Zahl gefunden, welche den wenigsten Fehler hat.  
+Da es zu aufwändig wäre immer Ausprobieren zu müssen, haben sich schlaue Mathematiker*innen hingesetzt und das ganze auf Formelebene gelöst. Sie fanden heraus, dass die genaueste Zahl diejenige ist, die herauskommt, wenn du alle vorhandenen summierst und durch ihre Anzahl teilst. Also kurz: das arithmetische Mittel oder der Mittelwert, auf englisch: mean.
 
-```{r kardinal-hint-1}
-sum(84 - iq)
-```
+$$
+{\large \bar{x} = \frac{\sum_{i=1}^{n}{x_i}}{n}}
+$$
 
-```{r kardinal-hint-2}
-sum(100 - iq)
-```
-
-```{r kardinal, exercise = T}
-iq <- c(100, 103, 114, 85, 101, 91, 84, 103, 117, 102)
-```
-
-Da es zu aufwändig wäre ausprobieren, welche Zahl die wenigsten Fehler hat, haben sich schlaue Mathematiker*innen hingesetzt und das ganze auf Formelebene gelöst. Sie fanden heraus, dass die genaueste Zahl diejenige ist, die herauskommt, wenn du alle vorhandenen summierst und durch ihre Anzahl teilst. Also kurz: das arithmetische Mittel oder der Mittelwert, auf englisch: mean.
-
+::: infobox
 Die Funktion für den Mittelwert in R ist `mean()`.
+:::
+<br>
 
 :::aufgabe
-Finde den Mittelwert der Variable IQ heraus und vergleiche ihn mit dem oben herausgefundenen Wert der geringsten Fehler
+Finde den Mittelwert der Variable IQ heraus!
 :::
-´
-```{r mean-soltion}
+
+```{r mean-solution}
 mean(iq)
 ```
 
+```{r mean, exercise = TRUE, exercise.cap = "Mittelwert berechnen"}
+iq <- c(100, 103, 114, 85, 101, 91, 84, 103, 117, 102)
 
-```{r mean, exercise = T}
-
+mean()
 ```
 
-Die beiden Zahlen (oben herausgefunden und Mittelwert) sollten die gleichen sein. Zudem ist auffällig, dass der kleinste Wert für Fehler 0 ist. Das ist erstmal egal aber kannst du dir schonmal für den nächsten Block (4a_dispersion) merken, da wird das wieder wichtig.
+Klasse!
 
-Halten wir fest: Der Mittelwert eines kardinalskalierten Vektors ist die einfachste und genaueste Zusammenfassung all seiner einzelnen Werte.
 
-### Ordnialskala
+
+Nun beweisen wir quasi rückwärts, dass das arithmetische Mittel immer der Wert ist, wo sich positive und negative Abweichungen
+gegenseitig aufheben. Es gilt:
+
+```
+sum(iq - mean(iq)) == 0
+```
+
+Was dieser Code ausgesprochen bedeutet: 
+
+1. Berechne die Differenz jedes IQ-Werts vom Mittelwert.
+2. Summiere alle Differenzen
+3. Prüfe, ob das Ergebnis Null ist
+
+::: aufgabe
+Wende diese Prüfung auf den Vektor `iq` an, indem du den Codeblock ausführst! Versuche die einzelnen Schritte nachzuvollziehen.
+:::
+
+```{r iq_proof, exercise = TRUE, exercise.cap = "Heben sich die Abweichungen auf?"}
+# 1. Berechne Differenz jedes Werts vom Mittelwert
+iq - mean(iq)
+
+# 2. Summiere alle Differenzen
+sum(iq - mean(iq))
+
+# 3. Prüfe ob das Ergebnis Null ist
+
+sum(iq - mean(iq)) == 0
+```
+
+<br>
+
+::: infobox
+**Take-Away**
+
+Halten wir fest: Der Mittelwert eines kardinalskalierten Vektors ist die einfachste und genaueste Zusammenfassung all seiner einzelnen Werte!
+:::
+
+### Ordinalskala
 
 Doch was tun, wenn du es mit ordinalskalierten Daten zu tun hast und du sie eben nicht einfach zusammenrechnen kannst (weil die Abstände nicht gleichbedeutend sind)?
 
 Es gibt im Grunde zwei verschiedene Ansätze
 
-  1. Du ignorierst alles, was du über Datenskalierungen gelernt hast und rechnest das arithmetische Mittel aus. Ab 5 Faktorstufen einer ordinalskalierten Skala lässt sich mathematisch zeigen, dass du sie als metrisch betrachten und entsprechende Statistiken verwenden kannst (ganz praktisches Beispiel: Schulnoten)
+  1. Du ignorierst alles, was du über Skalenniveaus gelernt hast und rechnest das arithmetische Mittel trotzdem aus. Ab 5 Faktorstufen einer ordinalskalierten Skala lässt sich mathematisch zeigen, dass du sie als metrisch betrachten und entsprechende Statistiken verwenden kannst (ganz praktisches Beispiel: Schulnoten)
   2. Du findest eine Möglichkeit die Rangplätze zu berücksichtigen.
 
  
