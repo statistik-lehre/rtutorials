@@ -15,7 +15,7 @@ resource_files:
 
 ```{r setup, include=FALSE}
 library(learnr)
-
+library(rtutorials)
 library(shiny)
 library(ggplot2)
 if(!require(ggbrace, quietly = TRUE)){
@@ -279,9 +279,64 @@ iq <- c(100, 103, 114, 85, 101, 91, 84, 103, 117, 102)
 mean()
 ```
 
-Klasse!
+<br>
 
+::: aufgabe
+Nun wenden wir das auf eine Tabellenspalte an. Als Daten dient uns der Datensatz
+`rtutorials::einkaufen`, welcher von Studierenden 2022 in ihrer Felderhebung erstellt wurde. Das Ziel ist, den Mittelwert der Spalte `Alter` zu berechnen.
 
+So sieht der Datensatz aus (reduziert auf die Spalten Alter, Verkehrsmittel, Weg, Frequenz):
+
+```{r preview, echo = FALSE}
+rtutorials::einkaufen |> dplyr::select(Alter, Verkehrsmittel, Weg, Frequenz)
+```
+
+**Tipp:** Auf die Spalte `Alter` greifst du zu mittels `einkaufen$Alter`. 
+
+Berechne den Mittelwert der Spalte `Alter`!
+:::
+
+```{r dfmean, exercise = TRUE, exercise.cap = "Mittelwert einer Tabellenspalte"}
+mean()
+```
+
+```{r dfmean-solution}
+mean(einkaufen$Alter)
+```
+
+Huch? Wieso kommt da `NA` raus?
+
+`NA` heißt *Not Available* und ist in R ein spezieller Platzhalter für fehlende Werte! `NA` sagt R so etwas wie: Vorsicht, dieser Wert könnte alles enthalten. 
+In Berechnungen wirkt sich `NA` sehr ansteckend aus, denn wenn ein Input alles mögliche enthalten könnte, kann auch der Output alles mögliche enthalten und ist dementsprechend auch `NA`. Daraus schließen wir, dass die Spalte `Alter` `NA`s enthält, was bei realen Daten sehr oft der Fall ist. Möglicherweise wollten einige Personen einfach nicht auf die Frage antworten, wie alt sie sind - verständlich. Dann wird `NA` eingetragen.
+
+R zwingt uns, explizit zu sein damit, wie wir mit `NA`s umgehen. Es gibt immer eine einfache Lösung, nämlich `NA`s ausschließen und dann die Berechnung durchführen, aber wir müssen erst spezifisch sagen, dass wir das tun wollen und es passiert nicht automatisch.
+
+Um `NA`s zu entfernen, geben wir das Argument `na.rm = TRUE` an die Funktion `mean()`!
+`na.rm` steht für *NA remove*.
+
+::: aufgabe
+Verändere die Berechnung so, dass `NA`s entfernt werden!
+:::
+
+```{r narm, exercise = TRUE, exercise.cap = "NAs entfernen"}
+mean(einkaufen$Alter)
+```
+
+```{r narm-solution}
+mean(einkaufen$Alter, na.rm = TRUE)
+```
+
+Juhu! Es hat funktioniert!
+
+```{r question_alter}
+question_numeric("Was ist das durchschnittliche Alter im `einkaufen`-Datensatz? (Auf eine ganze Zahl gerundet)",
+                 answer(43, 
+                        correct = TRUE),
+                 tolerance = 0.5)
+```
+
+<br>
+---
 
 Nun beweisen wir quasi rückwärts, dass das arithmetische Mittel immer der Wert ist, wo sich positive und negative Abweichungen
 gegenseitig aufheben. Es gilt:
