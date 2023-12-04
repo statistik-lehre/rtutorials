@@ -24,6 +24,8 @@ x <- c(1, 1, 9, 3, 6)
 x <- c(1, 1, 9, 3, 6)
 ```
 
+<!-- @Lukas muss hier vlt das Paket shinywidgets noch installiert werden? Bei mir lässt sich das Dokument sonst nicht rendern -->
+
 ## Intuition bekommen
 
 ### Was ist Streuung?
