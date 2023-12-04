@@ -17,10 +17,15 @@ resource_files:
 library(learnr)
 library(ggplot2)
 library(shiny)
-knitr::opts_chunk$set(echo = FALSE)
 
-if(require(ggbrace)) library(ggbrace) else {devtools::install_github("NicolasH2/ggbrace")}
-library(ggbrace)
+if(!require(ggbrace, quietly = TRUE)){
+   message("\nVersuche das Paket `ggbrace` von GitHub zu installieren...\nEs wird für eine Grafik benötigt, die ansonsten nicht funktioniert.\nFür die Installation braucht es eine Internetverbindung.\n")
+  try(devtools::install_github("NicolasH2/ggbrace"))
+  require(ggbrace)
+}else{
+ library(ggbrace)
+}
+knitr::opts_chunk$set(echo = FALSE)
 ```
 
 ## Inhalt
@@ -1227,7 +1232,8 @@ xlim_new <- f_krit + 1
 p <- df(3, df1, df2) # 0.052
 ### PLOT 
 ### Zoom 1
-ggplot() +
+try(
+  ggplot() +
   stat_function(geom = "area",
                 fill = "4",
                 alpha = .4,
@@ -1264,6 +1270,7 @@ ggplot() +
     labs(x = "F(1, 29)", y = "Wahrscheinlichkeitsdichte", title = "Beispiel",
          subtitle = "nicht signifikant (p > α)") +
     theme_minimal()
+)
 
 # Fail, does not render correctly in output
 # library(pBrackets)
