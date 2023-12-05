@@ -17,15 +17,31 @@ resource_files:
 library(learnr)
 library(rtutorials)
 library(shiny)
-library(ggplot2)
+
+# Learnr findet Tutorial-Dependencies automatisch heraus mittels renv::dependencies
+# und fragt vor Tutorial-Start, ob fehlende Pakete installiert werden sollen. 
+# Das ist für dieses Tutorial deaktiviert, da wir ein Paket von GitHub nutzen (ggbrace)
+# Die automatische Dependency-Installation erlaubt nur CRAN. Leider habe ich 
+# keinen besseren Weg gefunden als eine .renvignore -Datei im selben Verzeichnis
+# Damit müssen alle Dependencies für dieses Tutorial manuell geprüft werden. 
+
 if(!require(ggbrace, quietly = TRUE)){
   message("\nVersuche Paket 'ggbrace' von GitHub zu installieren. Benötigt eine Internetverbindung. \nOhne dieses Paket funktioniert eine interaktive Grafik nicht.")
   try(devtools::install_github("NicolasH2/ggbrace"))
   require(ggbrace)
 }else{
-    require(ggbrace)
+  require(ggbrace)
 }
-require(scales)
+
+if(!require(scales)){
+  message("Installiere fehlendes Paket `scales`...")
+  try(install.packages("scales"))
+  require(scales)
+}else{
+  require(scales)
+}
+
+library(ggplot2)
 
 knitr::opts_chunk$set(echo = FALSE)
 
@@ -77,7 +93,7 @@ Das gehen wir jetzt gemeinsam Skala für Skala durch.
 ## Kardinalskala {data-progressive=TRUE}
 
 ```{r synonym}
-question_checkbox("Was ist ein Synonym für Kardinalskala?,",
+question_checkbox("Was ist alles ein Synonym für Kardinalskala?",
                answer("metrisch", 
                       correct = TRUE,
                       message = "Metrisch oder auch kardinalskaliert ist alles ab der Intervallskala, das heißt, alles, wo Abstände sinnvoll interpretiert werden können."),
