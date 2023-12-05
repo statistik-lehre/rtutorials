@@ -8,7 +8,7 @@ output:
 runtime: shiny_prerendered
 bibliography: ref.json
 link-citations: TRUE
-description: Varianz, Standardabweichung
+description: Die Maße der Streuung werden vorgestellt. Es wird detailliert auf das Konzept der „Quadratsumme“ eingegangen, um Streuung zu quantifizieren. Darauf aufbauend werden die Formeln von Varianz und Standardabweichung vorgestellt. Zudem wird das Konzept von „Quantilen“ erklärt, um dann den Interquartilsabstand zu verstehen. 
 resource_files:
 - css/boxes.css
 ---
@@ -52,7 +52,7 @@ x <- c(1, 1, 9, 3, 6)
          coord_cartesian(xlim = c(1, 5000), ylim = c(-25, +25))
 
 
-    })
+    }) |> bindCache(input$var)
 ```
 
 In den nächsten Kapiteln gehen wir der Frage nach, wie Streuung messbar gemacht werden kann. 
@@ -67,20 +67,23 @@ Wir arbeiten mit Beispieldaten, die auch in der Vorlesung verwendet wurden:
 x <- c(1, 1, 9, 3, 6)
 ```
 
-```{r range}
-y <- c(1, 1, 9, 3, 6)
+```{r range, fig.height=2}
+x <- c(1, 1, 9, 3, 6)
 
-df <- data.frame(x = 1:5, y = y)
-ggplot(df, aes(x, y)) +
+df <- data.frame(x)
+ggplot(df, aes(x, y = 1)) +
   geom_point(size = 3) +
-  geom_segment(aes(x = 2.5, xend = 2.5, y = 1, yend = 9), 
+  geom_point(size = 3, aes(x = 1, y = 1.3)) +
+  geom_segment(aes(y = 2, yend = 2, x = 1, xend = 9), 
                arrow = arrow(ends = "both", type = "closed", length = unit(0.1, "inches")),
                col = "red")+
-  geom_label(label = "Range\n= 8", aes(x = 2.5, y = 5)) +
-  scale_y_continuous(breaks = 0:10) +
-  scale_x_continuous(breaks = NULL) +
+  geom_label(label = "Range\n= 8", aes(y = 2, x = 5)) +
+  scale_y_continuous(breaks = NULL,
+                     limits = c(0.9, 2.6)) +
+  scale_x_continuous(breaks = 0:10,
+                     minor_breaks = NULL) +
   theme_bw() +
-  labs(x = "", y = "x")
+  labs(x = "x", y = "")
 ```
 
 #### Umsetzung in R
@@ -127,7 +130,7 @@ question_checkbox("Welches Skalenniveau muss mindestens vorliegen, um die Spannw
                   answer("Metrisch", correct = T, message = "Genau! Nur metrische Daten enthalten Informationen über Abstände."))
 ```
 
-## Varianz & Standardabweichung
+## Varianz & Standardabweichung {data-progressive=TRUE}
 
 ### Streuung als Abweichung von einem Zentrum
 
@@ -141,7 +144,7 @@ Das Zentrum ist meistens der Mittelwert, aber es gibt auch weniger gebräuchlich
 
 In Rot sehen sie den Abstand jedes einzelnen Werts zum Mittelwert.
 
-```{r deviance}
+```{r deviance, fig.width=3.5}
 y <- c(1, 1, 9, 3, 6)
 res <- y - mean(y)
 df <- data.frame(x = 1:5, y = y, res = res, meanres = (y + mean(y)) / 2)
@@ -378,7 +381,7 @@ s == sd(x)
 
 Super! 
 
-## Quantile
+## Quantile {data-progressive=TRUE}
 
 ::: infobox
 **Einordnung**
@@ -402,10 +405,16 @@ Für Erklärungszwecke sind die Altersdaten von genau 100 Personen zufällig aus
 
 ### Intuition bekommen
 
-Stellen Sie sich vor, Sie sortieren 100 Personen nach dem Alter und stellen alle in  einer aufsteigenden Reihe auf, vom Baby bis zu Senioren. Dann ist z.B. das 25%-Quantil das Alter, für das gilt:
+Stellen Sie sich vor, Sie sortieren 100 Personen nach dem Alter und stellen alle in  einer aufsteigenden Reihe auf, vom Baby bis zu Senioren. Dann ist z.B. das 25%-Quantil das Alter der 25. Person in dieser Reihe. Oder der 26. Person, je nachdem wie Sie es auslegen. Oder sogar der Mittelwert des Alters der 25. und 26. Person. Es gibt nicht den "einen" Weg, Quantile zu berechnen. 
+
+Die mathematische Ausdrucksweise für das 25%-Quantil im Beispiel wäre:
 
 - wenigstens 25 Personen sind jünger oder gleich alt
 - wenigstens 75 Personen sind älter oder gleich alt
+
+::: aufgabe
+Unten finden Sie eine interaktive Grafik, wo die 100 Altersdaten aus dem `einkaufen`-Datensatz in sortierter Reihenfolge dargestellt werden. Nutzen Sie den Slider, um verschiedene Quantile zu finden!
+:::
 
 #### p-Quantil
 
@@ -451,7 +460,7 @@ fluidPage(
                y = discrete_quart,
                x = 2, label = lab) +
       coord_flip()
-  })
+  }) |> bindCache(input$p, input$method)
 
 ```
 
@@ -473,9 +482,9 @@ Für mehr Infos siehe `?quantile`.
 ```{r medianquest}
 question_numeric("Was ist der Median der obigen Altersdaten?",
                  answer(43, correct = T),
+                 answer(40.5, message = "Das ist der Median aller Datenpunkte in einkaufen$Alter. Wir haben hier 100 zufällige Personen aus dem Datensatz gezogen, deswegen unterscheidet sich der Median."),
                  allow_retry = T)
 ```
-
 
 ### Umsetzung in R
 
@@ -499,7 +508,7 @@ alter <- rtutorials::einkaufen$Alter[is.na(rtutorials::einkaufen$Alter) == F] |>
 ::: aufgabe
 **1.**
 
-Die Punkte aus den obigen Grafiken sind im Vektor `alter` gespeichert. Verwenden Sie die `quantile()`-Funktion ohne weitere Argumente außer den Daten, um sich die Quartile ausgeben zu lassen.
+Die Punkte aus den obigen Grafiken sind im Vektor `alter` gespeichert. Verwenden Sie die `quantile()`-Funktion ohne weitere Argumente außer den Daten, um sich die **Quartile** ausgeben zu lassen. (Quartil so wie *quarter* = Viertel)
 
 :::
 
@@ -530,9 +539,13 @@ Wie alt müsste ein Mensch sein, um gleich alt oder älter als 95% der Stichprob
 quantile(alter, probs = ___)
 ```
 
+```{r quant95-solution}
+quantile(alter, probs = 0.95)
+```
+
 
 ```{r quant_question}
-question_checkbox("Welches Skalenniveau muss mindestens vorhanden sein, um Quantile bestimmen zu können?",
+question_radio("Welches Skalenniveau muss mindestens vorhanden sein, um Quantile bestimmen zu können?",
                   answer("Nominal", message = "leider falsch, nominale Daten haben keine Reihenfolge"),
                   answer("Ordinal", correct = T, message = "Ab Ordinalskala gibt es Informationen über eine Reihenfolge, und das ist die Mindestvoraussetzung um Quantile berechnen zu können."),
                   answer("Metrisch", message = "Metrische Daten haben nicht nur eine Reihenfolge, sondern auch Abstände, die interpretierbar sind, was für Quantile nicht nötig ist."))
@@ -544,12 +557,19 @@ Der Interquartilsabstand ist die Spanne der Daten, in welcher die mittleren 50% 
 
 #### Umsetzung in R
 
+::: infobox
+
+Der Interquartilsabstand, also die Differenz 3. Quartil - 1. Quartil, wird in R mit dem Befehl
+`IQR()` wie *interquartile range* berechnet. 
+:::
+<br>
+
 ```{r iqr, exercise = TRUE, exercise.setup = "quant_setup"}
 IQR(alter)
 ```
 
 ```{r iqr_question}
-question_checkbox("Welches Skalenniveau muss mindestens vorliegen, um den Interquartilsabstand zu berechnen?",
+question_radio("Welches Skalenniveau muss mindestens vorliegen, um den Interquartilsabstand zu berechnen?",
                   answer("Nominal", message = "Leider falsch, nominale Daten haben keine Abstände"),
                   answer("Ordinal", message = "Ordinale Daten haben leider keine Information über Abstände, weswegen das Bilden der Differenz zwischen Q3 und Q1 „illegal“ ist."),
                   answer("Metrisch", correct = T, message = "Genau! Dadurch dass eine Differenz gebildet wird, interpretieren wir Abstände. Nur metrische Daten enthalten Informationen über Abstände."), 
@@ -613,7 +633,7 @@ ggplot(helpdf, aes(y = alter)) +
 </details
 <br>
 
-### Proof of Concept (wird gelöscht)
+### Proof of Concept
 
 Das Diagramm zeigt die Daten dem Alter nach **sortiert**. Auf der x-Achse befindet sich die Position in der Sortierung, die 100. Person hat das größte Alter, und die 1. Person das kleinste.
 
@@ -703,14 +723,6 @@ pointi +
 
 ```
 
-### Umsetzung in R
-
-Jetzt kommen die technischen Details, die vormals ausgelassen wurden :)
-
-Es wurde nur erwähnt, dass ein $p$-Quantil der Wert ist, unter dem $p$ der Werte liegen. Aber wie genau wird dieser Wert bestimmt?
-
-Tja, die `quantile()`-Funktion kann Quantile durch ganze **8** verschiedene Methoden berechnen. Aber keine Sorge, in dieses Rabbithole gehen wir nicht hinein. Wir geben uns damit zufrieden, wenn uns ein Quantil ausgegeben wird, wie es zustande kommt, vernachlässigen wir. 
-
 
 ## Überblick deskriptivstatistische Kennwerte
 
@@ -758,11 +770,22 @@ Hilfreich ist auch der Befehl `summary()`, der automatisch eine Zusammenfassung 
 
 ### neue Konzepte
 
--   nötige Skalenniveaus für Modus, Median und Mittelwert
+-   Streuung als Abweichung von einem Zentrum begreifen
 
--   Sinn von Abweichungen vom Mittelwert und Quadratsummen
+-   Quadratsummen als "Summe der quadrierten Abweichungen vom Mittelwert"
 
--   Die Formel für die Varianz
+-   Varianz ist einfach nur die Quadratsumme geteilt durch n-1
+
+-   Standardabweichung ist einfach nur die Wurzel der Varianz
+
+-   Quantile als Lagemaß
+
+-   Der Median ist das 50%-Quantil
+
+-   Quartile sind spezielle Quantile: Bei 25, 50 und 75 %. 
+
+-   Der Interquartilsabstand als Maß der Streuung
+
 
 ### neue Funktionen
 
