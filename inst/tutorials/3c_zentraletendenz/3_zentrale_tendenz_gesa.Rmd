@@ -35,8 +35,7 @@ iq <- c(100, 103, 114, 85, 101, 91, 84, 103, 117, 102)
 
 ## Inhalt
 
-In diesem Tutorial werden die Maße der zentralen Tendenz aus der Vorlesung 
-wiederholt sowie ihre Umsetzung in R besprochen.
+In diesem Tutorial wird dein Wissen zu den Maßen der zentralen Tendenz aufgefrischt sowie deren Umsetzung in R besprochen.
 
 Am Ende kannst du:
 
@@ -81,7 +80,7 @@ Das gehen wir jetzt gemeinsam Skala für Skala durch.
 question_checkbox("Was ist ein Synonym für Kardinalskala?,",
                answer("metrisch", 
                       correct = TRUE,
-                      message = "Metrisch oder auch kardinalskaliert ist alles ab Intervallskala, das heißt, alles, wo Abstände sinnvoll interpretiert werden können."),
+                      message = "Metrisch oder auch kardinalskaliert ist alles ab der Intervallskala, das heißt, alles, wo Abstände sinnvoll interpretiert werden können."),
                answer("kategorial",
                       message = "Kategoriale Daten haben keine sinnvoll interpretierbaren Abstände, und sind deswegen nicht kardinalskaliert, auch wenn beides mit K beginnt."),
                answer("Intervallskala",
@@ -285,7 +284,7 @@ Die Funktion für den Mittelwert in R ist `mean()`.
 <br>
 
 :::aufgabe
-Finde den Mittelwert der Variable IQ heraus!
+Finde den Mittelwert der Variable `iq` heraus!
 :::
 
 ```{r mean-solution}
@@ -305,14 +304,17 @@ mean()
 Nun wenden wir das auf eine Tabellenspalte an. Als Daten dient uns der Datensatz
 `rtutorials::einkaufen`, welcher von Studierenden 2022 in ihrer Felderhebung erstellt wurde. Das Ziel ist, den Mittelwert der Spalte `Alter` zu berechnen.
 
-So sieht der Datensatz `einkaufen` aus (reduziert auf die Spalten Alter, Verkehrsmittel, Weg, Frequenz):
+So sieht der Datensatz `einkaufen` aus (reduziert auf die Spalten: Alter, Verkehrsmittel, Weg, Frequenz):
 
 ```{r preview, echo = FALSE}
 rtutorials::einkaufen |> dplyr::select(Alter, Verkehrsmittel, Weg, Frequenz)
 ```
 
+
 ::: aufgabe
 Berechne den Mittelwert der Spalte `Alter` im Data Frame `einkaufen`!
+
+Beachte, dass hier entgegen der Konvention die Variablennamen mit Großbuchstaben anfangen! Möchtest du diese Variablen also verwenden, denk daran Sie ebenfalls mit Großbuchstaben zu schreiben. 
 :::
 
 ```{r dfmean, exercise = TRUE, exercise.cap = "Mittelwert einer Tabellenspalte"}
@@ -320,7 +322,7 @@ mean()
 ```
 
 ```{r dfmean-solution}
-mean(einkaufen$Alter)
+mean(einkaufen$Alter) 
 ```
 
 Huch? Wieso kommt da `NA` raus?
@@ -586,7 +588,7 @@ ggplot(df) +
 
 
 
-Es ist in manchen Fällen sinnvoll, sich beide Werte (Mittelwert und Median) anzuschauen und zu vergleichen. Wenn sie nah beieinander liegen ist es super, wenn nicht, ist es essentiell sich nochmal die Werte anzuschauen und über Außreißerwerte Gedanken zu machen und wie mit ihnen umgegangen werden soll (üblicherweise eine der drei Alternativen: rausschmeißen und Mittelwert berechnen, Ausreißer drin behalten und Mittelwert berechnen, Median berechnen)
+Es ist in manchen Fällen sinnvoll, sich beide Werte (Mittelwert und Median) anzuschauen und zu vergleichen. Wenn sie nah beieinander liegen ist es super, wenn nicht, ist es essentiell sich nochmal die Werte anzuschauen und sich über Außreißerwerte Gedanken zu machen und wie mit ihnen umgegangen werden soll (üblicherweise eine der drei Alternativen: rausschmeißen und Mittelwert berechnen, Ausreißer drin behalten und Mittelwert berechnen, Median berechnen)
 
 #### Warum Median, wenn ich doch metrische Daten habe?
 
@@ -612,7 +614,7 @@ ggplot(df, aes(x, y)) +
   labs(title = "Empfindlichkeit gegenüber Extremwerten")
 ```
 
-Eine schnelle Übersicht bietet dir die Funktion `summary()`. Hier werden dir Mittelwert (mean), Median, Reichweite (kleinster Wert und größter Wert) sowie der Interquartilsabstan (nächster Block, Tutorial Dispersionsmaße) angezeigt.
+Eine schnelle Übersicht bietet dir die Funktion `summary()`. Hier werden dir Mittelwert (mean), Median, Reichweite (kleinster Wert und größter Wert) sowie der Interquartilsabstand (nächster Block, Tutorial Dispersionsmaße) angezeigt.
 
 :::aufgabe
 Wende die Funktion summary() auf den Vektor `iq` an und mach dich mit dem Ergebnis vertraut!
@@ -639,7 +641,7 @@ Gegeben sei die Lieblingsfarbe von 10 anderen Studis:
 c("pink", "pink", "blau", "blau", "pink", "blau", "blau", "pink", "lila", "pink")
 ```
 Da es eine nominale Variable mit wiederkehrenden Kategorien ist, 
-sollten wir sie als `factor()` zu speichern. 
+sollten wir sie als `factor()` speichern. 
 
 Um heraus zu finden, welche Gruppe am größten ist, könntest du zählen und 
 eine Strichliste machen. ODER du lässt ganz smooth R für dich arbeiten. 
@@ -647,20 +649,20 @@ Hierfür brauchst du wieder die Funktion `summary()`.
 
 :::aufgabe
   
-  1. Erstelle einen neuen Vektor namens `farben`, der ein Faktor ist und die oben angegebenen Werte enthält!
+  1. Erstelle einen neuen Vektor namens `farben`, der ein Faktor `factor()` ist und die oben angegebenen Werte enthält!
   2. Lass dir eine Zusammenfassung der Werte mit der `summary()`-Funktion ausgeben!
 :::
+
+
+```{r nominal, exercise = TRUE}
+
+```
 
 ```{r nominal-solution}
 farben <- factor(c("pink", "pink", "blau", "blau", "pink", "blau", "blau", "pink", "lila", "pink"))
 
 summary(farben)
 ```
-
-```{r nominal, exercise = TRUE}
-
-```
-
  
 Doch warte mal - oben hat die gleiche Funktion doch auch einen numerischen Vektor
 bearbeitet und jetzt kann sie auch mit einem `factor` umgehen? Und das Ergebnis sieht auch ganz anders aus.
@@ -695,7 +697,114 @@ question_text("Was ist die häufigste Lieblingsfarbe bei den 10 Studis?",
 Lange Rede, kurzer Sinn: Der Modus ist die am häufigsten vorkommende Kategorie bei nominalen Daten und damit die beste Möglichkeit, diese zusammen zu fassen.
 :::
 
-## Zusammenfassung
+## Abschlussquizz
+
+```{r Abschlussquizz}
+quiz(caption = "Teste dein Wissen!",
+
+learnr::question_checkbox("Was hast du über die Maße der zentralen Tendenz gelernt?",
+         answer("Der Median ist das Zentrum einer sortierten Datenmenge und weniger anfällig für Ausreißer.", 
+                 correct = TRUE,
+                 message = "Richtig! Der Median ist robust gegenüber Ausreißern."),
+         answer("Der Median ist der Wert, der am häufigsten in einer Datenmenge vorkommt.",
+                 message = "Der Modus nicht der Median repräsentiert den am häufigsten auftretenden Wert."),
+         answer("Das artihmetische Mittel ist die Summe aller Werte geteilt durch die Anzahl der Werte.",
+                 correct = TRUE,
+                 message = "Genau, der Mittelwert wird durch die Summe der Werte geteilt durch ihre Anzahl errechnet."),
+         allow_retry = TRUE
+         ),
+
+learnr::question_checkbox("Welches Maß der zentralen Tendenz eignet sich für eine metrisch skalierte Variable mit großen Ausreißerwerten?",
+         answer("Der Modus.",
+              message = "Du könntest auch den Modus für diese Variable bestimmen, aber du möchtest ja die eine Zahl finden, die deine Daten mit den geringsten Abweichungen beschreibt. Dafür die lediglich häufigste Ausprägung zu verwenden wäre also nicht zielführend."),
+         answer("Der Median.",
+              correct = TRUE,
+              message = "Richtig, der Median eignet sich gut dafür ein Maß der zentralen Tendenz zu bestimmen, dass gegen Ausreißer robust ist."),
+         answer("Das artihmetische Mittel.",
+              message = "Das arithmetische Mittel gibt uns für Variablen OHNE Ausreißer eine gute Zusammenfassung unserer Daten, aber bei großen Ausreißern ist es anfällig für Verzerrungen."),
+         allow_retry = TRUE
+         ),
+
+learnr::question_checkbox("Welches Maß der zentralen Tendenz kannst du für eine ordianlskalierte Variable mit 6 Ausprägungen benutzen?",
+         answer("Den Median.", 
+                correct = TRUE,
+                message = "Genau! Der Median eignet sich gut für eine mindestens ordinal skalierte Variable, da dieser den Wert in der Mitte des Datensatzes repräsentiert."),
+         answer("Den Modus.",
+                 message = "Du könntest auch den Modus für diese Variable bestimmen, aber du möchtest ja die eine Zahl finden, die deine Daten mit den geringsten Abweichungen beschreibt. Dafür die lediglich häufigste Ausprägung zu verwenden wäre also nicht zielführend."),
+         answer("Das artihmetische Mittel.",
+                correct = TRUE,
+                 message = "Richtig, ab 5 Ausprägungen lässt sich auch der Mittelwert für ordinalskalierte Werte gut interpretieren."),
+         allow_retry = TRUE
+         ),
+
+learnr::question_checkbox("Welches Maß der zentralen Tendenz benutzt du für eine nominalskalierte Variable?",
+         answer("Den Median.", 
+                 message = "Für den Median benötigst du eine mindestens ordinal skalierte Variable."),
+         answer("Den Modus.",
+                correct = TRUE,
+                 message = "Genau! Mit dem Modus kannst du den häufigsten Wert bestimmen." ),
+         answer("Das artihmetische Mittel.",
+                 message = "Für die Berechnung des Mittelwert wird eine metrische Variable benötigt."),
+         allow_retry = TRUE
+         ))
+```
+
+## Learnings
+
+So hast du heute abgeschnitten:
+
+```{r context="server"}
+# Shiny App um die Anzahl richtig beantworteter Fragen anzuzeigen. 
+# Funktioniert in jedem Tutorial
+
+shiny::observeEvent(
+  input$get_score, 
+  {
+    objs2 = learnr:::get_tutorial_state()
+    
+    # Number of correct questions
+    
+    n_correct <- 
+      # Access the $correct sublist item in each list item
+        lapply(objs2, purrr::pluck, "correct") |>
+           # make it a vector containing: TRUE and FALSE and NAs
+           # NA is appearing for list items which don't have
+           # a $correct subitem
+                unlist() |> 
+           # Taking the sum of a logical Vector returns the number of TRUEs
+                sum(na.rm=TRUE)
+    
+    # Number of total questions
+    
+    total_questions <- 
+      # 1. Access $type in each list item and make it a vector of types
+      lapply(objs2, purrr::pluck, "type") |> unlist()
+    
+    # 2. Count the number of "question" in that vector
+    total_questions <- total_questions[total_questions == "question"] |> 
+      length()
+      
+      
+    output$score = shiny::renderText(
+      paste0(n_correct, " von ", total_questions,
+        " im gesamten Tutorial beantworteten Fragen waren richtig.")
+)
+    invisible()
+  }
+)
+```
+
+```{r score, echo=FALSE}
+shiny::br()
+shiny::actionButton("get_score", "Auswertung!")
+shiny::br()
+shiny::br()
+shiny::textOutput("score")
+shiny::br()
+```
+
+
+### Zusammenfassung
 
 In diesem Tutorial hast du folgende Funktionen kennengelernt:
 
