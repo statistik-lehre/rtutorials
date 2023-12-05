@@ -32,9 +32,10 @@ if(!require(ggbrace, quietly = TRUE)){
 }else{
   require(ggbrace)
 }
+  
 
 if(!require(scales)){
-  message("Installiere fehlendes Paket `scales`...")
+  message("Installiere fehlendes Paket...")
   try(install.packages("scales"))
   require(scales)
 }else{
@@ -42,6 +43,14 @@ if(!require(scales)){
 }
 
 library(ggplot2)
+
+if(!require(dplyr)){
+  message("Installiere fehlendes Paket...")
+  try(install.packages("dplyr"))
+  require(dplyr)
+}else{
+  require(dplyr)
+}
 
 knitr::opts_chunk$set(echo = FALSE)
 
