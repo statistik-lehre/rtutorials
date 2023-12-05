@@ -19,6 +19,9 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Imports: 
     learnr
+    ggbrace
 Depends: 
     R (>= 3.5)
 LazyData: true
+Remote:
+    nicolash2/ggbrace
