@@ -1,0 +1,825 @@
+---
+title: "Maße der zentralen Tendenz"
+output:
+  learnr::tutorial:
+    language: de
+    css: css/boxes.css
+    fig_caption: no
+runtime: shiny_prerendered
+bibliography: ref.json
+link-citations: TRUE
+description: "Maße der zentralen Tendenz sowie ihre Umsetzung in R werden erklärt"
+resource_files:
+- css/boxes.css
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(rtutorials)
+library(shiny)
+library(ggplot2)
+if(!require(ggbrace, quietly = TRUE)){
+  message("\nVersuche Paket 'ggbrace' von GitHub zu installieren. Benötigt eine Internetverbindung. \nOhne dieses Paket funktioniert eine interaktive Grafik nicht.")
+  try(devtools::install_github("NicolasH2/ggbrace"))
+  require(ggbrace)
+}else{
+    require(ggbrace)
+}
+require(scales)
+
+knitr::opts_chunk$set(echo = FALSE)
+
+iq <- c(100, 103, 114, 85, 101, 91, 84, 103, 117, 102)
+
+```
+
+## Inhalt
+
+In diesem Tutorial wird dein Wissen zu den Maßen der zentralen Tendenz aufgefrischt sowie deren Umsetzung in R besprochen.
+
+Am Ende kannst du:
+
+-   <input type="checkbox" unchecked> Den Mittelwert mit `mean()` berechnen </input>
+-   <input type="checkbox" unchecked> Den Median mit `median()` berechnen </input>
+-   <input type="checkbox" unchecked> Den Modus mit `table()` herausfinden </input>
+-   <input type="checkbox" unchecked> Verstehen, wann welches Maß angewandt wird </input>
+
+## Zentrale Tendenzen
+
+Zur Orientierung, wo wir uns im Prozess befinden: Der Datensatz ist nun erhoben 
+und in R eingepflegt, die Analyse kann beginnen! 
+
+![](images/games.png)
+
+[image source: twimg.com](https://pbs.twimg.com/media/ER24yA4XUAEGDfh.png:large)
+
+<br>
+
+Wenn du einer anderen Person jetzt von deinen Daten erzählen möchtest, könntest 
+du natürlich jeden einzelnen Datenpunkt aufzählen. 
+Doch seien wir ehrlich: das dauert lang und das will auch kein Mensch hören. 
+Dann stellt sich unweigerlich die Frage: Wie kann ich in möglichst kompakter
+Form, am besten in einer Zahl, über meine Daten sprechen und dabei möglichst genau sein?
+
+Die Antwort: Es kommt darauf an!
+
+Und worauf? Ganz genau, auf das Skalenniveau. Das ist im übrigend DER Grund, warum
+wir uns das ganze überhaupt erst so umfassend und genau angeschaut haben!
+
+### Was kennzeichnet eine gute Zusammenfassung?
+
+Woher weiß ich, unabhängig von der Skala, dass ich eine gute Zahl gewählt habe, um meine Daten zu beschreiben?
+
+> Daten sind bestmöglich beschrieben, wenn die zusammenfassende Zahl den kleinstmöglichen Fehlerwert aufweist!
+
+Das gehen wir jetzt gemeinsam Skala für Skala durch.
+
+## Kardinalskala {data-progressive=TRUE}
+
+```{r synonym}
+question_checkbox("Was ist ein Synonym für Kardinalskala?,",
+               answer("metrisch", 
+                      correct = TRUE,
+                      message = "Metrisch oder auch kardinalskaliert ist alles ab der Intervallskala, das heißt, alles, wo Abstände sinnvoll interpretiert werden können."),
+               answer("kategorial",
+                      message = "Kategoriale Daten haben keine sinnvoll interpretierbaren Abstände, und sind deswegen nicht kardinalskaliert, auch wenn beides mit K beginnt."),
+               answer("Intervallskala",
+                      correct = TRUE),
+               random_answer_order = TRUE,
+               allow_retry = TRUE)
+```
+
+
+Eben haben wir festgelegt:
+
+> Die zusammenfassende Zahl sollte den Fehler minimieren.
+
+Als Fehler lässt sich hier gut die summierte Abweichung von der zusammenfassenden Zahl beschreiben.
+Wir möchten diese Abweichung möglichst nahe bei 0 haben.
+
+::: aufgabe
+Unten siehst du eine interaktive Grafik, die das Konzept der Abweichung von der zusammenfassenden Zahl visualisieren soll.
+
+Nutze den Slider, um eine Zahl zu finden, wo sich die positiven und negativen Abweichungen ausbalancieren!
+:::
+<br>
+
+```{r ui}
+# Shiny App zum Finden des Mittelwerts
+
+fluidPage(
+  verticalLayout(
+    sliderInput("zahl",
+                "zusammenfassende Zahl:",
+                min = 1,
+                max = 10,
+                value = 5,
+                step = 0.5),
+    mainPanel(
+      plotOutput("vis", width = "100%"),
+      htmlOutput("psum"),
+      htmlOutput("nsum"),
+      hr(),
+      htmlOutput("sum"),
+      br(),
+      actionButton("new",
+                   label = "Neue Zahlenreihe!",
+                   icon = icon("rotate"))
+    )
+  )
+)
+```
+
+```{r server, context = "server"}
+# Mögliche Zahlenreihen-Längen
+sizes <- 3:7
+
+# Mögliche Zahlen: 1 - 9, ganzzahlig
+sampler <- function() sample(1:9, size = sample(sizes, size = 1))
+
+# Vektor mit allen erlaubten Mittelwerten
+test_vec <- seq(from = 1, to = 9, by = 0.5)
+
+# Zahlenreihen-Generierung
+x <- reactive({
+  # Nehme Abhängigkeit vom Neue Zahlenreihe Knopf
+  input$new
+  
+  # Wiederhole Sampling, bis Mittelwert erlaubt ist
+  x <- sampler()
+  while(!(mean(x) %in% test_vec)){
+    x <- sampler()
+  }
+  x |> sort()
+})
+
+  n <- reactive({
+    length(x())
+  })
+  
+df <- reactive({
+    data.frame(x = x(), y = 0)
+  })
+
+# Konstruiere Basic Plot, der sich nur ändern muss wenn neue Zahlenreihe gedrückt wird. 
+  p <-  reactive({
+    ggplot(df(), aes(x, y)) +
+      geom_point(size = 4) +
+      scale_y_continuous(name = NULL, breaks = NULL) +
+      theme_bw() +
+      theme(text = element_text(size = 20))
+  })
+
+  diff <- reactive({
+    x() - input$zahl
+  })
+
+# Positive Abweichungen
+  pdiff <- reactive({
+    pdiff <- diff()[diff() >= 0]
+  })
+
+# negative Abweichungen
+  ndiff <- reactive({
+    ndiff <- diff()[diff() < 0]
+  })
+
+# Achsenbeschriftungen 
+  breaks <- reactive({
+    # Kombiniere Zahlenreihe + SliderInput
+    c(x(), input$zahl) |> sort() 
+  })
+
+  output$vis <- renderPlot({
+    # Regeneriere Plot, wenn "neue Zahlenreihe" gedrückt wird
+    input$new
+    z <- input$zahl
+    
+    # Konstruiere Vektor h, der die Höhen der Braces enthält
+    # 1. Rangfolge der negativen Abw. absteigend sortieren und * -1
+    nh <- rank(ndiff()) |> sort(decreasing = T)
+    nh <- nh * (-1)
+    # Rangfolge der positiven Abw., startet bei 0.
+    ph <- rank(pdiff()) - 1
+    # Rangfolge mit dem Rang von z aus gesehen.
+    ranks <- c(nh, ph)
+    # Rescaling für visuelle Verhältnisse
+    h <-  ranks * 0.1
+    
+    # Initialisiere Plot
+    pl <- p()
+    # Füge iterativ Braces hinzu
+    for (i in 1:n()) {
+      r <- ifelse(h[i] >= 0, 0, 180)
+      pl <- pl +
+        geom_brace(aes(x = c(z, x()[!!i]),
+                       y = c(h[!!i] + 0.1, h[!!i]),
+                       label = diff()[!!i]),
+                   inherit.data = F,
+                   rotate = r,
+                   #bending = 0.05,
+                   labelsize = 4,
+                   textORlabel = "label",
+                   labeldistance = 0.01)
+    }
+    # Letzte Schritte beim Plotten: Füge SliderInput hinzu
+    pl + geom_vline(xintercept = z,
+                   color = "#428BCA",
+                   linewidth = 1.5) +
+      # Füge Achsenbeschriftungen hinzu
+      scale_x_continuous(name = NULL, breaks = breaks(), minor_breaks = NULL,
+                         labels = scales::label_number(accuracy = 0.5))
+  }) |>
+    bindCache(input$zahl, input$new) # Cache den Plot-Output für mehr Schnelligkeit
+
+
+  # Abweichungen insgesamt
+  output$sum <- renderText({
+    totalsum <- sum(diff())
+    
+    # Wenn Abweichungen == 0, mache den Text Grün, ansonsten schwarz
+    if(totalsum == 0){
+      paste0("Abweichungen insgesamt: ",
+           "<font color=\"#008000\"><b>",
+           round(totalsum, digits = 3),
+           "</b></font>")
+    } else {
+       paste0("Abweichungen insgesamt: ",
+           "<b>",
+           round(totalsum, digits = 3),
+           "</b>")
+    }
+  }) |> bindCache(input$zahl, input$new)
+
+  # pos. Abw.
+  output$psum <- renderText({
+    paste0("Summe positiver Abweichungen:   ",
+           "<b>", sum(pdiff()) |> round(digits = 3),
+           "</b>")
+  }) |> bindCache(input$zahl, input$new)
+
+  # neg. Abw.
+  output$nsum <- renderText({
+    paste0("Summe negativer Abweichungen: ",
+           "<font color=\"9c1111\"><b>",
+           sum(ndiff()) |> round(digits = 3),
+           "</b></font>")
+  }) |> bindCache(input$zahl, input$new)
+```
+
+<br>
+<br>
+<hr>
+
+Klasse! Du hast eben durch Ausprobieren diejenige Zahl gefunden, welche den wenigsten Fehler hat.  
+Da es zu aufwändig wäre immer Ausprobieren zu müssen, haben sich schlaue Mathematiker*innen hingesetzt und das ganze auf Formelebene gelöst. Sie fanden heraus, dass die genaueste Zahl diejenige ist, die herauskommt, wenn du alle vorhandenen summierst und durch ihre Anzahl teilst. Also kurz: das arithmetische Mittel oder der Mittelwert, auf englisch: mean.
+
+$$
+{\large \bar{x} = \frac{\sum_{i=1}^{n}{x_i}}{n}}
+$$
+
+::: infobox
+Die Funktion für den Mittelwert in R ist `mean()`.
+:::
+<br>
+
+:::aufgabe
+Finde den Mittelwert der Variable `iq` heraus!
+:::
+
+```{r mean-solution}
+mean(iq)
+```
+
+```{r mean, exercise = TRUE, exercise.cap = "Mittelwert berechnen"}
+iq <- c(100, 103, 114, 85, 101, 91, 84, 103, 117, 102)
+
+mean()
+```
+
+<br>
+
+### Mittelwert einer Tabellenspalte
+
+Nun wenden wir das auf eine Tabellenspalte an. Als Daten dient uns der Datensatz
+`rtutorials::einkaufen`, welcher von Studierenden 2022 in ihrer Felderhebung erstellt wurde. Das Ziel ist, den Mittelwert der Spalte `Alter` zu berechnen.
+
+So sieht der Datensatz `einkaufen` aus (reduziert auf die Spalten: Alter, Verkehrsmittel, Weg, Frequenz):
+
+```{r preview, echo = FALSE}
+rtutorials::einkaufen |> dplyr::select(Alter, Verkehrsmittel, Weg, Frequenz)
+```
+
+
+::: aufgabe
+Berechne den Mittelwert der Spalte `Alter` im Data Frame `einkaufen`!
+
+Beachte, dass hier entgegen der Konvention die Variablennamen mit Großbuchstaben anfangen! Möchtest du diese Variablen also verwenden, denk daran Sie ebenfalls mit Großbuchstaben zu schreiben. 
+:::
+
+```{r dfmean, exercise = TRUE, exercise.cap = "Mittelwert einer Tabellenspalte"}
+mean()
+```
+
+```{r dfmean-solution}
+mean(einkaufen$Alter) 
+```
+
+Huch? Wieso kommt da `NA` raus?
+
+`NA` heißt *Not Available* und ist in R ein spezieller Platzhalter für fehlende Werte! `NA` sagt R so etwas wie: Vorsicht, dieser Wert könnte alles enthalten. 
+In Berechnungen wirkt sich `NA` sehr ansteckend aus, denn wenn ein Input alles mögliche enthalten könnte, kann auch der Output alles mögliche enthalten und ist dementsprechend auch `NA`. Daraus schließen wir, dass die Spalte `Alter` `NA`s enthält, was bei realen Daten sehr oft der Fall ist. Möglicherweise wollten einige Personen einfach nicht auf die Frage antworten, wie alt sie sind - verständlich. Dann wird `NA` eingetragen.
+
+R zwingt uns, explizit zu sein damit, wie wir mit `NA`s umgehen. Es gibt immer eine einfache Lösung, nämlich `NA`s ausschließen und dann die Berechnung durchführen, aber wir müssen erst spezifisch sagen, dass wir das tun wollen und es passiert nicht automatisch.
+
+Um `NA`s zu entfernen, geben wir das Argument `na.rm = TRUE` an die Funktion `mean()`!
+`na.rm` steht für *NA remove*.
+
+::: aufgabe
+Verändere die Berechnung so, dass `NA`s entfernt werden!
+:::
+
+```{r narm, exercise = TRUE, exercise.cap = "NAs entfernen"}
+mean(einkaufen$Alter)
+```
+
+```{r narm-solution}
+mean(einkaufen$Alter, na.rm = TRUE)
+```
+
+Juhu! Es hat funktioniert!
+
+```{r question_alter}
+question_numeric("Was ist das durchschnittliche Alter im `einkaufen`-Datensatz? (Auf eine ganze Zahl gerundet)",
+                 answer(43, 
+                        correct = TRUE),
+                 tolerance = 0.5,
+                 allow_retry = TRUE)
+```
+
+<br>
+
+### Die Summe der Abweichungen vom Mittelwert ist immer 0
+
+Nun beweisen wir quasi rückwärts, dass das arithmetische Mittel immer der Wert ist, wo sich positive und negative Abweichungen
+gegenseitig aufheben. Dafür gehen wir zurück zu unserem einfachen IQ-Beispiel.
+Es gilt:
+
+```
+sum(iq - mean(iq)) == 0
+```
+
+Was dieser Code ausgesprochen bedeutet: 
+
+1. Berechne die Differenz jedes IQ-Werts vom Mittelwert.
+2. Summiere alle Differenzen
+3. Prüfe, ob das Ergebnis Null ist
+
+::: aufgabe
+Wende diese Prüfung auf den Vektor `iq` an, indem du den Codeblock ausführst! Versuche die einzelnen Schritte nachzuvollziehen.
+:::
+
+```{r iq_proof, exercise = TRUE, exercise.cap = "Heben sich die Abweichungen auf?"}
+# 1. Berechne Differenz jedes Werts vom Mittelwert
+iq - mean(iq)
+
+# 2. Summiere alle Differenzen
+sum(iq - mean(iq))
+
+# 3. Prüfe ob das Ergebnis Null ist
+
+sum(iq - mean(iq)) == 0
+```
+
+<br>
+
+::: infobox
+**Take-Away**
+
+Halten wir fest: Der Mittelwert eines kardinalskalierten Vektors ist die einfachste und genaueste Zusammenfassung all seiner einzelnen Werte! Wie wir im nächsten Abschnitt sehen werden, ist
+er aber sehr empfindlich gegenüber extremen Werten und manchmal deswegen ein ungeeignetes Maß. 
+:::
+
+## Ordinalskala {data-progressive=TRUE}
+
+Doch was tun, wenn du es mit ordinalskalierten Daten zu tun hast und du sie eben nicht einfach zusammenrechnen kannst (weil die Abstände nicht gleichbedeutend sind)?
+
+Es gibt im Grunde zwei verschiedene Ansätze
+
+  1. Du ignorierst alles, was du über Skalenniveaus gelernt hast und rechnest das arithmetische Mittel trotzdem aus. Ab 5 Faktorstufen einer ordinalskalierten Skala lässt sich mathematisch zeigen, dass du sie als metrisch betrachten und entsprechende Statistiken verwenden kannst (ganz praktisches Beispiel: Schulnoten)
+  2. Du findest eine Möglichkeit die Rangplätze zu berücksichtigen.
+
+ 
+Ansatz 1 kannst du schon. Ansatz 2 kommt jetzt:
+
+Das Gute an den rangskalierten Daten ist, dass du sie anhand ihrer Ausprägung in eine logische Reihenfolge bringen kannst.
+
+### Beispiel
+
+Wir tun jetzt mal so, als wäre der IQ Vektor aus dem vorherigen Abschnitt ordinalskaliert. Als Tabelle in der richtigen Reihenfolge würde das so aussehen. (R übernimmt das mit der Funktion `sort()` oder `table()`).
+
+| IQ Werte sortiert   | 
+|:--------------------|
+|84                   |
+|85                   |
+|91                   | 
+|100                  | 
+|101                  |
+|102                  |
+|103                  |
+|103                  |
+|114                  |
+|117                  |
+
+Nun werden Rangplätze vergeben. Doch: Wenn zwei Zahlen den gleichen Wert haben, werden ihre Ränge addiert und durch 2 geteilt und beiden zugewiesen. So dass in jedem Fall immer der letzte Eintrag genau den gleichen Rang hat, wie es Zahlen insgesamt gibt. (Das übernimmt R mit der Funktion `rank()`. Für die ganz Cleveren: `rank(sort())`.)
+
+| IQ Werte sortiert   | Ränge |
+|:--------------------|:------|
+|84                   |1      |
+|85                   |2      |
+|91                   |3      |
+|100                  |4      | 
+|101                  |5      |
+|102                  |6      |
+|103                  |7.5    |
+|103                  |7.5    |
+|114                  |9      |
+|117                  |10     |
+
+### Median berechnen
+
+Der Median ist der Wert, wo gleich viele Werte drüber und drunter liegen. 
+Je nachdem, ob wir eine gerade Anzahl von Werten haben, unterscheidet sich die Berechnung:
+
+**ungerade Anzahl**
+
+Bei einer ungeraden Anzahl von Werten gibt es einen, der genau in der Mitte liegt.
+Der ist dann auch der Median. Sehr praktisch.
+
+```{r fig.height=1}
+dfu <- data.frame(x = 1:5, y = 1)
+ggplot(dfu) +
+  geom_vline(xintercept = 3, color = "blue") +
+  geom_point(aes(x, y = 1), 
+             size = 4) +
+  theme_bw() +
+  scale_y_continuous(name = NULL,
+                     breaks = NULL) +
+  labs(x = "Rangplatz")
+```
+
+**gerade Anzahl**
+
+Das ist bei einer geraden Anzahl nicht der Fall, und der Median ist dann der Mittelwert beider Werte
+die in der Mitte sind. 
+
+```{r fig.height=1}
+dfu <- data.frame(x = 1:4, y = 1)
+ggplot(dfu) +
+  geom_vline(xintercept = 2.5, color = "blue") +
+  geom_point(aes(x, y = 1), 
+             size = 4) +
+  theme_bw() +
+  scale_y_continuous(name = NULL,
+                     breaks = NULL) +
+  labs(x = "Rangplatz")
+```
+
+Für dieses Beispiel konkret: $Median = (2 + 3)/2 = 2.5$
+
+<br>
+
+#### Anwendung auf das IQ-Beispiel
+
+Auch im IQ-Beispiel haben wir 10 Werte, also eine gerade Anzahl.
+
+Bei einer geraden Anzahl von Rängen (wie hier), wo es zwei Werte in der Mitte gibt, 
+werden die beiden Werte addiert und durch 2 geteilt.\
+Hier: $Median = \frac{101 + 102}{2} = 101.5$.
+
+```{r fig.height=2}
+dfu <- data.frame(x = rank(iq), y = 1, iq = iq)
+ggplot(dfu) +
+  geom_vline(xintercept = 5.5, color = "blue") +
+  geom_point(aes(x, y = 1), 
+             size = 4) +
+  geom_point(aes(x = 7.5, y = 1.05), 
+             size = 4) +
+  annotate(geom = "text", x = rank(iq), y = 1.1, label = iq) +
+  theme_bw() +
+  scale_y_continuous(name = NULL,
+                     breaks = NULL,
+                     limits = c(0.9, 1.2)) +
+  scale_x_continuous(name = "Rangplatz",
+                     breaks = 1:10)
+```
+
+Die Grafik zeigt sehr gut, dass der Median nicht die Werte selbst interpretiert, sondern lediglich ihre Rangplätze!
+Die Abstände zwischen den einzelnen IQ-Werten sind zwar eigentlich unterschiedlich groß, aber da wir ordinales Skalenniveau haben,
+fällt diese Information weg. 
+
+::: infobox
+Die Funktion in R für die Berechnung des Medians ist: `median()`
+:::
+
+<br>
+
+:::aufgabe
+Finde mittels der `median()`-Funktion den Median für die IQ-Variable heraus!
+:::
+
+```{r median-solution}
+median(iq)
+```
+
+```{r median, exercise = TRUE}
+iq
+```
+
+Klasse! Das ist genau das Gleiche, was wir auch per Hand berechnet haben. 
+
+### Median einer Tabellenspalte berechnen
+
+::: aufgabe
+Berechne dieses Mal den Median der Spalte `einkaufen$Alter`!
+
+- Verwende auch hier das Argument `na.rm = TRUE`, um `NA`s zu entfernen. 
+
+:::
+
+```{r altermedian, exercise = TRUE, exercise.cap = "Median einer Tabellenspalte"}
+median()
+```
+
+```{r altermedian-solution}
+median(einkaufen$Alter)
+```
+
+```{r question_altermedian}
+question_numeric("Was ist der Median des Alters im `einkaufen`-Datensatz? (Auf eine Nachkommastelle)",
+                 answer(40.5, 
+                        correct = TRUE),
+                 allow_retry = TRUE)
+```
+
+
+### Vergleich arithmetisches Mittel und Median
+
+Eben haben wir herausgefunden, dass der Median des Alters im Datensatz `einkaufen` 40.5 beträgt, und das arithmetische Mittel ca. 43. Diese beiden Werte liegen verhältnismäßig nah beieinander, siehe Grafik:
+
+```{r altermeanmed, warning=FALSE}
+x <- einkaufen$Alter
+df <- data.frame(x)
+ggplot(df) +
+  geom_histogram(aes(x), binwidth = 1, boundary = 40,
+                 fill = "grey",
+                 color = "white") +
+  geom_vline(xintercept = mean(x, na.rm = T), color = "red") +
+  geom_vline(xintercept = median(x, na.rm = T), color = "blue") +
+  annotate(geom = "label", x = c(mean(x, na.rm = T), median(x, na.rm = T)),
+           y = c(6.1, 4.5),
+           label = c("Mean", "Median")) +
+  theme_bw() +
+  labs(title = "Variable Alter",
+       subtitle = "Datensatz `einkaufen`",
+       x = "Alter",
+       y = "Häufigkeit")
+```
+
+
+
+Es ist in manchen Fällen sinnvoll, sich beide Werte (Mittelwert und Median) anzuschauen und zu vergleichen. Wenn sie nah beieinander liegen ist es super, wenn nicht, ist es essentiell sich nochmal die Werte anzuschauen und sich über Außreißerwerte Gedanken zu machen und wie mit ihnen umgegangen werden soll (üblicherweise eine der drei Alternativen: rausschmeißen und Mittelwert berechnen, Ausreißer drin behalten und Mittelwert berechnen, Median berechnen)
+
+#### Warum Median, wenn ich doch metrische Daten habe?
+
+Er ist robuster und in manchen Fällen sogar inhaltlich aussagekräftiger. Ein gutes Beispiel wäre: Eine Person hat 0€ auf dem Konto, eine andere 100€ und die dritte 5 000€.\ Der Mittelwert würde jetzt sagen, dass die Menschen im Durchschnitt <font color="red">1700€</font> auf dem Konto haben. Das bildet die Realität nicht wirklich ab. Der Median hingegen würde <font color="blue">100€</font> sagen, was vom Verständnis her besser passt.
+
+```{r}
+x <- c(0, 100, 5000)
+df <- data.frame(x, y = 1)
+ggplot(df, aes(x, y)) +
+  geom_vline(xintercept = mean(x), color = "red") +
+  geom_vline(xintercept = median(x), color = "blue") +
+  geom_point(size = 1) +
+  annotate(geom = "label", x = c(mean(x), median(x)),
+           y = 1.1,
+           label = c("Mean", "Median")) +
+  theme_bw() +
+  scale_y_continuous(name = NULL, breaks = NULL,
+                     limits = c(0.5, 1.5)) +
+  scale_x_continuous(name = "Geld auf dem Konto",
+                     breaks = scales::breaks_pretty(),
+                     minor_breaks = NULL,
+                     limits = c(-100, 5000)) +
+  labs(title = "Empfindlichkeit gegenüber Extremwerten")
+```
+
+Eine schnelle Übersicht bietet dir die Funktion `summary()`. Hier werden dir Mittelwert (mean), Median, Reichweite (kleinster Wert und größter Wert) sowie der Interquartilsabstand (nächster Block, Tutorial Dispersionsmaße) angezeigt.
+
+:::aufgabe
+Wende die Funktion summary() auf den Vektor `iq` an und mach dich mit dem Ergebnis vertraut!
+:::
+
+```{r summary-solution}
+summary(iq)
+```
+
+```{r summary, exercise = TRUE}
+iq
+```
+
+
+Zusammenfassend lässt sich also sagen: Der Median ist eine gute Zusammenfassung für ordinalskalierte und in manchen Fällen (zB. viele/ krasse Ausreißer) auch intervallskalierte Daten.
+
+## Nominalskala
+
+Hier gibt es keine logische Reihenfolge. Insofern fallen Mittelwert und Median raus. Um möglichst wenige Fehler in der Vorhersage zu machen, ist es logischerweise sinnvoll, die Kategorie anzugeben, welche die meisten Werte haben. Das wird dann **Modus** genannt.
+
+Gegeben sei die Lieblingsfarbe von 10 anderen Studis: 
+
+```
+c("pink", "pink", "blau", "blau", "pink", "blau", "blau", "pink", "lila", "pink")
+```
+Da es eine nominale Variable mit wiederkehrenden Kategorien ist, 
+sollten wir sie als `factor()` speichern. 
+
+Um heraus zu finden, welche Gruppe am größten ist, könntest du zählen und 
+eine Strichliste machen. ODER du lässt ganz smooth R für dich arbeiten. 
+Hierfür brauchst du wieder die Funktion `summary()`. 
+
+:::aufgabe
+  
+  1. Erstelle einen neuen Vektor namens `farben`, der ein Faktor `factor()` ist und die oben angegebenen Werte enthält!
+  2. Lass dir eine Zusammenfassung der Werte mit der `summary()`-Funktion ausgeben!
+:::
+
+
+```{r nominal, exercise = TRUE}
+
+```
+
+```{r nominal-solution}
+farben <- factor(c("pink", "pink", "blau", "blau", "pink", "blau", "blau", "pink", "lila", "pink"))
+
+summary(farben)
+```
+ 
+Doch warte mal - oben hat die gleiche Funktion doch auch einen numerischen Vektor
+bearbeitet und jetzt kann sie auch mit einem `factor` umgehen? Und das Ergebnis sieht auch ganz anders aus.
+
+JA!
+
+Deswegen war das Vektoren-Tutorial auch so wichtig! R erkennt, dass es eine andere Objektklasse ist und behandelt die Daten dementsprechend anders. Wenn du möchtest, kannst du zur Überprüfung einmal den `farben`-Vektor ohne ihn in einen Faktor zu verwandeln in die `summary()`-Funktion stecken:
+
+```{r error, exercise = TRUE}
+farben <- c("pink", "pink", "blau", "blau", "pink", "blau", "blau", "pink", "lila", "pink")
+summary(farben)
+table(farben)
+```
+
+Es wird nur grundsätzliche Information ausgegeben, z.B. dass `farben` die Klasse `character` hat. 
+
+Die Funktion `table()` kann exakt das gleiche, nur dass ihr egal ist, welche Objektklasse der Vektor hat, die funktioniert immer.
+
+Zurück zum Modus: 
+
+```{r modequest}
+question_text("Was ist die häufigste Lieblingsfarbe bei den 10 Studis?",
+                 answer("pink", correct = TRUE, message = "Genau, Pink kommt mit 5 mal am meisten vor."),
+              allow_retry = TRUE)
+```
+
+<br>
+
+::: infobox
+**Take-Away**:
+
+Lange Rede, kurzer Sinn: Der Modus ist die am häufigsten vorkommende Kategorie bei nominalen Daten und damit die beste Möglichkeit, diese zusammen zu fassen.
+:::
+
+## Abschlussquizz
+
+```{r Abschlussquizz}
+quiz(caption = "Teste dein Wissen!",
+
+learnr::question_checkbox("Was hast du über die Maße der zentralen Tendenz gelernt?",
+         answer("Der Median ist das Zentrum einer sortierten Datenmenge und weniger anfällig für Ausreißer.", 
+                 correct = TRUE,
+                 message = "Richtig! Der Median ist robust gegenüber Ausreißern."),
+         answer("Der Median ist der Wert, der am häufigsten in einer Datenmenge vorkommt.",
+                 message = "Der Modus nicht der Median repräsentiert den am häufigsten auftretenden Wert."),
+         answer("Das artihmetische Mittel ist die Summe aller Werte geteilt durch die Anzahl der Werte.",
+                 correct = TRUE,
+                 message = "Genau, der Mittelwert wird durch die Summe der Werte geteilt durch ihre Anzahl errechnet."),
+         allow_retry = TRUE
+         ),
+
+learnr::question_checkbox("Welches Maß der zentralen Tendenz eignet sich für eine metrisch skalierte Variable mit großen Ausreißerwerten?",
+         answer("Der Modus.",
+              message = "Du könntest auch den Modus für diese Variable bestimmen, aber du möchtest ja die eine Zahl finden, die deine Daten mit den geringsten Abweichungen beschreibt. Dafür die lediglich häufigste Ausprägung zu verwenden wäre also nicht zielführend."),
+         answer("Der Median.",
+              correct = TRUE,
+              message = "Richtig, der Median eignet sich gut dafür ein Maß der zentralen Tendenz zu bestimmen, dass gegen Ausreißer robust ist."),
+         answer("Das artihmetische Mittel.",
+              message = "Das arithmetische Mittel gibt uns für Variablen OHNE Ausreißer eine gute Zusammenfassung unserer Daten, aber bei großen Ausreißern ist es anfällig für Verzerrungen."),
+         allow_retry = TRUE
+         ),
+
+learnr::question_checkbox("Welches Maß der zentralen Tendenz kannst du für eine ordianlskalierte Variable mit 6 Ausprägungen benutzen?",
+         answer("Den Median.", 
+                correct = TRUE,
+                message = "Genau! Der Median eignet sich gut für eine mindestens ordinal skalierte Variable, da dieser den Wert in der Mitte des Datensatzes repräsentiert."),
+         answer("Den Modus.",
+                 message = "Du könntest auch den Modus für diese Variable bestimmen, aber du möchtest ja die eine Zahl finden, die deine Daten mit den geringsten Abweichungen beschreibt. Dafür die lediglich häufigste Ausprägung zu verwenden wäre also nicht zielführend."),
+         answer("Das artihmetische Mittel.",
+                correct = TRUE,
+                 message = "Richtig, ab 5 Ausprägungen lässt sich auch der Mittelwert für ordinalskalierte Werte gut interpretieren."),
+         allow_retry = TRUE
+         ),
+
+learnr::question_checkbox("Welches Maß der zentralen Tendenz benutzt du für eine nominalskalierte Variable?",
+         answer("Den Median.", 
+                 message = "Für den Median benötigst du eine mindestens ordinal skalierte Variable."),
+         answer("Den Modus.",
+                correct = TRUE,
+                 message = "Genau! Mit dem Modus kannst du den häufigsten Wert bestimmen." ),
+         answer("Das artihmetische Mittel.",
+                 message = "Für die Berechnung des Mittelwert wird eine metrische Variable benötigt."),
+         allow_retry = TRUE
+         ))
+```
+
+## Learnings
+
+So hast du heute abgeschnitten:
+
+```{r context="server"}
+# Shiny App um die Anzahl richtig beantworteter Fragen anzuzeigen. 
+# Funktioniert in jedem Tutorial
+
+shiny::observeEvent(
+  input$get_score, 
+  {
+    objs2 = learnr:::get_tutorial_state()
+    
+    # Number of correct questions
+    
+    n_correct <- 
+      # Access the $correct sublist item in each list item
+        lapply(objs2, purrr::pluck, "correct") |>
+           # make it a vector containing: TRUE and FALSE and NAs
+           # NA is appearing for list items which don't have
+           # a $correct subitem
+                unlist() |> 
+           # Taking the sum of a logical Vector returns the number of TRUEs
+                sum(na.rm=TRUE)
+    
+    # Number of total questions
+    
+    total_questions <- 
+      # 1. Access $type in each list item and make it a vector of types
+      lapply(objs2, purrr::pluck, "type") |> unlist()
+    
+    # 2. Count the number of "question" in that vector
+    total_questions <- total_questions[total_questions == "question"] |> 
+      length()
+      
+      
+    output$score = shiny::renderText(
+      paste0(n_correct, " von ", total_questions,
+        " im gesamten Tutorial beantworteten Fragen waren richtig.")
+)
+    invisible()
+  }
+)
+```
+
+```{r score, echo=FALSE}
+shiny::br()
+shiny::actionButton("get_score", "Auswertung!")
+shiny::br()
+shiny::br()
+shiny::textOutput("score")
+shiny::br()
+```
+
+
+### Zusammenfassung
+
+In diesem Tutorial hast du folgende Funktionen kennengelernt:
+
+| Funktion    | Inhalt                                              |
+|:------------|:----------------------------------------------------|
+| `mean()`    | Berechnet den Mittelwert.                           |
+| `median()`  | Berechnet den Median.                               |
+| `sort()`    | Sortiert einen Zahlenvektor.                        |
+| `rank()`    | Gibt die Rangplätze eines Zahlenvektors aus.        |
+| `summary()` | Gibt die zentrale Tendenz je nach Objektklasse aus. |
+| `table()`   | Fasst Daten je nach Objektklasse zusammen.          |
+| `sum()`     | Summiert die Elemente eines Vektors.                |
+
+### Credit
+
+Dieses Tutorial wurde von Gesa Graf verfasst, von Lukas Bruelheide erweitert und
+von Marie Klosterkamp reviewt.
+
