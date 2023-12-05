@@ -19,7 +19,7 @@ library(ggplot2)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## Was Du in diesem Tutorial lernst:
+## Was du in diesem Tutorial lernst:
 
 -   Pakete installieren und in die aktive Sitzung laden
 
@@ -36,7 +36,7 @@ knitr::opts_chunk$set(echo = FALSE)
 Was R so mächtig macht, sind die von der Community veröffentlichten und gepflegten Erweiterungen drum herum. Stand 2023 gibt es knapp 20.000 offiziell veröffentlichte Pakete auf CRAN.
 Dieses Akronym steht für *Comprehensive R Archive Network* und ist die offizielle Adresse für geprüfte Erweiterungen. Es sei aber erwähnt, dass es auch noch andere Orte gibt, wo Pakete veröffentlicht werden können, zum Beispiel Bioconductor, GitHub und andere. Deswegen ist die Gesamtzahl aktiv gepflegter Pakete wohl noch höher als 20.000.
 
-Pakete von CRAN reichen für unsere Anwendungszwecke vollkommen aus und können über den einfachen Befehl `install.packages("Paketname")` installiert werden - das ist unkompliziert, Du musst keine Internetseiten besuchen, keine Dateien irgendwo hinschieben oder ausführen, das wird alles intern von dieser Funktion erledigt.
+Pakete von CRAN reichen für unsere Anwendungszwecke vollkommen aus und können über den einfachen Befehl `install.packages("Paketname")` installiert werden - das ist unkompliziert, du musst keine Internetseiten besuchen, keine Dateien irgendwo hinschieben oder ausführen, das wird alles intern von dieser Funktion erledigt.
 
 ```{r cran_packages_reading}
 # Für den Fall keiner Internetverbindung
@@ -65,7 +65,7 @@ ggplot(tbl, aes(x = date, y = id)) +
   theme_bw() +
   #scale_y_log10() +
   labs(title = "Verfügbare Pakete auf CRAN",
-       y = "Anzahl (logarithmische Skala)",
+       y = "Anzahl",
        x = "Veröffentlichungsdatum",
        subtitle = current_message)
 ```
@@ -73,7 +73,7 @@ ggplot(tbl, aes(x = date, y = id)) +
 
 ### Woraus bestehen Pakete?
 
-Üblicherweise enthalten Pakete neue Funktionen, die das Leben von R-Nutzenden irgendwo erleichtern sollen. Manchmal werden Pakete auch genutzt, um Datensätze bereitzustellen, oder andere, außergewöhnlichere Sachen wie z.B. die interaktiven Tutorials, die Du im Moment betrachtst - diese stammen auch aus einem Paket, was wir für dich geschrieben und auf GitHub veröffentlicht haben. 
+Üblicherweise enthalten Pakete neue Funktionen, die das Leben von R-Nutzenden irgendwo erleichtern sollen. Manchmal werden Pakete auch genutzt, um Datensätze bereitzustellen, oder andere, außergewöhnlichere Sachen wie z.B. die interaktiven Tutorials, die du im Moment betrachtst - diese stammen auch aus einem Paket, was wir für dich geschrieben und auf GitHub veröffentlicht haben. 
 
 #### Ein Paket installieren
 
@@ -81,9 +81,9 @@ Wir installieren und nutzen heute ein Paket, um spielerisch den typischen Umgang
 
 Es heißt `cowsay` und stellt eine einzige neue Funktion namens `say()` bereit, mit der wir lustige Tiere lustige Dinge sagen lassen können.
 
-Hier im Tutorial musst Du das Paket nicht mehr installieren - vermutlich wurdest Du gefragt beim Start des Tutorials, ob fehlende Pakete installiert werden sollen. Das solltest Du bejahen, und dann erledigt RStudio das automatisch für dich.
+Hier im Tutorial musst du das Paket nicht mehr installieren - vermutlich wurdest du gefragt beim Start des Tutorials, ob fehlende Pakete installiert werden sollen. Das solltest du bejahen, und dann erledigt RStudio das automatisch für dich.
 
-Aber solltest Du mal eigenständig ein Paket installieren wollen, ist wichtig zu wissen wie es geht:
+Aber solltest du mal eigenständig ein Paket installieren wollen, ist wichtig zu wissen wie es geht:
 
 Der Befehl zum Installieren lautet:
 
@@ -103,7 +103,7 @@ Ersetze `cowsay` durch den Namen des gewünschten Pakets.
 
 2. `installed.packages()` ist etwas anderes als `install.packages()`!
   
-  Ersteres gibt dir eine Liste aller auf dem Gerät installierten Pakete, zweiteres ist das was Du brauchst um Pakete zu installieren.
+  Ersteres gibt dir eine Liste aller auf dem Gerät installierten Pakete, zweiteres ist das was du brauchst um Pakete zu installieren.
   
 3. Du brauchst eine funktionierende Internetverbindung.
 
@@ -112,19 +112,19 @@ Ersetze `cowsay` durch den Namen des gewünschten Pakets.
 <br>
 
 ::: grau-nb
-Tipp: Dass ein länger dauernder Befehl in der Konsole fertig ausgeführt ist, wie z.B. die Installation eines Pakets, erkennst Du daran, dass das rote Stoppzeichen ![](images/stop.PNG) oben rechts in der Konsole erlischt.
+Tipp: Dass ein länger dauernder Befehl in der Konsole fertig ausgeführt ist, wie z.B. die Installation eines Pakets, erkennst du daran, dass das rote Stoppzeichen ![](images/stop.PNG) oben rechts in der Konsole erlischt.
 :::
 
 ### Das Paket nutzen
 
-Jetzt habst Du also ein Paket installiert, nämlich `cowsay`, welches wir in diesem Tutorial nutzen möchten. Nun liegt es mit allen anderen installierten Paketen in einer Art „Bibliothek“ auf deinem Rechner. Um es tatsächlich nutzen zu können, muss der gewünschte Inhalt aus der Bibliothek geholt werden und in die aktive Sitzung geladen werden.
+Jetzt hast du also ein Paket installiert, nämlich `cowsay`, welches wir in diesem Tutorial nutzen möchten. Nun liegt es mit allen anderen installierten Paketen in einer Art „Bibliothek“ auf deinem Rechner. Um es tatsächlich nutzen zu können, muss der gewünschte Inhalt aus der Bibliothek geholt werden und in die aktive Sitzung geladen werden.
 
 Es gibt zwei Wege, an den Inhalt eines bereits installierten Pakets zu gelangen:
 
 1. Du lädst alles aus dem gesamten Paket in die aktive Sitzung mit `library(Paketname)`.
 1. Du addressierst nur bestimmte Inhalte aus dem Paket mit `Paketname::Inhalt`.
 
-Beide Varianten werden Ihnen begegnen. Wobei die erste (`library()`) häufiger ist, weswegen wir uns erst mal diese anschauen.
+Beide Varianten werden dir begegnen. Wobei die erste (`library()`) häufiger ist, weswegen wir uns erst mal diese anschauen.
 
 ::: aufgabe
 
@@ -149,7 +149,7 @@ library(cowsay)
 
 `library()` funktioniert im Gegensatz zu `install.packages()` ohne Anführungszeichen um den Paketnamen. 
 
-Wenn Du willst, kannst du dir das erklären lassen- ansonsten nimm es einfach hin. Hier ist meine persönliche Erklärung, die das für mich logisch macht:
+Wenn du willst, kannst du dir das erklären lassen- ansonsten nimm es einfach hin. Hier ist meine persönliche Erklärung, die das für mich logisch macht:
 
 Text ohne Anführungszeichen wird von R als Aufruf eines Objekts verstanden. Das funktioniert nur, wenn das Objekt bereits erstellt ist und "aufrufbar" ist. Die Pakete in der Bibliothek sind bereits vorhanden, existieren also als "Objekte" für R und warten nur noch darauf, aus dem Regal geholt (aufgerufen) zu werden.
 
@@ -170,7 +170,7 @@ R lädt zu Beginn einer neuen Sitzung nur eine handvoll essentieller Pakete. Die
 
 <br>
 
-Dann können wir nun endlich zum Hauptteil dieses Tutorials übergehen - jetzt wurde von Paketen gesprochen, die Funktionen bereitstellen sollen; nun wird es Zeit, dass Du mal eine Funktion in Aktion sehen.
+Dann können wir nun endlich zum Hauptteil dieses Tutorials übergehen - jetzt wurde von Paketen gesprochen, die Funktionen bereitstellen sollen; nun wird es Zeit, dass du mal eine Funktion in Aktion siehst.
 
 ## Funktionen und Argumente
 
@@ -180,7 +180,7 @@ library(cowsay)
 
 Hier siehst Du, was das Paket `cowsay` kann:\
 Es stellt die Funktion `say()` zur Verfügung, mit der wir kleine Text-Tiere Sätze sagen lassen können.\
-Lass das Huhn einen anderen Satz sagen, in dem Du einen anderen Text beim Argument `what` eingibst!
+Lass das Huhn einen anderen Satz sagen, in dem du einen anderen Text beim Argument `what` eingibst!
 
 ```{r func, exercise = TRUE, exercise.eval = TRUE, exercise.setup = "say"}
 say(what = "R is fun!", by = "chicken")
@@ -218,7 +218,7 @@ Alle Funktionen in öffentlichen Paketen müssen auf einer Hilfeseite dokumentie
 Auf der Hilfeseite werden alle möglichen Argumente aufgelistet, die eine Funktion entgegennehmen kann, und die möglichen Werte dieser Argumente. Also auch das Argument `by` und alle Tiere, die zur Verfügung stehen - und das ist ja die Information, die wir selektiv suchen!
 
 ::: blau-nb
-Um in RStudio die Hilfe aufzurufen, geh mit dem Cursor in den Namen der Funktion (z.B. `say`) und drücken F1. Das funktioniert aber nicht im interaktiven Codeblock.
+Um in RStudio die Hilfe aufzurufen, geh mit dem Cursor in den Namen der Funktion (z.B. `say`) und drück F1. Das funktioniert aber nicht im Tutorial.
 \
 Eine andere Option ist, `?say`, oder `help(say)`.\
 \
@@ -226,7 +226,7 @@ Eine andere Option ist, `?say`, oder `help(say)`.\
 **Tipp für das Lesen der Hilfe:**\
 Die Hilfeseiten sind oft eher an Vollständigkeit als Anfängerfreundlichkeit orientiert und versuchen, auf alle Spezialfälle einzugehen, die überhaupt vorkommen können. Deswegen wirkt die Hilfe anfangs unübersichtlich und technisch.
 
-Versuche zu lernen, aktiv auszublenden, was Du nicht verstehst, und krame dir nur die Informationen heraus, die für dich Sinn ergeben.
+Versuche zu lernen, aktiv auszublenden, was du nicht verstehst, und krame dir nur die Informationen heraus, die für dich Sinn ergeben.
 
 Hilfeseiten sind immer gleich aufgebaut:\
 
@@ -263,7 +263,7 @@ say(what = "catfact", by = "cat")
 say(what = "fortune", by = "rms")
 ```
 
-(Nach dem Lesen der Dokumentation fragst Du dich vielleicht: wer oder was ist ein `rms`? Antwort [hier](https://de.wikipedia.org/wiki/Richard_Stallman "Richard Matthew Stallman"))
+(Nach dem Lesen der Dokumentation fragst du dich vielleicht: wer oder was ist ein `rms`? Antwort [hier](https://de.wikipedia.org/wiki/Richard_Stallman "Richard Matthew Stallman"))
 
 ### Default-Werte
 
@@ -274,7 +274,7 @@ say()
 `say()` gibt auch ohne jegliche Argumente etwas aus. Das hat mit Default-Werten zu tun.
 
 Die meisten Funktionen haben Default-Werte für alle Argumente. Das heißt, Argumente, die nicht spezifiziert werden, nehmen ihren Standardwert an.\
-Diese Default-Werte findst Du in den Hilfeseiten unter dem Abschnitt **Usage**, und sie werden Ihnen in RStudio angezeigt in einem kleinen gelben Kästchen, sobald Du die Klammer hinter dem Funktionsnamen antippst.
+Diese Default-Werte findst du in den Hilfeseiten unter dem Abschnitt **Usage**, und sie werden dir in RStudio angezeigt in einem kleinen gelben Kästchen, sobald du die Klammer hinter dem Funktionsnamen antippst.
 
 ![](images/box.png)
 
@@ -320,7 +320,7 @@ say("Ordnung ist das halbe Leben...",
     type = "message")
 ```
 
-Das erleichtert anderen, die den Code mal lesen müssen (z.B. Ihrem zukünftigen Ich), schneller zu erfassen worum es geht. 
+Das erleichtert anderen, die den Code mal lesen müssen (z.B. deinem zukünftigen Ich), schneller zu erfassen worum es geht. 
 
 ## Skripte: Eine Geschichte erzählen
 
@@ -407,7 +407,7 @@ Gehen in RStudio.
 Lege ein neues Skript an, um Deine eigene Geschichte zu schreiben!
 
 `Ctr + Shift + N` erzeugt ein neues R-Skript.\
-Alternativ gehst Du auf das kleine Symbol ![Symbol des Skripts](images/skript.PNG) ganz oben links und wählst "R-Skript" aus.
+Alternativ gehst du auf das kleine Symbol ![Symbol des Skripts](images/skript.PNG) ganz oben links und wählst "R-Skript" aus.
 
 Ein viertes Fenster, der Editor, öffnet sich.
 :::
@@ -428,13 +428,13 @@ Das heißt, wir speichern in unserem Skript beispielsweise nur die `say()`-Befeh
 
 #### Das Skript beginnen
 
-Um die Nachvollziehbarkeit zu erhöhen, beginnst Du deshalb dein Skript immer mit dem Laden aller Pakete, die benötigen werden.\
+Um die Nachvollziehbarkeit zu erhöhen, beginnst du deshalb dein Skript immer mit dem Laden aller Pakete, die benötigen werden.\
 (Wie ging das nochmal? mit `library()`)
 
 #### Workflow
 
-Wenn Du einen Befehl im Skript ausführen möchtst, kannst Du `Strg + Enter` benutzen.\
-Wie Du sieht, wird der Befehl über die Konsole an R gesendet, und Output erscheint auch nur in der Konsole, niemals im Skript.
+Wenn du einen Befehl im Skript ausführen möchtst, kannst du `Strg + Enter` benutzen.\
+Wie du sieht, wird der Befehl über die Konsole an R gesendet, und Output erscheint auch nur in der Konsole, niemals im Skript.
 
 Beim Arbeiten im Skript wird durch Enter lediglich eine neue Zeile erzeugt, und nichts weiter passiert.\
 Beim Arbeiten in der Konsole hingegen sendet `Enter` direkt eine Eingabe ab.\
@@ -443,14 +443,14 @@ Um das gesamte Skript auf einmal an die Konsole zu senden, benutzen sie `Strg + 
 
 Skripte werden immer von oben nach unten ausgeführt, eine Zeile nach der anderen.
 
-Deine Hausaufgabe wird sein, deiner Fantasie freien Lauf zu lassen und im Skript eine Geschichte mit `say()`-Befehlen zu erzählen. In den folgenden Abschnitten findst Du noch einige wichtige Hinweise.
+Deine Hausaufgabe wird sein, deiner Fantasie freien Lauf zu lassen und im Skript eine Geschichte mit `say()`-Befehlen zu erzählen. In den folgenden Abschnitten findst du noch einige wichtige Hinweise.
 
 ### Kommentare
 
-Nun möchtest Du deiner Geschichte vielleicht eine Überschrift verleihen, oder sonstige Bemerkungen einfügen, die nicht als Befehl ausgeführt werden sollen, sonden lediglich der Orientierung im Skript dienen. Für Menschen erhöht das die Lesbarkeit eines Skripts. R hingegen kann Überschriften oder Bemerkungen nicht als solche erkennen und gibt Fehlermeldungen aus, beim Versuch sie zu interpretieren - deswegen müssen wir sie kennzeichnen.
+Nun möchtest du deiner Geschichte vielleicht eine Überschrift verleihen, oder sonstige Bemerkungen einfügen, die nicht als Befehl ausgeführt werden sollen, sonden lediglich der Orientierung im Skript dienen. Für Menschen erhöht das die Lesbarkeit eines Skripts. R hingegen kann Überschriften oder Bemerkungen nicht als solche erkennen und gibt Fehlermeldungen aus, beim Versuch sie zu interpretieren - deswegen müssen wir sie kennzeichnen.
 
 Mit der Raute `#` signalisieren wir R, dass der nachfolgende Text nicht ausgeführt werden muss, sondern ein Kommentar ist.\
-Die Raute wirkt lediglich für eine Zeile. Möchtst Du mehrere Zeilen auskommentieren, gibt es die Tastenkombination `Strg + Shift + C` (C wie Comment).
+Die Raute wirkt lediglich für eine Zeile. Möchtst du mehrere Zeilen auskommentieren, gibt es die Tastenkombination `Strg + Shift + C` (C wie Comment).
 
 ```{r eval=FALSE, echo=TRUE}
 #Eine Begegnung
@@ -463,11 +463,11 @@ say("Ganz gut, und dir?", "egret") #auch hier lässt es sich kommentieren
 
 ### Speichern
 
-Ordnung ist wichtig, gerade wenn sich über Jahre viele verschiedene Skripte ansammeln, wäre es gut, wenn Sie sich am selben Ort befinden.\
+Ordnung ist wichtig, gerade wenn sich über Jahre viele verschiedene Skripte ansammeln, wäre es gut, wenn sie sich am selben Ort befinden.\
 
 Ein hervorragender Weg Ordnung zu halten auf dem PC sind *Projekte*.
 
-Falls Sie noch kein Projekt erstellt haben, sollten Sie das tun - gehe dafür zurück zum letzten Tutorial, wo das erklärt wird.
+Falls du noch kein Projekt erstellt hast, solltest du das tun - gehe dafür zurück zum letzten Tutorial, wo das erklärt wird.
 
 ::: aufgaberstudio
 **Aufgabe 1**
@@ -481,7 +481,7 @@ Lasse verschiedene Protagonisten sprechen. Der Umfang liegt in deinem Ermessen.\
 Speichere alles.\
 Achte dabei auf Lesbarkeit und korrekte Syntax.\
 
-(Du darfst dich gerne auch von bereits existierenden Geschichten inspirieren lassen oder diese nachstellen.)
+(du darfst dich gerne auch von bereits existierenden Geschichten inspirieren lassen oder diese nachstellen.)
 :::
 
 ### Lesbarkeits-Kriterien
@@ -516,9 +516,9 @@ say('Q: What do you call a solitary shark\nA: A lone shark', by = 'shark')
 
 #### Advanced: verschachtelte Befehle
 
-Beachte diesen Abschnitt nur, wenn Du nach dem Tutorial noch weitere Herausforderungen suchst.\
+Beachte diesen Abschnitt nur, wenn du nach dem Tutorial noch weitere Herausforderungen suchst.\
 \
-Du kannst ein Tier von einem anderen Tier erzählen lassen, indem Du beim Argument `what` eine neue `say()`-Funktion eröffnest. Dieser Kniff wird "Verschachtelung" genannt.\
+du kannst ein Tier von einem anderen Tier erzählen lassen, indem du beim Argument `what` eine neue `say()`-Funktion eröffnest. Dieser Kniff wird "Verschachtelung" genannt.\
 Damit das funktioniert, müssen die inneren `say()`-Funktionen aber zusätzlich das Argument `type = "string"` enthalten, damit sie von der äußeren Funktion richtig ausgewertet werden können.
 
 ```{r schachtel, exercise = TRUE, exercise.setup = "say", exercise.cap = "Verschachtelung"}
@@ -535,7 +535,7 @@ Zentrales Kriterium beim wissenschaftlichen Programmieren ist Nachvollziehbarkei
 
 [R Notebooks](https://garrettgman.github.io/rmarkdown/r_notebooks#overview) ermöglichen, Code-Schnipsel gemeinsam mit ihren Outputs in ein schön formatiertes Textdokument einzubetten und so eine bessere Lesbarkeit herzustellen.\
 \
-Auch für Dich kann ein R Notebook eine sinnvolle Idee sein, im Sinne eines Notizheftes, wo Du gelernte Konzepte gemeinsam mit dem Code in einer visuell ansprechenden Form notieren kannst.\
+Auch für Dich kann ein R Notebook eine sinnvolle Idee sein, im Sinne eines Notizheftes, wo du gelernte Konzepte gemeinsam mit dem Code in einer visuell ansprechenden Form notieren kannst.\
 
 ::: aufgaberstudio
 
@@ -564,7 +564,7 @@ Welche Muster in der Rohform bewirken welche Erscheinung im gerenderten Zustand?
 
 <br>
 
-Um zu verstehen, was genau Du siehst, solltest Du zunächst etwas über `Markdown` lernen.
+Um zu verstehen, was genau du siehst, solltest du zunächst etwas über `Markdown` lernen.
 
 ### Markup Languages
 
@@ -580,7 +580,7 @@ Derartige Sprachen heißen **markup languages** (Auszeichnungssprachen).
 
 - Auch Textprogramme wie Word verwenden intern eine markup language, um Formatierungen zu speichern, diese ist allerdings etwas komplexer als Markdown.
 
-Markdown ist sehr unkompliziert. Sie müssen es allerdings nicht lernen, um R Notebooks zu benutzen, sondern können einfach den Visual Editor verwenden.\
+Markdown ist sehr unkompliziert. Du musst es allerdings nicht lernen, um R Notebooks zu benutzen, sondern kannst einfach den Visual Editor verwenden.\
 
 ### Visual Editor
 
@@ -592,14 +592,14 @@ Der Visual Editor zeigt den Text an ähnlich wie in normalen Textprogrammen, mit
 
 Das coole am R Notebook ist, dass der Output zusammen mit dem Code abgespeichert wird.
 
-Wenn Du jemandem ein Skript gibst, wo nur der Code enthalten ist, müsste die Person erst mal R starten, das Skript öffnen, die nötigen Pakete installieren, und das Skript ausführen, um irgendwelche Ergebnisse zu sehen. Natürlich macht das niemand. 
+Wenn du jemandem ein Skript gibst, wo nur der Code enthalten ist, müsste die Person erst mal R starten, das Skript öffnen, die nötigen Pakete installieren, und das Skript ausführen, um irgendwelche Ergebnisse zu sehen. Natürlich macht das niemand. 
 
-Die andere Option, nur den Output ohne Quellcode weiterzugeben, wird oft praktiziert - Du erstellst eine Grafik mit R, speicherst diese, und gibst sie an eine Kollegin weiter. Die Kollegin möchte aber vielleicht verstehen wie diese Grafik entstanden ist, oder einen Fehler korrigieren, kann die Grafik aber nicht reproduzieren, weil sie nicht deinen Code hat sondern nur den Output.
+Die andere Option, nur den Output ohne Quellcode weiterzugeben, wird oft praktiziert - du erstellst eine Grafik mit R, speicherst diese, und gibst sie an eine Kollegin weiter. Die Kollegin möchte aber vielleicht verstehen wie diese Grafik entstanden ist, oder einen Fehler korrigieren, kann die Grafik aber nicht reproduzieren, weil sie nicht deinen Code hat sondern nur den Output.
 
 Der Königsweg ist also, Code und Output zusammen übersichtlich darzustellen.
-Wenn Du jetzt also eine Geschichte schreibst, möchte ich dich ermuntern, diese in einem R Notebook zu speichern. So können andere viel schneller sehen, welche schönen Tiere Du dir ausgesucht hast, und es ist viel aussagekräftiger als ein bloßes Skript.
+Wenn du jetzt also eine Geschichte schreibst, möchte ich dich ermuntern, diese in einem R Notebook zu speichern. So können andere viel schneller sehen, welche schönen Tiere du dir ausgesucht hast, und es ist viel aussagekräftiger als ein bloßes Skript.
 
-Ein R Notebook ist, als würden Sie Drehbuch und Film nebeneinanderlegen. 
+Ein R Notebook ist, als würdest du Drehbuch und Film nebeneinanderlegen. 
 
 ::: aufgaberstudio
 **Aufgabe 3**
@@ -621,7 +621,7 @@ Ein R Notebook ist, als würden Sie Drehbuch und Film nebeneinanderlegen.
 
 Während in einem Skript jeglicher Text als Code interpretiert wird, also prinzipiell dafür gedacht ist, von R ausgeführt zu werden, ist das in einem R Notebook anders. Hier ist normaler Text dazu gedacht, Text zu sein der mit Markdown formatiert werden kann, und R Code muss in speziell dafür ausgewiesenen Abschnitte platziert werden, die sich *Codeblöcke* nennen. 
 
-Du kannst einen Codeblock erstellen mit `Ctrl + Shift + i`. Falls Du dich im Visual Mode befindest, geht es auch über das "Insert"-Menü. 
+Du kannst einen Codeblock erstellen mit `Ctrl + Shift + i`. Falls du dich im Visual Mode befindest, geht es auch über das "Insert"-Menü. 
 
 ### Dateiendungen 
 
@@ -632,7 +632,7 @@ Sie erscheinen in deinem System aber automatisch ein zweites Mal unter der Endun
 ::: blau-nb
 Was sind eigentlich Dateiendungen?
 
-Die Endung einer Datei kennzeichnet die Art der Datei. Ihr Betriebssystem kann anhand der Endungen bestimmen, welches Programm geeignet ist, um die Datei zu öffnen.\
+Die Endung einer Datei kennzeichnet die Art der Datei. Dein Betriebssystem kann anhand der Endungen bestimmen, welches Programm geeignet ist, um die Datei zu öffnen.\
 So sind z.B. `.R` und `.Rmd` mit RStudio assoziiert, während `.html` vom Webbrowser geöffnet wird.\
 Manche Computer zeigen standardmäßig gar keine Endungen an. Innerhalb des Dateibrowsers von RStudio werden aber Endungen gezeigt.
 :::
@@ -661,17 +661,17 @@ learnr::quiz(caption = "Teste dein Verständnis",
                                    answer("library", correct = TRUE),
                                    allow_retry = TRUE
                                    ),
-             learnr::question_radio("Braucht es Anführungszeichen um den Paketnamen, wenn Du ein Paket mit `install.packages()` installieren möchtest?",
+             learnr::question_radio("Braucht es Anführungszeichen um den Paketnamen, wenn du ein Paket mit `install.packages()` installieren möchtest?",
                                    answer("Ja", correct = TRUE),
                                    allow_retry = TRUE,
                                    random_answer_order = TRUE,
                                    answer("Nein")),
-             learnr::question_radio("Wenn Du ein Skript schreibst, wo im Skript lädst du alle benötigten Pakete?",
+             learnr::question_radio("Wenn du ein Skript schreibst, wo im Skript lädst du alle benötigten Pakete?",
                                     answer("Jeweils dort, wo sie gebraucht werden, damit der Zusammenhang klar ist."),
                                     answer("Ganz oben, damit sofort ersichtlich ist, was vielleicht noch installiert werden muss um das ganze Skript auszuführen.", correct = TRUE), 
                                     allow_retry = TRUE,
                                     random_answer_order = TRUE),
-             question_radio("Wie markierst Du für R, dass es sich bei deiner Eingabe um Text handelt?",
+             question_radio("Wie markierst du für R, dass es sich bei deiner Eingabe um Text handelt?",
                             answer("mit genau diesen Anführungszeichen: `\" \"` ", correct = TRUE),
                             answer("mit genau diesen Anführungszeichen: `„ “`"),
                             answer("mit genau diesen Anführungszeichen: `« »`"),
@@ -692,10 +692,10 @@ learnr::quiz(caption = "Teste dein Verständnis",
                             allow_retry = TRUE,
                             random_answer_order = TRUE
                             ),
-             question_checkbox("Wählen Sie alle möglichen Wege aus, die Hilfe zur Funktion `say()` aufzurufen",
+             question_checkbox("Wähle alle möglichen Wege aus, die Hilfe zur Funktion `say()` aufzurufen",
                             answer("`?say`", correct = TRUE),
                             answer("`help(say)`", correct = TRUE),
-                            answer("Den Cursor in die Funktion bewegen und F1 drücken", correct = TRUE, message = "Das mit F1 funktioniert nicht innerhalb der interaktiven Tutorials, aber wenn Sie in RStudio etwas im Skript oder der Konsole schreiben."),
+                            answer("Den Cursor in die Funktion bewegen und F1 drücken", correct = TRUE, message = "Das mit F1 funktioniert nicht innerhalb der interaktiven Tutorials, aber wenn du in RStudio etwas im Skript oder der Konsole schreibst."),
                             allow_retry = TRUE,
                             random_answer_order = TRUE),
              question_checkbox("Was können Pakete alles enthalten?",
@@ -709,18 +709,18 @@ learnr::quiz(caption = "Teste dein Verständnis",
                            answer("Comprehensive R Archive Network", correct = TRUE),
                            allow_retry = TRUE),
              question_radio("Was ist der Standardprozess, um ein Paket von CRAN zu installieren?",
-                           answer("Die Webseite von CRAN aufrufen und von dort das Paket herunterladen, entpacken, dann an den Ort Ihrer Bibliothek legen und installieren, in dem Sie den Befehl `install.packages()` verwenden.", 
-                                  message = "Das ist zwar eine mögliche Art, aber sehr umständlich und eigentlich auch nur nötig, wenn Du keine Internetverbindung hast. Ohne Internet ist es praktisch, Pakete an einem Gerät mit Internet herunterzuladen, dann über USB oder ähnliches auf das Gerät ohne Internet schieben zu können und dann installieren. Das ist aber eher selten und nicht die Standardprozedur."),
+                           answer("Die Webseite von CRAN aufrufen und von dort das Paket herunterladen, entpacken, dann an den Ort deiner Bibliothek legen und installieren, in dem du den Befehl `install.packages()` verwendest.", 
+                                  message = "Das ist zwar eine mögliche Art, aber sehr umständlich und eigentlich auch nur nötig, wenn du keine Internetverbindung hast. Ohne Internet ist es praktisch, Pakete an einem Gerät mit Internet herunterzuladen, dann über USB oder ähnliches auf das Gerät ohne Internet schieben zu können und dann installieren. Das ist aber eher selten und nicht die Standardprozedur."),
                            answer("Es reicht aus, den Befehl `install.packages()` zu verwenden.", correct = TRUE))
              )
 ```
 
 ## Learnings
 
-Heute hast Du gelernt, dass das R Ökosystem unter anderem aus 20 000 Paketen besteht, die von Mitgliedern der Community entwickelt und gepflegt werden. 
+Heute hast du gelernt, dass das R Ökosystem unter anderem aus 20 000 Paketen besteht, die von Mitgliedern der Community entwickelt und gepflegt werden. 
 Pakete stellen meistens Funktionen oder auch Daten bereit. Funktionen haben Argumente, die bestimmte Werte annehmen können. Welche Argumente eine Funktion entgegennimmt, steht im zugehörigen Hilfe-Artikel, der über `?funktion` oder F1 + Cursor in der Funktion aufgerufen werden kann. Darin stehen auch im Abschnitt `Usage` die Default-Werte der Argumente, auf die zurückgegriffen wird, wenn nichts angegeben wird.
 Argumente können auch ohne den Namen des Arguments angegeben werden, dann werden sie nach einer Standard-Reihenfolge ausgewertet. Das ist prinzipiell eine schlechte Idee, weil es den Code unverständlicher macht. Bei vielen Funktionen ist das erste Argument eine Ausnahme davon, weil es oft dazu dient, die „Daten“ zu übergeben, mit denen gearbeitet werden soll. Es gibt eine stille Vereinbarung, dieses „Datenargument“ üblicherweise nicht zu bennenen, und alle folgenden Argumente dann zu bennennen. 
-Wenn Sie einem Argument Text übergeben wollen, muss dieser von `"` umschlossen sein, um auch als solcher erkannt zu werden. Alles, was nicht so gekennzeichnet ist, wird von R als Aufruf eines bereits vorhandenen Objekts interpretiert. Beispielsweise als eine Funktion oder eine Variable.\
+Wenn du einem Argument Text übergeben möchtest, muss dieser von `"` umschlossen sein, um auch als solcher erkannt zu werden. Alles, was nicht so gekennzeichnet ist, wird von R als Aufruf eines bereits vorhandenen Objekts interpretiert. Beispielsweise als eine Funktion oder eine Variable.\
 Um Inhalte eines Paketes zu nutzen, muss das Paket in die aktive Sitzung geladen werden. Das funktioniert mit `library(Paket)`. Alternativ, wenn nur einzelne Inhalte aus dem Paket gebraucht werden, kann man mit `Paket::Inhalt` angeben, wo in der „Bibliothek“ R danach schauen soll.\
 Skripte sind wie ein Drehbuch, was Code enthält. Ein Grundprinzip ist, dass der Quellcode ausreicht, um die Ergebnisse zu replizieren, aber von Ergebnissen auf Quellcode zu schließen, wesentlich mühsamer ist. Deswegen speichern wir die „Regieanweisungen“ als Skript innerhalb unseres Projektordners ab. Technisch gesehen ist ein Skript eine reine Textdatei mit Anweisungen, die dazu gedacht sind von R ausgewertet zu werden.\
 Um Analyseergebnisse zusammen mit dem Quellcode weiterzugeben, eignet sich das Format “R Notebook“ gut. Das ist sinnvoll, um Code und Output beieinander zu behalten. R Notebooks verwenden die Auszeichnungssprache Markdown, um Text zu formatieren, und enthalten ausführbaren R-Code innerhalb von Codeblöcken. Diese Tutorials sind auch mit Markdown geschrieben. R Notebooks werden gespeichert als ein HTML-Dokument, was mit jedem Webbrowser angezeigt werden kann. Der Quellcode wird in einer `.Rmd`-Datei gespeichert, was *R Markdown* bedeutet. Das HTML-Dokument wird als `.nb.html`-Datei gespeichert und enthält eingebettet aber auch den Quellcode, ist also ein super Weg, um Forschungsergebnisse und Analyseprozesse replizierbar weiterzugeben.
