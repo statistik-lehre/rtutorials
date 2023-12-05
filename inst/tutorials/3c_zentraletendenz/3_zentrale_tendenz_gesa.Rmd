@@ -501,8 +501,6 @@ ggplot(dfu) +
   labs(x = "Rangplatz")
 ```
 
-Für dieses Beispiel konkret: $Median = (2 + 3)/2 = 2.5$
-
 <br>
 
 #### Anwendung auf das IQ-Beispiel
