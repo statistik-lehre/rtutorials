@@ -722,7 +722,7 @@ learnr::question_checkbox("Was hast du über die Maße der zentralen Tendenz gel
                  message = "Richtig! Der Median ist robust gegenüber Ausreißern."),
          answer("Der Median ist der Wert, der am häufigsten in einer Datenmenge vorkommt.",
                  message = "Der Modus nicht der Median repräsentiert den am häufigsten auftretenden Wert."),
-         answer("Das artihmetische Mittel ist die Summe aller Werte geteilt durch die Anzahl der Werte.",
+         answer("Das arithmetische Mittel ist die Summe aller Werte geteilt durch die Anzahl der Werte.",
                  correct = TRUE,
                  message = "Genau, der Mittelwert wird durch die Summe der Werte geteilt durch ihre Anzahl errechnet."),
          allow_retry = TRUE
@@ -734,21 +734,23 @@ learnr::question_checkbox("Welches Maß der zentralen Tendenz eignet sich für e
          answer("Der Median.",
               correct = TRUE,
               message = "Richtig, der Median eignet sich gut dafür ein Maß der zentralen Tendenz zu bestimmen, dass gegen Ausreißer robust ist."),
-         answer("Das artihmetische Mittel.",
+         answer("Das arithmetische Mittel.",
               message = "Das arithmetische Mittel gibt uns für Variablen OHNE Ausreißer eine gute Zusammenfassung unserer Daten, aber bei großen Ausreißern ist es anfällig für Verzerrungen."),
          allow_retry = TRUE
          ),
 
-learnr::question_checkbox("Welches Maß der zentralen Tendenz kannst du für eine ordianlskalierte Variable mit 6 Ausprägungen benutzen?",
+learnr::question_checkbox("Welche Maße der zentralen Tendenz wären für eine ordinalskalierte Variable mit 6 Ausprägungen erlaubt zu berechnen (nicht unbedingt sinnvoll, aber erlaubt!)?",
          answer("Den Median.", 
                 correct = TRUE,
                 message = "Genau! Der Median eignet sich gut für eine mindestens ordinal skalierte Variable, da dieser den Wert in der Mitte des Datensatzes repräsentiert."),
          answer("Den Modus.",
-                 message = "Du könntest auch den Modus für diese Variable bestimmen, aber du möchtest ja die eine Zahl finden, die deine Daten mit den geringsten Abweichungen beschreibt. Dafür die lediglich häufigste Ausprägung zu verwenden wäre also nicht zielführend."),
-         answer("Das artihmetische Mittel.",
+                correct = TRUE,
+                 message = "Du dürftest vom Skalenniveau her auch den Modus für diese Variable bestimmen, es wäre also erlaubt, du verlierst dabei aber Information."),
+         answer("Das arithmetische Mittel.",
                 correct = TRUE,
                  message = "Richtig, ab 5 Ausprägungen lässt sich auch der Mittelwert für ordinalskalierte Werte gut interpretieren."),
-         allow_retry = TRUE
+         allow_retry = TRUE,
+         random_answer_order = TRUE
          ),
 
 learnr::question_checkbox("Welches Maß der zentralen Tendenz benutzt du für eine nominalskalierte Variable?",
@@ -757,7 +759,7 @@ learnr::question_checkbox("Welches Maß der zentralen Tendenz benutzt du für ei
          answer("Den Modus.",
                 correct = TRUE,
                  message = "Genau! Mit dem Modus kannst du den häufigsten Wert bestimmen." ),
-         answer("Das artihmetische Mittel.",
+         answer("Das arithmetische Mittel.",
                  message = "Für die Berechnung des Mittelwert wird eine metrische Variable benötigt."),
          allow_retry = TRUE
          ))
