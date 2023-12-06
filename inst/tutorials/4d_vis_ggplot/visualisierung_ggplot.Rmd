@@ -1,0 +1,24 @@
+---
+title: "Visualisierung mit ggplot2"
+output:
+  learnr::tutorial:
+    language: de
+    css: css/boxes.css
+    fig_caption: no
+    progressive: true
+    allow_skip: true
+runtime: shiny_prerendered
+bibliography: ref.json
+link-citations: TRUE
+description: Schöne Diagramme erstellen. Die Grammar of Graphs wird kurz erklärt, das Prinzip wonach ggplot2 aufgebaut ist. Die Erstellung verschiedener Diagrammarten wird geübt. Aesthetic Mappings, Geoms, Facets. 
+resource_files:
+- css/boxes.css
+tutorial:
+      id: ggplot
+      version: 1
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```

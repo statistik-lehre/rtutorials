@@ -1,0 +1,24 @@
+---
+title: "Visualisierung Basics"
+output:
+  learnr::tutorial:
+    language: de
+    css: css/boxes.css
+    fig_caption: no
+    progressive: true
+    allow_skip: true
+runtime: shiny_prerendered
+bibliography: ref.json
+link-citations: TRUE
+description: Schnell eine grafische Übersicht gewinnen über die Daten mit einfachen Visualisierungen. Wann ist welches Diagramm angebracht? Scatterplots, Barplots, Histogramme. 
+resource_files:
+- css/boxes.css
+tutorial:
+      id: visbasic
+      version: 1
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```
