@@ -1301,4 +1301,6 @@ Darüber hinaus hast du nun ein Bild davon, welche wichtigen Datentypen (`double
 |`is.double()` | Logische Abfrage, analog zu den anderen Typen und Klassen abwandelbar |
 
 ## Credit
-Dieses Tutorial wurde von Lukas Bruelheide sowie Gesa Graf geschrieben. 
+Dieses Tutorial wurde von Lukas Bruelheide sowie Gesa Graf geschrieben. \
+Dank gilt auch Jeffrey Ohene für 
+das Korrigieren einiger Tippfehler und die Umsetzung einer konsistenten Anrede mit "du".  
