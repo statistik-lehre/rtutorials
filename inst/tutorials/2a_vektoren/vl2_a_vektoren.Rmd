@@ -37,7 +37,7 @@ Syntax von Funktionen in R beschäftigt. Dieses Tutorial baut darauf auf:
 ## kurze Wiederholung
 
 ```{r q1, echo=FALSE}
-question("Wie kennzeichnen Sie einen Kommentar in R?",
+question("Wie kennzeichnet man einen Kommentar in R?",
   answer("`#` mit der Raute", correct = TRUE),
   answer("`;` mit einem Semikolon "),
   answer("`>` mit dem Größer-als-Zeichen"),
@@ -130,7 +130,7 @@ x <- 2 + 3
 Oft ist es hilfreich, Code zu verbalisieren. Hier sind einige
 Möglichkeiten, wie der Pfeil ausgesprochen werden kann:
 
-Lesen Sie in Ihrem Kopf:
+Lies in deinem Kopf:
 
 -   `x` *bekommt den Wert von* `2 + 3`
 
@@ -205,7 +205,7 @@ unkonventionell und wird schnell unübersichtlich.
 
 ### printed and lost
 
-Wie bereis erwähnt ist alles, was nicht benannt wird, "*printed and
+Wie bereits erwähnt ist alles, was nicht benannt wird, "*printed and
 lost*".\
 Das heißt, die Rechenaufgabe wird ausgewertet und das Ergebnis
 ausgegeben, aber nirgends gespeichert.
@@ -346,8 +346,7 @@ alter
 
 ### neue Funktion: `c()`
 
-Um Vektoren zu erstellen, die mehr als einen Wert enthalten, brauchen
-Sie die Funktion `c()`.
+Um Vektoren zu erstellen, die mehr als einen Wert enthalten, brauchst du die Funktion `c()`.
 
 -   *c* wie *combine* oder *concatenate* (verketten)
 
@@ -585,7 +584,7 @@ question_numeric("Welche Länge hat der Vektor `tiere`? Anders gesagt, wie viele
 Die Länge eines Vektors kann mit der Funktion `length()` bestimmt werden. Jetzt konntest du die Anzahl der Elemente noch selbst zählen, aber die meisten Daten mit denen im Alltag gearbeitet wird, sind dafür zu groß. 
 
 ::: aufgabe
-Ermitteln Sie nun noch mal auf programmatischem Weg die Länge Ihres eben erstellten Vektors `tiere`! Nutzen Sie die Funktion `length()`!
+Ermittle nun noch einmal auf programmatischem Weg die Länge deines gerade erstellten Vektors 'tiere'! Nutze die Funktion `length()`!
 :::
 
 ```{r tiere}
@@ -968,7 +967,7 @@ Ein Vektor hat 1 Dimension. Nun werden Objekttypen besprochen, die mehr als 1 Di
 <summary><a>▼ \* Für die ganz fleißigen.
 </a></summary>
 
-Factoren in R sind ne feine Angelegenheit. Auf dem ersten Blick recht kompliziert und unintuitiv ermöglichen sie dem geübten Händchen vor allem hintenraus doch ein schnelles und einfaches Arbeiten. **Bitte trotz gleichem wording im Kopf konzeptuell trennen von dem statistischen Konzept Faktor aus der Faktorenanalyse, das ist was grundlegend anderes!** (Deswegen wird in diesem Kurs der Factor in R auch mit c geschrieben.)
+Factoren in R sind eine feine Angelegenheit. Auf dem ersten Blick recht kompliziert und unintuitiv ermöglichen sie dem geübten Händchen vor allem hintenraus doch ein schnelles und einfaches Arbeiten. **Bitte trotz gleichem wording im Kopf konzeptuell trennen von dem statistischen Konzept Faktor aus der Faktorenanalyse, das ist was grundlegend anderes!** (Deswegen wird in diesem Kurs der Factor in R auch mit c geschrieben.)
 
 Ein Factor ist genau genommen ein Spezialfall eines Vektors für **kategoriale** Daten (also **nominalen** Daten, die sich in nicht hierarchisch sortierbare Gruppen einteilen lassen (z.B. Farben, Städte, Studiengang etc.)) und **ordinalen** Daten (also denen, wo sich die Gruppen zwar hierarchisieren lassen, die Abstände aber nicht interpretierbar sind (z.B. Rangfolgen von Lieblingssüßigkeiten, Filmen etc., Bildungsniveau, Plätze bei einem Sportwettkampf etc.)).
 
@@ -1303,4 +1302,3 @@ Darüber hinaus hast du nun ein Bild davon, welche wichtigen Datentypen (`double
 
 ## Credit
 Dieses Tutorial wurde von Lukas Bruelheide sowie Gesa Graf geschrieben. 
-
