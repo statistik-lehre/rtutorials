@@ -188,7 +188,7 @@ Ersteres heißt: "Ist `x` kleiner als `-2 + 3`?", letzteres bedeutet:
 ::: aufgabe
 Lasse dir nun `y` ausgeben!
 :::
-```{r y_print, exercise = TRUE, setup.chunk = "y_saving-solution"}
+```{r y_print, exercise = TRUE, exercise.setup = "y_saving-solution"}
 
 ```
 
@@ -763,14 +763,14 @@ Okay, also Zusammenfassend lässt sich sagen: Es gibt zwei Typen von Zahlen. Gan
 
 Sollte, warum auch immer, der Fall eintreten, das du den einen Typen in den anderen umwandeln möchtest, ist das natürlich auch möglich: Die Funktionen `as.integer()` bzw. `as.double()` sind hier deine Freunde.
 
-```{r typen_num2, exercise = T, setup.chunk = "typen_num"}
+```{r typen_num2, exercise = T, exercise.setup = "typen_num"}
 typeof(as.integer(vec_dou))
 typeof(as.double(vec_int))
 ```
 
 So weit so gut. Was passiert nun aber, wenn im `double` Vektor auch tatsächlich Kommazahlen gespeichert sind?
 
-```{r typen_num3, exercise = T, setup.chunk = "typen_num"}
+```{r typen_num3, exercise = T, exercise.setup = "typen_num"}
 # zuerst vec_dou neu definieren
 vec_dou <- c(1, 2.4, 3.5, 4.5, 5.6, 6.9, 7)
 typeof(vec_dou)
@@ -907,7 +907,7 @@ vec_log <- c(T, F, T, F)
 ```
 
 
-```{r class1-solution, setup.chunk = "class1"}
+```{r class1-solution, exercise.setup = "class1"}
 
 typeof(vec_dou) # Datentyp
 class(vec_dou)  # Klasse
@@ -993,7 +993,7 @@ In R wird ein Factor intern als ganzzahliges (`integer`) Vektorobjekt repräsent
 
 Zu den schönen Facts von Factoren: Es ist möglich, die Inhalte des Factors zu sortieren und ihnen Labels zuzuweisen. Ersteres vereinfacht bestimmte Statistiken später, zweiteres vereinfach viele Darstellungsmöglichkeiten.
 
-```{r class_fac2, exercise = TRUE, setup.chunk = "class_fac1"}
+```{r class_fac2, exercise = TRUE, exercise.setup = "class_fac1", exercise.cap = "ordered factor"}
 fac <- factor(fac,                               # nimmt den alten Factor
               levels = c("real", "abi", "ba"),   # hier wird die Reihenfolge bestimmt
               ordered = TRUE,                    # und R mitgeteilt, dass diese auch bitte beachtet werden soll
