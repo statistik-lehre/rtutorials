@@ -13,12 +13,12 @@
 Acquire basic statistics and R knowledge (somewhat) interactively and
 self paced.
 
--   **Language**: German
+- **Language**: German
 
--   **Audience**: Written for statistic newbies, in our case 3rd
-    semester bachelor students of environmental and civil engineering
+- **Audience**: Written for statistic newbies, in our case 3rd semester
+  bachelor students of environmental and civil engineering
 
-### Quick Start
+### Quick Start / Installation
 
 By installing this package, you add handcrafted lessons to your RStudio
 Tutorials Pane.
@@ -33,53 +33,67 @@ and hit Enter.
 install.packages(c("devtools", "learnr"))
 devtools::install_github("statistik-lehre/rtutorials")
 ```
-**Error**: If R reports an error like "Error in utils::download.file(url, path, method = method, quiet = quiet,  :  Herunterladen von 'https://api.github.com/repos/statistik-lehre/rtutorials/tarball/HEAD' fehlgeschlagen", this could be due to the size of the packet in relation to your download speed (`install_github()` has a default timeout of 60 seconds). Try it with this version:
+
+**Error**: If R reports an error like
+
+    Error in
+    utils::download.file(url, path, method = method, quiet = quiet, :
+    Herunterladen von
+    ‘<https://api.github.com/repos/statistik-lehre/rtutorials/tarball/HEAD>’
+    fehlgeschlagen
+
+this could be due to the large size of the package in relation to your
+download speed. `install_github()` has a default timeout of 60 seconds.
+Set a longer timeout with the command below and retry the installation.
 
 ``` r
-# install.packages(c("devtools", "learnr"))
-# if you have made it to the error message, this line has already been executed successfully
-# so continue with:
 options(timeout = 9999999)
 devtools::install_github("statistik-lehre/rtutorials")
 ```
 
-## Contents
+**Error**: Another error, although more uncommon looks like this:
 
-Each tutorial is associated with one of eleven lectures. Lecture
-material is not included. Tutorials could be useful in a standalone
-fashion anyways.
+    Timeout was reached: [api.github.com] Resolving timed out after 10000 milliseconds
+
+Solution: Try to connect to the internet. If you are connected, wait a
+few minutes and try again. Likely, this error occurs because you hit the
+download rate limit of the GitHub API, e.g. installed too many large
+packages from GitHub in a short period of time.
+
+## Contents
 
 All tutorials are in German. Here are the titles translated to English
 for the convenience of the English readers. A German detailed overview
 can be found at the end.
 
-Tutorials with substantial content ( \> 50% completion status) are
-highlighted.
+Note that tutorials are being written and published step by step, the
+list below includes planned tutorials as well. Look at `inst/tutorials`
+in the main branch, it is the most up to date way of finding out what is
+published at the moment.
 
-| Lecture | Tutorial Subject                      | Status |
-|---------|---------------------------------------|--------|
-| 1       | **Introduction**                      | 80%    |
-| 1       | **Exploring Functions and Arguments** | 95%    |
-| 1       | **Scientific Process**                | \~70%  |
-| 2       | **Vectors**                           | 90%    |
-| 2       | **Indexing**                          | 65%    |
-| 2       | Data Frames                           | 30%    |
-| 3       | Data Import                           | 0%     |
-| 3       | Scales                                | 40%    |
-| 3       | Measures of Central Tendency          | 10%    |
-| 3       | Missing Values                        | 0%     |
-| 4       | **Measures of Spread**                | 90%    |
-| 4       | z-Standardization                     | 0%     |
-| 5       | Visualization                         | 0%     |
-| 6       | **Sampling**                          | 40%    |
-| 6       | t-Tests                               | 0%     |
-| 7       | Levene-Test                           | 0%     |
-| 8       | Chi Squared                           | 0%     |
-| 8       | Power Analysis                        | 0%     |
-| 8       | Correlations                          | 0%     |
-| 9       | **Simple Linear Regression**          | 85%    |
-| 10      | **Scientific Process**                | \~70%  |
-| 11      | **Programming Basics**                | \~70%  |
+| Block | Tutorial Subject                      | Tutorial name        |
+|-------|---------------------------------------|----------------------|
+| 1     | **Introduction**                      | `1a_intro`           |
+| 1     | **Exploring Functions and Arguments** | `1b_funktionen`      |
+| 1     | **Scientific Process**                | `1c_prozess`         |
+| 2     | **Vectors**                           | `2a_vektoren`        |
+| 2     | **Indexing**                          | `2b_indizierung`     |
+| 2     | **Data Frames**                       | `2c_dataframes`      |
+| 3     | **Data Import**                       | `3a_import`          |
+| 3     | **Scales and Factors**                | `3b_skalen`          |
+| 3     | **Measures of Central Tendency**      | `3c_zentraletendenz` |
+| 4     | Measures of Spread                    |                      |
+| 4     | Visualization Basics                  |                      |
+| 4     | Visualization with ggplot2            |                      |
+| 5     | Sampling                              |                      |
+| 5     | t-Tests                               |                      |
+| 5     | Levene-Test                           |                      |
+| 6     | Chi Squared                           |                      |
+| 6     | Power Analysis                        |                      |
+| 6     | Correlations                          |                      |
+| 7     | Simple Linear Regression              |                      |
+| 7     | Scientific Process Long               |                      |
+| 7     | Programming Basics                    |                      |
 
 ## Accessing the tutorials
 
@@ -100,16 +114,35 @@ click- and scrollable menu surface.
 
 **The command way**
 
-To list all available tutorials from `rtutorials`, copy paste following
-code to the console:
+To list all available tutorials from `rtutorials`:
 
 ``` r
 learnr::available_tutorials(package = "rtutorials")
+#> Available tutorials:
+#> * rtutorials
+#>   - 1a_intro           : "Einführung"
+#>   - 1b_funktionen      : "Funktionen erkunden"
+#>   - 1c_prozess         : "Wissenschaftlicher Prozess"
+#>   - 2a_vektoren        : "Vektoren"
+#>   - 2b_indizierung     : "Indizierung bei Vektoren"
+#>   - 2c_dataframes      : "Arbeit mit Tabellen"
+#>   - 3a_import          : "Datenimport"
+#>   - 3b_skalen          : "Skalenniveaus"
+#>   - 3c_zentraletendenz : "Maße der zentralen Tendenz"
+#>   - template           : "template"
 ```
 
 And to run the individual tutorials, run:
 
-    learnr::run_tutorial("name", package = "rtutorials")
+``` r
+learnr::run_tutorial("name", package = "rtutorials")
+```
+
+For example:
+
+``` r
+learnr::run_tutorial("1a_intro", package = "rtutorials")
+```
 
 ## Contributing
 
@@ -124,13 +157,16 @@ request.
 
 The tutorial source code is found at `inst/tutorials/…/….Rmd`.
 
-A template tutorial for the stylings we use is found at
+A **template tutorial** for the stylings we use is found at
 `inst/tutorials/template`, but not included in the built package.
 
 For more in depth guidelines on `learnr` tutorials, check out the
 [`learnr`](https://rstudio.github.io/learnr/) documentation.
 
-## Licensing
+Also, we try to maintain a set of `good first issues` that helps you get
+started with contributing to this project.
+
+## License
 
 We would be happy to hear from you if you want to modify or redistribute
 the contents of this course.
@@ -142,192 +178,11 @@ However, the use is restricted to noncommercial purposes and only
 applies to the contents of this repository. Other course materials that
 you may get as one of our students are subject to copyright.
 
-## Explanation of Quick Start commands
+## Authorship
 
-*for those who want to understand the installation code, skip if you
-already know*
-
-`install.packages()` is a function that installs R packages.
-
-`c()` is combining stuff, in our case the two package names.
-
-The packages we are installing are called `devtools` and `learnr`.
-
--   `learnr` is necessary because it supplies the interactive tutorials
-    functionality
-
--   `devtools` is necessary to install packages from GitHub.
-
-`install_github()` is self explanatory - it installs a package from a
-GitHub repo. The double colons `::` show that the function lives inside
-the `devtools` package.
-
-Inside the parentheses, we supply the name of this GitHub repo, which
-contains the tutorials you will learn in this semester:
-`"statistik-lehre/rtutorials"`.
+The tutorials are written by Lukas Bruelheide, Gesa Graf and Marie
+Klosterkamp, who is also leading the project.
 
 ## Funding
 
 Kassel University, HessenHub, 2022 - 2023
-
-## German
-
-Detaillierte Übersicht über den Inhalt + Codes zum Starten der einzelnen
-Tutorials:
-
-    Available tutorials:
-    * rtutorials
-      - 01a_intro           : "Einführung Idee"
-      - 01a_intro_alt       : "Einleitung"
-      - 01b_funktionen      : "Funktionen erkunden"
-      - 01c_prozess         : "Wissenschaftlicher Prozess"
-      - 02a_vektoren        : "Vektoren"
-      - 02b_index           : "Indizierung bei Vektoren"
-      - 02c_dataframes      : "Arbeit mit Tabellen"
-      - 03a_import          : "Datenimport"
-      - 03b_skalen          : "Skalenniveaus"
-      - 03c_zentraletendenz : "Maße der zentralen Tendenz"
-      - 03d_tidydata        : "Lang und Breit"
-      - 03e_na              : "Fehlende Werte"
-      - 04a_dispersion      : "Dispersionsmaße"
-      - 04b_zstandard       : "z-Standardisierung"
-      - 05a_vis             : "Visualisierung"
-      - 06a_sampling        : "Inferenzstatistik"
-      - 06b_ttest           : "Teststärke"
-      - 07a_levene          : "Levene-Test"
-      - 08a_chi             : "Chi-Quadrat-Test"
-      - 08b_korrelationen   : "Korrelationen"
-      - 09a_regression      : "Regression"
-      - 10a_prozess_lang    : "Wissenschaftlicher Prozess"
-      - 11a_programmieren   : "Programmieren Basics"
-
-#### Einleitung
-
-``` r
-learnr::run_tutorial("01a_intro", package = "rtutorials")
-```
-
--   R als Taschenrechner
-
-#### Funktionen erkunden
-
-``` r
-learnr::run_tutorial("01b_funktionen", package = "rtutorials")
-```
-
--   Funktionsaufruf am Beispiel von `cowsay`
-
--   Argumente spezifizieren
-
--   Skripte erstellen
-
-#### Wissenschaftlicher Prozess (kurz)
-
-``` r
-learnr::run_tutorial("01c_prozess", package = "rtutorials")
-```
-
-#### Vektoren
-
-``` r
-learnr::run_tutorial("02a_vektoren", package = "rtutorials")
-```
-
--   Variablen erstellen, Assignment
-
--   Gute Namen
-
--   Was ist das Environment
-
--   Recycling beim Rechnen mit Vektoren
-
--   Vektorisierung
-
-#### Indizierung bei Vektoren
-
-``` r
-learnr::run_tutorial("02b_index", package = "rtutorials")
-```
-
--   Auf spezifische Elemente eines Vektors zugreifen mittels `[]`…
-
--   Über die Position
-
--   Über eine logische Bedingungsprüfung
-
--   Über Namen (Attribute)
-
-#### Data Frames
-
-``` r
-learnr::run_tutorial("02c_dataframes", package = "rtutorials")
-```
-
--   Wie werden Tabellen in R repräsentiert?
-
--   Indizierung bei Data Frames mit `$`
-
-#### Maße der Streuung
-
-``` r
-learnr::run_tutorial("04a_dispersion", package = "rtutorials")
-```
-
--   Was ist Varianz
-
--   Spannweite
-
--   Quartile und Interquartilsabstand
-
-#### Sampling
-
-``` r
-learnr::run_tutorial("06a_sampling", package = "rtutorials")
-```
-
--   “Stichprobenkennwerteverteilung” verstehen
-
--   das Konzept “Stichprobenvariation” verstehen
-
--   simulierte Stichprobenziehung mit `moderndive::rep_sample_n()`
-
-#### t-Test
-
-``` r
-learnr::run_tutorial("06b_ttest", package = "rtutorials")
-```
-
--   einen t-Test in R ausführen und Output interpretieren
-
-#### Einfache lineare Regression
-
-``` r
-learnr::run_tutorial("09a_regression", package = "rtutorials")
-```
-
--   Interpretation der Koeffizienten
-
--   Erstellen eines `lm()` (linear model)
-
--   Output lesen lernen
-
--   Voraussetzungen der Regression prüfen
-
-#### Wissenschaftlicher Prozess (lang)
-
-``` r
-learnr::run_tutorial("10a_prozess_lang", package = "rtutorials")
-```
-
--   Nachschlagewerk für den detaillierten Ablauf des typischen
-    Forschungsprozesses auf einer Roadmap
-
-#### Programmieren Basics
-
-``` r
-learnr::run_tutorial("11a_programmieren", package = "rtutorials")
-```
-
--   Schleifen und Bedingungen
-
--   `for`, `while`, `if`, `else`, …
