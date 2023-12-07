@@ -18,8 +18,11 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Imports: 
-    learnr
+    learnr,
+    learnrhash (>= 0.2.0)
 Depends: 
     R (>= 3.5)
 LazyData: true
+Remotes:  
+    rundel/learnrhash
 
