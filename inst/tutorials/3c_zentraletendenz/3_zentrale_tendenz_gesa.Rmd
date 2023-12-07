@@ -27,7 +27,7 @@ library(shiny)
 
 if(!require(ggbrace, quietly = TRUE)){
   message("\nVersuche Paket 'ggbrace' von GitHub zu installieren. Benötigt eine Internetverbindung. \nOhne dieses Paket funktioniert eine interaktive Grafik nicht.")
-  try(devtools::install_github("NicolasH2/ggbrace"))
+  try(remotes::install_github("NicolasH2/ggbrace"))
   require(ggbrace)
 }else{
   require(ggbrace)
