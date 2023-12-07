@@ -32,7 +32,8 @@ In diesem Tutorial lernst du, wie du Daten nicht nur zusammenfasst sondern auch 
 
 ## Lernziele
 
-Am Ende des Tutorials kann ich
+Am Ende des Tutorials kann ich:
+
 -   <input type="checkbox" unchecked> die Spannweite von Daten berechnen </input>
 -   <input type="checkbox" unchecked> die Vanrianz und Standardabweichung berechnen </input>
 -   <input type="checkbox" unchecked> Quantile berechnen </input>
@@ -695,7 +696,7 @@ pointi
 
 Dann können wir das 25% - Qua**nnnnnn**til bestimmen, was dem 1. Qua**rrrrr**til (wie *quarter* = Viertel) entspricht. 
 
-Das 25% - Quantil ist der Wert, unterhalb de 25% der Werte liegen. 
+Das 25% - Quantil ist der Wert, unterhalb dessen 25% der Werte liegen. 
 
 ```{r quartile1}
 probs <- .25
@@ -813,11 +814,12 @@ learnr::quiz(caption = "Teste dein Verständnis",
                                     answer("... desto größer der Interquartilsabstand", correct = T),
                                     allow_retry = TRUE,
                                     random_answer_order = TRUE),
-             learnr::question_text("Die Streuung des Medians ist:",
+             learnr::question_radio("Ein robustes Maß der Streuung heißt:",
                                    answer("Varianz"),
                                    answer("Standardabweichung"),
-                                   answer("Interquartilsabstan", correct = TRUE),
-                                   allow_retry = TRUE
+                                   answer("Interquartilsabstand", correct = TRUE),
+                                   allow_retry = TRUE,
+                                   random_answer_order = TRUE
                                    ))
 ```
 
