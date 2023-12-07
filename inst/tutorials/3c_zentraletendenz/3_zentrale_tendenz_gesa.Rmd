@@ -163,6 +163,8 @@ sampler <- function() sample(1:9, size = sample(sizes, size = 1))
 
 # Vektor mit allen erlaubten Mittelwerten
 test_vec <- seq(from = 1, to = 9, by = 0.5)
+# Mittelwert 5 ist nicht erlaubt, damit die App beim Start nicht sofort gelöst ist...
+test_vec <- test_vec[test_vec != 5]
 
 # Zahlenreihen-Generierung
 x <- reactive({
@@ -191,7 +193,11 @@ df <- reactive({
       geom_point(size = 4) +
       scale_y_continuous(name = NULL, breaks = NULL) +
       theme_bw() +
-      theme(text = element_text(size = 20))
+      theme(text = element_text(size = 20)) +
+      # Füge Achsenbeschriftungen hinzu
+      scale_x_continuous(name = NULL, breaks = x(), minor_breaks = NULL,
+                         #labels = scales::label_number(accuracy = 0.5),
+                         limits = c(1, 10))
   })
 
   diff <- reactive({
@@ -206,12 +212,6 @@ df <- reactive({
 # negative Abweichungen
   ndiff <- reactive({
     ndiff <- diff()[diff() < 0]
-  })
-
-# Achsenbeschriftungen 
-  breaks <- reactive({
-    # Kombiniere Zahlenreihe + SliderInput
-    c(x(), input$zahl) |> sort() 
   })
 
   output$vis <- renderPlot({
@@ -249,10 +249,7 @@ df <- reactive({
     # Letzte Schritte beim Plotten: Füge SliderInput hinzu
     pl + geom_vline(xintercept = z,
                    color = "#428BCA",
-                   linewidth = 1.5) +
-      # Füge Achsenbeschriftungen hinzu
-      scale_x_continuous(name = NULL, breaks = breaks(), minor_breaks = NULL,
-                         labels = scales::label_number(accuracy = 0.5))
+                   linewidth = 1.5)
   }) |>
     bindCache(input$zahl, input$new) # Cache den Plot-Output für mehr Schnelligkeit
 
