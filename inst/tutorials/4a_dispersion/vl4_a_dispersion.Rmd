@@ -26,9 +26,34 @@ x <- c(1, 1, 9, 3, 6)
 
 <!-- @Lukas muss hier vlt das Paket shinywidgets noch installiert werden? Bei mir lässt sich das Dokument sonst nicht rendern -->
 
+## Inhalt
+
+In diesem Tutorial lernst du, wie du Daten nicht nur zusammenfasst sondern auch ihre Individualität berücksichtigst: Streuungsmaße. Besonders im Zentrum stehen hierbei die Varianz bzw. Standardabweichung.
+
+## Lernziele
+
+Am Ende des Tutorials kann ich
+-   <input type="checkbox" unchecked> die Spannweite von Daten berechnen </input>
+-   <input type="checkbox" unchecked> die Vanrianz und Standardabweichung berechnen </input>
+-   <input type="checkbox" unchecked> Quantile berechnen </input>
+
 ## Intuition bekommen
 
 ### Was ist Streuung?
+
+Normalerweise hast du konkrete Datenpunkte und errechnest daraus die Varianz. Um die Zusammenhänge besser verstehen zu können wurde hier die Reihenfolge umgekehrt: Du veränderst am Schieberegler die Varianz und daraufhin verändern sich die Datenpunkte.
+
+:::aufgabe
+Mach dich mit den Zusammenhängen vertraut:
+
+  - Wie sind die Punkte bei einer kleinen Varianz verteilt?
+  - Wie bei einer mittleren?
+  - Wie bei einer großen?
+  - Wie bei keiner (=0)?
+  
+Was fällt dir auf?
+:::
+
 ```{r ui}
             sliderInput("var",
                         "Varianz",
@@ -56,6 +81,7 @@ x <- c(1, 1, 9, 3, 6)
 ```
 
 In den nächsten Kapiteln gehen wir der Frage nach, wie Streuung messbar gemacht werden kann. 
+
 
 ## Spannweite
 Das einfachste Maß, um die Ausdehnung von Daten zu bestimmen, ist vermutlich das Minimum und Maximum.
@@ -91,7 +117,7 @@ ggplot(df, aes(x, y = 1)) +
 ::: aufgabe 
 **1.**
 
-Obwohl es in diesem Fall auch ohne Computer sehr überschaubar ist: verwenden Sie die R-Funktion
+Obwohl es in diesem Fall auch ohne Computer sehr überschaubar ist: verwende die R-Funktion
 `range()`, um Minimum und Maximum zu bestimmen!
 :::
 
@@ -106,7 +132,7 @@ Als Ergebnis steht ein Vektor mit zwei Zahlen: die erste bezeichnet das Minimum,
 
 Um nun die Spannweite zu berechnen, müssen wir $Max - Min$ rechnen. Das geht für dieses Beispiel im Kopf, aber wir üben ja für die schweren Fälle - deswegen nehmen wir wieder eine R-Funktion zu Hilfe: `diff()` um die Differenz zu berechnen. 
 
-Füttern Sie `diff()` mit dem Vektor, der durch `range(x)` ausgegeben wird.
+Füttere `diff()` mit dem Vektor, der durch `range(x)` ausgegeben wird.
 :::
 
 ```{r range2, exercise = TRUE, exercise.setup = "ex"}
@@ -130,6 +156,7 @@ question_checkbox("Welches Skalenniveau muss mindestens vorliegen, um die Spannw
                   answer("Metrisch", correct = T, message = "Genau! Nur metrische Daten enthalten Informationen über Abstände."))
 ```
 
+
 ## Varianz & Standardabweichung {data-progressive=TRUE}
 
 ### Streuung als Abweichung von einem Zentrum
@@ -142,7 +169,7 @@ Das Zentrum ist meistens der Mittelwert, aber es gibt auch weniger gebräuchlich
 
 ### Abweichungen vom Mittelwert
 
-In Rot sehen sie den Abstand jedes einzelnen Werts zum Mittelwert.
+In Rot siehst du den Abstand jedes einzelnen Werts zum Mittelwert.
 
 ```{r deviance, fig.width=3.5}
 y <- c(1, 1, 9, 3, 6)
@@ -176,7 +203,7 @@ $\large x_i - \bar x$
 
 #### wichtige Eigenschaft des Mittelwerts
 
-Interessanterweise ist der Mittelwert so definiert, dass sich die Abweichungen gegenseitig aufheben, wenn man sie alle addiert:
+Interessanterweise ist der Mittelwert so definiert, dass sich die Abweichungen gegenseitig aufheben, wenn sie alle addiert werden.
 
 $$
 {\large \sum_{i=1}^{n}{(x_i - \bar{x})}=0}
@@ -201,16 +228,17 @@ x - mean(x)
 
 Als Ergebnis entsteht ein neuer Vektor mit den Abweichungen vom Mittelwert.
 
-Jetzt sind Sie selber gefragt!
+Jetzt sind bist du gefragt!
 
 ::: aufgabe
 **Anwendungsaufgabe**
 
-Prüfen Sie, ob die Summe aller Abweichungen vom Mittelwert wirklich 0 beträgt.
+Prüfe, ob die Summe aller Abweichungen vom Mittelwert wirklich 0 beträgt.
 
-Übersetzen Sie dazu die Formel $\sum{(x_i - \bar{x})}=0$ in R Code!
+Übersetze dazu die Formel $\sum{(x_i - \bar{x})}=0$ in R Code!
 
-Denken Sie an Ihre bereits erlangten Kenntnisse der letzten Tutorials.
+Denke an deine bereits erlangten Kenntnisse der letzten Tutorials.
+
 :::
 
 ```{r deviation-setup}
@@ -222,14 +250,14 @@ sum(x - mean(x)) == 0
 ```
 
 ```{r deviation-hint}
-# Verwenden Sie sum() für die Formel und für die Überprüfung == 0 
+# Verwende sum() für die Formel und für die Überprüfung == 0 
 ```
 
 ```{r deviation, exercise=TRUE, exercise.setup = "deviation-setup", exercise.caption = "Abweichungen vom Mittelwert"}
 
 ```
 
-Super! Aber das war erst der halbe Weg - Wie Sie sehen, heben sich die Abweichungen gegenseitig auf, und wir müssen noch etwas dagegen unternehmen, um zu einem sinnvollen Maß für die Streuung zu kommen. 
+Super! Aber das war erst der halbe Weg - Wie du siehst, heben sich die Abweichungen gegenseitig auf, und wir müssen noch etwas dagegen unternehmen, um zu einem sinnvollen Maß für die Streuung zu kommen. 
 
 ### Quadratsummen
 
@@ -306,7 +334,7 @@ $$
 {\large s^2 = {\frac{48}{4}}=12 }
 $$
 
-Überprüfen Sie das mit R:
+Überprüfe das mit R:
 
 ```{r var, exercise = T, exercise.setup = "ex"}
 var(x)
@@ -338,13 +366,13 @@ Die Standardabweichung ist lediglich eine transformierte Version der Varianz, da
 ::: aufgabe
 **Coding Challenge**
 
-Setzen Sie die Berechnung der Standardabweichung in R Code um, analog zur mathematischen Formel:
+Setze die Berechnung der Standardabweichung in R Code um, analog zur mathematischen Formel:
 
 $$
 \large s = \sqrt{\frac{\sum_{i = 1}^{n}{(x_i-\bar{x})^2}}{n-1}}
 $$
 
-Vergleichen Sie Ihre Ergebnisse mit den Ergebnissen der eingebauten Funktion `sd()`. Nutzen Sie dafür die Gleichheitsbedingung `==`.
+Vergleiche deine Ergebnisse mit den Ergebnissen der eingebauten Funktion `sd()`. Nutze dafür die Gleichheitsbedingung `==`.
 :::
 
 ::: grau-nb
@@ -405,7 +433,7 @@ Für Erklärungszwecke sind die Altersdaten von genau 100 Personen zufällig aus
 
 ### Intuition bekommen
 
-Stellen Sie sich vor, Sie sortieren 100 Personen nach dem Alter und stellen alle in  einer aufsteigenden Reihe auf, vom Baby bis zu Senioren. Dann ist z.B. das 25%-Quantil das Alter der 25. Person in dieser Reihe. Oder der 26. Person, je nachdem wie Sie es auslegen. Oder sogar der Mittelwert des Alters der 25. und 26. Person. Es gibt nicht den "einen" Weg, Quantile zu berechnen. 
+Stell dir vor, du sortierst 100 Personen nach dem Alter und stelst alle in  einer aufsteigenden Reihe auf, vom Baby bis zu Senioren. Dann ist z.B. das 25%-Quantil das Alter der 25. Person in dieser Reihe. Oder der 26. Person, je nachdem wie du es auslegst Oder sogar der Mittelwert des Alters der 25. und 26. Person. Es gibt nicht den "einen" Weg, Quantile zu berechnen. 
 
 Die mathematische Ausdrucksweise für das 25%-Quantil im Beispiel wäre:
 
@@ -413,7 +441,7 @@ Die mathematische Ausdrucksweise für das 25%-Quantil im Beispiel wäre:
 - wenigstens 75 Personen sind älter oder gleich alt
 
 ::: aufgabe
-Unten finden Sie eine interaktive Grafik, wo die 100 Altersdaten aus dem `einkaufen`-Datensatz in sortierter Reihenfolge dargestellt werden. Nutzen Sie den Slider, um verschiedene Quantile zu finden!
+Unten findest du eine interaktive Grafik, wo die 100 Altersdaten aus dem `einkaufen`-Datensatz in sortierter Reihenfolge dargestellt werden. Nutze den Slider, um verschiedene Quantile zu finden!
 :::
 
 #### p-Quantil
@@ -468,7 +496,7 @@ fluidPage(
 <summary><a>▼ Infos zur Berechnungsmethode</a></summary>
 
 ::: blau-nb
-Lassen Sie sich nicht davon verunsichern, dass es 9 verschiedene Berechnungsmethoden gibt, die alle zu leicht unterschiedlichen Ergebnissen kommen. Das ist nur der Vollständigkeit halber hier, damit sie nicht denken, Quantile müssten immer auf Datenpunkten liegen wie in Methode 1. 
+Lass dich nicht davon verunsichern, dass es 9 verschiedene Berechnungsmethoden gibt, die alle zu leicht unterschiedlichen Ergebnissen kommen. Das ist nur der Vollständigkeit halber hier, damit du nicht denkst, Quantile müssten immer auf Datenpunkten liegen wie in Methode 1. 
 
 - Methode 1 ist für diskrete Daten gedacht und liefert nur Quantile, die auch auf tatsächlichen Datenpunkten liegen.
 
@@ -508,7 +536,7 @@ alter <- rtutorials::einkaufen$Alter[is.na(rtutorials::einkaufen$Alter) == F] |>
 ::: aufgabe
 **1.**
 
-Die Punkte aus den obigen Grafiken sind im Vektor `alter` gespeichert. Verwenden Sie die `quantile()`-Funktion ohne weitere Argumente außer den Daten, um sich die **Quartile** ausgeben zu lassen. (Quartil so wie *quarter* = Viertel)
+Die Punkte aus den obigen Grafiken sind im Vektor `alter` gespeichert. Verwende die `quantile()`-Funktion ohne weitere Argumente außer den Daten, um sich die **Quartile** ausgeben zu lassen. (Quartil so wie *quarter* = Viertel)
 
 :::
 
@@ -579,8 +607,8 @@ question_radio("Welches Skalenniveau muss mindestens vorliegen, um den Interquar
 ::: aufgabe
 **Anwendungsaufgabe: Boxplot**
 
-Nehmen Sie sich ein Blatt Papier und einen Stift zur Hand. Zeichnen Sie einen Boxplot der Altersdaten!
-Nutzen Sie den Codeblock, um die nötigen Maße zu erhalten. Die Daten sind im Vektor `alter` enthalten. 
+Nimm dir ein Blatt Papier und einen Stift zur Hand. Zeichne einen Boxplot der Altersdaten!
+Nutze den Codeblock, um die nötigen Maße zu erhalten. Die Daten sind im Vektor `alter` enthalten. 
 :::
 
 ::: grau-nb
@@ -662,9 +690,8 @@ pointi
 
 ```
 
-```{r}
-message("Bild einfügen mit Personen in Reihe dem Alter nach sortiert")
-```
+![](images/images.png)
+[image source: labbe.de](https://www.labbe.de/Wie-die-Orgelpfeifen)
 
 Dann können wir das 25% - Qua**nnnnnn**til bestimmen, was dem 1. Qua**rrrrr**til (wie *quarter* = Viertel) entspricht. 
 
@@ -728,9 +755,9 @@ pointi +
 
 Die Berechnung vieler statistischer Kennwerte ist in R ziemlich straight forward: Es gibt dafür oft eingebaute Funktionen, und wenn nicht, gibt es Pakete, die Funktionen enthalten. Immerhin wurde R entworfen mit dem Ziel, statistische Berechnungen zu ermöglichen.
 
-Sie kennen nun bereits einige statistische Kennwerte. Es gibt noch viele mehr, und es geht nicht darum, sich alles zu merken, sondern zu wissen, wo Sie die passende Funktion für das gewünschte Maß finden. Oft reicht dafür eine kurze Suche im Internet.\
+Du kennst nun bereits einige statistische Kennwerte. Es gibt noch viele mehr, und es geht nicht darum, sich alles zu merken, sondern zu wissen, wo du die passende Funktion für das gewünschte Maß findest Oft reicht dafür eine kurze Suche im Internet.\
 \
-Alle diese Funktionen sind sich ähnlich: Sie nehmen als erstes Argument einen Vektor, der die Werte enthält, mit denen gerechnet werden soll. Deswegen haben Sie im ersten Teil gelernt, wie Sie Vektoren erstellen und speichern.
+Alle diese Funktionen sind sich ähnlich: Sie nehmen als erstes Argument einen Vektor, der die Werte enthält, mit denen gerechnet werden soll. Deswegen hast du im ersten Teil gelernt, wie du Vektoren erstellen und speichern kannst.
 
 Hier nochmal eine Übersicht über deskriptivstatistische Kennwerte mit ihren eingebauten Funktionen:
 
@@ -764,6 +791,34 @@ Hilfreich ist auch der Befehl `summary()`, der automatisch eine Zusammenfassung 
 
 ```{r test, exercise=TRUE, exercise.caption="Zum Ausprobieren"}
 
+```
+
+## Abschlussquiz
+
+
+```{r abschlussquiz_01, echo = FALSE}
+learnr::quiz(caption = "Teste dein Verständnis",
+             learnr::question_radio("Die Spannweite...",
+               random_answer_order = TRUE,
+               answer("... gibt die mittlere Abweichung vom Mittelwert an."),
+               answer("... kann in allen Skalenniveaus berechnet werden."),
+               answer("... gibt an, in welchem Bereich 50 % der Werte liegen."),
+               answer("... gibt den Bereich von der kleinsten zur größten Zahl an.", correct = TRUE),
+               allow_retry = TRUE
+             ),
+             learnr::question_radio("Je größer die Varianz...",
+                                    answer("... desto genauer ist der Mittelwert."),
+                                    answer("... desto weiter streuen die Daten.", correct = TRUE),
+                                    answer("... desto kleiner die Standardabweichung."),
+                                    answer("... desto größer der Interquartilsabstand", correct = T),
+                                    allow_retry = TRUE,
+                                    random_answer_order = TRUE),
+             learnr::question_text("Die Streuung des Medians ist:",
+                                   answer("Varianz"),
+                                   answer("Standardabweichung"),
+                                   answer("Interquartilsabstan", correct = TRUE),
+                                   allow_retry = TRUE
+                                   ))
 ```
 
 ## Learnings
