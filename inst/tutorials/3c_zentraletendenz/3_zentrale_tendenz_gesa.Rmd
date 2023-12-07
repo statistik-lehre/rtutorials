@@ -145,6 +145,9 @@ fluidPage(
       hr(),
       htmlOutput("sum"),
       br(),
+      actionButton("solution",
+                   label = "Lösung",
+                   icon = icon("lightbulb")),
       actionButton("new",
                    label = "Neue Zahlenreihe!",
                    icon = icon("rotate"))
@@ -286,6 +289,9 @@ df <- reactive({
            sum(ndiff()) |> round(digits = 3),
            "</b></font>")
   }) |> bindCache(input$zahl, input$new)
+  
+  observe(updateSliderInput(inputId = "zahl",
+                            value = mean(x()))) |> bindEvent(input$solution)
 ```
 
 <br>
