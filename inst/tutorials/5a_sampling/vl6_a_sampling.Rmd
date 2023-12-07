@@ -45,17 +45,20 @@ Dabei werden viele neue Konzepte und Begriffe fallen. Einige davon sind:
 
 ## Stichprobenkennwerteverteilung
 
-Der fundamentale Baustein für das Verständnis von Inferenzstatistik ist zu verstehen, was eine Stichproben---Kennwerte---Verteilung ist.
+Der fundamentale Baustein für das Verständnis von Inferenzstatistik ist zu verstehen, was eine \
+**Stichproben---Kennwerte---Verteilung** ist.
 
-Dazu gibt es ein tolles Beispiel im frei verfügbaren Online-Lehrbuch [*Modern Dive*](https://moderndive.com/7-sampling.html), was wir hier übernehmen [@ismay2022]. Der folgende Absatz übersetzt Teile des Kapitels 7.
+Dazu gibt es ein tolles Buchkapitel im frei verfügbaren Online-Lehrbuch [*Modern Dive*](https://moderndive.com/7-sampling.html), was wir hier übernehmen [@ismay2022]. Der folgende Teil ist eine Übersetzung von Teilen des Kapitels 7, leicht adaptiert.
+
+<hr>
 
 In diesem Gefäß ist eine unbekannte Zahl roter und weißer gleichgroßer Kugeln. Es wurde gut durchmischt. Wir fragen uns jetzt: „Welcher Anteil der Kugeln ist rot?\"
 
-![EIn Gefäß mit roten und weißen Kugeln](images/bowl.jpg){width=100%}
+![Ein Gefäß mit roten und weißen Kugeln](images/bowl.jpg){width=100%}
 
 Eine Möglichkeit, den Anteil roter Kugeln zu bestimmen, wäre eine vollständige Zählung aller Kugeln. Dann könnte die Zahl der roten Kugeln durch die Gesamtanzahl geteilt werden. In der Schüssel sind aber mit Absicht so viele Kugeln, dass das ein langer und ermüdender Prozess wäre.
 
-### eine Stichprobe ziehen
+### Eine Stichprobe ziehen
 
 Anstelle der vollständigen Zählung können wir eine Schaufel mit kugelförmigen Aussparungen verwenden, um 50 zufällige Bälle aus dem Gefäß zu ziehen.
 
