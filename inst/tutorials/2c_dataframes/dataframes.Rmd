@@ -247,7 +247,7 @@ Auf eine Matrix greifst du wie folgt zu: `matrix[Zeile, Spalte]`
 
 Da es visuell leichter zu verstehen ist, auch hier ein kurzer Ausschnitt aus dem `Cheat Sheet`.
 
-![](images/matrix_index.png){width="50%"}
+![](images/matrix_index.PNG){width="50%"}
 
 source:[Base R cheat sheet by Mhairi McNeil](https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf)
 
@@ -523,9 +523,9 @@ learnr::question_checkbox(
 
 Fassen wir nochmal graphisch zusammen, um die Stärken und Schwächen der beiden Subsetting Arten zu verstehen:
 
-![](images/matrix_subsetting.png){width="25%"}
+![](images/matrix_subsetting.PNG){width="25%"}
 
-![](images/list_subsetting.png){width="40%"}
+![](images/list_subsetting.PNG){width="40%"}
 
 source: [Base R cheat sheet by Mhairi McNeil](https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf)
 
@@ -600,9 +600,9 @@ Manchmal möchtest du weitere Variablen (Spalten) oder auch Beobachtungen (Zeile
 
 Was diese tun kannst du aus dieser Abbildung schließen:
 
-![](images/cbind.png){width="40%"}
+![](images/cbind.PNG){width="40%"}
 
-![](images/rbind.png){width="40%"}
+![](images/rbind.PNG){width="40%"}
 
 source: [Base R cheat sheet by Mhairi McNeil](https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf)
 
