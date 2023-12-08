@@ -1,0 +1,48 @@
+---
+title: "Logik von Signifikanztests"
+output:
+  learnr::tutorial:
+    language: de
+    css: css/boxes.css
+    fig_caption: no
+    allow_skip: true
+    progressive: true
+runtime: shiny_prerendered
+bibliography: ref.json
+link-citations: TRUE
+description: Power-Analyse
+resource_files:
+- css/boxes.css
+tutorial:
+  id: significance
+  version: 1
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Lernziele
+
+Im letzten Tutorial hast du über Stichprobenziehung gelernt, und was Stichprobenvariation ist. In diesem Tutorial geht es darum zu verstehen, wie Nullhypothesen-Signifikanztestung funktioniert.
+
+## Nullhypothesen-Signifikanztests
+
+Diese Art von Tests machen eine Annahme darüber, wie die Stichprobenkennwerte verteilt sein müssten,
+wenn es keinerlei Effekt gäbe. Das heißt auch Nullhypothese. Die Stichprobenkennwerteverteilung unter Annahme der Nullhypothese ist bekannt. 
+
+
+
+Dann wird geschaut, wie wahrscheinlich der beobachtete Stichprobenkennwert unter Annahme der Nullhypothese auftreten könnte. Ist diese Wahrscheinlichkeit sehr gering, klassischerweise wird die Grenze da bei $p \leq 5 \%$ gesetzt, wird die Nullhypothese verworfen.
+
+Der Wissensgewinn ist hier die Verneinung der Nullhypothese. Lautet sie zum Beispiel: "Die Mittelwerte unterscheiden sich nicht", und das was wir beobachten 
+
+
+
+
+## Abschlussquiz
+
+## Learnings
+
+
