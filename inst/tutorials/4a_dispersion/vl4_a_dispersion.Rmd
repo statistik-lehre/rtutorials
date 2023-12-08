@@ -35,7 +35,7 @@ In diesem Tutorial lernst du, wie du Daten nicht nur zusammenfasst sondern auch 
 Am Ende des Tutorials kann ich:
 
 -   <input type="checkbox" unchecked> die Spannweite von Daten berechnen </input>
--   <input type="checkbox" unchecked> die Vanrianz und Standardabweichung berechnen </input>
+-   <input type="checkbox" unchecked> die Varianz und Standardabweichung berechnen </input>
 -   <input type="checkbox" unchecked> Quantile berechnen </input>
 
 ## Intuition bekommen
@@ -54,6 +54,8 @@ Mach dich mit den Zusammenhängen vertraut:
   
 Was fällt dir auf?
 :::
+
+<br>
 
 ```{r ui}
             sliderInput("var",
@@ -94,7 +96,7 @@ Wir arbeiten mit Beispieldaten, die auch in der Vorlesung verwendet wurden:
 x <- c(1, 1, 9, 3, 6)
 ```
 
-```{r range, fig.height=2}
+```{r range, fig.height=2, out.width="100%"}
 x <- c(1, 1, 9, 3, 6)
 
 df <- data.frame(x)
