@@ -166,6 +166,7 @@ Ohne dieses kleine HTML-Attribut in `{}` wird das Bild je nach Auflösung manchm
 Die `{}` müssen ohne Leerzeichen direkt nach dem Bild folgen.
 
 ![ein Bild mit 80% Breite](images/code_sources.png){width=80%}
+
 Das obige Bild hat 80% Breite, was manchmal ein netter Wert ist.
 
 Bei 100% kann man den unteren Teil nicht mehr sehen, weil es dann vertikal zu lang ist.
@@ -183,6 +184,29 @@ Es funktionieren auch GIFs:
 ![Mind Blowing](images/mind_blown.gif)
 
 Hier ist die Auflösung so gering, dass es nicht Gefahr läuft, die ganze Seite zu blockieren. 
+
+### Plots
+
+Plots werden in Code-Chunks erzeugt:
+
+```{r plot}
+plot(rnorm(100))
+```
+
+Sehr hilfreiche Chunk-Optionen um die Größe des Plots zu kontrollieren:
+
+- `fig.height=...` (inches)
+- `out.width=100%` (Rescaling, Prozent der Fensterbreite)
+
+Beispiel:
+
+```{r plot-sized, fig.height=3, out.width="100%"}
+plot(rnorm(100))
+```
+
+Im Gegensatz zum Plot oben reagiert dieser hier dynamisch auf die Fensterbreite,
+dank `out.width="100%"`.
+Das ist in den schmalen `learnr`-Tutorials besonders wichtig.
 
 ## Code Chunks
 
