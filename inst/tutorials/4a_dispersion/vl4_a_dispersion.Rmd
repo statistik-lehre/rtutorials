@@ -5,6 +5,7 @@ output:
     language: de
     css: css/boxes.css
     fig_caption: no
+    allow_skip: true
 runtime: shiny_prerendered
 bibliography: ref.json
 link-citations: TRUE
@@ -436,7 +437,7 @@ Für Erklärungszwecke sind die Altersdaten von genau 100 Personen zufällig aus
 
 ### Intuition bekommen
 
-Stell dir vor, du sortierst 100 Personen nach dem Alter und stelst alle in  einer aufsteigenden Reihe auf, vom Baby bis zu Senioren. Dann ist z.B. das 25%-Quantil das Alter der 25. Person in dieser Reihe. Oder der 26. Person, je nachdem wie du es auslegst Oder sogar der Mittelwert des Alters der 25. und 26. Person. Es gibt nicht den "einen" Weg, Quantile zu berechnen. 
+Stell dir vor, du sortierst 100 Personen nach dem Alter und stellst alle in  einer aufsteigenden Reihe auf, vom Baby bis zu Senioren. Dann ist z.B. das 25%-Quantil das Alter der 25. Person in dieser Reihe. Oder der 26. Person, je nachdem wie du es auslegst Oder sogar der Mittelwert des Alters der 25. und 26. Person. Es gibt nicht den "einen" Weg, Quantile zu berechnen. 
 
 Die mathematische Ausdrucksweise für das 25%-Quantil im Beispiel wäre:
 
@@ -793,7 +794,7 @@ Hier nochmal eine Übersicht über deskriptivstatistische Kennwerte mit ihren ei
 Hilfreich ist auch der Befehl `summary()`, der automatisch eine Zusammenfassung der wichtigen deskriptivstatistischen Kennwerte erstellt.
 
 ```{r test, exercise=TRUE, exercise.caption="Zum Ausprobieren"}
-
+x
 ```
 
 ## Abschlussquiz
