@@ -1,5 +1,5 @@
 ---
-title: "Visualisierung mit ggplot2"
+title: "Visualisierung"
 output:
   learnr::tutorial:
     language: de
@@ -10,7 +10,7 @@ output:
 runtime: shiny_prerendered
 bibliography: ref.json
 link-citations: TRUE
-description: Schöne Diagramme erstellen. Die Grammar of Graphs wird kurz erklärt, das Prinzip wonach ggplot2 aufgebaut ist. Die Erstellung verschiedener Diagrammarten wird geübt. Aesthetic Mappings, Geoms, Facets. 
+description: Schnelle Diagramme erstellen, schöne Diagramme erstellen. Die Grammar of Graphs wird kurz erklärt, das Prinzip wonach ggplot2 aufgebaut ist. Die Erstellung verschiedener Diagrammarten wird geübt. Aesthetic Mappings, Geoms, Facets. 
 resource_files:
 - css/boxes.css
 tutorial:
@@ -21,12 +21,37 @@ tutorial:
 ```{r setup, include=FALSE}
 library(learnr)
 library(ggplot2)
+library(kableExtra)
+library(tibble)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## Lernziele
+## Inhalt
 
-<input type="checkbox" unchecked> Grafiken mit `ggplot2` nach dem Baukasten der *Grammar of Graphs* erstellen
+Jetzt kommt wirklich einer der allercoolsten Teile des ganzen Kurses. R ist einfach
+unfassbar mächtig, was das Visualisieren von Daten angeht, viel ausgefeilter und vielfältiger, als
+Excel und SPSS es je erreichen können. Unser Ziel ist euch ein paar schnelle Kochrezepte für die wichtigsten
+Visualisierungsaufgaben mitzugeben, und die Neugier auf mehr zu wecken, in dem wir eine kleine Einführung in das Visualisierungspaket `ggplot2` geben.
+
+### Lernziele
+
+<input type="checkbox" unchecked> Punktdiagramm (*scatterplot*) </input>
+
+<input type="checkbox" unchecked> Balkendiagramm (*barplot*) </input>
+
+<input type="checkbox" unchecked> Histogramm (*histogram*) </input>
+
+<input type="checkbox" unchecked> Liniendiagramm (*linegraph*) </input>
+
+<input type="checkbox" unchecked> Boxplot </input>
+
+<input type="checkbox" unchecked> Schnelle Grafikfunktionen zum Überblick </input>
+
+<input type="checkbox" unchecked> Grafiken mit `ggplot2` nach dem Baukasten der *Grammar of Graphs* erstellen </inpu>
+
+<input type="checkbox" unchecked> colorblind-friendly sein </input>
+
+### benötigtes Paket
 
 Der erste Schritt für dieses Tutorial ist, das Paket `ggplot2` in die aktive Sitzung zu laden. Tu das mittels `library()`!
 
@@ -39,9 +64,22 @@ library()
 library(ggplot2)
 ```
 
+### Die fünf essentiellen Diagrammtypen
+
+```{r echo=FALSE}
+de <- c("Punktdiagramm","Liniendiagramm","Histogramm","Boxplot","Balkendiagramm")
+en <- c("scatterplot","linegraph", "histogram", "boxplot", "barplot")
+vars <- c("2 stetige Variablen", "1 stetige und 1 zeitlich geordnete Variable",
+          "1 stetige Variable", "1 stetige Variable", "1 kategoriale Variable")
+tibble(` `= c("1.", "2.", "3.", "4.", "5."), de, en, `geeignet für` = vars) |>
+  kbl() |>
+  kable_styling()
+```
+
+
 ## Grammar of Graphs
 
-Dieses Tutorial orientiert sich an einem tollen, frei verfügbaren Online-Lehrbuch namens [*Modern Dive*](https://www.moderndive.com) [@ismay2022]. Im Folgenden wird das Kapitel zu Visualisierungen in Teilen übersetzt oder paraphrasiert.
+Einiges im Folgenden orientiert sich an einem tollen, frei verfügbaren Online-Lehrbuch namens [*Modern Dive*](https://www.moderndive.com) [@ismay2022]. Ab hier wird das Kapitel zu Visualisierungen in Teilen übersetzt und paraphrasiert.
 
 <hr>
 
