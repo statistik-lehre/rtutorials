@@ -20,5 +20,70 @@ tutorial:
 
 ```{r setup, include=FALSE}
 library(learnr)
+library(ggplot2)
 knitr::opts_chunk$set(echo = FALSE)
 ```
+
+## Lernziele
+
+<input type="checkbox" unchecked> Grafiken mit `ggplot2` nach dem Baukasten der *Grammar of Graphs* erstellen
+
+Der erste Schritt für dieses Tutorial ist, das Paket `ggplot2` in die aktive Sitzung zu laden. Tu das mittels `library()`!
+
+
+```{r lib, exercise = TRUE, exercise.cap = "ggplot2 laden"}
+library()
+```
+
+```{r lib-solution}
+library(ggplot2)
+```
+
+## Grammar of Graphs
+
+Dieses Tutorial orientiert sich an einem tollen, frei verfügbaren Online-Lehrbuch namens [*Modern Dive*](https://www.moderndive.com) [@ismay2022]. Im Folgenden wird das Kapitel zu Visualisierungen in Teilen übersetzt oder paraphrasiert.
+
+<hr>
+
+### Geschichte
+
+Leland Wilkinson ist der Gründer des Grammar of Graphs-Ansatzes. Im Grunde ist das eine Theorie darüber, mit welchen Regeln und Bausteinen statistische Grafiken erstellt werden können [@wilkinson2005].
+
+`ggplot2` ist die Umsetzung dieses theoretischen Baukastens, und das `gg` steht für *Grammar of Graphs*. Es wurde von Hadley Wickham geschrieben und ist ein relativ altes Paket im R-Ökosystem [@wickham2009]. Es stammt aus einer Zeit, als es selbst den `magrittr` Pipe-Operator `%>%` noch nicht gab. Deswegen verwendet `ggplot2` seinen eigenen Pipe-Operator, ein `+`. Dazu aber später mehr.
+
+### Baukasten
+
+Gehen wir sofort zur Sache:
+
+> „Eine statistische Grafik ist: ein *aesthetic mapping* von Variablen auf die visuellen Eigenschaften geometrischer Objekte."
+
+So sieht `ggplot2`-Code aus, um
+
+## Barrierefreiheit
+
+Ein nicht zu vernachlässigender Anteil der Bevölkerung kann bestimmte Farben nicht unterscheiden. Deswegen wurden von schlauen Menschen Farbpaletten entworfen, die keine ambivalenten Farben wie rot und grün enthalten, und auch ganz ohne Farbwahrnehmung nur über Helligkeit und Dunkelheit der Farben in schwarz weiß funktionieren würden. 
+
+Eine der verbreitetesten ist `viridis`.
+
+### Viridis
+
+```{r viridis-demo, message=FALSE, warning=FALSE}
+library(ggplot2)
+library(hexbin)
+library(viridis)
+
+dat <- data.frame(x = rnorm(10000), y = rnorm(10000))
+
+p <- ggplot(dat, aes(x = x, y = y)) +
+  geom_hex() + coord_fixed() +
+  scale_fill_gradientn(colours = viridis(256, option = "D")) +
+  theme_bw()
+
+p
+```
+
+Die obenstehende Grafik ist ein gutes Beispiel dafür, wie hell-dunkel Kontraste verwendet werden können. So ist das Ganze in schwarz-weiß immer noch lesbar, was insbesondere für Menschen mit eingeschränkter Farbwahrnehmung klasse ist, denn alles was schwarz weiß gut lesbar ist, ist immer auch colorblind-friendly. 
+
+## Credit
+
+### Literaturverzeichnis
