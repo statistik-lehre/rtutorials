@@ -1,0 +1,122 @@
+---
+title: "Pipe"
+output:
+  learnr::tutorial:
+    language: de
+    css: css/boxes.css
+    fig_caption: no
+    progressive: true
+    allow_skip: true
+runtime: shiny_prerendered
+bibliography: ref.json
+link-citations: TRUE
+description: Lerne den Pipe-Operator kennen, und wie Code dadurch lesbarer wird. 
+resource_files:
+- css/boxes.css
+tutorial:
+  id: pipe
+  version: 1
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(rtutorials)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+## Lernziele
+
+## Pipe
+
+Das englische *Pipe* ist hier als Röhre zu verstehen, nicht als Pfeife. Auch wenn es lustig wäre, einen "Pfeifen-Operator" zu haben. 
+
+Der Pipe-Operator `|>` leitet den Output einer Funktion als Input an die nächste Funktion weiter, quasi wie eine Röhre durch die das Ergebnis der ersten Funktion durchgeschickt wird.
+
+Hier ist ein Beispiel: 
+
+```{r einkaufen, exercise = TRUE, exercise.cap = "Pipe Beispiel"}
+einkaufen$Alter |> mean(na.rm = TRUE)
+```
+
+ist genau das Gleiche wie:
+
+```{r einkaufen2, exercise = TRUE, exercise.cap = "Beispiel ohne Pipe"}
+mean(einkaufen$Alter, na.rm = TRUE)
+```
+
+Die Pipe fügt das, was reingegeben wird, **immer** als erstes Argument bei der nächsten Funktion ein. Das geht meistens gut, denn wir erinnern uns an das Tutorial "Funktionen erkunden": Das erste Argument ist meistens das Datenargument. 
+
+```{r pastepipe, exercise = TRUE, exercise.cap = "Pipe fügt Input als erstes Argument ein"}
+7 |> paste("Zwerge")
+```
+
+Auch hier: Normalerweise würde es ohne Pipe so aussehen.
+
+```{r pastepipe2, exercise = TRUE, exercise.cap = "Paste ohne Pipe"}
+paste(7, "Zwerge")
+```
+
+So lange es nur eine Pipe ist, ist sie relativ harmlos und überflüssig, und du fragst dich vielleicht wozu das Ganze gut ist. Die Pipe hat das große Potential, langen, verschachtelten
+Code auf elegante Art lesbar zu machen. Nehmen wir zum Beispiel mal die schnelle Erstellung eines Balkendiagramms (mehr dazu im Visualisierungstutorial):
+
+```{r barplot, exercise = TRUE, exercise.cap = "schneller Barplot mit Pipe"}
+einkaufen$Verkehrsmittel |> table() |> barplot()
+```
+
+Was sieht besser aus und ist besser zu erfassen? Der obige Code, oder das hier?
+
+```{r barplot2, exercise = TRUE, exercise.cap = "schneller Barplot ohne Pipe"}
+barplot(table(einkaufen$Verkehrsmittel))
+```
+
+Beides ist von der Funktion her äquivalent, aber die Pipe ermöglicht ein klares Lesen
+von links nach rechts:
+
+„Nimm die Spalte Verkehrsmittel, tabelliere die Häufigkeit der einzelnen Ausprägungen, dann zeichne daraus ein Balkendiagramm“. 
+
+```r
+einkaufen$Verkehrsmittel |> table() |> barplot()
+```
+
+::: grau-nb
+**Verbalisierung**
+
+`|>` kann gelesen werden wie ein „dann‘. 
+:::
+
+### `%>%`
+ 
+`%>%` ist auch ein Pipe-Operator, der aus dem `magrittr`-Paket stammt. Bis vor kurzem gab es `|>` noch nicht, und vorher war `%>%` jahrelang der Standard, der deswegen auch überall in Anleitungen im Internet zu sehen ist und immer noch sehr häufig genutzt wird. 
+
+Die beiden Pipe-Operatoren tun aber ziemlich genau das selbe und unterscheiden sich vor allem in einigen technischen Details, wie sie mit Spezialfällen umgehen, was aber hier nicht wichtig ist für dich. Wichtig ist, dass du beide schon mal gesehen hast und weißt, dass:
+
+- `%>%` nur funktioniert wenn `magrittr` geladen ist
+- `|>` in base R eingebaut ist und die gleiche Funktion hat (wenn auch in einigen Spezialfällen anders reagiert, die uninteressant sind auf unserem Level).
+
+### Pipelines
+
+Die Beispiele mit zweifacher Verschachtelung oben waren ja trotzdem noch halbwegs 
+lesbar. Die Pipe wird aber dann erst richtig interessant, wenn die Daten eine lange,
+vielschrittige Aufbereitung durchlaufen müssen - so ähnlich wie in einer Fabrik:
+
+```r
+metall |> 
+  schmelzen() |>
+  gießen() |>
+  abkühlen() |>
+  lackieren() |>
+  verpacken() |>
+  verladen()
+```
+„**Nimm** Metall. Schmelze es, **dann** gieße es, **dann** kühle es ab, **dann**
+lackiere es, **dann** verpacke, **dann** dann verlade es.“
+
+Das ist besonders bei der Aufbereitung von Datensätzen sehr häufig so, was auch *Data Wrangling* genannt wird und in einem eigenen Tutorial Raum finden wird. 
+
+
+
+
+## Abschlussquiz
+
+## Learnings
