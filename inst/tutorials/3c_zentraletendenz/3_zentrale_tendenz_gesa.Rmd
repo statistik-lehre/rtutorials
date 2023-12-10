@@ -133,6 +133,7 @@ Nutze den Slider, um eine Zahl zu finden, wo sich die positiven und negativen Ab
 # Shiny App zum Finden des Mittelwerts
 
 fluidPage(
+  shinyFeedback::useShinyFeedback(),
     sliderInput("zahl",
                 "zusammenfassende Zahl:",
                 min = 1,
@@ -292,6 +293,11 @@ df <- reactive({
   
   observe(updateSliderInput(inputId = "zahl",
                             value = mean(x()))) |> bindEvent(input$solution)
+  
+  observe(shinyFeedback::feedbackSuccess("zahl",
+                                         show = input$zahl == mean(x()))
+          ) |> bindEvent(input$zahl)
+  
 ```
 
 <br>
@@ -483,7 +489,7 @@ Je nachdem, ob wir eine gerade Anzahl von Werten haben, unterscheidet sich die B
 Bei einer ungeraden Anzahl von Werten gibt es einen, der genau in der Mitte liegt.
 Der ist dann auch der Median. Sehr praktisch.
 
-```{r fig.height=1}
+```{r fig.height=1, out.width="90%"}
 dfu <- data.frame(x = 1:5, y = 1)
 ggplot(dfu) +
   geom_vline(xintercept = 3, color = "blue") +
@@ -500,7 +506,7 @@ ggplot(dfu) +
 Das ist bei einer geraden Anzahl nicht der Fall, und der Median ist dann der Mittelwert beider Werte
 die in der Mitte sind. 
 
-```{r fig.height=1}
+```{r fig.height=1, out.width="90%"}
 dfu <- data.frame(x = 1:4, y = 1)
 ggplot(dfu) +
   geom_vline(xintercept = 2.5, color = "blue") +
@@ -522,7 +528,7 @@ Bei einer geraden Anzahl von Rängen (wie hier), wo es zwei Werte in der Mitte g
 werden die beiden Werte addiert und durch 2 geteilt.\
 Hier: $Median = \frac{101 + 102}{2} = 101.5$.
 
-```{r fig.height=2}
+```{r fig.height=2, out.width="90%"}
 dfu <- data.frame(x = rank(iq), y = 1, iq = iq)
 ggplot(dfu) +
   geom_vline(xintercept = 5.5, color = "blue") +
@@ -619,24 +625,26 @@ Es ist in manchen Fällen sinnvoll, sich beide Werte (Mittelwert und Median) anz
 
 Er ist robuster und in manchen Fällen sogar inhaltlich aussagekräftiger. Ein gutes Beispiel wäre: Eine Person hat 0€ auf dem Konto, eine andere 100€ und die dritte 5 000€.\ Der Mittelwert würde jetzt sagen, dass die Menschen im Durchschnitt <font color="red">1700€</font> auf dem Konto haben. Das bildet die Realität nicht wirklich ab. Der Median hingegen würde <font color="blue">100€</font> sagen, was vom Verständnis her besser passt.
 
-```{r}
+```{r fig.height=2, out.width="90%"}
 x <- c(0, 100, 5000)
 df <- data.frame(x, y = 1)
 ggplot(df, aes(x, y)) +
   geom_vline(xintercept = mean(x), color = "red") +
   geom_vline(xintercept = median(x), color = "blue") +
-  geom_point(size = 1) +
+  geom_point(size = 2) +
   annotate(geom = "label", x = c(mean(x), median(x)),
            y = 1.1,
            label = c("Mean", "Median")) +
   theme_bw() +
   scale_y_continuous(name = NULL, breaks = NULL,
-                     limits = c(0.5, 1.5)) +
-  scale_x_continuous(name = "Geld auf dem Konto",
-                     breaks = scales::breaks_pretty(),
+                     limits = c(0.9, 1.2)) +
+  scale_x_continuous(name = "",
+                     labels = scales::label_currency(suffix = "€",
+                                                     prefix = "",
+                                                     big.mark = ""),
                      minor_breaks = NULL,
-                     limits = c(-100, 5000)) +
-  labs(title = "Empfindlichkeit gegenüber Extremwerten")
+                     limits = c(-100, 5000)) #+
+  #labs(title = "Empfindlichkeit gegenüber Extremwerten")
 ```
 
 Eine schnelle Übersicht bietet dir die Funktion `summary()`. Hier werden dir Mittelwert (mean), Median, Reichweite (kleinster Wert und größter Wert) sowie der Interquartilsabstand (nächster Block, Tutorial Dispersionsmaße) angezeigt.
@@ -714,6 +722,16 @@ question_text("Was ist die häufigste Lieblingsfarbe bei den 10 Studis?",
               allow_retry = TRUE)
 ```
 
+
+<details>
+<summary><a>▼ Zeige Balkendiagramm</a></summary>
+<br>
+```{r}
+farben <- c("pink", "pink", "blau", "blau", "pink", "blau", "blau", "pink", "lila", "pink")
+
+barplot(table(farben), col = c("steelblue", "purple", "pink"))
+```
+</details>
 <br>
 
 ::: infobox
