@@ -162,22 +162,25 @@ sizes <- 3:7
 sampler <- function() sample(1:9, size = sample(sizes, size = 1))
 
 # Vektor mit allen erlaubten Mittelwerten
-test_vec <- seq(from = 1, to = 9, by = 0.5)
-# Mittelwert 5 ist nicht erlaubt, damit die App beim Start nicht sofort gelöst ist...
-test_vec <- test_vec[test_vec != 5]
+test_vec <- reactive({
+  #input$new
+  tv <- seq(from = 1, to = 9, by = 0.5)
+  # Schließe den Wert des Sliders aus, damit die App nicht gelöst startet
+  tv[tv != isolate(input$zahl)]
+}) |> bindEvent(input$new, ignoreNULL = FALSE)
 
 # Zahlenreihen-Generierung
 x <- reactive({
   # Nehme Abhängigkeit vom Neue Zahlenreihe Knopf
-  input$new
+ # input$new
   
   # Wiederhole Sampling, bis Mittelwert erlaubt ist
   x <- sampler()
-  while(!(mean(x) %in% test_vec)){
+  while(!(mean(x) %in% test_vec())){
     x <- sampler()
   }
   x |> sort()
-})
+}) |> bindEvent(input$new, ignoreNULL = FALSE)
 
   n <- reactive({
     length(x())
