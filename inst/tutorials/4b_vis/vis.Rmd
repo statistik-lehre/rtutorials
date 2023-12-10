@@ -23,6 +23,7 @@ library(learnr)
 library(ggplot2)
 library(kableExtra)
 library(tibble)
+library(rtutorials)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
@@ -70,10 +71,46 @@ library(ggplot2)
 de <- c("Punktdiagramm","Liniendiagramm","Histogramm","Boxplot","Balkendiagramm")
 en <- c("scatterplot","linegraph", "histogram", "boxplot", "barplot")
 vars <- c("2 stetige Variablen", "1 stetige und 1 zeitlich geordnete Variable",
-          "1 stetige Variable", "1 stetige Variable", "1 kategoriale Variable")
+          "stetige Variablen", "1 stetige Variable", "1 kategoriale Variable")
 tibble(` `= c("1.", "2.", "3.", "4.", "5."), de, en, `geeignet für` = vars) |>
   kbl() |>
   kable_styling()
+```
+
+```{r fiveplots, fig.height=8, out.width="100%"}
+par(mfrow = c(3, 2),
+    bty = "n")
+plot(heated[ ,c("maxtemp", "edvisits")],
+     main = "1.",
+     axes = F,
+     ylab = NA,
+     xlab = NA)
+plot(heated$enddate[heated$enddate > as.Date("2022-03-24")], 
+     heated$maxtemp[heated$enddate > as.Date("2022-03-24")],
+     type = "l",
+     main = "2.",
+     axes = F,
+     ylab = NA,
+     xlab = NA)
+hist(heated$maxtemp,
+     main = "3.",
+     axes = F,
+     ylab = NA,
+     xlab = NA)
+boxplot(heated$maxtemp ~ factor(lubridate::month(heated$enddate)),
+        main = "4.",
+        axes = F,
+        ylab = NA,
+        xlab = NA)
+barplot({einkaufen$Verkehrsmittel |> table()}[1:5],
+        main = "5.",
+        axes = F,
+        ylab = NA,
+        xlab = NA,
+        names.arg = NA)
+# reset par
+par(mfrow = c(1, 1),
+    bty = "o")
 ```
 
 
