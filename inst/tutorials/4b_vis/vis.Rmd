@@ -29,26 +29,40 @@ knitr::opts_chunk$set(echo = FALSE)
 ## hexbin und kableExtra?
 ```
 
-## Inhalt
+## Einführung
 
 Jetzt kommt wirklich einer der allercoolsten Teile des ganzen Kurses. R ist einfach
 unfassbar mächtig, was das Visualisieren von Daten angeht, viel ausgefeilter und vielfältiger, als
 Excel und SPSS es je erreichen können. Unser Ziel ist euch ein paar schnelle Kochrezepte für die wichtigsten
 Visualisierungsaufgaben mitzugeben, und die Neugier auf mehr zu wecken, in dem wir eine kleine Einführung in das Visualisierungspaket `ggplot2` geben.
 
+Mit R sind abgefahrene Sachen möglich. Eine vielfältige Übersicht darüber, was alles geht, erhältst du in der [R Graph Gallery](https://r-graph-gallery.com/). Hier sind ein paar Beispiele:
+
+#### [Eine Karte im Stil von Jacques Bertin](https://r-graph-gallery.com/web-valued-dots-map-bertin.html)
+
+![](images/compress/bertin.png){width=80%}
+
+#### [Heatmap stündliche Temperatur über zwei Jahre](https://r-graph-gallery.com/283-the-hourly-heatmap.html)
+
+![](images/compress/temp.png){width=80%}
+
+Das war nur, um dir einen Einblick zu geben in das, was alles möglich ist. Dieses Tutorial muss jedoch bei den Basics starten, wir werden nur grundständige Diagramme zeichnen. Das abgefahrene
+kann alles später kommen. In den Links über den Grafiken findest du detaillierte Anleitungen, sie selbst herzustellen, für deren Verständnis du aber das Grundwissen brauchst, was in diesem Tutorial
+vermittelt wird. Das hier sind die Ziele für heute: 
+
 ### Lernziele
 
-<input type="checkbox" unchecked> Punktdiagramm (*scatterplot*) </input>
+<input type="checkbox" unchecked> Punktdiagramm (*scatterplot*) erstellen </input>
 
-<input type="checkbox" unchecked> Balkendiagramm (*barplot*) </input>
+<input type="checkbox" unchecked> Balkendiagramm (*barplot*) erstellen </input>
 
-<input type="checkbox" unchecked> Histogramm (*histogram*) </input>
+<input type="checkbox" unchecked> Histogramm (*histogram*) erstellen </input>
 
-<input type="checkbox" unchecked> Liniendiagramm (*linegraph*) </input>
+<input type="checkbox" unchecked> Liniendiagramm (*linegraph*) erstellen </input>
 
-<input type="checkbox" unchecked> Boxplot </input>
+<input type="checkbox" unchecked> Boxplot erstellen </input>
 
-<input type="checkbox" unchecked> Schnelle Grafikfunktionen zum Überblick </input>
+<input type="checkbox" unchecked> Schnelle Grafikfunktionen um einen Überblick zu gewinnen </input>
 
 <input type="checkbox" unchecked> Grafiken mit `ggplot2` nach dem Baukasten der *Grammar of Graphs* erstellen </inpu>
 
@@ -73,7 +87,7 @@ library(ggplot2)
 de <- c("Punktdiagramm","Liniendiagramm","Histogramm","Boxplot","Balkendiagramm")
 en <- c("scatterplot","linegraph", "histogram", "boxplot", "barplot")
 vars <- c("2 stetige Variablen", "1 stetige und 1 zeitlich geordnete Variable",
-          "stetige Variablen", "1 stetige Variable", "1 kategoriale Variable")
+          "1 stetige Variable", "1 stetige Variable mit Gruppen", "1 kategoriale Variable")
 tibble(` `= c("1.", "2.", "3.", "4.", "5."), de, en, `geeignet für` = vars) |>
   kbl() |>
   kable_styling()
@@ -126,7 +140,7 @@ Einiges im Folgenden orientiert sich an einem tollen, frei verfügbaren Online-L
 
 Leland Wilkinson ist der Gründer des Grammar of Graphs-Ansatzes. Im Grunde ist das eine Theorie darüber, mit welchen Regeln und Bausteinen statistische Grafiken erstellt werden können [@wilkinson2005].
 
-`ggplot2` ist die Umsetzung dieses theoretischen Baukastens, und das `gg` steht für *Grammar of Graphs*. Es wurde von Hadley Wickham geschrieben und ist ein relativ altes Paket im R-Ökosystem [@wickham2009]. Es stammt aus einer Zeit, als es selbst den `magrittr` Pipe-Operator `%>%` noch nicht gab. Deswegen verwendet `ggplot2` seinen eigenen Pipe-Operator, ein `+`. Dazu aber später mehr.
+`ggplot2` ist die Umsetzung dieses theoretischen Baukastens, und das `gg` steht für *Grammar of Graphs*. Es wurde von Hadley Wickham geschrieben und ist ein relativ altes Paket im R-Ökosystem [@wickham2009].
 
 ### Baukasten
 
