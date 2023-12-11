@@ -25,11 +25,10 @@ x <- c(1, 1, 9, 3, 6)
 x <- c(1, 1, 9, 3, 6)
 ```
 
-<!-- @Lukas muss hier vlt das Paket shinywidgets noch installiert werden? Bei mir lässt sich das Dokument sonst nicht rendern -->
 
 ## Inhalt
 
-In diesem Tutorial lernst du, wie du Daten nicht nur zusammenfasst sondern auch ihre Individualität berücksichtigst: Streuungsmaße. Besonders im Zentrum stehen hierbei die Varianz bzw. Standardabweichung.
+In diesem Tutorial lernst du, wie du Daten nicht nur zusammenfasst, sondern auch ihre Individualität berücksichtigst: Streuungsmaße. Besonders im Zentrum stehen hierbei die Varianz bzw. Standardabweichung.
 
 ## Lernziele
 
@@ -150,14 +149,16 @@ diff(range(x))
 question_checkbox("Welches Skalenniveau muss mindestens vorhanden sein, um das Minimum und Maximum bestimmen zu können?",
                   answer("Nominal", message = "leider falsch, nominale Daten haben keine Reihenfolge"),
                   answer("Ordinal", correct = T, message = "ordinale Daten haben eine Reihenfolge"),
-                  answer("Metrisch", message = "metrische Daten haben nicht nur eine Reihenfolge, sondern auch Abstände, die interpretierbar sind, was für Minimum und Maximum nicht nötig ist."))
+                  answer("Metrisch", message = "metrische Daten haben nicht nur eine Reihenfolge, sondern auch Abstände, die interpretierbar sind, was für Minimum und Maximum nicht nötig ist."), 
+                  allow_retry = T)
 ```
 
 ```{r questionaes2}
 question_checkbox("Welches Skalenniveau muss mindestens vorliegen, um die Spannweite zu berechnen?",
                   answer("Nominal", message = "Leider falsch, nominale Daten haben keine Abstände"),
                   answer("Ordinal", message = "Ordinale Daten haben leider keine Information über Abstände, weswegen das Bilden der Differenz zwischen Maximum und Minumum „illegal“ ist."),
-                  answer("Metrisch", correct = T, message = "Genau! Nur metrische Daten enthalten Informationen über Abstände."))
+                  answer("Metrisch", correct = T, message = "Genau! Nur metrische Daten enthalten Informationen über Abstände."), 
+                  allow_retry = T)
 ```
 
 
@@ -197,11 +198,12 @@ $\large x_i - \bar x$
 
 +-----------------+----------+----------+----------+----------+----------+
 | $x_i$           | 1        | 1        | 3        | 6        | 9        |
-+=================+=========:+=========:+=========:+=========:+=========:+
++=================+:=========+:=========+:=========+:=========+:=========+
 | $\bar{x}$       | 4        | 4        | 4        | 4        | 4        |
 +-----------------+----------+----------+----------+----------+----------+
 | $x_i - \bar{x}$ | -3       | -3       | -1       | 2        | 5        |
 +-----------------+----------+----------+----------+----------+----------+
+
 
 : Abweichungen vom Mittelwert
 
@@ -328,15 +330,24 @@ sind wir bei der Formel für die Varianz angelangt!
 
 ### Varianz 
 
+Die allgemeine Formel für die Varianz lautet wie folgt:
+
 $$
 {\large s^2 = {\frac{\sum{(x_i-\bar{x})^2}}{n-1}} }
 $$
 
-Die Formel für die Varianz des Beispiels würde so aussehen:
+Die Formel für die Varianz unseres Beispiels würde so aussehen:
 
 $$
 {\large s^2 = {\frac{48}{4}}=12 }
 $$
+
+::: blau-nb
+Die R-Funktion `var()` berechnet die Varianz 
+:::
+
+<br>
+
 
 Überprüfe das mit R:
 
@@ -352,6 +363,14 @@ Die Standardabweichung $s$ ist die Quadratwurzel der Varianz $s^2$.
 $$
 {\large s = \sqrt{s^2} = \sqrt{12}=3.46}
 $$
+
+::: blau-nb
+Die R-Funktion `sd()` berechnet die Standardabweichung. 
+*SD* ist dabei eine weit verbreitete Abkürzung, die sich auch in wissenschaftlichen Berichten  wiederfindet.
+:::
+
+<br>
+
 
 Überprüfung mit R:
 
@@ -540,7 +559,7 @@ alter <- rtutorials::einkaufen$Alter[is.na(rtutorials::einkaufen$Alter) == F] |>
 ::: aufgabe
 **1.**
 
-Die Punkte aus den obigen Grafiken sind im Vektor `alter` gespeichert. Verwende die `quantile()`-Funktion ohne weitere Argumente außer den Daten, um sich die **Quartile** ausgeben zu lassen. (Quartil so wie *quarter* = Viertel)
+Die Punkte aus den obigen Grafiken sind im Vektor `alter` gespeichert. Verwende die `quantile()`-Funktion ohne weitere Argumente außer den Daten, um dir die **Quartile** ausgeben zu lassen. (Quartil so wie *quarter* = Viertel)
 
 :::
 
@@ -580,7 +599,8 @@ quantile(alter, probs = 0.95)
 question_radio("Welches Skalenniveau muss mindestens vorhanden sein, um Quantile bestimmen zu können?",
                   answer("Nominal", message = "leider falsch, nominale Daten haben keine Reihenfolge"),
                   answer("Ordinal", correct = T, message = "Ab Ordinalskala gibt es Informationen über eine Reihenfolge, und das ist die Mindestvoraussetzung um Quantile berechnen zu können."),
-                  answer("Metrisch", message = "Metrische Daten haben nicht nur eine Reihenfolge, sondern auch Abstände, die interpretierbar sind, was für Quantile nicht nötig ist."))
+                  answer("Metrisch", message = "Metrische Daten haben nicht nur eine Reihenfolge, sondern auch Abstände, die interpretierbar sind, was für Quantile nicht nötig ist."), 
+                  allow_retry = T)
 ```
 
 ### Interquartilsabstand
@@ -614,6 +634,8 @@ question_radio("Welches Skalenniveau muss mindestens vorliegen, um den Interquar
 Nimm dir ein Blatt Papier und einen Stift zur Hand. Zeichne einen Boxplot der Altersdaten!
 Nutze den Codeblock, um die nötigen Maße zu erhalten. Die Daten sind im Vektor `alter` enthalten. 
 :::
+
+</br>
 
 ::: grau-nb
 *Tipp*
@@ -759,7 +781,7 @@ pointi +
 
 Die Berechnung vieler statistischer Kennwerte ist in R ziemlich straight forward: Es gibt dafür oft eingebaute Funktionen, und wenn nicht, gibt es Pakete, die Funktionen enthalten. Immerhin wurde R entworfen mit dem Ziel, statistische Berechnungen zu ermöglichen.
 
-Du kennst nun bereits einige statistische Kennwerte. Es gibt noch viele mehr, und es geht nicht darum, sich alles zu merken, sondern zu wissen, wo du die passende Funktion für das gewünschte Maß findest Oft reicht dafür eine kurze Suche im Internet.\
+Du kennst nun bereits einige statistische Kennwerte. Es gibt noch viele mehr, und es geht nicht darum, sich alles zu merken, sondern zu wissen, wo du die passende Funktion für das gewünschte Maß findest. Oft reicht dafür eine kurze Suche im Internet.\
 \
 Alle diese Funktionen sind sich ähnlich: Sie nehmen als erstes Argument einen Vektor, der die Werte enthält, mit denen gerechnet werden soll. Deswegen hast du im ersten Teil gelernt, wie du Vektoren erstellen und speichern kannst.
 
@@ -810,7 +832,7 @@ learnr::quiz(caption = "Teste dein Verständnis",
                answer("... gibt den Bereich von der kleinsten zur größten Zahl an.", correct = TRUE),
                allow_retry = TRUE
              ),
-             learnr::question_radio("Je größer die Varianz...",
+             learnr::question_checkbox("Je größer die Varianz...",
                                     answer("... desto genauer ist der Mittelwert."),
                                     answer("... desto weiter streuen die Daten.", correct = TRUE),
                                     answer("... desto kleiner die Standardabweichung."),
@@ -857,4 +879,8 @@ learnr::quiz(caption = "Teste dein Verständnis",
 | `sd()`             | standard deviation              |
 | `quantile()`       | Quantile berechnen              |
 
+## Credit
+
+Dieses Tutorial wurde von Gesa Graf und Lukas Bruelheide verfasst und
+von Marie Klosterkamp reviewt.
 
