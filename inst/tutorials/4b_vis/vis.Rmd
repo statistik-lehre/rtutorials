@@ -25,6 +25,8 @@ library(kableExtra)
 library(tibble)
 library(rtutorials)
 knitr::opts_chunk$set(echo = FALSE)
+
+## hexbin und kableExtra?
 ```
 
 ## Inhalt
