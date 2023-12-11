@@ -6,7 +6,7 @@ output:
     css: css/boxes.css
     fig_caption: no
     progressive: true
-    allow_skip: true
+    allow_skip: false
 runtime: shiny_prerendered
 bibliography: ref.json
 link-citations: TRUE
@@ -68,19 +68,6 @@ vermittelt wird. Das hier sind die Ziele für heute:
 
 <input type="checkbox" unchecked> colorblind-friendly sein </input>
 
-### benötigtes Paket
-
-Der erste Schritt für dieses Tutorial ist, das Paket `ggplot2` in die aktive Sitzung zu laden. Tu das mittels `library()`!
-
-
-```{r lib, exercise = TRUE, exercise.cap = "ggplot2 laden"}
-library()
-```
-
-```{r lib-solution}
-library(ggplot2)
-```
-
 ### Die fünf essentiellen Diagrammtypen
 
 ```{r echo=FALSE}
@@ -129,26 +116,125 @@ par(mfrow = c(1, 1),
     bty = "o")
 ```
 
+## Einführung
 
-## Grammar of Graphs
+Es gibt (wie immer) tausend verschiedene Wege, Visualisierungen mit R zu erstellen. Aber einer hat sich über die Jahre herauskristallisiert, und das ist `ggplot2`. 
 
-Einiges im Folgenden orientiert sich an einem tollen, frei verfügbaren Online-Lehrbuch namens [*Modern Dive*](https://www.moderndive.com) [@ismay2022]. Ab hier wird das Kapitel zu Visualisierungen in Teilen übersetzt und paraphrasiert.
+Der Grund, warum wir dir diesen Weg beibringen:
+
+- Er folgt einem klaren Baukastenprinzip, mit dem auch später beliebig komplexe Anpassungen der Grafik an die eigenen Vorstellungen relativ schmerzfrei umgesetzt werden können. 
+
+- Es ist der populärste Weg, es gibt auf Google viele gute Anleitungen und Antworten. Und es existieren zahlreiche Eweiterungen um das Paket `ggplot2`. 
 
 <hr>
 
-### Geschichte
+Einiges im folgenden orientiert sich an einem tollen, frei verfügbaren Online-Lehrbuch namens [*Modern Dive*](https://www.moderndive.com) [@ismay2022]. Wir haben die Reihenfolge geändert, 
+Sachen übersetzt und paraphrasiert und unsere eigenen Gedanken hinzugefügt.
+
+<hr>
+
+### Grammar of Graphs
+
+Das `gg` im Paketnamen `ggplot2` steht für *Grammar of Graphs*. 
 
 Leland Wilkinson ist der Gründer des Grammar of Graphs-Ansatzes. Im Grunde ist das eine Theorie darüber, mit welchen Regeln und Bausteinen statistische Grafiken erstellt werden können [@wilkinson2005].
 
 `ggplot2` ist die Umsetzung dieses theoretischen Baukastens, und das `gg` steht für *Grammar of Graphs*. Es wurde von Hadley Wickham geschrieben und ist ein relativ altes Paket im R-Ökosystem [@wickham2009].
 
-### Baukasten
+#### benötigtes Paket
 
-Gehen wir sofort zur Sache:
+Der erste Schritt für dieses Tutorial ist, das Paket `ggplot2` in die aktive Sitzung zu laden. Tu das mittels `library()`!
 
-> „Eine statistische Grafik ist: ein *aesthetic mapping* von Variablen auf die visuellen Eigenschaften geometrischer Objekte."
+```{r lib, exercise = TRUE, exercise.cap = "ggplot2 laden"}
+library()
+```
 
-So sieht `ggplot2`-Code aus, um
+```{r lib-solution}
+library(ggplot2)
+```
+
+### Einordnung in den Prozess
+
+Wir haben jetzt Daten erhoben, importiert - und nun? Grafiken sind ein guter Weg, Zusammenhänge in den Daten sichtbar zu machen. Zum einen, um sich selbst in den Daten zu orientieren, und zum anderen auch um die Ergebnisse der Analyse zu präsentieren. Wir brauchen Visualisierungen also an zwei Stellen im Prozess: 
+
+- einmal um einen Überblick zu gewinnen
+- am Ende um Ergebnisse zu kommunizieren
+
+![](images/compress/prozess.png){width=90%}
+
+
+Welche Grafik du wann anwenden kannst, hängt vom Skalenniveau der Daten und der Anzahl von Variablen ab.
+
+Grob kann unterschieden werden zwischen:
+
+- Plots, die die Verteilung einer einzelnen Variablen darstellen
+- Plots, die den Zusammenhang zwischen zwei oder mehr Variablen zeigen
+
+Gehen wir sofort zur Sache!
+
+## 1. Balkendiagramm
+
+::: infobox
+Balkendiagramme sind geeignet, um die Verteilung einer einzelnen, kategorialen Variable zu zeigen. 
+:::
+
+So sieht Code aus, um mit `ggplot2` ein einfaches Balkendiagramm zu erstellen (das schön machen kommt später). 
+
+```{r barplot, exercise = TRUE, exercise.cap = "Einfacher Barplot"}
+ggplot(data = einkaufen,
+       mapping = aes(x = Verkehrsmittel)) +
+  geom_bar()
+```
+
+Dabei wird deutlich, dass der Code durch eine klare Sprache organisiert ist:
+
+- in `data` übergeben wir einen Datensatz an die Funktion
+- in `mapping` sagen wir, welche Variablen aus dem Datensatz gezeigt werden. 
+- das `+` fügt eine neue Ebene hinzu, genau wie in Photoshop / Gimp / Overhead-Folien
+- `geom_bar()` fügt ein `geom`etrisches Objekt, nämlich die Balken (`bar`s), hinzu.
+
+Mehr dazu, wie genau dieses Mapping funktioniert, folgt später.
+
+### Baukasten-Prinzip
+
+Leland Wilkonson, Begründer der *Grammar of Graphs*-Theorie sagt, dass sich jede statistische Grafik durch
+diese drei Kernbestandteile beschreiben lässt: 
+
+- `data`
+- `aesthetic mapping`
+- `geom`etric objects
+
+### aesthetic mapping
+
+Was ist eigentlich dieses aesthetic mapping? Das ist das, was wir oben im Code beim Argument `mapping` gemacht haben: `mapping = aes(x = Verkehrsmittel)`
+
+`aes()` steht für *aesthetic attributes*, und weist den einzelnen Variablen, wie z.B. dem Verkehrsmittel,
+eine *grafische Eigenschaft* zu. Grafische Eigenschaften sind: 
+
+- Achsen (`x`, `y`)
+- Farbe (`colour`)
+- Füllung (`fill`)
+- Größe (`size`)
+- Transparenz (`alpha`)
+
+Im Diagramm oben wurde der x-Achse die Variable Verkehrsmittel zugewiesen. 
+
+
+
+## 2. Histogramm
+
+## 3. Boxplot
+
+## 4. Punktdiagramm
+
+## 5. Liniendiagramm
+
+## 6. Special: Facets
+
+## 7. Special: Jitter
+
+## 8. Special: 
+
 
 ## Barrierefreiheit
 
@@ -174,6 +260,62 @@ p
 ```
 
 Die obenstehende Grafik ist ein gutes Beispiel dafür, wie hell-dunkel Kontraste verwendet werden können. So ist das Ganze in schwarz-weiß immer noch lesbar, was insbesondere für Menschen mit eingeschränkter Farbwahrnehmung klasse ist, denn alles was schwarz weiß gut lesbar ist, ist immer auch colorblind-friendly. 
+
+## Learnings
+
+So hast du heute abgeschnitten:
+
+```{r context="server"}
+# Shiny App um die Anzahl richtig beantworteter Fragen anzuzeigen. 
+# Funktioniert in jedem Tutorial
+
+shiny::observeEvent(
+  input$get_score, 
+  {
+    objs2 = learnr:::get_tutorial_state()
+    
+    # Number of correct questions
+    
+    n_correct <- 
+      # Access the $correct sublist item in each list item
+        lapply(objs2, purrr::pluck, "correct") |>
+           # make it a vector containing: TRUE and FALSE and NAs
+           # NA is appearing for list items which don't have
+           # a $correct subitem
+                unlist() |> 
+           # Taking the sum of a logical Vector returns the number of TRUEs
+                sum(na.rm=TRUE)
+    
+    # Number of total questions
+    
+    total_questions <- 
+      # 1. Access $type in each list item and make it a vector of types
+      lapply(objs2, purrr::pluck, "type") |> unlist()
+    
+    # 2. Count the number of "question" in that vector
+    total_questions <- total_questions[total_questions == "question"] |> 
+      length()
+      
+      
+    output$score = shiny::renderText(
+      paste0(n_correct, " von ", total_questions,
+        " im gesamten Tutorial beantworteten Fragen waren richtig.")
+)
+    invisible()
+  }
+)
+```
+
+```{r score, echo=FALSE}
+shiny::br()
+shiny::actionButton("get_score", "Auswertung!")
+shiny::br()
+shiny::br()
+shiny::textOutput("score")
+shiny::br()
+```
+
+
 
 ## Credit
 
