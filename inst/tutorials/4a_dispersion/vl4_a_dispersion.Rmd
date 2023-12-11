@@ -642,10 +642,13 @@ Nutze den Codeblock, um die nötigen Maße zu erhalten. Die Daten sind im Vektor
 
 In einem Boxplot enthaltene Daten:
 
-- Länge der "Whiskers": 1.5 \* *IQR*, aber maximal bis zum *Minimum / Maximum*
-- *1. Quartil*
-- *Median*
-- *3. Quartil*
+- Outlier ist alles, was außerhalb $Q1 - 1.5 \cdot IQR$ und $Q3 + 1.5 \cdot IQR$ liegt.
+- Die "Stäbe" (*whiskers*) gehen bis zu $Med \pm 1.5 \cdot IQR$, aber falls die Daten schon vorher aufhören, gehen die *whiskers* immer nur bis zum maximalen / minimalen Datenpunkt. 
+
+![](images/boxplot.png){width=90%}
+
+[image source](https://leansigmacorporation.com/box-plot-with-minitab/)
+
 :::
 
 ```{r boxi, exercise = TRUE, exercise.setup = "quant_setup", exercise.caption = "Boxplot"}
@@ -881,6 +884,6 @@ learnr::quiz(caption = "Teste dein Verständnis",
 
 ## Credit
 
-Dieses Tutorial wurde von Gesa Graf und Lukas Bruelheide verfasst und
-von Marie Klosterkamp reviewt.
+Dieses Tutorial wurde von Lukas Bruelheide verfasst und
+von Gesa Graf und Marie Klosterkamp überarbeitet und erweitert.
 
