@@ -52,6 +52,10 @@ if(!require(dplyr)){
   require(dplyr)
 }
 
+if(!require(shinyFeedback, quietly = TRUE)){
+  message("Installiere fehlendes Paket shinyFeedback")
+  try(install.packages("shinyFeedback"))}
+
 knitr::opts_chunk$set(echo = FALSE)
 
 iq <- c(100, 103, 114, 85, 101, 91, 84, 103, 117, 102)
@@ -296,7 +300,7 @@ df <- reactive({
   
   observe(shinyFeedback::feedbackSuccess("zahl",
                                          show = input$zahl == mean(x()))
-          ) |> bindEvent(input$zahl)
+          ) |> bindEvent(input$zahl, input$new)
   
 ```
 
