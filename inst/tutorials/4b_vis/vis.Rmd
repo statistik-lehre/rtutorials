@@ -177,8 +177,9 @@ Gehen wir sofort zur Sache!
 ::: infobox
 Balkendiagramme sind geeignet, um die Verteilung einer einzelnen, kategorialen Variable zu zeigen. 
 :::
+<br>
 
-So sieht Code aus, um mit `ggplot2` ein einfaches Balkendiagramm zu erstellen (das schön machen kommt später). 
+So sieht Code aus, um mit `ggplot2` ein einfaches Balkendiagramm zu erstellen (das schön machen kommt später):
 
 ```{r barplot, exercise = TRUE, exercise.cap = "Einfacher Barplot"}
 ggplot(data = einkaufen,
@@ -189,7 +190,7 @@ ggplot(data = einkaufen,
 Dabei wird deutlich, dass der Code durch eine klare Sprache organisiert ist:
 
 - in `data` übergeben wir einen Datensatz an die Funktion
-- in `mapping` sagen wir, welche Variablen aus dem Datensatz gezeigt werden. 
+- in `mapping` sagen wir, welche Variablen aus dem Datensatz wo gezeigt werden. 
 - das `+` fügt eine neue Ebene hinzu, genau wie in Photoshop / Gimp / Overhead-Folien
 - `geom_bar()` fügt ein `geom`etrisches Objekt, nämlich die Balken (`bar`s), hinzu.
 
@@ -219,6 +220,90 @@ eine *grafische Eigenschaft* zu. Grafische Eigenschaften sind:
 
 Im Diagramm oben wurde der x-Achse die Variable Verkehrsmittel zugewiesen. 
 
+:::aufgabe
+Ändere den Code so, dass die Variable Verkehrsmittel nun stattdessen auf die y-Achse gemappt wird. Wie wird sich das Diagramm wohl verändern?
+
+Beachte, dass wir dieses Mal die Argumentnamen `data` und `mapping` weggelassen haben, so wie es in der Praxis üblicherweise auch getan wird. Das war oben nur zur Einführung.
+:::
+
+```{r ybarplot, exercise = TRUE, exercise.cap = "Mapping ändern auf y-Achse"}
+ggplot(einkaufen, aes(x = Verkehrsmittel)) +
+  geom_bar()
+```
+
+```{r ybarplot-solution}
+ggplot(einkaufen, aes(y = Verkehrsmittel)) +
+  geom_bar()
+```
+
+Es gibt, wie oben erwähnt, noch mehr *aesthetic attributes* außer `x`-Achse und `y`-Achse, aber auf die fokussieren wir uns später. 
+
+### `geom_bar`
+
+Und was ist dieses `geom_bar()`? Das wird am ehesten deutlich, wenn wir es weglassen!
+
+::: aufgabe
+Schau dir an, wie der Plot aussieht ohne die Ebene mit`geom_bar()`!
+:::
+
+```{r plotwithoutgeom, exercise = TRUE, exercise.cap = "Ohne geom"}
+ggplot(einkaufen, aes(x = Verkehrsmittel))
+```
+
+Jetzt versteht du vielleicht, wofür die `geom_bar()`-Funktion da ist: Geometrische Objekte, in diesem Fall Balken, in den Plot zu zeichnen! Der Plot ist leer, aber die Achsen sind bereits beschriftet und perfekt vorbereitet, aber es fehlt noch das geometrische Objekt. 
+
+Innerhalb der Funktion für das geometrische Objekt finden auch Berechnungen statt, die einzelnen Ausprägungen der Verkehrsmittel werden gezählt, um die Höhe der Balken zu bestimmen. Aber damit müssen wir uns zum Glück nicht beschäftigen. 
+Und jetzt kommt das Ding: Es gibt auch noch andere `geom_...()` Funktionen. Zum Beispiel `geom_point()`, welche dem Plot Punkte hinzufügt! Oder `geom_histogram()`, welche ein Histogramm zeichnet, siehe nächster Abschnitt.
+
+Probieren wir das doch einfach mal aus und tauschen `geom_bar()` durch `geom_point()`. 
+
+```{r error, exercise = TRUE, exercise.cap = "Fehlermeldung"}
+ggplot(einkaufen, aes(x = Verkehrsmittel)) +
+  geom_point()
+```
+
+Dass hier eine Fehlermeldung herauskommt, ist völlig normal! Fehlermeldungen sind freundlich, denn Programmierer*innen geben sich (oft) viel Mühe, diese möglichst informativ und genau zu machen. Also hab keine Angst, und lies dir tatsächlich mal durch was da steht!
+
+Schon die erste Zeile gibt dir eine wichtige Information: Der Fehler trat in der Funktion `geom_point()` auf und nicht an irgendeiner anderen Stelle des Plots.
+
+```
+Error in `geom_point()`:
+```
+
+Manche Sachen verstehst du vielleicht nicht, wie z.B. was `compute_geom_1()` ist, und die beste Strategie für diese Sachen in R ist sie einfach zu ignorieren und anstattdessen Sinn aus den Dingen zu ziehen, die du verstehst!
+
+Die allerletzte Zeile der Meldung ist am informativsten:
+
+```
+! `geom_point()` requires the following missing aesthetics: y
+```
+`geom_point()` braucht die folgenden fehlenden aesthetics: y
+
+Ah, das macht auch Sinn, denn ein Punkt hat immer zwei Koordinaten, eine `x`- und eine `y`-Koordinate! Logischerweise kann kein Punkt gezeichnet werden, wenn du nur eine `x`-Koordinate angibst. 
+
+::: aufgabe
+Löse das Problem, indem du in `aes()` noch das Argument `y = Weg` angibst. Denk daran, Argumente werden durch Kommata getrennt. 
+
+"Weg" ist eine stetige Variable, die den zurückgelegten Anreiseweg der Person zum Bioladen, wo die Erhebung stattfand, in km enthält. 
+:::
+
+```{r weg, exercise = TRUE, exercise.cap = "aesthetic mapping hinzufügen für y-Achse"}
+ggplot(einkaufen, aes(x = Verkehrsmittel)) +
+  geom_point()
+```
+
+```{r weg-solution}
+ggplot(einkaufen, aes(x = Verkehrsmittel, y = Weg)) +
+  geom_boxplot()
+```
+
+Ok, das Diagramm ist vielleicht nicht ultra informativ, weil ganz viele Punkte übereinandergelagert wurden an manchen Stellen. Es gibt definitiv ein anderes, geeigneteres Diagramm! Hier ging es nur darum, das Prinzip zu beweisen: `ggplot` funktioniert wie ein Baukasten, und das `geom` können wir austauschen, so lange dafür gesorgt wird, dass in den `aes`thetic mappings Variablen und Skalenniveau zu dem jeweiligen `geom` passen!
+
+```{r weg-quest}
+question_text("Wie erklärst du dir die weiten Anreisewege (bis 600km!) beim Verkehrsmittel „ÖPNV”? (Tipp: Der Bioladen ist in der Nähe eines ICE-Bahnhofs)",
+              answer_fn(\(x) correct(messages = "Vermutlich waren einige Menschen zuvor mit dem ICE gefahren, und hatten vielleicht auch nur einen Umstieg mit Wartezeit und Hunger auf ein Bio-Brötchen oder so. Während der Rest der Menschen normalen Einkauf machen und aus der Umgebung kommen, maximal ein paar Kilometer entfernt.")),
+              placeholder = "Musterlösung erscheint bei Abgabe deiner Antwort...")
+```
 
 
 ## 2. Histogramm
