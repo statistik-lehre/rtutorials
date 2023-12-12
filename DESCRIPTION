@@ -24,7 +24,7 @@ Imports:
     rmarkdown,
     ggbrace (>= 0.1.0),
     shinyFeedback,
-    ggplot2
+    ggplot2,
     dplyr
 Depends: 
     R (>= 3.5)
