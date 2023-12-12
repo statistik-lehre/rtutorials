@@ -23,6 +23,7 @@ Imports:
 Depends: 
     R (>= 3.5)
 LazyData: true
-Remotes:  
+Remotes: 
     NicolasH2/ggbrace
-
+Enhances: 
+    shinyFeedback
