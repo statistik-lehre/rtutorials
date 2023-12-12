@@ -19,15 +19,17 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Imports: 
     learnr,
-    shiny
+    shiny,
+    markdown,
+    rmarkdown,
+    ggbrace (>= 0.1.0),
+    shinyFeedback,
+    ggplot2
+    dplyr
 Depends: 
     R (>= 3.5)
 LazyData: true
 Remotes: 
     NicolasH2/ggbrace
-Suggests: 
-    shinyFeedback,
-    ggbrace (>= 0.1.0),
-    dplyr,
-    ggplot2
+
 
