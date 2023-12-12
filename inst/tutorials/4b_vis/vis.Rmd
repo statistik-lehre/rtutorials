@@ -294,7 +294,7 @@ ggplot(einkaufen, aes(x = Verkehrsmittel)) +
 
 ```{r weg-solution}
 ggplot(einkaufen, aes(x = Verkehrsmittel, y = Weg)) +
-  geom_boxplot()
+  geom_point()
 ```
 
 Ok, das Diagramm ist vielleicht nicht ultra informativ, weil ganz viele Punkte übereinandergelagert wurden an manchen Stellen. Es gibt definitiv ein anderes, geeigneteres Diagramm! Hier ging es nur darum, das Prinzip zu beweisen: `ggplot` funktioniert wie ein Baukasten, und das `geom` können wir austauschen, so lange dafür gesorgt wird, dass in den `aes`thetic mappings Variablen und Skalenniveau zu dem jeweiligen `geom` passen!
@@ -321,6 +321,59 @@ Hier ist `ggplot2`-Code für ein einfaches, absolut nicht schönes Histogramm. I
 ggplot(einkaufen, aes(Alter)) +
   geom_histogram()
 ```
+
+
+### Was ist ein Histogramm?
+
+Bei einem Histogramm werden auf der x-Achse die möglichen Ausprägungen der Variable aufgelistet, und auf der y-Achse die Häufigkeit. Es ist also genau das gleiche Prinzip wie bei einem Balkendiagramm, nur dass wir uns hier zusätzlich noch mit der Kategorienbreite (*binwidth*) auseinandersetzen müssen.
+
+Denn: Balkendiagramme sind für diskrete Daten, und diskrete Daten haben natürliche Kategorien. Zum Beispiel ist das Verkehrsmittel ÖPNV etwas anderes als Motorrad - die Kategorien liegen also schon in der Natur der Sache. 
+
+Das ist bei stetigen (kontinuierlichen) Daten anders: Von Natur her gibt es bei stetigen Daten immer unendlich viele mögliche Ausprägungen, und also auch immer unendlich viele mögliche Kategorien. 
+
+Zum Beispiel kann ein Meter in unendlich feine Messeinheiten aufgeteilt werden:
+
+- Meter
+- Dezimeter
+- Zentimeter
+- Millimeter
+- Mikrometer
+- Nanometer
+- Picometer
+- Femtometer
+- Attometer
+...
+
+Da es unendlich Möglichkeiten gibt einen Meter einzuteilen, gehen keine natürlichen Kategorien daraus hervor. Deswegen können die Kategorien beliebig gebildet werden.
+
+Beim Histogramm des Alters oben sind die Balken zum Beispiel immer 2.5 Jahre breit, komplett random also. Darüber informiert `ggplot` auch beim Erstellen des Diagramms mit einer Warnmeldung:
+
+```
+`stat_bin()` using `bins = 30`. Pick better value with `binwidth`
+```
+`ggplot` sagt damit: „Hey, ich habe deine Daten einfach mal in 30 gleich große Kategorien eingeteilt, aber das ist ein default-Wert den du bitte anpassen solltest.“
+
+### Kategorienbreite anpassen
+
+In der Warnmeldung wurde bereits das Argument `binwidth` erwähnt. Hier ist Code, mit dem die Kategorienbreite auf 5 Jahre festgelegt wird. 
+
+```{r binwidth, exercise = TRUE, exercise.cap = "Kategorienbreite einstellen"}
+ggplot(einkaufen, aes(x = Alter)) +
+  geom_histogram(binwidth = 5)
+```
+
+Da die Balken gerade visuell in einer großen grauen Masse verschwinden, wird noch nicht so ganz deutlich worum es eigentlich geht. Deswegen wäre es hilfreich, wenn alle Balken eine schwarze Umrandung hätten und etwas hellgrauer wären. 
+
+```{r color, exercise = TRUE, exercise.cap = "Color und Fill"}
+ggplot(einkaufen, aes(x = Alter)) +
+  geom_histogram(color = "black",
+                 fill = "grey")
+```
+
+
+und die Höhe der Balken richtet sich danach, wie viele Beobachtungen in diese spezifische 2.5-Jahres-Kategorie fallen. 
+
+
 
 
 ## 3. Boxplot
