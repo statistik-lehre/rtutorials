@@ -29,7 +29,7 @@ knitr::opts_chunk$set(echo = FALSE)
 ## hexbin und kableExtra?
 ```
 
-## Einführung
+## Inhalt
 
 Jetzt kommt wirklich einer der allercoolsten Teile des ganzen Kurses. R ist einfach
 unfassbar mächtig, was das Visualisieren von Daten angeht, viel ausgefeilter und vielfältiger, als
@@ -139,7 +139,7 @@ Das `gg` im Paketnamen `ggplot2` steht für *Grammar of Graphs*.
 
 Leland Wilkinson ist der Gründer des Grammar of Graphs-Ansatzes. Im Grunde ist das eine Theorie darüber, mit welchen Regeln und Bausteinen statistische Grafiken erstellt werden können [@wilkinson2005].
 
-`ggplot2` ist die Umsetzung dieses theoretischen Baukastens, und das `gg` steht für *Grammar of Graphs*. Es wurde von Hadley Wickham geschrieben und ist ein relativ altes Paket im R-Ökosystem [@wickham2009].
+`ggplot2` ist die Umsetzung dieses theoretischen Baukastens. Es wurde von Hadley Wickham geschrieben und ist ein relativ altes Paket im R-Ökosystem [@wickham2009].
 
 #### benötigtes Paket
 
@@ -307,6 +307,21 @@ question_text("Wie erklärst du dir die weiten Anreisewege (bis 600km!) beim Ver
 
 
 ## 2. Histogramm
+
+::: infobox
+Histogramme sind geeignet, um die Verteilung einer einzelnen, stetigen Variable zu zeigen.
+:::
+<br>
+
+Unser Go-To-Beispiel für eine stetige Variable ist `einkaufen$Alter`, die dir schon in den letzten Tutorials begegnet sein sollte. Beachte, dass du innerhalb von `ggplot`-Code den `$`-Operator nicht benutzen musst. Das liegt daran, dass `ggplot` weiß, in welchem Datensatz die Variable gesucht werden muss, da wir den Datensatz ja im allerersten Argument angeben. 
+
+Hier ist `ggplot2`-Code für ein einfaches, absolut nicht schönes Histogramm. In diesem Abschnitt wird es deswegen auch mal Zeit, über Farben und Verschönerungen zu sprechen. 
+
+```{r hist, exercise = TRUE, exercise.cap = "einfaches Histogramm erstellen"}
+ggplot(einkaufen, aes(Alter)) +
+  geom_histogram()
+```
+
 
 ## 3. Boxplot
 
