@@ -362,19 +362,26 @@ ggplot(einkaufen, aes(x = Alter)) +
   geom_histogram(binwidth = 5)
 ```
 
-Da die Balken gerade visuell in einer großen grauen Masse verschwinden, wird noch nicht so ganz deutlich worum es eigentlich geht. Deswegen wäre es hilfreich, wenn alle Balken eine schwarze Umrandung hätten und etwas hellgrauer wären. 
+Da die Balken gerade visuell in einer großen grauen Masse verschwinden, wird noch nicht so ganz deutlich worum es eigentlich geht. Deswegen wäre es hilfreich, wenn alle Balken eine schwarze Umrandung hätten und etwas hellgrauer wären. Beachte, dass jetzt nach dem `binwidth`-Argument dafür noch die Argumente `color` und `fill` stehen. 
 
 ```{r color, exercise = TRUE, exercise.cap = "Color und Fill"}
 ggplot(einkaufen, aes(x = Alter)) +
-  geom_histogram(color = "black",
+  geom_histogram(binwidth = 5,
+                 color = "black",
                  fill = "grey")
 ```
 
+Das sieht schon mal ein Stück weit besser aus. Jetzt ist noch etwas störend, dass die Kategorien
+nicht bei runden Zahlen anfangen, sondern z.B. die 50 in der Mitte einer Kategorie liegt. Dafür kannst du das Argument
+`boundary` nutzen:
 
-und die Höhe der Balken richtet sich danach, wie viele Beobachtungen in diese spezifische 2.5-Jahres-Kategorie fallen. 
-
-
-
+```{r boundary, exercise = TRUE, exercise.cap = "Boundary-Argument"}
+ggplot(einkaufen, aes(x = Alter)) +
+  geom_histogram(binwidth = 5,
+                 boundary = 50,
+                 color = "black",
+                 fill = "grey")
+```
 
 ## 3. Boxplot
 
