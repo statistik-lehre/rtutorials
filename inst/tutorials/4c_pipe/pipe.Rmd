@@ -27,131 +27,52 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Lernziele
 
-## Tidyverse
-
-Was ist das Tidyverse? Es ist ein Universum von Paketen, die sich einem bestimmten Ziel widmen, nämlich R für *Data Science* zu nutzen. Dazu gehört vor allem die Arbeit mit Tabellen und Daten.
-
-Dabei hat sich eine Art Dialekt gebildet, der das Ziel hat, übersichtlich zu sein und konsistent und nutzerfreundlich. In den meisten Fällen werden Tidyverse-Funktionen diesem Anspruch gerecht und deswegen macht es auch Sinn, sie zu nutzen.
-
-Trotzdem ein Wort der Warnung: Alles, was mit Tidyverse-Paketen möglich ist, lässt sich auch mit base R erreichen. Es wäre nicht so schlau, die "Basis" zu vergessen, und nur noch Tidyverse zu lernen. Tidyverse schreibt selbst auf seiner [Website](https://www.tidyverse.org/), es sei ein „opinionated R Package". Das heißt, es vertritt eine klare Meinung darüber, was eigentlich *tidy*, also aufgeräumt sein, für R bedeutet. Letztlich kann das Tidyverse nicht alles und nicht alle sind überzeugt davon, weswegen wir Ihnen ab jetzt an manchen Stellen parallel sowohl die base R-Lösung und die Tidyverse-Variante beibringen werden. Manche R-Kurse entscheiden sich, um nicht zu verwirrend zu sein, nur noch Tidyverse zu lehren, beispielsweise @ismay2022 oder @wickham2016. Wir denken jedoch, dass Sie base R zumindest auch schon einmal gesehen haben sollten.
-
-Folgende Pakete gehören zum Tidyverse:
-
-(Hex-Sticker von tidyverse hinzufügen über das hexsticker Paket)
-
--   `ggplot2`: konsistente *Grammar of Graphs* für Visualisierungen
--   `dplyr`: *Data Plyers* "Datenzange"
--   `tidyr`: Daten in ein *tidy*-Format bringen
--   ... und noch einige mehr, unter anderem `tibble`.
-
-Alle diese Pakete können entweder einzeln installiert werden oder alle auf einmal, indem das Schirmpaket `tidyverse` installiert wird.
-
-Ein Beispiel für die Design-Richtlinien, nach denen sich Tidyverse-Funktionen richten müssen, ist keine Punkte zu verwenden in Funktionsnamen (wie z.B. base R: `as.data.frame()`), sondern Unterstriche wie in `as_tibble()`. Das ist ein klassisches Zeichen, dass wir uns im Tidyverse bewegen.
-
-## Von der Datenerhebung zur Analyse
-
-Es klingt banal, aber wenn die Daten aufgeräumt sind, ist bereits die größte Hürde geschafft. Einen Großteil der Zeit von Datenanalyse verbringen Forschende damit, Daten in die richtige Form zu bringen. Die Auswertung selbst geht dann oft vergleichsweise schnell.
-
-Den ganzen Aufräumprozess können Sie erleichtern, wenn Sie die Daten von Anfang an so organisieren, dass R gut damit umgehen kann.
-
-Aber was gibt es eigentlich für Formen in denen Daten sein können?
-
-
-Gleiche Daten, aber anders organisiert:
-
-```{r}
-df <- trees |> tibble::rowid_to_column(var = "id")
-library(dplyr)
-library(tidyr)
-df |> pivot_longer(cols = !id, names_to = "variable")
-
-df |> arrange(Height) |> pivot_wider(id_cols = "id", names_from = "Height",
-                                     names_prefix = "Height=", values_from = "Volume")
-```
-
-
-## Datenerhebung
-
-Wir beginnen damit, Daten zu erheben. Im Wintersemester 2022/23 haben 8 Studierende sich vor Bioläden in und um Kassel gestellt und den Kund_innen Fragen gestellt - zum Beispiel zum Lieblingsessen, wie oft sie selbst kochen und wie weit der Weg bis zum Laden war.
-
-Die Antworten wurden mitgeschrieben und später in Excel oder OpenOffice eingetippt. Damit die Analyse in R später gut funktioniert, müssen die Daten in einer speziellen Form eingegeben werden:
-
-```{r}
-knitr::include_graphics(path = "images/clean.png")
-```
-
-::: grau-nb
-Merke: Beobachtungen sind immer die Zeilen, und Variablen immer die Spalten.
-:::
-
-##### Variablen
-
-Variablen sind die unterschiedlichen Fragen, die wir gestellt haben. Zum Beispiel:
-
--   Wie alt sind Sie? -\> Variable: Alter
-
--   Wie weit war Ihr Weg in km? -\> Variable: Weg
-
-##### Beobachtungen
-
-Beobachtungen sind hier die einzelnen Personen, denen die Fragen gestellt wurden. Eine Person ist dabei eine Beobachtung.
-
-##### tidy data
-
-Das oben vorgestellte Konzept wurde unter dem Namen "*tidy data"* formalisiert.
-
-Hier sind drei wichtige Grundregeln für *tidy data* nach @wickham2016:
-
-<div>
-
-> 1.  Jede Variable braucht ihre eigene Spalte.
->
-> 2.  Jede Beobachtung braucht ihre eigene Zeile.
->
-> 3.  Jeder Wert braucht seine eigene Zelle.
-
-</div>
-
-grafisch dargestellt:
-![](images/tidy_tableview.png){width="90%"}
-
-Source: [R for Data Science](https://r4ds.hadley.nz/data-tidy)
-
-Mit diesen drei Grundregeln werden Sie weniger Kopfschmerzen bei der Analyse von Daten mit R bekommen.
+-   <input type="checkbox" unchecked> du lernst was eine `pipe` ist </input>
+-   <input type="checkbox" unchecked> du weißt *wann* du eine `pipe nutzen kannst </input>
+-   <input type="checkbox" unchecked> du weißt *wie* du eine `pipe nutzen kannst </input>
 
 
 ## Pipe
 
 Das englische *Pipe* ist hier als Röhre zu verstehen, nicht als Pfeife. Auch wenn es lustig wäre, einen "Pfeifen-Operator" zu haben. 
 
-Der Pipe-Operator `|>` leitet den Output einer Funktion als Input an die nächste Funktion weiter, quasi wie eine Röhre durch die das Ergebnis der ersten Funktion durchgeschickt wird.
+
+Der Pipe-Operator `|>` leitet den Output (Daten) einer Funktion(F1) als Input an die nächste Funktion (F2) weiter, quasi wie eine Röhre durch die das Ergebnis der ersten Funktion durchgeschickt wird. Analog kannst du es dir wie einen Staffelstab bei einem Staffellauf vorstellen, der von jeder Läuferin etwas (z.B. in seiner Position) verändert weitergegeben wird bis dieser am Ziel ist.  
+
+![](images/relay_pipe.png){width="100%"}
+
 
 Hier ist ein Beispiel: 
 
-```{r einkaufen, exercise = TRUE, exercise.cap = "Pipe Beispiel"}
-einkaufen$Alter |> mean(na.rm = TRUE)
+```{r einkaufen2, exercise = TRUE, exercise.cap = "Beispiel ohne Pipe"}
+# mean(data, na.rm = TRUE) 
+mean(einkaufen$Alter, na.rm = TRUE)
 ```
 
 ist genau das Gleiche wie:
 
-```{r einkaufen2, exercise = TRUE, exercise.cap = "Beispiel ohne Pipe"}
-mean(einkaufen$Alter, na.rm = TRUE)
+```{r einkaufen, exercise = TRUE, exercise.cap = "Pipe Beispiel"}
+# data |> mean(na.rm = TRUE)
+einkaufen$Alter |> mean(na.rm = TRUE)
 ```
 
-Die Pipe fügt das, was reingegeben wird, **immer** als erstes Argument bei der nächsten Funktion ein. Das geht meistens gut, denn wir erinnern uns an das Tutorial "Funktionen erkunden": Das erste Argument ist meistens das Datenargument. 
+Die Pipe fügt das, was reingegeben wird, **immer** als erstes Argument bei der nächsten Funktion ein. Das geht meistens gut, denn wir erinnern uns an das Tutorial "Funktionen erkunden": Das erste Argument ist meistens das *Daten*argument. 
 
-```{r pastepipe, exercise = TRUE, exercise.cap = "Pipe fügt Input als erstes Argument ein"}
-7 |> paste("Zwerge")
-```
-
-Auch hier: Normalerweise würde es ohne Pipe so aussehen.
+Auch hier: Normalerweise würde es ohne Pipe so aussehen:
 
 ```{r pastepipe2, exercise = TRUE, exercise.cap = "Paste ohne Pipe"}
 paste(7, "Zwerge")
 ```
 
+und mit Pipe so:
+
+```{r pastepipe, exercise = TRUE, exercise.cap = "Pipe fügt Input als erstes Argument ein"}
+7 |> paste("Zwerge")
+```
+
 So lange es nur eine Pipe ist, ist sie relativ harmlos und überflüssig, und du fragst dich vielleicht wozu das Ganze gut ist. Die Pipe hat das große Potential, langen, verschachtelten
 Code auf elegante Art lesbar zu machen. Nehmen wir zum Beispiel mal die schnelle Erstellung eines Balkendiagramms (mehr dazu im Visualisierungstutorial):
+
 
 ```{r barplot, exercise = TRUE, exercise.cap = "schneller Barplot mit Pipe"}
 einkaufen$Verkehrsmittel |> table() |> barplot()
@@ -166,7 +87,7 @@ barplot(table(einkaufen$Verkehrsmittel))
 Beides ist von der Funktion her äquivalent, aber die Pipe ermöglicht ein klares Lesen
 von links nach rechts:
 
-„Nimm die Spalte Verkehrsmittel, tabelliere die Häufigkeit der einzelnen Ausprägungen, dann zeichne daraus ein Balkendiagramm“. 
+*„Nimm die Spalte Verkehrsmittel, tabelliere die Häufigkeit der einzelnen Ausprägungen, dann zeichne daraus ein Balkendiagramm“*. 
 
 ```r
 einkaufen$Verkehrsmittel |> table() |> barplot()
@@ -178,14 +99,14 @@ einkaufen$Verkehrsmittel |> table() |> barplot()
 `|>` kann gelesen werden wie ein „dann‘. 
 :::
 
-### `%>%`
+### die `%>%` Pipe
  
 `%>%` ist auch ein Pipe-Operator, der aus dem `magrittr`-Paket stammt. Bis vor kurzem gab es `|>` noch nicht, und vorher war `%>%` jahrelang der Standard, der deswegen auch überall in Anleitungen im Internet zu sehen ist und immer noch sehr häufig genutzt wird. 
 
 Die beiden Pipe-Operatoren tun aber ziemlich genau das selbe und unterscheiden sich vor allem in einigen technischen Details, wie sie mit Spezialfällen umgehen, was aber hier nicht wichtig ist für dich. Wichtig ist, dass du beide schon mal gesehen hast und weißt, dass:
 
 - `%>%` nur funktioniert wenn `magrittr` geladen ist
-- `|>` in base R eingebaut ist und die gleiche Funktion hat (wenn auch in einigen Spezialfällen anders reagiert, die uninteressant sind auf unserem Level).
+- `|>` in `base R` eingebaut ist und die gleiche Funktion hat (wenn auch in einigen Spezialfällen anders reagiert, die uninteressant sind auf unserem Level).
 
 ### Pipelines
 
@@ -205,8 +126,72 @@ metall |>
 „**Nimm** Metall. Schmelze es, **dann** gieße es, **dann** kühle es ab, **dann**
 lackiere es, **dann** verpacke, **dann** dann verlade es.“
 
-Das ist besonders bei der Aufbereitung von Datensätzen sehr häufig so, was auch *Data Wrangling* genannt wird und in einem eigenen Tutorial Raum finden wird. 
+::: blau
+Für gute Lesbarkeit empfielt es sich, nach jeder Pipe eine neue Zeile zu beginnen.
+:::
 
+Das ist besonders bei der Aufbereitung von Datensätzen sehr häufig so, was 
+auch *Data Wrangling* genannt wird und in einem eigenen Tutorial Raum finden wird. 
+
+### Übung bekommen
+
+Jetzt bist du gefragt! Werde zu Mario oder Luigi und nutze Pipes um an dein 
+(Analyse-)Ziel zu kommen.
+
+![](images/mario_pipes){width="100%"}
+
+Wir nutzen wieder mal den Beispieldatensatz `einkaufen`. Heute benutzt du folgende Variablen:
+
+```{r viewdata, exercise = FALSE}
+einkaufen |> 
+  select(ID, Essen, Weg) |>
+  as_tibble()
+```
+
+
+::: aufgabe
+Nutze die Funktion summary(), um die Daten von einkaufen$Verkehrsmittel den Modus zu bestimmen
+:::
+
+```{r ex2, exercise = TRUE, exercise.cap = "Aufgabe 2"}
+
+```
+
+```{r ex2-hint-01}
+# Die Variable heißt einkaufen$Verkehrsmittel 
+# Die Funktion summary() gibt dir eine Zusammenfassung deiner Variable
+```
+
+```{r ex2-hint-02}
+# Die Daten der Variable Verkehrsmittel werden in die Funktion summary() gefüttert
+einkaufen$Verkehrsmittel |> summary()
+```
+
+```{r modequest}
+question_text("Was ist das häufigst gennante Verkehrsmittel der Befragten?",
+                 answer("Auto", correct = TRUE, message = "Genau, das Auto wird mit 46 Nennungen am meisten genutzt."),
+              allow_retry = TRUE)
+```
+
+::: aufgabe
+Nutze wieder den `einkaufen`-Datensatz.
+Ermittle den Mittelwert für die Weglänge `Weg` in dem du die Daten mittels Pipe in die Funktion eingibst. Schließe die `NA`s dafür von der Berechnung aus.
+:::
+
+```{r ex1, exercise = TRUE, exercise.cap = "Aufgabe 1"}
+
+```
+
+```{r ex1-hint-01}
+# Die Variable heißt einkaufen$Weg 
+# Die Funktion für den Mittelwert ist mean()  
+# Das Argument kannst du durch mean? in der Console herausfinden
+```
+
+```{r ex1-hint-02}
+# Die Daten der Variable Weg werden in die Funktion mean() an erster Stelle eingesetzt, es folgt das Argument na.rm = TRUE, um die NAs auszuschließen
+einkaufen$Weg |> mean(na.rm = TRUE)
+```
 
 
 
