@@ -65,6 +65,13 @@ Hier drüber ist also 1 Absatz. Will man mehr Platz, kann man
 
 voila
 
+### HTML-Tags
+
+können einfach so im Text verwendet werden...
+
+<center>`<center>...</center>` für zentrierten Text</center>
+<font color="red">`<font color="red">...</font>` für roten Text </font>
+
 ### momentan mögliche CSS-Klassen für farbige Boxen:
 
 `::: klasse ` ist ein shortcut für `<div, class=klasse>`
@@ -207,6 +214,17 @@ plot(rnorm(100))
 Im Gegensatz zum Plot oben reagiert dieser hier dynamisch auf die Fensterbreite,
 dank `out.width="100%"`.
 Das ist in den schmalen `learnr`-Tutorials besonders wichtig.
+
+### zentrierte Bilder
+
+```{r, echo=FALSE, fig.align='center'}
+knitr::include_graphics("images/mind_blown.gif")
+```
+
+### Bildgröße
+Da das Paket sehr groß wird mit vielen Bildern, sollten diese auf die Anzeigegröße
+optimiert sein und nicht unnötig groß sein. Die Größe kann durch Kompression
+verringert werden, ich nutze [*pngquant*](https://pngquant.org/) dafür
 
 ## Code Chunks
 
