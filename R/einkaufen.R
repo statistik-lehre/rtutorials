@@ -23,7 +23,7 @@
 #'- **Verkehrsmittel**: Wie sind Sie hier her gekommen?
 #'- **Weg**: Wie weit war ihr Weg hier her? (in km)
 #'
-#'- **Frequenz**: Wie oft kochen Sie selbst?
+#'- **Frequenz**: Wie oft kommen Sie hier her zum Einkaufen?
 #'- **Alter**
 #'
 #' @docType data
