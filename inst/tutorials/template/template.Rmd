@@ -72,6 +72,13 @@ verwenden um Absätze zu generieren.
 
 voila
 
+### HTML-Tags
+
+können einfach so im Text verwendet werden...
+
+<center>`<center>...</center>` für zentrierten Text</center>
+<font color="red">`<font color="red">...</font>` für roten Text </font>
+
 ### momentan mögliche CSS-Klassen für farbige Boxen:
 
 `::: klasse` ist ein shortcut für `<div, class=klasse>`
@@ -194,8 +201,9 @@ manchmal riesig angezeigt und passt nicht auf die Seite.
 
 Die `{}` müssen ohne Leerzeichen direkt nach dem Bild folgen.
 
-![ein Bild mit 80% Breite](images/code_sources.png){width="80%"} Das
-obige Bild hat 80% Breite, was manchmal ein netter Wert ist.
+![ein Bild mit 80% Breite](images/code_sources.png){width="80%"} 
+
+Das obige Bild hat 80% Breite, was manchmal ein netter Wert ist.
 
 Bei 100% kann man den unteren Teil nicht mehr sehen, weil es dann
 vertikal zu lang ist.
@@ -217,6 +225,17 @@ Es funktionieren auch GIFs:
 
 Hier ist die Auflösung so gering, dass es nicht Gefahr läuft, die ganze
 Seite zu blockieren.
+
+### zentrierte Bilder
+
+```{r, echo=FALSE, fig.align='center'}
+knitr::include_graphics("images/mind_blown.gif")
+```
+
+### Bildgröße
+Da das Paket sehr groß wird mit vielen Bildern, sollten diese auf die Anzeigegröße
+optimiert sein und nicht unnötig groß sein. Die Größe kann durch Kompression
+verringert werden, ich nutze [*pngquant*](https://pngquant.org/) dafür
 
 ## Code Chunks
 
