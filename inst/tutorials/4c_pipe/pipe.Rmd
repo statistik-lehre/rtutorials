@@ -231,21 +231,57 @@ Genial! Du hast jetzt also schon verstanden, wie du die Pipe für eine Funktione
 
 Als letztes gibt es hier jetzt schon einen kleinen Einblick in das Tutorial `Data Wrangling`, da die Pipe hier eine große Rolle spielt. 
 
-::: blau-nb
-Aus dem Paket `dplyr` kommt die hilfreiche Funktion `filter()`. Diese können wir nutzen, um bestimmte Daten aus unserem Datensatz zu filtern.
+### Daten filtern
 
-`filter()` erwartet als Argumente den `Datensatz`, die `Variable` mit `Operator` und filterndem `Wert`.
-
-```
-filter(Daten, Variable == Wert)
+```{r, echo=FALSE, fig.align='center'}
+knitr::include_graphics("images/dplyr_hex.png")
 ```
 
-für unser Beispiel:
+**Neues Paket:**
+
+Der Paketname `dplyr` ist eine Abkürzung für *data plyers*, „Datenzange“. Es ist
+super hilfreich was das Arbeiten mit Tabellen angeht, und mit einem Fokus auf 
+Leserlichkeit und Übersichtlichkeit des Codes entworfen worden. Wir stellen das
+hier vor, weil sehr viele Funktionen aus diesem Paket super in eine Pipeline 
+passen. 
+
+Die Funktion `filter()` aus `dplyr` erlaubt, bestimmte Zeilen aus einem 
+Datensatz herauszugreifen mit der „Datenzange“. 
+
+```{r, echo=FALSE, fig.align='center'}
+knitr::include_graphics("images/filter.png")
+```
+
+<center>
+[Image Source: Data Wrangling Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
+</center>
+<br>
+
+Zum Beispiel im `einkaufen`-Datensatz alle Zeilen von Personen, die als
+Lieblingsessen „Pizza“ angegeben haben:
+
 ```{r filt, exercise = TRUE, exercise.cap = "filter(): Funktionsweise"}
 filter(einkaufen, Essen == "Pizza")
 ```
 
-Achte auf die Spalte "Essen" (auf Seite 2 der Tabelle)! Im ganzen Datensatz werden nur noch Zeilen angezeigt, die als Essen "Pizza" angegeben haben.
+Achte auf die Spalte "Essen"! Im ganzen Datensatz werden nur noch Zeilen angezeigt, die als Essen "Pizza" angegeben haben.
+
+::: blau-nb
+`filter()` Basic Syntax folgt dieser Form:
+
+```r
+filter(Daten, Variable == Wert)
+```
+
+Oder mit Pipe:
+
+```r
+Daten |>
+  filter(Variable == Wert)
+```
+
+`filter()` erwartet als Argumente den `Datensatz`, die `Variable` mit `Operator` und filterndem `Wert`.
+
 :::
 
 </br>
@@ -253,8 +289,12 @@ Achte auf die Spalte "Essen" (auf Seite 2 der Tabelle)! Im ganzen Datensatz werd
 ::: aufgabe 
 **3** *(schwerer)*
 
-Schau dir die Funktionsweise der Funktion `filter()` aus dem `dplyr`-Paket an und nutze sie für diese Aufgabe.
-Füttere die Daten von `einkaufen` in die Funktion `filter()` und filtere dort in der Variable `Essen` nach den Werten für "Pasta". Gib die Daten in die Funktion `count()`, um dir die Anzahl ausgeben zu lassen.
+Nutze für diese Aufgabe wieder die Pipe.
+
+Nimm den Datensatz `einkaufen`, dann pipe ihn in die Funktion `filter()`, 
+und filtere dort in der Variable `Essen` nach dem Wert `"Pasta"`. 
+Übergib dann die Daten an die Funktion `count()`, um dir die Anzahl von Menschen
+mit Lieblingsessen "Pasta" ausgeben zu lassen.
 :::
 
 ```{r ex3, exercise = TRUE, exercise.cap = "Aufgabe 3"}
@@ -267,8 +307,8 @@ Füttere die Daten von `einkaufen` in die Funktion `filter()` und filtere dort i
 # count()
 
 # Datensatz |> 
-# funktion(zweites Argument) |>
-# function()
+# Funktion(zweites Argument) |>
+# Funktion()
 
 ```
 
@@ -289,6 +329,7 @@ Applaus!!! 👏
 Das war wirklich nicht einfach! 
 
 ![](images/mario_won.jpg){width="100%"}
+
 Du hast die Pipes gemeistert und bist bereit für das nächste Tutorial!
 
 ## Abschlussquizz
@@ -408,4 +449,4 @@ eine Tabelle mit den wichtigesten Codes des Tutorials
 
 Dieses Tutorial wurde von Lukas Bruelheide und Marie Klosterkamp geschrieben. 
 
-*Bei der Erstellung wurde teilweise von ChatGPT und Bing Image Creator gebrauch gemacht.*
+*Bei der Erstellung wurde teilweise von ChatGPT und Bing Image Creator Gebrauch gemacht.*
