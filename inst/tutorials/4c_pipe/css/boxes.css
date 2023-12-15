@@ -1,3 +1,4 @@
+
 .infobox {
   background-color:  #eef4ff ;
   border-left: solid  #99bdff   4px;
@@ -50,4 +51,18 @@
   background-color:   #eef4ff ;
   border-radius: 4px;
   padding:0.5em;
+}
+
+.aufgabe {
+  background-color:  #e9e5ee ;
+  border-left: solid  #957dad   4px;
+  border-radius: 4px;
+  padding:0.7em;
+}
+
+.aufgaberstudio {
+  background-color:  ##e9eee5 ;
+  border-left: solid  #95AD7D   4px;
+  border-radius: 4px;
+  padding:0.7em;
 }

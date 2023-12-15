@@ -21,15 +21,16 @@ tutorial:
 ```{r setup, include=FALSE}
 library(learnr)
 library(rtutorials)
+library(tidyverse)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
 
 ## Lernziele
 
--   <input type="checkbox" unchecked> du lernst was eine `pipe` ist </input>
--   <input type="checkbox" unchecked> du weißt *wann* du eine `pipe nutzen kannst </input>
--   <input type="checkbox" unchecked> du weißt *wie* du eine `pipe nutzen kannst </input>
+-   <input type="checkbox" unchecked> du lernst was eine `Pipe` ist </input>
+-   <input type="checkbox" unchecked> du weißt *wann* du eine `Pipe` nutzen kannst </input>
+-   <input type="checkbox" unchecked> du weißt *wie* du eine `Pipe` nutzen kannst </input>
 
 
 ## Pipe
@@ -37,7 +38,7 @@ knitr::opts_chunk$set(echo = FALSE)
 Das englische *Pipe* ist hier als Röhre zu verstehen, nicht als Pfeife. Auch wenn es lustig wäre, einen "Pfeifen-Operator" zu haben. 
 
 
-Der Pipe-Operator `|>` leitet den Output (Daten) einer Funktion(F1) als Input an die nächste Funktion (F2) weiter, quasi wie eine Röhre durch die das Ergebnis der ersten Funktion durchgeschickt wird. Analog kannst du es dir wie einen Staffelstab bei einem Staffellauf vorstellen, der von jeder Läuferin etwas (z.B. in seiner Position) verändert weitergegeben wird bis dieser am Ziel ist.  
+Der Pipe-Operator `|>` leitet den Output (**Daten**) einer Funktion(F1) als Input an die nächste Funktion (F2) weiter, quasi wie eine Röhre durch die das Ergebnis der ersten Funktion durchgeschickt wird. Analog kannst du es dir wie einen Staffelstab bei einem Staffellauf vorstellen, der von jeder Läuferin etwas (z.B. in seiner Position) verändert weitergegeben wird bis dieser am Ziel ist.  
 
 ![](images/relay_pipe.png){width="100%"}
 
@@ -56,7 +57,7 @@ ist genau das Gleiche wie:
 einkaufen$Alter |> mean(na.rm = TRUE)
 ```
 
-Die Pipe fügt das, was reingegeben wird, **immer** als erstes Argument bei der nächsten Funktion ein. Das geht meistens gut, denn wir erinnern uns an das Tutorial "Funktionen erkunden": Das erste Argument ist meistens das *Daten*argument. 
+Die Pipe `|>` fügt das, was reingegeben wird, **immer** als **erstes Argument** bei der nächsten Funktion ein. Das geht meistens gut, denn wir erinnern uns an das Tutorial "Funktionen erkunden": Das erste Argument ist meistens das **Daten**argument. 
 
 Auch hier: Normalerweise würde es ohne Pipe so aussehen:
 
@@ -101,7 +102,7 @@ einkaufen$Verkehrsmittel |> table() |> barplot()
 
 ### die `%>%` Pipe
  
-`%>%` ist auch ein Pipe-Operator, der aus dem `magrittr`-Paket stammt. Bis vor kurzem gab es `|>` noch nicht, und vorher war `%>%` jahrelang der Standard, der deswegen auch überall in Anleitungen im Internet zu sehen ist und immer noch sehr häufig genutzt wird. 
+`%>%` ist auch ein Pipe-Operator, der jedoch aus dem `magrittr`-Paket stammt. Bis vor kurzem gab es `|>` noch nicht, und vorher war `%>%` jahrelang der Standard, der deswegen auch überall in Anleitungen im Internet zu sehen ist und immer noch sehr häufig genutzt wird. 
 
 Die beiden Pipe-Operatoren tun aber ziemlich genau das selbe und unterscheiden sich vor allem in einigen technischen Details, wie sie mit Spezialfällen umgehen, was aber hier nicht wichtig ist für dich. Wichtig ist, dass du beide schon mal gesehen hast und weißt, dass:
 
@@ -133,36 +134,54 @@ Für gute Lesbarkeit empfielt es sich, nach jeder Pipe eine neue Zeile zu beginn
 Das ist besonders bei der Aufbereitung von Datensätzen sehr häufig so, was 
 auch *Data Wrangling* genannt wird und in einem eigenen Tutorial Raum finden wird. 
 
-### Übung bekommen
+## Übung bekommen
 
-Jetzt bist du gefragt! Werde zu Mario oder Luigi und nutze Pipes um an dein 
+Jetzt bist du gefragt! Werde zu Mario oder Luigi und nutze die Pipe, um an dein 
 (Analyse-)Ziel zu kommen.
 
-![](images/mario_pipes){width="100%"}
+![](images/mario_pipes.jpg){width="100%"}
 
-Wir nutzen wieder mal den Beispieldatensatz `einkaufen`. Heute benutzt du folgende Variablen:
+Wir nutzen weiterhin den Beispieldatensatz `einkaufen`. Hier ein kleiner Einblick in die Variablen, die du heute benutzt:
 
-```{r viewdata, exercise = FALSE}
-einkaufen |> 
-  select(ID, Essen, Weg) |>
-  as_tibble()
+```{r viewdata, exercise = FALSE, Echo = FALSE}
+data.frame(einkaufen$Weg, einkaufen$Verkehrsmittel, einkaufen$Essen)
+# nicht so schön, da nur die ersten beiden Variablen angezeigt werden
 ```
 
+</br>
 
-::: aufgabe
-Nutze die Funktion summary(), um die Daten von einkaufen$Verkehrsmittel den Modus zu bestimmen
+::: blau-nb
+Noch ein kurzer Hinweis: Falls du das `|` Zeichen noch nie verwendet hast, hier die Tastenkombination:
+
+**Windows/ Linux**: `alt gr` + `< ` oder `str` + `alt` + `<`
+
+**Mac**: `⌥ `+ `7` 
+
+oder du nutzt das eingebaute Tastaturkürzel `Strg/Cmd` + `Umschalt` + `M` nutzen.
+
+Dafür kannst du unter *Tools* > *Globale Optionen* folgende Änderung vornehmen, um `|>` anstelle von `%>%` zu verwenden:
+
+![](images/settings.PNG){width="100%"}
+
 :::
 
-```{r ex2, exercise = TRUE, exercise.cap = "Aufgabe 2"}
+</br>
+
+::: aufgabe
+**1**
+
+Nutze die Pipe für die Funktion summary(), um für die Werte von `einkaufen$Verkehrsmittel` den Modus zu bestimmen.
+:::
+
+```{r ex1, exercise = TRUE, exercise.cap = "Aufgabe 1"}
 
 ```
 
-```{r ex2-hint-01}
-# Die Variable heißt einkaufen$Verkehrsmittel 
-# Die Funktion summary() gibt dir eine Zusammenfassung deiner Variable
+```{r ex1-hint-1}
+# Daten |> funktion() 
 ```
 
-```{r ex2-hint-02}
+```{r ex1-solution}
 # Die Daten der Variable Verkehrsmittel werden in die Funktion summary() gefüttert
 einkaufen$Verkehrsmittel |> summary()
 ```
@@ -173,28 +192,219 @@ question_text("Was ist das häufigst gennante Verkehrsmittel der Befragten?",
               allow_retry = TRUE)
 ```
 
-::: aufgabe
+</br>
+
+::: aufgabe 
+**2**
+
 Nutze wieder den `einkaufen`-Datensatz.
-Ermittle den Mittelwert für die Weglänge `Weg` in dem du die Daten mittels Pipe in die Funktion eingibst. Schließe die `NA`s dafür von der Berechnung aus.
+Ermittle den *Mittelwert* für die Weglänge `einkaufen$Weg` in dem du die Daten mittels Pipe in die Funktion eingibst. Schließe die `NA`s dafür von der Berechnung aus.
 :::
 
-```{r ex1, exercise = TRUE, exercise.cap = "Aufgabe 1"}
+```{r ex2, exercise = TRUE, exercise.cap = "Aufgabe 2"}
 
 ```
 
-```{r ex1-hint-01}
+```{r ex2-hint-1}
 # Die Variable heißt einkaufen$Weg 
 # Die Funktion für den Mittelwert ist mean()  
-# Das Argument kannst du durch mean? in der Console herausfinden
+# Das Argument kannst du durch Eingabe von `mean?` in der Console herausfinden
+
+# # Daten |> funktion( `zweites` Argument) 
+
 ```
 
-```{r ex1-hint-02}
+```{r ex2-hint-2}
 # Die Daten der Variable Weg werden in die Funktion mean() an erster Stelle eingesetzt, es folgt das Argument na.rm = TRUE, um die NAs auszuschließen
 einkaufen$Weg |> mean(na.rm = TRUE)
 ```
 
 
+```{r meanquest}
+question_text("Was ist der Mittelwert für den Weg zum Einkaufsladen auf zwei Nachkommastellen gerundet?",
+                 answer("12.76", correct = TRUE, message = "Genau, im Durchschnitt beträgt die Weglänge zum",
+                 "Einkaufsladen 12.76km."),
+              allow_retry = TRUE)
+```
 
-## Abschlussquiz
+
+Genial! Du hast jetzt also schon verstanden, wie du die Pipe für eine Funktionen mit einem zweiten Argument nutzt! 
+
+Als letztes gibt es hier jetzt schon einen kleinen Einblick in das Tutorial `Data Wrangling`, da die Pipe hier eine große Rolle spielt. 
+
+::: blau-nb
+Aus dem Packet `dplyr` kommt die hilfreiche Funktion `filter()`. Diese können wir nuzten, um bestimmte Daten aus unserem Datensatz zu filtern.
+
+Die Funktion erwartet als Argumente den `Datensatz`, die `Variable` mit `Operator` und filterndem `Wert`.
+
+filter(Daten, Variable Operator Wert)
+
+für unser Beispiel:
+filter(einkaufen, Essen == "Pizza")
+
+würde uns nur noch die Einträge anzeigen, bei denen die Befragten als Lieblingsessen Pizza angegeben haben.
+:::
+
+</br>
+
+::: aufgabe 
+**3** *(schwerer)*
+
+Schau dir die Funktionsweiese der Funktion `filter()` an und nutze sie für diese Aufgabe.
+Füttere die Daten von `einkaufen` in die Funktion `filter()` und filtere dort in der Variable `Essen` nach den Werten für "Pasta". Gib die Daten in die Funktion `count()`, um dir die Anzahl ausgeben zu lassen.
+:::
+
+```{r ex3, exercise = TRUE, exercise.cap = "Aufgabe 3"}
+
+```
+
+```{r ex3-hint-1}
+# Nutze den gesamten Datensatz von einkaufen 
+# filter(Variable Operator Wert) 
+# count()
+
+# Datensatz |> 
+# funktion(zweites Argument) |>
+# function()
+
+```
+
+```{r ex3-hint-2}
+# Die Daten des Datensatz einkaufen werden in die Funktion filter() an erster Stelle eingesetzt, es folgt das Argument wonach gefiltert wird: In der Variable Essen nach Einträgen die gleich (==) "Pizza" sind.
+einkaufen |> 
+  filter(Essen == "Pasta") |> 
+  count()
+```
+
+```{r lastquest}
+question_text("Wie viele Menschen haben Pasta als Lieblingessen angegeben?",
+                 answer("13", correct = TRUE, message = "Genau, 13 Befragte essen am liebsten Pasta."),
+              allow_retry = TRUE)
+```
+
+Applaus!!! 👏
+Das war wirklich nicht einfach! 
+
+![](images/mario_won.jpg){width="100%"}
+Du hast die Pipes gemeistert und bist bereit für das nächste Tutorial!
+
+## Abschlussquizz
+
+```{r Abschlussquizz}
+quiz(caption = "Teste dein Wissen!",
+
+learnr::question_checkbox("Welche der folgenden Aussagen sind korrekt? Markiere alle zutreffenden Aussagen.",
+         answer(paste("Der Pipe-Operator ist in deinem Code nicht erforderlich, aber es ist hilfreich,",
+                      " weil er den Code sauberer macht."), correct = TRUE),
+         answer(paste("Der Pipe-Operator gibt den Output als erstes Argument in die nachfolgende Funktion ein"),
+                correct = TRUE,
+                message = "Genau. Die meisten Funktionen nehmen Daten als erstes Argument. Diese Funktionen",
+                "können wir also mit Daten aus der Pipe füttern"),
+         answer(paste("Der Pipe-Operator kann sowohl Data Frames als auch Funktionen",
+                      " in andere Funktionen einleiten."),
+                message = "Der Pipe-Operator füttert nur Daten in Funktionen."),
+         allow_retry = TRUE,
+         random_answer_order = TRUE
+         ),
+
+
+learnr::question_checkbox("Was ist der Unterschied zwischen dem `%>%` und dem `|>` Pipe Operator?",
+         answer("Die `|>`Pipe ist genauer als die `%>%`Pipe.",
+              message = "Die Pipes unterscheiden sich nicht in der Genauigkeit, beide geben die Daten in die nächste Funktion weiter. Die Pipes unterscheiden sich aber in ihrer Funktionsweise in Spezialsituationen."),
+         answer("Die `|>` Pipe kann nur genutzt werden, wenn das `magrittr`-Paket geladen wurde.",
+              message = "Die `|>` Pipe ist in `Base R` implementiert und muss nicht extra aus",
+              "einem Paket geladen werden.",
+              correct = TRUE),
+         answer("Die `%>%` Pipe kann nur genutzt werden, wenn das `magrittr`-Paket geladen wurde.",
+              message = "Genau, um die `%>%` Pipe nutzen zu können, muss das `magrittr`-Paket geladen sein", 
+              correct = TRUE),
+         allow_retry = TRUE,
+         random_answer_order = TRUE
+         )
+)
+```
+
 
 ## Learnings
+
+So hast du heute abgeschnitten:
+
+```{r context="server"}
+# Shiny App um die Anzahl richtig beantworteter Fragen anzuzeigen. 
+# Funktioniert in jedem Tutorial
+
+shiny::observeEvent(
+  input$get_score, 
+  {
+    objs2 = learnr:::get_tutorial_state()
+    
+    # Number of correct questions
+    
+    n_correct <- 
+      # Access the $correct sublist item in each list item
+        lapply(objs2, purrr::pluck, "correct") |>
+           # make it a vector containing: TRUE and FALSE and NAs
+           # NA is appearing for list items which don't have
+           # a $correct subitem
+                unlist() |> 
+           # Taking the sum of a logical Vector returns the number of TRUEs
+                sum(na.rm=TRUE)
+    
+    # Number of total questions
+    
+    total_questions <- 
+      # 1. Access $type in each list item and make it a vector of types
+      lapply(objs2, purrr::pluck, "type") |> unlist()
+    
+    # 2. Count the number of "question" in that vector
+    total_questions <- total_questions[total_questions == "question"] |> 
+      length()
+      
+      
+    output$score = shiny::renderText(
+      paste0(n_correct, " von ", total_questions,
+        " im gesamten Tutorial beantworteten Fragen waren richtig.")
+)
+    invisible()
+  }
+)
+```
+
+```{r score, echo=FALSE}
+shiny::br()
+shiny::actionButton("get_score", "Auswertung!")
+shiny::br()
+shiny::br()
+shiny::textOutput("score")
+shiny::br()
+```
+
+
+
+### Zusammenfassung
+
+In diesem Tutorial habst du die Pipe-Operatoren `|>` und `%>%` kennengelernt. 
+Der Pipe-Operator leitet den Output einer Funktion als Input an die nächste Funktion weiter, was zu einem klaren und lesbareren Code führt. `%>%` und `|>` sind äquivalente Pipe-Operatoren, wobei `%>%` aus dem `magrittr`-Paket stammt und `|>` in `base R` eingebaut ist.
+
+### Diese neuen Konzepte kennst du nun:
+-     Stichpunktartige Beschreibung
+
+### Neue Funktionen
+eine Tabelle mit den wichtigesten Codes des Tutorials
+
+| Code                      | Beschreibung                                       |
+|---------------------------|----------------------------------------------------|
+| `x |> f()`                | Leitet den Output von `x` als erstes Argument an `f()` weiter. |
+| `x %>% f()`               | Äquivalente Verwendung von `%>%` für die gleiche Funktionalität. |
+| `paste(x, "Zwerge")`      | Verbindet den Vektor `x ` nach der Konvertierung in `char` mit "Zwerge"|
+| `table(x)`                | Erstellt eine Häufigkeitstabelle für die Werte in `x`.|
+| `barplot(x)`              | Erstellt ein Balkendiagramm für die Werte in `x`. |
+| `filter(data, condition)` | Filtert Daten nach einer bestimmten Bedingung.|
+| `count(x)`                | Zählt die Werte in `x`.|
+
+
+## Credit
+
+Dieses Tutorial wurde von Lukas Bruelheide und Marie Klosterkamp geschrieben. 
+
+*Bei der Erstellung wurde teilweise von ChatGPT und Bing Image Creator gebrauch gemacht.*
