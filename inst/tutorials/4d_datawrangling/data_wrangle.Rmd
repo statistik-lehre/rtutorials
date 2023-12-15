@@ -20,6 +20,8 @@ tutorial:
 
 ```{r setup, include=FALSE}
 library(learnr)
+library(dplyr)
+library(tidyr)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
@@ -75,11 +77,12 @@ Folgende Pakete gehören zum Tidyverse:
 
 Alle diese Pakete können entweder einzeln installiert werden oder alle auf einmal, indem das Schirmpaket `tidyverse` installiert wird.
 
-```
-# 1 mal zur Installation ausführen
+```{r tidyinstall, exercise = TRUE}
+# Nur EIN Mal zur Installation ausführen
 install.packages("tidyverse") 
 
-# für jede Session ausführen, in der tidyverse packete genutzt werden sollen
+# für jede Session ausführen, in der tidyverse 
+# Packete genutzt werden sollen
 library(tidyverse)            
 ```
 
@@ -98,8 +101,9 @@ Gleiche Daten, aber anders organisiert:
 
 ```{r}
 df <- trees |> tibble::rowid_to_column(var = "id")
-library(dplyr)
-library(tidyr)
+#moved to setup:
+# library(dplyr) 
+# library(tidyr)
 df |> pivot_longer(cols = !id, names_to = "variable")
 
 df |> arrange(Height) |> pivot_wider(id_cols = "id", names_from = "Height",
