@@ -454,15 +454,40 @@ Für mehr Infos für Hintergründe der Entstehung von Chained Setup Chunks:
 **Wichtig:** Argument setzen: `allow_retry = TRUE`
 
 
-```{r abschlussquiz_01, echo = FALSE}
-learnr::question_radio("Was vermutest du: Was wird ausgegeben durch `wg$name`?",
-                       answer("Ein Data Frame",
-                              message = "Es ist kein Data Frame, weil die Werte dann untereinander in einer Spalte ausgegeben würden und nicht nebeneinander."),
-                       answer("Ein Vektor",
-                              correct = TRUE,
-                              message = "Genau. Es ist ein Vektor, denn bei einem Data Frame würden die Werte untereinander in einer Spalte ausgegeben statt horizontal."),
-                       allow_retry = TRUE)
+```{r Abschlussquizz}
+quiz(caption = "Teste dein Wissen!",
+
+learnr::question_checkbox("Was hast du über die Maße der zentralen Tendenz gelernt?",
+         answer("Der Median ist das Zentrum einer sortierten Datenmenge und weniger anfällig für Ausreißer.", 
+                 correct = TRUE,
+                 message = "Richtig! Der Median ist robust gegenüber Ausreißern."),
+         answer("Der Median ist der Wert, der am häufigsten in einer Datenmenge vorkommt.",
+                 message = "Der Modus nicht der Median repräsentiert den am häufigsten auftretenden Wert."),
+         answer("Das artihmetische Mittel ist die Summe aller Werte geteilt durch die Anzahl der Werte.",
+                 correct = TRUE,
+                 message = "Genau, der Mittelwert wird durch die Summe der Werte geteilt durch ihre",
+                 "Anzahl errechnet."),
+         allow_retry = TRUE,
+         random_answer_order = TRUE
+         ),
+
+learnr::question_radio("Welches Maß der zentralen Tendenz eignet sich für eine metrisch skalierte Variable mit großen Ausreißerwerten?",
+         answer("Der Modus.",
+              message = "Du könntest auch den Modus für diese Variable bestimmen,",
+              "aber du möchtest ja die eine Zahl finden, die deine Daten mit den geringsten Abweichungen",
+              "beschreibt. Dafür die lediglich häufigste Ausprägung zu verwenden wäre also nicht zielführend."),
+         answer("Der Median.",
+              correct = TRUE,
+              message = "Richtig, der Median eignet sich gut dafür ein Maß der zentralen Tendenz zu bestimmen,",
+              "dass gegen Ausreißer robust ist."),
+         answer("Das artihmetische Mittel.",
+              message = "Das arithmetische Mittel gibt uns für Variablen OHNE Ausreißer eine gute",
+              "Zusammenfassung unserer Daten, aber bei großen Ausreißern ist es anfällig für Verzerrungen."),
+         allow_retry = TRUE,
+         random_answer_order = TRUE
+         ))
 ```
+
 
 
 ## Learnings
