@@ -144,7 +144,7 @@ Jetzt bist du gefragt! Werde zu Mario oder Luigi und nutze die Pipe, um an dein
 Wir nutzen weiterhin den Beispieldatensatz `einkaufen`. Hier ein kleiner Einblick in die Variablen, die du heute benutzt:
 
 ```{r viewdata, exercise = FALSE, Echo = FALSE}
-data.frame(einkaufen$Weg, einkaufen$Verkehrsmittel, einkaufen$Essen)
+einkaufen |> select(Verkehrsmittel, Essen, Weg)
 # nicht so schön, da nur die ersten beiden Variablen angezeigt werden
 ```
 
@@ -157,7 +157,7 @@ Noch ein kurzer Hinweis: Falls du das `|` Zeichen noch nie verwendet hast, hier 
 
 **Mac**: `⌥ `+ `7` 
 
-oder du nutzt das eingebaute Tastaturkürzel `Strg/Cmd` + `Umschalt` + `M` nutzen.
+Am besten nutzt du das in RStudio das eingebaute Tastaturkürzel `Strg/Cmd` + `Umschalt` + `M`. Dadurch wird ein ` |> ` mit Leerzeichen umgeben eingefügt.
 
 Dafür kannst du unter *Tools* > *Globale Optionen* folgende Änderung vornehmen, um `|>` anstelle von `%>%` zu verwenden:
 
@@ -187,7 +187,7 @@ einkaufen$Verkehrsmittel |> summary()
 ```
 
 ```{r modequest}
-question_text("Was ist das häufigst gennante Verkehrsmittel der Befragten?",
+question_text("Was ist das häufigst genannte Verkehrsmittel der Befragten?",
                  answer("Auto", correct = TRUE, message = "Genau, das Auto wird mit 46 Nennungen am meisten genutzt."),
               allow_retry = TRUE)
 ```
@@ -222,8 +222,7 @@ einkaufen$Weg |> mean(na.rm = TRUE)
 
 ```{r meanquest}
 question_text("Was ist der Mittelwert für den Weg zum Einkaufsladen auf zwei Nachkommastellen gerundet?",
-                 answer("12.76", correct = TRUE, message = "Genau, im Durchschnitt beträgt die Weglänge zum",
-                 "Einkaufsladen 12.76km."),
+                 answer(12.76, correct = TRUE, message = "Genau, im Durchschnitt beträgt die Weglänge zum Einkaufsladen 12.76 km."),
               allow_retry = TRUE)
 ```
 
@@ -233,16 +232,20 @@ Genial! Du hast jetzt also schon verstanden, wie du die Pipe für eine Funktione
 Als letztes gibt es hier jetzt schon einen kleinen Einblick in das Tutorial `Data Wrangling`, da die Pipe hier eine große Rolle spielt. 
 
 ::: blau-nb
-Aus dem Packet `dplyr` kommt die hilfreiche Funktion `filter()`. Diese können wir nuzten, um bestimmte Daten aus unserem Datensatz zu filtern.
+Aus dem Paket `dplyr` kommt die hilfreiche Funktion `filter()`. Diese können wir nutzen, um bestimmte Daten aus unserem Datensatz zu filtern.
 
-Die Funktion erwartet als Argumente den `Datensatz`, die `Variable` mit `Operator` und filterndem `Wert`.
+`filter()` erwartet als Argumente den `Datensatz`, die `Variable` mit `Operator` und filterndem `Wert`.
 
-filter(Daten, Variable Operator Wert)
+```
+filter(Daten, Variable == Wert)
+```
 
 für unser Beispiel:
+```{r filt, exercise = TRUE, exercise.cap = "filter(): Funktionsweise"}
 filter(einkaufen, Essen == "Pizza")
+```
 
-würde uns nur noch die Einträge anzeigen, bei denen die Befragten als Lieblingsessen Pizza angegeben haben.
+Achte auf die Spalte "Essen" (auf Seite 2 der Tabelle)! Im ganzen Datensatz werden nur noch Zeilen angezeigt, die als Essen "Pizza" angegeben haben.
 :::
 
 </br>
@@ -250,7 +253,7 @@ würde uns nur noch die Einträge anzeigen, bei denen die Befragten als Liebling
 ::: aufgabe 
 **3** *(schwerer)*
 
-Schau dir die Funktionsweiese der Funktion `filter()` an und nutze sie für diese Aufgabe.
+Schau dir die Funktionsweise der Funktion `filter()` aus dem `dplyr`-Paket an und nutze sie für diese Aufgabe.
 Füttere die Daten von `einkaufen` in die Funktion `filter()` und filtere dort in der Variable `Essen` nach den Werten für "Pasta". Gib die Daten in die Funktion `count()`, um dir die Anzahl ausgeben zu lassen.
 :::
 
@@ -278,7 +281,7 @@ einkaufen |>
 
 ```{r lastquest}
 question_text("Wie viele Menschen haben Pasta als Lieblingessen angegeben?",
-                 answer("13", correct = TRUE, message = "Genau, 13 Befragte essen am liebsten Pasta."),
+                 answer(15, correct = TRUE, message = "Genau, 15 Befragte essen am liebsten Pasta."),
               allow_retry = TRUE)
 ```
 
@@ -294,15 +297,13 @@ Du hast die Pipes gemeistert und bist bereit für das nächste Tutorial!
 quiz(caption = "Teste dein Wissen!",
 
 learnr::question_checkbox("Welche der folgenden Aussagen sind korrekt? Markiere alle zutreffenden Aussagen.",
-         answer(paste("Der Pipe-Operator ist in deinem Code nicht erforderlich, aber es ist hilfreich,",
-                      " weil er den Code sauberer macht."), correct = TRUE),
-         answer(paste("Der Pipe-Operator gibt den Output als erstes Argument in die nachfolgende Funktion ein"),
+         answer("Der Pipe-Operator ist in deinem Code nicht erforderlich, aber es ist hilfreich, weil er Code linear lesbar macht.",
+         correct = TRUE),
+         answer("Der Pipe-Operator gibt den Output als erstes Argument in die nachfolgende Funktion ein",
                 correct = TRUE,
-                message = "Genau. Die meisten Funktionen nehmen Daten als erstes Argument. Diese Funktionen",
-                "können wir also mit Daten aus der Pipe füttern"),
-         answer(paste("Der Pipe-Operator kann sowohl Data Frames als auch Funktionen",
-                      " in andere Funktionen einleiten."),
-                message = "Der Pipe-Operator füttert nur Daten in Funktionen."),
+                message = "Genau. Die meisten Funktionen nehmen Daten als erstes Argument. Diese Funktionen können wir also mit Daten aus der Pipe füttern"),
+         answer("Der Pipe-Operator kann auch Daten von rechts nach links weitergeben",
+                message = "Der Pipe-Operator gibt immer den linken Output an die rechte Funktion weiter"),
          allow_retry = TRUE,
          random_answer_order = TRUE
          ),
