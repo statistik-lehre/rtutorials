@@ -1,11 +1,11 @@
 #' einkaufen
 #'
-#' Von Studierenden durchgeführte Befragungen von Kund_innen
-#' (hauptsächlich vor Bioläden in und um Kassel)
+#' Von Studierenden durchgeführte Befragungen von Kund_innen in
+#' Bioläden in und um Kassel, es sind aber auch zwei Nicht-Bioläden dabei.
 #'
 #' @author Studierende des WiSe 22/23 in Kassel
 #'
-#' @format 9 Variablen mit 166 Beobachtungen
+#' @format 12 Variablen mit 166 Beobachtungen
 #'
 #'
 #'- **Befragung**:
@@ -23,7 +23,7 @@
 #'- **Verkehrsmittel**: Wie sind Sie hier her gekommen?
 #'- **Weg**: Wie weit war ihr Weg hier her? (in km)
 #'
-#'- **Frequenz**: Wie oft kommen Sie hier her zum Einkaufen?
+#'- **Frequenz**: Wie oft gehen Sie in einen Bioladen?
 #'- **Alter**
 #'
 #' @docType data

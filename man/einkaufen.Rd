@@ -5,7 +5,7 @@
 \alias{einkaufen}
 \title{einkaufen}
 \format{
-9 Variablen mit 166 Beobachtungen
+12 Variablen mit 166 Beobachtungen
 \itemize{
 \item \strong{Befragung}:
 Initialien der Studierenden, die die Befragung durchgeführt haben
@@ -20,7 +20,7 @@ TRUE / FALSE, je nach dem ob der Laden ein Bioladen war
 \item \strong{Kochen}: Anzahl der Tage pro Woche, an denen selber gekocht wird
 \item \strong{Verkehrsmittel}: Wie sind Sie hier her gekommen?
 \item \strong{Weg}: Wie weit war ihr Weg hier her? (in km)
-\item \strong{Frequenz}: Wie oft kochen Sie selbst?
+\item \strong{Frequenz}: Wie oft gehen Sie in einen Bioladen?
 \item \strong{Alter}
 }
 }
@@ -28,8 +28,8 @@ TRUE / FALSE, je nach dem ob der Laden ein Bioladen war
 einkaufen
 }
 \description{
-Von Studierenden durchgeführte Befragungen von Kund_innen
-(hauptsächlich vor Bioläden in und um Kassel)
+Von Studierenden durchgeführte Befragungen von Kund_innen in
+Bioläden in und um Kassel, es sind aber auch zwei Nicht-Bioläden dabei.
 }
 \author{
 Studierende des WiSe 22/23 in Kassel
