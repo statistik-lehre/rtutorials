@@ -1,0 +1,167 @@
+Befragung,ID,Ort,Bioladen,Datum,Uhrzeit,Essen,Kochen,Verkehrsmittel,Weg,Frequenz,Alter
+DS,1,NA,TRUE,NA,NA,Sushi,4,Fahrrad,5,mehrfach die Woche,22
+DS,2,NA,TRUE,NA,NA,Lasagne,1,ÖPNV,2,seltener,23
+DS,3,NA,TRUE,NA,NA,Sushi,1,Zu Fuß,0.9,einmal im Monat,26
+DS,4,NA,TRUE,NA,NA,Curry,3,Zu Fuß,0.8,einmal im Monat,24
+DS,5,NA,TRUE,NA,NA,Pasta,4,Zu Fuß,2,alle zwei Wochen,25
+DS,6,NA,TRUE,NA,NA,Pasta,2,Auto,17,alle zwei Wochen,27
+DS,7,NA,TRUE,NA,NA,Matjes,4,Auto,1.8,mehrfach die Woche,47
+DS,8,NA,TRUE,NA,NA,Dorade,5,Zu Fuß,0.9,mehrfach die Woche,49
+DS,9,NA,TRUE,NA,NA,Pho-Suppe,3,Fahrrad,0.8,einmal die Woche,25
+DS,10,NA,TRUE,NA,NA,Pizza,6,Fahrrad,7,mehrfach die Woche,46
+DS,11,NA,TRUE,NA,NA,Spaghetti,6,ÖPNV,3,mehrfach die Woche,25
+DS,12,NA,TRUE,NA,NA,Kartoffelklöße,5,ÖPNV,3,mehrfach die Woche,22
+DS,13,NA,TRUE,NA,NA,Pesto mit Nudeln,5,ÖPNV,3,einmal die Woche,23
+DS,14,NA,TRUE,NA,NA,Nudeln mit Lachs-Sahne Soße,3,Fahrrad,2,einmal im Monat,35
+DS,15,NA,TRUE,NA,NA,Pasta,2,ÖPNV,60,seltener,23
+DS,16,NA,TRUE,NA,NA,Pasta,3,ÖPNV,60,seltener,52
+DS,17,NA,TRUE,NA,NA,Pasta,6,Zu Fuß,2,mehrfach die Woche,36
+DS,18,NA,TRUE,NA,NA,Pasta,4,Zu Fuß,0.2,mehrfach die Woche,40
+DS,19,NA,TRUE,NA,NA,Spinat-quiche,5,ÖPNV,3,mehrfach die Woche,48
+DS,20,NA,TRUE,NA,NA,Gemüse jeglicher Art,4,Fahrrad,7,einmal die Woche,55
+IB,1,Markthalle Kassel,FALSE,2022-11-12,13:27,Fischsuppe,7,Auto,8,einmal im Monat,20
+IB,2,Markthalle Kassel,FALSE,2022-11-12,13:30,Schnitzel,5,Auto,30,einmal die Woche,58
+IB,3,Markthalle Kassel,FALSE,2022-11-12,13:33,Semmelknödel,1,ÖPNV,15,einmal im Monat,21
+IB,4,Markthalle Kassel,FALSE,2022-11-12,13:36,Weihnachtsgans,0,Auto,5,einmal im Monat,60
+IB,5,Markthalle Kassel,FALSE,2022-11-12,13:39,Gulasch mit Klösen,5,Auto,5,einmal im Monat,24
+IB,6,Markthalle Kassel,FALSE,2022-11-12,13:39,Lasagne,6,Auto,5,alle zwei Wochen,27
+IB,7,Markthalle Kassel,FALSE,2022-11-12,13:42,Pizza,6,ÖPNV,10,alle zwei Wochen,23
+IB,8,Markthalle Kassel,FALSE,2022-11-12,13:44,Falaffel im Brot,4,Fahrrad,4,alle zwei Wochen,35
+IB,9,Markthalle Kassel,FALSE,2022-11-12,13:44,Pasta,5,Auto,3,mehrfach die Woche,38
+IB,10,Markthalle Kassel,FALSE,2022-11-12,13:53,Lasagne,7,Zu Fuß,2,alle zwei Wochen,20
+IB,11,Markthalle Kassel,FALSE,2022-11-12,13:53,Lasagne,7,Zu Fuß,2,alle zwei Wochen,14
+IB,12,Markthalle Kassel,FALSE,2022-11-12,13:56,Gemüse,7,Fahrrad,3,mehrfach die Woche,62
+IB,13,Markthalle Kassel,FALSE,2022-11-12,14:00,Bratkartoffel,5,Auto,5,einmal die Woche,43
+IB,14,Markthalle Kassel,FALSE,2022-11-12,14:03,Nudelauflauf,4,Zu Fuß,5,seltener,24
+IB,15,Markthalle Kassel,FALSE,2022-11-12,14:05,Sushi,5,Zu Fuß,10,einmal im Monat,31
+IB,16,Markthalle Kassel,FALSE,2022-11-12,14:05,Sushi,5,Fahrrad,10,einmal im Monat,32
+IB,17,Markthalle Kassel,FALSE,2022-11-12,14:10,Bratapfel,6,Fahrrad,10,alle zwei Wochen,28
+IB,18,Markthalle Kassel,FALSE,2022-11-12,14:10,Döner,6,Fahrrad,10,einmal die Woche,30
+IB,19,Markthalle Kassel,FALSE,2022-11-12,14:13,Risotto,7,ÖPNV,15,einmal im Monat,42
+IB,20,Markthalle Kassel,FALSE,2022-11-12,14:16,Kasseler,0,ÖPNV,20,einmal im Monat,49
+LM,1,NA,TRUE,NA,NA,Linsensuppe,1,Zu Fuß,2,alle zwei Wochen,33
+LM,2,NA,TRUE,NA,NA,Curry,5,ÖPNV,35,mehrfach die Woche,22
+LM,3,NA,TRUE,NA,NA,Gebratenes Hähnchen,2,Fahrrad,4,einmal die Woche,59
+LM,4,NA,TRUE,NA,NA,Gemüse,3,Zu Fuß,2,mehrfach die Woche,69
+LM,5,NA,TRUE,NA,NA,Salat,5,Zu Fuß,0.8,mehrfach die Woche,58
+LM,6,NA,TRUE,NA,NA,Sushi,1,Zu Fuß,0.4,mehrfach die Woche,31
+LM,7,NA,TRUE,NA,NA,Lasagne,7,ÖPNV,3,mehrfach die Woche,34
+LM,8,NA,TRUE,NA,NA,Pasta,4,ÖPNV,2,einmal die Woche,68
+LM,9,NA,TRUE,NA,NA,Wrap,2,ÖPNV,5,seltener,19
+LM,10,NA,TRUE,NA,NA,Gemüse,7,Auto,40,alle zwei Wochen,NA
+LM,11,NA,TRUE,NA,NA,Pasta,7,Auto,10,einmal die Woche,68
+LM,12,NA,TRUE,NA,NA,Pasta,7,Auto,10,einmal die Woche,65
+LM,13,NA,TRUE,NA,NA,Vegetarisch,6,Auto,10,mehrfach die Woche,59
+LM,14,NA,TRUE,NA,NA,Pasta,6,ÖPNV,8,mehrfach die Woche,57
+LM,15,NA,TRUE,NA,NA,Pasta,4,ÖPNV,140,einmal die Woche,56
+LM,16,NA,TRUE,NA,NA,Spinat,3,ÖPNV,600,alle zwei Wochen,43
+LM,17,NA,TRUE,NA,NA,Pasta,6,Fahrrad,7,mehrfach die Woche,29
+LM,18,NA,TRUE,NA,NA,Spinat,4,ÖPNV,8,mehrfach die Woche,59
+LM,19,NA,TRUE,NA,NA,Pasta,4,Auto,12,mehrfach die Woche,58
+LM,20,NA,TRUE,NA,NA,Pasta,7,ÖPNV,2,einmal die Woche,75
+LM,21,NA,TRUE,NA,NA,Vietnamesisch,7,Auto,5,mehrfach die Woche,40
+RM,1,Schachtelhalm,TRUE,2022-11-14,NA,Kartoffelpuffer,7,Fahrrad,2.5,einmal im Monat,68
+RM,2,Schachtelhalm,TRUE,2022-11-14,NA,Käse,7,Auto,1.5,seltener,83
+RM,3,Schachtelhalm,TRUE,2022-11-14,NA,Pommes,2,Zu Fuß,0.1,einmal im Monat,31
+RM,4,Schachtelhalm,TRUE,2022-11-14,NA,Pizza,6,Fahrrad,3.5,mehrfach die Woche,20
+RM,5,Schachtelhalm,TRUE,2022-11-14,NA,Gemüse,5,Fahrrad,18,seltener,59
+RM,6,Schachtelhalm,TRUE,2022-11-14,NA,Pizza,7,Auto,3,seltener,64
+RM,7,Schachtelhalm,TRUE,2022-11-14,NA,Grünkohl,3,Auto,6,alle zwei Wochen,49
+RM,8,Schachtelhalm,TRUE,2022-11-14,NA,Rote-Beete-Risotto,6,Zu Fuß,0.25,seltener,57
+RM,9,Schachtelhalm,TRUE,2022-11-14,NA,Kartoffelgratin,5,Auto,4,alle zwei Wochen,58
+RM,10,Schachtelhalm,TRUE,2022-11-14,NA,Sauerbraten mit Blaukraut und Knödeln,2,ÖPNV,287,seltener,62
+RM,11,Schachtelhalm,TRUE,2022-11-14,NA,Nudeln,2,Auto,4,seltener,44
+RM,12,Schachtelhalm,TRUE,2022-11-14,NA,Gemüse,4,Auto,1,seltener,61
+RM,13,Schachtelhalm,TRUE,2022-11-14,NA,Schokolade,2,Fahrrad,1.5,mehrfach die Woche,21
+RM,14,Schachtelhalm,TRUE,2022-11-14,NA,Ofengemüse,5,Zu Fuß,0.5,seltener,20
+RM,15,Schachtelhalm,TRUE,2022-11-14,NA,Curry,7,Fahrrad,1.5,alle zwei Wochen,23
+RM,16,Schachtelhalm,TRUE,2022-11-14,NA,Gefüllte Paprika,2,Auto,3,alle zwei Wochen,54
+RM,17,Schachtelhalm,TRUE,2022-11-14,NA,Pizza,5,Fahrrad,3,mehrfach die Woche,27
+RM,18,Schachtelhalm,TRUE,2022-11-14,NA,Matjes,3,Auto,0.75,seltener,55
+RM,19,Schachtelhalm,TRUE,2022-11-14,NA,Shitake-Suppe,7,Zu Fuß,0.5,einmal im Monat,30
+RM,20,Schachtelhalm,TRUE,2022-11-14,NA,Nudeln mit Bolognese,3,Zu Fuß,0.1,seltener,24
+RD,1,Kaufland,FALSE,2022-11-12,16:21,NA,4,Auto,4,mehrfach die Woche,31
+RD,2,Kaufland,FALSE,2022-11-12,16:25,NA,2,Auto,2,einmal die Woche,51
+RD,3,Kaufland,FALSE,2022-11-12,16:37,NA,3,Fahrrad,1,alle zwei Wochen,29
+RD,4,Kaufland,FALSE,2022-11-12,16:39,NA,4,Auto,5,einmal die Woche,23
+RD,5,Kaufland,FALSE,2022-11-12,16:42,NA,4,Zu Fuß,0.5,mehrfach die Woche,32
+RD,6,Kaufland,FALSE,2022-11-12,16:54,NA,5,Zu Fuß,0.2,einmal die Woche,30
+RD,7,Kaufland,FALSE,2022-11-12,17:01,NA,4,Zu Fuß,0.2,alle zwei Wochen,43
+RD,8,Kaufland,FALSE,2022-11-12,17:14,NA,3,Auto,4,alle zwei Wochen,43
+RD,9,Kaufland,FALSE,2022-11-12,17:15,NA,4,Fahrrad,1,einmal die Woche,28
+RD,10,Kaufland,FALSE,2022-11-12,17:29,NA,4,Fahrrad,1.5,einmal die Woche,27
+RD,11,Kaufland,FALSE,2022-11-12,17:32,NA,5,Zu Fuß,0.5,mehrfach die Woche,26
+RD,12,Kaufland,FALSE,2022-11-12,17:46,NA,5,Fahrrad,1.5,mehrfach die Woche,28
+RD,13,Kaufland,FALSE,2022-11-12,17:47,NA,3,Auto,4,einmal die Woche,48
+RD,14,Kaufland,FALSE,2022-11-12,17:52,NA,2,Auto,2,einmal die Woche,55
+RD,15,Kaufland,FALSE,2022-11-12,17:54,NA,3,ÖPNV,3,einmal die Woche,28
+RD,16,Kaufland,FALSE,2022-11-12,17:57,NA,1,Auto,3,einmal im Monat,48
+RD,17,Kaufland,FALSE,2022-11-12,17:59,NA,4,Fahrrad,1,mehrfach die Woche,26
+RD,18,Kaufland,FALSE,2022-11-12,18:08,NA,1,Auto,2.5,seltener,56
+RD,19,Kaufland,FALSE,2022-11-12,18:13,NA,1,ÖPNV,2,einmal die Woche,25
+RD,20,Kaufland,FALSE,2022-11-12,18:14,NA,4,ÖPNV,2,alle zwei Wochen,32
+TB,1,Denn’s Biomarkt Bebelplatz,TRUE,2022-11-10,ab 15:10:00,Fleischsalat,3,Zu Fuß,1,einmal die Woche,38
+TB,2,Denn’s Biomarkt Bebelplatz,TRUE,2022-11-10,ab 15:10:00,Gemueselasagne,6,Auto,4,mehrfach die Woche,51
+TB,3,Denn’s Biomarkt Bebelplatz,TRUE,2022-11-10,ab 15:10:01,Obstsalat,7,Fahrrad,5,mehrfach die Woche,33
+TB,4,Denn’s Biomarkt Bebelplatz,TRUE,2022-11-10,ab 15:10:02,Avocado,3,Fahrrad,4,alle zwei Wochen,20
+TB,5,Denn’s Biomarkt Bebelplatz,TRUE,2022-11-10,ab 15:10:03,Spaghetti,0,Zu Fuß,2,seltener,10
+TB,6,Denn’s Biomarkt Bebelplatz,TRUE,2022-11-10,ab 15:10:04,Mamas Schwarzwurzeln,5,Zu Fuß,2,einmal die Woche,41
+TB,7,Denn’s Biomarkt Bebelplatz,TRUE,2022-11-10,ab 15:10:05,alles mit Pilzen,4,ÖPNV,6,einmal die Woche,29
+TB,8,Denn’s Biomarkt Bebelplatz,TRUE,2022-11-10,ab 15:10:06,Chilli sin Carne,7,Fahrrad,4,mehrfach die Woche,27
+TB,9,Denn’s Biomarkt Bebelplatz,TRUE,2022-11-10,ab 15:10:07,Ribs,5,Fahrrad,4,einmal die Woche,29
+TB,10,Denn’s Biomarkt Bebelplatz,TRUE,2022-11-10,ab 15:10:08,Ahle Wurst,7,Zu Fuß,1,mehrfach die Woche,81
+TB,11,Denn’s Biomarkt Bebelplatz,TRUE,2022-11-10,ab 15:10:09,Eintopf,7,Zu Fuß,1,mehrfach die Woche,83
+TB,12,Denn’s Biomarkt Bebelplatz,TRUE,2022-11-10,ab 15:10:10,Pizza Meeresfruechte,0,Auto,3,alle zwei Wochen,50
+TB,13,Denn’s Biomarkt Bebelplatz,TRUE,2022-11-10,ab 15:10:11,Gemueseroesti,7,Fahrrad,5,mehrfach die Woche,44
+TB,14,Denn’s Biomarkt Bebelplatz,TRUE,2022-11-10,ab 15:10:12,Im Herbst: Kuerbissuppe,5,Fahrrad,2,einmal die Woche,63
+TB,15,Denn’s Biomarkt Bebelplatz,TRUE,2022-11-10,ab 15:10:13,Buerger,2,Zu Fuß,2,einmal die Woche,33
+TB,16,Denn’s Biomarkt Bebelplatz,TRUE,2022-11-10,ab 15:10:14,Lachs vom Grill,6,ÖPNV,4,einmal die Woche,24
+TB,17,Denn’s Biomarkt Bebelplatz,TRUE,2022-11-10,ab 15:10:15,Linsenbolognese,7,Zu Fuß,1,mehrfach die Woche,49
+TB,18,Denn’s Biomarkt Bebelplatz,TRUE,2022-11-10,ab 15:10:16,Doener,3,Auto,10,einmal im Monat,20
+TB,19,Denn’s Biomarkt Bebelplatz,TRUE,2022-11-10,ab 15:10:17,Doenerbox,5,Auto,14,seltener,21
+TB,20,Denn’s Biomarkt Bebelplatz,TRUE,2022-11-10,ab 15:10:18,Indisch,7,Auto,3,mehrfach die Woche,49
+TB,21,Denn’s Biomarkt Bebelplatz,TRUE,2022-11-10,ab 15:10:19,Alles von meiner Frau,0,Fahrrad,1,mehrfach die Woche,76
+TB,22,Denn’s Biomarkt Bebelplatz,TRUE,2022-11-10,ab 15:10:20,Frikadellen,7,Fahrrad,1,mehrfach die Woche,77
+TB,23,Denn’s Biomarkt Bebelplatz,TRUE,2022-11-10,ab 15:10:21,Nudeln mit Tomatensosse,0,Zu Fuß,3,einmal die Woche,9
+TB,24,Denn’s Biomarkt Bebelplatz,TRUE,2022-11-10,ab 15:10:22,Bratwurst vom Wildschwein,7,Zu Fuß,3,mehrfach die Woche,44
+MD,1,Denn’s Biomarkt Bebelplatz,TRUE,NA,13:00 - 15.30,asiatisch,5,Andere,65,mehrfach die Woche,55
+MD,2,Denn’s Biomarkt Bebelplatz,TRUE,NA,13:00 - 15.31,Lasagne,3,Andere,30,mehrfach die Woche,66
+MD,3,Denn’s Biomarkt Bebelplatz,TRUE,NA,13:00 - 15.32,Pizza,3,E-Roller,4,mehrfach die Woche,78
+MD,4,Denn’s Biomarkt Bebelplatz,TRUE,NA,13:00 - 15.33,"Bohnen mit Schafskäse,Kartoffeln und Tomaten",5,Andere,40,seltener,65
+MD,5,Denn’s Biomarkt Bebelplatz,TRUE,NA,13:00 - 15.34,irgendwas mit Tomaten,3,Fahrrad,5,alle zwei Wochen,30
+MD,6,Denn’s Biomarkt Bebelplatz,TRUE,NA,13:00 - 15.35,Spinatlasagne,2,Zu Fuß,3,einmal im Monat,20
+MD,7,Denn’s Biomarkt Bebelplatz,TRUE,NA,13:00 - 15.36,Spätzle,5,NA,20,mehrfach die Woche,34
+MD,8,Denn’s Biomarkt Bebelplatz,TRUE,NA,13:00 - 15.37,Obst und Salat,3,Motorrad,6,mehrfach die Woche,84
+MD,9,Denn’s Biomarkt Bebelplatz,TRUE,NA,13:00 - 15.38,Alles,3,Zu Fuß,8,mehrfach die Woche,67
+MD,10,Denn’s Biomarkt Bebelplatz,TRUE,NA,13:00 - 15.39,Spinat und Spaghetti,3,Andere,8,seltener,87
+MD,11,Denn’s Biomarkt Bebelplatz,TRUE,NA,13:00 - 15.40,Alles,3,Andere,10,einmal im Monat,NA
+MD,12,Denn’s Biomarkt Bebelplatz,TRUE,NA,13:00 - 15.41,Wirsing,3,Zu Fuß,5,mehrfach die Woche,80
+MD,13,Denn’s Biomarkt Bebelplatz,TRUE,NA,13:00 - 15.42,Risotto,3,Andere,3,mehrfach die Woche,19
+MD,14,Denn’s Biomarkt Bebelplatz,TRUE,NA,13:00 - 15.43,Spaghetti,5,Andere,50,einmal die Woche,64
+MD,15,Denn’s Biomarkt Bebelplatz,TRUE,NA,13:00 - 15.44,Pilze mit Lauch,5,Zu Fuß,13,einmal die Woche,66
+MD,16,Denn’s Biomarkt Bebelplatz,TRUE,NA,13:00 - 15.45,Gemüse,5,Auto,13,mehrfach die Woche,69
+MD,17,Denn’s Biomarkt Bebelplatz,TRUE,NA,13:00 - 15.46,Alles,3,Auto,1,einmal die Woche,32
+MD,18,Denn’s Biomarkt Bebelplatz,TRUE,NA,13:00 - 15.47,ungarisches Gulasch,3,Andere,3,alle zwei Wochen,67
+MD,19,Denn’s Biomarkt Bebelplatz,TRUE,NA,13:00 - 15.48,Kaffee,1,ÖPNV,5,mehrfach die Woche,35
+MD,20,Denn’s Biomarkt Bebelplatz,TRUE,NA,13:00 - 15.49,Alles vegane,3,Andere,2.5,alle zwei Wochen,25
+LE,1,Bioladen Greger Wilhelmshöher Allee,TRUE,2022-11-09,09:34:00,Spaghetti,5,Zu Fuß,1,einmal die Woche,40
+LE,2,Bioladen Greger Wilhelmshöher Allee,TRUE,2022-11-09,09:37:00,Huehnerfrikasee,7,ÖPNV,8,einmal die Woche,70
+LE,3,Bioladen Greger Wilhelmshöher Allee,TRUE,2022-11-09,09:47:00,Gemuese,3,Auto,2,mehrfach die Woche,64
+LE,4,Bioladen Greger Wilhelmshöher Allee,TRUE,2022-11-09,NA,NA,1,Fahrrad,1.7,mehrfach die Woche,33
+LE,5,Bioladen Greger Wilhelmshöher Allee,TRUE,2022-11-09,NA,Kartoffelgratin mit grossem Salat,7,Auto,3,einmal die Woche,69
+LE,6,Bioladen Greger Wilhelmshöher Allee,TRUE,2022-11-09,NA,Alles mit Gemuese,7,Auto,7,mehrfach die Woche,35
+LE,7,Bioladen Greger Wilhelmshöher Allee,TRUE,2022-11-09,10:02:00,Reduzierte Ware,0,Zu Fuß,NA,einmal die Woche,NA
+LE,8,Bioladen Greger Wilhelmshöher Allee,TRUE,2022-11-09,NA,Hauptsache gute Qualitaet und Bio,7,Fahrrad,1.5,einmal die Woche,67
+LE,9,Bioladen Greger Wilhelmshöher Allee,TRUE,2022-11-09,10:13:00,Gemueseauflauf,3,Auto,2,einmal die Woche,69
+LE,10,Bioladen Greger Wilhelmshöher Allee,TRUE,2022-11-09,10:20:00,Muesli mit Fruechten,1,Zu Fuß,2,einmal die Woche,59
+LE,11,Bioladen Greger Wilhelmshöher Allee,TRUE,2022-11-09,10:23:00,Muesli und Nudeln,7,Fahrrad,0.5,einmal die Woche,48
+LE,12,Bioladen Greger Wilhelmshöher Allee,TRUE,2022-11-09,NA,NA,3,Fahrrad,1,mehrfach die Woche,61
+LE,13,Bioladen Greger Wilhelmshöher Allee,TRUE,2022-11-09,10:34:00,Pizza,3,Zu Fuß,1.5,einmal die Woche,19
+LE,14,Bioladen Greger Wilhelmshöher Allee,TRUE,2022-11-09,NA,Imam Biyildi,4,Fahrrad,6.5,mehrfach die Woche,25
+LE,15,NA,TRUE,2022-11-09,NA,NA,NA,NA,NA,NA,NA
+LE,16,Bioladen Greger Wilhelmshöher Allee,TRUE,2022-11-09,10:38:00,Curry,5,Zu Fuß,2.5,einmal die Woche,68
+LE,17,Bioladen Greger Wilhelmshöher Allee,TRUE,2022-11-09,10:40:00,Nudeln mit Tomatensosse,1,Auto,10,einmal die Woche,9
+LE,18,Bioladen Greger Wilhelmshöher Allee,TRUE,2022-11-09,10:42:00,Etwas Vegetarisches,7,Auto,7,einmal die Woche,68
+LE,19,Bioladen Greger Wilhelmshöher Allee,TRUE,2022-11-09,10:45:00,Couscous,4,Fahrrad,1,mehrfach die Woche,49
+LE,20,Bioladen Greger Wilhelmshöher Allee,TRUE,2022-11-09,NA,Sauerbraten,3,Auto,3,einmal die Woche,65
+LE,21,Bioladen Greger Wilhelmshöher Allee,TRUE,2022-11-09,11:00:00,Semmelknödel,2,Auto,3,einmal die Woche,84
