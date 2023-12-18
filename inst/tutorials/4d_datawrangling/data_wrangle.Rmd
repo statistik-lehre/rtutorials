@@ -110,7 +110,6 @@ df |> arrange(Height) |> pivot_wider(id_cols = "id", names_from = "Height",
                                      names_prefix = "Height=", values_from = "Volume")
 ```
 
-
 ## Datenerhebung
 
 Wir beginnen damit, Daten zu erheben. Im Wintersemester 2022/23 haben 8 Studierende sich vor Bioläden in und um Kassel gestellt und den Kund_innen Fragen gestellt - zum Beispiel zum Lieblingsessen, wie oft sie selbst kochen und wie weit der Weg bis zum Laden war.

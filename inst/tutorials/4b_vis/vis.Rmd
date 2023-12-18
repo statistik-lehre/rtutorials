@@ -6,7 +6,7 @@ output:
     css: css/boxes.css
     fig_caption: no
     progressive: true
-    allow_skip: false
+    allow_skip: true
 runtime: shiny_prerendered
 bibliography: ref.json
 link-citations: TRUE
@@ -26,7 +26,6 @@ library(tibble)
 library(rtutorials)
 knitr::opts_chunk$set(echo = FALSE)
 
-## hexbin und kableExtra?
 ```
 
 ## Inhalt
@@ -46,9 +45,11 @@ Mit R sind abgefahrene Sachen möglich. Eine vielfältige Übersicht darüber, w
 
 ![](images/compress/temp.png){width=80%}
 
-Das war nur, um dir einen Einblick zu geben in das, was alles möglich ist. Dieses Tutorial muss jedoch bei den Basics starten, wir werden nur grundständige Diagramme zeichnen. Das abgefahrene
-kann alles später kommen. In den Links über den Grafiken findest du detaillierte Anleitungen, sie selbst herzustellen, für deren Verständnis du aber das Grundwissen brauchst, was in diesem Tutorial
-vermittelt wird. Das hier sind die Ziele für heute: 
+Ziemlich beeindruckend, oder?
+Das soll hier aber nur ein kleiner Einblick in das sein, was alles möglich ist.  In diesem Tutorial starten natürlich bei den Basics und focussieren uns darauf grundständige Diagramme zu zeichnen. Mit diesem Grundwissen kannst du dir dann auch selbst beibringen solche abgefahrenen Diagramme zu erstellen.
+In den Links über den Grafiken findest du detaillierte Anleitungen, wenn du dann soweit bist.
+
+Wie gesagt, wir fangen Schritt für Schritt an und daher sind das hier die Ziele für heute: 
 
 ### Lernziele
 
@@ -62,7 +63,7 @@ vermittelt wird. Das hier sind die Ziele für heute:
 
 <input type="checkbox" unchecked> Boxplot erstellen </input>
 
-<input type="checkbox" unchecked> Schnelle Grafikfunktionen um einen Überblick zu gewinnen </input>
+<input type="checkbox" unchecked> Schnelle Grafikfunktionen, um einen Überblick zu gewinnen </input>
 
 <input type="checkbox" unchecked> Grafiken mit `ggplot2` nach dem Baukasten der *Grammar of Graphs* erstellen </inpu>
 
@@ -118,7 +119,7 @@ par(mfrow = c(1, 1),
 
 ## Einführung
 
-Es gibt (wie immer) tausend verschiedene Wege, Visualisierungen mit R zu erstellen. Aber einer hat sich über die Jahre herauskristallisiert, und das ist `ggplot2`. 
+Es gibt (wie immer) tausend verschiedene Wege, Visualisierungen mit R zu erstellen. Aber einer hat sich über die Jahre als besonders Beliebt erwiesen, und das ist `ggplot2`. 
 
 Der Grund, warum wir dir diesen Weg beibringen:
 
@@ -143,7 +144,9 @@ Leland Wilkinson ist der Gründer des Grammar of Graphs-Ansatzes. Im Grunde ist 
 
 #### benötigtes Paket
 
-Der erste Schritt für dieses Tutorial ist, das Paket `ggplot2` in die aktive Sitzung zu laden. Tu das mittels `library()`!
+::: aufgabe
+Der erste Schritt für dieses Tutorial ist, das Paket `ggplot2` in die aktive Sitzung zu laden. Tu das mittels `library()`! 
+:::
 
 ```{r lib, exercise = TRUE, exercise.cap = "ggplot2 laden"}
 library()
@@ -155,10 +158,10 @@ library(ggplot2)
 
 ### Einordnung in den Prozess
 
-Wir haben jetzt Daten erhoben, importiert - und nun? Grafiken sind ein guter Weg, Zusammenhänge in den Daten sichtbar zu machen. Zum einen, um sich selbst in den Daten zu orientieren, und zum anderen auch um die Ergebnisse der Analyse zu präsentieren. Wir brauchen Visualisierungen also an zwei Stellen im Prozess: 
+Wir haben jetzt Daten erhoben, importiert - und nun? Grafiken sind ein guter Weg, Zusammenhänge in den Daten sichtbar zu machen. Zum einen, um sich selbst in den Daten zu orientieren, und zum anderen auch, um die Ergebnisse der Analyse zu präsentieren. Wir brauchen Visualisierungen also an zwei Stellen im Prozess: 
 
-- einmal um einen Überblick zu gewinnen
-- am Ende um Ergebnisse zu kommunizieren
+- einmal um einen **Überblick** zu gewinnen
+- am Ende um **Ergebnisse** zu **kommunizieren**
 
 ![](images/compress/prozess.png){width=90%}
 
@@ -175,7 +178,9 @@ Gehen wir sofort zur Sache!
 ## 1. Balkendiagramm
 
 ::: infobox
-Balkendiagramme sind geeignet, um die Verteilung einer einzelnen, kategorialen Variable zu zeigen. 
+Balkendiagramme sind geeignet, um die Verteilung einer einzelnen, kategorialen Variable zu zeigen.
+
+Funktion: `geom_bar()`
 :::
 <br>
 
@@ -205,12 +210,13 @@ diese drei Kernbestandteile beschreiben lässt:
 - `aesthetic mapping`
 - `geom`etric objects
 
+Mit data kennst du dich ja jetzt schon aus, daher können wir direkt zum *mapping* übergehen.
+
 ### aesthetic mapping
 
-Was ist eigentlich dieses aesthetic mapping? Das ist das, was wir oben im Code beim Argument `mapping` gemacht haben: `mapping = aes(x = Verkehrsmittel)`
+Was ist eigentlich dieses `aesthetic mapping`? Das ist das, was wir oben im Code beim Argument `mapping` gemacht haben: `mapping = aes(x = Verkehrsmittel)`
 
-`aes()` steht für *aesthetic attributes*, und weist den einzelnen Variablen, wie z.B. dem Verkehrsmittel,
-eine *grafische Eigenschaft* zu. Grafische Eigenschaften sind: 
+`aes()` steht für *aesthetic attributes*, und weist den einzelnen Variablen, wie z.B. dem Verkehrsmittel, eine *grafische Eigenschaft* zu. Grafische Eigenschaften sind: 
 
 - Achsen (`x`, `y`)
 - Farbe (`colour`)
@@ -222,9 +228,9 @@ Im Diagramm oben wurde der x-Achse die Variable Verkehrsmittel zugewiesen.
 
 :::aufgabe
 Ändere den Code so, dass die Variable Verkehrsmittel nun stattdessen auf die y-Achse gemappt wird. Wie wird sich das Diagramm wohl verändern?
-
-Beachte, dass wir dieses Mal die Argumentnamen `data` und `mapping` weggelassen haben, so wie es in der Praxis üblicherweise auch getan wird. Das war oben nur zur Einführung.
 :::
+
+*Beachte, dass wir hier die Argumentnamen `data` und `mapping` weggelassen haben, so wie es in der Praxis üblicherweise auch getan wird. Das können wir machen, da wir die Reihenfolge der Argumente beachten, also `data`, `mapping` dann `geometric objects`.* 
 
 ```{r ybarplot, exercise = TRUE, exercise.cap = "Mapping ändern auf y-Achse"}
 ggplot(einkaufen, aes(x = Verkehrsmittel)) +
@@ -270,14 +276,14 @@ Schon die erste Zeile gibt dir eine wichtige Information: Der Fehler trat in der
 Error in `geom_point()`:
 ```
 
-Manche Sachen verstehst du vielleicht nicht, wie z.B. was `compute_geom_1()` ist, und die beste Strategie für diese Sachen in R ist sie einfach zu ignorieren und anstattdessen Sinn aus den Dingen zu ziehen, die du verstehst!
+Manche Sachen verstehst du vielleicht nicht, wie z.B. was `compute_geom_1()` ist, und die beste Strategie für diese Sachen in R ist, sie einfach zu ignorieren und stattdessen Sinn aus den Dingen zu ziehen, die du verstehst!
 
 Die allerletzte Zeile der Meldung ist am informativsten:
 
 ```
 ! `geom_point()` requires the following missing aesthetics: y
 ```
-`geom_point()` braucht die folgenden fehlenden aesthetics: y
+`geom_point()` braucht die folgenden fehlenden aesthetics: 'y'
 
 Ah, das macht auch Sinn, denn ein Punkt hat immer zwei Koordinaten, eine `x`- und eine `y`-Koordinate! Logischerweise kann kein Punkt gezeichnet werden, wenn du nur eine `x`-Koordinate angibst. 
 
@@ -301,7 +307,7 @@ Ok, das Diagramm ist vielleicht nicht ultra informativ, weil ganz viele Punkte �
 
 ```{r weg-quest}
 question_text("Wie erklärst du dir die weiten Anreisewege (bis 600km!) beim Verkehrsmittel „ÖPNV”? (Tipp: Der Bioladen ist in der Nähe eines ICE-Bahnhofs)",
-              answer_fn(\(x) correct(messages = "Vermutlich waren einige Menschen zuvor mit dem ICE gefahren, und hatten vielleicht auch nur einen Umstieg mit Wartezeit und Hunger auf ein Bio-Brötchen oder so. Während der Rest der Menschen normalen Einkauf machen und aus der Umgebung kommen, maximal ein paar Kilometer entfernt.")),
+              answer_fn(\(x) correct(messages = "Vermutlich waren einige Menschen zuvor mit dem ICE gefahren, und hatten vielleicht auch nur einen Umstieg mit Wartezeit und Hunger auf ein Bio-Brötchen oder so. Während der Rest der Menschen ihren regulären Wocheneinnkauf machen und aus der Umgebung kommen, maximal ein paar Kilometer entfernt.")),
               placeholder = "Musterlösung erscheint bei Abgabe deiner Antwort...")
 ```
 
@@ -309,7 +315,9 @@ question_text("Wie erklärst du dir die weiten Anreisewege (bis 600km!) beim Ver
 ## 2. Histogramm
 
 ::: infobox
-Histogramme sind geeignet, um die Verteilung einer einzelnen, stetigen Variable zu zeigen.
+Histogramme sind geeignet, um die Verteilung einer **einzelnen**, stetigen Variable zu zeigen.
+
+Funktion: `geom_histogram()`
 :::
 <br>
 
@@ -351,11 +359,11 @@ Beim Histogramm des Alters oben sind die Balken zum Beispiel immer 2.5 Jahre bre
 ```
 `stat_bin()` using `bins = 30`. Pick better value with `binwidth`
 ```
-`ggplot` sagt damit: „Hey, ich habe deine Daten einfach mal in 30 gleich große Kategorien eingeteilt, aber das ist ein default-Wert den du bitte anpassen solltest.“
+`ggplot` sagt damit: „Hey, ich habe deine Daten einfach mal in 30 gleich große Kategorien eingeteilt, aber das ist ein default-Wert, den du bitte anpassen solltest.“
 
 ### Kategorienbreite anpassen
 
-In der Warnmeldung wurde bereits das Argument `binwidth` erwähnt. Hier ist Code, mit dem die Kategorienbreite auf 5 Jahre festgelegt wird. 
+In der Warnmeldung wurde bereits das Argument `binwidth` erwähnt. Hier ist Code, mit dem die Kategorienbreite auf 5 (Jahre) festgelegt wird. 
 
 ```{r binwidth, exercise = TRUE, exercise.cap = "Kategorienbreite einstellen"}
 ggplot(einkaufen, aes(x = Alter)) +
@@ -372,8 +380,7 @@ ggplot(einkaufen, aes(x = Alter)) +
 ```
 
 Das sieht schon mal ein Stück weit besser aus. Jetzt ist noch etwas störend, dass die Kategorien
-nicht bei runden Zahlen anfangen, sondern z.B. die 50 in der Mitte einer Kategorie liegt. Dafür kannst du das Argument
-`boundary` nutzen:
+nicht bei den markanten Zahlen anfangen, sondern z.B. die 50 in der Mitte einer Kategorie liegt. Dafür kannst du das Argument `boundary` nutzen, um einen Grenzwert zu bestimmen, der die Kategorien an diesem Punkt teilt (sog. "bin break"):
 
 ```{r boundary, exercise = TRUE, exercise.cap = "Boundary-Argument"}
 ggplot(einkaufen, aes(x = Alter)) +
@@ -385,11 +392,40 @@ ggplot(einkaufen, aes(x = Alter)) +
 
 ## 3. Boxplot
 
+::: infobox
+Balkendiagramme sind geeignet, um die Verteilung einer einzelnen, kategorialen Variable zu zeigen.
+
+Funktion: `geom_boxplot()`
+:::
+<br>
+
 ## 4. Punktdiagramm
+
+::: infobox
+Punktdiagramme sind geeignet, um die Zusammenhänge zweier numerischen Variablen zu zeigen.
+
+Funktion: `geom_point()`
+:::
+<br>
 
 ## 5. Liniendiagramm
 
+::: infobox
+Liniendiagramme sind geeignet, um zwei numerische Variablen zu Visualisieren. Die x-Variable 
+hat dabei häufig eine sequentielle Reihenfolge (wie z.B. die Zeit).
+
+Funktion: `geom_line()`
+:::
+<br>
+
 ## 6. Special: Facets
+
+::: infobox
+Facets sind geeignet, um 
+
+Funktion: `facet()`
+:::
+<br>
 
 ## 7. Special: Jitter
 
@@ -480,3 +516,6 @@ shiny::br()
 ## Credit
 
 ### Literaturverzeichnis
+
+fehlt:  Modern Dive (Ismay and Kim 2022)
+
