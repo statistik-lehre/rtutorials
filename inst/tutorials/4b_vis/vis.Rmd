@@ -393,11 +393,52 @@ ggplot(einkaufen, aes(x = Alter)) +
 ## 3. Boxplot
 
 ::: infobox
-Balkendiagramme sind geeignet, um die Verteilung einer einzelnen, kategorialen Variable zu zeigen.
+Ein Boxplot ist eine effektive Methode, um die Verteilung von einer oder mehrerer stetiger Variablen zu visualisieren und Ausreißer zu identifizieren.
 
-Funktion: `geom_boxplot()`
+Funktion: geom_boxplot()
 :::
 <br>
+
+Du erinnerst dich vielleicht daran im letzten Tutorial selbst bereits einen Boxplot gezeichnet zu haben. Hier noch einmal die Übersicht, welche Daten in einem Boxplot enthalten sind:
+
+![](images/boxplot.png){width=90%}
+
+Zum Glück wird es jetzt mit einem kleinen Codeschnipsel für uns erstellt, ohne dass wir es alles händisch vorher ermitteln müssten. 
+
+```{r boxplot-Beispiel, exercise = TRUE, exercise.cap = "Boxplot Beispiel"}
+ggplot(einkaufen, aes(y = Alter)) +
+  geom_boxplot()
+```
+
+
+::: aufgabe
+Probiere es doch mal aus, und schaue welche Daten aus dem Beispieldatensatz `einkaufen` du dir gut als Boxplot anzeigen lassen kannst. 
+:::
+
+Hier eine Auflistung der Variabelnamen:
+
+```{r}
+names(einkaufen)
+```
+
+
+```{r boxplot, exercise = TRUE, exercise.cap = "Boxplot Exploration"}
+ggplot(einkaufen, aes(y = )) +
+  geom_boxplot()
+```
+
+<!-- Quizz: Welche der folgenden Variablen eignen sich für einen Boxplot -->
+<!-- Answer: Alter und Weg. Message: kontinuierliche Variablen! -->
+
+### Farbanpassung und Verbesserungen
+
+Wie bei anderen Diagrammen kannst du Farben und Stile anpassen, um die Lesbarkeit zu verbessern. Hier werden die Boxen in unterschiedlichen Graustufen dargestellt und die Whiskers sind schwarz:
+
+```{r boxplotColor, exercise = TRUE, exercise.cap = "Boxplot mit Farbe"}
+ggplot(einkaufen, aes(y = Alter)) +
+  geom_boxplot(color = "blue", fill = "gray", alpha = 0.5) 
+```
+
 
 ## 4. Punktdiagramm
 
@@ -429,10 +470,33 @@ Funktion: `facet()`
 
 ## 7. Special: Jitter
 
-## 8. Special: 
+## Überblick bekommen
+
+Wie zu Beginn erwähnt benutzen wir diese Visualisierungen für zweierlei Zwecke:
+
+- einmal um einen **Überblick** zu gewinnen
+- am Ende um **Ergebnisse** zu **kommunizieren**
+
+Es lassen sich eigentlich alle Grafiken nuzten, um Ergebnisse zu kommunizieren, aber welche eignen sich dafür einen Überblick zu bekommen, um deine (zunächst unverständlich großen) Daten besser zu verstehen? Hier nur eine kurze Auflistung: 
+
+1. *Histogramme*:
+Zweck: Zeigt die Verteilung der Daten.
+Verwendung: Geeignet, um die Form der Verteilung, Zentralität und Streuung zu untersuchen.
+
+2. *Boxplots*:
+Zweck: Veranschaulicht die Verteilung und Zentralität der Daten sowie Ausreißer.
+Verwendung: Besonders hilfreich bei der Identifizierung von Ausreißern.
+
+3. *Streudiagramme* (Scatter Plots):
+Zweck: Zeigt die Beziehung zwischen zwei kontinuierlichen Variablen.
+Verwendung: Ermöglicht die Identifizierung von Mustern, Korrelationen oder Ausreißern.
+
+Dieser Art der Nutzung von Visualisierungen wirst du in späteren Tutorials erneut begegnen, wenn wir diese zur Überprüfung der Voraussetzungen für eine statistische Testgröße verwenden. Jetzt hast du es bereits schon einmal gehört - oder eher *gelesen* - und weißt dann, wenn die Zeit gekommen ist, schon Bescheid was da passiert. 
 
 
 ## Barrierefreiheit
+
+Noch ein letztes Kapitel, dass nicht vernachlässigt werden sollte, wenn es um visuelle Darstellung geht: die Barrierefreiheit.
 
 Ein nicht zu vernachlässigender Anteil der Bevölkerung kann bestimmte Farben nicht unterscheiden. Deswegen wurden von schlauen Menschen Farbpaletten entworfen, die keine ambivalenten Farben wie rot und grün enthalten, und auch ganz ohne Farbwahrnehmung nur über Helligkeit und Dunkelheit der Farben in schwarz weiß funktionieren würden. 
 
