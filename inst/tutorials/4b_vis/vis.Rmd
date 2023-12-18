@@ -480,6 +480,9 @@ ggplot(einkaufen, aes(x = Verkehrsmittel, y = Alter)) +
               size = 3)
 ```
 
+Achte mal auf das Verkehrsmittel "Andere". Dort gibt es wirklich nur eine handvoll Punkte,
+aber die Box ist nicht wirklich zu unterscheiden von den anderen Verkehrsmitteln. 
+
 
 ::: aufgabe
 Probiere es doch mal aus, und schaue welche Daten aus dem Beispieldatensatz `einkaufen` du dir gut als Boxplot anzeigen lassen kannst. 
