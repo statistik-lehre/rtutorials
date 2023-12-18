@@ -393,9 +393,9 @@ ggplot(einkaufen, aes(x = Alter)) +
 ## 3. Boxplot
 
 ::: infobox
-Ein Boxplot ist eine effektive Methode, um die Verteilung von einer oder mehrerer stetiger Variablen zu visualisieren und Ausreißer zu identifizieren.
+Ein Boxplot ist eine effektive Methode, um die Verteilung **einer stetigen** Variable zu visualisieren und Ausreißer zu identifizieren.
 
-Funktion: geom_boxplot()
+Funktion: `geom_boxplot()`
 :::
 <br>
 
@@ -408,6 +408,76 @@ Zum Glück wird es jetzt mit einem kleinen Codeschnipsel für uns erstellt, ohne
 ```{r boxplot-Beispiel, exercise = TRUE, exercise.cap = "Boxplot Beispiel"}
 ggplot(einkaufen, aes(y = Alter)) +
   geom_boxplot()
+```
+
+Ok, dieser Boxplot ist sehr breit und dafür auch nicht so besonders informativ. 
+Da würde ein Histogramm vom Gefühl her besser geeignet sein, um Informationen über die Verteilung **einer** einzelnen Variablen zeigen. 
+
+Spannend wird es, wenn noch eine weitere **kategoriale** Variable hinzukommt, erst dann
+wird wirklich sichtbar, wozu Boxplots gut sind.
+Hier nehmen wir „Verkehrsmittel“ als kategoriale Variable, und für jedes Verkehrsmittel
+ergibt sich nun eine eigene Altersverteilung. Da zeigen sich dann die ersten Zusammenhänge!
+
+```{r}
+ggplot(einkaufen, aes(x = Verkehrsmittel, y = Alter)) +
+  geom_boxplot()
+```
+
+```{r question_boxplot}
+quiz(caption = "Interpretation üben",
+question_radio("Wie ist das obere und untere Ende der Box bei den Autofahrenden zu interpretieren? Der untere Rand der Box liegt ungefähr bei 37, der obere bei ca. 60 Jahren.",
+               answer("Diese Altersspanne umfasst die mittleren 50% der Autofahrenden",
+                      correct = TRUE,
+                      message = "Das entspricht der IQR (*interquartile range*), also dem Abstand zwischen drittem und erstem Quartil, oder anders gesagt zwischen dem 75%-Quantil und dem 25%-Quantil."),
+               answer("Diese Altersspanne umfasst die mittleren 75% der Autofahrenden",
+                      message = "Das obere Ende der Box kennzeichnet das 75%-Quantil oder auch drittes Quartil, das untere das 25%-Quantil oder auch 1. Quartil. Der Abstand zwischen 75 und 25 % beträgt 50%."),
+               answer("Diese Altersspanne umfasst die mittleren 25% der Autofahrenden",
+                      message = "Das obere Ende der Box kennzeichnet das 75%-Quantil oder auch drittes Quartil, das untere das 25%-Quantil oder auch 1. Quartil. Der Abstand zwischen 75 und 25 % beträgt 50%."),
+               allow_retry = TRUE,
+               random_answer_order = TRUE,
+               correct = "Richtig!",
+               incorrect = "Das stimmt leider nicht, probier es noch mal!"),
+
+question_numeric("Wie lautet der Median des Alters aller Autofahrenden? (grob)",
+                 answer(50, correct = TRUE),
+                 tolerance = 2,
+                 allow_retry = T,
+                 incorrect = "Der Median ist der dicke Strich in der Mitte der Box."),
+
+question_radio("Wie ist der Median zu interpretieren?",
+               answer("Der Median ist das Alter, was die Autofahrenden in zwei gleich große Hälften teilt", correct = TRUE, message = 
+                        "Dabei wird die Box ja gar nicht in zwei gleich große Teile geteilt! Aber trotzdem hast du es richtig erkannt."),
+               answer("Der Median ist der Punkt, wo die Alterskurve ein Plateau erreicht", message = "Diese Antwort hat nichts mit der Realität zu tun"),
+               answer("Der Median darf hier nicht interpretiert werden, da das Alter stetig ist.", message = "Der Median darf zwar bereits für ordinale, diskrete Daten berechnet werden, aber das heißt nicht dass er für höhere Skalenniveaus verboten ist."),
+               allow_retry = T,
+               random_answer_order = T,
+               incorrect = "Leider nicht richtig, probier es noch mal!"),
+question_radio("Zeigt der Boxplot die Gruppengröße jedes Verkehrsmittels?",
+               answer("Nein, es wird nur die Verteilung gezeigt, aber nicht auf wie vielen Datenpunkten diese Verteilung beruht!",
+                      correct = TRUE,
+                      message = "Das schauen wir uns im nächsten Abschnitt genauer an."),
+               answer("Ja, die Größe der Box kennzeichnet auch die Anzahl an Personen.",
+                      message = "Das ist leider falsch. Ganz im Gegenteil. Wenn die Box sehr klein ist, können das tausende von Personen sein, die einfach alle innerhalb einer sehr geringen Altersspanne liegen."),
+               allow_retry = TRUE,
+               random_answer_order = TRUE,
+               incorrect = random_encouragement(language = "de"))
+)
+```
+
+### \# Show your data!
+
+Der obige Boxplot hat einen großen Nachteil: Es ist nicht zu sehen, wie viele Personen in jeder Gruppe sind. Dabei wissen wir eigentlich, dass die Gruppengröße der unterschiedlichen Verkehrsmittel
+unterschiedlich ist. Manchmal wird halt ein ganzer Boxplot gezeichnet, während lediglich
+4 Personen dahinter stehen, und er ist nicht zu unterscheiden von einem für ein Verkehrsmittel, was 100 Menschen nutzen. 
+
+Das ist ein möglicher Weg, diese Information noch hinzuzufügen:
+
+```{r showyourdata}
+ggplot(einkaufen, aes(x = Verkehrsmittel, y = Alter)) +
+  geom_boxplot() +
+  geom_jitter(alpha = 0.2, 
+              width = 0.1, 
+              size = 3)
 ```
 
 
