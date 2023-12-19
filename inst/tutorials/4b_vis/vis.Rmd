@@ -493,7 +493,7 @@ Probiere es doch mal aus, und schaue welche anderen zwei Variablen aus dem Beisp
 Hier eine Auflistung der Variablennamen:
 
 ```{r}
-names(einkaufen[3:length(einkaufen)])
+names(einkaufen)
 ```
 
 
@@ -592,7 +592,7 @@ question_radio("Welche Art von Variablen wird für die Funktion `g + geom_count(
 question_radio("Wie kannst du deiner Grafik eine Legende hinzufügen?",
                answer("labs(x = , y = )",
                       correct = TRUE,
-                      message = "Das schauen wir uns im nächsten Abschnitt genauer an."),
+                      message = "Richtig, du kannst für die jeweiligen Variablen auf Achse x und y eine Legende einfügen lassen."),
                answer("labels(x = , y =)"),
                answer("leg(x = , y =)"),
                allow_retry = TRUE,
@@ -609,8 +609,11 @@ Da du jetzt vertraut mit dem Sheet Cheat bist, versuche herauszufinden, wie du d
 Wie bei anderen Diagrammen kannst du Farben und Stile anpassen, um die Lesbarkeit zu verbessern. Dafür kannst du in der Funktion `geom_boxplot()` u.a. die Argumente `color`, `fill` und `alpha` nutzen.
 
 ```{r boxplotColor, exercise = TRUE, exercise.cap = "Boxplot mit Farbe"}
-ggplot(einkaufen, aes(y = Alter)) +
-  geom_boxplot(color = "blue", fill = "gray", alpha = 0.5) 
+library(viridis)
+
+ggplot(einkaufen, aes(x = Ort, y = Alter, fill = Ort)) +
+  geom_boxplot() +
+  scale_fill_viridis_d(alpha = 0.7)
 ```
 
 ## Überblick bekommen
