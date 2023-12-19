@@ -402,6 +402,7 @@ Funktion: `geom_boxplot()`
 Du erinnerst dich vielleicht daran im letzten Tutorial selbst bereits einen Boxplot gezeichnet zu haben. Hier noch einmal die Übersicht, welche Daten in einem Boxplot enthalten sind:
 
 ![](images/boxplot.png){width=90%}
+[image source](https://leansigmacorporation.com/box-plot-with-minitab/)
 
 Zum Glück wird es jetzt mit einem kleinen Codeschnipsel für uns erstellt, ohne dass wir es alles händisch vorher ermitteln müssten. 
 
@@ -468,11 +469,11 @@ question_radio("Zeigt der Boxplot die Gruppengröße jedes Verkehrsmittels?",
 
 Der obige Boxplot hat einen großen Nachteil: Es ist nicht zu sehen, wie viele Personen in jeder Gruppe sind. Dabei wissen wir eigentlich, dass die Gruppengröße der unterschiedlichen Verkehrsmittel
 unterschiedlich ist. Manchmal wird halt ein ganzer Boxplot gezeichnet, während lediglich
-4 Personen dahinter stehen, und er ist nicht zu unterscheiden von einem für ein Verkehrsmittel, was 100 Menschen nutzen. 
+4 Personen dahinter stehen, und er ist nicht zu unterscheiden von einem für ein Verkehrsmittel, was 100 Menschen nutzen. Genau hier können wir die die Magie von R nutzen, um unsere Visualisierung nach unseren Wünschen zu ändern. 
 
-Das ist ein möglicher Weg, diese Information noch hinzuzufügen:
+Mit einem kleinen Befehl (`geom_jitter()`), lassen sich über unsere Boxplots noch die Informationen der Datenpunkte legen. Mehr dazu in einem späteren Kapitel. 
 
-```{r showyourdata}
+```{r showyourdata, echo=TRUE}
 ggplot(einkaufen, aes(x = Verkehrsmittel, y = Alter)) +
   geom_boxplot() +
   geom_jitter(alpha = 0.2, 
@@ -481,35 +482,31 @@ ggplot(einkaufen, aes(x = Verkehrsmittel, y = Alter)) +
 ```
 
 Achte mal auf das Verkehrsmittel "Andere". Dort gibt es wirklich nur eine handvoll Punkte,
-aber die Box ist nicht wirklich zu unterscheiden von den anderen Verkehrsmitteln. 
-
+aber die Box ist kaum von den anderen Verkehrsmitteln zu unterscheiden. Aber mithilfe der Punkte können wir nun sehen, dass dort weit weniger Datenpunkte vorliegen und wir daher bei der Interpretation dieser Gruppe Vorsicht walten lassen sollten.
 
 ::: aufgabe
-Probiere es doch mal aus, und schaue welche Daten aus dem Beispieldatensatz `einkaufen` du dir gut als Boxplot anzeigen lassen kannst. 
+Probiere es doch mal aus, und schaue welche anderen zwei Variablen aus dem Beispieldatensatz `einkaufen` du gut für ein Boxplot nutzen kannst. 
 :::
 
-Hier eine Auflistung der Variabelnamen:
+</br>
+
+Hier eine Auflistung der Variablennamen:
 
 ```{r}
-names(einkaufen)
+names(einkaufen[3:length(einkaufen)])
 ```
 
 
 ```{r boxplot, exercise = TRUE, exercise.cap = "Boxplot Exploration"}
-ggplot(einkaufen, aes(y = )) +
+ggplot(einkaufen, aes(x = , y =  )) +
   geom_boxplot()
 ```
 
-<!-- Quizz: Welche der folgenden Variablen eignen sich für einen Boxplot -->
-<!-- Answer: Alter und Weg. Message: kontinuierliche Variablen! -->
 
-### Farbanpassung und Verbesserungen
-
-Wie bei anderen Diagrammen kannst du Farben und Stile anpassen, um die Lesbarkeit zu verbessern. Hier werden die Boxen in unterschiedlichen Graustufen dargestellt und die Whiskers sind schwarz:
-
-```{r boxplotColor, exercise = TRUE, exercise.cap = "Boxplot mit Farbe"}
-ggplot(einkaufen, aes(y = Alter)) +
-  geom_boxplot(color = "blue", fill = "gray", alpha = 0.5) 
+```{r boxplot-quest}
+question_text("Welche Variablen hast du gefunden, die sich für einen Boxplot mit 2 Variablen eignen",
+              answer_fn(\(x) correct(messages = "Wie oben erwähnt, ist es am aussagekräftigsten eine kontinuierliche Variable und eine kategoriale Variable zu verwenden. Zum Beispiel Ort (kategorial) und Weg (kontinuierlich).")),
+              placeholder = "Musterlösung erscheint bei Abgabe deiner Antwort...")
 ```
 
 
@@ -543,9 +540,82 @@ Funktion: `facet()`
 
 ## 7. Special: Jitter
 
+## Becoming a Pro
+
+In Zukunft möchtest du wahrscheinlich deine eigenen Visualisierungen ganz nach deinen Wünschen gestalten,  - darum geht es ja hier auch! Denn diese Basics sind zwar schon hilfreich, aber beeindruckend und besonders ästhetisch sind sie noch nicht. 
+
+Also wie kommst du zum nächsten Level? - Recherche! Informiere dich im Internet was alles für deine Zwecke möglich ist und passe den Beispielcode auf deine Daten an. (Das gilt übrigens für alle Tutorials und Alles, was du hier in diesem Kurs lernst)
+
+In den ersten Tutorials haben wir dir bereits *Cheat Sheets* verlinkt und auch zu Beginn dieses Tutorials die super hilfreiche Seite [R Graph Gallery](https://r-graph-gallery.com/). 
+
+**Cheat Sheets** 
+Sind eine fantastische erste Anlaufstelle, wenn du dir Zeit nimmst sie zu verstehen. Sie geben dir für ein bestimmtes Paket einen guten Überblick zu den vielzähligen Funktionen und deren Code. Somit fungieren Sie wie die `Hilfe` Seite einer Funktion oder eines Paketes, das für dich visuell aufbereitet wurde.
+
+Hier kannst du die [von R Studio erstellten Cheat Sheets](https://rstudio.github.io/cheatsheets/) finden. Es gibt aber auch noch weitere *Cheat Sheets* von anderen Instanzen. 
+
+::: aufgaberstudio
+Hier mal eine besondere Aufgabe: Schau dir das [ggplot Cheat Sheet](https://rstudio.github.io/cheatsheets/data-visualization.pdf) genau an und beantworte dann folgende Fragen.
+:::
+
+</br>
+
+```{r question_cheatsheet}
+quiz(caption = "Das Cheat Sheet verstehen",
+question_checkbox("In der Box zu Basics hast du gelernt, dass diese Funktionen notwendig zur Erstellung einer Grafik sind:",
+               answer("ggplot(data= <DATA>)",
+                      correct = TRUE,
+                      message = "Wir brauchen Daten, die wir visualiesieren können."),
+               answer("stat = <STAT>",
+                      message = "Die Nutzung von in der ggplot-Funktion neu berechneten Statistiken ist kein muss."),
+               answer("mapping = aes( <MAPPINGS> )",
+                      correct = TRUE,
+                      message = "Wir brauchen natürlich auch `aes` für ein Koordinatensystem."),
+                answer("<GEOM_FUNCTION>",
+                       correct = TRUE,
+                      message = "Die `geom` Funktion brauchen wir für das Einzeichnen unserer Datenpunkte."),
+               allow_retry = TRUE,
+               random_answer_order = TRUE,
+               correct = "Richtig!",
+               incorrect = "Das stimmt leider nicht, probier es noch mal!"),
+
+
+question_radio("Welche Art von Variablen wird für die Funktion `g + geom_count()` benötigt?",
+               answer("Zwei diskrete Variablen", 
+                      correct = TRUE, 
+                      message = "Das Cheat Sheet ist so aufgebaut, dass die Buchstaben vor den Funktionen (z.B. das `g +` vor geom_count) im Abschnitt `Geoms` für die entsprechenden Skalenniveaus und Anzahl der Variablen stehen."),
+               answer("Eine kontinuierliche Variable"),
+               answer("Zwei kontinuierliche Variablen"),
+               allow_retry = T,
+               random_answer_order = T,
+               incorrect = "Leider nicht richtig, probier es noch mal!"),
+
+question_radio("Wie kannst du deiner Grafik eine Legende hinzufügen?",
+               answer("labs(x = , y = )",
+                      correct = TRUE,
+                      message = "Das schauen wir uns im nächsten Abschnitt genauer an."),
+               answer("labels(x = , y =)"),
+               answer("leg(x = , y =)"),
+               allow_retry = TRUE,
+               random_answer_order = TRUE,
+               incorrect = random_encouragement(language = "de"))
+)
+```
+
+
+### Farbanpassung und Verbesserungen
+
+Da du jetzt vertraut mit dem Sheet Cheat bist, versuche herauszufinden, wie du die Farben deiner Grafik 
+
+Wie bei anderen Diagrammen kannst du Farben und Stile anpassen, um die Lesbarkeit zu verbessern. Dafür kannst du in der Funktion `geom_boxplot()` u.a. die Argumente `color`, `fill` und `alpha` nutzen.
+
+```{r boxplotColor, exercise = TRUE, exercise.cap = "Boxplot mit Farbe"}
+ggplot(einkaufen, aes(y = Alter)) +
+  geom_boxplot(color = "blue", fill = "gray", alpha = 0.5) 
+```
+
 ## Überblick bekommen
 
-Wie zu Beginn erwähnt benutzen wir diese Visualisierungen für zweierlei Zwecke:
+Wie ganz zu Beginn erwähnt, benutzen wir Visualisierungen für zweierlei Zwecke:
 
 - einmal um einen **Überblick** zu gewinnen
 - am Ende um **Ergebnisse** zu **kommunizieren**
@@ -564,7 +634,7 @@ Verwendung: Besonders hilfreich bei der Identifizierung von Ausreißern.
 Zweck: Zeigt die Beziehung zwischen zwei kontinuierlichen Variablen.
 Verwendung: Ermöglicht die Identifizierung von Mustern, Korrelationen oder Ausreißern.
 
-Dieser Art der Nutzung von Visualisierungen wirst du in späteren Tutorials erneut begegnen, wenn wir diese zur Überprüfung der Voraussetzungen für eine statistische Testgröße verwenden. Jetzt hast du es bereits schon einmal gehört - oder eher *gelesen* - und weißt dann, wenn die Zeit gekommen ist, schon Bescheid was da passiert. 
+Dieser Art der Nutzung von Visualisierungen wirst du in späteren Tutorials erneut begegnen, wenn wir diese zur Überprüfung der Voraussetzungen für eine statistische Testgröße verwenden. Jetzt hast du es bereits schon einmal gehört - oder eher *gelesen* - und weißt dann, wenn die Zeit gekommen ist, schon Bescheid was wir zur Verfügung haben. 
 
 
 ## Barrierefreiheit
@@ -573,7 +643,7 @@ Noch ein letztes Kapitel, dass nicht vernachlässigt werden sollte, wenn es um v
 
 Ein nicht zu vernachlässigender Anteil der Bevölkerung kann bestimmte Farben nicht unterscheiden. Deswegen wurden von schlauen Menschen Farbpaletten entworfen, die keine ambivalenten Farben wie rot und grün enthalten, und auch ganz ohne Farbwahrnehmung nur über Helligkeit und Dunkelheit der Farben in schwarz weiß funktionieren würden. 
 
-Eine der verbreitetesten ist `viridis`.
+Eine der verbreitetesten ist das Paket `viridis`. Es hat auch seine eigene [Hilfe Seite](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html) auf der die Verwendung und möglichen Farbschemen dargestellt werden. 
 
 ### Viridis
 
@@ -593,6 +663,13 @@ p
 ```
 
 Die obenstehende Grafik ist ein gutes Beispiel dafür, wie hell-dunkel Kontraste verwendet werden können. So ist das Ganze in schwarz-weiß immer noch lesbar, was insbesondere für Menschen mit eingeschränkter Farbwahrnehmung klasse ist, denn alles was schwarz weiß gut lesbar ist, ist immer auch colorblind-friendly. 
+
+Schau dir doch einmal die Hilfeseite von viridis für ggplot an und finde heraus, wie du es nutzen kannst
+
+```{r exvi, exercise = TRUE}
+??viridis
+```
+
 
 ## Learnings
 
