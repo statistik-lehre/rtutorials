@@ -344,7 +344,7 @@ Nun wenden wir das auf eine Tabellenspalte an. Als Daten dient uns der Datensatz
 So sieht der Datensatz `einkaufen` aus (reduziert auf die Spalten: Alter, Verkehrsmittel, Weg, Frequenz):
 
 ```{r preview, echo = FALSE}
-rtutorials::einkaufen |> dplyr::select(Alter, Verkehrsmittel, Weg, Frequenz)
+rtutorials::einkaufen |> dplyr::select(alter, verkehrsmittel, weg, frequenz)
 ```
 
 
@@ -359,7 +359,7 @@ mean()
 ```
 
 ```{r dfmean-solution}
-mean(einkaufen$Alter) 
+mean(einkaufen$alter) 
 ```
 
 Huch? Wieso kommt da `NA` raus?
@@ -377,11 +377,11 @@ Verändere die Berechnung so, dass `NA`s entfernt werden!
 :::
 
 ```{r narm, exercise = TRUE, exercise.cap = "NAs entfernen"}
-mean(einkaufen$Alter)
+mean(einkaufen$alter)
 ```
 
 ```{r narm-solution}
-mean(einkaufen$Alter, na.rm = TRUE)
+mean(einkaufen$alter, na.rm = TRUE)
 ```
 
 Juhu! Es hat funktioniert!
@@ -576,7 +576,7 @@ Klasse! Das ist genau das Gleiche, was wir auch per Hand berechnet haben.
 ### Median einer Tabellenspalte berechnen
 
 ::: aufgabe
-Berechne dieses Mal den Median der Spalte `einkaufen$Alter`!
+Berechne dieses Mal den Median der Spalte `einkaufen$alter`!
 
 - Verwende auch hier das Argument `na.rm = TRUE`, um `NA`s zu entfernen. 
 
@@ -587,7 +587,7 @@ median()
 ```
 
 ```{r altermedian-solution}
-median(einkaufen$Alter)
+median(einkaufen$alter)
 ```
 
 ```{r question_altermedian}
@@ -603,7 +603,7 @@ question_numeric("Was ist der Median des Alters im `einkaufen`-Datensatz? (Auf e
 Eben haben wir herausgefunden, dass der Median des Alters im Datensatz `einkaufen` 40.5 beträgt, und das arithmetische Mittel ca. 43. Diese beiden Werte liegen verhältnismäßig nah beieinander, siehe Grafik:
 
 ```{r altermeanmed, warning=FALSE}
-x <- einkaufen$Alter
+x <- einkaufen$alter
 df <- data.frame(x)
 ggplot(df) +
   geom_histogram(aes(x), binwidth = 1, boundary = 40,

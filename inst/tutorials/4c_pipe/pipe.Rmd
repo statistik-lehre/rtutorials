@@ -47,14 +47,14 @@ Hier ist ein Beispiel:
 
 ```{r einkaufen2, exercise = TRUE, exercise.cap = "Beispiel ohne Pipe"}
 # mean(data, na.rm = TRUE) 
-mean(einkaufen$Alter, na.rm = TRUE)
+mean(einkaufen$alter, na.rm = TRUE)
 ```
 
 ist genau das Gleiche wie:
 
 ```{r einkaufen, exercise = TRUE, exercise.cap = "Pipe Beispiel"}
 # data |> mean(na.rm = TRUE)
-einkaufen$Alter |> mean(na.rm = TRUE)
+einkaufen$alter |> mean(na.rm = TRUE)
 ```
 
 Die Pipe `|>` fügt das, was reingegeben wird, **immer** als **erstes Argument** bei der nächsten Funktion ein. Das geht meistens gut, denn wir erinnern uns an das Tutorial "Funktionen erkunden": Das erste Argument ist meistens das **Daten**argument. 
@@ -76,13 +76,13 @@ Code auf elegante Art lesbar zu machen. Nehmen wir zum Beispiel mal die schnelle
 
 
 ```{r barplot, exercise = TRUE, exercise.cap = "schneller Barplot mit Pipe"}
-einkaufen$Verkehrsmittel |> table() |> barplot()
+einkaufen$verkehrsmittel |> table() |> barplot()
 ```
 
 Was sieht besser aus und ist besser zu erfassen? Der obige Code, oder das hier?
 
 ```{r barplot2, exercise = TRUE, exercise.cap = "schneller Barplot ohne Pipe"}
-barplot(table(einkaufen$Verkehrsmittel))
+barplot(table(einkaufen$verkehrsmittel))
 ```
 
 Beides ist von der Funktion her äquivalent, aber die Pipe ermöglicht ein klares Lesen
@@ -91,7 +91,7 @@ von links nach rechts:
 *„Nimm die Spalte Verkehrsmittel, tabelliere die Häufigkeit der einzelnen Ausprägungen, dann zeichne daraus ein Balkendiagramm“*. 
 
 ```r
-einkaufen$Verkehrsmittel |> table() |> barplot()
+einkaufen$verkehrsmittel |> table() |> barplot()
 ```
 
 ::: grau-nb
@@ -144,7 +144,7 @@ Jetzt bist du gefragt! Werde zu Mario oder Luigi und nutze die Pipe, um an dein
 Wir nutzen weiterhin den Beispieldatensatz `einkaufen`. Hier ein kleiner Einblick in die Variablen, die du heute benutzt:
 
 ```{r viewdata, exercise = FALSE, Echo = FALSE}
-einkaufen |> select(Verkehrsmittel, Essen, Weg)
+einkaufen |> select(verkehrsmittel, essen, weg)
 # nicht so schön, da nur die ersten beiden Variablen angezeigt werden
 ```
 
@@ -170,7 +170,7 @@ Dafür kannst du unter *Tools* > *Globale Optionen* folgende Änderung vornehmen
 ::: aufgabe
 **1**
 
-Nutze die Pipe für die Funktion summary(), um für die Werte von `einkaufen$Verkehrsmittel` den Modus zu bestimmen.
+Nutze die Pipe für die Funktion summary(), um für die Werte von `einkaufen$verkehrsmittel` den Modus zu bestimmen.
 :::
 
 ```{r ex1, exercise = TRUE, exercise.cap = "Aufgabe 1"}
@@ -183,7 +183,7 @@ Nutze die Pipe für die Funktion summary(), um für die Werte von `einkaufen$Ver
 
 ```{r ex1-solution}
 # Die Daten der Variable Verkehrsmittel werden in die Funktion summary() gefüttert
-einkaufen$Verkehrsmittel |> summary()
+einkaufen$verkehrsmittel |> summary()
 ```
 
 ```{r modequest}
@@ -198,7 +198,7 @@ question_text("Was ist das häufigst genannte Verkehrsmittel der Befragten?",
 **2**
 
 Nutze wieder den `einkaufen`-Datensatz.
-Ermittle den *Mittelwert* für die Weglänge `einkaufen$Weg` in dem du die Daten mittels Pipe in die Funktion eingibst. Schließe die `NA`s dafür von der Berechnung aus.
+Ermittle den *Mittelwert* für die Weglänge `einkaufen$weg` in dem du die Daten mittels Pipe in die Funktion eingibst. Schließe die `NA`s dafür von der Berechnung aus.
 :::
 
 ```{r ex2, exercise = TRUE, exercise.cap = "Aufgabe 2"}
@@ -206,7 +206,7 @@ Ermittle den *Mittelwert* für die Weglänge `einkaufen$Weg` in dem du die Daten
 ```
 
 ```{r ex2-hint-1}
-# Die Variable heißt einkaufen$Weg 
+# Die Variable heißt einkaufen$weg 
 # Die Funktion für den Mittelwert ist mean()  
 # Das Argument kannst du durch Eingabe von `mean?` in der Console herausfinden
 
@@ -216,7 +216,7 @@ Ermittle den *Mittelwert* für die Weglänge `einkaufen$Weg` in dem du die Daten
 
 ```{r ex2-hint-2}
 # Die Daten der Variable Weg werden in die Funktion mean() an erster Stelle eingesetzt, es folgt das Argument na.rm = TRUE, um die NAs auszuschließen
-einkaufen$Weg |> mean(na.rm = TRUE)
+einkaufen$weg |> mean(na.rm = TRUE)
 ```
 
 
@@ -261,7 +261,7 @@ Zum Beispiel im `einkaufen`-Datensatz alle Zeilen von Personen, die als
 Lieblingsessen „Pizza“ angegeben haben:
 
 ```{r filt, exercise = TRUE, exercise.cap = "filter(): Funktionsweise"}
-filter(einkaufen, Essen == "Pizza")
+filter(einkaufen, essen == "Pizza")
 ```
 
 Achte auf die Spalte "Essen"! Im ganzen Datensatz werden nur noch Zeilen angezeigt, die als Essen "Pizza" angegeben haben.
@@ -315,7 +315,7 @@ mit Lieblingsessen "Pasta" ausgeben zu lassen.
 ```{r ex3-hint-2}
 # Die Daten des Datensatz einkaufen werden in die Funktion filter() an erster Stelle eingesetzt, es folgt das Argument wonach gefiltert wird: In der Variable Essen nach Einträgen die gleich (==) "Pizza" sind.
 einkaufen |> 
-  filter(Essen == "Pasta") |> 
+  filter(essen == "Pasta") |> 
   count()
 ```
 
