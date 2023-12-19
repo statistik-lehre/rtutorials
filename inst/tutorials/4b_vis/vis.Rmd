@@ -544,9 +544,9 @@ Funktion: `facet()`
 
 In Zukunft möchtest du wahrscheinlich deine eigenen Visualisierungen ganz nach deinen Wünschen gestalten,  - darum geht es ja hier auch! Denn diese Basics sind zwar schon hilfreich, aber beeindruckend und besonders ästhetisch sind sie noch nicht. 
 
-Also wie kommst du zum nächsten Level? - Recherche! Informiere dich im Internet was alles für deine Zwecke möglich ist und passe den Beispielcode auf deine Daten an. (Das gilt übrigens für alle Tutorials und Alles, was du hier in diesem Kurs lernst)
+Also wie kommst du zum nächsten Level? - Recherche! Informiere dich im Internet was für deine Zwecke möglich ist und passe den Beispielcode auf deine Daten an. (Das gilt übrigens für alle Tutorials und Alles, was du hier in diesem Kurs lernst). 
 
-In den ersten Tutorials haben wir dir bereits *Cheat Sheets* verlinkt und auch zu Beginn dieses Tutorials die super hilfreiche Seite [R Graph Gallery](https://r-graph-gallery.com/). 
+In den ersten Tutorials haben wir dir bereits *Cheat Sheets* verlinkt und auch zu Beginn dieses Tutorials die super hilfreiche Seite [R Graph Gallery](https://r-graph-gallery.com/) empfohlen. 
 
 **Cheat Sheets** 
 Sind eine fantastische erste Anlaufstelle, wenn du dir Zeit nimmst sie zu verstehen. Sie geben dir für ein bestimmtes Paket einen guten Überblick zu den vielzähligen Funktionen und deren Code. Somit fungieren Sie wie die `Hilfe` Seite einer Funktion oder eines Paketes, das für dich visuell aufbereitet wurde.
