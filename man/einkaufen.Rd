@@ -7,21 +7,21 @@
 \format{
 12 Variablen mit 166 Beobachtungen
 \itemize{
-\item \strong{Befragung}:
+\item \strong{befragung}:
 Initialien der Studierenden, die die Befragung durchgeführt haben
-\item \strong{ID}:
+\item \strong{id}:
 Interviewnummer für jede einzelne Befragung
-\item \strong{Ort}
-\item \strong{Bioladen}:
+\item \strong{ort}
+\item \strong{bioladen}:
 TRUE / FALSE, je nach dem ob der Laden ein Bioladen war
-\item \strong{Datum}: YYYY-MM-DD
-\item \strong{Uhrzeit}
-\item \strong{Essen}: Lieblingsessen
-\item \strong{Kochen}: Anzahl der Tage pro Woche, an denen selber gekocht wird
-\item \strong{Verkehrsmittel}: Wie sind Sie hier her gekommen?
-\item \strong{Weg}: Wie weit war ihr Weg hier her? (in km)
-\item \strong{Frequenz}: Wie oft gehen Sie in einen Bioladen?
-\item \strong{Alter}
+\item \strong{datum}: YYYY-MM-DD
+\item \strong{uhrzeit}
+\item \strong{essen}: Lieblingsessen
+\item \strong{kochen}: Anzahl der Tage pro Woche, an denen selber gekocht wird
+\item \strong{verkehrsmittel}: Wie sind Sie hier her gekommen?
+\item \strong{weg}: Wie weit war ihr Weg hier her? (in km)
+\item \strong{frequenz}: Wie oft gehen Sie in einen Bioladen?
+\item \strong{alter}
 }
 }
 \usage{

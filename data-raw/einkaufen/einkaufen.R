@@ -10,4 +10,7 @@ einkaufen <- einkaufen |>
   select(Essen, Verkehrsmittel, Weg, Alter, Kochen, Frequenz, Befragung, ID, Ort,
          Datum, Uhrzeit, Bioladen)
 
+# convert column names to snake_case
+colnames(einkaufen) <- tolower(colnames(einkaufen))
+
 usethis::use_data(einkaufen, overwrite = TRUE, version = 3)
