@@ -339,7 +339,7 @@ mean()
 ### Mittelwert einer Tabellenspalte
 
 Nun wenden wir das auf eine Tabellenspalte an. Als Daten dient uns der Datensatz
-`rtutorials::einkaufen`, welcher von Studierenden 2022 in ihrer Felderhebung erstellt wurde. Das Ziel ist, den Mittelwert der Spalte `Alter` zu berechnen.
+`rtutorials::einkaufen`, welcher von Studierenden 2022 in ihrer Felderhebung erstellt wurde. Das Ziel ist, den Mittelwert der Spalte `alter` zu berechnen.
 
 So sieht der Datensatz `einkaufen` aus (reduziert auf die Spalten: Alter, Verkehrsmittel, Weg, Frequenz):
 
@@ -349,7 +349,7 @@ rtutorials::einkaufen |> dplyr::select(alter, verkehrsmittel, weg, frequenz)
 
 
 ::: aufgabe
-Berechne den Mittelwert der Spalte `Alter` im Data Frame `einkaufen`!
+Berechne den Mittelwert der Spalte `alter` im Data Frame `einkaufen`!
 
 Beachte, dass hier entgegen der Konvention die Variablennamen mit Großbuchstaben anfangen! Möchtest du diese Variablen also verwenden, denk daran Sie ebenfalls mit Großbuchstaben zu schreiben. 
 :::
@@ -365,7 +365,7 @@ mean(einkaufen$alter)
 Huch? Wieso kommt da `NA` raus?
 
 `NA` heißt *Not Available* und ist in R ein spezieller Platzhalter für fehlende Werte! `NA` sagt R so etwas wie: Vorsicht, dieser Wert könnte alles enthalten. 
-In Berechnungen wirkt sich `NA` sehr ansteckend aus, denn wenn ein Input alles mögliche enthalten könnte, kann auch der Output alles mögliche enthalten und ist dementsprechend auch `NA`. Daraus schließen wir, dass die Spalte `Alter` `NA`s enthält, was bei realen Daten sehr oft der Fall ist. Möglicherweise wollten einige Personen einfach nicht auf die Frage antworten, wie alt sie sind - verständlich. Dann wird `NA` eingetragen.
+In Berechnungen wirkt sich `NA` sehr ansteckend aus, denn wenn ein Input alles mögliche enthalten könnte, kann auch der Output alles mögliche enthalten und ist dementsprechend auch `NA`. Daraus schließen wir, dass die Spalte `alter` `NA`s enthält, was bei realen Daten sehr oft der Fall ist. Möglicherweise wollten einige Personen einfach nicht auf die Frage antworten, wie alt sie sind - verständlich. Dann wird `NA` eingetragen.
 
 R zwingt uns, explizit zu sein damit, wie wir mit `NA`s umgehen. Es gibt immer eine einfache Lösung, nämlich `NA`s ausschließen und dann die Berechnung durchführen, aber wir müssen erst spezifisch sagen, dass wir das tun wollen und es passiert nicht automatisch.
 
