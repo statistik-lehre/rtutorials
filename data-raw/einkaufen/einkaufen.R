@@ -15,7 +15,7 @@ colnames(einkaufen) <- tolower(colnames(einkaufen))
 
 # convert some columns to factors
 
-einkaufen |>
+einkaufen <- einkaufen |>
   mutate(across(c(essen, verkehrsmittel, frequenz, befragung, ort), forcats::as_factor))
 
 usethis::use_data(einkaufen, overwrite = TRUE, version = 3)
