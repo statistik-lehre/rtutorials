@@ -25,7 +25,8 @@ Imports:
     ggbrace (>= 0.1.0),
     shinyFeedback,
     ggplot2,
-    dplyr
+    dplyr,
+    scales (>= 1.3.0)
 Depends: 
     R (>= 3.5)
 LazyData: true

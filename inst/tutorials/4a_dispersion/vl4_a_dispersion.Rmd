@@ -481,7 +481,7 @@ fluidPage(
 
 ```{r quant_server, context = "server"}
  set.seed(10)
-  data <- rtutorials::einkaufen$Alter[is.na(rtutorials::einkaufen$Alter) == F] |>
+  data <- rtutorials::einkaufen$alter[is.na(rtutorials::einkaufen$alter) == F] |>
     sample(size = 100)
   df2 <- data.frame(count = seq_along(data),
                     data,
@@ -533,7 +533,7 @@ Für mehr Infos siehe `?quantile`.
 ```{r medianquest}
 question_numeric("Was ist der Median der obigen Altersdaten?",
                  answer(43, correct = T),
-                 answer(40.5, message = "Das ist der Median aller Datenpunkte in einkaufen$Alter. Wir haben hier 100 zufällige Personen aus dem Datensatz gezogen, deswegen unterscheidet sich der Median."),
+                 answer(40.5, message = "Das ist der Median aller Datenpunkte in einkaufen$alter. Wir haben hier 100 zufällige Personen aus dem Datensatz gezogen, deswegen unterscheidet sich der Median."),
                  allow_retry = T)
 ```
 
@@ -544,14 +544,14 @@ question_numeric("Was ist der Median der obigen Altersdaten?",
 ```{r quant_setup}
 # learnr exercise Setup
 set.seed(10)
-alter <- rtutorials::einkaufen$Alter[is.na(rtutorials::einkaufen$Alter) == F] |>
+alter <- rtutorials::einkaufen$alter[is.na(rtutorials::einkaufen$alter) == F] |>
   sample(size = 100)
 ```
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 # repeat the setup for normal code chunks... :/ because we need it outside exercises too
 set.seed(10)
-alter <- rtutorials::einkaufen$Alter[is.na(rtutorials::einkaufen$Alter) == F] |>
+alter <- rtutorials::einkaufen$alter[is.na(rtutorials::einkaufen$alter) == F] |>
   sample(size = 100)
 ```
 <br>

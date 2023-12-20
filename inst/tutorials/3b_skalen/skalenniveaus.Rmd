@@ -341,13 +341,15 @@ Nehmen wir folgenden Beispieldatensatz (`einkaufen`):
 
 Diese Daten wurden von Studierenden im Rahmen dieser Vorlesung im WiSe 2022-23 erhoben. Dabei fokussieren wir uns auf verschiedene Fälle:
 
--   Das *Lieblingsessen* von Bioladenbesucher\*innen (*nominal*)
--   Das *Verkehrsmittel*, mit dem sie zum Laden gekommen sind (*nominal*)
--   Die *Frequenz*, mit der sie einkaufen gehen (*ordinal*)
--   Den *Weg*, den sie zurückgelegt haben in Kilometern (*metrisch*)
+-   Das *lieblingsessen* von Bioladenbesucher\*innen (*nominal*)
+-   Das *verkehrsmittel*, mit dem sie zum Laden gekommen sind (*nominal*)
+-   Die *frequenz*, mit der sie einkaufen gehen (*ordinal*)
+-   Den *weg*, den sie zurückgelegt haben in Kilometern (*metrisch*)
 
 ```{r echo=FALSE}
-head(rtutorials::einkaufen) |> dplyr::select(Essen, Verkehrsmittel, Frequenz, Weg) |> dplyr::mutate(Essen = as.character(Essen))
+head(rtutorials::einkaufen) |> 
+  dplyr::select(essen, verkehrsmittel, frequenz, weg) |> 
+  dplyr::mutate(essen = as.character(essen))
 ```
 
 Kurze Wiederholung:
@@ -412,8 +414,6 @@ Untersuche mit der Funktion `class()` welche Datenformate für die verschiedenen
 ```{r einkaufen}
 # load einkaufen for upcoming exercises
 einkaufen <-  data.frame(rtutorials::einkaufen)
-#changing variable names to lower case
-colnames(einkaufen) <-  tolower(colnames(einkaufen))
 ```
 
 ```{r class, exercise = TRUE, exercise.setup = "einkaufen"}
