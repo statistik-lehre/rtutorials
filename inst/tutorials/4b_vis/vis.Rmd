@@ -25,7 +25,7 @@ library(kableExtra)
 library(tibble)
 library(rtutorials)
 knitr::opts_chunk$set(echo = FALSE)
-
+colnames(einkaufen) <- tolower(colnames(einkaufen))
 ```
 
 ## Inhalt
@@ -106,7 +106,7 @@ boxplot(heated$maxtemp ~ factor(lubridate::month(heated$enddate)),
         axes = F,
         ylab = NA,
         xlab = NA)
-barplot({einkaufen$Verkehrsmittel |> table()}[1:5],
+barplot({einkaufen$verkehrsmittel |> table()}[1:5],
         main = "5.",
         axes = F,
         ylab = NA,
@@ -188,7 +188,7 @@ So sieht Code aus, um mit `ggplot2` ein einfaches Balkendiagramm zu erstellen (d
 
 ```{r barplot, exercise = TRUE, exercise.cap = "Einfacher Barplot"}
 ggplot(data = einkaufen,
-       mapping = aes(x = Verkehrsmittel)) +
+       mapping = aes(x = verkehrsmittel)) +
   geom_bar()
 ```
 
@@ -214,7 +214,7 @@ Mit data kennst du dich ja jetzt schon aus, daher können wir direkt zum *mappin
 
 ### aesthetic mapping
 
-Was ist eigentlich dieses `aesthetic mapping`? Das ist das, was wir oben im Code beim Argument `mapping` gemacht haben: `mapping = aes(x = Verkehrsmittel)`
+Was ist eigentlich dieses `aesthetic mapping`? Das ist das, was wir oben im Code beim Argument `mapping` gemacht haben: `mapping = aes(x = verkehrsmittel)`
 
 `aes()` steht für *aesthetic attributes*, und weist den einzelnen Variablen, wie z.B. dem Verkehrsmittel, eine *grafische Eigenschaft* zu. Grafische Eigenschaften sind: 
 
@@ -233,12 +233,12 @@ Im Diagramm oben wurde der x-Achse die Variable Verkehrsmittel zugewiesen.
 *Beachte, dass wir hier die Argumentnamen `data` und `mapping` weggelassen haben, so wie es in der Praxis üblicherweise auch getan wird. Das können wir machen, da wir die Reihenfolge der Argumente beachten, also `data`, `mapping` dann `geometric objects`.* 
 
 ```{r ybarplot, exercise = TRUE, exercise.cap = "Mapping ändern auf y-Achse"}
-ggplot(einkaufen, aes(x = Verkehrsmittel)) +
+ggplot(einkaufen, aes(x = verkehrsmittel)) +
   geom_bar()
 ```
 
 ```{r ybarplot-solution}
-ggplot(einkaufen, aes(y = Verkehrsmittel)) +
+ggplot(einkaufen, aes(y = verkehrsmittel)) +
   geom_bar()
 ```
 
@@ -253,7 +253,7 @@ Schau dir an, wie der Plot aussieht ohne die Ebene mit`geom_bar()`!
 :::
 
 ```{r plotwithoutgeom, exercise = TRUE, exercise.cap = "Ohne geom"}
-ggplot(einkaufen, aes(x = Verkehrsmittel))
+ggplot(einkaufen, aes(x = verkehrsmittel))
 ```
 
 Jetzt versteht du vielleicht, wofür die `geom_bar()`-Funktion da ist: Geometrische Objekte, in diesem Fall Balken, in den Plot zu zeichnen! Der Plot ist leer, aber die Achsen sind bereits beschriftet und perfekt vorbereitet, aber es fehlt noch das geometrische Objekt. 
@@ -264,7 +264,7 @@ Und jetzt kommt das Ding: Es gibt auch noch andere `geom_...()` Funktionen. Zum 
 Probieren wir das doch einfach mal aus und tauschen `geom_bar()` durch `geom_point()`. 
 
 ```{r error, exercise = TRUE, exercise.cap = "Fehlermeldung"}
-ggplot(einkaufen, aes(x = Verkehrsmittel)) +
+ggplot(einkaufen, aes(x = verkehrsmittel)) +
   geom_point()
 ```
 
@@ -288,18 +288,18 @@ Die allerletzte Zeile der Meldung ist am informativsten:
 Ah, das macht auch Sinn, denn ein Punkt hat immer zwei Koordinaten, eine `x`- und eine `y`-Koordinate! Logischerweise kann kein Punkt gezeichnet werden, wenn du nur eine `x`-Koordinate angibst. 
 
 ::: aufgabe
-Löse das Problem, indem du in `aes()` noch das Argument `y = Weg` angibst. Denk daran, Argumente werden durch Kommata getrennt. 
+Löse das Problem, indem du in `aes()` noch das Argument `y = weg` angibst. Denk daran, Argumente werden durch Kommata getrennt. 
 
-"Weg" ist eine stetige Variable, die den zurückgelegten Anreiseweg der Person zum Bioladen, wo die Erhebung stattfand, in km enthält. 
+"weg" ist eine stetige Variable, die den zurückgelegten Anreiseweg der Person zum Bioladen, wo die Erhebung stattfand, in km enthält. 
 :::
 
 ```{r weg, exercise = TRUE, exercise.cap = "aesthetic mapping hinzufügen für y-Achse"}
-ggplot(einkaufen, aes(x = Verkehrsmittel)) +
+ggplot(einkaufen, aes(x = verkehrsmittel)) +
   geom_point()
 ```
 
 ```{r weg-solution}
-ggplot(einkaufen, aes(x = Verkehrsmittel, y = Weg)) +
+ggplot(einkaufen, aes(x = verkehrsmittel, y = weg)) +
   geom_point()
 ```
 
@@ -321,12 +321,12 @@ Funktion: `geom_histogram()`
 :::
 <br>
 
-Unser Go-To-Beispiel für eine stetige Variable ist `einkaufen$Alter`, die dir schon in den letzten Tutorials begegnet sein sollte. Beachte, dass du innerhalb von `ggplot`-Code den `$`-Operator nicht benutzen musst. Das liegt daran, dass `ggplot` weiß, in welchem Datensatz die Variable gesucht werden muss, da wir den Datensatz ja im allerersten Argument angeben. 
+Unser Go-To-Beispiel für eine stetige Variable ist `einkaufen$alter`, die dir schon in den letzten Tutorials begegnet sein sollte. Beachte, dass du innerhalb von `ggplot`-Code den `$`-Operator nicht benutzen musst. Das liegt daran, dass `ggplot` weiß, in welchem Datensatz die Variable gesucht werden muss, da wir den Datensatz ja im allerersten Argument angeben. 
 
 Hier ist `ggplot2`-Code für ein einfaches, absolut nicht schönes Histogramm. In diesem Abschnitt wird es deswegen auch mal Zeit, über Farben und Verschönerungen zu sprechen. 
 
 ```{r hist, exercise = TRUE, exercise.cap = "einfaches Histogramm erstellen"}
-ggplot(einkaufen, aes(Alter)) +
+ggplot(einkaufen, aes(alter)) +
   geom_histogram()
 ```
 
@@ -366,14 +366,14 @@ Beim Histogramm des Alters oben sind die Balken zum Beispiel immer 2.5 Jahre bre
 In der Warnmeldung wurde bereits das Argument `binwidth` erwähnt. Hier ist Code, mit dem die Kategorienbreite auf 5 (Jahre) festgelegt wird. 
 
 ```{r binwidth, exercise = TRUE, exercise.cap = "Kategorienbreite einstellen"}
-ggplot(einkaufen, aes(x = Alter)) +
+ggplot(einkaufen, aes(x = alter)) +
   geom_histogram(binwidth = 5)
 ```
 
 Da die Balken gerade visuell in einer großen grauen Masse verschwinden, wird noch nicht so ganz deutlich worum es eigentlich geht. Deswegen wäre es hilfreich, wenn alle Balken eine schwarze Umrandung hätten und etwas hellgrauer wären. Beachte, dass jetzt nach dem `binwidth`-Argument dafür noch die Argumente `color` und `fill` stehen. 
 
 ```{r color, exercise = TRUE, exercise.cap = "Color und Fill"}
-ggplot(einkaufen, aes(x = Alter)) +
+ggplot(einkaufen, aes(x = alter)) +
   geom_histogram(binwidth = 5,
                  color = "black",
                  fill = "grey")
@@ -383,7 +383,7 @@ Das sieht schon mal ein Stück weit besser aus. Jetzt ist noch etwas störend, d
 nicht bei den markanten Zahlen anfangen, sondern z.B. die 50 in der Mitte einer Kategorie liegt. Dafür kannst du das Argument `boundary` nutzen, um einen Grenzwert zu bestimmen, der die Kategorien an diesem Punkt teilt (sog. "bin break"):
 
 ```{r boundary, exercise = TRUE, exercise.cap = "Boundary-Argument"}
-ggplot(einkaufen, aes(x = Alter)) +
+ggplot(einkaufen, aes(x = alter)) +
   geom_histogram(binwidth = 5,
                  boundary = 50,
                  color = "black",
@@ -407,7 +407,7 @@ Du erinnerst dich vielleicht daran im letzten Tutorial selbst bereits einen Boxp
 Zum Glück wird es jetzt mit einem kleinen Codeschnipsel für uns erstellt, ohne dass wir es alles händisch vorher ermitteln müssten. 
 
 ```{r boxplot-Beispiel, exercise = TRUE, exercise.cap = "Boxplot Beispiel"}
-ggplot(einkaufen, aes(y = Alter)) +
+ggplot(einkaufen, aes(y = alter)) +
   geom_boxplot()
 ```
 
@@ -416,11 +416,11 @@ Da würde ein Histogramm vom Gefühl her besser geeignet sein, um Informationen 
 
 Spannend wird es, wenn noch eine weitere **kategoriale** Variable hinzukommt, erst dann
 wird wirklich sichtbar, wozu Boxplots gut sind.
-Hier nehmen wir „Verkehrsmittel“ als kategoriale Variable, und für jedes Verkehrsmittel
+Hier nehmen wir `verkehrsmittel` als kategoriale Variable, und für jedes Verkehrsmittel
 ergibt sich nun eine eigene Altersverteilung. Da zeigen sich dann die ersten Zusammenhänge!
 
 ```{r}
-ggplot(einkaufen, aes(x = Verkehrsmittel, y = Alter)) +
+ggplot(einkaufen, aes(x = verkehrsmittel, y = alter)) +
   geom_boxplot()
 ```
 
@@ -474,7 +474,7 @@ unterschiedlich ist. Manchmal wird halt ein ganzer Boxplot gezeichnet, während 
 Mit einem kleinen Befehl (`geom_jitter()`), lassen sich über unsere Boxplots noch die Informationen der Datenpunkte legen. Mehr dazu in einem späteren Kapitel. 
 
 ```{r showyourdata, echo=TRUE}
-ggplot(einkaufen, aes(x = Verkehrsmittel, y = Alter)) +
+ggplot(einkaufen, aes(x = verkehrsmittel, y = alter)) +
   geom_boxplot() +
   geom_jitter(alpha = 0.2, 
               width = 0.1, 
@@ -611,7 +611,7 @@ Wie bei anderen Diagrammen kannst du Farben und Stile anpassen, um die Lesbarkei
 ```{r boxplotColor, exercise = TRUE, exercise.cap = "Boxplot mit Farbe"}
 library(viridis)
 
-ggplot(einkaufen, aes(x = Ort, y = Alter, fill = Ort)) +
+ggplot(einkaufen, aes(x = Ort, y = alter, fill = Ort)) +
   geom_boxplot() +
   scale_fill_viridis_d(alpha = 0.7)
 ```
