@@ -292,7 +292,7 @@ Daten |>
 Nutze für diese Aufgabe wieder die Pipe.
 
 Nimm den Datensatz `einkaufen`, dann pipe ihn in die Funktion `filter()`, 
-und filtere dort in der Variable `Essen` nach dem Wert `"Pasta"`. 
+und filtere dort in der Variable `essen` nach dem Wert `"Pasta"`. 
 Übergib dann die Daten an die Funktion `count()`, um dir die Anzahl von Menschen
 mit Lieblingsessen "Pasta" ausgeben zu lassen.
 :::
