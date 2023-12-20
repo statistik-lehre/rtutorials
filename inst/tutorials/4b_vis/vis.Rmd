@@ -402,11 +402,12 @@ Funktion: `geom_boxplot()`
 Du erinnerst dich vielleicht daran im letzten Tutorial selbst bereits einen Boxplot gezeichnet zu haben. Hier noch einmal die Übersicht, welche Daten in einem Boxplot enthalten sind:
 
 ![](images/boxplot.png){width=90%}
+
 [image source](https://leansigmacorporation.com/box-plot-with-minitab/)
 
 Zum Glück wird es jetzt mit einem kleinen Codeschnipsel für uns erstellt, ohne dass wir es alles händisch vorher ermitteln müssten. 
 
-```{r boxplot-Beispiel, exercise = TRUE, exercise.cap = "Boxplot Beispiel"}
+```{r boxplot-Beispiel, fig.width=2, exercise=TRUE, exercise.cap="Boxplot"}
 ggplot(einkaufen, aes(y = alter)) +
   geom_boxplot()
 ```
@@ -448,7 +449,7 @@ question_numeric("Wie lautet der Median des Alters aller Autofahrenden? (grob)",
 question_radio("Wie ist der Median zu interpretieren?",
                answer("Der Median ist das Alter, was die Autofahrenden in zwei gleich große Hälften teilt", correct = TRUE, message = 
                         "Dabei wird die Box ja gar nicht in zwei gleich große Teile geteilt! Aber trotzdem hast du es richtig erkannt."),
-               answer("Der Median ist der Punkt, wo die Alterskurve ein Plateau erreicht", message = "Diese Antwort hat nichts mit der Realität zu tun"),
+               answer("Der Median ist das Alter, was am häufigsten vorkommt.", message = "Die häufigste Ausprägung nennt sich „Modus“ und wird üblicherweise für kategoriale Daten angegeben. Der Median ist etwas anderes: Wenn die Werte der Reihenfolge nach sortiert werden, ist der Median derjenige, der in der Mitte der Reihenfolge steht."),
                answer("Der Median darf hier nicht interpretiert werden, da das Alter stetig ist.", message = "Der Median darf zwar bereits für ordinale, diskrete Daten berechnet werden, aber das heißt nicht dass er für höhere Skalenniveaus verboten ist."),
                allow_retry = T,
                random_answer_order = T,
@@ -469,7 +470,7 @@ question_radio("Zeigt der Boxplot die Gruppengröße jedes Verkehrsmittels?",
 
 Der obige Boxplot hat einen großen Nachteil: Es ist nicht zu sehen, wie viele Personen in jeder Gruppe sind. Dabei wissen wir eigentlich, dass die Gruppengröße der unterschiedlichen Verkehrsmittel
 unterschiedlich ist. Manchmal wird halt ein ganzer Boxplot gezeichnet, während lediglich
-4 Personen dahinter stehen, und er ist nicht zu unterscheiden von einem für ein Verkehrsmittel, was 100 Menschen nutzen. Genau hier können wir die die Magie von R nutzen, um unsere Visualisierung nach unseren Wünschen zu ändern. 
+6 Personen dahinter stehen, und er ist nicht zu unterscheiden von einem für ein Verkehrsmittel, was 100 Menschen nutzen. Genau hier können wir die die Magie von R nutzen, um unsere Visualisierung nach unseren Wünschen zu ändern. 
 
 Mit einem kleinen Befehl (`geom_jitter()`), lassen sich über unsere Boxplots noch die Informationen der Datenpunkte legen. Mehr dazu in einem späteren Kapitel. 
 
@@ -481,21 +482,32 @@ ggplot(einkaufen, aes(x = verkehrsmittel, y = alter)) +
               size = 3)
 ```
 
+::: infobox
+Hier siehst du, was ein Boxplot eigentlich wirklich aussagt: Er zeigt wirklich nur die Quartile, Minimum und Maximum und den Median (das ist ja ein Quartil).
+:::
+<br>
+
 Achte mal auf das Verkehrsmittel "Andere". Dort gibt es wirklich nur eine handvoll Punkte,
-aber die Box ist kaum von den anderen Verkehrsmitteln zu unterscheiden. Aber mithilfe der Punkte können wir nun sehen, dass dort weit weniger Datenpunkte vorliegen und wir daher bei der Interpretation dieser Gruppe Vorsicht walten lassen sollten.
+aber die Box ist kaum von den anderen Verkehrsmitteln zu unterscheiden. Aber mithilfe der Punkte können wir nun sehen, dass dort weit weniger Datenpunkte vorliegen und wir daher bei der Interpretation dieser Gruppe Vorsicht walten lassen sollten, da sie von der Gruppengröße her nicht mit den anderen zu vergleichen ist, von Motorrad, E-Roller und NA ganz zu schweigen. 
 
 ::: aufgabe
 Probiere es doch mal aus, und schaue welche anderen zwei Variablen aus dem Beispieldatensatz `einkaufen` du gut für ein Boxplot nutzen kannst. 
-:::
 
-</br>
+Achte darauf, immer eine metrische mit einer kategorialen Variable zu kombinieren! Sonst gibt es komische Fehlermeldungen / komisch aussehende Plots.
 
 Hier eine Auflistung der Variablennamen:
 
-```{r}
-names(einkaufen)
-```
-
+- `essen`: Das Lieblingsessen der Person. Kategorial, 97 verschiedene Ausprägungen
+- `verkehrsmittel`: Das Verkehrsmittel, mit dem die Person zum Bioladen gefahren ist. Kategorial, 7 Auprägungen
+- `weg`: Die Länge der Anreise zum Bioladen in km, metrisch
+- `alter`: Alter der Person, metrisch
+- `kochen`:  Anzahl der Tage pro Woche, an denen selber gekocht wird, metrisch 
+- `frequenz`: Wie oft die Person in einen Bioladen geht, ordinal, 5 Stufen
+- `ort`: Befragungsort, kategorial, 5 Ausprägungen
+- `bioladen`: Ob der Laden ein Bioladen war, kategorial, binär
+- `befragung`: Kürzel der Studierenden, die die Daten erhoben haben, kategorial, 8 Ausprägungen
+- `id`, `datum`, `uhrzeit` sind Metadaten die wir gerade nicht brauchen. 
+:::
 
 ```{r boxplot, exercise = TRUE, exercise.cap = "Boxplot Exploration"}
 ggplot(einkaufen, aes(x = , y =  )) +
@@ -505,7 +517,7 @@ ggplot(einkaufen, aes(x = , y =  )) +
 
 ```{r boxplot-quest}
 question_text("Welche Variablen hast du gefunden, die sich für einen Boxplot mit 2 Variablen eignen",
-              answer_fn(\(x) correct(messages = "Wie oben erwähnt, ist es am aussagekräftigsten eine kontinuierliche Variable und eine kategoriale Variable zu verwenden. Zum Beispiel Ort (kategorial) und Weg (kontinuierlich).")),
+              answer_fn(\(x) correct(messages = "Wie oben erwähnt, ist es am aussagekräftigsten eine metrische Variable und eine kategoriale Variable zu verwenden. Zum Beispiel Ort (kategorial) und Weg (kontinuierlich).")),
               placeholder = "Musterlösung erscheint bei Abgabe deiner Antwort...")
 ```
 
@@ -562,15 +574,15 @@ Hier mal eine besondere Aufgabe: Schau dir das [ggplot Cheat Sheet](https://rstu
 ```{r question_cheatsheet}
 quiz(caption = "Das Cheat Sheet verstehen",
 question_checkbox("In der Box zu Basics hast du gelernt, dass diese Funktionen notwendig zur Erstellung einer Grafik sind:",
-               answer("ggplot(data= <DATA>)",
+               answer("`ggplot(data = ...)`",
                       correct = TRUE,
                       message = "Wir brauchen Daten, die wir visualiesieren können."),
-               answer("stat = <STAT>",
+               answer("`stat = ...`",
                       message = "Die Nutzung von in der ggplot-Funktion neu berechneten Statistiken ist kein muss."),
-               answer("mapping = aes( <MAPPINGS> )",
+               answer("`mapping = aes(...)`",
                       correct = TRUE,
                       message = "Wir brauchen natürlich auch `aes` für ein Koordinatensystem."),
-                answer("<GEOM_FUNCTION>",
+                answer("`geom_...()`",
                        correct = TRUE,
                       message = "Die `geom` Funktion brauchen wir für das Einzeichnen unserer Datenpunkte."),
                allow_retry = TRUE,
@@ -582,19 +594,19 @@ question_checkbox("In der Box zu Basics hast du gelernt, dass diese Funktionen n
 question_radio("Welche Art von Variablen wird für die Funktion `g + geom_count()` benötigt?",
                answer("Zwei diskrete Variablen", 
                       correct = TRUE, 
-                      message = "Das Cheat Sheet ist so aufgebaut, dass die Buchstaben vor den Funktionen (z.B. das `g +` vor geom_count) im Abschnitt `Geoms` für die entsprechenden Skalenniveaus und Anzahl der Variablen stehen."),
+                      message = "Das Cheat Sheet ist so aufgebaut, dass die Buchstaben vor den Funktionen (z.B. das `g +` vor `geom_count()`) im Abschnitt `Geoms` für die entsprechenden Skalenniveaus und Anzahl der Variablen stehen."),
                answer("Eine kontinuierliche Variable"),
                answer("Zwei kontinuierliche Variablen"),
                allow_retry = T,
                random_answer_order = T,
                incorrect = "Leider nicht richtig, probier es noch mal!"),
 
-question_radio("Wie kannst du deiner Grafik eine Legende hinzufügen?",
-               answer("labs(x = , y = )",
+question_radio("Wie kannst du deiner Grafik Achsebeschriftungen hinzufügen?",
+               answer("`labs(x = , y = )`",
                       correct = TRUE,
                       message = "Richtig, du kannst für die jeweiligen Variablen auf Achse x und y eine Legende einfügen lassen."),
-               answer("labels(x = , y =)"),
-               answer("leg(x = , y =)"),
+               answer("`labels(x = , y = )`"),
+               answer("`leg(x = , y = )`"),
                allow_retry = TRUE,
                random_answer_order = TRUE,
                incorrect = random_encouragement(language = "de"))
@@ -611,7 +623,7 @@ Wie bei anderen Diagrammen kannst du Farben und Stile anpassen, um die Lesbarkei
 ```{r boxplotColor, exercise = TRUE, exercise.cap = "Boxplot mit Farbe"}
 library(viridis)
 
-ggplot(einkaufen, aes(x = Ort, y = alter, fill = Ort)) +
+ggplot(einkaufen, aes(x = ort, y = alter, fill = ort)) +
   geom_boxplot() +
   scale_fill_viridis_d(alpha = 0.7)
 ```
