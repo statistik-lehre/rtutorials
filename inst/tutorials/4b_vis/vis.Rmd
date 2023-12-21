@@ -178,7 +178,7 @@ Gehen wir sofort zur Sache!
 ## 1. Balkendiagramm
 
 ::: infobox
-Balkendiagramme sind geeignet, um die Verteilung einer einzelnen, kategorialen Variable zu zeigen.
+Balkendiagramme sind geeignet, um die Verteilung einer **einzelnen**, **kategorialen** Variable zu zeigen.
 
 Funktion: `geom_bar()`
 :::
@@ -242,7 +242,7 @@ ggplot(einkaufen, aes(y = verkehrsmittel)) +
   geom_bar()
 ```
 
-Es gibt, wie oben erwähnt, noch mehr *aesthetic attributes* außer `x`-Achse und `y`-Achse, aber auf die fokussieren wir uns später. 
+Es gibt, wie oben erwähnt, noch mehr *aesthetic attributes* außer der `x`-Achse und der `y`-Achse, aber auf die fokussieren wir uns später. 
 
 ### `geom_bar`
 
@@ -315,7 +315,7 @@ question_text("Wie erklärst du dir die weiten Anreisewege (bis 600km!) beim Ver
 ## 2. Histogramm
 
 ::: infobox
-Histogramme sind geeignet, um die Verteilung einer **einzelnen**, stetigen Variable zu zeigen.
+Histogramme sind geeignet, um die Verteilung einer **einzelnen**, **stetigen** Variable zu zeigen.
 
 Funktion: `geom_histogram()`
 :::
@@ -370,7 +370,11 @@ ggplot(einkaufen, aes(x = alter)) +
   geom_histogram(binwidth = 5)
 ```
 
+### `colour` und `fill`
+
 Da die Balken gerade visuell in einer großen grauen Masse verschwinden, wird noch nicht so ganz deutlich worum es eigentlich geht. Deswegen wäre es hilfreich, wenn alle Balken eine schwarze Umrandung hätten und etwas hellgrauer wären. Beachte, dass jetzt nach dem `binwidth`-Argument dafür noch die Argumente `color` und `fill` stehen. 
+
+Fun fact: in `ggplot` ist es für R egal, ob du die UK Variante von `colour` schreibst oder die amerikanische `color`. Wie das geschrieben wird ist in diesem Fall reine Geschmackssache.
 
 ```{r color, exercise = TRUE, exercise.cap = "Color und Fill"}
 ggplot(einkaufen, aes(x = alter)) +
@@ -378,6 +382,10 @@ ggplot(einkaufen, aes(x = alter)) +
                  color = "black",
                  fill = "grey")
 ```
+
+Später in diesem Tutorial wird es noch ein eigenes Kapitel zu Farben geben.
+
+### `boundary`
 
 Das sieht schon mal ein Stück weit besser aus. Jetzt ist noch etwas störend, dass die Kategorien
 nicht bei den markanten Zahlen anfangen, sondern z.B. die 50 in der Mitte einer Kategorie liegt. Dafür kannst du das Argument `boundary` nutzen, um einen Grenzwert zu bestimmen, der die Kategorien an diesem Punkt teilt (sog. "bin break"):
@@ -393,7 +401,7 @@ ggplot(einkaufen, aes(x = alter)) +
 ## 3. Boxplot
 
 ::: infobox
-Ein Boxplot ist eine effektive Methode, um die Verteilung **einer stetigen** Variable zu visualisieren und Ausreißer zu identifizieren.
+Ein Boxplot ist eine effektive Methode, um die Verteilung **einer stetigen** und **einer kategorialen** Variable zu visualisieren und Ausreißer zu identifizieren.
 
 Funktion: `geom_boxplot()`
 :::
@@ -531,21 +539,153 @@ question_text("Welche Variablen hast du gefunden, die sich für einen Boxplot mi
 ## 4. Punktdiagramm
 
 ::: infobox
-Punktdiagramme sind geeignet, um die Zusammenhänge zweier numerischen Variablen zu zeigen.
+Punktdiagramme sind geeignet, um die Zusammenhänge **zweier numerischer** Variablen zu zeigen.
 
 Funktion: `geom_point()`
 :::
 <br>
+ 
+Punktediagramme können dir auch unter den Namen: *Streudiagramm*, *Punktewolke* oder englisch *Scatterplot* begegnen.
+
+```{r scatterplot, exercise = TRUE, exercise.cap = "Streudiagramm"}
+ggplot(einkaufen, aes(x = alter, y = weg)) +
+  geom_point()
+```
+
+### Exkurs: Ausreißer-Werte
+
+In diesem Unterkapitel hast du die Mögichkeit, einen Blick in die Praxis zu werfen: Der Umgang mit Ausreißerwerten. Es ist komplett freiwillig. Wenn du lieber mit dem rein grafischen weitermachen willst, springe zu Kapitel 5: Liniendiagramme.
+
+Das ist ein klassischer Fall von Datenaufbereitung. Es wird **vor** den Analysen gemacht.
+
+Und genau deswegen ist es so cool, dass wir diesen echten Datensatz zur Verfügung haben: Du wirst mit Problemen konfrontiert, die dir auch in Praxis begegnen werden, aber eben nicht in simulierten Datensätzen.
+
+Wie du in der Grafik siehst gibt es einzelne Werte, die doll von allen anderen abweichen. Das verzerrt nicht nur die Grafik sondern auch die Analyse. Das sind sog. Ausreißer. Es gibt, wie eigentlich immer in der Statistik, nicht den einen Weg, damit umzugehen. Was allerdings immer gilt, wenn Ausreiper auftreten: **Check your data!**. Ausreißer können unterschiedlichste Gründe haben. Und je nachdem woher sie kommen, können sie behandelt werden.
+
+
+Das Anschauen der Daten geht sowohl numerisch als auch optisch.
+
+::: aufgabe
+Nutze eine der dir bekannten Möglichkeiten, dir die Variable `weg` numerisch und optisch anzuschauen.
+:::
+
+```{r ausreisser-solution}
+summary(einkaufen$weg)
+
+table(einkaufen$weg)
+
+ggplot(einkaufen, aes(x = weg)) +
+  geom_histogram()
+```
+
+```{r ausreisser, exercise=TRUE, exercise.cap="Daten checken"}
+
+```
+
+Der Median liegt bei 3km bedeutet: 50% der Personen haben max. einen Anfahrtsweg von 3km. Das 3. Quantil ist bei 7km: 75% der Personen haben max. einen Anfahrtsweg von 7km. Und der Mean liegt bei 12.76km. Das deutet sehr starkt auf Ausreißerwerte hin. Das Maximum liegt bei 600, was die Vermutung noch bestärkt. Auch optisch wird deutlich, dass der Großteil der Ausprägungen unter 100km liegt.
+
+#### Ursachenanalyse
+
+Das die Ausreißer da sind kann, auch in diesem Fall, verschiedene Gründe haben:
+
+1. Weiter oben im Tutorial wurde bereits erwähnt: Ein Laden liegt an einem ICE Bahnhof. Wenn das stimmt, dann müssten die Ausreißerwerte alle in einem Laden erhoben worden sein (`ort`)
+
+Das lässt sich prüfen. (In diesem Unterkapitel wird nur nach Optik geprüft. In der freien Wildbahn wären statistische Analysen notwendig!)
+
+```{r ausreisser2}
+ggplot(einkaufen, aes(x = ort, y = weg)) +
+  geom_boxplot()
+```
+
+Die Vermutung stimmt teilweise. Ganz schwierig ist, dass der Ladentyp `NA` ist. Das heißt, es ist nicht klar, um welchen und wie viele Läden es sich handelt. Es wurde miterhoben, wer welche Beobachtung aufgeschrieben hat (`befragung`), vielleicht gibt das Aufschluss. Sowohl numerisch, als auch optisch. `geom_count()` ist eine Möglichkeit, Kreuztabellen optisch darzustellen.
+
+```{r ausreisser3}
+table(einkaufen$ort, einkaufen$befragung, useNA = "always")
+
+ggplot(einkaufen, aes(x = ort, y = befragung)) +
+  geom_count()
+```
+
+Sowohl in der Kreuztabelle als auch in der Grafik kannst du sehen, dass jede Person lediglich in 1 Laden erhoben hat. LE hat scheinbar bei einer Person vergessen, den Laden einzutragen. LM und DS haben beide keinen Laden eingetragen. Es könnte also ein Laden sein oder auch 2, das können wir aus den Daten nicht wissen.
+
+Sidefact: Die erhebenden Personen sind btw. klassische Metadaten - also Daten über Daten. Sie scheinen erstmal relativ wenige aussagekräftig. Das ist natürlich quatsch, Metadaten sind richtig mächtig. Hier ist ein sehr unterhaltsames [Beispiel](https://www.youtube.com/watch?v=-YpwsdRKt8Q).
+
+#### Ausschluss
+
+Jetzt ist ein wenig mehr Orientierung bzgl der Ausreißer da. Die Entscheidung, wie damit umgegangen wird ist nach wie vor offen. Spätestens jetzt ist es sehr wichtig, sich nochmal die Eingangsfrage der eigenen Forschung zu stellen: Was wollte ich eigentlich untersuchen? In diesem Fall ging es um die Frage, ob es einen Zusammenhang zwischen Einkaufsweg und Alter gibt. Wenn da Fernreisende mit drin sind, bieten diese logischerweise keine interessante Info für die Frage. Eine Möglichkeit wäre, den Laden am Bahnhof kategorisch auszuschließen. Allerdings ist unklar, ob in den NA Werten nur dieser Laden hinter steckt, deswegen müssten wir alle NAs rausschmeißen, was zum Verlust von 42 Beobachtungen führen würde. Das ist absurd viel. Außerdem kann davon ausgegangen werden, das Menschen auch ihre Alltagseinkäufe dort machen, die wären dadurch kategorisch auch ausgeschlossen. Die nächste Möglichkeit wäre, eine feste Grenze zu setzen. Klassischerweise könnte diese aus der bestehenden Literatur bezogen werden. Also wenn es zB ein Paper geben würde, dass sagen würde: klassische Einkäufe finden in einem Umkreis von 10km statt, könnten alle Werte über 10km ausgeschlossen werden. Das wären schon deutlich weniger. Eine andere Möglichkeit ist die statistische: entweder die Werte außerhalb des Intervalls $[Q_1 - 1.5 \cdot IQR; Q_3 + 1.5 \cdot IQR]$ oder die Werte außerhalb des Intervalls $[\mu \pm 3 \cdot \sigma]$. Wenn die Daten normalverteilt sind (wie angenommen wird für die allermeisten statistischen Analysen, wenn nicht, haben wir noch ganz andere Probleme!), liegen in diesem Bereich 99.8% aller Werte. Es gibt keine Funktion in R, die automatisiert entsprechende Werte rausschmeißt. Das liegt daran, dass die Entscheidung so Situationsabhängig ist und es einfach wichtig ist, sich jedes Mal wieder Gedanken zu machen, wie du damit umgehen möchtest. Hier sind beide Möglichkeiten:
+
+```{r ausreisser4}
+quantile(einkaufen$weg, .75, na.rm = T) + (1.5 * IQR(einkaufen$weg, na.rm = T))
+
+mean(einkaufen$weg, na.rm = T) + (3 * sd(einkaufen$weg, na.rm = T))
+```
+
+Es wird sehr deutlich, dass die Quantilversion die robustere ist. 15 km Anfahrtsweg für Alltagseinkäufe scheinen deutlich logischer als 172. In diesem Fall wäre also eine Möglichkeit, alle Werte überhalb von 15km auszuschließen. Das geht dann so:
+
+```{r ausreisser5}
+# Maximalwert festlegen
+maximalwert <- quantile(einkaufen$weg, .75, na.rm = T) + (1.5 * IQR(einkaufen$weg, na.rm = T))
+
+# Ein Subset aus dem aktuellen Datensatz treffen und als neues Objekt (daten_oa) speichern
+daten_oa <- einkaufen[einkaufen$weg < maximalwert, ]
+
+# und NAs entfernen
+daten_oa <- daten_oa[!is.na(daten_oa$weg), ]
+```
+
+#### Dokumentation
+
+**Ganz wichtig!**: Wenn du Daten ausschließt **musst** du das, inklusive der Argumentation warum, gut dokumentieren. Sonst ist das wissenschaftlicher Betrug!
+
+
+Und jetzt nochmal der Plot ganz vom Anfang:
+
+```{r scatterplot2}
+ggplot(daten_oa, aes(x = alter, y = weg)) +
+  geom_point()
+```
+
+Das sieht doch deutlich stimmiger aus.
 
 ## 5. Liniendiagramm
 
 ::: infobox
-Liniendiagramme sind geeignet, um zwei numerische Variablen zu Visualisieren. Die x-Variable 
+Liniendiagramme sind geeignet, um **zwei numerische** Variablen zu Visualisieren. Die x-Variable 
 hat dabei häufig eine sequentielle Reihenfolge (wie z.B. die Zeit).
 
 Funktion: `geom_line()`
 :::
 <br>
+
+Hierfür wird ein anderer Datensatz benötigt, da eine Zeitvariable gebraucht wird. In `heated` ist die maximale Tagestemperatur (`maxtemp`; in Farenheit) sowie das Tagesdatum (`enddate`) gespeichert.
+
+```{r}
+ggplot(heated, aes(x = enddate, y = maxtemp)) +
+  geom_line()
+```
+
+Zwischen den Jahren sind eher horizontale Linien, das liegt daran, dass nur die Monate Mai bis September abgebildet sind. Das Problem ist, dass es durch den Verbindungsstrich den Anschein macht, als gäbe es Daten, die es gar nicht gibt. Um das zu umgehen braucht es in den `aes`thetics die `group` Variable. Mit der Funktion `year()` aus dem Paket `lubridate()` ziehst du *nur* das Jahr aus dem Datum und erschaffst somit eine Gruppe pro Jahr.
+
+```{r}
+ggplot(heated, aes(x = enddate, y = maxtemp, group = lubridate::year(enddate))) +
+  geom_line()
+```
+
+Sehr gut, jetzt werden keine Zusammenhänge mehr angedeutet, wo gar keine sind. Und weils noch schöner ist, wenn die lesende Person intuitiv die Zahlen deuten kann wird im letzten Schritt die Grad Farenheit Skala in eine Grad Celsius Skala umgerechnet. Dies geht mit der Funktion `convert_temperature()` aus dem Paket `weathermetrics`. Und weil sich Celsius an 0 Grad orientiert wird die y Achse noch nach unten bis auf 0 Grad erweitert und zu guter letzt die Achsenbeschriftung geändert:
+
+```{r}
+# Für die Achsenbeschriftung
+breaks <- heated$enddate[grepl("07-01", as.character(heated$enddate))]
+
+# hier werden die Temperaturen konvertiert
+ggplot(heated, aes(x = enddate, y = weathermetrics::convert_temperature(maxtemp, "f", "c"), group = lubridate::year(enddate))) +
+  geom_line() +
+  # Verlängerung der y Achse
+  expand_limits(y = 0) +
+  # Die Breaks/ Achsenbeschriftung ändern
+  scale_x_date(breaks = breaks, date_labels = "%b %Y")
+```
+
 
 ## 6. Special: Facets
 
@@ -662,7 +802,7 @@ Dieser Art der Nutzung von Visualisierungen wirst du in späteren Tutorials erne
 
 Noch ein letztes Kapitel, dass nicht vernachlässigt werden sollte, wenn es um visuelle Darstellung geht: die Barrierefreiheit.
 
-Ein nicht zu vernachlässigender Anteil der Bevölkerung kann bestimmte Farben nicht unterscheiden. Deswegen wurden von schlauen Menschen Farbpaletten entworfen, die keine ambivalenten Farben wie rot und grün enthalten, und auch ganz ohne Farbwahrnehmung nur über Helligkeit und Dunkelheit der Farben in schwarz weiß funktionieren würden. 
+Ein nicht zu vernachlässigender Anteil der Bevölkerung kann bestimmte Farben nicht unterscheiden. Deswegen wurden von schlauen Menschen Farbpaletten entworfen, die keine ambivalenten Farben wie rot und grün enthalten, und auch ganz ohne Farbwahrnehmung nur über Helligkeit und Dunkelheit der Farben in schwarz weiß funktionieren. Der letzte Punkt ist ebenfalls relevant für alle Plots, die in schwarz weiß (wie bspw. in manchen Journals) ausgedruckt werden. 
 
 Eine der verbreitetesten ist das Paket `viridis`. Es hat auch seine eigene [Hilfe Seite](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html) auf der die Verwendung und möglichen Farbschemen dargestellt werden. 
 
