@@ -405,22 +405,18 @@ Du erinnerst dich vielleicht daran im letzten Tutorial selbst bereits einen Boxp
 
 [image source](https://leansigmacorporation.com/box-plot-with-minitab/)
 
-Zum Glück wird es jetzt mit einem kleinen Codeschnipsel für uns erstellt, ohne dass wir es alles händisch vorher ermitteln müssten. 
+Boxplots werden eigentlich niemals einzeln gezeigt, sondern immer im Vergleich neben
+anderen Boxplots. Das heißt dann *side-by-side boxplot*. Das macht auch Sinn,
+denn für die Verteilung einer einzelnen stetigen Variablen haben wir ja bereits
+das Histogramm. Boxplots hingegen sind gut darin, mehrere Verteilungen übersichtlich zu vergleichen. Histogramme sind gut darin, eine einzelne Verteilung detailliert 
+darzustellen.
 
-```{r boxplot-Beispiel, fig.width=2, exercise=TRUE, exercise.cap="Boxplot"}
-ggplot(einkaufen, aes(y = alter)) +
-  geom_boxplot()
-```
+*Side-by-side boxplots* entstehen, wenn zu der **stetigen** noch eine **kategoriale** Variable hinzukommt. 
+Im Plot unten wird die stetige Variable `alter` nach der kategorialen Variable 
+`verkehrsmittel` aufgeschlüsselt. Für jedes Verkehrsmittel
+ergibt sich nun eine eigene Altersverteilung. Da zeigen sich dann die ersten spannenden  Zusammenhänge!
 
-Ok, dieser Boxplot ist sehr breit und dafür auch nicht so besonders informativ. 
-Da würde ein Histogramm vom Gefühl her besser geeignet sein, um Informationen über die Verteilung **einer** einzelnen Variablen zeigen. 
-
-Spannend wird es, wenn noch eine weitere **kategoriale** Variable hinzukommt, erst dann
-wird wirklich sichtbar, wozu Boxplots gut sind.
-Hier nehmen wir `verkehrsmittel` als kategoriale Variable, und für jedes Verkehrsmittel
-ergibt sich nun eine eigene Altersverteilung. Da zeigen sich dann die ersten Zusammenhänge!
-
-```{r}
+```{r sidebysideboxplot, echo=TRUE, message=FALSE, warning=FALSE}
 ggplot(einkaufen, aes(x = verkehrsmittel, y = alter)) +
   geom_boxplot()
 ```
@@ -491,21 +487,31 @@ Achte mal auf das Verkehrsmittel "Andere". Dort gibt es wirklich nur eine handvo
 aber die Box ist kaum von den anderen Verkehrsmitteln zu unterscheiden. Aber mithilfe der Punkte können wir nun sehen, dass dort weit weniger Datenpunkte vorliegen und wir daher bei der Interpretation dieser Gruppe Vorsicht walten lassen sollten, da sie von der Gruppengröße her nicht mit den anderen zu vergleichen ist, von Motorrad, E-Roller und NA ganz zu schweigen. 
 
 ::: aufgabe
-Probiere es doch mal aus, und schaue welche anderen zwei Variablen aus dem Beispieldatensatz `einkaufen` du gut für ein Boxplot nutzen kannst. 
+**Aufgabe**
 
-Achte darauf, immer eine metrische mit einer kategorialen Variable zu kombinieren! Sonst gibt es komische Fehlermeldungen / komisch aussehende Plots.
+Probiere es doch mal aus, und schaue welche anderen zwei Variablen aus dem Beispieldatensatz `einkaufen` du gut für einen Boxplot nutzen kannst. 
+
+Achte darauf, immer eine **metrische** mit einer **kategorialen** Variable zu kombinieren! Sonst gibt es komische Fehlermeldungen / komisch aussehende Plots.
 
 Hier eine Auflistung der Variablennamen:
 
-- `essen`: Das Lieblingsessen der Person. Kategorial, 97 verschiedene Ausprägungen
-- `verkehrsmittel`: Das Verkehrsmittel, mit dem die Person zum Bioladen gefahren ist. Kategorial, 7 Auprägungen
-- `weg`: Die Länge der Anreise zum Bioladen in km, metrisch
-- `alter`: Alter der Person, metrisch
-- `kochen`:  Anzahl der Tage pro Woche, an denen selber gekocht wird, metrisch 
-- `frequenz`: Wie oft die Person in einen Bioladen geht, ordinal, 5 Stufen
-- `ort`: Befragungsort, kategorial, 5 Ausprägungen
-- `bioladen`: Ob der Laden ein Bioladen war, kategorial, binär
-- `befragung`: Kürzel der Studierenden, die die Daten erhoben haben, kategorial, 8 Ausprägungen
+**Kategorial:**
+
+- `essen`: Das Lieblingsessen der Person. Nominal, 97 verschiedene Ausprägungen
+- `verkehrsmittel`: Das Verkehrsmittel, mit dem die Person zum Bioladen gefahren ist. Nominal, 7 Auprägungen
+- `frequenz`: Wie oft die Person in einen Bioladen geht. Ordinal, 5 Stufen
+- `ort`: Befragungsort. Nominal, 5 Ausprägungen
+- `bioladen`: Ob der Laden ein Bioladen war. Nominal, binär
+- `befragung`: Kürzel der Studierenden, die die Daten erhoben haben. Nominal, 8 Ausprägungen
+
+**Metrisch:**
+
+- `weg`: Die Länge der Anreise zum Bioladen in km, Verhältnisskala
+- `alter`: Alter der Person, Verhältnisskala
+- `kochen`:  Anzahl der Tage pro Woche, an denen selber gekocht wird, Absolutskala 
+
+**Andere:**
+
 - `id`, `datum`, `uhrzeit` sind Metadaten die wir gerade nicht brauchen. 
 :::
 
@@ -740,11 +746,11 @@ shiny::textOutput("score")
 shiny::br()
 ```
 
-
-
 ## Credit
+
+Dieses Tutorial wurde gemeinsam von Gesa Graf, Lukas Bruelheide und Marie
+Klosterkamp verfasst. 
 
 ### Literaturverzeichnis
 
-fehlt:  Modern Dive (Ismay and Kim 2022)
-
+<!--  Wird automatisch generiert aus den @autorYYYY-Zitationen und der Bibliothek in ref.json. Das Literaturverzeichnis wird immer ans Ende generiert, deswegen muss das hier die letzte Überschrift bleiben. -->
