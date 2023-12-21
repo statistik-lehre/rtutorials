@@ -1,8 +1,7 @@
 library(dplyr)
 library(readr)
 
-einkaufen <- read_csv("data-raw/einkaufen/einkaufen.csv",
-                      col_types = cols(...1 = col_skip()))
+einkaufen <- read_csv("data-raw/einkaufen/einkaufen.csv")
 
 # rearrange columns
 
@@ -16,6 +15,13 @@ colnames(einkaufen) <- tolower(colnames(einkaufen))
 # convert some columns to factors
 
 einkaufen <- einkaufen |>
-  mutate(across(c(essen, verkehrsmittel, frequenz, befragung, ort), forcats::as_factor))
+  mutate(across(c(essen, verkehrsmittel, frequenz, befragung, ort), forcats::as_factor)) |>
+  mutate(frequenz = factor(frequenz, ordered = TRUE, levels = c(
+    "seltener",
+    "einmal im Monat",
+    "alle zwei Wochen",
+    "einmal die Woche",
+    "mehrfach die Woche"
+  )))
 
 usethis::use_data(einkaufen, overwrite = TRUE, version = 3)
