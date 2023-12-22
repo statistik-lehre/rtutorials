@@ -834,23 +834,70 @@ Weil es auch ein bisschen Spaß bringt hier ein Plot, in dem fast alle Ästhetis
 ```{r}
 ggplot(daten_oa, aes(x = alter, y = weg, colour = verkehrsmittel, shape = ort, size = bioladen, alpha = kochen)) +
   geom_point() +
+  # legende lesbar anordnen
   theme(legend.direction = "horizontal", legend.box = "vertical")
 ```
 
 
 ### Ästhetische Attribute ohne Mapping
 
-Jetzt kennst du die Möglichkeiten, ästhetische Attribute Variablen zuzuweisen, um noch mehr Information abzubilden. Was du bisher noch nicht gelernt hast ist, diese ästhetischen Attribute auch ohne Mapping (also ohne sie einer Variable, also noch mehr Informationen, zuzuweisen) zu nutzen. Einfach, weil es gut aussieht und Grafiken übersichtlicher und lesbarer macht. Einige Beispiele wurden dir im bisherigen Tutorial schon untergemogelt
+Jetzt kennst du die Möglichkeiten, ästhetische Attribute Variablen zuzuweisen, um noch mehr Information abzubilden. Was du bisher noch nicht gelernt hast ist, diese ästhetischen Attribute auch ohne Mapping (also ohne sie einer Variable, also noch mehr Informationen, zuzuweisen) zu nutzen. Einfach, weil es gut aussieht und Grafiken übersichtlicher und lesbarer macht. Einige Beispiele wurden dir im bisherigen Tutorial schon untergemogelt. Hier sollen sie nochmal den gebührenden Platz finden.
 
+::: aufgabe
+Schaue dir den folgenden Codeabschnitt an, führe den Code aus und finde den Unterschied zwischen den verschiedenen Plots
+:::
 
-## 6. Special: Facets
+```{r}
+ggplot(einkaufen, aes(x = alter, colour = bioladen)) +
+  geom_histogram(binwidth = 5, boundary = 50, fill = "grey", position = "identity", alpha = .5)
+
+ggplot(einkaufen, aes(x = alter, fill = bioladen)) +
+  geom_histogram(binwidth = 5, boundary = 50, colour = "black", position = "identity", alpha = .5)
+```
+
+Richtig erkannt: sobald ein ästhetisches Attribut in der Funktion `aes()` steht, wird ihr eine Variable zugeordnet, sie bringt neue Information mit in den Plot. Das erkennst du auch daran, dass per default eine Legende erstellt wird. Steht eine Attribut einfach in einer geom-Funktion wird der Inhalt auf *alle* Informationen im Plot angewendet, ihr wird ein einzelner Wert zugeordnet und es wird keine Legende erstellt.
+
+Dieses Prinzip gilt für alle oben vorgestellten ästhetischen Attribute. Deiner Phantasie sind keine Grenzen gesetzt. Bevor du jetzt anfängst, wild mit Farben um die zu schmeißen wäre es allerdings wichtig, dass du das Unterkapitel Barrierefreiheit liest - da ist eine wunderschöne Palette vorgestellt, die so richtig Spaß macht :)
+
+## 7. Special: Facets
 
 ::: infobox
-Facets sind geeignet, um 
+Facets sind geeignet, um die Daten anhand von ein oder zwei Variablen aufzuteilen und mehr Information bei relativ guter Übersichtlichkeit in die Darstellung zu bekommen.
 
-Funktion: `facet()`
+Funktion: `facet_grid()` und `facet_wrap()`.
 :::
 <br>
+
+### `facet_grid()`
+
+Für ein oder zwei Variablen. Um das gut zu demonstrieren wird ein größerer Datensatz benötigt: In `fallcolors` wird die tägliche Prozentzahl von gefärbten Blättern im Herbst im Mount Mansfield State Forest. 
+
+```{r}
+# hier lieber Lukas' Grafik einsetzen
+ggplot(fallcolor, aes(x = as.numeric(day), y = value, colour = year, group = year)) +
+  geom_line() +
+  facet_grid(elevation ~ species)
+```
+
+Vor der Welle (Tilde) stehen die Zeilen und nach der Tilde die Spalten (Reihenfolge der Indizierung bleibt also wie gewohnt). Wenn du nur eines von beiden willst kannst du einfach die Stelle vor bzw. nach der Tilde leer lassen.
+
+### `facet_wrap()`
+
+Für den Fall, dass die Facetten nur anhand einer Variable aufmachen möchtest, du aber flexibler in der Form bleiben möchtest.
+
+```{r}
+# hier lieber Lukas' Grafik einsetzen
+ggplot(fallcolor, aes(x = as.numeric(day), y = value, colour = year, 
+                      group = interaction(year, elevation))) +
+  geom_line() +
+  facet_wrap( ~ species)
+
+# hier lieber Lukas' Grafik einsetzen
+ggplot(fallcolor, aes(x = as.numeric(day), y = value, colour = year, 
+                      group = interaction(year, elevation))) +
+  geom_line() +
+  facet_wrap( ~ species, nrow = 3)
+```
 
 ## 7. Special: Jitter
 
