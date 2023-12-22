@@ -685,21 +685,21 @@ Funktion: `geom_line()`
 
 Hierfür wird ein anderer Datensatz benötigt, da eine Zeitvariable gebraucht wird. In `heated` ist die maximale Tagestemperatur (`maxtemp`) in Farenheit sowie das Tagesdatum (`enddate`) gespeichert.
 
-```{r}
+```{r linegraph}
 ggplot(heated, aes(x = enddate, y = maxtemp)) +
   geom_line()
 ```
 
 Zwischen den Jahren sind eher horizontale Linien, das liegt daran, dass nur die Monate Mai bis September abgebildet sind. Das Problem ist, dass es durch den Verbindungsstrich den Anschein macht, als gäbe es Daten, die es gar nicht gibt. Um das zu umgehen braucht es in den `aes`thetics die `group` Variable. Mit der Funktion `year()` aus dem Paket `lubridate()` ziehst du *nur* das Jahr aus dem Datum und erschaffst somit eine Gruppe pro Jahr.
 
-```{r}
+```{r linegraph2}
 ggplot(heated, aes(x = enddate, y = maxtemp, group = lubridate::year(enddate))) +
   geom_line()
 ```
 
 Sehr gut, jetzt werden keine Zusammenhänge mehr angedeutet, wo gar keine sind. Und weils noch schöner ist, wenn die lesende Person intuitiv die Zahlen deuten kann wird im letzten Schritt die Grad Farenheit Skala in eine Grad Celsius Skala umgerechnet. Dies geht mit der Funktion `convert_temperature()` aus dem Paket `weathermetrics`. Und weil sich Celsius an 0 Grad orientiert wird die y Achse noch nach unten bis auf 0 Grad erweitert und zu guter letzt die Achsenbeschriftung geändert:
 
-```{r}
+```{r linegraph3}
 # Für die Achsenbeschriftung
 breaks <- heated$enddate[grepl("07-01", as.character(heated$enddate))]
 
@@ -711,6 +711,136 @@ ggplot(heated, aes(x = enddate, y = weathermetrics::convert_temperature(maxtemp,
   # Die Breaks/ Achsenbeschriftung ändern
   scale_x_date(breaks = breaks, date_labels = "%b %Y")
 ```
+
+## 6. Aesthetic Mapping
+
+Jetzt kennst du die 5 häufigsten Diagrammformen. Jetzt kommt farbe ins Spiel. Wie im ersten Kapitel bereits besprochen ist: Die ästhetischen Attribute eines Plots werden festgelegt. Bisher haben wir lediglich die Zuweisung zur x und ggf. y Achse genutzt, da geht allerdings noch viel mehr. Als Erinnerung:
+
+::: infobox
+`aes()` steht für *aesthetic attributes*, und weist den einzelnen Variablen, wie z.B. dem Verkehrsmittel, eine *grafische Eigenschaft* zu. Grafische Eigenschaften sind: 
+
+- Achsen (`x`, `y`)
+- Farbe (`colour`)
+- Füllung (`fill`)
+- Form (`shape`)
+- Größe (`size`)
+- Transparenz (`alpha`)
+:::
+
+Also: jeder Variable wird ein ästethisches Attribut zugeordnet. Bedeutet umgekehrt: Es lassen sich bis zu 6 verschiedenen Variablen in einem Plot unterbringen. Wie sinnvoll es ist, das auszureizen, sei dahingestellt.
+
+### Füllung und Farbe
+
+#### Fill
+
+Was allerdings in vielen Fällen sinnvoll ist, ist eine weitere Variable über das Attribut Füllung (`fill`) zu plotten. Das gilt sowohl für *kategoriale* als auch *metrische* Daten.
+
+```{r colour}
+ggplot(einkaufen, aes(x = verkehrsmittel, fill = bioladen)) +
+  geom_bar()
+```
+
+Dazu kommt nun, dass unterschieden werden kann zwischen Bio- und Nicht-Bioläden. Aber **Achtung**: Es ist kein ausgewogenes Design, es wurde in deutlich mehr Bio- als Nicht-Bioläden erhoben. Das kann in der statistischen Analyse später noch besondere Beachtung benötigen.
+Doch zu dem Plot: Scheint erstmal recht einleuchtend. Was jedoch noch besser wäre, um es vergleichbarer zu machen, wäre wenn die farbigen Balken *nebeneinander* und nicht aufeinander stünden. Das lässt sich mit dem Argument `position = "dodge"` erreichen:
+
+```{r colour}
+ggplot(einkaufen, aes(x = verkehrsmittel, fill = bioladen)) +
+  geom_bar(position = "dodge")
+```
+
+Jetzt ist nur noch bisschen hässlich, dass die Balken unterschiedlich breit sind, je nachdem, ob eine oder beide Faktorstufen vorkommen. Das lässt sich mit dem Argument `position = position_dodge(preserve = "single")` umgestalten:
+
+```{r colour}
+ggplot(einkaufen, aes(x = verkehrsmittel, fill = bioladen)) +
+  geom_bar(position = position_dodge(preserve = "single"))
+```
+
+#### Colour
+
+Farbe (`colour`) ist ein bisschen tricky: Bei Balkendiagrammen, Histogrammen und Boxplots wird damit die Umrandung der Balken beeinflusst. Hier braucht es noch das Attribut `Füllung`.
+
+```{r colour}
+ggplot(einkaufen, aes(x = verkehrsmittel, colour = bioladen)) +
+  geom_bar()
+```
+
+Bei Punktdiagrammen und Liniendiagrammen wird die Punkt- bzw. Linienfarbe durch `colour` bestimmt. Wird das Attribut Füllung vergeben passiert einfach nichts.
+
+```{r scatterplot2, exercise.setup = "ausreisser5"}
+ggplot(daten_oa, aes(x = alter, y = weg, colour = bioladen)) +
+  geom_point()
+```
+
+Eine Ausnahme gibt es: Die Formen 21, 22, 23, 24, 25 in einem Punktediagramm haben sowohl ein Farben als auch ein Füllungsattribut. Doch dazu später mehr.
+
+#### kontinuierlich
+
+Das fill bzw colour Attribut kann genauso gut auf kontinuierliche Variablen angewendet werden:
+
+```{r scatterplot2, exercise.setup = "ausreisser5"}
+ggplot(daten_oa, aes(x = alter, y = weg, colour = kochen)) +
+  geom_point()
+```
+
+### Shape
+
+Die Form eignet sich, um in Punktediagrammen eine weitere kategoriale Variable einzubauen.
+
+```{r exercise.setup = "ausreisser5"}
+ggplot(daten_oa, aes(x = alter, y = weg, shape = verkehrsmittel)) +
+  geom_point()
+```
+
+Insbesondere wenn es kombiniert wird mit `colour` wird es besonders eindeutig
+
+```{r exercise.setup = "ausreisser5"}
+ggplot(daten_oa, aes(x = alter, y = weg, shape = verkehrsmittel, colour = verkehrsmittel)) +
+  geom_point()
+```
+
+
+### Size
+
+Auch Mittels Größe kann eine weitere Dimension rein gebracht werden. Das ist allerdings mit vorsicht zu genießen, da es in vielen Fällen die Wahrnehmung zu bestimmten Zusammenhängen verzerrt:
+
+```{r scatterplot2, exercise.setup = "ausreisser5"}
+ggplot(daten_oa, aes(x = alter, y = weg, size = bioladen)) +
+  geom_point()
+```
+
+Bei diesem Beispiel wird deutlich: Dieses Attribunt ist ungünstig verteilt. es macht den Plot viel unübersichtlicher im Vergleich zu der Info, die die lesende Person daraus ziehen kann. colour aus dem vorherigen Abschnitt war die deutlich bessere Wahl.
+
+Im Grunde gibt es nur 3 Gründe, `size` als ästhetisches Attribut zu nutzen:
+
+1. Bei diskreten Daten, wo die Punkte sonst so sehr übereinander liegen würden, dass die Grafik total Gegenstandslos wäre. (Hierfür wurde allerdings das `geom_count()` entwickelnt)
+2. In Momenten, in denen mit der Größe wirklich eine Relation ausgedrückt werden kann (bspw. Gewicht, Quadratmeter oder Bruttoinlandsprodukt)
+3. In Korrelationstabellen.
+
+### Alpha
+
+Zu guter letzt folgt die Dichte. Die ist grundsätzlich auch eher ungeeignet. Der Vollständigkeit halber, lernst du sie hier trotzdem kennen:
+
+```{r}
+ggplot(daten_oa, aes(x = alter, y = weg, alpha = kochen)) +
+  geom_point()
+```
+
+Hier gilt das gleiche wie bei size: die unterschiedlichen alpha Werte nehmen eine Gewichtung vor, die die Wahrnehmung von Daten verzerren kann.
+
+### Viel zu doll
+
+Weil es auch ein bisschen Spaß bringt hier ein Plot, in dem fast alle Ästhetischen Attribute enthalten sind. Auch wenns Quatsch ist.
+
+```{r}
+ggplot(daten_oa, aes(x = alter, y = weg, colour = verkehrsmittel, shape = ort, size = bioladen, alpha = kochen)) +
+  geom_point() +
+  theme(legend.direction = "horizontal", legend.box = "vertical")
+```
+
+
+### Ästhetische Attribute ohne Mapping
+
+Jetzt kennst du die Möglichkeiten, ästhetische Attribute Variablen zuzuweisen, um noch mehr Information abzubilden. Was du bisher noch nicht gelernt hast ist, diese ästhetischen Attribute auch ohne Mapping (also ohne sie einer Variable, also noch mehr Informationen, zuzuweisen) zu nutzen. Einfach, weil es gut aussieht und Grafiken übersichtlicher und lesbarer macht. Einige Beispiele wurden dir im bisherigen Tutorial schon untergemogelt
 
 
 ## 6. Special: Facets
