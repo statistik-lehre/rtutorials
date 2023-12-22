@@ -173,7 +173,19 @@ Grob kann unterschieden werden zwischen:
 - Plots, die die Verteilung einer einzelnen Variablen darstellen
 - Plots, die den Zusammenhang zwischen zwei oder mehr Variablen zeigen
 
-Gehen wir sofort zur Sache!
+Die am häufigsten verwendeten und in diesem Tutorial vorgestellten Plots sind:
+
+|                    | kategorial               | kontinuierlich                   |
+|--------------------|--------------------------|----------------------------------|
+| **keine**          | Barplot <br>`geom_bar()` | Histogram <br>`geom_histogram()` |
+| **kategorial**     | (`geom_count()`)         | Boxplot<br>`geom_boxplot()`      |
+| **kontinuierlich** | -                        | Punktdiagramm<br>`geom_point()`  |
+| **sequentiell**    | -                        | Liniendiagramm<br>`geom_line()`  |
+
+
+
+
+Steigen wir direkt ein!
 
 ## 1. Balkendiagramm
 
@@ -261,31 +273,45 @@ Jetzt versteht du vielleicht, wofür die `geom_bar()`-Funktion da ist: Geometris
 Innerhalb der Funktion für das geometrische Objekt finden auch Berechnungen statt, die einzelnen Ausprägungen der Verkehrsmittel werden gezählt, um die Höhe der Balken zu bestimmen. Aber damit müssen wir uns zum Glück nicht beschäftigen. 
 Und jetzt kommt das Ding: Es gibt auch noch andere `geom_...()` Funktionen. Zum Beispiel `geom_point()`, welche dem Plot Punkte hinzufügt! Oder `geom_histogram()`, welche ein Histogramm zeichnet, siehe nächster Abschnitt.
 
-Probieren wir das doch einfach mal aus und tauschen `geom_bar()` durch `geom_point()`. 
+::: aufgabe
+Probiere das doch einfach mal aus und tausche `geom_bar()` durch `geom_point()`. 
+:::
 
-```{r error, exercise = TRUE, exercise.cap = "Fehlermeldung"}
+```{r error-solution, exercise = TRUE}
 ggplot(einkaufen, aes(x = verkehrsmittel)) +
   geom_point()
 ```
 
+```{r error, exercise = TRUE, exercise.cap = "Fehlermeldung"}
+
+```
+
 Dass hier eine Fehlermeldung herauskommt, ist völlig normal! Fehlermeldungen sind freundlich, denn Programmierer*innen geben sich (oft) viel Mühe, diese möglichst informativ und genau zu machen. Also hab keine Angst, und lies dir tatsächlich mal durch was da steht!
 
-Schon die erste Zeile gibt dir eine wichtige Information: Der Fehler trat in der Funktion `geom_point()` auf und nicht an irgendeiner anderen Stelle des Plots.
+Es gibt hier einen Unterschied, in den R Skripten, mit denen du arbeitest und den R Tutorials, in dem du dich gerade befindest, deswegen die folgende Aufgabe:
+
+::: aufgaberstudio
+Füge den Code aus der obigen Aufgabe in deine R Studio Konsole ein und schau dir die daraus resultierende Fehlermeldung genau an.
+:::
+
+Wahrscheinlich sieht sie so aus:
 
 ```
 Error in `geom_point()`:
-```
-
-Manche Sachen verstehst du vielleicht nicht, wie z.B. was `compute_geom_1()` ist, und die beste Strategie für diese Sachen in R ist, sie einfach zu ignorieren und stattdessen Sinn aus den Dingen zu ziehen, die du verstehst!
-
-Die allerletzte Zeile der Meldung ist am informativsten:
-
-```
+! Problem while setting up geom.
+ℹ Error occurred in the 1st layer.
+Caused by error in `compute_geom_1()`:
 ! `geom_point()` requires the following missing aesthetics: y
+Run `rlang::last_trace()` to see where the error occurred.
 ```
-`geom_point()` braucht die folgenden fehlenden aesthetics: 'y'
 
-Ah, das macht auch Sinn, denn ein Punkt hat immer zwei Koordinaten, eine `x`- und eine `y`-Koordinate! Logischerweise kann kein Punkt gezeichnet werden, wenn du nur eine `x`-Koordinate angibst. 
+- Schon die erste Zeile gibt dir eine wichtige Information: Der Fehler trat in der Funktion `geom_point()` auf und nicht an irgendeiner anderen Stelle des Plots. (Das wird wichtiger, umso mehr Ebenen ein Plot hat.)
+- Die zweite Zeile spezifiziert das Problem: Es gibt Probleme mit dem geometrischen Objekt (also den Punkten) und nicht mit irgendwas anderem in dieser Funktion
+- Die dritte Zeile sagt, dass der Fehler bereits in der allerersten Zeile / Ebene passiert
+- Die vierte Zeile musst du nicht genau verstehen
+- die fünfte Zeile schließlich sagt dir ganz genau, wo das Problem ist: Du brauchst eine zweite Variable. Und zwar auf der y-Achse. Das ergibt auch Sinn, denn ein Punkt hat immer zwei Koordinaten, eine `x`- und eine `y`-Koordinate! Logischerweise kann kein Punkt gezeichnet werden, wenn du nur eine `x`-Koordinate angibst. 
+- In der sechsten Zeile ist ein Vorschlag, um genau zu verstehen, was in deinem Code schiefläuft, das kannst du eigentlich auch ignorieren, da du die wichtigeste Info ja bereits in Zeile fünf erhalten hast
+
 
 ::: aufgabe
 Löse das Problem, indem du in `aes()` noch das Argument `y = weg` angibst. Denk daran, Argumente werden durch Kommata getrennt. 
@@ -657,7 +683,7 @@ Funktion: `geom_line()`
 :::
 <br>
 
-Hierfür wird ein anderer Datensatz benötigt, da eine Zeitvariable gebraucht wird. In `heated` ist die maximale Tagestemperatur (`maxtemp`; in Farenheit) sowie das Tagesdatum (`enddate`) gespeichert.
+Hierfür wird ein anderer Datensatz benötigt, da eine Zeitvariable gebraucht wird. In `heated` ist die maximale Tagestemperatur (`maxtemp`) in Farenheit sowie das Tagesdatum (`enddate`) gespeichert.
 
 ```{r}
 ggplot(heated, aes(x = enddate, y = maxtemp)) +
