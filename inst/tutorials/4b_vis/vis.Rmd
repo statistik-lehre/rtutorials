@@ -455,6 +455,26 @@ ggplot(einkaufen, aes(x = verkehrsmittel, y = alter)) +
   geom_boxplot()
 ```
 
+Es wird auch deutlich, dass die Kategorien "E-Roller" und "Motorrad" so klein sind, dass sie sich nicht als eigene Analyse-Kategorie eignen, deswegen werden sie mit "Andere" zusammengefasst. Hierfür wird ein neuer Datensatz mit dem Namen `data_einkaufen` erstellt. Die NAs dürfen allerdings nicht einfach umgecodet werden, weil wir es in diesem Fall einfach wirklich nicht wissen.
+
+```{r}
+# Erstelle ein neues Objekt und speichere den bisherigen Datensatz darin
+data_einkaufen <- einkaufen
+
+# Verändere Variablen nach deinen Wünschen im NEUEN Objekt
+# in diesem Fall mit der recode Funktion aus dem Paket dplyr
+# die bisherige Variable wird einfach mit der neuen überschrieben
+data_einkaufen$verkehrsmittel <- recode(einkaufen$verkehrsmittel,
+      "E-Roller" = "Andere",
+      "Motorrad" = "Andere"
+)
+
+# und nochmal der gleiche Plot
+ggplot(data_einkaufen, aes(x = verkehrsmittel, y = alter)) +
+  geom_boxplot()
+```
+
+
 ```{r question_boxplot}
 quiz(caption = "Interpretation üben",
 question_radio("Wie ist das obere und untere Ende der Box bei den Autofahrenden zu interpretieren? Der untere Rand der Box liegt ungefähr bei 37, der obere bei ca. 60 Jahren.",
@@ -652,11 +672,11 @@ Es wird sehr deutlich, dass die Quantilversion die robustere ist. 15 km Anfahrts
 # Maximalwert festlegen
 maximalwert <- quantile(einkaufen$weg, .75, na.rm = T) + (1.5 * IQR(einkaufen$weg, na.rm = T))
 
-# Ein Subset aus dem aktuellen Datensatz treffen und als neues Objekt (daten_oa) speichern
-daten_oa <- einkaufen[einkaufen$weg < maximalwert, ]
+# Ein Subset aus dem aktuellen Datensatz treffen und in dem schon oben neu angelegten Objekt speichern
+data_einkaufen <- data_einkaufen[data_einkaufen$weg < maximalwert, ]
 
 # und NAs entfernen
-daten_oa <- daten_oa[!is.na(daten_oa$weg), ]
+data_einkaufen <- data_einkaufen[!is.na(data_einkaufen$weg), ]
 ```
 
 #### Dokumentation
@@ -667,7 +687,7 @@ daten_oa <- daten_oa[!is.na(daten_oa$weg), ]
 Und jetzt nochmal der Plot ganz vom Anfang:
 
 ```{r scatterplot2}
-ggplot(daten_oa, aes(x = alter, y = weg)) +
+ggplot(data_einkaufen, aes(x = alter, y = weg)) +
   geom_point()
 ```
 
@@ -767,7 +787,7 @@ ggplot(einkaufen, aes(x = verkehrsmittel, colour = bioladen)) +
 Bei Punktdiagrammen und Liniendiagrammen wird die Punkt- bzw. Linienfarbe durch `colour` bestimmt. Wird das Attribut Füllung vergeben passiert einfach nichts.
 
 ```{r scatterplot2, exercise.setup = "ausreisser5"}
-ggplot(daten_oa, aes(x = alter, y = weg, colour = bioladen)) +
+ggplot(data_einkaufen, aes(x = alter, y = weg, colour = bioladen)) +
   geom_point()
 ```
 
@@ -778,7 +798,7 @@ Eine Ausnahme gibt es: Die Formen 21, 22, 23, 24, 25 in einem Punktediagramm hab
 Das fill bzw colour Attribut kann genauso gut auf kontinuierliche Variablen angewendet werden:
 
 ```{r scatterplot2, exercise.setup = "ausreisser5"}
-ggplot(daten_oa, aes(x = alter, y = weg, colour = kochen)) +
+ggplot(data_einkaufen, aes(x = alter, y = weg, colour = kochen)) +
   geom_point()
 ```
 
@@ -787,14 +807,14 @@ ggplot(daten_oa, aes(x = alter, y = weg, colour = kochen)) +
 Die Form eignet sich, um in Punktediagrammen eine weitere kategoriale Variable einzubauen.
 
 ```{r exercise.setup = "ausreisser5"}
-ggplot(daten_oa, aes(x = alter, y = weg, shape = verkehrsmittel)) +
+ggplot(data_einkaufen, aes(x = alter, y = weg, shape = verkehrsmittel)) +
   geom_point()
 ```
 
 Insbesondere wenn es kombiniert wird mit `colour` wird es besonders eindeutig
 
 ```{r exercise.setup = "ausreisser5"}
-ggplot(daten_oa, aes(x = alter, y = weg, shape = verkehrsmittel, colour = verkehrsmittel)) +
+ggplot(data_einkaufen, aes(x = alter, y = weg, shape = verkehrsmittel, colour = verkehrsmittel)) +
   geom_point()
 ```
 
@@ -804,7 +824,7 @@ ggplot(daten_oa, aes(x = alter, y = weg, shape = verkehrsmittel, colour = verkeh
 Auch Mittels Größe kann eine weitere Dimension rein gebracht werden. Das ist allerdings mit vorsicht zu genießen, da es in vielen Fällen die Wahrnehmung zu bestimmten Zusammenhängen verzerrt:
 
 ```{r scatterplot2, exercise.setup = "ausreisser5"}
-ggplot(daten_oa, aes(x = alter, y = weg, size = bioladen)) +
+ggplot(data_einkaufen, aes(x = alter, y = weg, size = bioladen)) +
   geom_point()
 ```
 
@@ -821,7 +841,7 @@ Im Grunde gibt es nur 3 Gründe, `size` als ästhetisches Attribut zu nutzen:
 Zu guter letzt folgt die Dichte. Die ist grundsätzlich auch eher ungeeignet. Der Vollständigkeit halber, lernst du sie hier trotzdem kennen:
 
 ```{r}
-ggplot(daten_oa, aes(x = alter, y = weg, alpha = kochen)) +
+ggplot(data_einkaufen, aes(x = alter, y = weg, alpha = kochen)) +
   geom_point()
 ```
 
@@ -832,7 +852,7 @@ Hier gilt das gleiche wie bei size: die unterschiedlichen alpha Werte nehmen ein
 Weil es auch ein bisschen Spaß bringt hier ein Plot, in dem fast alle Ästhetischen Attribute enthalten sind. Auch wenns Quatsch ist.
 
 ```{r}
-ggplot(daten_oa, aes(x = alter, y = weg, colour = verkehrsmittel, shape = ort, size = bioladen, alpha = kochen)) +
+ggplot(data_einkaufen, aes(x = alter, y = weg, colour = verkehrsmittel, shape = ort, size = bioladen, alpha = kochen)) +
   geom_point() +
   # legende lesbar anordnen
   theme(legend.direction = "horizontal", legend.box = "vertical")
@@ -870,36 +890,127 @@ Funktion: `facet_grid()` und `facet_wrap()`.
 
 ### `facet_grid()`
 
-Für ein oder zwei Variablen. Um das gut zu demonstrieren wird ein größerer Datensatz benötigt: In `fallcolors` wird die tägliche Prozentzahl von gefärbten Blättern im Herbst im Mount Mansfield State Forest. 
+Für eine oder zwei Variablen. Wie auch bei anderen Indizierungen in R gilt: bei der 1. Stelle werden die Zeilen benannt, in der 2. die Spalten. In diesem Fall werden sie durch eine Tilde (`~`) verbunden. Wenn du nur eines von beiden willst kannst du einfach die Stelle vor bzw. nach der Tilde leer lassen.
+
+In diesem Fall wird der veränderte Datensatz verwendet. Alle Veränderungen wurden im Laufe des bisherigen Tutorials argumentiert und dokumentiert.
+
+::: aufgabe
+Führe den Code aus und mache dich mit dem Ergebnis vertraut. Lösche jeweils einmal die Variable vor sowie nach der Tilde heraus und schaue, wie sich das Ergebnis verändert.
+:::
 
 ```{r}
-# hier lieber Lukas' Grafik einsetzen
-ggplot(fallcolor, aes(x = as.numeric(day), y = value, colour = year, group = year)) +
-  geom_line() +
-  facet_grid(elevation ~ species)
+ggplot(data_einkaufen, aes(x = alter, y = weg)) +
+  geom_point() +
+  facet_grid(bioladen ~ verkehrsmittel)
 ```
 
-Vor der Welle (Tilde) stehen die Zeilen und nach der Tilde die Spalten (Reihenfolge der Indizierung bleibt also wie gewohnt). Wenn du nur eines von beiden willst kannst du einfach die Stelle vor bzw. nach der Tilde leer lassen.
+Beachte: Hier wird (erneut) deutlich, welche Auswirkungen ein unbalanciertes Design hat. Da es sehr viel weniger Beobachtungen aus nicht Bioläden gibt, können die Zusammenhänge im Zweifel nicht wirklich dargestellt werden.
 
 ### `facet_wrap()`
 
-Für den Fall, dass die Facetten nur anhand einer Variable aufmachen möchtest, du aber flexibler in der Form bleiben möchtest.
+Für den Fall, dass die Facetten nur anhand einer Variable aufmachen möchtest, du aber flexibler in der Form bleiben möchtest. Du kannst die Zeilen- **oder** die Spaltenanzahl bestimmen durch die Argumente `ncol` bzw. `nrow`.
+
+::: aufgabe
+Führe den Code aus, mach dich mit den Auswirkungen von `nrow` vertraut und setze anstatt dessen `ncol` ein.
+:::
 
 ```{r}
-# hier lieber Lukas' Grafik einsetzen
-ggplot(fallcolor, aes(x = as.numeric(day), y = value, colour = year, 
-                      group = interaction(year, elevation))) +
-  geom_line() +
-  facet_wrap( ~ species)
+ggplot(data_einkaufen, aes(x = alter, y = weg)) +
+  geom_point() +
+  facet_wrap(~verkehrsmittel, nrow = 3)
+```
+## 8. Das Drumherum: Labs, Themes usw.
 
-# hier lieber Lukas' Grafik einsetzen
-ggplot(fallcolor, aes(x = as.numeric(day), y = value, colour = year, 
-                      group = interaction(year, elevation))) +
-  geom_line() +
-  facet_wrap( ~ species, nrow = 3)
+Was noch fehlt um die Grafiken ganz grundlegend ein bisschen schöner zu machen ist die grundsätzliche Gestaltung der Plots sowie die grundsätzlichen Beschriftungen.
+
+### Themes
+
+Es gibt verschiedene Themes, welche Hintergrundfarbe, Umrandungen etc. bestimmen. Eine Übersicht findest du [hier](https://ggplot2.tidyverse.org/reference/ggtheme.html). Themes werden als eine weitere Lage dem Plot hinzugefügt.
+
+::: aufgabe
+Suche dir ein Theme deiner Wahl aus und füge es dem untenstehenden Plot hinzu
+:::
+
+```{r}
+# Ein Beispiel:
+ggplot(data_einkaufen, aes(x = alter, y = weg)) +
+  geom_point() +
+  theme_bw()
 ```
 
-## 7. Special: Jitter
+```{r}
+ggplot(data_einkaufen, aes(x = alter, y = weg)) +
+  geom_point()
+```
+
+### Labs
+
+Die Beschriftungen sind ebenfalls eine weitere Lage und werden mittels `labs()` Funktion hinzu gefügt.
+
+::: aufgabe
+Ändere die Beschriftungen so, dass sie Sinn ergeben
+:::
+
+
+```{r}
+ggplot(data_einkaufen, aes(x = alter, y = weg)) +
+  geom_point() +
+  labs(
+    title = "Titel",
+    subtitle = "Untertitel",
+    x = "x-Achse",
+    y = "y-Achse",
+    caption = "Fußnote"
+  )
+```
+
+## Barrierefreiheit
+
+Es mag erstmal überraschen aber: auch in visuellen Darstellungen ist Barrierefreiheit ein relevantes Thema. Ein nicht zu vernachlässigender Anteil der Bevölkerung kann bestimmte Farben nicht unterscheiden. Deswegen wurden von schlauen Menschen Farbpaletten entworfen, die keine ambivalenten Farben wie rot und grün enthalten, und auch ganz ohne Farbwahrnehmung nur über Helligkeit und Dunkelheit der Farben in schwarz weiß funktionieren. Der letzte Punkt ist ebenfalls relevant für alle Plots, die in schwarz weiß (wie bspw. in manchen Journals) aus- oder abgedruckt werden. 
+
+Eine der verbreitetesten ist das Paket `viridis`. Es hat auch seine eigene [Hilfe Seite](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html) auf der die Verwendung und möglichen Farbschemen dargestellt werden. 
+
+Hier ein Beispiel:
+
+```{r viridis-demo, message=FALSE, warning=FALSE}
+library(ggplot2)
+library(hexbin)
+library(viridis)
+
+dat <- data.frame(x = rnorm(10000), y = rnorm(10000))
+
+p <- ggplot(dat, aes(x = x, y = y)) +
+  geom_hex() + coord_fixed() +
+  scale_fill_gradientn(colours = viridis(256, option = "D")) +
+  theme_bw()
+
+p
+```
+
+Zuerst fällt auf: Die Farben sind einfach auch deutlich schöner als die Standard-Farbpalette von R. 
+
+Und die obenstehende Grafik ist ein gutes Beispiel dafür, wie hell-dunkel Kontraste verwendet werden können. So ist das Ganze in schwarz-weiß immer noch lesbar, was insbesondere für Menschen mit eingeschränkter Farbwahrnehmung klasse ist, denn alles was schwarz weiß gut lesbar ist, ist immer auch colorblind-friendly. 
+
+Im Grunde folgt die Anwendung von Viridis immer dem gleichen Prinzip: Du sagst R in den aesthetics, welche Variable R über colour oder fill abbilden soll. Dann fügst du eine weitere Ebene hinzu, in der du die Farbwahl spezifizierst. Diese Ebene hängt von 2 Punkten ab: hast du fill oder colour zugewiesen? Und: ist es eine kontinuierliche oder eine diskrete Variable:
+
+|                    |   `colour`                             |   `fill`                           |
+|--------------------|----------------------------------------|------------------------------------|
+| **diskret**        | `scale_colour_viridis(discrete = T)`   | `scale_fill_viridis(discrete = T)` |
+| **kontinuierlich** | `scale_colour_viridis()`               | `scale_fill_viridis()`             |
+
+Zusätzlich gibt es noch die Möglichkeit, sich eine Palette (s. [Hilfeseite](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html)) auszusuchen. Das geht mit dem Argument `option = ` und dann eine der Paletten in Anführungszeichen ! (`"magma"`, `"inferno"`, `"plasma"`, `"viridis"`, `"cividis"`, `"rocket"`, `"mako"` oder `"turbo"`).
+
+
+
+
+::: aufgabe
+:::
+
+```{r exvi, exercise = TRUE}
+```
+
+
+
 
 ## Becoming a Pro
 
@@ -999,40 +1110,6 @@ Zweck: Zeigt die Beziehung zwischen zwei kontinuierlichen Variablen.
 Verwendung: Ermöglicht die Identifizierung von Mustern, Korrelationen oder Ausreißern.
 
 Dieser Art der Nutzung von Visualisierungen wirst du in späteren Tutorials erneut begegnen, wenn wir diese zur Überprüfung der Voraussetzungen für eine statistische Testgröße verwenden. Jetzt hast du es bereits schon einmal gehört - oder eher *gelesen* - und weißt dann, wenn die Zeit gekommen ist, schon Bescheid was wir zur Verfügung haben. 
-
-
-## Barrierefreiheit
-
-Noch ein letztes Kapitel, dass nicht vernachlässigt werden sollte, wenn es um visuelle Darstellung geht: die Barrierefreiheit.
-
-Ein nicht zu vernachlässigender Anteil der Bevölkerung kann bestimmte Farben nicht unterscheiden. Deswegen wurden von schlauen Menschen Farbpaletten entworfen, die keine ambivalenten Farben wie rot und grün enthalten, und auch ganz ohne Farbwahrnehmung nur über Helligkeit und Dunkelheit der Farben in schwarz weiß funktionieren. Der letzte Punkt ist ebenfalls relevant für alle Plots, die in schwarz weiß (wie bspw. in manchen Journals) ausgedruckt werden. 
-
-Eine der verbreitetesten ist das Paket `viridis`. Es hat auch seine eigene [Hilfe Seite](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html) auf der die Verwendung und möglichen Farbschemen dargestellt werden. 
-
-### Viridis
-
-```{r viridis-demo, message=FALSE, warning=FALSE}
-library(ggplot2)
-library(hexbin)
-library(viridis)
-
-dat <- data.frame(x = rnorm(10000), y = rnorm(10000))
-
-p <- ggplot(dat, aes(x = x, y = y)) +
-  geom_hex() + coord_fixed() +
-  scale_fill_gradientn(colours = viridis(256, option = "D")) +
-  theme_bw()
-
-p
-```
-
-Die obenstehende Grafik ist ein gutes Beispiel dafür, wie hell-dunkel Kontraste verwendet werden können. So ist das Ganze in schwarz-weiß immer noch lesbar, was insbesondere für Menschen mit eingeschränkter Farbwahrnehmung klasse ist, denn alles was schwarz weiß gut lesbar ist, ist immer auch colorblind-friendly. 
-
-Schau dir doch einmal die Hilfeseite von viridis für ggplot an und finde heraus, wie du es nutzen kannst
-
-```{r exvi, exercise = TRUE}
-??viridis
-```
 
 
 ## Learnings
