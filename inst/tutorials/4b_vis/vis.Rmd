@@ -316,7 +316,7 @@ Run `rlang::last_trace()` to see where the error occurred.
 ::: aufgabe
 Löse das Problem, indem du in `aes()` noch das Argument `y = weg` angibst. Denk daran, Argumente werden durch Kommata getrennt. 
 
-"weg" ist eine stetige Variable, die den zurückgelegten Anreiseweg der Person zum Bioladen, wo die Erhebung stattfand, in km enthält. 
+"weg" ist eine stetige Variable, die den zurückgelegten Anreiseweg der Person zum Laden, wo die Erhebung stattfand, in km enthält. 
 :::
 
 ```{r weg, exercise = TRUE, exercise.cap = "aesthetic mapping hinzufügen für y-Achse"}
@@ -552,7 +552,7 @@ Hier eine Auflistung der Variablennamen:
 **Kategorial:**
 
 - `essen`: Das Lieblingsessen der Person. Nominal, 97 verschiedene Ausprägungen
-- `verkehrsmittel`: Das Verkehrsmittel, mit dem die Person zum Bioladen gefahren ist. Nominal, 7 Auprägungen
+- `verkehrsmittel`: Das Verkehrsmittel, mit dem die Person zum Laden gefahren ist. Nominal, 7 Auprägungen
 - `frequenz`: Wie oft die Person in einen Bioladen geht. Ordinal, 5 Stufen
 - `ort`: Befragungsort. Nominal, 5 Ausprägungen
 - `bioladen`: Ob der Laden ein Bioladen war. Nominal, binär
@@ -560,7 +560,7 @@ Hier eine Auflistung der Variablennamen:
 
 **Metrisch:**
 
-- `weg`: Die Länge der Anreise zum Bioladen in km, Verhältnisskala
+- `weg`: Die Länge der Anreise zum Laden in km, Verhältnisskala
 - `alter`: Alter der Person, Verhältnisskala
 - `kochen`:  Anzahl der Tage pro Woche, an denen selber gekocht wird, Absolutskala 
 
@@ -710,7 +710,7 @@ ggplot(heated, aes(x = enddate, y = maxtemp)) +
   geom_line()
 ```
 
-Zwischen den Jahren sind eher horizontale Linien, das liegt daran, dass nur die Monate Mai bis September abgebildet sind. Das Problem ist, dass es durch den Verbindungsstrich den Anschein macht, als gäbe es Daten, die es gar nicht gibt. Um das zu umgehen braucht es in den `aes`thetics die `group` Variable. Mit der Funktion `year()` aus dem Paket `lubridate()` ziehst du *nur* das Jahr aus dem Datum und erschaffst somit eine Gruppe pro Jahr.
+Zwischen den Jahren sind relativ horizontale Linien. Das liegt daran, dass nur die Monate Mai bis September im Datensatz vorhanden sind. Dieses geometrische Objekt (Liniendiagramm) verbindet alle Punkte, die ihm zur Verfügung gestellt werden miteinander. Wenn dann länger keine Daten da sind, wird der Verbindungsstrich einfach zum nächsten vorhandenen Datenpunkt gezogen. Das Problem ist, dass dieser Verbindungsstrich den Anschein erweckt, als gäbe es Daten, die eben in echt gar nicht gibt. Um damit gut umzugehen braucht es in den `aes`thetics das `group` Argument. Das sagt dem geometrischen Objekt in welchen Gruppen es die Daten behandeln soll. In diesem Fall wäre eine Gruppe für jedes Jahr sinnvoll. Mit der Funktion `year()` aus dem Paket `lubridate()` ziehst du *nur* das Jahr aus dem Datum und erschaffst somit eine Gruppe pro Jahr.
 
 ```{r linegraph2}
 ggplot(heated, aes(x = enddate, y = maxtemp, group = lubridate::year(enddate))) +
@@ -720,7 +720,7 @@ ggplot(heated, aes(x = enddate, y = maxtemp, group = lubridate::year(enddate))) 
 Sehr gut, jetzt werden keine Zusammenhänge mehr angedeutet, wo gar keine sind. Und weils noch schöner ist, wenn die lesende Person intuitiv die Zahlen deuten kann wird im letzten Schritt die Grad Farenheit Skala in eine Grad Celsius Skala umgerechnet. Dies geht mit der Funktion `convert_temperature()` aus dem Paket `weathermetrics`. Und weil sich Celsius an 0 Grad orientiert wird die y Achse noch nach unten bis auf 0 Grad erweitert und zu guter letzt die Achsenbeschriftung geändert:
 
 ```{r linegraph3}
-# Für die Achsenbeschriftung
+# Für die Abschnitte auf der x-Achse
 breaks <- heated$enddate[grepl("07-01", as.character(heated$enddate))]
 
 # hier werden die Temperaturen konvertiert
@@ -948,7 +948,7 @@ ggplot(data_einkaufen, aes(x = alter, y = weg)) +
 Die Beschriftungen sind ebenfalls eine weitere Lage und werden mittels `labs()` Funktion hinzu gefügt.
 
 ::: aufgabe
-Ändere die Beschriftungen so, dass sie Sinn ergeben
+Ändere die Beschriftungen so, dass sie informativ sind.
 :::
 
 
@@ -964,7 +964,96 @@ ggplot(data_einkaufen, aes(x = alter, y = weg)) +
   )
 ```
 
-## Barrierefreiheit
+### Legends
+
+Die Legende sind eine Sache für sich. Es wird hier nur angeschnitten, solltest du damit arbeiten wollen, wirst du eh auf den bekannten Seiten (su.) nachschauen. Obacht: Das ist ein klassischer Fall, in dem ChatGPT häufig mehr Verwirrung als Klarheit reinbringt. Im Folgenden sind die ganz grundlegenden Mechanismen erklärt. Wenn du die verstanden hast sollte die Nutzung von ChatGPT tatsächlich einigermaßen flüssig funktionieren (wenn du es dann überhaupt noch nutzen möchtest und nicht viel lieber in der deutlich besser strukturierten [R Graph Gallery](https://r-graph-gallery.com/239-custom-layout-legend-ggplot2.html), der [Hilfeseite](https://ggplot2.tidyverse.org/reference/guide_legend.html) oder dem [Cookbook](http://www.cookbook-r.com/Graphs/Legends_(ggplot2)/) nachschauen willst ;)).
+
+Es gibt sehr viele Wege, sie zu verändern und anzupassen und je nach Ausgangslage und Ergebnisvorstellung haben viele ihr Für und Wider. Eine dicke Empfehlung ist, es konsistent innerhalb von einem Plot zu machen (und spätestens hier verliert ChatGPT!).
+
+Im Grunde gibt es zwei Möglichkeiten, etwas an der Legende zu ändern:
+
+1. Im Vektor an sich (also vorher)
+2. In der Legende (also im ggplot an sich)
+
+**Zu 1**: Bietet sich an, wenn es die Daten dadurch eh übersichtlicher macht bzw. nichts an Übersichtlichkeit verloren geht. Im Beispiel der Variablen `bioladen` sehr ersichtlich: aktuell noch logical würde durchaus übersichtlicher werden, wenn Einträge "bio" und "konventionell" wären. Hier begegnen wir unserem alten Bekannten, dem `factor` wieder. Es wird eine neue Variable mit dem Namen "ladenart" erstellt. Es wäre allerdings auch denkbar, die alte zu überschreiben. 
+  - Pro: Geringere Gefahr, dass sich Fehler aufgrund von falscher Beschriftung einschleichen.
+  - Contra: Eher seltener der Fall, da das Datawrangling (s. entsprechendes Tutorial) ja eigentlich schon vorher abgeschlossen sein sollte und die Daten eigentlich in sehr hoher Qualität vorliegen sollten.
+
+```{r}
+# Factor erstellen (ei Fragen dazu: Wiederhole gerne das Tutorial Vektoren)
+data_einkaufen$ladenart <- factor(data_einkaufen$bioladen, 
+                                  levels = c(TRUE, FALSE), 
+                                  labels = c("bio", "konventionell"))
+
+ggplot(data_einkaufen, aes(x = verkehrsmittel, fill = ladenart)) +
+  geom_bar(position = position_dodge(preserve = "single")) +
+  labs(
+    title = "Verkehrsmittel und Ladenart",
+    y = "Absolute Anzahl der Nutzenden",
+    x = "Verkehrsmittel"
+  )+
+  theme_bw()
+```
+
+**Zu 2:** Ist in den allermeisten Fällen das Mittel der Wahl. Die beiden Hauptpunkte sind: Punkte und Titel der Legende verändern. Alles andere (Schriftart und -größe, Position, Ausrichtung, Hintergrund, Umrandung etc. kannst du in den oben vorgeschlagenen Seiten nachschauen). Es folgt eigentlich immer dem gleichen Prinzip: Du fügst deinem ggplot eine weitere Ebene hinzu und innerhalb dieser Ebene legst du Dinge fest. Welche Funktion du wählst hängt von deinen Variablen und ästhetischen Attributen ab: diskret oder kontinuierlich? Fill oder Colour? Daraus ergibt sich folgende Kreuztabelle
+
+|                    |   `colour`                                |   `fill`                           |
+|--------------------|-------------------------------------------|------------------------------------|
+| **diskret**        | `scale_colour_discrete(discrete = T)`     | `scale_fill_discrete(discrete = T)`|
+| **kontinuierlich** | `scale_colour_continuous()`               | `scale_fill_continuous()` \*       |
+
+\* Steht nur der Vollständigkeit halber hier, ist keinem der vorgestellten geoms sinnvoll einsetzbar. Wird vor allem für Heatmaps verwendet.
+
+  -**2a Punkte verändern:** Wenn du die passende Funktion ausgewählt hast fügst du das Argument `labels = c("label 1", "label 2")` hinzu. Wobei die Sortierung die gleiche Reihenfolge haben sollte, wie die aktuelle. **PRÜFE DAS**, sonst kann es zu schwerwiegenden inhaltlichen Fehlern kommen!
+  -**2b Titel verändern:** In die gleiche Funktion fügst du die Funktion `guide_legend()` mit dem Argument `title = "some title"` ein.
+  - **Zusammenfassung:**
+    - **Pro:** Kein rumgemurkse mit den Daten. Kann für jeden Plot individuell passend verändert werden.
+    - **Con:** Erhöhte Fehlergefahr aufgrund von flaschen Beschriftungen.
+
+```{r}
+ggplot(data_einkaufen, aes(x = verkehrsmittel, fill = bioladen)) +
+  geom_bar(position = position_dodge(preserve = "single")) +
+  scale_fill_discrete(labels = c("bio", "konven."),
+    guide_legend(title = "Ladenart")) +
+  labs(
+    title = "Verkehrsmittel und Ladenart",
+    y = "Absolute Anzahl der Nutzenden",
+    x = "Verkehrsmittel"
+  )+
+  theme_bw()
+```
+
+::: aufgabe
+Finde für die Funktionen `scale_colour_continuous()` und `scale_colour_continuos()` eine Anwendungsmöglichkeit in einen der bereits ausgeführten Plots dieses Tutorials und füge diese Ebene hinzu. Füge auch gerne ein Theme deiner Wahl sowie passende Achsenbeschriftungen hinzu.
+
+*Extraaufgabe: schreibe einen komplett eigenen Plot.
+:::
+
+```{r}
+ggplot(data_einkaufen, aes(x = alter, y = weg, colour = kochen)) +
+   geom_point() +
+   scale_colour_continuous(guide_legend(title = "Kochen/ \n Woche")) +
+  labs(
+    title = "Weg und Alter",
+    x = "Alter",
+    y = "Weg (in km)"
+    ) +
+  theme_bw()
+
+ ggplot(data_einkaufen, aes(x = verkehrsmittel, y = alter, colour = bioladen)) +
+   geom_boxplot() +
+   scale_colour_discrete(labels = c("bio", "konven."),
+    guide_legend(title = "Ladenart")) +
+   labs(
+     title = "Genutze Verkehrsmittel und Alter",
+     x = "Verkehrsmittel",
+     y = "Alter"
+   ) +
+   theme_bw()
+```
+
+
+## 9. Barrierefreiheit
 
 Es mag erstmal überraschen aber: auch in visuellen Darstellungen ist Barrierefreiheit ein relevantes Thema. Ein nicht zu vernachlässigender Anteil der Bevölkerung kann bestimmte Farben nicht unterscheiden. Deswegen wurden von schlauen Menschen Farbpaletten entworfen, die keine ambivalenten Farben wie rot und grün enthalten, und auch ganz ohne Farbwahrnehmung nur über Helligkeit und Dunkelheit der Farben in schwarz weiß funktionieren. Der letzte Punkt ist ebenfalls relevant für alle Plots, die in schwarz weiß (wie bspw. in manchen Journals) aus- oder abgedruckt werden. 
 
@@ -998,17 +1087,34 @@ Im Grunde folgt die Anwendung von Viridis immer dem gleichen Prinzip: Du sagst R
 | **diskret**        | `scale_colour_viridis(discrete = T)`   | `scale_fill_viridis(discrete = T)` |
 | **kontinuierlich** | `scale_colour_viridis()`               | `scale_fill_viridis()`             |
 
-Zusätzlich gibt es noch die Möglichkeit, sich eine Palette (s. [Hilfeseite](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html)) auszusuchen. Das geht mit dem Argument `option = ` und dann eine der Paletten in Anführungszeichen ! (`"magma"`, `"inferno"`, `"plasma"`, `"viridis"`, `"cividis"`, `"rocket"`, `"mako"` oder `"turbo"`).
-
-
+Optional gibt es noch die Möglichkeit, sich eine Palette (s. [Hilfeseite](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html)) auszusuchen. Das geht mit dem Argument `option = ` und dann eine der Paletten in Anführungszeichen (`"magma"`, `"inferno"`, `"plasma"`, `"viridis"`, `"cividis"`, `"rocket"`, `"mako"` oder `"turbo"`).
 
 
 ::: aufgabe
+Finde für jede der vier Kombinationen (colour und fill zu diskret und kontinuierlich) eine Anwendungsmöglichkeit in einen der bereits ausgeführten Plots dieses Tutorials und füge diese Ebene hinzu. Nutze dafür jeweils eine andere Palette. Füge auch gerne ein Theme deiner Wahl sowie Achsenbeschriftung hinzu.
+
+*Extraaufgabe: schreibe einen komplett eigenen Plot.
 :::
 
-```{r exvi, exercise = TRUE}
+```{r}
+ggplot(data_einkaufen, aes(x = verkehrsmittel, fill = bioladen)) +
+  geom_bar(position = position_dodge(preserve = "single")) +
+  scale_fill_viridis(discrete = T, option = "plasma", 
+                     # Titel und Beschriftung der Legende ändern
+                     guide = guide_legend(title = "Ladenart"), 
+                     labels = c("konventionell", "biologisch")
+                     ) +
+  labs(
+    title = "Verkehrsmittel und Ladenart",
+    y = "Absolute Anzahl der Nutzenden",
+    x = "Verkehrsmittel"
+  )+
+  theme_bw()
 ```
 
+```{r}
+
+```
 
 
 
