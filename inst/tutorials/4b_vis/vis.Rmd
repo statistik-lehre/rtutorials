@@ -599,7 +599,13 @@ ggplot(einkaufen, aes(x = alter, y = weg)) +
   geom_point()
 ```
 
-### Exkurs: Ausreißer-Werte
+Schau dir das Diagramm mal an. Einige Extremwerte der Variable 
+`weg` definieren die Skala der y-Achse auf 0 - 600 km, wodurch die "normalen" Werte am unteren Rand zu einer
+undifferenzierbaren Masse zusammenschrumpfen. Im nächsten Kapitel erfährst du
+Möglichkeiten, mit extremen Werten umzugehen, und wie das
+Punktdiagramm ohne sie aussehen würde.
+
+## Extreme Werte
 
 In diesem Unterkapitel hast du die Mögichkeit, einen Blick in die Praxis zu werfen: Der Umgang mit Ausreißerwerten. Es ist komplett freiwillig. Wenn du lieber mit dem rein grafischen weitermachen willst, springe zu Kapitel 5: Liniendiagramme.
 
@@ -607,19 +613,17 @@ Das ist ein klassischer Fall von Datenaufbereitung. Es wird **vor** den Analysen
 
 Und genau deswegen ist es so cool, dass wir diesen echten Datensatz zur Verfügung haben: Du wirst mit Problemen konfrontiert, die dir auch in Praxis begegnen werden, aber eben nicht in simulierten Datensätzen.
 
-Wie du in der Grafik siehst gibt es einzelne Werte, die doll von allen anderen abweichen. Das verzerrt nicht nur die Grafik sondern auch die Analyse. Das sind sog. Ausreißer. Es gibt, wie eigentlich immer in der Statistik, nicht den einen Weg, damit umzugehen. Was allerdings immer gilt, wenn Ausreiper auftreten: **Check your data!**. Ausreißer können unterschiedlichste Gründe haben. Und je nachdem woher sie kommen, können sie behandelt werden.
+Wie du in der Grafik siehst gibt es einzelne Werte, die doll von allen anderen abweichen. Das verzerrt nicht nur die Grafik sondern auch die Analyse. Das sind sog. Ausreißer. Es gibt, wie eigentlich immer in der Statistik, nicht den einen Weg, damit umzugehen. Was allerdings immer gilt, wenn Ausreißer auftreten: **Check your data!** Extreme Werte können unterschiedlichste Gründe haben. Und je nachdem woher sie kommen, können sie behandelt werden.
 
 
 Das Anschauen der Daten geht sowohl numerisch als auch optisch.
 
 ::: aufgabe
-Nutze eine der dir bekannten Möglichkeiten, dir die Variable `weg` numerisch und optisch anzuschauen.
+Nutze eine der dir bekannten Möglichkeiten, dir die Spalte `weg` aus dem `einkaufen`-Datensatz numerisch und optisch anzuschauen.
 :::
 
 ```{r ausreisser-solution}
 summary(einkaufen$weg)
-
-table(einkaufen$weg)
 
 ggplot(einkaufen, aes(x = weg)) +
   geom_histogram()
@@ -629,27 +633,35 @@ ggplot(einkaufen, aes(x = weg)) +
 
 ```
 
-Der Median liegt bei 3km bedeutet: 50% der Personen haben max. einen Anfahrtsweg von 3km. Das 3. Quantil ist bei 7km: 75% der Personen haben max. einen Anfahrtsweg von 7km. Und der Mean liegt bei 12.76km. Das deutet sehr starkt auf Ausreißerwerte hin. Das Maximum liegt bei 600, was die Vermutung noch bestärkt. Auch optisch wird deutlich, dass der Großteil der Ausprägungen unter 100km liegt.
+Der Median liegt bei 3 km, das bedeutet: 50% der Personen haben einen Anfahrtsweg von höchstens 3 km. Das 3. Quantil ist bei 7 km: 75% der Personen haben einen Anfahrtsweg von höchstens 7km. Und das arithmetische Mittel liegt bei 12.76 km. Das deutet sehr stark auf Ausreißerwerte hin. Das Maximum liegt bei 600, was die Vermutung noch bestärkt. Auch optisch im Histogramm wird deutlich, dass fast alle Ausprägungen unter 100 km liegen.
 
 #### Ursachenanalyse
 
-Das die Ausreißer da sind kann, auch in diesem Fall, verschiedene Gründe haben:
+Dass die Ausreißer da sind kann, auch in diesem Fall, verschiedene Gründe haben:
 
-1. Weiter oben im Tutorial wurde bereits erwähnt: Ein Laden liegt an einem ICE Bahnhof. Wenn das stimmt, dann müssten die Ausreißerwerte alle in einem Laden erhoben worden sein (`ort`)
+1. Weiter oben im Tutorial wurde bereits erwähnt: Ein Laden, nämlich der Biomarkt Greger, liegt in der Nähe eines ICE-Bahnhofs. Die Ausreißer könnten also von Fernreisenden kommen. Wenn das stimmt, dann müssten die Ausreißerwerte in diesem Laden erhoben worden sein (`ort`).
 
 Das lässt sich prüfen. (In diesem Unterkapitel wird nur nach Optik geprüft. In der freien Wildbahn wären statistische Analysen notwendig!)
 
 ```{r ausreisser2, exercise = TRUE,  exercise.cap = "Ursachenanalyse"}
-ggplot(einkaufen, aes(x = ort, y = weg)) +
+ggplot(einkaufen, aes(x = weg, y = ort)) +
   geom_boxplot()
 ```
 
-Die Vermutung stimmt teilweise. Ganz schwierig ist, dass der Ladentyp `NA` ist. Das heißt, es ist nicht klar, um welchen und wie viele Läden es sich handelt. Es wurde miterhoben, wer welche Beobachtung aufgeschrieben hat (`befragung`), vielleicht gibt das Aufschluss. Sowohl numerisch, als auch optisch. `geom_count()` ist eine Möglichkeit, Kreuztabellen optisch darzustellen.
+Die Vermutung wird durch die Daten nicht wirklich gestützt. Bei Greger in der
+Willi-Allee zeigt der Boxplot gerade mal einen Wert außerhalb von 
+$Q3 + 1.5\cdot IQR$ (gekennzeichnet als Punkt). Manche Studierende haben
+leider nicht dokumentiert, an welchem Laden sie Daten gesammelt haben, deswegen
+gibt es `NA`s bei der Variable `ort`. `NA` heißt, es ist nicht klar, um welchen und wie viele Läden es sich handelt. 
+
+Es wurde miterhoben, wer welche Beobachtung aufgeschrieben hat (`befragung`), vielleicht gibt das Aufschluss. Sowohl numerisch, als auch optisch. `geom_count()` ist eine Möglichkeit, Kreuztabellen optisch darzustellen.
 
 ```{r ausreisser3, exercise = TRUE,  exercise.cap = "Verteilung checken"}
+# numerisch
 table(einkaufen$ort, einkaufen$befragung, useNA = "always")
 
-ggplot(einkaufen, aes(x = ort, y = befragung)) +
+# grafische Darstellung
+ggplot(einkaufen, aes(x = befragung, y = x)) +
   geom_count()
 ```
 
@@ -694,23 +706,6 @@ ggplot(data_einkaufen, aes(x = alter, y = weg)) +
 
 Das sieht doch deutlich stimmiger aus.
 
-### Regressionsmodelle darstellen
-
-Ein Unterpunkt von Punktediagrammen sind Regressionsmodelle grafisch darstellen. In einem entsprechenden Plot kommt klassischerweise noch eine Linie hinzu, welche die Zusammenhänge grafisch darstellt. Also so:
-
-```{r sp_regressionsmodelle, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "REgressionsmodelle"}
-ggplot(data_einkaufen, aes(x = alter, y = weg)) +
-  geom_point() +
-  geom_smooth(formula = y ~ x, method = "lm", se = F)
-```
-
-Die Funktion `geom_smooth(formula = y ~ x, method = "lm", se = F)` 
-
-- rechnet ein Lineares Model (`lm`)
-- Mehr zur Modellierung (`y ~ x`) im Tutorial "Regression"
-- `se = F` sorgt dafür, dass die Standardfehler nicht mit angezeigt werden.
-
-
 ## 5. Liniendiagramm
 
 ::: infobox
@@ -721,39 +716,49 @@ Funktion: `geom_line()`
 :::
 <br>
 
-Hierfür wird ein anderer Datensatz benötigt, da eine Zeitvariable gebraucht wird. In `heated` ist die maximale Tagestemperatur (`maxtemp`) in Farenheit sowie das Tagesdatum (`enddate`) gespeichert.
+Hierfür wird ein anderer Datensatz benötigt, da eine wiederholte Messung brauchen.
+`einkaufen` enthält 160 unabhängige Messungen. Ein Liniendiagramm ist
+geeignet, aufeinander aufbauende / sequentielle Messungen des selben Gegenstands darzustellen, wie zum
+Beispiel einen Temperaturverlauf, wo jeden Tag über den ganzen Sommer hinweg die selbe Messung wiederholt wurde. \
+Im Datensatz `rtutorials::heated` ist die maximale Tagestemperatur (`maxtemp`) in Grad Fahrenheit sowie das Tagesdatum (`enddate`) gespeichert.
 
-```{r linegraph, exercise = TRUE, "Liniendiagramm"}
+```{r linegraph, exercise = TRUE, exercise.cap = "Liniendiagramm"}
 ggplot(heated, aes(x = enddate, y = maxtemp)) +
   geom_line()
 ```
 
-Zwischen den Jahren sind relativ horizontale Linien. Das liegt daran, dass nur die Monate Mai bis September im Datensatz vorhanden sind. Dieses geometrische Objekt (Liniendiagramm) verbindet alle Punkte, die ihm zur Verfügung gestellt werden miteinander. Wenn dann länger keine Daten da sind, wird der Verbindungsstrich einfach zum nächsten vorhandenen Datenpunkt gezogen. Das Problem ist, dass dieser Verbindungsstrich den Anschein erweckt, als gäbe es Daten, die eben in echt gar nicht gibt. Um damit gut umzugehen braucht es in den `aes`thetics das `group` Argument. Das sagt dem geometrischen Objekt in welchen Gruppen es die Daten behandeln soll. In diesem Fall wäre eine Gruppe für jedes Jahr sinnvoll. Mit der Funktion `year()` aus dem Paket `lubridate()` ziehst du *nur* das Jahr aus dem Datum und erschaffst somit eine Gruppe pro Jahr.
+Zwischen den Jahren sind komische, gerade Linien. Das liegt daran, dass nur die Monate Mai bis September im Datensatz vorhanden sind. Dieses geometrische Objekt `geom_line()` (Liniendiagramm) verbindet alle Punkte, die ihm zur Verfügung gestellt werden miteinander. Wenn dann länger keine Daten da sind, wird der Verbindungsstrich einfach zum nächsten vorhandenen Datenpunkt gezogen. Das Problem ist, dass dieser Verbindungsstrich den Anschein erweckt, als gäbe es Daten, die eben in echt gar nicht gibt. Um damit gut umzugehen braucht es in den `aes`thetics das `group` Argument. Das sagt dem geometrischen Objekt in welchen Gruppen es die Daten behandeln soll. In diesem Fall wäre eine Gruppe für jedes Jahr sinnvoll. \
+Der Umgang mit Datumsformaten in R würde hier komplett den Rahmen sprengen, 
+aber die Lösung ist: \
+Mit der Funktion `year()` aus dem Paket `lubridate()` ziehst du *nur* das Jahr aus dem Datum und erschaffst somit eine Gruppe pro Jahr.
 
 ```{r linegraph2, exercise = TRUE,  exercise.cap = "Daten Gruppieren!"}
-ggplot(heated, aes(x = enddate, y = maxtemp, group = lubridate::year(enddate))) +
+ggplot(heated, aes(x = enddate, 
+                   y = maxtemp, 
+                   group = lubridate::year(enddate))) +
   geom_line()
 ```
 
-Sehr gut, jetzt werden keine Zusammenhänge mehr angedeutet, wo gar keine sind. Und weils noch schöner ist, wenn die lesende Person intuitiv die Zahlen deuten kann wird im letzten Schritt die Grad Farenheit Skala in eine Grad Celsius Skala umgerechnet. Dies geht mit der Funktion `convert_temperature()` aus dem Paket `weathermetrics`. Und weil sich Celsius an 0 Grad orientiert wird die y Achse noch nach unten bis auf 0 Grad erweitert und zu guter letzt die Achsenbeschriftung geändert:
+Sehr gut, jetzt werden keine Zusammenhänge mehr angedeutet, wo gar keine sind. Und weils noch schöner ist, wenn die lesende Person intuitiv die Zahlen deuten kann wird im letzten Schritt die Grad Fahrenheit Skala in eine Grad Celsius Skala umgerechnet. Dies geht mit der Funktion `convert_temperature()` aus dem Paket `weathermetrics`.
 
 ```{r linegraph3, exercise = TRUE,  exercise.cap = "Sauberes Liniendiagramm"}
-# Für die Abschnitte auf der x-Achse
-breaks <- heated$enddate[grepl("07-01", as.character(heated$enddate))]
 
-# hier werden die Temperaturen konvertiert
-ggplot(heated, aes(x = enddate, y = weathermetrics::convert_temperature(maxtemp, "f", "c"), 
+# hier werden die Temperaturen konvertiert und in einer neuen Spalte gespeichert
+heated$maxtemp_celsius <- weathermetrics::convert_temperature(heated$maxtemp,
+                                                              old_metric = "f", 
+                                                              new_metric = "c")
+
+ggplot(heated, aes(x = enddate, 
+                   y = maxtemp_celsius, 
                    group = lubridate::year(enddate))) +
-  geom_line() +
-  # Verlängerung der y Achse
-  expand_limits(y = 0) +
-  # Die Breaks/ Achsenbeschriftung ändern
-  scale_x_date(breaks = breaks, date_labels = "%b %Y")
+  geom_line()
 ```
+
+Für schöne Achsenbeschriftungen siehe das Kapitel „Themes und Labs“.
 
 ## 6. Aesthetic Mapping
 
-Jetzt kennst du die 5 häufigsten Diagrammformen. Jetzt kommt farbe ins Spiel. Wie im ersten Kapitel bereits besprochen ist: Die ästhetischen Attribute eines Plots werden festgelegt. Bisher haben wir lediglich die Zuweisung zur x und ggf. y Achse genutzt, da geht allerdings noch viel mehr. Als Erinnerung:
+Jetzt kennst du die 5 häufigsten Diagrammformen. Jetzt kommt Farbe ins Spiel. Wie im ersten Kapitel bereits besprochen ist: Die ästhetischen Attribute eines Plots werden festgelegt. Bisher haben wir lediglich die Zuweisung zur x und ggf. y Achse genutzt, da geht allerdings noch viel mehr. Als Erinnerung:
 
 ::: infobox
 `aes()` steht für *aesthetic attributes*, und weist den einzelnen Variablen, wie z.B. dem Verkehrsmittel, eine *grafische Eigenschaft* zu. Grafische Eigenschaften sind: 
@@ -1078,7 +1083,7 @@ ggplot(data_einkaufen, aes(x = alter, y = weg, colour = kochen)) +
    theme_bw()
 ```
 
-```{r exercise = TRUE, exercise.setup = "d_legends", exercise.cap = "Legenden"}
+```{r d_legends_3, exercise = TRUE, exercise.setup = "d_legends", exercise.cap = "Legenden"}
 
 ```
 
@@ -1091,7 +1096,7 @@ Eine der verbreitetesten ist das Paket `viridis`. Es hat auch seine eigene [Hilf
 
 Die verfügbaren Farbpaletten sind:
 
-[](images/viridis.png){width="50%"}
+[](images/viridis.png){width=50%}
 
 [source](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html)
 
@@ -1172,7 +1177,7 @@ ggplot(data_einkaufen, aes(x = alter, y = weg, colour = kochen)) +
 
 ## 10. Becoming a Pro
 
-![](images/pro.webp)
+![](images/pro.webp){width=50%}
 
 [source](https://www.reddit.com/media?url=https%3A%2F%2Fpreview.redd.it%2Fgggd8zabn6s11.jpg%3Fauto%3Dwebp%26s%3Dd2d26cf405057710034a718c567cdad6d81de099)
 
