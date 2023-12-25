@@ -24,6 +24,8 @@ library(ggplot2)
 library(kableExtra)
 library(tibble)
 library(rtutorials)
+library(dplyr)
+library(viridis)
 knitr::opts_chunk$set(echo = FALSE)
 colnames(einkaufen) <- tolower(colnames(einkaufen))
 ```
@@ -72,10 +74,9 @@ Wie gesagt, wir fangen Schritt für Schritt an und daher sind das hier die Ziele
 ### Die fünf essentiellen Diagrammtypen
 
 ```{r echo=FALSE}
-de <- c("Punktdiagramm","Liniendiagramm","Histogramm","Boxplot","Balkendiagramm")
-en <- c("scatterplot","linegraph", "histogram", "boxplot", "barplot")
-vars <- c("2 stetige Variablen", "1 stetige und 1 zeitlich geordnete Variable",
-          "1 stetige Variable", "1 stetige Variable mit Gruppen", "1 kategoriale Variable")
+de <- c("Balkendiagramm", "Histogramm","Boxplot", "Punktdiagramm","Liniendiagramm")
+en <- c("barplot", "histogram", "boxplot", "scatterplot","linegraph")
+vars <- c("1 kategoriale Variable", "1 stetige Variable", "1 kategoriale & 1 stetige Variable", "2 stetige Variablen", "1 stetige und 1 zeitlich geordnete Variable")
 tibble(` `= c("1.", "2.", "3.", "4.", "5."), de, en, `geeignet für` = vars) |>
   kbl() |>
   kable_styling()
@@ -84,34 +85,34 @@ tibble(` `= c("1.", "2.", "3.", "4.", "5."), de, en, `geeignet für` = vars) |>
 ```{r fiveplots, fig.height=8, out.width="100%"}
 par(mfrow = c(3, 2),
     bty = "n")
+barplot({einkaufen$verkehrsmittel |> table()}[1:5],
+        main = "1.",
+        axes = F,
+        ylab = NA,
+        xlab = NA,
+        names.arg = NA)
+hist(heated$maxtemp,
+     main = "2.",
+     axes = F,
+     ylab = NA,
+     xlab = NA)
+boxplot(heated$maxtemp ~ factor(lubridate::month(heated$enddate)),
+        main = "3.",
+        axes = F,
+        ylab = NA,
+        xlab = NA)
 plot(heated[ ,c("maxtemp", "edvisits")],
-     main = "1.",
+     main = "4.",
      axes = F,
      ylab = NA,
      xlab = NA)
 plot(heated$enddate[heated$enddate > as.Date("2022-03-24")], 
      heated$maxtemp[heated$enddate > as.Date("2022-03-24")],
      type = "l",
-     main = "2.",
+     main = "5.",
      axes = F,
      ylab = NA,
      xlab = NA)
-hist(heated$maxtemp,
-     main = "3.",
-     axes = F,
-     ylab = NA,
-     xlab = NA)
-boxplot(heated$maxtemp ~ factor(lubridate::month(heated$enddate)),
-        main = "4.",
-        axes = F,
-        ylab = NA,
-        xlab = NA)
-barplot({einkaufen$verkehrsmittel |> table()}[1:5],
-        main = "5.",
-        axes = F,
-        ylab = NA,
-        xlab = NA,
-        names.arg = NA)
 # reset par
 par(mfrow = c(1, 1),
     bty = "o")
@@ -175,12 +176,12 @@ Grob kann unterschieden werden zwischen:
 
 Die am häufigsten verwendeten und in diesem Tutorial vorgestellten Plots sind:
 
-|                    | kategorial               | kontinuierlich                   |
-|--------------------|--------------------------|----------------------------------|
-| **keine**          | Barplot <br>`geom_bar()` | Histogram <br>`geom_histogram()` |
-| **kategorial**     | (`geom_count()`)         | Boxplot<br>`geom_boxplot()`      |
-| **kontinuierlich** | -                        | Punktdiagramm<br>`geom_point()`  |
-| **sequentiell**    | -                        | Liniendiagramm<br>`geom_line()`  |
+|                    | kategorial                | kontinuierlich                   |
+|--------------------|:--------------------------|:---------------------------------|
+| **keine**          | Barplot <br>`geom_bar()`  | Histogram <br>`geom_histogram()` |
+| **kategorial**     | (`geom_count()`)          | Boxplot<br>`geom_boxplot()`      |
+| **kontinuierlich** | -                         | Punktdiagramm<br>`geom_point()`  |
+| **sequentiell**    | -                         | Liniendiagramm<br>`geom_line()`  |
 
 
 
@@ -277,7 +278,7 @@ Und jetzt kommt das Ding: Es gibt auch noch andere `geom_...()` Funktionen. Zum 
 Probiere das doch einfach mal aus und tausche `geom_bar()` durch `geom_point()`. 
 :::
 
-```{r error-solution, exercise = TRUE}
+```{r error-solution}
 ggplot(einkaufen, aes(x = verkehrsmittel)) +
   geom_point()
 ```
@@ -427,7 +428,7 @@ ggplot(einkaufen, aes(x = alter)) +
 ## 3. Boxplot
 
 ::: infobox
-Ein Boxplot ist eine effektive Methode, um die Verteilung **einer stetigen** und **einer kategorialen** Variable zu visualisieren und Ausreißer zu identifizieren.
+Ein Boxplot ist eine effektive und robuste Methode, um die Verteilung **einer stetigen** und **einer kategorialen** Variable zu visualisieren und Ausreißer zu identifizieren.
 
 Funktion: `geom_boxplot()`
 :::
@@ -450,14 +451,14 @@ Im Plot unten wird die stetige Variable `alter` nach der kategorialen Variable
 `verkehrsmittel` aufgeschlüsselt. Für jedes Verkehrsmittel
 ergibt sich nun eine eigene Altersverteilung. Da zeigen sich dann die ersten spannenden  Zusammenhänge!
 
-```{r sidebysideboxplot, echo=TRUE, message=FALSE, warning=FALSE}
+```{r sidebysideboxplot, exercise = TRUE, message=FALSE, warning=FALSE}
 ggplot(einkaufen, aes(x = verkehrsmittel, y = alter)) +
   geom_boxplot()
 ```
 
 Es wird auch deutlich, dass die Kategorien "E-Roller" und "Motorrad" so klein sind, dass sie sich nicht als eigene Analyse-Kategorie eignen, deswegen werden sie mit "Andere" zusammengefasst. Hierfür wird ein neuer Datensatz mit dem Namen `data_einkaufen` erstellt. Die NAs dürfen allerdings nicht einfach umgecodet werden, weil wir es in diesem Fall einfach wirklich nicht wissen.
 
-```{r}
+```{r bp_neuerdf, exercise = TRUE}
 # Erstelle ein neues Objekt und speichere den bisherigen Datensatz darin
 data_einkaufen <- einkaufen
 
@@ -524,7 +525,7 @@ unterschiedlich ist. Manchmal wird halt ein ganzer Boxplot gezeichnet, während 
 
 Mit einem kleinen Befehl (`geom_jitter()`), lassen sich über unsere Boxplots noch die Informationen der Datenpunkte legen. Mehr dazu in einem späteren Kapitel. 
 
-```{r showyourdata, echo=TRUE}
+```{r showyourdata, exercise = TRUE, echo=TRUE}
 ggplot(einkaufen, aes(x = verkehrsmittel, y = alter)) +
   geom_boxplot() +
   geom_jitter(alpha = 0.2, 
@@ -624,7 +625,7 @@ ggplot(einkaufen, aes(x = weg)) +
   geom_histogram()
 ```
 
-```{r ausreisser, exercise=TRUE, exercise.cap="Daten checken"}
+```{r ausreisser, exercise = TRUE, exercise.cap = "Daten checken"}
 
 ```
 
@@ -638,14 +639,14 @@ Das die Ausreißer da sind kann, auch in diesem Fall, verschiedene Gründe haben
 
 Das lässt sich prüfen. (In diesem Unterkapitel wird nur nach Optik geprüft. In der freien Wildbahn wären statistische Analysen notwendig!)
 
-```{r ausreisser2}
+```{r ausreisser2, exercise = TRUE,  exercise.cap = "Ursachenanalyse"}
 ggplot(einkaufen, aes(x = ort, y = weg)) +
   geom_boxplot()
 ```
 
 Die Vermutung stimmt teilweise. Ganz schwierig ist, dass der Ladentyp `NA` ist. Das heißt, es ist nicht klar, um welchen und wie viele Läden es sich handelt. Es wurde miterhoben, wer welche Beobachtung aufgeschrieben hat (`befragung`), vielleicht gibt das Aufschluss. Sowohl numerisch, als auch optisch. `geom_count()` ist eine Möglichkeit, Kreuztabellen optisch darzustellen.
 
-```{r ausreisser3}
+```{r ausreisser3, exercise = TRUE,  exercise.cap = "Verteilung checken"}
 table(einkaufen$ort, einkaufen$befragung, useNA = "always")
 
 ggplot(einkaufen, aes(x = ort, y = befragung)) +
@@ -660,7 +661,7 @@ Sidefact: Die erhebenden Personen sind btw. klassische Metadaten - also Daten ü
 
 Jetzt ist ein wenig mehr Orientierung bzgl der Ausreißer da. Die Entscheidung, wie damit umgegangen wird ist nach wie vor offen. Spätestens jetzt ist es sehr wichtig, sich nochmal die Eingangsfrage der eigenen Forschung zu stellen: Was wollte ich eigentlich untersuchen? In diesem Fall ging es um die Frage, ob es einen Zusammenhang zwischen Einkaufsweg und Alter gibt. Wenn da Fernreisende mit drin sind, bieten diese logischerweise keine interessante Info für die Frage. Eine Möglichkeit wäre, den Laden am Bahnhof kategorisch auszuschließen. Allerdings ist unklar, ob in den NA Werten nur dieser Laden hinter steckt, deswegen müssten wir alle NAs rausschmeißen, was zum Verlust von 42 Beobachtungen führen würde. Das ist absurd viel. Außerdem kann davon ausgegangen werden, das Menschen auch ihre Alltagseinkäufe dort machen, die wären dadurch kategorisch auch ausgeschlossen. Die nächste Möglichkeit wäre, eine feste Grenze zu setzen. Klassischerweise könnte diese aus der bestehenden Literatur bezogen werden. Also wenn es zB ein Paper geben würde, dass sagen würde: klassische Einkäufe finden in einem Umkreis von 10km statt, könnten alle Werte über 10km ausgeschlossen werden. Das wären schon deutlich weniger. Eine andere Möglichkeit ist die statistische: entweder die Werte außerhalb des Intervalls $[Q_1 - 1.5 \cdot IQR; Q_3 + 1.5 \cdot IQR]$ oder die Werte außerhalb des Intervalls $[\mu \pm 3 \cdot \sigma]$. Wenn die Daten normalverteilt sind (wie angenommen wird für die allermeisten statistischen Analysen, wenn nicht, haben wir noch ganz andere Probleme!), liegen in diesem Bereich 99.8% aller Werte. Es gibt keine Funktion in R, die automatisiert entsprechende Werte rausschmeißt. Das liegt daran, dass die Entscheidung so Situationsabhängig ist und es einfach wichtig ist, sich jedes Mal wieder Gedanken zu machen, wie du damit umgehen möchtest. Hier sind beide Möglichkeiten:
 
-```{r ausreisser4}
+```{r ausreisser4, exercise = TRUE,  exercise.cap = "Verschiedene Definitionen"}
 quantile(einkaufen$weg, .75, na.rm = T) + (1.5 * IQR(einkaufen$weg, na.rm = T))
 
 mean(einkaufen$weg, na.rm = T) + (3 * sd(einkaufen$weg, na.rm = T))
@@ -668,7 +669,7 @@ mean(einkaufen$weg, na.rm = T) + (3 * sd(einkaufen$weg, na.rm = T))
 
 Es wird sehr deutlich, dass die Quantilversion die robustere ist. 15 km Anfahrtsweg für Alltagseinkäufe scheinen deutlich logischer als 172. In diesem Fall wäre also eine Möglichkeit, alle Werte überhalb von 15km auszuschließen. Das geht dann so:
 
-```{r ausreisser5}
+```{r ausreisser5, exercise = TRUE, exercise.setup = "bp_neuerdf",  exercise.cap = "Ausreißer raus"}
 # Maximalwert festlegen
 maximalwert <- quantile(einkaufen$weg, .75, na.rm = T) + (1.5 * IQR(einkaufen$weg, na.rm = T))
 
@@ -686,12 +687,29 @@ data_einkaufen <- data_einkaufen[!is.na(data_einkaufen$weg), ]
 
 Und jetzt nochmal der Plot ganz vom Anfang:
 
-```{r scatterplot2}
+```{r sp_dokumentation, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "Scatterplot ohne Ausreißer"}
 ggplot(data_einkaufen, aes(x = alter, y = weg)) +
   geom_point()
 ```
 
 Das sieht doch deutlich stimmiger aus.
+
+### Regressionsmodelle darstellen
+
+Ein Unterpunkt von Punktediagrammen sind Regressionsmodelle grafisch darstellen. In einem entsprechenden Plot kommt klassischerweise noch eine Linie hinzu, welche die Zusammenhänge grafisch darstellt. Also so:
+
+```{r sp_regressionsmodelle, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "REgressionsmodelle"}
+ggplot(data_einkaufen, aes(x = alter, y = weg)) +
+  geom_point() +
+  geom_smooth(formula = y ~ x, method = "lm", se = F)
+```
+
+Die Funktion `geom_smooth(formula = y ~ x, method = "lm", se = F)` 
+
+- rechnet ein Lineares Model (`lm`)
+- Mehr zur Modellierung (`y ~ x`) im Tutorial "Regression"
+- `se = F` sorgt dafür, dass die Standardfehler nicht mit angezeigt werden.
+
 
 ## 5. Liniendiagramm
 
@@ -705,26 +723,27 @@ Funktion: `geom_line()`
 
 Hierfür wird ein anderer Datensatz benötigt, da eine Zeitvariable gebraucht wird. In `heated` ist die maximale Tagestemperatur (`maxtemp`) in Farenheit sowie das Tagesdatum (`enddate`) gespeichert.
 
-```{r linegraph}
+```{r linegraph, exercise = TRUE, "Liniendiagramm"}
 ggplot(heated, aes(x = enddate, y = maxtemp)) +
   geom_line()
 ```
 
 Zwischen den Jahren sind relativ horizontale Linien. Das liegt daran, dass nur die Monate Mai bis September im Datensatz vorhanden sind. Dieses geometrische Objekt (Liniendiagramm) verbindet alle Punkte, die ihm zur Verfügung gestellt werden miteinander. Wenn dann länger keine Daten da sind, wird der Verbindungsstrich einfach zum nächsten vorhandenen Datenpunkt gezogen. Das Problem ist, dass dieser Verbindungsstrich den Anschein erweckt, als gäbe es Daten, die eben in echt gar nicht gibt. Um damit gut umzugehen braucht es in den `aes`thetics das `group` Argument. Das sagt dem geometrischen Objekt in welchen Gruppen es die Daten behandeln soll. In diesem Fall wäre eine Gruppe für jedes Jahr sinnvoll. Mit der Funktion `year()` aus dem Paket `lubridate()` ziehst du *nur* das Jahr aus dem Datum und erschaffst somit eine Gruppe pro Jahr.
 
-```{r linegraph2}
+```{r linegraph2, exercise = TRUE,  exercise.cap = "Daten Gruppieren!"}
 ggplot(heated, aes(x = enddate, y = maxtemp, group = lubridate::year(enddate))) +
   geom_line()
 ```
 
 Sehr gut, jetzt werden keine Zusammenhänge mehr angedeutet, wo gar keine sind. Und weils noch schöner ist, wenn die lesende Person intuitiv die Zahlen deuten kann wird im letzten Schritt die Grad Farenheit Skala in eine Grad Celsius Skala umgerechnet. Dies geht mit der Funktion `convert_temperature()` aus dem Paket `weathermetrics`. Und weil sich Celsius an 0 Grad orientiert wird die y Achse noch nach unten bis auf 0 Grad erweitert und zu guter letzt die Achsenbeschriftung geändert:
 
-```{r linegraph3}
+```{r linegraph3, exercise = TRUE,  exercise.cap = "Sauberes Liniendiagramm"}
 # Für die Abschnitte auf der x-Achse
 breaks <- heated$enddate[grepl("07-01", as.character(heated$enddate))]
 
 # hier werden die Temperaturen konvertiert
-ggplot(heated, aes(x = enddate, y = weathermetrics::convert_temperature(maxtemp, "f", "c"), group = lubridate::year(enddate))) +
+ggplot(heated, aes(x = enddate, y = weathermetrics::convert_temperature(maxtemp, "f", "c"), 
+                   group = lubridate::year(enddate))) +
   geom_line() +
   # Verlängerung der y Achse
   expand_limits(y = 0) +
@@ -755,7 +774,7 @@ Also: jeder Variable wird ein ästethisches Attribut zugeordnet. Bedeutet umgeke
 
 Was allerdings in vielen Fällen sinnvoll ist, ist eine weitere Variable über das Attribut Füllung (`fill`) zu plotten. Das gilt sowohl für *kategoriale* als auch *metrische* Daten.
 
-```{r colour}
+```{r aestheticmapping, exercise = TRUE,  exercise.cap = "fill"}
 ggplot(einkaufen, aes(x = verkehrsmittel, fill = bioladen)) +
   geom_bar()
 ```
@@ -763,14 +782,14 @@ ggplot(einkaufen, aes(x = verkehrsmittel, fill = bioladen)) +
 Dazu kommt nun, dass unterschieden werden kann zwischen Bio- und Nicht-Bioläden. Aber **Achtung**: Es ist kein ausgewogenes Design, es wurde in deutlich mehr Bio- als Nicht-Bioläden erhoben. Das kann in der statistischen Analyse später noch besondere Beachtung benötigen.
 Doch zu dem Plot: Scheint erstmal recht einleuchtend. Was jedoch noch besser wäre, um es vergleichbarer zu machen, wäre wenn die farbigen Balken *nebeneinander* und nicht aufeinander stünden. Das lässt sich mit dem Argument `position = "dodge"` erreichen:
 
-```{r colour}
+```{r am_fuellung, exercise = TRUE,  exercise.cap = "position dodge"}
 ggplot(einkaufen, aes(x = verkehrsmittel, fill = bioladen)) +
   geom_bar(position = "dodge")
 ```
 
 Jetzt ist nur noch bisschen hässlich, dass die Balken unterschiedlich breit sind, je nachdem, ob eine oder beide Faktorstufen vorkommen. Das lässt sich mit dem Argument `position = position_dodge(preserve = "single")` umgestalten:
 
-```{r colour}
+```{r am_f_fill, exercise = TRUE,  exercise.cap = "postion dodge in single"}
 ggplot(einkaufen, aes(x = verkehrsmittel, fill = bioladen)) +
   geom_bar(position = position_dodge(preserve = "single"))
 ```
@@ -779,14 +798,14 @@ ggplot(einkaufen, aes(x = verkehrsmittel, fill = bioladen)) +
 
 Farbe (`colour`) ist ein bisschen tricky: Bei Balkendiagrammen, Histogrammen und Boxplots wird damit die Umrandung der Balken beeinflusst. Hier braucht es noch das Attribut `Füllung`.
 
-```{r colour}
+```{r am_f_colour, exercise = TRUE,  exercise.cap = "colour"}
 ggplot(einkaufen, aes(x = verkehrsmittel, colour = bioladen)) +
   geom_bar()
 ```
 
 Bei Punktdiagrammen und Liniendiagrammen wird die Punkt- bzw. Linienfarbe durch `colour` bestimmt. Wird das Attribut Füllung vergeben passiert einfach nichts.
 
-```{r scatterplot2, exercise.setup = "ausreisser5"}
+```{r am_f_colour_2, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "colour im Scatterplot"}
 ggplot(data_einkaufen, aes(x = alter, y = weg, colour = bioladen)) +
   geom_point()
 ```
@@ -797,7 +816,7 @@ Eine Ausnahme gibt es: Die Formen 21, 22, 23, 24, 25 in einem Punktediagramm hab
 
 Das fill bzw colour Attribut kann genauso gut auf kontinuierliche Variablen angewendet werden:
 
-```{r scatterplot2, exercise.setup = "ausreisser5"}
+```{r am_f_c_kontinuierlich, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "continuous colour"}
 ggplot(data_einkaufen, aes(x = alter, y = weg, colour = kochen)) +
   geom_point()
 ```
@@ -806,14 +825,14 @@ ggplot(data_einkaufen, aes(x = alter, y = weg, colour = kochen)) +
 
 Die Form eignet sich, um in Punktediagrammen eine weitere kategoriale Variable einzubauen.
 
-```{r exercise.setup = "ausreisser5"}
+```{r am_shape, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "shape"}
 ggplot(data_einkaufen, aes(x = alter, y = weg, shape = verkehrsmittel)) +
   geom_point()
 ```
 
 Insbesondere wenn es kombiniert wird mit `colour` wird es besonders eindeutig
 
-```{r exercise.setup = "ausreisser5"}
+```{r am_shape_2, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "shape & colour"}
 ggplot(data_einkaufen, aes(x = alter, y = weg, shape = verkehrsmittel, colour = verkehrsmittel)) +
   geom_point()
 ```
@@ -823,7 +842,7 @@ ggplot(data_einkaufen, aes(x = alter, y = weg, shape = verkehrsmittel, colour = 
 
 Auch Mittels Größe kann eine weitere Dimension rein gebracht werden. Das ist allerdings mit vorsicht zu genießen, da es in vielen Fällen die Wahrnehmung zu bestimmten Zusammenhängen verzerrt:
 
-```{r scatterplot2, exercise.setup = "ausreisser5"}
+```{r am_size, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "size"}
 ggplot(data_einkaufen, aes(x = alter, y = weg, size = bioladen)) +
   geom_point()
 ```
@@ -840,7 +859,7 @@ Im Grunde gibt es nur 3 Gründe, `size` als ästhetisches Attribut zu nutzen:
 
 Zu guter letzt folgt die Dichte. Die ist grundsätzlich auch eher ungeeignet. Der Vollständigkeit halber, lernst du sie hier trotzdem kennen:
 
-```{r}
+```{r am_alpha, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "alpha"}
 ggplot(data_einkaufen, aes(x = alter, y = weg, alpha = kochen)) +
   geom_point()
 ```
@@ -851,7 +870,7 @@ Hier gilt das gleiche wie bei size: die unterschiedlichen alpha Werte nehmen ein
 
 Weil es auch ein bisschen Spaß bringt hier ein Plot, in dem fast alle Ästhetischen Attribute enthalten sind. Auch wenns Quatsch ist.
 
-```{r}
+```{r am_viel, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "Negativbeispiel"}
 ggplot(data_einkaufen, aes(x = alter, y = weg, colour = verkehrsmittel, shape = ort, size = bioladen, alpha = kochen)) +
   geom_point() +
   # legende lesbar anordnen
@@ -867,7 +886,7 @@ Jetzt kennst du die Möglichkeiten, ästhetische Attribute Variablen zuzuweisen,
 Schaue dir den folgenden Codeabschnitt an, führe den Code aus und finde den Unterschied zwischen den verschiedenen Plots
 :::
 
-```{r}
+```{r am_aesthetische, exercise = TRUE,  exercise.cap = "aes ohne mapping"}
 ggplot(einkaufen, aes(x = alter, colour = bioladen)) +
   geom_histogram(binwidth = 5, boundary = 50, fill = "grey", position = "identity", alpha = .5)
 
@@ -898,7 +917,7 @@ In diesem Fall wird der veränderte Datensatz verwendet. Alle Veränderungen wur
 Führe den Code aus und mache dich mit dem Ergebnis vertraut. Lösche jeweils einmal die Variable vor sowie nach der Tilde heraus und schaue, wie sich das Ergebnis verändert.
 :::
 
-```{r}
+```{r special, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "facet_grid()"}
 ggplot(data_einkaufen, aes(x = alter, y = weg)) +
   geom_point() +
   facet_grid(bioladen ~ verkehrsmittel)
@@ -914,7 +933,7 @@ Für den Fall, dass die Facetten nur anhand einer Variable aufmachen möchtest, 
 Führe den Code aus, mach dich mit den Auswirkungen von `nrow` vertraut und setze anstatt dessen `ncol` ein.
 :::
 
-```{r}
+```{r s_facet, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "facet_wrap()"}
 ggplot(data_einkaufen, aes(x = alter, y = weg)) +
   geom_point() +
   facet_wrap(~verkehrsmittel, nrow = 3)
@@ -931,14 +950,14 @@ Es gibt verschiedene Themes, welche Hintergrundfarbe, Umrandungen etc. bestimmen
 Suche dir ein Theme deiner Wahl aus und füge es dem untenstehenden Plot hinzu
 :::
 
-```{r}
+```{r drumherum-solution}
 # Ein Beispiel:
 ggplot(data_einkaufen, aes(x = alter, y = weg)) +
   geom_point() +
   theme_bw()
 ```
 
-```{r}
+```{r drumherum, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "themes"}
 ggplot(data_einkaufen, aes(x = alter, y = weg)) +
   geom_point()
 ```
@@ -952,7 +971,7 @@ Die Beschriftungen sind ebenfalls eine weitere Lage und werden mittels `labs()` 
 :::
 
 
-```{r}
+```{r d_labs, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "labs"}
 ggplot(data_einkaufen, aes(x = alter, y = weg)) +
   geom_point() +
   labs(
@@ -966,6 +985,10 @@ ggplot(data_einkaufen, aes(x = alter, y = weg)) +
 
 ### Legends
 
+[](images/legends.webp){width="50%"}
+
+[source](https://www.reddit.com/media?url=https%3A%2F%2Fpreview.redd.it%2Fgbjhlcz41i871.jpg%3Fauto%3Dwebp%26s%3D7a940a1c20340cefabf513e1a5987359542a3b72)
+
 Die Legende sind eine Sache für sich. Es wird hier nur angeschnitten, solltest du damit arbeiten wollen, wirst du eh auf den bekannten Seiten (su.) nachschauen. Obacht: Das ist ein klassischer Fall, in dem ChatGPT häufig mehr Verwirrung als Klarheit reinbringt. Im Folgenden sind die ganz grundlegenden Mechanismen erklärt. Wenn du die verstanden hast sollte die Nutzung von ChatGPT tatsächlich einigermaßen flüssig funktionieren (wenn du es dann überhaupt noch nutzen möchtest und nicht viel lieber in der deutlich besser strukturierten [R Graph Gallery](https://r-graph-gallery.com/239-custom-layout-legend-ggplot2.html), der [Hilfeseite](https://ggplot2.tidyverse.org/reference/guide_legend.html) oder dem [Cookbook](http://www.cookbook-r.com/Graphs/Legends_(ggplot2)/) nachschauen willst ;)).
 
 Es gibt sehr viele Wege, sie zu verändern und anzupassen und je nach Ausgangslage und Ergebnisvorstellung haben viele ihr Für und Wider. Eine dicke Empfehlung ist, es konsistent innerhalb von einem Plot zu machen (und spätestens hier verliert ChatGPT!).
@@ -975,15 +998,15 @@ Im Grunde gibt es zwei Möglichkeiten, etwas an der Legende zu ändern:
 1. Im Vektor an sich (also vorher)
 2. In der Legende (also im ggplot an sich)
 
-**Zu 1**: Bietet sich an, wenn es die Daten dadurch eh übersichtlicher macht bzw. nichts an Übersichtlichkeit verloren geht. Im Beispiel der Variablen `bioladen` sehr ersichtlich: aktuell noch logical würde durchaus übersichtlicher werden, wenn Einträge "bio" und "konventionell" wären. Hier begegnen wir unserem alten Bekannten, dem `factor` wieder. Es wird eine neue Variable mit dem Namen "ladenart" erstellt. Es wäre allerdings auch denkbar, die alte zu überschreiben. 
-  - Pro: Geringere Gefahr, dass sich Fehler aufgrund von falscher Beschriftung einschleichen.
-  - Contra: Eher seltener der Fall, da das Datawrangling (s. entsprechendes Tutorial) ja eigentlich schon vorher abgeschlossen sein sollte und die Daten eigentlich in sehr hoher Qualität vorliegen sollten.
+**Zu 1**: Bietet sich an, wenn es die Daten dadurch noch übersichtlicher macht bzw. nichts an Übersichtlichkeit verloren geht. Im Beispiel der Variablen `bioladen`: aktuell noch logical würde sie durchaus übersichtlicher werden, wenn Einträge "bio" und "konventionell" wären. Hier begegnen wir unserem alten Bekannten, dem `factor`, wieder. Es wird eine neue Variable mit dem Namen "ladenart" erstellt. Es wäre allerdings auch denkbar, die alte zu überschreiben. 
+  - **Pro:** Geringere Gefahr, dass sich Fehler aufgrund von falscher Beschriftung einschleichen.
+  - **Con:** Eher seltener der Fall, da das Datawrangling (s. entsprechendes Tutorial) ja eigentlich schon vorher abgeschlossen sein sollte und die Daten eigentlich in sehr hoher Qualität vorliegen sollten.
 
-```{r}
+```{r d_legends, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "legends"}
 # Factor erstellen (ei Fragen dazu: Wiederhole gerne das Tutorial Vektoren)
 data_einkaufen$ladenart <- factor(data_einkaufen$bioladen, 
                                   levels = c(TRUE, FALSE), 
-                                  labels = c("bio", "konventionell"))
+                                  labels = c("bio", "konven."))
 
 ggplot(data_einkaufen, aes(x = verkehrsmittel, fill = ladenart)) +
   geom_bar(position = position_dodge(preserve = "single")) +
@@ -995,12 +1018,12 @@ ggplot(data_einkaufen, aes(x = verkehrsmittel, fill = ladenart)) +
   theme_bw()
 ```
 
-**Zu 2:** Ist in den allermeisten Fällen das Mittel der Wahl. Die beiden Hauptpunkte sind: Punkte und Titel der Legende verändern. Alles andere (Schriftart und -größe, Position, Ausrichtung, Hintergrund, Umrandung etc. kannst du in den oben vorgeschlagenen Seiten nachschauen). Es folgt eigentlich immer dem gleichen Prinzip: Du fügst deinem ggplot eine weitere Ebene hinzu und innerhalb dieser Ebene legst du Dinge fest. Welche Funktion du wählst hängt von deinen Variablen und ästhetischen Attributen ab: diskret oder kontinuierlich? Fill oder Colour? Daraus ergibt sich folgende Kreuztabelle
+**Zu 2:** Ist in den allermeisten Fällen das Mittel der Wahl. Die beiden Hauptpunkte sind: Punkte und Titel der Legende verändern. Alles andere (Schriftart und -größe, Position, Ausrichtung, Hintergrund, Umrandung etc. kannst du in den oben vorgeschlagenen Seiten nachschauen). Es folgt eigentlich immer dem gleichen Prinzip: Du fügst deinem ggplot eine weitere Ebene hinzu und innerhalb dieser Ebene legst du Dinge fest. Welche Funktion bzw. Argumente du wählst hängt von deinen Variablen und ästhetischen Attributen ab: diskret oder kontinuierlich? Fill oder Colour? Daraus ergibt sich folgende Kreuztabelle
 
-|                    |   `colour`                                |   `fill`                           |
-|--------------------|-------------------------------------------|------------------------------------|
-| **diskret**        | `scale_colour_discrete(discrete = T)`     | `scale_fill_discrete(discrete = T)`|
-| **kontinuierlich** | `scale_colour_continuous()`               | `scale_fill_continuous()` \*       |
+|                    |   `colour`                           |   `fill`                         |
+|--------------------|--------------------------------------|----------------------------------|
+| **diskret**        | `scale_colour_viridis(discrete = T)` | `scale_fill_virdis(discrete = T)`|
+| **kontinuierlich** | `scale_colour_virdis()`              | `scale_fill_viridis()` \*        |
 
 \* Steht nur der Vollständigkeit halber hier, ist keinem der vorgestellten geoms sinnvoll einsetzbar. Wird vor allem für Heatmaps verwendet.
 
@@ -1010,10 +1033,11 @@ ggplot(data_einkaufen, aes(x = verkehrsmittel, fill = ladenart)) +
     - **Pro:** Kein rumgemurkse mit den Daten. Kann für jeden Plot individuell passend verändert werden.
     - **Con:** Erhöhte Fehlergefahr aufgrund von flaschen Beschriftungen.
 
-```{r}
+```{r d_legends_2, exercise = TRUE, exercise.setup = "d_legends",  exercise.cap = "guide_legend()"}
 ggplot(data_einkaufen, aes(x = verkehrsmittel, fill = bioladen)) +
   geom_bar(position = position_dodge(preserve = "single")) +
-  scale_fill_discrete(labels = c("bio", "konven."),
+  scale_fill_viridis(discrete = T,
+    labels = c("bio", "konven."),
     guide_legend(title = "Ladenart")) +
   labs(
     title = "Verkehrsmittel und Ladenart",
@@ -1024,15 +1048,16 @@ ggplot(data_einkaufen, aes(x = verkehrsmittel, fill = bioladen)) +
 ```
 
 ::: aufgabe
-Finde für die Funktionen `scale_colour_continuous()` und `scale_colour_continuos()` eine Anwendungsmöglichkeit in einen der bereits ausgeführten Plots dieses Tutorials und füge diese Ebene hinzu. Füge auch gerne ein Theme deiner Wahl sowie passende Achsenbeschriftungen hinzu.
+Finde für die Funktionen `scale_colour_viridis(discrete = T)` und `scale_colour_viridis()` eine Anwendungsmöglichkeit in einen der bereits ausgeführten Plots dieses Tutorials und füge diese Ebene hinzu. Füge auch gerne ein Theme deiner Wahl sowie passende Achsenbeschriftungen hinzu.
 
 *Extraaufgabe: schreibe einen komplett eigenen Plot.
 :::
 
-```{r}
+```{r d_legends_3-solution}
 ggplot(data_einkaufen, aes(x = alter, y = weg, colour = kochen)) +
    geom_point() +
-   scale_colour_continuous(guide_legend(title = "Kochen/ \n Woche")) +
+  # \n sagt R, dass du einen Zeilenumbruch möchtest
+   scale_colour_viridis(guide_legend(title = "Kochen/ \n Woche")) +
   labs(
     title = "Weg und Alter",
     x = "Alter",
@@ -1041,8 +1066,9 @@ ggplot(data_einkaufen, aes(x = alter, y = weg, colour = kochen)) +
   theme_bw()
 
  ggplot(data_einkaufen, aes(x = verkehrsmittel, y = alter, colour = bioladen)) +
-   geom_boxplot() +
-   scale_colour_discrete(labels = c("bio", "konven."),
+   geom_boxplot(position = position_dodge(preserve = "single")) +
+   scale_colour_viridis(discrete = T,
+     labels = c("bio", "konven."),
     guide_legend(title = "Ladenart")) +
    labs(
      title = "Genutze Verkehrsmittel und Alter",
@@ -1052,14 +1078,26 @@ ggplot(data_einkaufen, aes(x = alter, y = weg, colour = kochen)) +
    theme_bw()
 ```
 
+```{r exercise = TRUE, exercise.setup = "d_legends", exercise.cap = "Legenden"}
+
+```
+
 
 ## 9. Barrierefreiheit
 
-Es mag erstmal überraschen aber: auch in visuellen Darstellungen ist Barrierefreiheit ein relevantes Thema. Ein nicht zu vernachlässigender Anteil der Bevölkerung kann bestimmte Farben nicht unterscheiden. Deswegen wurden von schlauen Menschen Farbpaletten entworfen, die keine ambivalenten Farben wie rot und grün enthalten, und auch ganz ohne Farbwahrnehmung nur über Helligkeit und Dunkelheit der Farben in schwarz weiß funktionieren. Der letzte Punkt ist ebenfalls relevant für alle Plots, die in schwarz weiß (wie bspw. in manchen Journals) aus- oder abgedruckt werden. 
+Es mag erstmal überraschen, aber: auch in visuellen Darstellungen ist Barrierefreiheit ein relevantes Thema. Ein nicht zu vernachlässigender Anteil der Bevölkerung kann bestimmte Farben nicht unterscheiden. Deswegen wurden von schlauen Menschen Farbpaletten entworfen, die keine ambivalenten Farben wie rot und grün enthalten, und auch ganz ohne Farbwahrnehmung nur über Helligkeit und Dunkelheit der Farben, also in schwarz weiß funktionieren. Der letzte Punkt ist ebenfalls relevant für alle Plots, die in schwarz weiß (wie bspw. in manchen Journals) abgebildet werden. 
 
-Eine der verbreitetesten ist das Paket `viridis`. Es hat auch seine eigene [Hilfe Seite](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html) auf der die Verwendung und möglichen Farbschemen dargestellt werden. 
+Eine der verbreitetesten ist das Paket `viridis`. Es hat auch seine eigene [Hilfeseite](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html), auf der die Verwendung und die Hintergründe gut dokumentiert sind.
 
-Hier ein Beispiel:
+Die verfügbaren Farbpaletten sind:
+
+[](images/viridis.png){width="50%"}
+
+[source](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html)
+
+
+
+Hier ein Beispiel in action:
 
 ```{r viridis-demo, message=FALSE, warning=FALSE}
 library(ggplot2)
@@ -1076,33 +1114,24 @@ p <- ggplot(dat, aes(x = x, y = y)) +
 p
 ```
 
-Zuerst fällt auf: Die Farben sind einfach auch deutlich schöner als die Standard-Farbpalette von R. 
+Und die obenstehende Grafik ist ein gutes Beispiel dafür, wie hell-dunkel Kontraste verwendet werden können. So ist das Ganze in schwarz-weiß immer noch lesbar, was insbesondere für Menschen mit eingeschränkter Farbwahrnehmung klasse ist, denn alles was schwarz weiß gut lesbar ist, ist immer auch colorblind-friendly. Die Farben sind nicht unbeding neu für dich, spätestens seit dem letzten Abschnitt (Legends) bist du mit ihnen vertraut. Der Punkt ist: wir haben dir da schon eine colourblind friendly scale untergemogelt, damit du von anfang an sauber mit Farben in Grafiken umgehst.
 
-Und die obenstehende Grafik ist ein gutes Beispiel dafür, wie hell-dunkel Kontraste verwendet werden können. So ist das Ganze in schwarz-weiß immer noch lesbar, was insbesondere für Menschen mit eingeschränkter Farbwahrnehmung klasse ist, denn alles was schwarz weiß gut lesbar ist, ist immer auch colorblind-friendly. 
-
-Im Grunde folgt die Anwendung von Viridis immer dem gleichen Prinzip: Du sagst R in den aesthetics, welche Variable R über colour oder fill abbilden soll. Dann fügst du eine weitere Ebene hinzu, in der du die Farbwahl spezifizierst. Diese Ebene hängt von 2 Punkten ab: hast du fill oder colour zugewiesen? Und: ist es eine kontinuierliche oder eine diskrete Variable:
-
-|                    |   `colour`                             |   `fill`                           |
-|--------------------|----------------------------------------|------------------------------------|
-| **diskret**        | `scale_colour_viridis(discrete = T)`   | `scale_fill_viridis(discrete = T)` |
-| **kontinuierlich** | `scale_colour_viridis()`               | `scale_fill_viridis()`             |
-
-Optional gibt es noch die Möglichkeit, sich eine Palette (s. [Hilfeseite](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html)) auszusuchen. Das geht mit dem Argument `option = ` und dann eine der Paletten in Anführungszeichen (`"magma"`, `"inferno"`, `"plasma"`, `"viridis"`, `"cividis"`, `"rocket"`, `"mako"` oder `"turbo"`).
+In diesem Unterkapitel lernst du neues über die Hintergründe der Farben (erledigt!) und du lernst verschiedene Paletten kennen: auf der [Hilfeseite](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html)) sind alle Optionen mit Namen angegeben. Du kannst dich nun für eine Option entscheiden und diese mit dem Argument `option = ` und ihrem Namen (`"viridis"` (default), `"magma"`,  `"plasma"`, `"inferno"`, `"cividis"`, `"mako"`, `"rocket"` oder `"turbo"`) einfügen.
 
 
 ::: aufgabe
-Finde für jede der vier Kombinationen (colour und fill zu diskret und kontinuierlich) eine Anwendungsmöglichkeit in einen der bereits ausgeführten Plots dieses Tutorials und füge diese Ebene hinzu. Nutze dafür jeweils eine andere Palette. Füge auch gerne ein Theme deiner Wahl sowie Achsenbeschriftung hinzu.
+Nutze für jeden der Plots aus dem letzten Unterkapitel (Legends) eine andere viridis Farbpalette.
 
 *Extraaufgabe: schreibe einen komplett eigenen Plot.
 :::
 
-```{r}
+```{r barrierefreiheit-solution}
 ggplot(data_einkaufen, aes(x = verkehrsmittel, fill = bioladen)) +
   geom_bar(position = position_dodge(preserve = "single")) +
-  scale_fill_viridis(discrete = T, option = "plasma", 
+  scale_fill_viridis(discrete = T, option = "cividis",
                      # Titel und Beschriftung der Legende ändern
                      guide = guide_legend(title = "Ladenart"), 
-                     labels = c("konventionell", "biologisch")
+                     labels = c("konven.", "bio")
                      ) +
   labs(
     title = "Verkehrsmittel und Ladenart",
@@ -1110,19 +1139,44 @@ ggplot(data_einkaufen, aes(x = verkehrsmittel, fill = bioladen)) +
     x = "Verkehrsmittel"
   )+
   theme_bw()
+
+ ggplot(data_einkaufen, aes(x = verkehrsmittel, y = alter, colour = bioladen)) +
+   geom_boxplot(position = position_dodge(preserve = "single")) +
+   scale_colour_viridis(discrete = T, option = "turbo",
+     labels = c("bio", "konven."),
+    guide_legend(title = "Ladenart")) +
+   labs(
+     title = "Genutze Verkehrsmittel und Alter",
+     x = "Verkehrsmittel",
+     y = "Alter"
+   ) +
+   theme_bw()
+
+ggplot(data_einkaufen, aes(x = alter, y = weg, colour = kochen)) +
+   geom_point() +
+   scale_colour_viridis(option = "plasma",
+     guide_legend(title = "Kochen/ \n Woche")) +
+  labs(
+    title = "Weg und Alter",
+    x = "Alter",
+    y = "Weg (in km)"
+    ) +
+  theme_bw()
 ```
 
-```{r}
+```{r barrierefreiheit, exercise = TRUE, exercise.setup = "d_legends", exercise.cap = "Barrierefreiheit"}
 
 ```
 
 
 
-## Becoming a Pro
+## 10. Becoming a Pro
 
-In Zukunft möchtest du wahrscheinlich deine eigenen Visualisierungen ganz nach deinen Wünschen gestalten,  - darum geht es ja hier auch! Denn diese Basics sind zwar schon hilfreich, aber beeindruckend und besonders ästhetisch sind sie noch nicht. 
+![](images/pro.webp)
 
-Also wie kommst du zum nächsten Level? - Recherche! Informiere dich im Internet was für deine Zwecke möglich ist und passe den Beispielcode auf deine Daten an. (Das gilt übrigens für alle Tutorials und Alles, was du hier in diesem Kurs lernst). 
+[source](https://www.reddit.com/media?url=https%3A%2F%2Fpreview.redd.it%2Fgggd8zabn6s11.jpg%3Fauto%3Dwebp%26s%3Dd2d26cf405057710034a718c567cdad6d81de099)
+
+Durch dieses Tutorial hast du nun die Grundlagen, um in Zukunft deine Plots ganz nach deinen Wünschen gestalten zu können. Deiner Phantasie sind kaum Grenzen gesetzt. Um zum nächsten Level zu kommen hilft: Recherche! Informiere dich im Internet was für deine Zwecke möglich ist und passe den Beispielcode auf deine Daten an. (Das gilt übrigens für alle Tutorials und Alles, was du hier in diesem Kurs lernst). 
 
 In den ersten Tutorials haben wir dir bereits *Cheat Sheets* verlinkt und auch zu Beginn dieses Tutorials die super hilfreiche Seite [R Graph Gallery](https://r-graph-gallery.com/) empfohlen. 
 
@@ -1179,22 +1233,9 @@ question_radio("Wie kannst du deiner Grafik Achsebeschriftungen hinzufügen?",
 )
 ```
 
+Noch ein paar Worte zu *ChatGPT*: Schau gut, inwieweit es für dich hilfreich ist. Jetzt wo du die grundlegenden Zusammenhänge verstanden hast kannst du es wahrscheinlich gut nutzen. Meine ganz persönliche Sicht: Seit ich mich für dieses Tutorial nochmal so richtig in ggplot reingearbeitet habe, nutze ich es gar nicht mehr - ich hab (endlich) verstanden, wie die Zusammenhänge funktionieren und bin deutlich schneller und effizienter mit den verlinkten Hilfeseiten und der R Graph Gallery. Sich da einzuarbeiten ist wirklich ein lohnendes Investment!
 
-### Farbanpassung und Verbesserungen
-
-Da du jetzt vertraut mit dem Sheet Cheat bist, versuche herauszufinden, wie du die Farben deiner Grafik 
-
-Wie bei anderen Diagrammen kannst du Farben und Stile anpassen, um die Lesbarkeit zu verbessern. Dafür kannst du in der Funktion `geom_boxplot()` u.a. die Argumente `color`, `fill` und `alpha` nutzen.
-
-```{r boxplotColor, exercise = TRUE, exercise.cap = "Boxplot mit Farbe"}
-library(viridis)
-
-ggplot(einkaufen, aes(x = ort, y = alter, fill = ort)) +
-  geom_boxplot() +
-  scale_fill_viridis_d(alpha = 0.7)
-```
-
-## Überblick bekommen
+## Zu guter Letzt: Überblick bekommen
 
 Wie ganz zu Beginn erwähnt, benutzen wir Visualisierungen für zweierlei Zwecke:
 
