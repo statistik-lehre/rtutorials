@@ -47,29 +47,48 @@ Mit R sind abgefahrene Sachen möglich. Eine vielfältige Übersicht darüber, w
 
 ![](images/compress/temp.png){width=80%}
 
+#### [Aber auch solche geometrischen Schönheiten](https://fronkonstin.com/tag/ggplot2/page/3/)
+
+```{r fronkonstin, fig.asp = 1}
+n=300
+t1=1:n
+t0=seq(3,2*n+1,2)%%n
+t2=t0+(t0==0)*n
+df=data.frame(x=cos((t1-1)*2*pi/n), 
+y=sin((t1-1)*2*pi/n),
+x2=cos((t2-1)*2*pi/n),
+y2=sin((t2-1)*2*pi/n))
+ggplot(df,aes(x,y,xend=x2,yend=y2)) +
+geom_segment(alpha=.1)+theme_void()
+```
+
+
 Ziemlich beeindruckend, oder?
-Das soll hier aber nur ein kleiner Einblick in das sein, was alles möglich ist.  In diesem Tutorial starten natürlich bei den Basics und focussieren uns darauf grundständige Diagramme zu zeichnen. Mit diesem Grundwissen kannst du dir dann auch selbst beibringen solche abgefahrenen Diagramme zu erstellen.
+
+Das soll hier aber nur ein kleiner Einblick in das sein, was alles möglich ist. In diesem Tutorial starten natürlich bei den Basics und fokussieren uns darauf grundständige Diagramme zu zeichnen. Mit diesem Grundwissen kannst du dir dann auch selbst beibringen solche abgefahrenen Diagramme zu erstellen.
+
 In den Links über den Grafiken findest du detaillierte Anleitungen, wenn du dann soweit bist.
 
 Wie gesagt, wir fangen Schritt für Schritt an und daher sind das hier die Ziele für heute: 
 
 ### Lernziele
 
-<input type="checkbox" unchecked> Punktdiagramm (*scatterplot*) erstellen </input>
-
 <input type="checkbox" unchecked> Balkendiagramm (*barplot*) erstellen </input>
 
 <input type="checkbox" unchecked> Histogramm (*histogram*) erstellen </input>
 
-<input type="checkbox" unchecked> Liniendiagramm (*linegraph*) erstellen </input>
+<input type="checkbox" unchecked> *Boxplot* erstellen </input>
 
-<input type="checkbox" unchecked> Boxplot erstellen </input>
+<input type="checkbox" unchecked> Punktdiagramm (*scatterplot*) erstellen </input>
+
+<input type="checkbox" unchecked> Liniendiagramm (*linegraph*) erstellen </input>
 
 <input type="checkbox" unchecked> Schnelle Grafikfunktionen, um einen Überblick zu gewinnen </input>
 
-<input type="checkbox" unchecked> Grafiken mit `ggplot2` nach dem Baukasten der *Grammar of Graphs* erstellen </inpu>
+<input type="checkbox" unchecked> Grafiken mit `ggplot2` nach dem Baukasten der *Grammar of Graphs* erstellen </input>
 
 <input type="checkbox" unchecked> colorblind-friendly sein </input>
+
 
 ### Die fünf essentiellen Diagrammtypen
 
@@ -120,13 +139,12 @@ par(mfrow = c(1, 1),
 
 ## Einführung
 
-Es gibt (wie immer) tausend verschiedene Wege, Visualisierungen mit R zu erstellen. Aber einer hat sich über die Jahre als besonders Beliebt erwiesen, und das ist `ggplot2`. 
+Es gibt (wie immer) tausend verschiedene Wege, Visualisierungen mit R zu erstellen. Aber einer hat sich über die Jahre als besonders beliebt erwiesen, und das ist `ggplot2`. 
 
 Der Grund, warum wir dir diesen Weg beibringen:
 
-- Er folgt einem klaren Baukastenprinzip, mit dem auch später beliebig komplexe Anpassungen der Grafik an die eigenen Vorstellungen relativ schmerzfrei umgesetzt werden können. 
-
-- Es ist der populärste Weg, es gibt auf Google viele gute Anleitungen und Antworten. Und es existieren zahlreiche Eweiterungen um das Paket `ggplot2`. 
+- `ggplot2` folgt einem klaren Baukastenprinzip, mit dem auch später beliebig komplexe Anpassungen der Grafik an die eigenen Vorstellungen relativ schmerzfrei umgesetzt werden können. 
+- `ggplot2` ist der populärste Weg, daher gibt es auf Google viele gute Anleitungen und Antworten. Und es existieren zahlreiche Eweiterungen um das Paket `ggplot2`. 
 
 <hr>
 
@@ -139,14 +157,14 @@ Sachen übersetzt und paraphrasiert und unsere eigenen Gedanken hinzugefügt.
 
 Das `gg` im Paketnamen `ggplot2` steht für *Grammar of Graphs*. 
 
-Leland Wilkinson ist der Gründer des Grammar of Graphs-Ansatzes. Im Grunde ist das eine Theorie darüber, mit welchen Regeln und Bausteinen statistische Grafiken erstellt werden können [@wilkinson2005].
+Leland Wilkinson ist der Gründer des Grammar of Graphs-Ansatzes. Im Grunde ist das eine Theorie darüber, mit welchen Regeln und Bausteinen statistische Grafiken gut und übersichtlich erstellt werden können [@wilkinson2005].
 
 `ggplot2` ist die Umsetzung dieses theoretischen Baukastens. Es wurde von Hadley Wickham geschrieben und ist ein relativ altes Paket im R-Ökosystem [@wickham2009].
 
 #### benötigtes Paket
 
 ::: aufgabe
-Der erste Schritt für dieses Tutorial ist, das Paket `ggplot2` in die aktive Sitzung zu laden. Tu das mittels `library()`! 
+Der erste Schritt für dieses Tutorial ist, das Paket `ggplot2` in die aktive Sitzung zu laden. Tu das mittels `library()`. (Installiert hast du es schon, sonst wären alle anderen Tutorials nicht gelaufen.)
 :::
 
 ```{r lib, exercise = TRUE, exercise.cap = "ggplot2 laden"}
@@ -159,26 +177,26 @@ library(ggplot2)
 
 ### Einordnung in den Prozess
 
-Wir haben jetzt Daten erhoben, importiert - und nun? Grafiken sind ein guter Weg, Zusammenhänge in den Daten sichtbar zu machen. Zum einen, um sich selbst in den Daten zu orientieren, und zum anderen auch, um die Ergebnisse der Analyse zu präsentieren. Wir brauchen Visualisierungen also an zwei Stellen im Prozess: 
+Die Daten sind erhoben, importiert und nun kommen die Grafiken. Sie sind ein guter Weg, Zusammenhänge in den Daten sichtbar zu machen. Zum einen, um sich selbst in den Daten zu orientieren, und zum anderen, um die Ergebnisse der Analyse zu präsentieren. Visualisierungen werden also an zwei Stellen im Prozess benötigt:
 
-- einmal um einen **Überblick** zu gewinnen
-- am Ende um **Ergebnisse** zu **kommunizieren**
+- um einen **Überblick** zu gewinnen
+- um am Ende **Ergebnisse** zu **kommunizieren**
 
-![](images/compress/prozess.png){width=90%}
+![](images/compress/prozess.png){width=80%}
 
 
 Welche Grafik du wann anwenden kannst, hängt vom Skalenniveau der Daten und der Anzahl von Variablen ab.
 
 Grob kann unterschieden werden zwischen:
 
-- Plots, die die Verteilung einer einzelnen Variablen darstellen
-- Plots, die den Zusammenhang zwischen zwei oder mehr Variablen zeigen
+- Plots, die die **Verteilung einer** einzelnen Variablen darstellen
+- Plots, die den **Zusammenhang** zwischen **zwei oder mehr** Variablen zeigen
 
 Die am häufigsten verwendeten und in diesem Tutorial vorgestellten Plots sind:
 
 |                    | kategorial                | kontinuierlich                   |
 |--------------------|:--------------------------|:---------------------------------|
-| **keine**          | Barplot <br>`geom_bar()`  | Histogram <br>`geom_histogram()` |
+| **keine**          | Balekdiagramm <br>`geom_bar()`| Histogramm <br>`geom_histogram()`|
 | **kategorial**     | (`geom_count()`)          | Boxplot<br>`geom_boxplot()`      |
 | **kontinuierlich** | -                         | Punktdiagramm<br>`geom_point()`  |
 | **sequentiell**    | -                         | Liniendiagramm<br>`geom_line()`  |
@@ -191,13 +209,15 @@ Steigen wir direkt ein!
 ## 1. Balkendiagramm
 
 ::: infobox
-Balkendiagramme sind geeignet, um die Verteilung einer **einzelnen**, **kategorialen** Variable zu zeigen.
+Balkendiagramme sind geeignet, um die **Verteilung** einer **einzelnen**, **kategorialen** Variable zu zeigen.
 
 Funktion: `geom_bar()`
 :::
 <br>
 
-So sieht Code aus, um mit `ggplot2` ein einfaches Balkendiagramm zu erstellen (das schön machen kommt später):
+::: aufgabe
+So sieht Code aus, um mit `ggplot2` ein einfaches Balkendiagramm zu erstellen (das schön machen kommt später). Führe ihn aus.
+:::
 
 ```{r barplot, exercise = TRUE, exercise.cap = "Einfacher Barplot"}
 ggplot(data = einkaufen,
@@ -207,10 +227,10 @@ ggplot(data = einkaufen,
 
 Dabei wird deutlich, dass der Code durch eine klare Sprache organisiert ist:
 
-- in `data` übergeben wir einen Datensatz an die Funktion
-- in `mapping` sagen wir, welche Variablen aus dem Datensatz wo gezeigt werden. 
-- das `+` fügt eine neue Ebene hinzu, genau wie in Photoshop / Gimp / Overhead-Folien
-- `geom_bar()` fügt ein `geom`etrisches Objekt, nämlich die Balken (`bar`s), hinzu.
+- in `data` wird ein Datensatz an die Funktion übergeben
+- in `mapping` wird festgelegt, welche Variablen aus dem Datensatz wo gezeigt werden
+- das `+` fügt eine neue Ebene hinzu, genau wie in Photoshop / Gimp / bei Overhead-Folien
+- `geom_bar()` fügt ein `geom`etrisches Objekt, nämlich die Balken (`bar`s), hinzu
 
 Mehr dazu, wie genau dieses Mapping funktioniert, folgt später.
 
@@ -227,9 +247,7 @@ Mit data kennst du dich ja jetzt schon aus, daher können wir direkt zum *mappin
 
 ### aesthetic mapping
 
-Was ist eigentlich dieses `aesthetic mapping`? Das ist das, was wir oben im Code beim Argument `mapping` gemacht haben: `mapping = aes(x = verkehrsmittel)`
-
-`aes()` steht für *aesthetic attributes*, und weist den einzelnen Variablen, wie z.B. dem Verkehrsmittel, eine *grafische Eigenschaft* zu. Grafische Eigenschaften sind: 
+`aes()` steht für *aesthetic attributes*. Beim `aesthetic mapping` (oben im Code: `mapping = aes(x = verkehrsmittel)`) wird einer Variable eine *grafische Eigenschaft* zugeordnet. Grafische Eigenschaften sind: 
 
 - Achsen (`x`, `y`)
 - Farbe (`colour`)
@@ -237,13 +255,13 @@ Was ist eigentlich dieses `aesthetic mapping`? Das ist das, was wir oben im Code
 - Größe (`size`)
 - Transparenz (`alpha`)
 
-Im Diagramm oben wurde der x-Achse die Variable Verkehrsmittel zugewiesen. 
+Im Diagramm oben wurde der *x-Achse* die Variable *Verkehrsmittel* zugewiesen. 
 
 :::aufgabe
 Ändere den Code so, dass die Variable Verkehrsmittel nun stattdessen auf die y-Achse gemappt wird. Wie wird sich das Diagramm wohl verändern?
 :::
-
-*Beachte, dass wir hier die Argumentnamen `data` und `mapping` weggelassen haben, so wie es in der Praxis üblicherweise auch getan wird. Das können wir machen, da wir die Reihenfolge der Argumente beachten, also `data`, `mapping` dann `geometric objects`.* 
+<br>
+*Beachte, dass hier die Argumentnamen `data` und `mapping` weggelassen wurden, so wie es in der Praxis üblicherweise auch getan wird. Das ist möglich, da die Reihenfolge der Argumente beachten wire, also erst `data`, dann `mapping` und schließlich `geometric objects`.* 
 
 ```{r ybarplot, exercise = TRUE, exercise.cap = "Mapping ändern auf y-Achse"}
 ggplot(einkaufen, aes(x = verkehrsmittel)) +
@@ -255,11 +273,11 @@ ggplot(einkaufen, aes(y = verkehrsmittel)) +
   geom_bar()
 ```
 
-Es gibt, wie oben erwähnt, noch mehr *aesthetic attributes* außer der `x`-Achse und der `y`-Achse, aber auf die fokussieren wir uns später. 
+Es gibt, wie oben erwähnt, noch mehr *aesthetic attributes* außer der `x`-Achse und der `y`-Achse, die bekommen später noch ihren Raum.
 
 ### `geom_bar`
 
-Und was ist dieses `geom_bar()`? Das wird am ehesten deutlich, wenn wir es weglassen!
+Und was ist dieses `geom_bar()`? Das wird am ehesten deutlich, wenn es weggelassen wird!
 
 ::: aufgabe
 Schau dir an, wie der Plot aussieht ohne die Ebene mit`geom_bar()`!
@@ -271,7 +289,8 @@ ggplot(einkaufen, aes(x = verkehrsmittel))
 
 Jetzt versteht du vielleicht, wofür die `geom_bar()`-Funktion da ist: Geometrische Objekte, in diesem Fall Balken, in den Plot zu zeichnen! Der Plot ist leer, aber die Achsen sind bereits beschriftet und perfekt vorbereitet, aber es fehlt noch das geometrische Objekt. 
 
-Innerhalb der Funktion für das geometrische Objekt finden auch Berechnungen statt, die einzelnen Ausprägungen der Verkehrsmittel werden gezählt, um die Höhe der Balken zu bestimmen. Aber damit müssen wir uns zum Glück nicht beschäftigen. 
+Innerhalb der Funktion für das geometrische Objekt finden auch Berechnungen statt, die einzelnen Ausprägungen der Verkehrsmittel werden gezählt, um die Höhe der Balken zu bestimmen. Aber das übernimmt zum Glück alles R. 
+
 Und jetzt kommt das Ding: Es gibt auch noch andere `geom_...()` Funktionen. Zum Beispiel `geom_point()`, welche dem Plot Punkte hinzufügt! Oder `geom_histogram()`, welche ein Histogramm zeichnet, siehe nächster Abschnitt.
 
 ::: aufgabe
@@ -287,13 +306,14 @@ ggplot(einkaufen, aes(x = verkehrsmittel)) +
 
 ```
 
-Dass hier eine Fehlermeldung herauskommt, ist völlig normal! Fehlermeldungen sind freundlich, denn Programmierer*innen geben sich (oft) viel Mühe, diese möglichst informativ und genau zu machen. Also hab keine Angst, und lies dir tatsächlich mal durch was da steht!
+Dass hier eine Fehlermeldung aufploppt, ist völlig normal! Fehlermeldungen sind freundlich, denn Programmierer*innen geben sich (oft) viel Mühe, diese möglichst informativ und genau zu machen. Also hab keine Angst, und lies dir tatsächlich mal durch was da steht!
 
-Es gibt hier einen Unterschied, in den R Skripten, mit denen du arbeitest und den R Tutorials, in dem du dich gerade befindest, deswegen die folgende Aufgabe:
+Es gibt hier einen Unterschied, in den R Skripten, mit denen du arbeitest und den R Tutorials, in denen du dich gerade befindest, deswegen die folgende Aufgabe:
 
 ::: aufgaberstudio
 Füge den Code aus der obigen Aufgabe in deine R Studio Konsole ein und schau dir die daraus resultierende Fehlermeldung genau an.
 :::
+<br>
 
 Wahrscheinlich sieht sie so aus:
 
@@ -317,7 +337,7 @@ Run `rlang::last_trace()` to see where the error occurred.
 ::: aufgabe
 Löse das Problem, indem du in `aes()` noch das Argument `y = weg` angibst. Denk daran, Argumente werden durch Kommata getrennt. 
 
-"weg" ist eine stetige Variable, die den zurückgelegten Anreiseweg der Person zum Laden, wo die Erhebung stattfand, in km enthält. 
+"`weg`" ist eine stetige Variable, die den zurückgelegten Anreiseweg der Person zum Laden, wo die Erhebung stattfand, in km enthält. 
 :::
 
 ```{r weg, exercise = TRUE, exercise.cap = "aesthetic mapping hinzufügen für y-Achse"}
@@ -330,12 +350,92 @@ ggplot(einkaufen, aes(x = verkehrsmittel, y = weg)) +
   geom_point()
 ```
 
-Ok, das Diagramm ist vielleicht nicht ultra informativ, weil ganz viele Punkte übereinandergelagert wurden an manchen Stellen. Es gibt definitiv ein anderes, geeigneteres Diagramm! Hier ging es nur darum, das Prinzip zu beweisen: `ggplot` funktioniert wie ein Baukasten, und das `geom` können wir austauschen, so lange dafür gesorgt wird, dass in den `aes`thetic mappings Variablen und Skalenniveau zu dem jeweiligen `geom` passen!
+Ok, das Diagramm ist vielleicht nicht ultra informativ, weil ganz viele Punkte übereinandergelagert wurden an manchen Stellen. Es gibt definitiv ein anderes, geeigneteres Diagramm! Hier ging es nur darum, das Prinzip zu zeigen: Fehlermeldungen sind freundlich, `ggplot` funktioniert wie ein Baukasten, und das `geom` können wir austauschen, so lange dafür gesorgt wird, dass in den `aes`thetic mappings Variablen und Skalenniveau zu dem jeweiligen `geom` passen!
 
 ```{r weg-quest}
-question_text("Wie erklärst du dir die weiten Anreisewege (bis 600km!) beim Verkehrsmittel „ÖPNV”? (Tipp: Der Bioladen ist in der Nähe eines ICE-Bahnhofs)",
-              answer_fn(\(x) correct(messages = "Vermutlich waren einige Menschen zuvor mit dem ICE gefahren, und hatten vielleicht auch nur einen Umstieg mit Wartezeit und Hunger auf ein Bio-Brötchen oder so. Während der Rest der Menschen ihren regulären Wocheneinnkauf machen und aus der Umgebung kommen, maximal ein paar Kilometer entfernt.")),
+quiz(caption = "Quiz zu den Balkendiagrammen",
+     question("Welche Daten lassen sich gut mit Balkendiagrammen darstellen?",
+               answer("Eine einzelne, kategoriale Variable.",
+                      correct = TRUE),
+               answer("Eine einzelne, stetig Variable.",
+                      message = "Schon fast richtig. 
+                      Es ist eine einzelne Variable, aber sie ist nicht stetig, versuch es nochmal. 
+                      Für diese Datenart eignet sich ein Histogramm."),
+               answer("Zwei kategoriale Variablen.",
+                      message = "Schon fast richtig. 
+                      Die Variable ist kategorial, aber es sind nicht zwei.
+                      Für diese Datenart eignet sich eine Kreuztabelle."),
+               answer("Zwei stetige Variablen.",
+                      message = "Für diese Datenart eignet sich ein Punktdiagramm."),
+               allow_retry = TRUE,
+               random_answer_order = TRUE,
+               correct = "Richtig!",
+               incorrect = "Das stimmt leider nicht, probier es noch mal!"),
+
+question("Welche Aussagen über das obige Balkendiagramm mit den Vekehrsmitteln treffen zu?",
+               answer("Das Auto war das Häufigsten genutzte Fahrzeug zum Einkaufen.",
+                      correct = TRUE),
+               answer("Es nutzten ca. 38 Menschen das Fahrrad zum einkaufen.",
+                      correct = TRUE),
+               answer("Ca 28% der Menschen nutzten ÖPNV zum einkaufen",
+                      message = "Fast richtig. 
+                      Allerdings wird auf der y-Achse die absolute Anzahl der Beobachtungen gezeigt, 
+                      nicht die prozentuale."),
+               answer("Ca. 41% der Befragten finden, dass es am besten ist, zu Fuß einkaufen zu gehen.",
+                      message = "Die Frage war, mit welchem Verkehrsmittel die Befragten gerade da waren, 
+                      nicht, welches ihrer Meinung nach das beste ist und auf der y Achse sind absolute Zahlen,
+                      keine Prozente!"),
+               allow_retry = TRUE,
+               random_answer_order = TRUE,
+               correct = "Richtig!",
+               incorrect = "Das stimmt leider nicht, probier es noch mal!"),
+
+question("Welche drei Kernbestandteile hat laut der Grammar of Graphs Theorie von Leland Wilkinson 
+         jede statistische Grafik?",
+               answer("Daten",
+                      correct = TRUE),
+               answer("Ästhetische Attribute",
+                      correct = TRUE),
+               answer("Geometrische Objekte",
+                      correct = T),
+               answer("Statistische Kennzahlen",
+                      message = "Statistische Kennzahlen können Teil einer Grafik sein, müssen es jedoch nicht."),
+                        allow_retry = TRUE,
+               random_answer_order = TRUE,
+               correct = "Richtig!",
+               incorrect = "Das stimmt leider nicht, probier es noch mal!"),
+         
+         question("Welches sind keine ästhetischen Attribute?",
+               answer("y Achse",
+                      message = "Die y Achse ist eines der zentralen ästhetischen Attribute."),
+               answer("x Achse",
+                      message = "Die x Achse ist eines der zentralen ästhetischen Attribute."),
+               answer("Geometrische Objekte",
+                      message = "Geometrische Objekte sind ein 
+                      gleichwertiger notwendiger Bestandteil zu ästhetischen Attributen, 
+                      welche die ästehtischen Attribute abbilden.",
+                      correct = T),
+               answer("Statistische Kennzahlen",
+                      correct = T),
+               answer("Wenn die Farben schön zusammenpassen.",
+                      message = "Das ist zwar ästhetisch, aber kein ästhetisches Attribut nach der GG Theorie. 
+                      Farbe per sé ist so eines, aber wie schön die sind oder wie gut sie zusammenpassen 
+                      ist keines."),
+               allow_retry = TRUE,
+               random_answer_order = TRUE,
+               correct = "Richtig!",
+               incorrect = "Das stimmt leider nicht, probier es noch mal!"),
+
+question_text("Wie erklärst du dir die weiten Anreisewege (bis 600km!) beim Verkehrsmittel „ÖPNV”? 
+              (Tipp: Der Bioladen ist in der Nähe eines ICE-Bahnhofs)",
+              answer_fn(\(x) correct(messages = "Vermutlich waren einige Menschen zuvor mit dem ICE gefahren, 
+                                     und hatten vielleicht auch nur einen Umstieg mit Wartezeit und 
+                                     Hunger auf ein Bio-Brötchen oder so. Während der Rest der Menschen 
+                                     ihren regulären Wocheneinnkauf machen und aus der Umgebung kommen, 
+                                     maximal ein paar Kilometer entfernt.")),
               placeholder = "Musterlösung erscheint bei Abgabe deiner Antwort...")
+
+)
 ```
 
 
@@ -348,7 +448,7 @@ Funktion: `geom_histogram()`
 :::
 <br>
 
-Unser Go-To-Beispiel für eine stetige Variable ist `einkaufen$alter`, die dir schon in den letzten Tutorials begegnet sein sollte. Beachte, dass du innerhalb von `ggplot`-Code den `$`-Operator nicht benutzen musst. Das liegt daran, dass `ggplot` weiß, in welchem Datensatz die Variable gesucht werden muss, da wir den Datensatz ja im allerersten Argument angeben. 
+Unser Go-To-Beispiel für eine stetige Variable ist `einkaufen$alter`, die dir schon in den letzten Tutorials begegnet sein sollte. Beachte, dass du innerhalb eines `ggplot`-Codes den `$`-Operator nicht benutzen musst. Das liegt daran, dass `ggplot` aufgrund des ersten Arguments schon weiß, in welchem Datensatz die Variable gesucht werden muss.
 
 Hier ist `ggplot2`-Code für ein einfaches, absolut nicht schönes Histogramm. In diesem Abschnitt wird es deswegen auch mal Zeit, über Farben und Verschönerungen zu sprechen. 
 
@@ -360,7 +460,7 @@ ggplot(einkaufen, aes(alter)) +
 
 ### Was ist ein Histogramm?
 
-Bei einem Histogramm werden auf der x-Achse die möglichen Ausprägungen der Variable aufgelistet, und auf der y-Achse die Häufigkeit. Es ist also genau das gleiche Prinzip wie bei einem Balkendiagramm, nur dass wir uns hier zusätzlich noch mit der Kategorienbreite (*binwidth*) auseinandersetzen müssen.
+Bei einem Histogramm werden auf der x-Achse die möglichen Ausprägungen der Variable aufgelistet, und auf der y-Achse die Häufigkeit. Es ist also genau das gleiche Prinzip wie bei einem Balkendiagramm, nur dass du dich hier zusätzlich noch mit der Kategorienbreite (*binwidth*) auseinandersetzen musst.
 
 Denn: Balkendiagramme sind für diskrete Daten, und diskrete Daten haben natürliche Kategorien. Zum Beispiel ist das Verkehrsmittel ÖPNV etwas anderes als Motorrad - die Kategorien liegen also schon in der Natur der Sache. 
 
@@ -401,7 +501,7 @@ ggplot(einkaufen, aes(x = alter)) +
 
 Da die Balken gerade visuell in einer großen grauen Masse verschwinden, wird noch nicht so ganz deutlich worum es eigentlich geht. Deswegen wäre es hilfreich, wenn alle Balken eine schwarze Umrandung hätten und etwas hellgrauer wären. Beachte, dass jetzt nach dem `binwidth`-Argument dafür noch die Argumente `color` und `fill` stehen. 
 
-Fun fact: in `ggplot` ist es für R egal, ob du die UK Variante von `colour` schreibst oder die amerikanische `color`. Wie das geschrieben wird ist in diesem Fall reine Geschmackssache.
+Fun fact: in `ggplot` ist es für R egal, ob du die UK Variante von `colour` schreibst oder das amerikanische `color`. Wie das geschrieben wird ist in diesem Fall reine Geschmackssache.
 
 ```{r color, exercise = TRUE, exercise.cap = "Color und Fill"}
 ggplot(einkaufen, aes(x = alter)) +
@@ -424,6 +524,101 @@ ggplot(einkaufen, aes(x = alter)) +
                  color = "black",
                  fill = "grey")
 ```
+
+```{r hist-quest}
+quiz(caption = "Quiz zu den Histogrammen",
+     
+question("Welche Daten lassen sich gut im Histogramm darstellen?",
+               answer("Eine einzelne, kategoriale Variable.",
+                      message = "Fast richtig. Nur dass die Variable stetig ist und nicht kategorial. 
+                      Hier würde sich ein Balkendiagramm anbieten."),
+               answer("Eine einzelne, stetig Variable.",
+                      correct = T),
+               answer("Zwei kategoriale Variablen.",
+                      message = "Für diese Datenart eignet sich eine Kreuztabelle."),
+               answer("Zwei stetige Variablen.",
+                      message = "Fast richtig. Es geht um stetige Daten, aber eben nur um eine einzelne Variable. 
+                      Für diese Datenart eignet sich ein Punktdiagramm."),
+               allow_retry = TRUE,
+               random_answer_order = TRUE,
+               correct = "Richtig!",
+               incorrect = "Das stimmt leider nicht, probier es noch mal!"),
+
+question("Warum ein Histogramm und kein Balkendiagramm?",
+               answer("Weil die abgebildete Variable stetig und nicht diskret ist.",
+                     correct = T),
+               answer("Weil die abgebildete Variable diskret und nicht stetig ist.",
+                      message = "Genau anders herum. 
+                      Die abgebildete Variable ist stetig (hat keine natürlichen Kategorien) 
+                      und muss deswegen in Intervallen abgebildet werden."),
+               answer("Weil Statistiker*innen gerne möglichst viele Möglichkeiten haben, 
+                      um es maximal kompliziert zu machen.",
+                      message = "Es mag manchmal so anmuten aber eigentlich geht es ja darum, 
+                      die Sachverhalten möglichst übersichtlich und korrekt abzubilden :)"),
+               answer("Weil stetige Variablen keine natürlichen Kategorien bilden.",
+                      correct = T),
+               allow_retry = TRUE,
+               random_answer_order = TRUE,
+               correct = "Richtig!",
+               incorrect = "Das stimmt leider nicht, probier es noch mal!"),
+
+question("Warum verändert sich die Höhe zwischen den beiden ersten Histogrammen beim Alter um die 25 von 17 auf 25??",
+               answer("Weil die Kategorienbreite breiter wird und somit mehr Menschen umfasst.",
+                      correct = TRUE),
+               answer("Weil die Kategorienbreite sich ändert und jetzt mehr Menschen zusammengefasst werden.",
+                      correct = TRUE),
+               answer("Weil das Alter entsprechend angepasst wurde.",
+                      message = "Die 25 Beobachtungen haben nichts mit dem Alter 25 zu tun."),
+               answer("Weil die Kategorienbreite enger wird und somit mehr Menschen pro Alter zusammenkommen.",
+                      message = "Genau anders herum: wenn die Kategorien werden breiter werden, werden mehr Menschen in einer Kategorie zusammengefasst."),
+               allow_retry = TRUE,
+               random_answer_order = TRUE,
+               correct = "Richtig!",
+               incorrect = "Das stimmt leider nicht, probier es noch mal!"),
+
+question("Was stimmt bzgl. der Argumente colour und fill?",
+               answer("colour kann auch color geschrieben werden.",
+                      correct = TRUE),
+               answer("R ist case sensitive, deswegen muss das Argument colour stehts mit ou geschrieben werden.",
+                      message = "Das ist teilweise richtig. R ist case sensitive. In diesem speziellen Fall sind allerdings zwei Schreibweisen des gleichen Arguments möglich."),
+               answer("colour bestimmt die Farbe der Umrandungen",
+                      correct = T),
+               answer("fill bestimmt die Farbe des Hintergrundes",
+                      message = "fill bestimmt die Farbe der Füllung des jeweiligen geometrischen Objekts."),
+               allow_retry = TRUE,
+               random_answer_order = TRUE,
+               correct = "Richtig!",
+               incorrect = "Das stimmt leider nicht, probier es noch mal!"),
+
+question("Was stimmt bzgl. des Arguments boundary?",
+               answer("Spezifiziert die Grenze zwischen zwei bins.",
+                      correct = TRUE),
+               answer("Spezifiziert die Grenzen des gesamten Plots.",
+                      message = "Dafür gibt es andere Funktionen (zB. coord_cartesian())."),
+               answer("Spezifiziert die Grenzen, welcher Teil des Plots angezeigt wird.",
+                      message = "Dafür gibt es bspw. coord_cartesian()"),
+               answer("Umrandet die bins in einer frei gewählten Farbe.",
+                      message = "Das gesuchte Argument heißt colour."),
+               allow_retry = TRUE,
+               random_answer_order = TRUE,
+               correct = "Richtig!",
+               incorrect = "Das stimmt leider nicht, probier es noch mal!"),
+
+question("Letzter Plot: Wie alt ist die älteste Person?",
+               answer("Zwischen 85 und 90 Jahren.",
+                      correct = TRUE),
+               answer("89 Jahre, 11 Monate und 3 Tage.",
+                      message = "Das könnte zwar sein, könnte aber auch nicht sein. Du kannst du wissen, das diese Person sich im Intervall zwischen 85 und 90 Jahren befindet."),
+               answer("100",
+                      message = "Die höchste Kategorie hört bei 90 aus, also maximal 90 Jahre."),
+               allow_retry = TRUE,
+               random_answer_order = TRUE,
+               correct = "Richtig!",
+               incorrect = "Das stimmt leider nicht, probier es noch mal!")
+
+)
+```
+
 
 ## 3. Boxplot
 
@@ -478,7 +673,23 @@ ggplot(data_einkaufen, aes(x = verkehrsmittel, y = alter)) +
 
 ```{r question_boxplot}
 quiz(caption = "Interpretation üben",
-question_radio("Wie ist das obere und untere Ende der Box bei den Autofahrenden zu interpretieren? Der untere Rand der Box liegt ungefähr bei 37, der obere bei ca. 60 Jahren.",
+     question("Welche Daten lassen sich gut im Boxplot darstellen?",
+               answer("Eine einzelne, kategoriale Variable.",
+                      message = "Fast richtig. Nur dass noch eine weitere, stetige Variable benötigt 
+                      Hier würde sich ein Balkendiagramm anbieten."),
+               answer("Eine einzelne, stetig Variable.",
+                      message = "Fast richtig. Es fehlt noch eine weitere, kategoriale Variable. In diesem Fall eignet sich ein Histogramm."),
+               answer("Eine kategoriale und eine stetige Variable,",
+                      correct = T),
+               answer("Zwei stetige Variablen.",
+                      message = "Fast richtig. Nur das die zweite Variable kategorial ist und nicht stetig. 
+                      Für diese Datenart eignet sich ein Punktdiagramm."),
+               allow_retry = TRUE,
+               random_answer_order = TRUE,
+               correct = "Richtig!",
+               incorrect = "Das stimmt leider nicht, probier es noch mal!"),
+     
+question("Wie ist das obere und untere Ende der Box bei den Autofahrenden zu interpretieren? Der untere Rand der Box liegt ungefähr bei 37, der obere bei ca. 60 Jahren.",
                answer("Diese Altersspanne umfasst die mittleren 50% der Autofahrenden",
                       correct = TRUE,
                       message = "Das entspricht der IQR (*interquartile range*), also dem Abstand zwischen drittem und erstem Quartil, oder anders gesagt zwischen dem 75%-Quantil und dem 25%-Quantil."),
@@ -605,11 +816,11 @@ undifferenzierbaren Masse zusammenschrumpfen. Im nächsten Kapitel erfährst du
 Möglichkeiten, mit extremen Werten umzugehen, und wie das
 Punktdiagramm ohne sie aussehen würde.
 
-## Extreme Werte
+### Extreme Werte
 
-In diesem Unterkapitel hast du die Mögichkeit, einen Blick in die Praxis zu werfen: Der Umgang mit Ausreißerwerten. Es ist komplett freiwillig. Wenn du lieber mit dem rein grafischen weitermachen willst, springe zu Kapitel 5: Liniendiagramme.
+In diesem Abschnitt hast du die Mögichkeit, einen Blick in die Praxis zu werfen: Der Umgang mit Ausreißerwerten. Es ist komplett freiwillig. Wenn du lieber mit dem rein grafischen weitermachen willst, springe zu Kapitel 5: Liniendiagramme.
 
-Das ist ein klassischer Fall von Datenaufbereitung. Es wird **vor** den Analysen gemacht.
+Das ist ein klassischer Fall von Datenaufbereitung. Es wird **vor** den Analysen gemacht, s. Tutorial Data Wrangling.
 
 Und genau deswegen ist es so cool, dass wir diesen echten Datensatz zur Verfügung haben: Du wirst mit Problemen konfrontiert, die dir auch in Praxis begegnen werden, aber eben nicht in simulierten Datensätzen.
 
@@ -644,7 +855,7 @@ Dass die Ausreißer da sind kann, auch in diesem Fall, verschiedene Gründe habe
 Das lässt sich prüfen. (In diesem Unterkapitel wird nur nach Optik geprüft. In der freien Wildbahn wären statistische Analysen notwendig!)
 
 ```{r ausreisser2, exercise = TRUE,  exercise.cap = "Ursachenanalyse"}
-ggplot(einkaufen, aes(x = weg, y = ort)) +
+ggplot(einkaufen, aes(x = ort, y = weg)) +
   geom_boxplot()
 ```
 
@@ -706,6 +917,84 @@ ggplot(data_einkaufen, aes(x = alter, y = weg)) +
 
 Das sieht doch deutlich stimmiger aus.
 
+```{r scatter-quest}
+quiz(caption = "Quiz zum Punktediagramm",
+     
+question("Welche Daten lassen sich gut in einem Punktediagramm darstellen?",
+               answer("Eine einzelne, kategoriale Variable.",
+                      message = "Fast richtig. 
+                      Nur dass die Variable stetig ist und nicht kategorial. 
+                      Hier würde sich ein Balkendiagramm anbieten."),
+               answer("Eine einzelne, stetig Variable.",
+                      correct = T),
+               answer("Zwei kategoriale Variablen.",
+                      message = "Für diese Datenart 
+                      eignet sich eine Kreuztabelle."),
+               answer("Zwei stetige Variablen.",
+                      message = "Fast richtig. 
+                      Es geht um stetige Daten, 
+                      aber eben nur um eine einzelne Variable. 
+                      Für diese Datenart eignet sich ein Punktdiagramm."),
+               allow_retry = TRUE,
+               random_answer_order = TRUE,
+               correct = "Richtig!",
+               incorrect = "Das stimmt leider nicht, probier es noch mal!"),
+
+question("Plot 1: Wie alt ist die Person, die 600km Anreieweg hat ca.?",
+               answer("ca. 40 Jahre alt.",
+                     correct = T),
+               answer("Über 75 Jahre alt."),
+               answer("Zwischen 37 und 50 Jahren",
+                      correct = T),
+               answer("Unter 25 Jahren."),
+               allow_retry = TRUE,
+               random_answer_order = TRUE,
+               correct = "Richtig!",
+               incorrect = "Das stimmt leider nicht, probier es noch mal!"),
+
+question("Was ist zu tun bei extremen Werten?",
+               answer("Alles kleinstschrittig Dokumentieren.",
+                      correct = TRUE),
+               answer("Willkürlich einen Wert festlegen, 
+                      über- oder unterhalb dessen einfach alle Daten rausgeworfen
+                      werden.",
+                      message = "Das geht gar nicht. 
+                      Es muss alles begründet sein!"),
+               answer("Sich die Zusammenhänge anschauen und Ideen sammeln, 
+                      womit die extremen Werte zu tun haben könnten.",
+                      correct = T),
+               answer("Ignorieren.",
+                      message = "Auch quatsch. 
+                      Wenn du dich entschließt, sie drin zu behalten, 
+                      dann sollte auch das gut argumentiert sein."),
+               allow_retry = TRUE,
+               random_answer_order = TRUE,
+               correct = "Richtig!",
+               incorrect = "Das stimmt leider nicht, probier es noch mal!"),
+
+question("Was sind zwei übliche Daumenregeln für die Definition von Ausreißern??",
+               answer("Mittelwert plus/minus 3 Standardabweichungen",
+                      correct = TRUE),
+               answer("Q1 - 1.5 * IQR bzw. Q3 + 1.5 * IQR",
+                      correct = T),
+               answer("Mittelwert plus/minus 1.96 Standardabweichungen",
+                      message = "Mittelwert plus/minus 1.96 Standardabweichungen 
+                      umschließen bei der Standardnormalverteilung genau 95% der 
+                      Fläche, sind also sehr relevant zur Errechnung des p Wertes.
+                      Für die extremen Werte ist dieses Intervall jedoch
+                      irrelevant."),
+               answer("Mittelwert plus/minus 1.5 * IQR",
+                      message = "Da hast du zwei, zugegeben sehr ähnliche, Maßen
+                      durcheinander bekommen. 
+                      Lies dir den Abschnitt nochmal zur Erinnerung durch :)"),
+               allow_retry = TRUE,
+               random_answer_order = TRUE,
+               correct = "Richtig!",
+               incorrect = "Das stimmt leider nicht, probier es noch mal!"),
+)
+```
+
+
 ## 5. Liniendiagramm
 
 ::: infobox
@@ -755,6 +1044,63 @@ ggplot(heated, aes(x = enddate,
 ```
 
 Für schöne Achsenbeschriftungen siehe das Kapitel „Themes und Labs“.
+
+```{r line-quest}
+quiz(caption = "Quiz zum Liniendiagramm",
+     
+question("Welche Daten lassen sich gut in einem Liniendiagramm darstellen?",
+               answer("Eine einzelne, stetig Variable.",
+                      message = "Das ist schon ein guter Anfang.Es fehlt noch eine weitere, sequentielle Variable. Für diese Datenart eignet sich ein Histogramm."),
+               answer("Zwei kategoriale Variablen.",
+                      message = "Für diese Datenart 
+                      eignet sich eine Kreuztabelle."),
+               answer("Zwei stetige Variablen.",
+                      message = "Fast richtig. 
+                      Es geht um zwei stetige Variablen, 
+                      aber für ein Liniendiagramm ist es essentiell, 
+                      dass eine von ihnen sequentiell ist. 
+                      Für diese Datenart eignet sich ein Punktdiagramm."),
+                answer("Eine stetige und eine sequentielle Varible.",
+                      correct = T),
+               allow_retry = TRUE,
+               random_answer_order = TRUE,
+               correct = "Richtig!",
+               incorrect = "Das stimmt leider nicht, probier es noch mal!"),
+
+question("Plot 1: Was ist richtig?",
+               answer("Es werden sechs Jahre abgebildet.",
+                     correct = T),
+               answer("Es existieren Daten für jeden einzelnen Tag in der
+                      angegebenen Zeit.",
+                      message = "Die Wintermonate fehlen"),
+               answer("Die fehlenden Werte werden einfach mit einem Strich
+                      überbrückt.",
+                      correct = T),
+               allow_retry = TRUE,
+               random_answer_order = TRUE,
+               correct = "Richtig!",
+               incorrect = "Das stimmt leider nicht, probier es noch mal!"),
+
+question("Letzte Grafik: Was stimmt?",
+              answer("Es werden sechs Jahre abgebildet.",
+                     correct = T),
+               answer("Die Wintermonate wurden einfach rausgelöscht.",
+                      message = "Die Wintermonate waren nie vorhanden!"),
+               answer("Das Argument group ist essentiell, damit R weiß, 
+                      welche Werte wie zusammengehören.",
+                      correct = T),
+               answer("lubridate ist ein super Paket, 
+                      um mit Daten und Zeitangaben umzugehen",
+                      correct = T),
+               answer("weathermetrics ist ein super Paket, 
+                      um mit Wetterdaten zu rechnen.",
+                      correct = T),
+               allow_retry = TRUE,
+               random_answer_order = TRUE,
+               correct = "Richtig!",
+               incorrect = "Das stimmt leider nicht, probier es noch mal!")
+)
+```
 
 ## 6. Aesthetic Mapping
 
@@ -871,18 +1217,6 @@ ggplot(data_einkaufen, aes(x = alter, y = weg, alpha = kochen)) +
 
 Hier gilt das gleiche wie bei size: die unterschiedlichen alpha Werte nehmen eine Gewichtung vor, die die Wahrnehmung von Daten verzerren kann.
 
-### Viel zu doll
-
-Weil es auch ein bisschen Spaß bringt hier ein Plot, in dem fast alle Ästhetischen Attribute enthalten sind. Auch wenns Quatsch ist.
-
-```{r am_viel, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "Negativbeispiel"}
-ggplot(data_einkaufen, aes(x = alter, y = weg, colour = verkehrsmittel, shape = ort, size = bioladen, alpha = kochen)) +
-  geom_point() +
-  # legende lesbar anordnen
-  theme(legend.direction = "horizontal", legend.box = "vertical")
-```
-
-
 ### Ästhetische Attribute ohne Mapping
 
 Jetzt kennst du die Möglichkeiten, ästhetische Attribute Variablen zuzuweisen, um noch mehr Information abzubilden. Was du bisher noch nicht gelernt hast ist, diese ästhetischen Attribute auch ohne Mapping (also ohne sie einer Variable, also noch mehr Informationen, zuzuweisen) zu nutzen. Einfach, weil es gut aussieht und Grafiken übersichtlicher und lesbarer macht. Einige Beispiele wurden dir im bisherigen Tutorial schon untergemogelt. Hier sollen sie nochmal den gebührenden Platz finden.
@@ -902,6 +1236,136 @@ ggplot(einkaufen, aes(x = alter, fill = bioladen)) +
 Richtig erkannt: sobald ein ästhetisches Attribut in der Funktion `aes()` steht, wird ihr eine Variable zugeordnet, sie bringt neue Information mit in den Plot. Das erkennst du auch daran, dass per default eine Legende erstellt wird. Steht eine Attribut einfach in einer geom-Funktion wird der Inhalt auf *alle* Informationen im Plot angewendet, ihr wird ein einzelner Wert zugeordnet und es wird keine Legende erstellt.
 
 Dieses Prinzip gilt für alle oben vorgestellten ästhetischen Attribute. Deiner Phantasie sind keine Grenzen gesetzt. Bevor du jetzt anfängst, wild mit Farben um die zu schmeißen wäre es allerdings wichtig, dass du das Unterkapitel Barrierefreiheit liest - da ist eine wunderschöne Palette vorgestellt, die so richtig Spaß macht :)
+
+```{r aes-quest}
+quiz(caption = "Quiz zum aesthetic mapping",
+     
+question("Welche der folgenden Attribute können als ästhetische Attribute genutzt
+         werden?",
+         answer("x Achse",
+                 correct = T),
+         answer("y Achse",
+                 correct = T),
+        answer("colour",
+                 correct = T),
+        answer("fill",
+                 correct = T),
+         answer("shape",
+                 correct = T),
+         answer("size",
+                 correct = T),
+         answer("alpha",
+                 correct = T),
+               allow_retry = TRUE,
+               random_answer_order = TRUE,
+               correct = "Richtig!",
+               incorrect = "Das stimmt leider nicht, probier es noch mal!"),
+
+question("Füllung und Farbe, was stimmt??",
+               answer("fill geht grundsätzlich nur für kategoriale Daten.",
+                     message = "Gerade in Heatmaps funktioniert fill für stetige
+                     Daten ganz wunderbar."),
+               answer("colour bestimmt immer die Farbe der geometrischen Objekte.",
+                      message = "Jain. 
+                      Bei Balkendiagrammen und Histogrammen wird mit colour die
+                      Umrandungsfarbe der Balken bzw. Intervalle festgelegt."),
+               answer("colour kann als ästhetisches Atrribut eine weitere Variable
+                      abbilden.",
+                      correct = T),
+                answer("fill kann als ästhetisches Atrribut eine weitere Variable
+                      abbilden.",
+                      correct = T),
+               allow_retry = TRUE,
+               random_answer_order = TRUE,
+               correct = "Richtig!",
+               incorrect = "Das stimmt leider nicht, probier es noch mal!"),
+
+question("Shape: Was stimmt?",
+              answer("shape kann als ästhetisches Atrribut eine weitere Variable
+                      abbilden.",
+                      correct = T),
+              answer("Shape ist vor allem für Punktdiagramme ein relevantes
+                     Attribut.",
+                     correct = T),
+               answer("Mit shape ist es möglich, 
+                      der Punktewolke eine Form nach eigener Wahl zu geben.",
+                      message = "Das ist mit keiner einzigen Funktion möglich. 
+                      Das wäre nämlich basically wissenschaftlicher Betrug. 
+                      Shape gibt den einzelnen Punkten eine Form der eigenen
+                      Wahl."),
+               answer("Shape kann stetige Variablen abbilden.",
+                      message = "Das ist Quatsch. 
+                      Einzelne Formen bilden aus sich heraus natürliche Kategorien,
+                      deswegen können sie auch nur für Variablen verwendet werden,
+                      die das auch tun (= kategoriale)"),
+               allow_retry = TRUE,
+               random_answer_order = TRUE,
+               correct = "Richtig!",
+               incorrect = "Das stimmt leider nicht, probier es noch mal!"),
+
+question("size: Was stimmt?",
+              answer("size kann als ästhetisches Atrribut eine weitere Variable
+                      abbilden.",
+                      correct = T),
+              answer("size ist vor allem für Punktdiagramme ein relevantes
+                     Attribut.",
+                     correct = T),
+               answer("size ist das Mittel der Wahl, 
+                      um eine weitere Variable in den Plot einzubinden.",
+                      message = "Auf gar keinen Fall. 
+                      Mittel der Wahl sind fill und colour. 
+                      Nur in dezidierten Fällen ist size eine geeignete Wahl."),
+               answer("size bestimmt die Größe des gesamten Plots.",
+                      message = "size bestimmt die Größe der Punkte IM Plot."),
+               allow_retry = TRUE,
+               random_answer_order = TRUE,
+               correct = "Richtig!",
+               incorrect = "Das stimmt leider nicht, probier es noch mal!"),
+
+question("alpha: Was stimmt?",
+              answer("alpha kann als ästhetisches Atrribut eine weitere Variable
+                      abbilden.",
+                      correct = T),
+              answer("alpha ist vor allem für Punktdiagramme ein relevantes
+                     Attribut.",
+                     correct = T),
+               answer("alpha ist das Mittel der Wahl, 
+                      um eine weitere Variable in den Plot einzubinden.",
+                      message = "Auf gar keinen Fall. 
+                      Mittel der Wahl sind fill und colour. 
+                      Nur in dezidierten Fällen ist alpha eine geeignete Wahl."),
+               answer("alpha bestimmt das Maß der Durchsichtigkeit des
+                      Hintergrundes des gesamten Plots.",
+                      message = "alpha bestimmt die Durchsichtigkeit der Punkte IM
+                      Plot."),
+                answer("alpha lohnt sich besonders als ästhetisches Attribut ohne mapping.",
+                      correct = T),
+               allow_retry = TRUE,
+               random_answer_order = TRUE,
+               correct = "Richtig!",
+               incorrect = "Das stimmt leider nicht, probier es noch mal!"),
+
+question("aesthetic mapping: Was stimmt?",
+              answer("Ästhetische Attribute können auch ohne mapping genutzt
+                     werden.",
+                      correct = T),
+              answer("Wenn ästhetische Attribute ohne mapping angewendet werden,
+                     geht es wirklich um rein ästhetische Aspekte, nicht darum,
+                     noch eine weitere Variable (also mehr Information)
+                     einzufügen.",
+                     correct = T),
+               answer("Farben werden auf englisch und in Anführungszeichen
+                      geschrieben.",
+                      correct = T),
+               answer("Ästhetische Attribute, die nicht gemapped werden sollen kommen ebenfalls in die aes() Funktion.",
+                      message = "Da kommen genau nur die Attribute rein, 
+                      die gemapped werden sollen."),
+               allow_retry = TRUE,
+               random_answer_order = TRUE,
+               correct = "Richtig!",
+               incorrect = "Das stimmt leider nicht, probier es noch mal!")
+)
+```
 
 ## 7. Special: Facets
 
@@ -943,7 +1407,35 @@ ggplot(data_einkaufen, aes(x = alter, y = weg)) +
   geom_point() +
   facet_wrap(~verkehrsmittel, nrow = 3)
 ```
-## 8. Das Drumherum: Labs, Themes usw.
+
+```{r facets-quest}
+quiz(caption = "Quiz zu den facets",
+     
+question("Facetten: Was stimmt?",
+         answer("Facetten ermöglichen es auf eine sehr übersichtliche Weise noch weitere Variablen (Informationen) mit in die Grafik zu bringen.",
+                 correct = T),
+         answer("facet_grid() ist besonders für 2 Variablen im Stile einer
+                Kreuztabelle geeignet.",
+                 correct = T),
+        answer("facet_wrap() ist besonders für eine Varibale in einer selbst
+               gewählten Anordnung geeignet.",
+                 correct = T),
+        answer("Die Tilde (~) verbindet die beiden Variablen, 
+               die abgebildet werden sollen",
+                 correct = T),
+         answer("Facetten sind wie verschiedene Fenster im Browser, 
+                zwischen denen man hin und her wechseln kann.",
+                 message = "Sie ermöglichen alle Infos auf einen Blick zu bekommen."),
+               allow_retry = TRUE,
+               random_answer_order = TRUE,
+               correct = "Richtig!",
+               incorrect = "Das stimmt leider nicht, probier es noch mal!")
+)
+```
+
+
+
+## 8. Das Drumherum: Themes, Labs und Legenden
 
 Was noch fehlt um die Grafiken ganz grundlegend ein bisschen schöner zu machen ist die grundsätzliche Gestaltung der Plots sowie die grundsätzlichen Beschriftungen.
 
@@ -1086,6 +1578,29 @@ ggplot(data_einkaufen, aes(x = alter, y = weg, colour = kochen)) +
 ```{r d_legends_3, exercise = TRUE, exercise.setup = "d_legends", exercise.cap = "Legenden"}
 
 ```
+
+```{r drumherum-quest}
+quiz(caption = "Quiz zum Drumherum",
+     
+question("Was stimmt?",
+         answer("Themes sind vorgefertigte Muster (Hintergrund, Schriftart etc.), nach denen Plots gestaltet werden.",
+                 correct = T),
+         answer("Themes sind Themenfelder, 
+                welche inhaltlich in Plotsabgearbeitet werden.",
+                 message = "Lies dir den Abschnitt lieber nochmal genauer durch."),
+        answer("Labs sind die Beschriftungen eines Plots.",
+                 correct = T),
+        answer("Labs ist die Laborkennung, 
+               in dem die analysierten Daten erhoben wurden.",
+                 message = "Lies dir den Abschnitt lieber nochmal genauer durch."),
+         answer("Um eine Legende zu verändern, 
+                wird der Plot gespeichert und die Legende dann extern mittels Paint
+                oder Gimp nach den eigenen Wünschen nachgestaltet.",
+                 message = "Da gibt es deutlich galantere Wege. 
+                Lies dir den Abschnitt lieber nochmal genauer durch."))
+)
+```
+
 
 
 ## 9. Barrierefreiheit
