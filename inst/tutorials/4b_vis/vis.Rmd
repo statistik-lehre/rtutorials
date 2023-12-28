@@ -15,7 +15,7 @@ resource_files:
 - css/boxes.css
 tutorial:
       id: ggplot
-      version: 1
+      version: 2
 ---
 
 ```{r setup, include=FALSE}
@@ -49,7 +49,7 @@ Mit R sind abgefahrene Sachen möglich. Eine vielfältige Übersicht darüber, w
 
 #### [Aber auch solche geometrischen Schönheiten](https://fronkonstin.com/tag/ggplot2/page/3/)
 
-```{r fronkonstin, fig.asp = 1}
+```{r fronkonstin, fig.asp = 1, out.width="80%"}
 n=300
 t1=1:n
 t0=seq(3,2*n+1,2)%%n
@@ -642,7 +642,17 @@ ggplot(einkaufen, aes(x = verkehrsmittel, y = alter)) +
   geom_boxplot()
 ```
 
+<details>
+<summary> <a>**▼ \* Zusatz: Zusammenfassen von Kategorien**</a> </summary>
+
 Es wird auch deutlich, dass die Kategorien "E-Roller" und "Motorrad" so klein sind, dass sie sich nicht als eigene Analyse-Kategorie eignen, deswegen werden sie mit "Andere" zusammengefasst. Hierfür wird ein neuer Datensatz mit dem Namen `data_einkaufen` erstellt. Die NAs dürfen allerdings nicht einfach umgecodet werden, weil wir es in diesem Fall einfach wirklich nicht wissen.
+
+::: rot
+Das Zusammenfassen von Kategorien sollte vor der Datenerhebung geplant sein, damit 
+nicht nachträglich Kategorien zusammengefasst werden und dadurch die Ergebnisse 
+verändert werden können. Wenn es nachträglich geschieht, muss es auf jeden Fall
+gut begründet und **dokumentiert** werden, sonst ist das wissenschaftlicher Betrug!
+:::
 
 ```{r bp_neuerdf, exercise = TRUE}
 # Erstelle ein neues Objekt und speichere den bisherigen Datensatz darin
@@ -661,6 +671,7 @@ ggplot(data_einkaufen, aes(x = verkehrsmittel, y = alter)) +
   geom_boxplot()
 ```
 
+</details>
 
 ```{r question_boxplot}
 quiz(caption = "Interpretation üben",
@@ -815,7 +826,7 @@ undifferenzierbaren Masse zusammenschrumpfen. Im nächsten Kapitel erfährst du
 Möglichkeiten, mit extremen Werten umzugehen, und wie das
 Punktdiagramm ohne sie aussehen würde.
 
-### Extreme Werte
+## Extreme Werte
 
 In diesem Abschnitt hast du die Mögichkeit, einen Blick in die Praxis zu werfen: Der Umgang mit Ausreißerwerten. Es ist komplett freiwillig. Wenn du lieber mit dem rein grafischen weitermachen willst, springe zu Kapitel 5: Liniendiagramme.
 
@@ -845,7 +856,7 @@ ggplot(einkaufen, aes(x = weg)) +
 
 Der Median liegt bei 3 km, das bedeutet: 50% der Personen haben einen Anfahrtsweg von höchstens 3 km. Das 3. Quantil ist bei 7 km: 75% der Personen haben einen Anfahrtsweg von höchstens 7km. Und das arithmetische Mittel liegt bei 12.76 km. Das deutet sehr stark auf Ausreißerwerte hin. Das Maximum liegt bei 600, was die Vermutung noch bestärkt. Auch optisch im Histogramm wird deutlich, dass fast alle Ausprägungen unter 100 km liegen.
 
-#### Ursachenanalyse
+### Ursachenanalyse
 
 Dass die Ausreißer da sind kann, auch in diesem Fall, verschiedene Gründe haben:
 
@@ -879,7 +890,7 @@ Sowohl in der Kreuztabelle als auch in der Grafik kannst du sehen, dass jede Per
 
 Sidefact: Die erhebenden Personen sind btw. klassische Metadaten - also Daten über Daten. Sie scheinen erstmal relativ wenige aussagekräftig. Das ist natürlich quatsch, Metadaten sind richtig mächtig. Hier ist ein sehr unterhaltsames [Beispiel](https://www.youtube.com/watch?v=-YpwsdRKt8Q).
 
-#### Ausschluss
+### Ausschluss
 
 Jetzt ist ein wenig mehr Orientierung bzgl. der Ausreißer da. Die Entscheidung, wie damit umgegangen wird ist nach wie vor offen. Spätestens jetzt ist es sehr wichtig, sich nochmal die Eingangsfrage der eigenen Forschung zu stellen: Was wollte ich eigentlich untersuchen? In diesem Fall ging es um die Frage, ob es einen Zusammenhang zwischen Einkaufsweg und Alter gibt. Wenn da Fernreisende mit drin sind, bieten diese logischerweise keine interessante Info für die Frage. Eine Möglichkeit wäre, den Laden am Bahnhof kategorisch auszuschließen. Allerdings ist unklar, ob in den NA Werten nur dieser Laden hinter steckt, deswegen müssten wir alle NAs rausschmeißen, was zum Verlust von 42 Beobachtungen führen würde. Das ist absurd viel. Außerdem kann davon ausgegangen werden, dass Menschen auch ihre Alltagseinkäufe dort machen, die wären dadurch kategorisch auch ausgeschlossen. Die nächste Möglichkeit wäre, eine feste Grenze zu setzen. Klassischerweise könnte diese aus der bestehenden Literatur bezogen werden. Also wenn es zB ein Paper geben würde, dass sagen würde: klassische Einkäufe finden in einem Umkreis von 10km statt, könnten alle Werte über 10km ausgeschlossen werden. Das wären schon deutlich weniger. Eine andere Möglichkeit ist die statistische: entweder die Werte außerhalb des Intervalls $[Q_1 - 1.5 \cdot IQR; Q_3 + 1.5 \cdot IQR]$ oder die Werte außerhalb des Intervalls $[\mu \pm 3 \cdot \sigma]$. Wenn die Daten normalverteilt sind (wie angenommen wird für die allermeisten statistischen Analysen, wenn nicht, haben wir noch ganz andere Probleme!), liegen in diesem Bereich 99.8% aller Werte. Es gibt keine Funktion in R, die automatisiert entsprechende Werte rausschmeißt. Das liegt daran, dass die Entscheidung so situationsabhängig ist und es einfach wichtig ist, sich jedes Mal wieder Gedanken zu machen, wie du damit umgehen möchtest. Hier sind beide Möglichkeiten:
 
@@ -902,10 +913,14 @@ data_einkaufen <- data_einkaufen[data_einkaufen$weg < maximalwert, ]
 data_einkaufen <- data_einkaufen[!is.na(data_einkaufen$weg), ]
 ```
 
+::: rot
 #### Dokumentation
 
-::: rot
 **Ganz wichtig!**: Wenn du Daten ausschließt **musst** du das, inklusive der Argumentation warum, gut dokumentieren. Sonst ist das wissenschaftlicher Betrug!
+
+Im Normalfall sollte bereits vor der Datenerhebung festgelegt werden, nach welchen
+Kriterien Daten ausgeschlossen werden müssen - damit die Versuchsleiter nicht
+nachträglich die Möglichkeit haben, das Ergebnis in eine bestimmte Richtung zu lenken.
 :::
 
 Und jetzt nochmal der Plot ganz vom Anfang:
