@@ -1028,6 +1028,12 @@ zweites Mal befragt. Deswegen ist `einkaufen` nicht geeignet um einen Verlauf
 
 <!-- Maybe use the `economics` data set from ggplot2 here -->
 
+```{r include = FALSE}
+ggplot(economics, aes(date, unemploy)) +
+  geom_line
+```
+
+
 Im Datensatz `rtutorials::heated` ist die maximale Tagestemperatur (`maxtemp`) in Grad Fahrenheit sowie das Tagesdatum (`enddate`) gespeichert. Es handelt sich um 
 wiederholte Messungen, weil der gleiche Gegenstand (die Temperatur in New York) 
 immer wieder (täglich) erhoben wurde.
