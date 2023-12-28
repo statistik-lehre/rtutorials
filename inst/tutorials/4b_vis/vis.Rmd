@@ -826,6 +826,19 @@ undifferenzierbaren Masse zusammenschrumpfen. Im nächsten Kapitel erfährst du
 Möglichkeiten, mit extremen Werten umzugehen, und wie das
 Punktdiagramm ohne sie aussehen würde.
 
+```{r scatterquiz}
+question_checkbox("Plot 1: Wie alt ist die Person, die 600km Anreiseweg hat ca.?",
+               answer("ca. 40 Jahre alt.",
+                     correct = T),
+               answer("Über 75 Jahre alt."),
+               answer("Unter 25 Jahren."),
+               allow_retry = TRUE,
+               random_answer_order = TRUE,
+               correct = "Richtig!",
+               incorrect = "Das stimmt leider nicht, probier es noch mal!")
+```
+
+
 ## Extreme Werte
 
 In diesem Abschnitt hast du die Mögichkeit, einen Blick in die Praxis zu werfen: Der Umgang mit Ausreißerwerten. Es ist komplett freiwillig. Wenn du lieber mit dem rein grafischen weitermachen willst, springe zu Kapitel 5: Liniendiagramme.
@@ -941,34 +954,19 @@ question("Welche Daten lassen sich gut in einem Punktediagramm darstellen?",
                       Nur dass die Variable stetig ist und nicht kategorial. 
                       Hier würde sich ein Balkendiagramm anbieten."),
                answer("Eine einzelne, stetig Variable.",
-                      correct = T),
+                      message = "Dafür eignet sich ein Histogramm."),
                answer("Zwei kategoriale Variablen.",
                       message = "Für diese Datenart 
                       eignet sich eine Kreuztabelle."),
                answer("Zwei stetige Variablen.",
-                      message = "Fast richtig. 
-                      Es geht um stetige Daten, 
-                      aber eben nur um eine einzelne Variable. 
-                      Für diese Datenart eignet sich ein Punktdiagramm."),
-               allow_retry = TRUE,
-               random_answer_order = TRUE,
-               correct = "Richtig!",
-               incorrect = "Das stimmt leider nicht, probier es noch mal!"),
-
-question("Plot 1: Wie alt ist die Person, die 600km Anreieweg hat ca.?",
-               answer("ca. 40 Jahre alt.",
-                     correct = T),
-               answer("Über 75 Jahre alt."),
-               answer("Zwischen 37 und 50 Jahren",
-                      correct = T),
-               answer("Unter 25 Jahren."),
+                      correct = TRUE),
                allow_retry = TRUE,
                random_answer_order = TRUE,
                correct = "Richtig!",
                incorrect = "Das stimmt leider nicht, probier es noch mal!"),
 
 question("Was ist zu tun bei extremen Werten?",
-               answer("Alles kleinstschrittig Dokumentieren.",
+               answer("Alle Entscheidungen kleinstschrittig dokumentieren.",
                       correct = TRUE),
                answer("Willkürlich einen Wert festlegen, 
                       über- oder unterhalb dessen einfach alle Daten rausgeworfen
@@ -1013,18 +1011,26 @@ question("Was sind zwei übliche Daumenregeln für die Definition von Ausreißer
 ## 5. Liniendiagramm
 
 ::: infobox
-Liniendiagramme sind geeignet, um **zwei numerische** Variablen zu Visualisieren. Die x-Variable 
-hat dabei häufig eine sequentielle Reihenfolge (wie z.B. die Zeit).
+Liniendiagramme sind geeignet, um Verläufe und Entwicklungen darzustellen.
+Dafür braucht es **zwei Variablen**: eine **stetige** Variable, und eine andere 
+mit einer **sequentiellen Abfolge** (wie z.B. die Zeit). 
+
+Die sequentielle Variable kommt dabei immer auf die `x`-Achse. 
 
 Funktion: `geom_line()`
 :::
 <br>
 
-Hierfür wird ein anderer Datensatz benötigt, da eine wiederholte Messung brauchen.
-`einkaufen` enthält 160 unabhängige Messungen. Ein Liniendiagramm ist
-geeignet, aufeinander aufbauende / sequentielle Messungen des selben Gegenstands darzustellen, wie zum
-Beispiel einen Temperaturverlauf, wo jeden Tag über den ganzen Sommer hinweg die selbe Messung wiederholt wurde. \
-Im Datensatz `rtutorials::heated` ist die maximale Tagestemperatur (`maxtemp`) in Grad Fahrenheit sowie das Tagesdatum (`enddate`) gespeichert.
+Hierfür wird ein anderer Datensatz benötigt, da wir für ein Liniendiagramm eine wiederholte Messung brauchen.
+`einkaufen` enthält 160 unabhängige Messungen, keine der Personen wurde ein
+zweites Mal befragt. Deswegen ist `einkaufen` nicht geeignet um einen Verlauf
+über die Zeit darzustellen. 
+
+<!-- Maybe use the `economics` data set from ggplot2 here -->
+
+Im Datensatz `rtutorials::heated` ist die maximale Tagestemperatur (`maxtemp`) in Grad Fahrenheit sowie das Tagesdatum (`enddate`) gespeichert. Es handelt sich um 
+wiederholte Messungen, weil der gleiche Gegenstand (die Temperatur in New York) 
+immer wieder (täglich) erhoben wurde.
 
 ```{r linegraph, exercise = TRUE, exercise.cap = "Liniendiagramm"}
 ggplot(heated, aes(x = enddate, y = maxtemp)) +
