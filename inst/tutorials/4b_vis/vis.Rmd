@@ -65,7 +65,7 @@ geom_segment(alpha=.1)+theme_void()
 
 Ziemlich beeindruckend, oder?
 
-Das soll hier aber nur ein kleiner Einblick in das sein, was alles möglich ist. In diesem Tutorial starten natürlich bei den Basics und fokussieren uns darauf grundständige Diagramme zu zeichnen. Mit diesem Grundwissen kannst du dir dann auch selbst beibringen solche abgefahrenen Diagramme zu erstellen.
+Das soll hier aber nur ein kleiner Einblick in das sein, was alles möglich ist. In diesem Tutorial starten wir natürlich bei den Basics und fokussieren uns darauf grundständige Diagramme zu zeichnen. Mit diesem Grundwissen kannst du dir dann auch selbst beibringen solche abgefahrenen Diagramme zu erstellen.
 
 In den Links über den Grafiken findest du detaillierte Anleitungen, wenn du dann soweit bist.
 
@@ -139,7 +139,8 @@ par(mfrow = c(1, 1),
 
 ## Einführung
 
-Es gibt (wie immer) tausend verschiedene Wege, Visualisierungen mit R zu erstellen. Aber einer hat sich über die Jahre als besonders beliebt erwiesen, und das ist `ggplot2`. 
+Es gibt (wie immer) tausend verschiedene Wege, Visualisierungen mit R zu erstellen. Aber einer hat sich über die Jahre als besonders beliebt erwiesen, und das ist das 
+Paket `ggplot2`. 
 
 Der Grund, warum wir dir diesen Weg beibringen:
 
@@ -196,10 +197,10 @@ Die am häufigsten verwendeten und in diesem Tutorial vorgestellten Plots sind:
 
 |                    | kategorial                | kontinuierlich                   |
 |--------------------|:--------------------------|:---------------------------------|
-| **keine**          | Balekdiagramm <br>`geom_bar()`| Histogramm <br>`geom_histogram()`|
+| **keine**          | Balkendiagramm <br>`geom_bar()`| Histogramm <br>`geom_histogram()`|
 | **kategorial**     | (`geom_count()`)          | Boxplot<br>`geom_boxplot()`      |
 | **kontinuierlich** | -                         | Punktdiagramm<br>`geom_point()`  |
-| **sequentiell**    | -                         | Liniendiagramm<br>`geom_line()`  |
+| **sequentiell (z.B. Zeit)**    | -                         | Liniendiagramm<br>`geom_line()`  |
 
 
 
@@ -211,7 +212,7 @@ Steigen wir direkt ein!
 ::: infobox
 Balkendiagramme sind geeignet, um die **Verteilung** einer **einzelnen**, **kategorialen** Variable zu zeigen.
 
-Funktion: `geom_bar()`
+Funktion: `ggplot() + geom_bar()`
 :::
 <br>
 
@@ -243,7 +244,8 @@ diese drei Kernbestandteile beschreiben lässt:
 - `aesthetic mapping`
 - `geom`etric objects
 
-Mit data kennst du dich ja jetzt schon aus, daher können wir direkt zum *mapping* übergehen.
+Mit data kennst du dich ja jetzt schon aus, daher können wir direkt zum *mapping* übergehen. Wichtig ist nur zu wissen, dass `ggplot()` nur *data frames* als Daten
+akzeptiert. 
 
 ### aesthetic mapping
 
@@ -261,7 +263,10 @@ Im Diagramm oben wurde der *x-Achse* die Variable *Verkehrsmittel* zugewiesen.
 Ändere den Code so, dass die Variable Verkehrsmittel nun stattdessen auf die y-Achse gemappt wird. Wie wird sich das Diagramm wohl verändern?
 :::
 <br>
-*Beachte, dass hier die Argumentnamen `data` und `mapping` weggelassen wurden, so wie es in der Praxis üblicherweise auch getan wird. Das ist möglich, da die Reihenfolge der Argumente beachten wire, also erst `data`, dann `mapping` und schließlich `geometric objects`.* 
+
+::: blau-nb
+Beachte, dass hier die Argumentnamen `data` und `mapping` weggelassen wurden, so wie es in der Praxis üblicherweise auch getan wird. Das ist möglich, da die Reihenfolge der Argumente beachten wire, also erst `data`, dann `mapping` und schließlich `geom`etric objects.
+:::
 
 ```{r ybarplot, exercise = TRUE, exercise.cap = "Mapping ändern auf y-Achse"}
 ggplot(einkaufen, aes(x = verkehrsmittel)) +
@@ -303,35 +308,27 @@ ggplot(einkaufen, aes(x = verkehrsmittel)) +
 ```
 
 ```{r error, exercise = TRUE, exercise.cap = "Fehlermeldung"}
+ggplot(einkaufen, aes(x = verkehrsmittel)) +
+  geom_bar()
 
 ```
 
 Dass hier eine Fehlermeldung aufploppt, ist völlig normal! Fehlermeldungen sind freundlich, denn Programmierer*innen geben sich (oft) viel Mühe, diese möglichst informativ und genau zu machen. Also hab keine Angst, und lies dir tatsächlich mal durch was da steht!
 
-Es gibt hier einen Unterschied, in den R Skripten, mit denen du arbeitest und den R Tutorials, in denen du dich gerade befindest, deswegen die folgende Aufgabe:
-
-::: aufgaberstudio
-Füge den Code aus der obigen Aufgabe in deine R Studio Konsole ein und schau dir die daraus resultierende Fehlermeldung genau an.
-:::
-<br>
-
-Wahrscheinlich sieht sie so aus:
-
 ```
-Error in `geom_point()`:
 ! Problem while setting up geom.
 ℹ Error occurred in the 1st layer.
 Caused by error in `compute_geom_1()`:
 ! `geom_point()` requires the following missing aesthetics: y
-Run `rlang::last_trace()` to see where the error occurred.
 ```
 
-- Schon die erste Zeile gibt dir eine wichtige Information: Der Fehler trat in der Funktion `geom_point()` auf und nicht an irgendeiner anderen Stelle des Plots. (Das wird wichtiger, umso mehr Ebenen ein Plot hat.)
-- Die zweite Zeile spezifiziert das Problem: Es gibt Probleme mit dem geometrischen Objekt (also den Punkten) und nicht mit irgendwas anderem in dieser Funktion
-- Die dritte Zeile sagt, dass der Fehler bereits in der allerersten Zeile / Ebene passiert
-- Die vierte Zeile musst du nicht genau verstehen
-- die fünfte Zeile schließlich sagt dir ganz genau, wo das Problem ist: Du brauchst eine zweite Variable. Und zwar auf der y-Achse. Das ergibt auch Sinn, denn ein Punkt hat immer zwei Koordinaten, eine `x`- und eine `y`-Koordinate! Logischerweise kann kein Punkt gezeichnet werden, wenn du nur eine `x`-Koordinate angibst. 
-- In der sechsten Zeile ist ein Vorschlag, um genau zu verstehen, was in deinem Code schiefläuft, das kannst du eigentlich auch ignorieren, da du die wichtigeste Info ja bereits in Zeile fünf erhalten hast
+- Schon die erste Zeile gibt dir eine wichtige Information: Der Fehler trat beim
+Hinzufügen des `geom`etrischen Objekts auf und nicht an irgendeiner anderen Stelle
+- Die zweite Zeile sagt, dass der Fehler in der ersten Zeile / Ebene passiert ist. 
+Das wird relevant, wenn du mehrere Ebenen mit `+` übereinanderlegst in deinem Plot.
+- Die dritte Zeile musst du nicht genau verstehen, das ist irgendwas internes von
+`ggplot2`
+- die vierte Zeile schließlich sagt dir ganz genau, wo das Problem ist: Du brauchst eine zweite Variable. Und zwar auf der y-Achse. Das ergibt auch Sinn, denn ein Punkt hat immer zwei Koordinaten, eine `x`- und eine `y`-Koordinate! Logischerweise kann kein Punkt gezeichnet werden, wenn du nur eine `x`-Koordinate angibst. 
 
 
 ::: aufgabe
@@ -359,12 +356,9 @@ quiz(caption = "Quiz zu den Balkendiagrammen",
                       correct = TRUE),
                answer("Eine einzelne, stetig Variable.",
                       message = "Schon fast richtig. 
-                      Es ist eine einzelne Variable, aber sie ist nicht stetig, versuch es nochmal. 
-                      Für diese Datenart eignet sich ein Histogramm."),
+                      Es ist eine einzelne Variable, aber sie ist nicht stetig, versuch es nochmal. Für diese Datenart eignet sich ein Histogramm."),
                answer("Zwei kategoriale Variablen.",
-                      message = "Schon fast richtig. 
-                      Die Variable ist kategorial, aber es sind nicht zwei.
-                      Für diese Datenart eignet sich eine Kreuztabelle."),
+                      message = "Schon fast richtig. Die Variable ist kategorial, aber es sind nicht zwei. Für diese Datenart eignet sich eine Kreuztabelle."),
                answer("Zwei stetige Variablen.",
                       message = "Für diese Datenart eignet sich ein Punktdiagramm."),
                allow_retry = TRUE,
@@ -415,12 +409,8 @@ question("Welche drei Kernbestandteile hat laut der Grammar of Graphs Theorie vo
                       gleichwertiger notwendiger Bestandteil zu ästhetischen Attributen, 
                       welche die ästehtischen Attribute abbilden.",
                       correct = T),
-               answer("Statistische Kennzahlen",
-                      correct = T),
-               answer("Wenn die Farben schön zusammenpassen.",
-                      message = "Das ist zwar ästhetisch, aber kein ästhetisches Attribut nach der GG Theorie. 
-                      Farbe per sé ist so eines, aber wie schön die sind oder wie gut sie zusammenpassen 
-                      ist keines."),
+               answer("Spalten in einem Datesatz",
+                      message = "Das sind Daten, kein visuellen Eigenschaften."),
                allow_retry = TRUE,
                random_answer_order = TRUE,
                correct = "Richtig!",
@@ -433,7 +423,8 @@ question_text("Wie erklärst du dir die weiten Anreisewege (bis 600km!) beim Ver
                                      Hunger auf ein Bio-Brötchen oder so. Während der Rest der Menschen 
                                      ihren regulären Wocheneinnkauf machen und aus der Umgebung kommen, 
                                      maximal ein paar Kilometer entfernt.")),
-              placeholder = "Musterlösung erscheint bei Abgabe deiner Antwort...")
+              placeholder = "Musterlösung erscheint bei Abgabe deiner Antwort...",
+              correct = "")
 
 )
 ```
@@ -481,7 +472,7 @@ Zum Beispiel kann ein Meter in unendlich feine Messeinheiten aufgeteilt werden:
 
 Da es unendlich Möglichkeiten gibt einen Meter einzuteilen, gehen keine natürlichen Kategorien daraus hervor. Deswegen können die Kategorien beliebig gebildet werden.
 
-Beim Histogramm des Alters oben sind die Balken zum Beispiel immer 2.5 Jahre breit, komplett random also. Darüber informiert `ggplot` auch beim Erstellen des Diagramms mit einer Warnmeldung:
+Beim Histogramm des Alters oben sind die Balken zum Beispiel immer 2.5 Jahre breit, komplett random also. Darüber informiert `ggplot` auch beim Erstellen des Diagramms mit einer Nachricht:
 
 ```
 `stat_bin()` using `bins = 30`. Pick better value with `binwidth`
@@ -623,7 +614,7 @@ question("Letzter Plot: Wie alt ist die älteste Person?",
 ## 3. Boxplot
 
 ::: infobox
-Ein Boxplot ist eine effektive und robuste Methode, um die Verteilung **einer stetigen** und **einer kategorialen** Variable zu visualisieren und Ausreißer zu identifizieren.
+Ein Boxplot ist eine effektive und robuste Methode, um die Verteilung **einer stetigen** Variable aufgeschlüsselt nach den Auprägungen **einer kategorialen** Variable zu visualisieren und Ausreißer zu identifizieren.
 
 Funktion: `geom_boxplot()`
 :::
@@ -675,14 +666,13 @@ ggplot(data_einkaufen, aes(x = verkehrsmittel, y = alter)) +
 quiz(caption = "Interpretation üben",
      question("Welche Daten lassen sich gut im Boxplot darstellen?",
                answer("Eine einzelne, kategoriale Variable.",
-                      message = "Fast richtig. Nur dass noch eine weitere, stetige Variable benötigt 
-                      Hier würde sich ein Balkendiagramm anbieten."),
-               answer("Eine einzelne, stetig Variable.",
-                      message = "Fast richtig. Es fehlt noch eine weitere, kategoriale Variable. In diesem Fall eignet sich ein Histogramm."),
-               answer("Eine kategoriale und eine stetige Variable,",
+                      message = "Fast richtig. Nur dass noch eine weitere, stetige Variable benötigt wird. Hier würde sich ein Balkendiagramm anbieten."),
+               answer("Eine einzelne, stetige Variable.",
+                      message = "An sich nicht falsch, aber Histogramme sind geeigneter in diesem Fall."),
+               answer("Eine stetige Variable aufgeteilt nach den Kategorien einer kategorialen Variable",
                       correct = T),
                answer("Zwei stetige Variablen.",
-                      message = "Fast richtig. Nur das die zweite Variable kategorial ist und nicht stetig. 
+                      message = "Fast richtig. Nur dass die zweite Variable kategorial ist und nicht stetig. 
                       Für diese Datenart eignet sich ein Punktdiagramm."),
                allow_retry = TRUE,
                random_answer_order = TRUE,
@@ -709,10 +699,12 @@ question_numeric("Wie lautet der Median des Alters aller Autofahrenden? (grob)",
                  incorrect = "Der Median ist der dicke Strich in der Mitte der Box."),
 
 question_radio("Wie ist der Median zu interpretieren?",
-               answer("Der Median ist das Alter, was die Autofahrenden in zwei gleich große Hälften teilt", correct = TRUE, message = 
-                        "Dabei wird die Box ja gar nicht in zwei gleich große Teile geteilt! Aber trotzdem hast du es richtig erkannt."),
-               answer("Der Median ist das Alter, was am häufigsten vorkommt.", message = "Die häufigste Ausprägung nennt sich „Modus“ und wird üblicherweise für kategoriale Daten angegeben. Der Median ist etwas anderes: Wenn die Werte der Reihenfolge nach sortiert werden, ist der Median derjenige, der in der Mitte der Reihenfolge steht."),
-               answer("Der Median darf hier nicht interpretiert werden, da das Alter stetig ist.", message = "Der Median darf zwar bereits für ordinale, diskrete Daten berechnet werden, aber das heißt nicht dass er für höhere Skalenniveaus verboten ist."),
+               answer("Der Median ist das Alter, was die Autofahrenden in zwei gleich große Hälften teilt", correct = TRUE, 
+                      message = "Wenn die Autofahrenden dem Alter nach aufgestellt würden, wäre der Median das Alter der Person in der Mitte der Aufstellung."),
+               answer("Der Median ist das Alter, was am häufigsten vorkommt.", 
+                      message = "Die häufigste Ausprägung nennt sich „Modus“ und wird üblicherweise für kategoriale Daten angegeben. Der Median ist etwas anderes: Wenn die Werte der Reihenfolge nach sortiert werden, ist der Median derjenige, der in der Mitte der Reihenfolge steht."),
+               answer("Der Median darf hier nicht interpretiert werden, da das Alter stetig ist.", 
+                      message = "Der Median darf zwar bereits für ordinale, diskrete Daten berechnet werden, aber das heißt nicht dass er für höhere Skalenniveaus verboten ist."),
                allow_retry = T,
                random_answer_order = T,
                incorrect = "Leider nicht richtig, probier es noch mal!"),
@@ -786,9 +778,16 @@ ggplot(einkaufen, aes(x = , y =  )) +
   geom_boxplot()
 ```
 
+::: infobox
+**Tipp:**
+Wenn du die Beschriftungen einer kategorialen Variable auf der `x`-Achse nicht mehr lesen kannst, weil
+sie übereinandergedruckt werden: Pack die Variable einfach auf die
+`y`-Achse! Dann werden die Beschriftungen untereinander dargestellt und überlappen
+sich nicht. 
+:::
 
 ```{r boxplot-quest}
-question_text("Welche Variablen hast du gefunden, die sich für einen Boxplot mit 2 Variablen eignen",
+question_text("Welche Variablen hast du gefunden, die sich für einen Boxplot mit 2 Variablen eignen?",
               answer_fn(\(x) correct(messages = "Wie oben erwähnt, ist es am aussagekräftigsten eine metrische Variable und eine kategoriale Variable zu verwenden. Zum Beispiel Ort (kategorial) und Weg (kontinuierlich).")),
               placeholder = "Musterlösung erscheint bei Abgabe deiner Antwort...")
 ```
@@ -855,7 +854,7 @@ Dass die Ausreißer da sind kann, auch in diesem Fall, verschiedene Gründe habe
 Das lässt sich prüfen. (In diesem Unterkapitel wird nur nach Optik geprüft. In der freien Wildbahn wären statistische Analysen notwendig!)
 
 ```{r ausreisser2, exercise = TRUE,  exercise.cap = "Ursachenanalyse"}
-ggplot(einkaufen, aes(x = ort, y = weg)) +
+ggplot(einkaufen, aes(x = weg, y = ort)) +
   geom_boxplot()
 ```
 
@@ -872,7 +871,7 @@ Es wurde miterhoben, wer welche Beobachtung aufgeschrieben hat (`befragung`), vi
 table(einkaufen$ort, einkaufen$befragung, useNA = "always")
 
 # grafische Darstellung
-ggplot(einkaufen, aes(x = befragung, y = x)) +
+ggplot(einkaufen, aes(x = befragung, y = ort)) +
   geom_count()
 ```
 
@@ -882,7 +881,7 @@ Sidefact: Die erhebenden Personen sind btw. klassische Metadaten - also Daten ü
 
 #### Ausschluss
 
-Jetzt ist ein wenig mehr Orientierung bzgl der Ausreißer da. Die Entscheidung, wie damit umgegangen wird ist nach wie vor offen. Spätestens jetzt ist es sehr wichtig, sich nochmal die Eingangsfrage der eigenen Forschung zu stellen: Was wollte ich eigentlich untersuchen? In diesem Fall ging es um die Frage, ob es einen Zusammenhang zwischen Einkaufsweg und Alter gibt. Wenn da Fernreisende mit drin sind, bieten diese logischerweise keine interessante Info für die Frage. Eine Möglichkeit wäre, den Laden am Bahnhof kategorisch auszuschließen. Allerdings ist unklar, ob in den NA Werten nur dieser Laden hinter steckt, deswegen müssten wir alle NAs rausschmeißen, was zum Verlust von 42 Beobachtungen führen würde. Das ist absurd viel. Außerdem kann davon ausgegangen werden, das Menschen auch ihre Alltagseinkäufe dort machen, die wären dadurch kategorisch auch ausgeschlossen. Die nächste Möglichkeit wäre, eine feste Grenze zu setzen. Klassischerweise könnte diese aus der bestehenden Literatur bezogen werden. Also wenn es zB ein Paper geben würde, dass sagen würde: klassische Einkäufe finden in einem Umkreis von 10km statt, könnten alle Werte über 10km ausgeschlossen werden. Das wären schon deutlich weniger. Eine andere Möglichkeit ist die statistische: entweder die Werte außerhalb des Intervalls $[Q_1 - 1.5 \cdot IQR; Q_3 + 1.5 \cdot IQR]$ oder die Werte außerhalb des Intervalls $[\mu \pm 3 \cdot \sigma]$. Wenn die Daten normalverteilt sind (wie angenommen wird für die allermeisten statistischen Analysen, wenn nicht, haben wir noch ganz andere Probleme!), liegen in diesem Bereich 99.8% aller Werte. Es gibt keine Funktion in R, die automatisiert entsprechende Werte rausschmeißt. Das liegt daran, dass die Entscheidung so Situationsabhängig ist und es einfach wichtig ist, sich jedes Mal wieder Gedanken zu machen, wie du damit umgehen möchtest. Hier sind beide Möglichkeiten:
+Jetzt ist ein wenig mehr Orientierung bzgl. der Ausreißer da. Die Entscheidung, wie damit umgegangen wird ist nach wie vor offen. Spätestens jetzt ist es sehr wichtig, sich nochmal die Eingangsfrage der eigenen Forschung zu stellen: Was wollte ich eigentlich untersuchen? In diesem Fall ging es um die Frage, ob es einen Zusammenhang zwischen Einkaufsweg und Alter gibt. Wenn da Fernreisende mit drin sind, bieten diese logischerweise keine interessante Info für die Frage. Eine Möglichkeit wäre, den Laden am Bahnhof kategorisch auszuschließen. Allerdings ist unklar, ob in den NA Werten nur dieser Laden hinter steckt, deswegen müssten wir alle NAs rausschmeißen, was zum Verlust von 42 Beobachtungen führen würde. Das ist absurd viel. Außerdem kann davon ausgegangen werden, dass Menschen auch ihre Alltagseinkäufe dort machen, die wären dadurch kategorisch auch ausgeschlossen. Die nächste Möglichkeit wäre, eine feste Grenze zu setzen. Klassischerweise könnte diese aus der bestehenden Literatur bezogen werden. Also wenn es zB ein Paper geben würde, dass sagen würde: klassische Einkäufe finden in einem Umkreis von 10km statt, könnten alle Werte über 10km ausgeschlossen werden. Das wären schon deutlich weniger. Eine andere Möglichkeit ist die statistische: entweder die Werte außerhalb des Intervalls $[Q_1 - 1.5 \cdot IQR; Q_3 + 1.5 \cdot IQR]$ oder die Werte außerhalb des Intervalls $[\mu \pm 3 \cdot \sigma]$. Wenn die Daten normalverteilt sind (wie angenommen wird für die allermeisten statistischen Analysen, wenn nicht, haben wir noch ganz andere Probleme!), liegen in diesem Bereich 99.8% aller Werte. Es gibt keine Funktion in R, die automatisiert entsprechende Werte rausschmeißt. Das liegt daran, dass die Entscheidung so situationsabhängig ist und es einfach wichtig ist, sich jedes Mal wieder Gedanken zu machen, wie du damit umgehen möchtest. Hier sind beide Möglichkeiten:
 
 ```{r ausreisser4, exercise = TRUE,  exercise.cap = "Verschiedene Definitionen"}
 quantile(einkaufen$weg, .75, na.rm = T) + (1.5 * IQR(einkaufen$weg, na.rm = T))
@@ -905,8 +904,9 @@ data_einkaufen <- data_einkaufen[!is.na(data_einkaufen$weg), ]
 
 #### Dokumentation
 
+::: rot
 **Ganz wichtig!**: Wenn du Daten ausschließt **musst** du das, inklusive der Argumentation warum, gut dokumentieren. Sonst ist das wissenschaftlicher Betrug!
-
+:::
 
 Und jetzt nochmal der Plot ganz vom Anfang:
 
@@ -990,7 +990,7 @@ question("Was sind zwei übliche Daumenregeln für die Definition von Ausreißer
                allow_retry = TRUE,
                random_answer_order = TRUE,
                correct = "Richtig!",
-               incorrect = "Das stimmt leider nicht, probier es noch mal!"),
+               incorrect = "Das stimmt leider nicht, probier es noch mal!")
 )
 ```
 
@@ -1086,13 +1086,13 @@ question("Letzte Grafik: Was stimmt?",
                      correct = T),
                answer("Die Wintermonate wurden einfach rausgelöscht.",
                       message = "Die Wintermonate waren nie vorhanden!"),
-               answer("Das Argument group ist essentiell, damit R weiß, 
+               answer("Das Argument `group` ist essentiell, damit R weiß, 
                       welche Werte wie zusammengehören.",
                       correct = T),
-               answer("lubridate ist ein super Paket, 
+               answer("`lubridate` ist ein super Paket, 
                       um mit Daten und Zeitangaben umzugehen",
                       correct = T),
-               answer("weathermetrics ist ein super Paket, 
+               answer("`weathermetrics` ist ein super Paket, 
                       um mit Wetterdaten zu rechnen.",
                       correct = T),
                allow_retry = TRUE,
