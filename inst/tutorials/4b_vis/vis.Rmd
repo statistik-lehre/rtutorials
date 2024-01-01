@@ -174,7 +174,7 @@ Wenn du im Internet nach „Balkendiagramm erstellen mit R“ suchst, wirst du v
 
 Letztlich nutzen alle *higher level* Grafik-Funktionen unter der Oberfläche entweder `grid` oder `graphics`, um Grafiken zu erstellen. `ggplot2` gehört zur Familie der `grid`-basierten Grafikpakete. 
 
-![](images/deep_r_gagolewski.png){width="80%"}
+![](images/compress/deep_r_gagolewski.png){width="80%"}
 
 Bild aus: [@gagolewski2023]: [Deep R Programming](https://deepr.gagolewski.com/chapter/250-graphics.html)
 
