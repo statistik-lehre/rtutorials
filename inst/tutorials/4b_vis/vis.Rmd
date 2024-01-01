@@ -15,7 +15,7 @@ resource_files:
 - css/boxes.css
 tutorial:
       id: ggplot
-      version: 2
+      version: 5
 ---
 
 ```{r setup, include=FALSE}
@@ -263,13 +263,13 @@ Mit data kennst du dich ja jetzt schon aus, daher können wir direkt zum *mappin
 Im Diagramm oben wurde der *x-Achse* die Variable *Verkehrsmittel* zugewiesen.
 
 ::: aufgabe
-Ändere den Code so, dass die Variable Verkehrsmittel nun stattdessen auf die y-Achse gemappt wird. Wie wird sich das Diagramm wohl verändern?
+Ändere den Code so, dass die Variable Verkehrsmittel statt auf der `x`-Achse nun auf die `y`-Achse gemappt wird. Wie wird sich das Diagramm wohl verändern?
 :::
 
 <br>
 
 ::: blau-nb
-Beachte, dass hier die Argumentnamen `data` und `mapping` weggelassen wurden, so wie es in der Praxis üblicherweise auch getan wird. Das ist möglich, da die Reihenfolge der Argumente beachten wire, also erst `data`, dann `mapping` und schließlich `geom`etric objects.
+Beachte, dass hier die Argumentnamen `data` und `mapping` weggelassen wurden, so wie es in der Praxis üblicherweise auch getan wird. Das ist möglich, da die Reihenfolge der Argumente beachtet wird, also erst `data`, dann `mapping` und schließlich `geom`etric objects.
 :::
 
 ```{r ybarplot, exercise = TRUE, exercise.cap = "Mapping ändern auf y-Achse"}
@@ -296,9 +296,9 @@ Schau dir an, wie der Plot aussieht ohne die Ebene mit`geom_bar()`!
 ggplot(einkaufen, aes(x = verkehrsmittel))
 ```
 
-Jetzt versteht du vielleicht, wofür die `geom_bar()`-Funktion da ist: Geometrische Objekte, in diesem Fall Balken, in den Plot zu zeichnen! Der Plot ist leer, aber die Achsen sind bereits beschriftet und perfekt vorbereitet, aber es fehlt noch das geometrische Objekt.
+Jetzt versteht du vielleicht, wofür die `geom_bar()`-Funktion da ist: Geometrische Formen, in diesem Fall Balken, in den Plot zu zeichnen! Der Plot ist leer, aber die Achsen sind bereits beschriftet und perfekt vorbereitet, aber es fehlt noch das geometrische Objekt.
 
-Innerhalb der Funktion für das geometrische Objekt finden auch Berechnungen statt, die einzelnen Ausprägungen der Verkehrsmittel werden gezählt, um die Höhe der Balken zu bestimmen. Aber das übernimmt zum Glück alles R.
+Innerhalb der `geom_bar()`-Funktion finden Berechnungen statt: die einzelnen Ausprägungen der Verkehrsmittel werden gezählt, um die Höhe der Balken zu bestimmen. Aber das passiert alles im Hintergrund.
 
 Und jetzt kommt das Ding: Es gibt auch noch andere `geom_...()` Funktionen. Zum Beispiel `geom_point()`, welche dem Plot Punkte hinzufügt! Oder `geom_histogram()`, welche ein Histogramm zeichnet, siehe nächster Abschnitt.
 
@@ -366,19 +366,9 @@ quiz(caption = "Quiz zu den Balkendiagrammen",
                correct = "Richtig!",
                incorrect = "Das stimmt leider nicht, probier es noch mal!"),
 
-question("Welche Aussagen über das obige Balkendiagramm mit den Vekehrsmitteln treffen zu?",
-               answer("Das Auto war das Häufigsten genutzte Fahrzeug zum Einkaufen.",
-                      correct = TRUE),
-               answer("Es nutzten ca. 38 Menschen das Fahrrad zum einkaufen.",
-                      correct = TRUE),
-               answer("Ca 28% der Menschen nutzten ÖPNV zum einkaufen",
-                      message = "Fast richtig. 
-                      Allerdings wird auf der y-Achse die absolute Anzahl der Beobachtungen gezeigt, 
-                      nicht die prozentuale."),
-               answer("Ca. 41% der Befragten finden, dass es am besten ist, zu Fuß einkaufen zu gehen.",
-                      message = "Die Frage war, mit welchem Verkehrsmittel die Befragten gerade da waren, 
-                      nicht, welches ihrer Meinung nach das beste ist und auf der y Achse sind absolute Zahlen,
-                      keine Prozente!"),
+question_radio("Wie fügst du eine neue Ebene zum Plot hinzu?",
+         answer("Mit dem `+`", correct = TRUE),
+         answer("Mit dem Pipe-Operator `|>` oder `%>%`"),
                allow_retry = TRUE,
                random_answer_order = TRUE,
                correct = "Richtig!",
@@ -399,32 +389,34 @@ question("Welche drei Kernbestandteile hat laut der Grammar of Graphs Theorie vo
                correct = "Richtig!",
                incorrect = "Das stimmt leider nicht, probier es noch mal!"),
          
-         question("Welches sind keine ästhetischen Attribute?",
-               answer("y Achse",
-                      message = "Die y Achse ist eines der zentralen ästhetischen Attribute."),
-               answer("x Achse",
-                      message = "Die x Achse ist eines der zentralen ästhetischen Attribute."),
-               answer("Geometrische Objekte",
-                      message = "Geometrische Objekte sind ein 
-                      gleichwertiger notwendiger Bestandteil zu ästhetischen Attributen, 
-                      welche die ästehtischen Attribute abbilden.",
-                      correct = T),
-               answer("Spalten in einem Datesatz",
-                      message = "Das sind Daten, kein visuellen Eigenschaften."),
+    question_radio("Wo spezifizierst du, welche Variable auf welcher Achse angezeigt wird?",
+                   answer("In der Funktion `aes()` (*aesthetic mappings*)",
+                          correct = TRUE),
+                   answer("In der `library()` ganz zu Beginn des Skripts"),
                allow_retry = TRUE,
                random_answer_order = TRUE,
                correct = "Richtig!",
                incorrect = "Das stimmt leider nicht, probier es noch mal!"),
-
-question_text("Wie erklärst du dir die weiten Anreisewege (bis 600km!) beim Verkehrsmittel „ÖPNV”? 
-              (Tipp: Der Bioladen ist in der Nähe eines ICE-Bahnhofs)",
-              answer_fn(\(x) correct(messages = "Vermutlich waren einige Menschen zuvor mit dem ICE gefahren, 
-                                     und hatten vielleicht auch nur einen Umstieg mit Wartezeit und 
-                                     Hunger auf ein Bio-Brötchen oder so. Während der Rest der Menschen 
-                                     ihren regulären Wocheneinnkauf machen und aus der Umgebung kommen, 
-                                     maximal ein paar Kilometer entfernt.")),
-              placeholder = "Musterlösung erscheint bei Abgabe deiner Antwort...",
-              correct = "")
+question_radio("Wie kannst du Variablen in `aes()` angeben?",
+               answer("Mit der gewohnten Schreibweise: `einkaufen$alter`. Damit weiß R, dass `alter` im Datensatz `einkaufen` zu finden ist.",
+                      message = "Das funktioniert zwar, aber ist unübersichtlicher und unüblich."),
+               answer("Einfach nur den Variablennamen `alter`, da der Datensatz bereits vorher angegeben wurde. So weiß R, wo die Variable `alter` zu finden ist", correct = TRUE),
+               allow_retry = TRUE,
+               random_answer_order = TRUE,
+               incorrect = random_encouragement(language = "de")),
+question_radio("Was passiert, wenn du `ggplot()` ohne eine `geom`-Ebene ausführst?",
+               answer("Ein leerer Plot mit korrekten Achsenbeschriftungen wird gezeichnet, aber ohne geometrische Formen", correct = TRUE),
+               answer("Es kommt zu einer Fehlermeldung!"),
+               allow_retry = TRUE,
+               incorrect = random_encouragement("de"),
+               correct = random_praise("de")),
+question_radio("Zusatz**: Welche Art von Daten wird akzeptiert durch `ggplot()`?",
+               answer("Nur Vektoren"),
+               answer("Nur Data Frames", correct = TRUE),
+               random_answer_order = TRUE,
+               allow_retry = TRUE,
+               incorrect = random_encouragement("de"),
+               correct = random_praise("de"))
 
 )
 ```
@@ -521,7 +513,7 @@ question("Welche Daten lassen sich gut im Histogramm darstellen?",
                answer("Eine einzelne, kategoriale Variable.",
                       message = "Fast richtig. Nur dass die Variable stetig ist und nicht kategorial. 
                       Hier würde sich ein Balkendiagramm anbieten."),
-               answer("Eine einzelne, stetig Variable.",
+               answer("Eine einzelne, stetige Variable.",
                       correct = T),
                answer("Zwei kategoriale Variablen.",
                       message = "Für diese Datenart eignet sich eine Kreuztabelle."),
@@ -530,8 +522,8 @@ question("Welche Daten lassen sich gut im Histogramm darstellen?",
                       Für diese Datenart eignet sich ein Punktdiagramm."),
                allow_retry = TRUE,
                random_answer_order = TRUE,
-               correct = "Richtig!",
-               incorrect = "Das stimmt leider nicht, probier es noch mal!"),
+               correct = random_praise("de"),
+               incorrect = random_encouragement("de")),
 
 question("Warum ein Histogramm und kein Balkendiagramm?",
                answer("Weil die abgebildete Variable stetig und nicht diskret ist.",
@@ -551,59 +543,59 @@ question("Warum ein Histogramm und kein Balkendiagramm?",
                correct = "Richtig!",
                incorrect = "Das stimmt leider nicht, probier es noch mal!"),
 
-question("Warum verändert sich die Höhe zwischen den beiden ersten Histogrammen beim Alter um die 25 von 17 auf 25??",
-               answer("Weil die Kategorienbreite breiter wird und somit mehr Menschen umfasst.",
-                      correct = TRUE),
-               answer("Weil die Kategorienbreite sich ändert und jetzt mehr Menschen zusammengefasst werden.",
+question_radio("Warum verändert sich die Höhe zwischen den beiden ersten Histogrammen beim Alter um die 25 von 17 auf 25??",
+               answer("Weil wir die Kategorien breiter gemacht haben und jetzt mehr Menschen in einer Kategorie zusammengefasst werden.",
                       correct = TRUE),
                answer("Weil das Alter entsprechend angepasst wurde.",
                       message = "Die 25 Beobachtungen haben nichts mit dem Alter 25 zu tun."),
-               answer("Weil die Kategorienbreite enger wird und somit mehr Menschen pro Alter zusammenkommen.",
-                      message = "Genau anders herum: wenn die Kategorien werden breiter werden, werden mehr Menschen in einer Kategorie zusammengefasst."),
+               answer("Weil wir die Kategorien schmaler gemacht haben und somit mehr Menschen pro Kategorie zusammenkommen.",
+                      message = "Genau anders herum: wenn die Kategorien breiter werden, werden mehr Menschen in einer Kategorie zusammengefasst."),
                allow_retry = TRUE,
                random_answer_order = TRUE,
-               correct = "Richtig!",
-               incorrect = "Das stimmt leider nicht, probier es noch mal!"),
+               correct = random_praise("de"),
+               incorrect = random_encouragement("de")),
+question_radio("Wie legst du die Farbe der Umrandung der Balken fest?",
+               answer("Mit dem Argument `fill`.",
+                      message = "`fill` bestimmt die Füllung der Balken."),
+               answer("Mit dem Argument `colour`.", correct = TRUE),
+               random_answer_order = TRUE,
+               allow_retry = TRUE,
+               correct = random_praise("de"),
+               incorrect = random_encouragement("de")),
 
-question("Was stimmt bzgl. der Argumente colour und fill?",
-               answer("colour kann auch color geschrieben werden.",
+question_radio("Was stimmt zur Schreibweise des Arguments `colour`?",
+               answer("`colour` kann auch `color` geschrieben werden.",
                       correct = TRUE),
-               answer("R ist case sensitive, deswegen muss das Argument colour stehts mit ou geschrieben werden.",
-                      message = "Das ist teilweise richtig. R ist case sensitive. In diesem speziellen Fall sind allerdings zwei Schreibweisen des gleichen Arguments möglich."),
-               answer("colour bestimmt die Farbe der Umrandungen",
-                      correct = T),
-               answer("fill bestimmt die Farbe des Hintergrundes",
-                      message = "fill bestimmt die Farbe der Füllung des jeweiligen geometrischen Objekts."),
+               answer("R ist case sensitive, deswegen muss das Argument `colour` stehts mit ou geschrieben werden.",
+                      message = "Das ist teilweise richtig. R ist case sensitive, was heißt, dass es Groß- und Kleinschreibung beachtet. `colour` kann allerdings in diesem Fall sowohl mit `ou` als auch nur mit `o` geschrieben werden."),
                allow_retry = TRUE,
                random_answer_order = TRUE,
-               correct = "Richtig!",
-               incorrect = "Das stimmt leider nicht, probier es noch mal!"),
+               correct = random_praise("de"),
+               incorrect = random_encouragement("de")),
 
-question("Was stimmt bzgl. des Arguments boundary?",
-               answer("Spezifiziert die Grenze zwischen zwei bins.",
+question_radio("Was stimmt bzgl. des Arguments `boundary`?",
+               answer("Spezifiziert den Grenzpunkt zwischen zwei Kategorien",
                       correct = TRUE),
                answer("Spezifiziert die Grenzen des gesamten Plots.",
-                      message = "Dafür gibt es andere Funktionen (zB. coord_cartesian())."),
-               answer("Spezifiziert die Grenzen, welcher Teil des Plots angezeigt wird.",
-                      message = "Dafür gibt es bspw. coord_cartesian()"),
+                      message = "Dafür gibt es andere Funktionen (z.B. `coord_cartesian()`)."),
                answer("Umrandet die bins in einer frei gewählten Farbe.",
-                      message = "Das gesuchte Argument heißt colour."),
+                      message = "Das gesuchte Argument heißt `colour`."),
                allow_retry = TRUE,
                random_answer_order = TRUE,
-               correct = "Richtig!",
-               incorrect = "Das stimmt leider nicht, probier es noch mal!"),
+               correct = random_praise("de"),
+               incorrect = random_encouragement("de")),
 
-question("Letzter Plot: Wie alt ist die älteste Person?",
+question_radio("Letzter Plot: Wie alt ist die älteste Person?",
                answer("Zwischen 85 und 90 Jahren.",
                       correct = TRUE),
                answer("89 Jahre, 11 Monate und 3 Tage.",
-                      message = "Das könnte zwar sein, könnte aber auch nicht sein. Du kannst du wissen, das diese Person sich im Intervall zwischen 85 und 90 Jahren befindet."),
+                      message = "Das könnte zwar sein, könnte aber auch nicht sein. Du kannst nur wissen, das diese Person sich im Intervall zwischen 85 und 90 Jahren befindet."),
                answer("100",
                       message = "Die höchste Kategorie hört bei 90 aus, also maximal 90 Jahre."),
                allow_retry = TRUE,
                random_answer_order = TRUE,
-               correct = "Richtig!",
-               incorrect = "Das stimmt leider nicht, probier es noch mal!")
+               correct = random_praise("de"),
+               incorrect = random_encouragement("de"))
 
 )
 ```
@@ -637,7 +629,7 @@ ggplot(einkaufen, aes(x = verkehrsmittel, y = alter)) +
 
 <summary><a>**▼ \* Zusatz: Zusammenfassen von Kategorien**</a></summary>
 
-Es wird auch deutlich, dass die Kategorien "E-Roller" und "Motorrad" so klein sind, dass sie sich nicht als eigene Analyse-Kategorie eignen, deswegen werden sie mit "Andere" zusammengefasst. Hierfür wird ein neuer Datensatz mit dem Namen `data_einkaufen` erstellt. Die NAs dürfen allerdings nicht einfach umgecodet werden, weil wir es in diesem Fall einfach wirklich nicht wissen.
+Es wird auch deutlich, dass die Kategorien "E-Roller" und "Motorrad" so klein sind, dass sie sich nicht als eigene Analyse-Kategorie eignen, deswegen werden sie mit "Andere" zusammengefasst. Hierfür wird ein neuer Datensatz mit dem Namen `einkaufen_recoded` erstellt. Die NAs dürfen allerdings nicht einfach umgecodet werden, weil wir es in diesem Fall einfach wirklich nicht wissen.
 
 ::: rot
 Das Zusammenfassen von Kategorien sollte vor der Datenerhebung geplant sein, damit nicht nachträglich Kategorien zusammengefasst werden und dadurch die Ergebnisse verändert werden können. Wenn es nachträglich geschieht, muss es auf jeden Fall gut begründet und **dokumentiert** werden, sonst ist das wissenschaftlicher Betrug!
@@ -645,18 +637,18 @@ Das Zusammenfassen von Kategorien sollte vor der Datenerhebung geplant sein, dam
 
 ```{r bp_neuerdf, exercise = TRUE}
 # Erstelle ein neues Objekt und speichere den bisherigen Datensatz darin
-data_einkaufen <- einkaufen
+einkaufen_recoded <- einkaufen
 
 # Verändere Variablen nach deinen Wünschen im NEUEN Objekt
 # in diesem Fall mit der recode Funktion aus dem Paket dplyr
 # die bisherige Variable wird einfach mit der neuen überschrieben
-data_einkaufen$verkehrsmittel <- recode(einkaufen$verkehrsmittel,
+einkaufen_recoded$verkehrsmittel <- recode(einkaufen$verkehrsmittel,
       "E-Roller" = "Andere",
       "Motorrad" = "Andere"
 )
 
 # und nochmal der gleiche Plot
-ggplot(data_einkaufen, aes(x = verkehrsmittel, y = alter)) +
+ggplot(einkaufen_recoded, aes(x = verkehrsmittel, y = alter)) +
   geom_boxplot()
 ```
 
@@ -722,9 +714,17 @@ question_radio("Zeigt der Boxplot die Gruppengröße jedes Verkehrsmittels?",
 
 ### \# Show your data!
 
-Der obige Boxplot hat einen großen Nachteil: Es ist nicht zu sehen, wie viele Personen in jeder Gruppe sind. Dabei wissen wir eigentlich, dass die Gruppengröße der unterschiedlichen Verkehrsmittel unterschiedlich ist. Manchmal wird halt ein ganzer Boxplot gezeichnet, während lediglich 6 Personen dahinter stehen, und er ist nicht zu unterscheiden von einem für ein Verkehrsmittel, was 100 Menschen nutzen. Genau hier können wir die die Magie von R nutzen, um unsere Visualisierung nach unseren Wünschen zu ändern.
+Der obige Boxplot hat einen großen Nachteil: Es ist nicht zu sehen, wie viele Personen in jeder Gruppe sind. Dabei wissen wir eigentlich, dass die Gruppengröße der unterschiedlichen Verkehrsmittel unterschiedlich ist. Manchmal wird halt ein ganzer Boxplot gezeichnet, während lediglich 6 Personen dahinter stehen, und er ist nicht zu unterscheiden von einem für ein Verkehrsmittel, was 100 Menschen nutzen. 
 
-Mit einem kleinen Befehl (`geom_jitter()`), lassen sich über unsere Boxplots noch die Informationen der Datenpunkte legen. Mehr dazu in einem späteren Kapitel.
+Du kannst dem Plot die fehlenden Informationen in einer neuen Ebene hinzufügen!
+
+Die Funktion `geom_jitter()` zeichnet genau wie `geom_point()` einzelne Datenpunkte, nur dass ein bisschen zufälliger *jitter* angewandt wird, um sie ein bisschen durcheinander zu schütteln, sodass nicht mehr alle Punkte übereinander liegen und Information verloren geht an der Stelle. 
+
+- `size` kennzeichnet die Größe der Punkte
+- `alpha` bestimmt die Transparenz der Punkte (von 0 - 1)
+- `width` ist die Stärke des horizontalen zufälligen Jitters,
+`height` wäre für den vertikalen Jitter
+
 
 ```{r showyourdata, exercise = TRUE, echo=TRUE}
 ggplot(einkaufen, aes(x = verkehrsmittel, y = alter)) +
@@ -735,7 +735,7 @@ ggplot(einkaufen, aes(x = verkehrsmittel, y = alter)) +
 ```
 
 ::: infobox
-Hier siehst du, was ein Boxplot eigentlich wirklich aussagt: Er zeigt wirklich nur die Quartile, Minimum und Maximum und den Median (das ist ja ein Quartil).
+Hier siehst du, was ein Boxplot tatsächlich aussagt: Er zeigt wirklich nur die Quartile, Minimum und Maximum und den Median (das ist ja ein Quartil).
 :::
 
 <br>
@@ -786,10 +786,53 @@ question_text("Welche Variablen hast du gefunden, die sich für einen Boxplot mi
               placeholder = "Musterlösung erscheint bei Abgabe deiner Antwort...")
 ```
 
+### Boxplot-Quiz
+
+```{r boxquiz}
+quiz(caption = "Quizfragen zum Boxplot",
+     question_radio("Welche Information zeigt ein klassischer Boxplot **nicht**?",
+                     answer("Die Gruppengröße", correct = TRUE),
+                     answer("Den Median"),
+                     answer("Minimum und Maximum"),
+                     answer("Den Interquartilsabstand"),
+                     answer("Extreme Werte"),
+                     correct = random_praise("de"),
+                     incorrect = random_encouragement("de"),
+                     allow_retry = TRUE,
+                     random_answer_order = TRUE),
+     question_radio("Wofür ist ein Boxplot *besonders* gut geeignet?",
+                    answer("Die Verteilung einer stetigen Variablen über die Ausprägungen einer kategorialen Variablen hinweg zu betrachten", correct = TRUE),
+                    answer("Die Verteilung einer einzelnen kategorialen Variable darzustellen",
+                           message = "Dafür eignen sich Balkendiagramme."),
+                    answer("Die Verteilung einer einzelnen, stetigen Variable darstellen",
+                           message = "Das geht zwar mit einem Boxplot, aber Histogramme sind eventuell informativer an dieser Stelle!"),
+                    answer("Den Zusammenhang zweier stetiger Variablen grafisch darzustellen",
+                           message = "Dafür sind Punktdiagramme gedacht."),
+                    correct = random_praise("de"),
+                    incorrect = random_encouragement("de"),
+                    allow_retry = TRUE,
+                    random_answer_order = TRUE),
+     question_radio("Wofür steht die Länge der Box in einem Boxplot?",
+                    answer("Für den Interquartilsabstand (IQR)", 
+                           correct = TRUE,
+                           message = "Die IQR *interquartile range* ist der Abstand zwischen erstem und drittem Quartil, und kennzeichnet die mittleren 50% der Datenreihe."),
+                    answer("Für die Spannweite (range)",
+                           message = "Spannweite wird durch Minimum und Maximum bestimmt."),
+                    answer("Für die Gruppengröße (n)",
+                           message = "Die Gruppengröße fließt nicht in einen Boxplot mit ein."),
+                    correct = random_praise("de"),
+                     incorrect = random_encouragement("de"),
+                     allow_retry = TRUE,
+                     random_answer_order = TRUE)
+     
+     )
+```
+
+
 ## 4. Punktdiagramm
 
 ::: infobox
-Punktdiagramme sind geeignet, um die Zusammenhänge **zweier numerischer** Variablen zu zeigen.
+Punktdiagramme sind geeignet, um den Zusammenhang **zweier stetiger** Variablen zu zeigen.
 
 Funktion: `geom_point()`
 :::
@@ -806,7 +849,7 @@ ggplot(einkaufen, aes(x = alter, y = weg)) +
 Schau dir das Diagramm mal an. Einige Extremwerte der Variable `weg` definieren die Skala der y-Achse auf 0 - 600 km, wodurch die "normalen" Werte am unteren Rand zu einer undifferenzierbaren Masse zusammenschrumpfen. Im nächsten Kapitel erfährst du Möglichkeiten, mit extremen Werten umzugehen, und wie das Punktdiagramm ohne sie aussehen würde.
 
 ```{r scatterquiz}
-question_checkbox("Plot 1: Wie alt ist die Person, die 600km Anreiseweg hat ca.?",
+question_checkbox("Verständnis-Check: Wie alt ist die Person, die 600km Anreiseweg hat?",
                answer("ca. 40 Jahre alt.",
                      correct = T),
                answer("Über 75 Jahre alt."),
@@ -815,6 +858,19 @@ question_checkbox("Plot 1: Wie alt ist die Person, die 600km Anreiseweg hat ca.?
                random_answer_order = TRUE,
                correct = "Richtig!",
                incorrect = "Das stimmt leider nicht, probier es noch mal!")
+```
+
+### "Lügen" mit log-transformierten Achsen
+
+Bevor wir versuchen, die extremen Werte auszuschließen, hier noch ein alternativer Weg, die undifferenzierbare Masse am unteren Rand der Grafik besser darzustellen: Die y-Achse logarithmisch transformieren! Das geht in `ggplot` sehr einfach, du musst nur eine neue Ebene zum Plot hinzufügen mit der Funktion `scale_y_log10()`. 
+
+Die logarithmische Transformation ist sehr praktisch, um extreme Werte mit auf der Bildschirmfläche unterzubringen, und gleichzeitig eine sinnvolle Skalierung der normalen Werte aufrecht zu erhalten. Das kann natürlich missbraucht werden,
+deswegen sollte das immer deutlich gekennzeichnet werden!
+
+```{r logtransform, exercise = TRUE, exercise.cap = "log-transformiertes Streudiagramm"}
+ggplot(einkaufen, aes(x = alter, y = weg)) +
+  geom_point() +
+  scale_y_log10()
 ```
 
 ## Extreme Werte
@@ -850,7 +906,7 @@ Der Median liegt bei 3 km, das bedeutet: 50% der Personen haben einen Anfahrtswe
 
 Dass die Ausreißer da sind kann, auch in diesem Fall, verschiedene Gründe haben:
 
-1.  Weiter oben im Tutorial wurde bereits erwähnt: Ein Laden, nämlich der Biomarkt Greger, liegt in der Nähe eines ICE-Bahnhofs. Die Ausreißer könnten also von Fernreisenden kommen. Wenn das stimmt, dann müssten die Ausreißerwerte in diesem Laden erhoben worden sein (`ort`).
+1. Ein Laden, nämlich der Biomarkt Greger, liegt in der Nähe eines ICE-Bahnhofs. Die Ausreißer könnten also von Fernreisenden kommen. Wenn das stimmt, dann müssten die Ausreißerwerte in diesem Laden erhoben worden sein (`ort`).
 
 Das lässt sich prüfen. (In diesem Unterkapitel wird nur nach Optik geprüft. In der freien Wildbahn wären statistische Analysen notwendig!)
 
@@ -893,10 +949,10 @@ Es wird sehr deutlich, dass die Quantilversion die robustere ist. 15 km Anfahrts
 maximalwert <- quantile(einkaufen$weg, .75, na.rm = T) + (1.5 * IQR(einkaufen$weg, na.rm = T))
 
 # Ein Subset aus dem aktuellen Datensatz treffen und in dem schon oben neu angelegten Objekt speichern
-data_einkaufen <- data_einkaufen[data_einkaufen$weg < maximalwert, ]
+einkaufen_recoded <- einkaufen_recoded[einkaufen_recoded$weg < maximalwert, ]
 
 # und NAs entfernen
-data_einkaufen <- data_einkaufen[!is.na(data_einkaufen$weg), ]
+einkaufen_recoded <- einkaufen_recoded[!is.na(einkaufen_recoded$weg), ]
 ```
 
 ::: rot
@@ -910,7 +966,7 @@ Im Normalfall sollte bereits vor der Datenerhebung festgelegt werden, nach welch
 Und jetzt nochmal der Plot ganz vom Anfang:
 
 ```{r sp_dokumentation, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "Scatterplot ohne Ausreißer"}
-ggplot(data_einkaufen, aes(x = alter, y = weg)) +
+ggplot(einkaufen_recoded, aes(x = alter, y = weg)) +
   geom_point()
 ```
 
@@ -1145,7 +1201,7 @@ ggplot(einkaufen, aes(x = verkehrsmittel, colour = bioladen)) +
 Bei Punktdiagrammen und Liniendiagrammen wird die Punkt- bzw. Linienfarbe durch `colour` bestimmt. Wird das Attribut Füllung vergeben passiert einfach nichts.
 
 ```{r am_f_colour_2, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "colour im Scatterplot"}
-ggplot(data_einkaufen, aes(x = alter, y = weg, colour = bioladen)) +
+ggplot(einkaufen_recoded, aes(x = alter, y = weg, colour = bioladen)) +
   geom_point()
 ```
 
@@ -1156,7 +1212,7 @@ Eine Ausnahme gibt es: Die Formen 21, 22, 23, 24, 25 in einem Punktediagramm hab
 Das fill bzw colour Attribut kann genauso gut auf kontinuierliche Variablen angewendet werden:
 
 ```{r am_f_c_kontinuierlich, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "continuous colour"}
-ggplot(data_einkaufen, aes(x = alter, y = weg, colour = kochen)) +
+ggplot(einkaufen_recoded, aes(x = alter, y = weg, colour = kochen)) +
   geom_point()
 ```
 
@@ -1165,14 +1221,14 @@ ggplot(data_einkaufen, aes(x = alter, y = weg, colour = kochen)) +
 Die Form eignet sich, um in Punktediagrammen eine weitere kategoriale Variable einzubauen.
 
 ```{r am_shape, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "shape"}
-ggplot(data_einkaufen, aes(x = alter, y = weg, shape = verkehrsmittel)) +
+ggplot(einkaufen_recoded, aes(x = alter, y = weg, shape = verkehrsmittel)) +
   geom_point()
 ```
 
 Insbesondere wenn es kombiniert wird mit `colour` wird es besonders eindeutig
 
 ```{r am_shape_2, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "shape & colour"}
-ggplot(data_einkaufen, aes(x = alter, y = weg, shape = verkehrsmittel, colour = verkehrsmittel)) +
+ggplot(einkaufen_recoded, aes(x = alter, y = weg, shape = verkehrsmittel, colour = verkehrsmittel)) +
   geom_point()
 ```
 
@@ -1181,7 +1237,7 @@ ggplot(data_einkaufen, aes(x = alter, y = weg, shape = verkehrsmittel, colour = 
 Auch Mittels Größe kann eine weitere Dimension rein gebracht werden. Das ist allerdings mit vorsicht zu genießen, da es in vielen Fällen die Wahrnehmung zu bestimmten Zusammenhängen verzerrt:
 
 ```{r am_size, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "size"}
-ggplot(data_einkaufen, aes(x = alter, y = weg, size = bioladen)) +
+ggplot(einkaufen_recoded, aes(x = alter, y = weg, size = bioladen)) +
   geom_point()
 ```
 
@@ -1198,7 +1254,7 @@ Im Grunde gibt es nur 3 Gründe, `size` als ästhetisches Attribut zu nutzen:
 Zu guter letzt folgt die Dichte. Die ist grundsätzlich auch eher ungeeignet. Der Vollständigkeit halber, lernst du sie hier trotzdem kennen:
 
 ```{r am_alpha, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "alpha"}
-ggplot(data_einkaufen, aes(x = alter, y = weg, alpha = kochen)) +
+ggplot(einkaufen_recoded, aes(x = alter, y = weg, alpha = kochen)) +
   geom_point()
 ```
 
@@ -1375,7 +1431,7 @@ Führe den Code aus und mache dich mit dem Ergebnis vertraut. Lösche jeweils ei
 :::
 
 ```{r special, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "facet_grid()"}
-ggplot(data_einkaufen, aes(x = alter, y = weg)) +
+ggplot(einkaufen_recoded, aes(x = alter, y = weg)) +
   geom_point() +
   facet_grid(bioladen ~ verkehrsmittel)
 ```
@@ -1391,7 +1447,7 @@ Führe den Code aus, mach dich mit den Auswirkungen von `nrow` vertraut und setz
 :::
 
 ```{r s_facet, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "facet_wrap()"}
-ggplot(data_einkaufen, aes(x = alter, y = weg)) +
+ggplot(einkaufen_recoded, aes(x = alter, y = weg)) +
   geom_point() +
   facet_wrap(~verkehrsmittel, nrow = 3)
 ```
@@ -1435,13 +1491,13 @@ Suche dir ein Theme deiner Wahl aus und füge es dem untenstehenden Plot hinzu
 
 ```{r drumherum-solution}
 # Ein Beispiel:
-ggplot(data_einkaufen, aes(x = alter, y = weg)) +
+ggplot(einkaufen_recoded, aes(x = alter, y = weg)) +
   geom_point() +
   theme_bw()
 ```
 
 ```{r drumherum, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "themes"}
-ggplot(data_einkaufen, aes(x = alter, y = weg)) +
+ggplot(einkaufen_recoded, aes(x = alter, y = weg)) +
   geom_point()
 ```
 
@@ -1454,7 +1510,7 @@ Die Beschriftungen sind ebenfalls eine weitere Lage und werden mittels `labs()` 
 :::
 
 ```{r d_labs, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "labs"}
-ggplot(data_einkaufen, aes(x = alter, y = weg)) +
+ggplot(einkaufen_recoded, aes(x = alter, y = weg)) +
   geom_point() +
   labs(
     title = "Titel",
@@ -1484,11 +1540,11 @@ Im Grunde gibt es zwei Möglichkeiten, etwas an der Legende zu ändern:
 
 ```{r d_legends, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "legends"}
 # Factor erstellen (ei Fragen dazu: Wiederhole gerne das Tutorial Vektoren)
-data_einkaufen$ladenart <- factor(data_einkaufen$bioladen, 
+einkaufen_recoded$ladenart <- factor(einkaufen_recoded$bioladen, 
                                   levels = c(TRUE, FALSE), 
                                   labels = c("bio", "konven."))
 
-ggplot(data_einkaufen, aes(x = verkehrsmittel, fill = ladenart)) +
+ggplot(einkaufen_recoded, aes(x = verkehrsmittel, fill = ladenart)) +
   geom_bar(position = position_dodge(preserve = "single")) +
   labs(
     title = "Verkehrsmittel und Ladenart",
@@ -1510,7 +1566,7 @@ ggplot(data_einkaufen, aes(x = verkehrsmittel, fill = ladenart)) +
 \-**2a Punkte verändern:** Wenn du die passende Funktion ausgewählt hast fügst du das Argument `labels = c("label 1", "label 2")` hinzu. Wobei die Sortierung die gleiche Reihenfolge haben sollte, wie die aktuelle. **PRÜFE DAS**, sonst kann es zu schwerwiegenden inhaltlichen Fehlern kommen! -**2b Titel verändern:** In die gleiche Funktion fügst du die Funktion `guide_legend()` mit dem Argument `title = "some title"` ein. - **Zusammenfassung:** - **Pro:** Kein rumgemurkse mit den Daten. Kann für jeden Plot individuell passend verändert werden. - **Con:** Erhöhte Fehlergefahr aufgrund von flaschen Beschriftungen.
 
 ```{r d_legends_2, exercise = TRUE, exercise.setup = "d_legends",  exercise.cap = "guide_legend()"}
-ggplot(data_einkaufen, aes(x = verkehrsmittel, fill = bioladen)) +
+ggplot(einkaufen_recoded, aes(x = verkehrsmittel, fill = bioladen)) +
   geom_bar(position = position_dodge(preserve = "single")) +
   scale_fill_viridis(discrete = T,
     labels = c("bio", "konven."),
@@ -1530,7 +1586,7 @@ Finde für die Funktionen `scale_colour_viridis(discrete = T)` und `scale_colour
 :::
 
 ```{r d_legends_3-solution}
-ggplot(data_einkaufen, aes(x = alter, y = weg, colour = kochen)) +
+ggplot(einkaufen_recoded, aes(x = alter, y = weg, colour = kochen)) +
    geom_point() +
   # \n sagt R, dass du einen Zeilenumbruch möchtest
    scale_colour_viridis(guide_legend(title = "Kochen/ \n Woche")) +
@@ -1541,7 +1597,7 @@ ggplot(data_einkaufen, aes(x = alter, y = weg, colour = kochen)) +
     ) +
   theme_bw()
 
- ggplot(data_einkaufen, aes(x = verkehrsmittel, y = alter, colour = bioladen)) +
+ ggplot(einkaufen_recoded, aes(x = verkehrsmittel, y = alter, colour = bioladen)) +
    geom_boxplot(position = position_dodge(preserve = "single")) +
    scale_colour_viridis(discrete = T,
      labels = c("bio", "konven."),
@@ -1620,7 +1676,7 @@ Nutze für jeden der Plots aus dem letzten Unterkapitel (Legends) eine andere vi
 :::
 
 ```{r barrierefreiheit-solution}
-ggplot(data_einkaufen, aes(x = verkehrsmittel, fill = bioladen)) +
+ggplot(einkaufen_recoded, aes(x = verkehrsmittel, fill = bioladen)) +
   geom_bar(position = position_dodge(preserve = "single")) +
   scale_fill_viridis(discrete = T, option = "cividis",
                      # Titel und Beschriftung der Legende ändern
@@ -1634,7 +1690,7 @@ ggplot(data_einkaufen, aes(x = verkehrsmittel, fill = bioladen)) +
   )+
   theme_bw()
 
- ggplot(data_einkaufen, aes(x = verkehrsmittel, y = alter, colour = bioladen)) +
+ ggplot(einkaufen_recoded, aes(x = verkehrsmittel, y = alter, colour = bioladen)) +
    geom_boxplot(position = position_dodge(preserve = "single")) +
    scale_colour_viridis(discrete = T, option = "turbo",
      labels = c("bio", "konven."),
@@ -1646,7 +1702,7 @@ ggplot(data_einkaufen, aes(x = verkehrsmittel, fill = bioladen)) +
    ) +
    theme_bw()
 
-ggplot(data_einkaufen, aes(x = alter, y = weg, colour = kochen)) +
+ggplot(einkaufen_recoded, aes(x = alter, y = weg, colour = kochen)) +
    geom_point() +
    scale_colour_viridis(option = "plasma",
      guide_legend(title = "Kochen/ \n Woche")) +
