@@ -32,20 +32,17 @@ colnames(einkaufen) <- tolower(colnames(einkaufen))
 
 ## Inhalt
 
-Jetzt kommt wirklich einer der allercoolsten Teile des ganzen Kurses. R ist einfach
-unfassbar mächtig, was das Visualisieren von Daten angeht, viel ausgefeilter und vielfältiger, als
-Excel und SPSS es je erreichen können. Unser Ziel ist euch ein paar schnelle Kochrezepte für die wichtigsten
-Visualisierungsaufgaben mitzugeben, und die Neugier auf mehr zu wecken, in dem wir eine kleine Einführung in das Visualisierungspaket `ggplot2` geben.
+Jetzt kommt wirklich einer der allercoolsten Teile des ganzen Kurses. R ist einfach unfassbar mächtig, was das Visualisieren von Daten angeht, viel ausgefeilter und vielfältiger, als Excel und SPSS es je erreichen können. Unser Ziel ist euch ein paar schnelle Kochrezepte für die wichtigsten Visualisierungsaufgaben mitzugeben, und die Neugier auf mehr zu wecken, in dem wir eine kleine Einführung in das Visualisierungspaket `ggplot2` geben.
 
 Mit R sind abgefahrene Sachen möglich. Eine vielfältige Übersicht darüber, was alles geht, erhältst du in der [R Graph Gallery](https://r-graph-gallery.com/). Hier sind ein paar Beispiele:
 
 #### [Eine Karte im Stil von Jacques Bertin](https://r-graph-gallery.com/web-valued-dots-map-bertin.html)
 
-![](images/compress/bertin.png){width=80%}
+![](images/compress/bertin.png){width="80%"}
 
 #### [Heatmap stündliche Temperatur über zwei Jahre](https://r-graph-gallery.com/283-the-hourly-heatmap.html)
 
-![](images/compress/temp.png){width=80%}
+![](images/compress/temp.png){width="80%"}
 
 #### [Aber auch solche geometrischen Schönheiten](https://fronkonstin.com/tag/ggplot2/page/3/)
 
@@ -62,14 +59,13 @@ ggplot(df,aes(x,y,xend=x2,yend=y2)) +
 geom_segment(alpha=.1)+theme_void()
 ```
 
-
 Ziemlich beeindruckend, oder?
 
 Das soll hier aber nur ein kleiner Einblick in das sein, was alles möglich ist. In diesem Tutorial starten wir natürlich bei den Basics und fokussieren uns darauf grundständige Diagramme zu zeichnen. Mit diesem Grundwissen kannst du dir dann auch selbst beibringen solche abgefahrenen Diagramme zu erstellen.
 
 In den Links über den Grafiken findest du detaillierte Anleitungen, wenn du dann soweit bist.
 
-Wie gesagt, wir fangen Schritt für Schritt an und daher sind das hier die Ziele für heute: 
+Wie gesagt, wir fangen Schritt für Schritt an und daher sind das hier die Ziele für heute:
 
 ### Lernziele
 
@@ -88,7 +84,6 @@ Wie gesagt, wir fangen Schritt für Schritt an und daher sind das hier die Ziele
 <input type="checkbox" unchecked> Grafiken mit `ggplot2` nach dem Baukasten der *Grammar of Graphs* erstellen </input>
 
 <input type="checkbox" unchecked> colorblind-friendly sein </input>
-
 
 ### Die fünf essentiellen Diagrammtypen
 
@@ -139,24 +134,18 @@ par(mfrow = c(1, 1),
 
 ## Einführung
 
-Es gibt (wie immer) tausend verschiedene Wege, Visualisierungen mit R zu erstellen. Aber einer hat sich über die Jahre als besonders beliebt erwiesen, und das ist das 
-Paket `ggplot2`. 
+Es gibt (wie immer) tausend verschiedene Wege, Visualisierungen mit R zu erstellen. Aber einer hat sich über die Jahre als besonders beliebt erwiesen, und das ist das Paket `ggplot2`.
 
 Der Grund, warum wir dir diesen Weg beibringen:
 
-- `ggplot2` folgt einem klaren Baukastenprinzip, mit dem auch später beliebig komplexe Anpassungen der Grafik an die eigenen Vorstellungen relativ schmerzfrei umgesetzt werden können. 
-- `ggplot2` ist der populärste Weg, daher gibt es auf Google viele gute Anleitungen und Antworten. Und es existieren zahlreiche Eweiterungen um das Paket `ggplot2`. 
+-   **klares Baukastenprinzip**: Auch später können komplexe Anpassungen der Grafik an die eigenen Vorstellungen relativ schmerzfrei umgesetzt werden
+-   **Popularität**: Es gibt auf Google viele gute Anleitungen. 
 
-<hr>
-
-Einiges im folgenden orientiert sich an einem tollen, frei verfügbaren Online-Lehrbuch namens [*Modern Dive*](https://www.moderndive.com) [@ismay2022]. Wir haben die Reihenfolge geändert, 
-Sachen übersetzt und paraphrasiert und unsere eigenen Gedanken hinzugefügt.
-
-<hr>
+- **Funktionalität**: `ggplot2` kann eigentlich alles, was du brauchst, und wenn es etwas nicht kann, gibt es dafür mit hoher Wahrscheinlichkeit bereits ein Paket 
 
 ### Grammar of Graphs
 
-Das `gg` im Paketnamen `ggplot2` steht für *Grammar of Graphs*. 
+Das `gg` im Paketnamen `ggplot2` steht für *Grammar of Graphs*.
 
 Leland Wilkinson ist der Gründer des Grammar of Graphs-Ansatzes. Im Grunde ist das eine Theorie darüber, mit welchen Regeln und Bausteinen statistische Grafiken gut und übersichtlich erstellt werden können [@wilkinson2005].
 
@@ -176,36 +165,51 @@ library()
 library(ggplot2)
 ```
 
+### Einordnung in das R-Ökosystem
+
+`ggplot2` ist nur eins von mehreren Interfaces für die unterhalb der Oberfläche liegenden Grafik-Strukturen von R. Es ist also nur eine Spitze des Eisbergs, und der Eisberg hat mehrere Spitzen, zum Beispiel das Paket `lattice` oder Visualisierungsfunktionen aus base R.
+
+Ein Beispiel:\
+Wenn du im Internet nach „Balkendiagramm erstellen mit R“ suchst, wirst du vermutlich Anleitungen für die base R-Variante `barplot()` finden. Trotzdem geht das auch mit `ggplot2`. Du kannst am Ende den Weg verwenden, der dir näher liegt. Wir denken, dass `ggplot2` zu einem intuitven Interface für dich werden kann, aber möchten dir bewusst machen, dass es keinesfalls das einzig Wahre ist! Jede Variante hat eigene Vor- und Nachteile.
+
+Letztlich nutzen alle *higher level* Grafik-Funktionen unter der Oberfläche entweder `grid` oder `graphics`, um Grafiken zu erstellen. `ggplot2` gehört zur Familie der `grid`-basierten Grafikpakete. 
+
+![](images/deep_r_gagolewski.png){width="80%"}
+
+Bild aus: [@gagolewski2023]: [Deep R Programming](https://deepr.gagolewski.com/chapter/250-graphics.html)
+
 ### Einordnung in den Prozess
 
 Die Daten sind erhoben, importiert und nun kommen die Grafiken. Sie sind ein guter Weg, Zusammenhänge in den Daten sichtbar zu machen. Zum einen, um sich selbst in den Daten zu orientieren, und zum anderen, um die Ergebnisse der Analyse zu präsentieren. Visualisierungen werden also an zwei Stellen im Prozess benötigt:
 
-- um einen **Überblick** zu gewinnen
-- um am Ende **Ergebnisse** zu **kommunizieren**
+-   um einen **Überblick** zu gewinnen
+-   um am Ende **Ergebnisse** zu **kommunizieren**
 
-![](images/compress/prozess.png){width=80%}
-
+![](images/compress/prozess.png){width="80%"}
 
 Welche Grafik du wann anwenden kannst, hängt vom Skalenniveau der Daten und der Anzahl von Variablen ab.
 
 Grob kann unterschieden werden zwischen:
 
-- Plots, die die **Verteilung einer** einzelnen Variablen darstellen
-- Plots, die den **Zusammenhang** zwischen **zwei oder mehr** Variablen zeigen
+-   Plots, die die **Verteilung einer** einzelnen Variablen darstellen
+-   Plots, die den **Zusammenhang** zwischen **zwei oder mehr** Variablen zeigen
 
 Die am häufigsten verwendeten und in diesem Tutorial vorgestellten Plots sind:
 
-|                    | kategorial                | kontinuierlich                   |
-|--------------------|:--------------------------|:---------------------------------|
-| **keine**          | Balkendiagramm <br>`geom_bar()`| Histogramm <br>`geom_histogram()`|
-| **kategorial**     | (`geom_count()`)          | Boxplot<br>`geom_boxplot()`      |
-| **kontinuierlich** | -                         | Punktdiagramm<br>`geom_point()`  |
-| **sequentiell (z.B. Zeit)**    | -                         | Liniendiagramm<br>`geom_line()`  |
-
-
-
+|                             | kategorial                      | kontinuierlich                    |
+|------------------|:-----------------------|:-----------------------------|
+| **keine**                   | Balkendiagramm <br>`geom_bar()` | Histogramm <br>`geom_histogram()` |
+| **kategorial**              | (`geom_count()`)                | Boxplot<br>`geom_boxplot()`       |
+| **kontinuierlich**          | \-                              | Punktdiagramm<br>`geom_point()`   |
+| **sequentiell (z.B. Zeit)** | \-                              | Liniendiagramm<br>`geom_line()`   |
 
 Steigen wir direkt ein!
+
+<hr>
+
+Einiges im folgenden orientiert sich an einem tollen, frei verfügbaren Online-Lehrbuch namens [*Modern Dive*](https://www.moderndive.com) [@ismay2022]. Wir haben die Reihenfolge geändert, Sachen übersetzt und paraphrasiert und unsere eigenen Gedanken hinzugefügt.
+
+<hr>
 
 ## 1. Balkendiagramm
 
@@ -214,6 +218,7 @@ Balkendiagramme sind geeignet, um die **Verteilung** einer **einzelnen**, **kate
 
 Funktion: `ggplot() + geom_bar()`
 :::
+
 <br>
 
 ::: aufgabe
@@ -228,40 +233,39 @@ ggplot(data = einkaufen,
 
 Dabei wird deutlich, dass der Code durch eine klare Sprache organisiert ist:
 
-- in `data` wird ein Datensatz an die Funktion übergeben
-- in `mapping` wird festgelegt, welche Variablen aus dem Datensatz wo gezeigt werden
-- das `+` fügt eine neue Ebene hinzu, genau wie in Photoshop / Gimp / bei Overhead-Folien
-- `geom_bar()` fügt ein `geom`etrisches Objekt, nämlich die Balken (`bar`s), hinzu
+-   in `data` wird ein Datensatz an die Funktion übergeben
+-   in `mapping` wird festgelegt, welche Variablen aus dem Datensatz wo gezeigt werden
+-   das `+` fügt eine neue Ebene hinzu, genau wie in Photoshop / Gimp / bei Overhead-Folien
+-   `geom_bar()` fügt ein `geom`etrisches Objekt, nämlich die Balken (`bar`s), hinzu
 
 Mehr dazu, wie genau dieses Mapping funktioniert, folgt später.
 
 ### Baukasten-Prinzip
 
-Leland Wilkonson, Begründer der *Grammar of Graphs*-Theorie sagt, dass sich jede statistische Grafik durch
-diese drei Kernbestandteile beschreiben lässt: 
+Leland Wilkonson, Begründer der *Grammar of Graphs*-Theorie sagt, dass sich jede statistische Grafik durch diese drei Kernbestandteile beschreiben lässt:
 
-- `data`
-- `aesthetic mapping`
-- `geom`etric objects
+-   `data`
+-   `aesthetic mapping`
+-   `geom`etric objects
 
-Mit data kennst du dich ja jetzt schon aus, daher können wir direkt zum *mapping* übergehen. Wichtig ist nur zu wissen, dass `ggplot()` nur *data frames* als Daten
-akzeptiert. 
+Mit data kennst du dich ja jetzt schon aus, daher können wir direkt zum *mapping* übergehen. Wichtig ist nur zu wissen, dass `ggplot()` nur *data frames* als Daten akzeptiert.
 
 ### aesthetic mapping
 
-`aes()` steht für *aesthetic attributes*. Beim `aesthetic mapping` (oben im Code: `mapping = aes(x = verkehrsmittel)`) wird einer Variable eine *grafische Eigenschaft* zugeordnet. Grafische Eigenschaften sind: 
+`aes()` steht für *aesthetic attributes*. Beim `aesthetic mapping` (oben im Code: `mapping = aes(x = verkehrsmittel)`) wird einer Variable eine *grafische Eigenschaft* zugeordnet. Grafische Eigenschaften sind:
 
-- Achsen (`x`, `y`)
-- Farbe (`colour`)
-- Füllung (`fill`)
-- Größe (`size`)
-- Transparenz (`alpha`)
+-   Achsen (`x`, `y`)
+-   Farbe (`colour`)
+-   Füllung (`fill`)
+-   Größe (`size`)
+-   Transparenz (`alpha`)
 
-Im Diagramm oben wurde der *x-Achse* die Variable *Verkehrsmittel* zugewiesen. 
+Im Diagramm oben wurde der *x-Achse* die Variable *Verkehrsmittel* zugewiesen.
 
-:::aufgabe
+::: aufgabe
 Ändere den Code so, dass die Variable Verkehrsmittel nun stattdessen auf die y-Achse gemappt wird. Wie wird sich das Diagramm wohl verändern?
 :::
+
 <br>
 
 ::: blau-nb
@@ -292,14 +296,14 @@ Schau dir an, wie der Plot aussieht ohne die Ebene mit`geom_bar()`!
 ggplot(einkaufen, aes(x = verkehrsmittel))
 ```
 
-Jetzt versteht du vielleicht, wofür die `geom_bar()`-Funktion da ist: Geometrische Objekte, in diesem Fall Balken, in den Plot zu zeichnen! Der Plot ist leer, aber die Achsen sind bereits beschriftet und perfekt vorbereitet, aber es fehlt noch das geometrische Objekt. 
+Jetzt versteht du vielleicht, wofür die `geom_bar()`-Funktion da ist: Geometrische Objekte, in diesem Fall Balken, in den Plot zu zeichnen! Der Plot ist leer, aber die Achsen sind bereits beschriftet und perfekt vorbereitet, aber es fehlt noch das geometrische Objekt.
 
-Innerhalb der Funktion für das geometrische Objekt finden auch Berechnungen statt, die einzelnen Ausprägungen der Verkehrsmittel werden gezählt, um die Höhe der Balken zu bestimmen. Aber das übernimmt zum Glück alles R. 
+Innerhalb der Funktion für das geometrische Objekt finden auch Berechnungen statt, die einzelnen Ausprägungen der Verkehrsmittel werden gezählt, um die Höhe der Balken zu bestimmen. Aber das übernimmt zum Glück alles R.
 
 Und jetzt kommt das Ding: Es gibt auch noch andere `geom_...()` Funktionen. Zum Beispiel `geom_point()`, welche dem Plot Punkte hinzufügt! Oder `geom_histogram()`, welche ein Histogramm zeichnet, siehe nächster Abschnitt.
 
 ::: aufgabe
-Probiere das doch einfach mal aus und tausche `geom_bar()` durch `geom_point()`. 
+Probiere das doch einfach mal aus und tausche `geom_bar()` durch `geom_point()`.
 :::
 
 ```{r error-solution}
@@ -313,28 +317,24 @@ ggplot(einkaufen, aes(x = verkehrsmittel)) +
 
 ```
 
-Dass hier eine Fehlermeldung aufploppt, ist völlig normal! Fehlermeldungen sind freundlich, denn Programmierer*innen geben sich (oft) viel Mühe, diese möglichst informativ und genau zu machen. Also hab keine Angst, und lies dir tatsächlich mal durch was da steht!
+Dass hier eine Fehlermeldung aufploppt, ist völlig normal! Fehlermeldungen sind freundlich, denn Programmierer\*innen geben sich (oft) viel Mühe, diese möglichst informativ und genau zu machen. Also hab keine Angst, und lies dir tatsächlich mal durch was da steht!
 
-```
+```         
 ! Problem while setting up geom.
 ℹ Error occurred in the 1st layer.
 Caused by error in `compute_geom_1()`:
 ! `geom_point()` requires the following missing aesthetics: y
 ```
 
-- Schon die erste Zeile gibt dir eine wichtige Information: Der Fehler trat beim
-Hinzufügen des `geom`etrischen Objekts auf und nicht an irgendeiner anderen Stelle
-- Die zweite Zeile sagt, dass der Fehler in der ersten Zeile / Ebene passiert ist. 
-Das wird relevant, wenn du mehrere Ebenen mit `+` übereinanderlegst in deinem Plot.
-- Die dritte Zeile musst du nicht genau verstehen, das ist irgendwas internes von
-`ggplot2`
-- die vierte Zeile schließlich sagt dir ganz genau, wo das Problem ist: Du brauchst eine zweite Variable. Und zwar auf der y-Achse. Das ergibt auch Sinn, denn ein Punkt hat immer zwei Koordinaten, eine `x`- und eine `y`-Koordinate! Logischerweise kann kein Punkt gezeichnet werden, wenn du nur eine `x`-Koordinate angibst. 
-
+-   Schon die erste Zeile gibt dir eine wichtige Information: Der Fehler trat beim Hinzufügen des `geom`etrischen Objekts auf und nicht an irgendeiner anderen Stelle
+-   Die zweite Zeile sagt, dass der Fehler in der ersten Zeile / Ebene passiert ist. Das wird relevant, wenn du mehrere Ebenen mit `+` übereinanderlegst in deinem Plot.
+-   Die dritte Zeile musst du nicht genau verstehen, das ist irgendwas internes von `ggplot2`
+-   die vierte Zeile schließlich sagt dir ganz genau, wo das Problem ist: Du brauchst eine zweite Variable. Und zwar auf der y-Achse. Das ergibt auch Sinn, denn ein Punkt hat immer zwei Koordinaten, eine `x`- und eine `y`-Koordinate! Logischerweise kann kein Punkt gezeichnet werden, wenn du nur eine `x`-Koordinate angibst.
 
 ::: aufgabe
-Löse das Problem, indem du in `aes()` noch das Argument `y = weg` angibst. Denk daran, Argumente werden durch Kommata getrennt. 
+Löse das Problem, indem du in `aes()` noch das Argument `y = weg` angibst. Denk daran, Argumente werden durch Kommata getrennt.
 
-"`weg`" ist eine stetige Variable, die den zurückgelegten Anreiseweg der Person zum Laden, wo die Erhebung stattfand, in km enthält. 
+"`weg`" ist eine stetige Variable, die den zurückgelegten Anreiseweg der Person zum Laden, wo die Erhebung stattfand, in km enthält.
 :::
 
 ```{r weg, exercise = TRUE, exercise.cap = "aesthetic mapping hinzufügen für y-Achse"}
@@ -429,7 +429,6 @@ question_text("Wie erklärst du dir die weiten Anreisewege (bis 600km!) beim Ver
 )
 ```
 
-
 ## 2. Histogramm
 
 ::: infobox
@@ -437,51 +436,51 @@ Histogramme sind geeignet, um die Verteilung einer **einzelnen**, **stetigen** V
 
 Funktion: `geom_histogram()`
 :::
+
 <br>
 
 Unser Go-To-Beispiel für eine stetige Variable ist `einkaufen$alter`, die dir schon in den letzten Tutorials begegnet sein sollte. Beachte, dass du innerhalb eines `ggplot`-Codes den `$`-Operator nicht benutzen musst. Das liegt daran, dass `ggplot` aufgrund des ersten Arguments schon weiß, in welchem Datensatz die Variable gesucht werden muss.
 
-Hier ist `ggplot2`-Code für ein einfaches, absolut nicht schönes Histogramm. In diesem Abschnitt wird es deswegen auch mal Zeit, über Farben und Verschönerungen zu sprechen. 
+Hier ist `ggplot2`-Code für ein einfaches, absolut nicht schönes Histogramm. In diesem Abschnitt wird es deswegen auch mal Zeit, über Farben und Verschönerungen zu sprechen.
 
 ```{r hist, exercise = TRUE, exercise.cap = "einfaches Histogramm erstellen"}
 ggplot(einkaufen, aes(alter)) +
   geom_histogram()
 ```
 
-
 ### Was ist ein Histogramm?
 
 Bei einem Histogramm werden auf der x-Achse die möglichen Ausprägungen der Variable aufgelistet, und auf der y-Achse die Häufigkeit. Es ist also genau das gleiche Prinzip wie bei einem Balkendiagramm, nur dass du dich hier zusätzlich noch mit der Kategorienbreite (*binwidth*) auseinandersetzen musst.
 
-Denn: Balkendiagramme sind für diskrete Daten, und diskrete Daten haben natürliche Kategorien. Zum Beispiel ist das Verkehrsmittel ÖPNV etwas anderes als Motorrad - die Kategorien liegen also schon in der Natur der Sache. 
+Denn: Balkendiagramme sind für diskrete Daten, und diskrete Daten haben natürliche Kategorien. Zum Beispiel ist das Verkehrsmittel ÖPNV etwas anderes als Motorrad - die Kategorien liegen also schon in der Natur der Sache.
 
-Das ist bei stetigen (kontinuierlichen) Daten anders: Von Natur her gibt es bei stetigen Daten immer unendlich viele mögliche Ausprägungen, und also auch immer unendlich viele mögliche Kategorien. 
+Das ist bei stetigen (kontinuierlichen) Daten anders: Von Natur her gibt es bei stetigen Daten immer unendlich viele mögliche Ausprägungen, und also auch immer unendlich viele mögliche Kategorien.
 
 Zum Beispiel kann ein Meter in unendlich feine Messeinheiten aufgeteilt werden:
 
-- Meter
-- Dezimeter
-- Zentimeter
-- Millimeter
-- Mikrometer
-- Nanometer
-- Picometer
-- Femtometer
-- Attometer
-...
+-   Meter
+-   Dezimeter
+-   Zentimeter
+-   Millimeter
+-   Mikrometer
+-   Nanometer
+-   Picometer
+-   Femtometer
+-   Attometer ...
 
 Da es unendlich Möglichkeiten gibt einen Meter einzuteilen, gehen keine natürlichen Kategorien daraus hervor. Deswegen können die Kategorien beliebig gebildet werden.
 
 Beim Histogramm des Alters oben sind die Balken zum Beispiel immer 2.5 Jahre breit, komplett random also. Darüber informiert `ggplot` auch beim Erstellen des Diagramms mit einer Nachricht:
 
-```
+```         
 `stat_bin()` using `bins = 30`. Pick better value with `binwidth`
 ```
+
 `ggplot` sagt damit: „Hey, ich habe deine Daten einfach mal in 30 gleich große Kategorien eingeteilt, aber das ist ein default-Wert, den du bitte anpassen solltest.“
 
 ### Kategorienbreite anpassen
 
-In der Warnmeldung wurde bereits das Argument `binwidth` erwähnt. Hier ist Code, mit dem die Kategorienbreite auf 5 (Jahre) festgelegt wird. 
+In der Warnmeldung wurde bereits das Argument `binwidth` erwähnt. Hier ist Code, mit dem die Kategorienbreite auf 5 (Jahre) festgelegt wird.
 
 ```{r binwidth, exercise = TRUE, exercise.cap = "Kategorienbreite einstellen"}
 ggplot(einkaufen, aes(x = alter)) +
@@ -490,7 +489,7 @@ ggplot(einkaufen, aes(x = alter)) +
 
 ### `colour` und `fill`
 
-Da die Balken gerade visuell in einer großen grauen Masse verschwinden, wird noch nicht so ganz deutlich worum es eigentlich geht. Deswegen wäre es hilfreich, wenn alle Balken eine schwarze Umrandung hätten und etwas hellgrauer wären. Beachte, dass jetzt nach dem `binwidth`-Argument dafür noch die Argumente `color` und `fill` stehen. 
+Da die Balken gerade visuell in einer großen grauen Masse verschwinden, wird noch nicht so ganz deutlich worum es eigentlich geht. Deswegen wäre es hilfreich, wenn alle Balken eine schwarze Umrandung hätten und etwas hellgrauer wären. Beachte, dass jetzt nach dem `binwidth`-Argument dafür noch die Argumente `color` und `fill` stehen.
 
 Fun fact: in `ggplot` ist es für R egal, ob du die UK Variante von `colour` schreibst oder das amerikanische `color`. Wie das geschrieben wird ist in diesem Fall reine Geschmackssache.
 
@@ -505,8 +504,7 @@ Später in diesem Tutorial wird es noch ein eigenes Kapitel zu Farben geben.
 
 ### `boundary`
 
-Das sieht schon mal ein Stück weit besser aus. Jetzt ist noch etwas störend, dass die Kategorien
-nicht bei den markanten Zahlen anfangen, sondern z.B. die 50 in der Mitte einer Kategorie liegt. Dafür kannst du das Argument `boundary` nutzen, um einen Grenzwert zu bestimmen, der die Kategorien an diesem Punkt teilt (sog. "bin break"):
+Das sieht schon mal ein Stück weit besser aus. Jetzt ist noch etwas störend, dass die Kategorien nicht bei den markanten Zahlen anfangen, sondern z.B. die 50 in der Mitte einer Kategorie liegt. Dafür kannst du das Argument `boundary` nutzen, um einen Grenzwert zu bestimmen, der die Kategorien an diesem Punkt teilt (sog. "bin break"):
 
 ```{r boundary, exercise = TRUE, exercise.cap = "Boundary-Argument"}
 ggplot(einkaufen, aes(x = alter)) +
@@ -610,7 +608,6 @@ question("Letzter Plot: Wie alt ist die älteste Person?",
 )
 ```
 
-
 ## 3. Boxplot
 
 ::: infobox
@@ -618,24 +615,18 @@ Ein Boxplot ist eine effektive und robuste Methode, um die Verteilung **einer st
 
 Funktion: `geom_boxplot()`
 :::
+
 <br>
 
 Du erinnerst dich vielleicht daran im letzten Tutorial selbst bereits einen Boxplot gezeichnet zu haben. Hier noch einmal die Übersicht, welche Daten in einem Boxplot enthalten sind:
 
-![](images/boxplot.png){width=90%}
+![](images/boxplot.png){width="90%"}
 
 [image source](https://leansigmacorporation.com/box-plot-with-minitab/)
 
-Boxplots werden eigentlich niemals einzeln gezeigt, sondern immer im Vergleich neben
-anderen Boxplots. Das heißt dann *side-by-side boxplot*. Das macht auch Sinn,
-denn für die Verteilung einer einzelnen stetigen Variablen haben wir ja bereits
-das Histogramm. Boxplots hingegen sind gut darin, mehrere Verteilungen übersichtlich zu vergleichen. Histogramme sind gut darin, eine einzelne Verteilung detailliert 
-darzustellen.
+Boxplots werden eigentlich niemals einzeln gezeigt, sondern immer im Vergleich neben anderen Boxplots. Das heißt dann *side-by-side boxplot*. Das macht auch Sinn, denn für die Verteilung einer einzelnen stetigen Variablen haben wir ja bereits das Histogramm. Boxplots hingegen sind gut darin, mehrere Verteilungen übersichtlich zu vergleichen. Histogramme sind gut darin, eine einzelne Verteilung detailliert darzustellen.
 
-*Side-by-side boxplots* entstehen, wenn zu der **stetigen** noch eine **kategoriale** Variable hinzukommt. 
-Im Plot unten wird die stetige Variable `alter` nach der kategorialen Variable 
-`verkehrsmittel` aufgeschlüsselt. Für jedes Verkehrsmittel
-ergibt sich nun eine eigene Altersverteilung. Da zeigen sich dann die ersten spannenden  Zusammenhänge!
+*Side-by-side boxplots* entstehen, wenn zu der **stetigen** noch eine **kategoriale** Variable hinzukommt. Im Plot unten wird die stetige Variable `alter` nach der kategorialen Variable `verkehrsmittel` aufgeschlüsselt. Für jedes Verkehrsmittel ergibt sich nun eine eigene Altersverteilung. Da zeigen sich dann die ersten spannenden Zusammenhänge!
 
 ```{r sidebysideboxplot, exercise = TRUE, message=FALSE, warning=FALSE}
 ggplot(einkaufen, aes(x = verkehrsmittel, y = alter)) +
@@ -643,15 +634,13 @@ ggplot(einkaufen, aes(x = verkehrsmittel, y = alter)) +
 ```
 
 <details>
-<summary> <a>**▼ \* Zusatz: Zusammenfassen von Kategorien**</a> </summary>
+
+<summary><a>**▼ \* Zusatz: Zusammenfassen von Kategorien**</a></summary>
 
 Es wird auch deutlich, dass die Kategorien "E-Roller" und "Motorrad" so klein sind, dass sie sich nicht als eigene Analyse-Kategorie eignen, deswegen werden sie mit "Andere" zusammengefasst. Hierfür wird ein neuer Datensatz mit dem Namen `data_einkaufen` erstellt. Die NAs dürfen allerdings nicht einfach umgecodet werden, weil wir es in diesem Fall einfach wirklich nicht wissen.
 
 ::: rot
-Das Zusammenfassen von Kategorien sollte vor der Datenerhebung geplant sein, damit 
-nicht nachträglich Kategorien zusammengefasst werden und dadurch die Ergebnisse 
-verändert werden können. Wenn es nachträglich geschieht, muss es auf jeden Fall
-gut begründet und **dokumentiert** werden, sonst ist das wissenschaftlicher Betrug!
+Das Zusammenfassen von Kategorien sollte vor der Datenerhebung geplant sein, damit nicht nachträglich Kategorien zusammengefasst werden und dadurch die Ergebnisse verändert werden können. Wenn es nachträglich geschieht, muss es auf jeden Fall gut begründet und **dokumentiert** werden, sonst ist das wissenschaftlicher Betrug!
 :::
 
 ```{r bp_neuerdf, exercise = TRUE}
@@ -733,11 +722,9 @@ question_radio("Zeigt der Boxplot die Gruppengröße jedes Verkehrsmittels?",
 
 ### \# Show your data!
 
-Der obige Boxplot hat einen großen Nachteil: Es ist nicht zu sehen, wie viele Personen in jeder Gruppe sind. Dabei wissen wir eigentlich, dass die Gruppengröße der unterschiedlichen Verkehrsmittel
-unterschiedlich ist. Manchmal wird halt ein ganzer Boxplot gezeichnet, während lediglich
-6 Personen dahinter stehen, und er ist nicht zu unterscheiden von einem für ein Verkehrsmittel, was 100 Menschen nutzen. Genau hier können wir die die Magie von R nutzen, um unsere Visualisierung nach unseren Wünschen zu ändern. 
+Der obige Boxplot hat einen großen Nachteil: Es ist nicht zu sehen, wie viele Personen in jeder Gruppe sind. Dabei wissen wir eigentlich, dass die Gruppengröße der unterschiedlichen Verkehrsmittel unterschiedlich ist. Manchmal wird halt ein ganzer Boxplot gezeichnet, während lediglich 6 Personen dahinter stehen, und er ist nicht zu unterscheiden von einem für ein Verkehrsmittel, was 100 Menschen nutzen. Genau hier können wir die die Magie von R nutzen, um unsere Visualisierung nach unseren Wünschen zu ändern.
 
-Mit einem kleinen Befehl (`geom_jitter()`), lassen sich über unsere Boxplots noch die Informationen der Datenpunkte legen. Mehr dazu in einem späteren Kapitel. 
+Mit einem kleinen Befehl (`geom_jitter()`), lassen sich über unsere Boxplots noch die Informationen der Datenpunkte legen. Mehr dazu in einem späteren Kapitel.
 
 ```{r showyourdata, exercise = TRUE, echo=TRUE}
 ggplot(einkaufen, aes(x = verkehrsmittel, y = alter)) +
@@ -750,15 +737,15 @@ ggplot(einkaufen, aes(x = verkehrsmittel, y = alter)) +
 ::: infobox
 Hier siehst du, was ein Boxplot eigentlich wirklich aussagt: Er zeigt wirklich nur die Quartile, Minimum und Maximum und den Median (das ist ja ein Quartil).
 :::
+
 <br>
 
-Achte mal auf das Verkehrsmittel "Andere". Dort gibt es wirklich nur eine handvoll Punkte,
-aber die Box ist kaum von den anderen Verkehrsmitteln zu unterscheiden. Aber mithilfe der Punkte können wir nun sehen, dass dort weit weniger Datenpunkte vorliegen und wir daher bei der Interpretation dieser Gruppe Vorsicht walten lassen sollten, da sie von der Gruppengröße her nicht mit den anderen zu vergleichen ist, von Motorrad, E-Roller und NA ganz zu schweigen. 
+Achte mal auf das Verkehrsmittel "Andere". Dort gibt es wirklich nur eine handvoll Punkte, aber die Box ist kaum von den anderen Verkehrsmitteln zu unterscheiden. Aber mithilfe der Punkte können wir nun sehen, dass dort weit weniger Datenpunkte vorliegen und wir daher bei der Interpretation dieser Gruppe Vorsicht walten lassen sollten, da sie von der Gruppengröße her nicht mit den anderen zu vergleichen ist, von Motorrad, E-Roller und NA ganz zu schweigen.
 
 ::: aufgabe
 **Aufgabe**
 
-Probiere es doch mal aus, und schaue welche anderen zwei Variablen aus dem Beispieldatensatz `einkaufen` du gut für einen Boxplot nutzen kannst. 
+Probiere es doch mal aus, und schaue welche anderen zwei Variablen aus dem Beispieldatensatz `einkaufen` du gut für einen Boxplot nutzen kannst.
 
 Achte darauf, immer eine **metrische** mit einer **kategorialen** Variable zu kombinieren! Sonst gibt es komische Fehlermeldungen / komisch aussehende Plots.
 
@@ -766,22 +753,22 @@ Hier eine Auflistung der Variablennamen:
 
 **Kategorial:**
 
-- `essen`: Das Lieblingsessen der Person. Nominal, 97 verschiedene Ausprägungen
-- `verkehrsmittel`: Das Verkehrsmittel, mit dem die Person zum Laden gefahren ist. Nominal, 7 Auprägungen
-- `frequenz`: Wie oft die Person in einen Bioladen geht. Ordinal, 5 Stufen
-- `ort`: Befragungsort. Nominal, 5 Ausprägungen
-- `bioladen`: Ob der Laden ein Bioladen war. Nominal, binär
-- `befragung`: Kürzel der Studierenden, die die Daten erhoben haben. Nominal, 8 Ausprägungen
+-   `essen`: Das Lieblingsessen der Person. Nominal, 97 verschiedene Ausprägungen
+-   `verkehrsmittel`: Das Verkehrsmittel, mit dem die Person zum Laden gefahren ist. Nominal, 7 Auprägungen
+-   `frequenz`: Wie oft die Person in einen Bioladen geht. Ordinal, 5 Stufen
+-   `ort`: Befragungsort. Nominal, 5 Ausprägungen
+-   `bioladen`: Ob der Laden ein Bioladen war. Nominal, binär
+-   `befragung`: Kürzel der Studierenden, die die Daten erhoben haben. Nominal, 8 Ausprägungen
 
 **Metrisch:**
 
-- `weg`: Die Länge der Anreise zum Laden in km, Verhältnisskala
-- `alter`: Alter der Person, Verhältnisskala
-- `kochen`:  Anzahl der Tage pro Woche, an denen selber gekocht wird, Absolutskala 
+-   `weg`: Die Länge der Anreise zum Laden in km, Verhältnisskala
+-   `alter`: Alter der Person, Verhältnisskala
+-   `kochen`: Anzahl der Tage pro Woche, an denen selber gekocht wird, Absolutskala
 
 **Andere:**
 
-- `id`, `datum`, `uhrzeit` sind Metadaten die wir gerade nicht brauchen. 
+-   `id`, `datum`, `uhrzeit` sind Metadaten die wir gerade nicht brauchen.
 :::
 
 ```{r boxplot, exercise = TRUE, exercise.cap = "Boxplot Exploration"}
@@ -790,11 +777,7 @@ ggplot(einkaufen, aes(x = , y =  )) +
 ```
 
 ::: infobox
-**Tipp:**
-Wenn du die Beschriftungen einer kategorialen Variable auf der `x`-Achse nicht mehr lesen kannst, weil
-sie übereinandergedruckt werden: Pack die Variable einfach auf die
-`y`-Achse! Dann werden die Beschriftungen untereinander dargestellt und überlappen
-sich nicht. 
+**Tipp:** Wenn du die Beschriftungen einer kategorialen Variable auf der `x`-Achse nicht mehr lesen kannst, weil sie übereinandergedruckt werden: Pack die Variable einfach auf die `y`-Achse! Dann werden die Beschriftungen untereinander dargestellt und überlappen sich nicht.
 :::
 
 ```{r boxplot-quest}
@@ -803,7 +786,6 @@ question_text("Welche Variablen hast du gefunden, die sich für einen Boxplot mi
               placeholder = "Musterlösung erscheint bei Abgabe deiner Antwort...")
 ```
 
-
 ## 4. Punktdiagramm
 
 ::: infobox
@@ -811,8 +793,9 @@ Punktdiagramme sind geeignet, um die Zusammenhänge **zweier numerischer** Varia
 
 Funktion: `geom_point()`
 :::
+
 <br>
- 
+
 Punktediagramme können dir auch unter den Namen: *Streudiagramm*, *Punktewolke* oder englisch *Scatterplot* begegnen.
 
 ```{r scatterplot, exercise = TRUE, exercise.cap = "Streudiagramm"}
@@ -820,11 +803,7 @@ ggplot(einkaufen, aes(x = alter, y = weg)) +
   geom_point()
 ```
 
-Schau dir das Diagramm mal an. Einige Extremwerte der Variable 
-`weg` definieren die Skala der y-Achse auf 0 - 600 km, wodurch die "normalen" Werte am unteren Rand zu einer
-undifferenzierbaren Masse zusammenschrumpfen. Im nächsten Kapitel erfährst du
-Möglichkeiten, mit extremen Werten umzugehen, und wie das
-Punktdiagramm ohne sie aussehen würde.
+Schau dir das Diagramm mal an. Einige Extremwerte der Variable `weg` definieren die Skala der y-Achse auf 0 - 600 km, wodurch die "normalen" Werte am unteren Rand zu einer undifferenzierbaren Masse zusammenschrumpfen. Im nächsten Kapitel erfährst du Möglichkeiten, mit extremen Werten umzugehen, und wie das Punktdiagramm ohne sie aussehen würde.
 
 ```{r scatterquiz}
 question_checkbox("Plot 1: Wie alt ist die Person, die 600km Anreiseweg hat ca.?",
@@ -838,7 +817,6 @@ question_checkbox("Plot 1: Wie alt ist die Person, die 600km Anreiseweg hat ca.?
                incorrect = "Das stimmt leider nicht, probier es noch mal!")
 ```
 
-
 ## Extreme Werte
 
 In diesem Abschnitt hast du die Mögichkeit, einen Blick in die Praxis zu werfen: Der Umgang mit Ausreißerwerten. Es ist komplett freiwillig. Wenn du lieber mit dem rein grafischen weitermachen willst, springe zu Kapitel 5: Liniendiagramme.
@@ -848,7 +826,6 @@ Das ist ein klassischer Fall von Datenaufbereitung. Es wird **vor** den Analysen
 Und genau deswegen ist es so cool, dass wir diesen echten Datensatz zur Verfügung haben: Du wirst mit Problemen konfrontiert, die dir auch in Praxis begegnen werden, aber eben nicht in simulierten Datensätzen.
 
 Wie du in der Grafik siehst gibt es einzelne Werte, die doll von allen anderen abweichen. Das verzerrt nicht nur die Grafik sondern auch die Analyse. Das sind sog. Ausreißer. Es gibt, wie eigentlich immer in der Statistik, nicht den einen Weg, damit umzugehen. Was allerdings immer gilt, wenn Ausreißer auftreten: **Check your data!** Extreme Werte können unterschiedlichste Gründe haben. Und je nachdem woher sie kommen, können sie behandelt werden.
-
 
 Das Anschauen der Daten geht sowohl numerisch als auch optisch.
 
@@ -873,7 +850,7 @@ Der Median liegt bei 3 km, das bedeutet: 50% der Personen haben einen Anfahrtswe
 
 Dass die Ausreißer da sind kann, auch in diesem Fall, verschiedene Gründe haben:
 
-1. Weiter oben im Tutorial wurde bereits erwähnt: Ein Laden, nämlich der Biomarkt Greger, liegt in der Nähe eines ICE-Bahnhofs. Die Ausreißer könnten also von Fernreisenden kommen. Wenn das stimmt, dann müssten die Ausreißerwerte in diesem Laden erhoben worden sein (`ort`).
+1.  Weiter oben im Tutorial wurde bereits erwähnt: Ein Laden, nämlich der Biomarkt Greger, liegt in der Nähe eines ICE-Bahnhofs. Die Ausreißer könnten also von Fernreisenden kommen. Wenn das stimmt, dann müssten die Ausreißerwerte in diesem Laden erhoben worden sein (`ort`).
 
 Das lässt sich prüfen. (In diesem Unterkapitel wird nur nach Optik geprüft. In der freien Wildbahn wären statistische Analysen notwendig!)
 
@@ -882,11 +859,7 @@ ggplot(einkaufen, aes(x = weg, y = ort)) +
   geom_boxplot()
 ```
 
-Die Vermutung wird durch die Daten nicht wirklich gestützt. Bei Greger in der
-Willi-Allee zeigt der Boxplot gerade mal einen Wert außerhalb von 
-$Q3 + 1.5\cdot IQR$ (gekennzeichnet als Punkt). Manche Studierende haben
-leider nicht dokumentiert, an welchem Laden sie Daten gesammelt haben, deswegen
-gibt es `NA`s bei der Variable `ort`. `NA` heißt, es ist nicht klar, um welchen und wie viele Läden es sich handelt. 
+Die Vermutung wird durch die Daten nicht wirklich gestützt. Bei Greger in der Willi-Allee zeigt der Boxplot gerade mal einen Wert außerhalb von $Q3 + 1.5\cdot IQR$ (gekennzeichnet als Punkt). Manche Studierende haben leider nicht dokumentiert, an welchem Laden sie Daten gesammelt haben, deswegen gibt es `NA`s bei der Variable `ort`. `NA` heißt, es ist nicht klar, um welchen und wie viele Läden es sich handelt.
 
 Es wurde miterhoben, wer welche Beobachtung aufgeschrieben hat (`befragung`), vielleicht gibt das Aufschluss. Sowohl numerisch, als auch optisch. `geom_count()` ist eine Möglichkeit, Kreuztabellen optisch darzustellen.
 
@@ -931,9 +904,7 @@ data_einkaufen <- data_einkaufen[!is.na(data_einkaufen$weg), ]
 
 **Ganz wichtig!**: Wenn du Daten ausschließt **musst** du das, inklusive der Argumentation warum, gut dokumentieren. Sonst ist das wissenschaftlicher Betrug!
 
-Im Normalfall sollte bereits vor der Datenerhebung festgelegt werden, nach welchen
-Kriterien Daten ausgeschlossen werden müssen - damit die Versuchsleiter nicht
-nachträglich die Möglichkeit haben, das Ergebnis in eine bestimmte Richtung zu lenken.
+Im Normalfall sollte bereits vor der Datenerhebung festgelegt werden, nach welchen Kriterien Daten ausgeschlossen werden müssen - damit die Versuchsleiter nicht nachträglich die Möglichkeit haben, das Ergebnis in eine bestimmte Richtung zu lenken.
 :::
 
 Und jetzt nochmal der Plot ganz vom Anfang:
@@ -1007,45 +978,36 @@ question("Was sind zwei übliche Daumenregeln für die Definition von Ausreißer
 )
 ```
 
-
 ## 5. Liniendiagramm
 
 ::: infobox
-Liniendiagramme sind geeignet, um Verläufe und Entwicklungen darzustellen.
-Dafür braucht es **zwei Variablen**: eine **stetige** Variable, und eine andere 
-mit einer **sequentiellen Abfolge** (wie z.B. die Zeit). 
+Liniendiagramme sind geeignet, um Verläufe und Entwicklungen darzustellen. Dafür braucht es **zwei Variablen**: eine **stetige** Variable, und eine andere mit einer **sequentiellen Abfolge** (wie z.B. die Zeit).
 
-Die sequentielle Variable kommt dabei immer auf die `x`-Achse. 
+Die sequentielle Variable kommt dabei immer auf die `x`-Achse.
 
 Funktion: `geom_line()`
 :::
+
 <br>
 
-Hierfür wird ein anderer Datensatz benötigt, da wir für ein Liniendiagramm eine wiederholte Messung brauchen.
-`einkaufen` enthält 160 unabhängige Messungen, keine der Personen wurde ein
-zweites Mal befragt. Deswegen ist `einkaufen` nicht geeignet um einen Verlauf
-über die Zeit darzustellen. 
+Hierfür wird ein anderer Datensatz benötigt, da wir für ein Liniendiagramm eine wiederholte Messung brauchen. `einkaufen` enthält 160 unabhängige Messungen, keine der Personen wurde ein zweites Mal befragt. Deswegen ist `einkaufen` nicht geeignet um einen Verlauf über die Zeit darzustellen.
 
 <!-- Maybe use the `economics` data set from ggplot2 here -->
 
 ```{r include = FALSE}
 ggplot(economics, aes(date, unemploy)) +
-  geom_line
+  geom_line()
 ```
 
-
-Im Datensatz `rtutorials::heated` ist die maximale Tagestemperatur (`maxtemp`) in Grad Fahrenheit sowie das Tagesdatum (`enddate`) gespeichert. Es handelt sich um 
-wiederholte Messungen, weil der gleiche Gegenstand (die Temperatur in New York) 
-immer wieder (täglich) erhoben wurde.
+Im Datensatz `rtutorials::heated` ist die maximale Tagestemperatur (`maxtemp`) in Grad Fahrenheit sowie das Tagesdatum (`enddate`) gespeichert. Es handelt sich um wiederholte Messungen, weil der gleiche Gegenstand (die Temperatur in New York) immer wieder (täglich) erhoben wurde.
 
 ```{r linegraph, exercise = TRUE, exercise.cap = "Liniendiagramm"}
 ggplot(heated, aes(x = enddate, y = maxtemp)) +
   geom_line()
 ```
 
-Zwischen den Jahren sind komische, gerade Linien. Das liegt daran, dass nur die Monate Mai bis September im Datensatz vorhanden sind. Dieses geometrische Objekt `geom_line()` (Liniendiagramm) verbindet alle Punkte, die ihm zur Verfügung gestellt werden miteinander. Wenn dann länger keine Daten da sind, wird der Verbindungsstrich einfach zum nächsten vorhandenen Datenpunkt gezogen. Das Problem ist, dass dieser Verbindungsstrich den Anschein erweckt, als gäbe es Daten, die eben in echt gar nicht gibt. Um damit gut umzugehen braucht es in den `aes`thetics das `group` Argument. Das sagt dem geometrischen Objekt in welchen Gruppen es die Daten behandeln soll. In diesem Fall wäre eine Gruppe für jedes Jahr sinnvoll. \
-Der Umgang mit Datumsformaten in R würde hier komplett den Rahmen sprengen, 
-aber die Lösung ist: \
+Zwischen den Jahren sind komische, gerade Linien. Das liegt daran, dass nur die Monate Mai bis September im Datensatz vorhanden sind. Dieses geometrische Objekt `geom_line()` (Liniendiagramm) verbindet alle Punkte, die ihm zur Verfügung gestellt werden miteinander. Wenn dann länger keine Daten da sind, wird der Verbindungsstrich einfach zum nächsten vorhandenen Datenpunkt gezogen. Das Problem ist, dass dieser Verbindungsstrich den Anschein erweckt, als gäbe es Daten, die eben in echt gar nicht gibt. Um damit gut umzugehen braucht es in den `aes`thetics das `group` Argument. Das sagt dem geometrischen Objekt in welchen Gruppen es die Daten behandeln soll. In diesem Fall wäre eine Gruppe für jedes Jahr sinnvoll.\
+Der Umgang mit Datumsformaten in R würde hier komplett den Rahmen sprengen, aber die Lösung ist:\
 Mit der Funktion `year()` aus dem Paket `lubridate()` ziehst du *nur* das Jahr aus dem Datum und erschaffst somit eine Gruppe pro Jahr.
 
 ```{r linegraph2, exercise = TRUE,  exercise.cap = "Daten Gruppieren!"}
@@ -1134,14 +1096,14 @@ question("Letzte Grafik: Was stimmt?",
 Jetzt kennst du die 5 häufigsten Diagrammformen. Jetzt kommt Farbe ins Spiel. Wie im ersten Kapitel bereits besprochen ist: Die ästhetischen Attribute eines Plots werden festgelegt. Bisher haben wir lediglich die Zuweisung zur x und ggf. y Achse genutzt, da geht allerdings noch viel mehr. Als Erinnerung:
 
 ::: infobox
-`aes()` steht für *aesthetic attributes*, und weist den einzelnen Variablen, wie z.B. dem Verkehrsmittel, eine *grafische Eigenschaft* zu. Grafische Eigenschaften sind: 
+`aes()` steht für *aesthetic attributes*, und weist den einzelnen Variablen, wie z.B. dem Verkehrsmittel, eine *grafische Eigenschaft* zu. Grafische Eigenschaften sind:
 
-- Achsen (`x`, `y`)
-- Farbe (`colour`)
-- Füllung (`fill`)
-- Form (`shape`)
-- Größe (`size`)
-- Transparenz (`alpha`)
+-   Achsen (`x`, `y`)
+-   Farbe (`colour`)
+-   Füllung (`fill`)
+-   Form (`shape`)
+-   Größe (`size`)
+-   Transparenz (`alpha`)
 :::
 
 Also: jeder Variable wird ein ästethisches Attribut zugeordnet. Bedeutet umgekehrt: Es lassen sich bis zu 6 verschiedenen Variablen in einem Plot unterbringen. Wie sinnvoll es ist, das auszureizen, sei dahingestellt.
@@ -1157,8 +1119,7 @@ ggplot(einkaufen, aes(x = verkehrsmittel, fill = bioladen)) +
   geom_bar()
 ```
 
-Dazu kommt nun, dass unterschieden werden kann zwischen Bio- und Nicht-Bioläden. Aber **Achtung**: Es ist kein ausgewogenes Design, es wurde in deutlich mehr Bio- als Nicht-Bioläden erhoben. Das kann in der statistischen Analyse später noch besondere Beachtung benötigen.
-Doch zu dem Plot: Scheint erstmal recht einleuchtend. Was jedoch noch besser wäre, um es vergleichbarer zu machen, wäre wenn die farbigen Balken *nebeneinander* und nicht aufeinander stünden. Das lässt sich mit dem Argument `position = "dodge"` erreichen:
+Dazu kommt nun, dass unterschieden werden kann zwischen Bio- und Nicht-Bioläden. Aber **Achtung**: Es ist kein ausgewogenes Design, es wurde in deutlich mehr Bio- als Nicht-Bioläden erhoben. Das kann in der statistischen Analyse später noch besondere Beachtung benötigen. Doch zu dem Plot: Scheint erstmal recht einleuchtend. Was jedoch noch besser wäre, um es vergleichbarer zu machen, wäre wenn die farbigen Balken *nebeneinander* und nicht aufeinander stünden. Das lässt sich mit dem Argument `position = "dodge"` erreichen:
 
 ```{r am_fuellung, exercise = TRUE,  exercise.cap = "position dodge"}
 ggplot(einkaufen, aes(x = verkehrsmittel, fill = bioladen)) +
@@ -1215,7 +1176,6 @@ ggplot(data_einkaufen, aes(x = alter, y = weg, shape = verkehrsmittel, colour = 
   geom_point()
 ```
 
-
 ### Size
 
 Auch Mittels Größe kann eine weitere Dimension rein gebracht werden. Das ist allerdings mit vorsicht zu genießen, da es in vielen Fällen die Wahrnehmung zu bestimmten Zusammenhängen verzerrt:
@@ -1229,9 +1189,9 @@ Bei diesem Beispiel wird deutlich: Dieses Attribunt ist ungünstig verteilt. es 
 
 Im Grunde gibt es nur 3 Gründe, `size` als ästhetisches Attribut zu nutzen:
 
-1. Bei diskreten Daten, wo die Punkte sonst so sehr übereinander liegen würden, dass die Grafik total Gegenstandslos wäre. (Hierfür wurde allerdings das `geom_count()` entwickelnt)
-2. In Momenten, in denen mit der Größe wirklich eine Relation ausgedrückt werden kann (bspw. Gewicht, Quadratmeter oder Bruttoinlandsprodukt)
-3. In Korrelationstabellen.
+1.  Bei diskreten Daten, wo die Punkte sonst so sehr übereinander liegen würden, dass die Grafik total Gegenstandslos wäre. (Hierfür wurde allerdings das `geom_count()` entwickelnt)
+2.  In Momenten, in denen mit der Größe wirklich eine Relation ausgedrückt werden kann (bspw. Gewicht, Quadratmeter oder Bruttoinlandsprodukt)
+3.  In Korrelationstabellen.
 
 ### Alpha
 
@@ -1401,6 +1361,7 @@ Facets sind geeignet, um die Daten anhand von ein oder zwei Variablen aufzuteile
 
 Funktion: `facet_grid()` und `facet_wrap()`.
 :::
+
 <br>
 
 ### `facet_grid()`
@@ -1460,8 +1421,6 @@ question("Facetten: Was stimmt?",
 )
 ```
 
-
-
 ## 8. Das Drumherum: Themes, Labs und Legenden
 
 Was noch fehlt um die Grafiken ganz grundlegend ein bisschen schöner zu machen ist die grundsätzliche Gestaltung der Plots sowie die grundsätzlichen Beschriftungen.
@@ -1494,7 +1453,6 @@ Die Beschriftungen sind ebenfalls eine weitere Lage und werden mittels `labs()` 
 Ändere die Beschriftungen so, dass sie informativ sind.
 :::
 
-
 ```{r d_labs, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "labs"}
 ggplot(data_einkaufen, aes(x = alter, y = weg)) +
   geom_point() +
@@ -1509,7 +1467,7 @@ ggplot(data_einkaufen, aes(x = alter, y = weg)) +
 
 ### Legends
 
-[](images/legends.webp){width="50%"}
+[ ](images/legends.webp){width="50%"}
 
 [source](https://www.reddit.com/media?url=https%3A%2F%2Fpreview.redd.it%2Fgbjhlcz41i871.jpg%3Fauto%3Dwebp%26s%3D7a940a1c20340cefabf513e1a5987359542a3b72)
 
@@ -1519,12 +1477,10 @@ Es gibt sehr viele Wege, sie zu verändern und anzupassen und je nach Ausgangsla
 
 Im Grunde gibt es zwei Möglichkeiten, etwas an der Legende zu ändern:
 
-1. Im Vektor an sich (also vorher)
-2. In der Legende (also im ggplot an sich)
+1.  Im Vektor an sich (also vorher)
+2.  In der Legende (also im ggplot an sich)
 
-**Zu 1**: Bietet sich an, wenn es die Daten dadurch noch übersichtlicher macht bzw. nichts an Übersichtlichkeit verloren geht. Im Beispiel der Variablen `bioladen`: aktuell noch logical würde sie durchaus übersichtlicher werden, wenn Einträge "bio" und "konventionell" wären. Hier begegnen wir unserem alten Bekannten, dem `factor`, wieder. Es wird eine neue Variable mit dem Namen "ladenart" erstellt. Es wäre allerdings auch denkbar, die alte zu überschreiben. 
-  - **Pro:** Geringere Gefahr, dass sich Fehler aufgrund von falscher Beschriftung einschleichen.
-  - **Con:** Eher seltener der Fall, da das Datawrangling (s. entsprechendes Tutorial) ja eigentlich schon vorher abgeschlossen sein sollte und die Daten eigentlich in sehr hoher Qualität vorliegen sollten.
+**Zu 1**: Bietet sich an, wenn es die Daten dadurch noch übersichtlicher macht bzw. nichts an Übersichtlichkeit verloren geht. Im Beispiel der Variablen `bioladen`: aktuell noch logical würde sie durchaus übersichtlicher werden, wenn Einträge "bio" und "konventionell" wären. Hier begegnen wir unserem alten Bekannten, dem `factor`, wieder. Es wird eine neue Variable mit dem Namen "ladenart" erstellt. Es wäre allerdings auch denkbar, die alte zu überschreiben. - **Pro:** Geringere Gefahr, dass sich Fehler aufgrund von falscher Beschriftung einschleichen. - **Con:** Eher seltener der Fall, da das Datawrangling (s. entsprechendes Tutorial) ja eigentlich schon vorher abgeschlossen sein sollte und die Daten eigentlich in sehr hoher Qualität vorliegen sollten.
 
 ```{r d_legends, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "legends"}
 # Factor erstellen (ei Fragen dazu: Wiederhole gerne das Tutorial Vektoren)
@@ -1544,18 +1500,14 @@ ggplot(data_einkaufen, aes(x = verkehrsmittel, fill = ladenart)) +
 
 **Zu 2:** Ist in den allermeisten Fällen das Mittel der Wahl. Die beiden Hauptpunkte sind: Punkte und Titel der Legende verändern. Alles andere (Schriftart und -größe, Position, Ausrichtung, Hintergrund, Umrandung etc. kannst du in den oben vorgeschlagenen Seiten nachschauen). Es folgt eigentlich immer dem gleichen Prinzip: Du fügst deinem ggplot eine weitere Ebene hinzu und innerhalb dieser Ebene legst du Dinge fest. Welche Funktion bzw. Argumente du wählst hängt von deinen Variablen und ästhetischen Attributen ab: diskret oder kontinuierlich? Fill oder Colour? Daraus ergibt sich folgende Kreuztabelle
 
-|                    |   `colour`                           |   `fill`                         |
-|--------------------|--------------------------------------|----------------------------------|
-| **diskret**        | `scale_colour_viridis(discrete = T)` | `scale_fill_virdis(discrete = T)`|
-| **kontinuierlich** | `scale_colour_virdis()`              | `scale_fill_viridis()` \*        |
+|                    | `colour`                             | `fill`                            |
+|------------------|-----------------------------|--------------------------|
+| **diskret**        | `scale_colour_viridis(discrete = T)` | `scale_fill_virdis(discrete = T)` |
+| **kontinuierlich** | `scale_colour_virdis()`              | `scale_fill_viridis()` \*         |
 
 \* Steht nur der Vollständigkeit halber hier, ist keinem der vorgestellten geoms sinnvoll einsetzbar. Wird vor allem für Heatmaps verwendet.
 
-  -**2a Punkte verändern:** Wenn du die passende Funktion ausgewählt hast fügst du das Argument `labels = c("label 1", "label 2")` hinzu. Wobei die Sortierung die gleiche Reihenfolge haben sollte, wie die aktuelle. **PRÜFE DAS**, sonst kann es zu schwerwiegenden inhaltlichen Fehlern kommen!
-  -**2b Titel verändern:** In die gleiche Funktion fügst du die Funktion `guide_legend()` mit dem Argument `title = "some title"` ein.
-  - **Zusammenfassung:**
-    - **Pro:** Kein rumgemurkse mit den Daten. Kann für jeden Plot individuell passend verändert werden.
-    - **Con:** Erhöhte Fehlergefahr aufgrund von flaschen Beschriftungen.
+\-**2a Punkte verändern:** Wenn du die passende Funktion ausgewählt hast fügst du das Argument `labels = c("label 1", "label 2")` hinzu. Wobei die Sortierung die gleiche Reihenfolge haben sollte, wie die aktuelle. **PRÜFE DAS**, sonst kann es zu schwerwiegenden inhaltlichen Fehlern kommen! -**2b Titel verändern:** In die gleiche Funktion fügst du die Funktion `guide_legend()` mit dem Argument `title = "some title"` ein. - **Zusammenfassung:** - **Pro:** Kein rumgemurkse mit den Daten. Kann für jeden Plot individuell passend verändert werden. - **Con:** Erhöhte Fehlergefahr aufgrund von flaschen Beschriftungen.
 
 ```{r d_legends_2, exercise = TRUE, exercise.setup = "d_legends",  exercise.cap = "guide_legend()"}
 ggplot(data_einkaufen, aes(x = verkehrsmittel, fill = bioladen)) +
@@ -1574,7 +1526,7 @@ ggplot(data_einkaufen, aes(x = verkehrsmittel, fill = bioladen)) +
 ::: aufgabe
 Finde für die Funktionen `scale_colour_viridis(discrete = T)` und `scale_colour_viridis()` eine Anwendungsmöglichkeit in einen der bereits ausgeführten Plots dieses Tutorials und füge diese Ebene hinzu. Füge auch gerne ein Theme deiner Wahl sowie passende Achsenbeschriftungen hinzu.
 
-*Extraaufgabe: schreibe einen komplett eigenen Plot.
+\*Extraaufgabe: schreibe einen komplett eigenen Plot.
 :::
 
 ```{r d_legends_3-solution}
@@ -1628,21 +1580,17 @@ question("Was stimmt?",
 )
 ```
 
-
-
 ## 9. Barrierefreiheit
 
-Es mag erstmal überraschen, aber: auch in visuellen Darstellungen ist Barrierefreiheit ein relevantes Thema. Ein nicht zu vernachlässigender Anteil der Bevölkerung kann bestimmte Farben nicht unterscheiden. Deswegen wurden von schlauen Menschen Farbpaletten entworfen, die keine ambivalenten Farben wie rot und grün enthalten, und auch ganz ohne Farbwahrnehmung nur über Helligkeit und Dunkelheit der Farben, also in schwarz weiß funktionieren. Der letzte Punkt ist ebenfalls relevant für alle Plots, die in schwarz weiß (wie bspw. in manchen Journals) abgebildet werden. 
+Es mag erstmal überraschen, aber: auch in visuellen Darstellungen ist Barrierefreiheit ein relevantes Thema. Ein nicht zu vernachlässigender Anteil der Bevölkerung kann bestimmte Farben nicht unterscheiden. Deswegen wurden von schlauen Menschen Farbpaletten entworfen, die keine ambivalenten Farben wie rot und grün enthalten, und auch ganz ohne Farbwahrnehmung nur über Helligkeit und Dunkelheit der Farben, also in schwarz weiß funktionieren. Der letzte Punkt ist ebenfalls relevant für alle Plots, die in schwarz weiß (wie bspw. in manchen Journals) abgebildet werden.
 
 Eine der verbreitetesten ist das Paket `viridis`. Es hat auch seine eigene [Hilfeseite](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html), auf der die Verwendung und die Hintergründe gut dokumentiert sind.
 
 Die verfügbaren Farbpaletten sind:
 
-[](images/viridis.png){width=50%}
+[ ](images/viridis.png){width="50%"}
 
 [source](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html)
-
-
 
 Hier ein Beispiel in action:
 
@@ -1663,13 +1611,12 @@ p
 
 Und die obenstehende Grafik ist ein gutes Beispiel dafür, wie hell-dunkel Kontraste verwendet werden können. So ist das Ganze in schwarz-weiß immer noch lesbar, was insbesondere für Menschen mit eingeschränkter Farbwahrnehmung klasse ist, denn alles was schwarz weiß gut lesbar ist, ist immer auch colorblind-friendly. Die Farben sind nicht unbeding neu für dich, spätestens seit dem letzten Abschnitt (Legends) bist du mit ihnen vertraut. Der Punkt ist: wir haben dir da schon eine colourblind friendly scale untergemogelt, damit du von anfang an sauber mit Farben in Grafiken umgehst.
 
-In diesem Unterkapitel lernst du neues über die Hintergründe der Farben (erledigt!) und du lernst verschiedene Paletten kennen: auf der [Hilfeseite](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html)) sind alle Optionen mit Namen angegeben. Du kannst dich nun für eine Option entscheiden und diese mit dem Argument `option = ` und ihrem Namen (`"viridis"` (default), `"magma"`,  `"plasma"`, `"inferno"`, `"cividis"`, `"mako"`, `"rocket"` oder `"turbo"`) einfügen.
-
+In diesem Unterkapitel lernst du neues über die Hintergründe der Farben (erledigt!) und du lernst verschiedene Paletten kennen: auf der [Hilfeseite](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html)) sind alle Optionen mit Namen angegeben. Du kannst dich nun für eine Option entscheiden und diese mit dem Argument `option =` und ihrem Namen (`"viridis"` (default), `"magma"`, `"plasma"`, `"inferno"`, `"cividis"`, `"mako"`, `"rocket"` oder `"turbo"`) einfügen.
 
 ::: aufgabe
 Nutze für jeden der Plots aus dem letzten Unterkapitel (Legends) eine andere viridis Farbpalette.
 
-*Extraaufgabe: schreibe einen komplett eigenen Plot.
+\*Extraaufgabe: schreibe einen komplett eigenen Plot.
 :::
 
 ```{r barrierefreiheit-solution}
@@ -1715,22 +1662,19 @@ ggplot(data_einkaufen, aes(x = alter, y = weg, colour = kochen)) +
 
 ```
 
-
-
 ## 10. Becoming a Pro
 
-![](images/pro.webp){width=50%}
+![](images/pro.webp){width="50%"}
 
 [source](https://www.reddit.com/media?url=https%3A%2F%2Fpreview.redd.it%2Fgggd8zabn6s11.jpg%3Fauto%3Dwebp%26s%3Dd2d26cf405057710034a718c567cdad6d81de099)
 
-Durch dieses Tutorial hast du nun die Grundlagen, um in Zukunft deine Plots ganz nach deinen Wünschen gestalten zu können. Deiner Phantasie sind kaum Grenzen gesetzt. Um zum nächsten Level zu kommen hilft: Recherche! Informiere dich im Internet was für deine Zwecke möglich ist und passe den Beispielcode auf deine Daten an. (Das gilt übrigens für alle Tutorials und Alles, was du hier in diesem Kurs lernst). 
+Durch dieses Tutorial hast du nun die Grundlagen, um in Zukunft deine Plots ganz nach deinen Wünschen gestalten zu können. Deiner Phantasie sind kaum Grenzen gesetzt. Um zum nächsten Level zu kommen hilft: Recherche! Informiere dich im Internet was für deine Zwecke möglich ist und passe den Beispielcode auf deine Daten an. (Das gilt übrigens für alle Tutorials und Alles, was du hier in diesem Kurs lernst).
 
-In den ersten Tutorials haben wir dir bereits *Cheat Sheets* verlinkt und auch zu Beginn dieses Tutorials die super hilfreiche Seite [R Graph Gallery](https://r-graph-gallery.com/) empfohlen. 
+In den ersten Tutorials haben wir dir bereits *Cheat Sheets* verlinkt und auch zu Beginn dieses Tutorials die super hilfreiche Seite [R Graph Gallery](https://r-graph-gallery.com/) empfohlen.
 
-**Cheat Sheets** 
-Sind eine fantastische erste Anlaufstelle, wenn du dir Zeit nimmst sie zu verstehen. Sie geben dir für ein bestimmtes Paket einen guten Überblick zu den vielzähligen Funktionen und deren Code. Somit fungieren Sie wie die `Hilfe` Seite einer Funktion oder eines Paketes, das für dich visuell aufbereitet wurde.
+**Cheat Sheets** Sind eine fantastische erste Anlaufstelle, wenn du dir Zeit nimmst sie zu verstehen. Sie geben dir für ein bestimmtes Paket einen guten Überblick zu den vielzähligen Funktionen und deren Code. Somit fungieren Sie wie die `Hilfe` Seite einer Funktion oder eines Paketes, das für dich visuell aufbereitet wurde.
 
-Hier kannst du die [von R Studio erstellten Cheat Sheets](https://rstudio.github.io/cheatsheets/) finden. Es gibt aber auch noch weitere *Cheat Sheets* von anderen Instanzen. 
+Hier kannst du die [von R Studio erstellten Cheat Sheets](https://rstudio.github.io/cheatsheets/) finden. Es gibt aber auch noch weitere *Cheat Sheets* von anderen Instanzen.
 
 ::: aufgaberstudio
 Hier mal eine besondere Aufgabe: Schau dir das [ggplot Cheat Sheet](https://rstudio.github.io/cheatsheets/data-visualization.pdf) genau an und beantworte dann folgende Fragen.
@@ -1786,25 +1730,18 @@ Noch ein paar Worte zu *ChatGPT*: Schau gut, inwieweit es für dich hilfreich is
 
 Wie ganz zu Beginn erwähnt, benutzen wir Visualisierungen für zweierlei Zwecke:
 
-- einmal um einen **Überblick** zu gewinnen
-- am Ende um **Ergebnisse** zu **kommunizieren**
+-   einmal um einen **Überblick** zu gewinnen
+-   am Ende um **Ergebnisse** zu **kommunizieren**
 
-Es lassen sich eigentlich alle Grafiken nuzten, um Ergebnisse zu kommunizieren, aber welche eignen sich dafür einen Überblick zu bekommen, um deine (zunächst unverständlich großen) Daten besser zu verstehen? Hier nur eine kurze Auflistung: 
+Es lassen sich eigentlich alle Grafiken nuzten, um Ergebnisse zu kommunizieren, aber welche eignen sich dafür einen Überblick zu bekommen, um deine (zunächst unverständlich großen) Daten besser zu verstehen? Hier nur eine kurze Auflistung:
 
-1. *Histogramme*:
-Zweck: Zeigt die Verteilung der Daten.
-Verwendung: Geeignet, um die Form der Verteilung, Zentralität und Streuung zu untersuchen.
+1.  *Histogramme*: Zweck: Zeigt die Verteilung der Daten. Verwendung: Geeignet, um die Form der Verteilung, Zentralität und Streuung zu untersuchen.
 
-2. *Boxplots*:
-Zweck: Veranschaulicht die Verteilung und Zentralität der Daten sowie Ausreißer.
-Verwendung: Besonders hilfreich bei der Identifizierung von Ausreißern.
+2.  *Boxplots*: Zweck: Veranschaulicht die Verteilung und Zentralität der Daten sowie Ausreißer. Verwendung: Besonders hilfreich bei der Identifizierung von Ausreißern.
 
-3. *Streudiagramme* (Scatter Plots):
-Zweck: Zeigt die Beziehung zwischen zwei kontinuierlichen Variablen.
-Verwendung: Ermöglicht die Identifizierung von Mustern, Korrelationen oder Ausreißern.
+3.  *Streudiagramme* (Scatter Plots): Zweck: Zeigt die Beziehung zwischen zwei kontinuierlichen Variablen. Verwendung: Ermöglicht die Identifizierung von Mustern, Korrelationen oder Ausreißern.
 
-Dieser Art der Nutzung von Visualisierungen wirst du in späteren Tutorials erneut begegnen, wenn wir diese zur Überprüfung der Voraussetzungen für eine statistische Testgröße verwenden. Jetzt hast du es bereits schon einmal gehört - oder eher *gelesen* - und weißt dann, wenn die Zeit gekommen ist, schon Bescheid was wir zur Verfügung haben. 
-
+Dieser Art der Nutzung von Visualisierungen wirst du in späteren Tutorials erneut begegnen, wenn wir diese zur Überprüfung der Voraussetzungen für eine statistische Testgröße verwenden. Jetzt hast du es bereits schon einmal gehört - oder eher *gelesen* - und weißt dann, wenn die Zeit gekommen ist, schon Bescheid was wir zur Verfügung haben.
 
 ## Learnings
 
@@ -1862,8 +1799,7 @@ shiny::br()
 
 ## Credit
 
-Dieses Tutorial wurde gemeinsam von Gesa Graf, Lukas Bruelheide und Marie
-Klosterkamp verfasst. 
+Dieses Tutorial wurde gemeinsam von Gesa Graf, Lukas Bruelheide und Marie Klosterkamp verfasst.
 
 ### Literaturverzeichnis
 

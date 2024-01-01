@@ -183,5 +183,40 @@
         "source": "DOI.org (Crossref)",
         "title": "The Grammar of Graphics",
         "type": "book"
+    },
+    {
+        "DOI": "10.5281/ZENODO.7490464",
+        "ISBN": "9780645571929",
+        "URL": "https://zenodo.org/record/7490464",
+        "accessed": {
+            "date-parts": []
+        },
+        "author": [
+            {
+                "family": "Gagolewski",
+                "given": "Marek"
+            }
+        ],
+        "id": "gagolewski2023",
+        "issued": {
+            "date-parts": [
+                [
+                    2023,
+                    6,
+                    28
+                ]
+            ]
+        },
+        "key": "2FGU9XGW",
+        "language": "en",
+        "libraryid": "1",
+        "note": "Version Number: v1.0.0-book",
+        "providerkey": "2509FBBE-5BB0-44C4-B119-6083A81ED673",
+        "publisher": "Zenodo",
+        "rights": "Creative Commons Attribution Non Commercial No Derivatives 4.0 International, Open Access",
+        "source": "DOI.org (Datacite)",
+        "title": "Deep R Programming",
+        "type": "article-journal",
+        "version number": "v1.0.0-book"
     }
 ]
