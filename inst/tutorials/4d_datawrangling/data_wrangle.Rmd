@@ -1,5 +1,5 @@
 ---
-title: "Visualisierung Basics"
+title: "Data Wrangling"
 output:
   learnr::tutorial:
     language: de
@@ -10,7 +10,7 @@ output:
 runtime: shiny_prerendered
 bibliography: ref.json
 link-citations: TRUE
-description: Schnell eine grafische Übersicht gewinnen über die Daten mit einfachen Visualisierungen. Wann ist welches Diagramm angebracht? Scatterplots, Barplots, Histogramme. 
+description: Mit Daten ringen.
 resource_files:
 - css/boxes.css
 tutorial:
@@ -45,7 +45,7 @@ kleine Checkliste mit abhakbaren Checkboxen:
 
 ## Tidyverse
 
-Wenn unsere Welt mal wieder im Chaos versinkt, gibt es  einen Rückzugsort, wo die Welt noch in *Ordnung* ist: das **Tidyverse**.  
+Wenn unsere Welt mal wieder im Chaos versinkt, gibt es  einen Rückzugsort, wo die Welt noch in *Ordnung* ist: das **Tidyverse**. 
 
 ![](images/messy_tidy.jpg){width="100%"}
 
@@ -79,14 +79,16 @@ Alle diese Pakete können entweder einzeln installiert werden oder alle auf einm
 
 ```{r tidyinstall, exercise = TRUE}
 # Nur EIN Mal zur Installation ausführen
-install.packages("tidyverse") 
+# install.packages("tidyverse") # ist bereits installiert
 
 # für jede Session ausführen, in der tidyverse 
-# Packete genutzt werden sollen
+# Pakete genutzt werden sollen
 library(tidyverse)            
 ```
 
-Ein Beispiel für die Design-Richtlinien, nach denen sich Tidyverse-Funktionen richten müssen, ist keine Punkte zu verwenden in Funktionsnamen (wie z.B. `base R`: `as.data.frame()`), sondern Unterstriche wie in `as_tibble()`. Das ist ein klassisches Zeichen, dass wir uns im Tidyverse bewegen.
+Ein Beispiel für die Design-Richtlinien, nach denen sich Tidyverse-Funktionen richten müssen, ist keine Punkte zu verwenden in Funktionsnamen (wie z.B. `base R`: `as.data.frame()`), sondern Unterstriche wie in `as_tibble()`. Das ist ein klassisches Zeichen, dass wir uns im Tidyverse bewegen. Außerdem ist dort alles
+*lowercase*, also kleingeschrieben, damit es nicht zu Verwirrungen wegen Groß-
+und Kleinschreibung kommt. 
 
 ## Von der Datenerhebung zur Analyse
 
