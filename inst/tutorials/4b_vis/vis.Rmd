@@ -85,6 +85,10 @@ Wie gesagt, wir fangen Schritt für Schritt an und daher sind das hier die Ziele
 
 <input type="checkbox" unchecked> colorblind-friendly sein </input>
 
+::: info
+Am besten maximierst du das Fenster des Tutorials, um alle Abbildungen vollständig sehen zu könnnen. Ansonsten kann es passieren, dass du z.B. eine Legende nicht siehst oder andere Teile des Diagramms verdeckt sind. 
+:::
+
 ### Die fünf essentiellen Diagrammtypen
 
 ```{r echo=FALSE}
@@ -138,10 +142,9 @@ Es gibt (wie immer) tausend verschiedene Wege, Visualisierungen mit R zu erstell
 
 Der Grund, warum wir dir diesen Weg beibringen:
 
--   **klares Baukastenprinzip**: Auch später können komplexe Anpassungen der Grafik an die eigenen Vorstellungen relativ schmerzfrei umgesetzt werden
+-   **klares Baukastenprinzip**: Auch später können komplexe Anpassungen der Grafik an die eigenen Vorstellungen relativ schmerzfrei umgesetzt werden.
 -   **Popularität**: Es gibt auf Google viele gute Anleitungen. 
-
-- **Funktionalität**: `ggplot2` kann eigentlich alles, was du brauchst, und wenn es etwas nicht kann, gibt es dafür mit hoher Wahrscheinlichkeit bereits ein Paket 
+- **Funktionalität**: `ggplot2` kann eigentlich alles, was du brauchst, und wenn es etwas nicht kann, gibt es dafür mit hoher Wahrscheinlichkeit bereits ein Paket. 
 
 ### Grammar of Graphs
 
@@ -167,10 +170,10 @@ library(ggplot2)
 
 ### Einordnung in das R-Ökosystem
 
-`ggplot2` ist nur eins von mehreren Interfaces für die unterhalb der Oberfläche liegenden Grafik-Strukturen von R. Es ist also nur eine Spitze des Eisbergs, und der Eisberg hat mehrere Spitzen, zum Beispiel das Paket `lattice` oder Visualisierungsfunktionen aus base R.
+`ggplot2` ist nur eins von mehreren Interfaces für die unterhalb der Oberfläche liegenden Grafik-Strukturen von R. Es ist also nur eine Spitze des Eisbergs, und der Eisberg hat mehrere Spitzen, zum Beispiel das Paket `lattice` oder Visualisierungsfunktionen aus *base R*.
 
 Ein Beispiel:\
-Wenn du im Internet nach „Balkendiagramm erstellen mit R“ suchst, wirst du vermutlich Anleitungen für die base R-Variante `barplot()` finden. Trotzdem geht das auch mit `ggplot2`. Du kannst am Ende den Weg verwenden, der dir näher liegt. Wir denken, dass `ggplot2` zu einem intuitven Interface für dich werden kann, aber möchten dir bewusst machen, dass es keinesfalls das einzig Wahre ist! Jede Variante hat eigene Vor- und Nachteile.
+Wenn du im Internet nach „Balkendiagramm erstellen mit R“ suchst, wirst du vermutlich Anleitungen für die *base R*-Variante `barplot()` finden. Trotzdem geht das auch mit `ggplot2`. Du kannst am Ende den Weg verwenden, der dir näher liegt. Wir denken, dass `ggplot2` zu einem intuitven Interface für dich werden kann, aber möchten dir bewusst machen, dass es keinesfalls das einzig Wahre ist! Jede Variante hat eigene Vor- und Nachteile.
 
 Letztlich nutzen alle *higher level* Grafik-Funktionen unter der Oberfläche entweder `grid` oder `graphics`, um Grafiken zu erstellen. `ggplot2` gehört zur Familie der `grid`-basierten Grafikpakete. 
 
@@ -178,9 +181,9 @@ Letztlich nutzen alle *higher level* Grafik-Funktionen unter der Oberfläche ent
 
 Bild aus: [@gagolewski2023]: [Deep R Programming](https://deepr.gagolewski.com/chapter/250-graphics.html)
 
-### Einordnung in den Prozess
+### Einordnung in den wissenschaftlichen Prozess
 
-Die Daten sind erhoben, importiert und nun kommen die Grafiken. Sie sind ein guter Weg, Zusammenhänge in den Daten sichtbar zu machen. Zum einen, um sich selbst in den Daten zu orientieren, und zum anderen, um die Ergebnisse der Analyse zu präsentieren. Visualisierungen werden also an zwei Stellen im Prozess benötigt:
+Sind die Daten erhoben und importiert folgt die Arbeit mit Grafiken. Sie sind ein guter Weg, Zusammenhänge in den Daten sichtbar zu machen. Zum einen, um sich selbst in den Daten zu orientieren, und zum anderen, um die Ergebnisse der Analyse zu präsentieren. Visualisierungen werden also an zwei Stellen im Prozess benötigt:
 
 -   um einen **Überblick** zu gewinnen
 -   um am Ende **Ergebnisse** zu **kommunizieren**
@@ -238,7 +241,7 @@ Dabei wird deutlich, dass der Code durch eine klare Sprache organisiert ist:
 -   das `+` fügt eine neue Ebene hinzu, genau wie in Photoshop / Gimp / bei Overhead-Folien
 -   `geom_bar()` fügt ein `geom`etrisches Objekt, nämlich die Balken (`bar`s), hinzu
 
-Mehr dazu, wie genau dieses Mapping funktioniert, folgt später.
+Mehr dazu, wie genau dieses *mapping* funktioniert, folgt später.
 
 ### Baukasten-Prinzip
 
@@ -248,14 +251,14 @@ Leland Wilkonson, Begründer der *Grammar of Graphs*-Theorie sagt, dass sich jed
 -   `aesthetic mapping`
 -   `geom`etric objects
 
-Mit data kennst du dich ja jetzt schon aus, daher können wir direkt zum *mapping* übergehen. Wichtig ist nur zu wissen, dass `ggplot()` nur *data frames* als Daten akzeptiert.
+Mit `data` kennst du dich ja jetzt schon aus, daher können wir direkt zum *mapping* übergehen. Wichtig ist nur zu wissen, dass `ggplot()` nur *data frames* als Daten akzeptiert.
 
 ### aesthetic mapping
 
 `aes()` steht für *aesthetic attributes*. Beim `aesthetic mapping` (oben im Code: `mapping = aes(x = verkehrsmittel)`) wird einer Variable eine *grafische Eigenschaft* zugeordnet. Grafische Eigenschaften sind:
 
 -   Achsen (`x`, `y`)
--   Farbe (`colour`)
+-   Farbe (`color`)
 -   Füllung (`fill`)
 -   Größe (`size`)
 -   Transparenz (`alpha`)
@@ -479,7 +482,7 @@ ggplot(einkaufen, aes(x = alter)) +
   geom_histogram(binwidth = 5)
 ```
 
-### `colour` und `fill`
+### `color` und `fill`
 
 Da die Balken gerade visuell in einer großen grauen Masse verschwinden, wird noch nicht so ganz deutlich worum es eigentlich geht. Deswegen wäre es hilfreich, wenn alle Balken eine schwarze Umrandung hätten und etwas hellgrauer wären. Beachte, dass jetzt nach dem `binwidth`-Argument dafür noch die Argumente `color` und `fill` stehen.
 
@@ -557,17 +560,17 @@ question_radio("Warum verändert sich die Höhe zwischen den beiden ersten Histo
 question_radio("Wie legst du die Farbe der Umrandung der Balken fest?",
                answer("Mit dem Argument `fill`.",
                       message = "`fill` bestimmt die Füllung der Balken."),
-               answer("Mit dem Argument `colour`.", correct = TRUE),
+               answer("Mit dem Argument `color`.", correct = TRUE),
                random_answer_order = TRUE,
                allow_retry = TRUE,
                correct = random_praise("de"),
                incorrect = random_encouragement("de")),
 
-question_radio("Was stimmt zur Schreibweise des Arguments `colour`?",
-               answer("`colour` kann auch `color` geschrieben werden.",
+question_radio("Was stimmt zur Schreibweise des Arguments `color`?",
+               answer("`color` kann auch `color` geschrieben werden.",
                       correct = TRUE),
-               answer("R ist case sensitive, deswegen muss das Argument `colour` stehts mit ou geschrieben werden.",
-                      message = "Das ist teilweise richtig. R ist case sensitive, was heißt, dass es Groß- und Kleinschreibung beachtet. `colour` kann allerdings in diesem Fall sowohl mit `ou` als auch nur mit `o` geschrieben werden."),
+               answer("R ist case sensitive, deswegen muss das Argument `color` stehts mit ou geschrieben werden.",
+                      message = "Das ist teilweise richtig. R ist case sensitive, was heißt, dass es Groß- und Kleinschreibung beachtet. `color` kann allerdings in diesem Fall sowohl mit `ou` als auch nur mit `o` geschrieben werden."),
                allow_retry = TRUE,
                random_answer_order = TRUE,
                correct = random_praise("de"),
@@ -579,7 +582,7 @@ question_radio("Was stimmt bzgl. des Arguments `boundary`?",
                answer("Spezifiziert die Grenzen des gesamten Plots.",
                       message = "Dafür gibt es andere Funktionen (z.B. `coord_cartesian()`)."),
                answer("Umrandet die bins in einer frei gewählten Farbe.",
-                      message = "Das gesuchte Argument heißt `colour`."),
+                      message = "Das gesuchte Argument heißt `color`."),
                allow_retry = TRUE,
                random_answer_order = TRUE,
                correct = random_praise("de"),
@@ -873,7 +876,7 @@ ggplot(einkaufen, aes(x = alter, y = weg)) +
   scale_y_log10()
 ```
 
-## Extreme Werte
+## Exkurs: Extreme Werte
 
 In diesem Abschnitt hast du die Mögichkeit, einen Blick in die Praxis zu werfen: Der Umgang mit Ausreißerwerten. Es ist komplett freiwillig. Wenn du lieber mit dem rein grafischen weitermachen willst, springe zu Kapitel 5: Liniendiagramme.
 
@@ -881,23 +884,31 @@ Das ist ein klassischer Fall von Datenaufbereitung. Es wird **vor** den Analysen
 
 Und genau deswegen ist es so cool, dass wir diesen echten Datensatz zur Verfügung haben: Du wirst mit Problemen konfrontiert, die dir auch in Praxis begegnen werden, aber eben nicht in simulierten Datensätzen.
 
-Wie du in der Grafik siehst gibt es einzelne Werte, die doll von allen anderen abweichen. Das verzerrt nicht nur die Grafik sondern auch die Analyse. Das sind sog. Ausreißer. Es gibt, wie eigentlich immer in der Statistik, nicht den einen Weg, damit umzugehen. Was allerdings immer gilt, wenn Ausreißer auftreten: **Check your data!** Extreme Werte können unterschiedlichste Gründe haben. Und je nachdem woher sie kommen, können sie behandelt werden.
+Wie du in der Grafik siehst, gibt es einzelne Werte, die doll von allen anderen abweichen. Das verzerrt nicht nur die Grafik, sondern auch die Analyse. Das sind sog. **Ausreißer**. Es gibt, wie eigentlich immer in der Statistik, nicht den einen Weg, damit umzugehen. Was allerdings immer gilt, wenn Ausreißer auftreten: **Check your data!** Extreme Werte können unterschiedlichste Gründe haben. Und je nachdem wodurch sie entstanden sind, können sie unterschiedliche Reaktionen erfordern.
 
-Das Anschauen der Daten geht sowohl numerisch als auch optisch.
+Die Ausreißeranalyse der Daten lässt sich sowohl numerisch als auch optisch bewerkstelligen.
 
 ::: aufgabe
 Nutze eine der dir bekannten Möglichkeiten, dir die Spalte `weg` aus dem `einkaufen`-Datensatz numerisch und optisch anzuschauen.
 :::
 
 ```{r ausreisser-solution}
+# numerische Möglichkeit
 summary(einkaufen$weg)
 
+# optische Möglichkeit
 ggplot(einkaufen, aes(x = weg)) +
   geom_histogram()
 ```
 
 ```{r ausreisser, exercise = TRUE, exercise.cap = "Daten checken"}
 
+```
+
+```{r ausreisser-hint}
+# Zusammenfassung über eine Variable
+
+# optische Möglichkeit mittels `histogram`
 ```
 
 Der Median liegt bei 3 km, das bedeutet: 50% der Personen haben einen Anfahrtsweg von höchstens 3 km. Das 3. Quantil ist bei 7 km: 75% der Personen haben einen Anfahrtsweg von höchstens 7km. Und das arithmetische Mittel liegt bei 12.76 km. Das deutet sehr stark auf Ausreißerwerte hin. Das Maximum liegt bei 600, was die Vermutung noch bestärkt. Auch optisch im Histogramm wird deutlich, dass fast alle Ausprägungen unter 100 km liegen.
@@ -928,13 +939,23 @@ ggplot(einkaufen, aes(x = befragung, y = ort)) +
   geom_count()
 ```
 
-Sowohl in der Kreuztabelle als auch in der Grafik kannst du sehen, dass jede Person lediglich in 1 Laden erhoben hat. LE hat scheinbar bei einer Person vergessen, den Laden einzutragen. LM und DS haben beide keinen Laden eingetragen. Es könnte also ein Laden sein oder auch 2, das können wir aus den Daten nicht wissen.
+Sowohl in der Kreuztabelle als auch in der Grafik kannst du sehen, dass jede Person lediglich in einem Laden erhoben hat. LE hat scheinbar bei einer Person vergessen, den Laden einzutragen. LM und DS haben beide keinen Laden eingetragen. Es könnte also ein Laden sein oder auch zwei, das können wir aus den Daten nicht wissen.
 
-Sidefact: Die erhebenden Personen sind btw. klassische Metadaten - also Daten über Daten. Sie scheinen erstmal relativ wenige aussagekräftig. Das ist natürlich quatsch, Metadaten sind richtig mächtig. Hier ist ein sehr unterhaltsames [Beispiel](https://www.youtube.com/watch?v=-YpwsdRKt8Q).
+Sidefact: Die erhebenden Personen sind btw. klassische Metadaten - also Daten über Daten. Sie scheinen erstmal relativ wenig aussagekräftig. Das ist natürlich quatsch, Metadaten sind richtig mächtig. Hier ist ein sehr unterhaltsames [Beispiel](https://www.youtube.com/watch?v=-YpwsdRKt8Q).
 
 ### Ausschluss
 
-Jetzt ist ein wenig mehr Orientierung bzgl. der Ausreißer da. Die Entscheidung, wie damit umgegangen wird ist nach wie vor offen. Spätestens jetzt ist es sehr wichtig, sich nochmal die Eingangsfrage der eigenen Forschung zu stellen: Was wollte ich eigentlich untersuchen? In diesem Fall ging es um die Frage, ob es einen Zusammenhang zwischen Einkaufsweg und Alter gibt. Wenn da Fernreisende mit drin sind, bieten diese logischerweise keine interessante Info für die Frage. Eine Möglichkeit wäre, den Laden am Bahnhof kategorisch auszuschließen. Allerdings ist unklar, ob in den NA Werten nur dieser Laden hinter steckt, deswegen müssten wir alle NAs rausschmeißen, was zum Verlust von 42 Beobachtungen führen würde. Das ist absurd viel. Außerdem kann davon ausgegangen werden, dass Menschen auch ihre Alltagseinkäufe dort machen, die wären dadurch kategorisch auch ausgeschlossen. Die nächste Möglichkeit wäre, eine feste Grenze zu setzen. Klassischerweise könnte diese aus der bestehenden Literatur bezogen werden. Also wenn es zB ein Paper geben würde, dass sagen würde: klassische Einkäufe finden in einem Umkreis von 10km statt, könnten alle Werte über 10km ausgeschlossen werden. Das wären schon deutlich weniger. Eine andere Möglichkeit ist die statistische: entweder die Werte außerhalb des Intervalls $[Q_1 - 1.5 \cdot IQR; Q_3 + 1.5 \cdot IQR]$ oder die Werte außerhalb des Intervalls $[\mu \pm 3 \cdot \sigma]$. Wenn die Daten normalverteilt sind (wie angenommen wird für die allermeisten statistischen Analysen, wenn nicht, haben wir noch ganz andere Probleme!), liegen in diesem Bereich 99.8% aller Werte. Es gibt keine Funktion in R, die automatisiert entsprechende Werte rausschmeißt. Das liegt daran, dass die Entscheidung so situationsabhängig ist und es einfach wichtig ist, sich jedes Mal wieder Gedanken zu machen, wie du damit umgehen möchtest. Hier sind beide Möglichkeiten:
+Jetzt ist ein wenig mehr Orientierung bzgl. der Ausreißer da. Die Entscheidung, wie damit umgegangen wird ist nach wie vor offen. Spätestens jetzt ist es sehr wichtig, sich nochmal die Eingangsfrage der eigenen Forschung zu stellen: Was wollte ich eigentlich untersuchen? In diesem Fall ging es um die Frage, ob es einen Zusammenhang zwischen Einkaufsweg und Alter gibt. 
+
+#### Plausibilitätscheck
+
+Wenn da Fernreisende mit drin sind, bieten diese logischerweise keine interessante Info für die Frage. Eine Möglichkeit wäre, den Laden am Bahnhof kategorisch auszuschließen. Allerdings ist unklar, ob in den NA Werten nur dieser Laden hinter steckt, deswegen müssten wir alle NAs rausschmeißen, was zum Verlust von 42 Beobachtungen führen würde. Das ist absurd viel. Außerdem kann davon ausgegangen werden, dass Menschen auch ihre Alltagseinkäufe dort machen, die wären dadurch kategorisch auch ausgeschlossen. 
+
+Die nächste Möglichkeit wäre, eine feste Grenze zu setzen. Klassischerweise könnte diese aus der bestehenden Literatur bezogen werden. Also wenn es z.B. ein Paper geben würde, dass sagen würde: klassische Einkäufe finden in einem Umkreis von 10km statt, könnten alle Werte über 10km ausgeschlossen werden. Das wären schon deutlich weniger. 
+
+#### statistischer Check
+
+Eine andere Möglichkeit ist die statistische: entweder die Werte außerhalb des Intervalls $[Q_1 - 1.5 \cdot IQR; Q_3 + 1.5 \cdot IQR]$ oder die Werte außerhalb des Intervalls $[\mu \pm 3 \cdot \sigma]$. Wenn die Daten normalverteilt sind (wie angenommen wird für die allermeisten statistischen Analysen, wenn nicht, haben wir noch ganz andere Probleme!), liegen in diesem Bereich 99.8% aller Werte. Es gibt keine Funktion in R, die automatisiert entsprechende Werte rausschmeißt. Das liegt daran, dass die Entscheidung so situationsabhängig ist und es einfach wichtig ist, sich jedes Mal wieder Gedanken zu machen, wie du damit umgehen möchtest. Hier sind beide Möglichkeiten:
 
 ```{r ausreisser4, exercise = TRUE,  exercise.cap = "Verschiedene Definitionen"}
 quantile(einkaufen$weg, .75, na.rm = T) + (1.5 * IQR(einkaufen$weg, na.rm = T))
@@ -1073,7 +1094,7 @@ ggplot(heated, aes(x = enddate,
   geom_line()
 ```
 
-Sehr gut, jetzt werden keine Zusammenhänge mehr angedeutet, wo gar keine sind. Und weils noch schöner ist, wenn die lesende Person intuitiv die Zahlen deuten kann wird im letzten Schritt die Grad Fahrenheit Skala in eine Grad Celsius Skala umgerechnet. Dies geht mit der Funktion `convert_temperature()` aus dem Paket `weathermetrics`.
+Sehr gut, jetzt werden keine Zusammenhänge mehr angedeutet, wo gar keine sind. Und weils noch schöner ist, wenn die lesende Person intuitiv die Zahlen deuten kann wird im letzten Schritt die *Grad Fahrenheit* Skala in eine *Grad Celsius* Skala umgerechnet. Dies geht mit der Funktion `convert_temperature()` aus dem Paket `weathermetrics`.
 
 ```{r linegraph3, exercise = TRUE,  exercise.cap = "Sauberes Liniendiagramm"}
 
@@ -1112,7 +1133,7 @@ question("Welche Daten lassen sich gut in einem Liniendiagramm darstellen?",
                correct = "Richtig!",
                incorrect = "Das stimmt leider nicht, probier es noch mal!"),
 
-question("Plot 1: Was ist richtig?",
+question("Grafik 1: Was ist richtig?",
                answer("Es werden sechs Jahre abgebildet.",
                      correct = T),
                answer("Es existieren Daten für jeden einzelnen Tag in der
@@ -1126,7 +1147,7 @@ question("Plot 1: Was ist richtig?",
                correct = "Richtig!",
                incorrect = "Das stimmt leider nicht, probier es noch mal!"),
 
-question("Letzte Grafik: Was stimmt?",
+question("Grafik 3: Was stimmt?",
               answer("Es werden sechs Jahre abgebildet.",
                      correct = T),
                answer("Die Wintermonate wurden einfach rausgelöscht.",
@@ -1149,13 +1170,13 @@ question("Letzte Grafik: Was stimmt?",
 
 ## 6. Aesthetic Mapping
 
-Jetzt kennst du die 5 häufigsten Diagrammformen. Jetzt kommt Farbe ins Spiel. Wie im ersten Kapitel bereits besprochen ist: Die ästhetischen Attribute eines Plots werden festgelegt. Bisher haben wir lediglich die Zuweisung zur x und ggf. y Achse genutzt, da geht allerdings noch viel mehr. Als Erinnerung:
+Jetzt kennst du die 5 häufigsten Diagrammformen. Jetzt kommt Farbe ins Spiel. Wie im ersten Kapitel bereits besprochen ist: Die ästhetischen Attribute eines Plots werden festgelegt. Bisher haben wir lediglich die Zuweisung zur x- und ggf. y-Achse genutzt, da geht allerdings noch viel mehr. Als Erinnerung:
 
 ::: infobox
 `aes()` steht für *aesthetic attributes*, und weist den einzelnen Variablen, wie z.B. dem Verkehrsmittel, eine *grafische Eigenschaft* zu. Grafische Eigenschaften sind:
 
 -   Achsen (`x`, `y`)
--   Farbe (`colour`)
+-   Farbe (`color`)
 -   Füllung (`fill`)
 -   Form (`shape`)
 -   Größe (`size`)
@@ -1189,19 +1210,19 @@ ggplot(einkaufen, aes(x = verkehrsmittel, fill = bioladen)) +
   geom_bar(position = position_dodge(preserve = "single"))
 ```
 
-#### Colour
+#### color
 
-Farbe (`colour`) ist ein bisschen tricky: Bei Balkendiagrammen, Histogrammen und Boxplots wird damit die Umrandung der Balken beeinflusst. Hier braucht es noch das Attribut `Füllung`.
+Farbe (`color`) ist ein bisschen tricky: Bei Balkendiagrammen, Histogrammen und Boxplots wird damit die Umrandung der Balken beeinflusst. Ohne das Attribut *Füllung* sieht ein Plot dann so aus:
 
-```{r am_f_colour, exercise = TRUE,  exercise.cap = "colour"}
-ggplot(einkaufen, aes(x = verkehrsmittel, colour = bioladen)) +
+```{r am_f_color, exercise = TRUE,  exercise.cap = "color"}
+ggplot(einkaufen, aes(x = verkehrsmittel, color = bioladen)) +
   geom_bar()
 ```
 
-Bei Punktdiagrammen und Liniendiagrammen wird die Punkt- bzw. Linienfarbe durch `colour` bestimmt. Wird das Attribut Füllung vergeben passiert einfach nichts.
+Bei Punktdiagrammen und Liniendiagrammen wird die Punkt- bzw. Linienfarbe durch `color` bestimmt. Wird das Attribut *Füllung* vergeben passiert einfach nichts. Probiere es gerne selbst aus und ändere `color` zu `fill`. 
 
-```{r am_f_colour_2, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "colour im Scatterplot"}
-ggplot(einkaufen_recoded, aes(x = alter, y = weg, colour = bioladen)) +
+```{r am_f_color_2, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "color im Scatterplot"}
+ggplot(einkaufen_recoded, aes(x = alter, y = weg, color = bioladen)) +
   geom_point()
 ```
 
@@ -1209,10 +1230,10 @@ Eine Ausnahme gibt es: Die Formen 21, 22, 23, 24, 25 in einem Punktediagramm hab
 
 #### kontinuierlich
 
-Das fill bzw colour Attribut kann genauso gut auf kontinuierliche Variablen angewendet werden:
+Das `fill` bzw `color` Attribut kann genauso gut auf kontinuierliche Variablen angewendet werden:
 
-```{r am_f_c_kontinuierlich, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "continuous colour"}
-ggplot(einkaufen_recoded, aes(x = alter, y = weg, colour = kochen)) +
+```{r am_f_c_kontinuierlich, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "continuous color"}
+ggplot(einkaufen_recoded, aes(x = alter, y = weg, color = kochen)) +
   geom_point()
 ```
 
@@ -1225,23 +1246,23 @@ ggplot(einkaufen_recoded, aes(x = alter, y = weg, shape = verkehrsmittel)) +
   geom_point()
 ```
 
-Insbesondere wenn es kombiniert wird mit `colour` wird es besonders eindeutig
+Insbesondere wenn es kombiniert wird mit `color` wird es besonders eindeutig
 
-```{r am_shape_2, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "shape & colour"}
-ggplot(einkaufen_recoded, aes(x = alter, y = weg, shape = verkehrsmittel, colour = verkehrsmittel)) +
+```{r am_shape_2, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "shape & color"}
+ggplot(einkaufen_recoded, aes(x = alter, y = weg, shape = verkehrsmittel, color = verkehrsmittel)) +
   geom_point()
 ```
 
 ### Size
 
-Auch Mittels Größe kann eine weitere Dimension rein gebracht werden. Das ist allerdings mit vorsicht zu genießen, da es in vielen Fällen die Wahrnehmung zu bestimmten Zusammenhängen verzerrt:
+Auch Mittels Größe kann eine weitere Dimension rein gebracht werden. Das ist allerdings mit Vorsicht zu genießen, da es in vielen Fällen die Wahrnehmung zu bestimmten Zusammenhängen verzerrt:
 
 ```{r am_size, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "size"}
 ggplot(einkaufen_recoded, aes(x = alter, y = weg, size = bioladen)) +
   geom_point()
 ```
 
-Bei diesem Beispiel wird deutlich: Dieses Attribunt ist ungünstig verteilt. es macht den Plot viel unübersichtlicher im Vergleich zu der Info, die die lesende Person daraus ziehen kann. colour aus dem vorherigen Abschnitt war die deutlich bessere Wahl.
+Bei diesem Beispiel wird deutlich: Dieses Attribunt ist ungünstig verteilt. es macht den Plot viel unübersichtlicher im Vergleich zu der Info, die die lesende Person daraus ziehen kann. `color` aus dem vorherigen Abschnitt war die deutlich bessere Wahl.
 
 Im Grunde gibt es nur 3 Gründe, `size` als ästhetisches Attribut zu nutzen:
 
@@ -1258,38 +1279,38 @@ ggplot(einkaufen_recoded, aes(x = alter, y = weg, alpha = kochen)) +
   geom_point()
 ```
 
-Hier gilt das gleiche wie bei size: die unterschiedlichen alpha Werte nehmen eine Gewichtung vor, die die Wahrnehmung von Daten verzerren kann.
+Hier gilt das gleiche wie bei `size`: die unterschiedlichen `alpha` Werte nehmen eine Gewichtung vor, die die Wahrnehmung von Daten verzerren kann.
 
-### Ästhetische Attribute ohne Mapping
+### Ästhetische Attribute außerhalb von Mapping
 
-Jetzt kennst du die Möglichkeiten, ästhetische Attribute Variablen zuzuweisen, um noch mehr Information abzubilden. Was du bisher noch nicht gelernt hast ist, diese ästhetischen Attribute auch ohne Mapping (also ohne sie einer Variable, also noch mehr Informationen, zuzuweisen) zu nutzen. Einfach, weil es gut aussieht und Grafiken übersichtlicher und lesbarer macht. Einige Beispiele wurden dir im bisherigen Tutorial schon untergemogelt. Hier sollen sie nochmal den gebührenden Platz finden.
+Jetzt kennst du die Möglichkeiten, ästhetische Attribute Variablen zuzuweisen, um noch mehr Information abzubilden. Was du bisher noch nicht gelernt hast ist, diese ästhetischen Attribute auch ohne *mapping* (also ohne sie einer Variable, also noch mehr Informationen, zuzuweisen) zu nutzen. Einfach, weil es gut aussieht und Grafiken übersichtlicher und lesbarer macht. Einige Beispiele wurden dir im bisherigen Tutorial schon untergemogelt. Hier sollen sie nochmal den gebührenden Platz finden.
 
 ::: aufgabe
 Schaue dir den folgenden Codeabschnitt an, führe den Code aus und finde den Unterschied zwischen den verschiedenen Plots
 :::
 
 ```{r am_aesthetische, exercise = TRUE,  exercise.cap = "aes ohne mapping"}
-ggplot(einkaufen, aes(x = alter, colour = bioladen)) +
+ggplot(einkaufen, aes(x = alter, color = bioladen)) +
   geom_histogram(binwidth = 5, boundary = 50, fill = "grey", position = "identity", alpha = .5)
 
 ggplot(einkaufen, aes(x = alter, fill = bioladen)) +
-  geom_histogram(binwidth = 5, boundary = 50, colour = "black", position = "identity", alpha = .5)
+  geom_histogram(binwidth = 5, boundary = 50, color = "black", position = "identity", alpha = .5)
 ```
 
-Richtig erkannt: sobald ein ästhetisches Attribut in der Funktion `aes()` steht, wird ihr eine Variable zugeordnet, sie bringt neue Information mit in den Plot. Das erkennst du auch daran, dass per default eine Legende erstellt wird. Steht eine Attribut einfach in einer geom-Funktion wird der Inhalt auf *alle* Informationen im Plot angewendet, ihr wird ein einzelner Wert zugeordnet und es wird keine Legende erstellt.
+Richtig erkannt: sobald ein ästhetisches Attribut in der Funktion `aes()` steht, wird ihr eine Variable zugeordnet, sie bringt neue Information mit in den Plot. Das erkennst du auch daran, dass per default eine Legende erstellt wird. Steht ein Attribut einfach in einer `geom`-Funktion wird der Inhalt auf *alle* Informationen im Plot angewendet, ihr wird ein einzelner Wert zugeordnet und es wird keine Legende erstellt.
 
-Dieses Prinzip gilt für alle oben vorgestellten ästhetischen Attribute. Deiner Phantasie sind keine Grenzen gesetzt. Bevor du jetzt anfängst, wild mit Farben um die zu schmeißen wäre es allerdings wichtig, dass du das Unterkapitel Barrierefreiheit liest - da ist eine wunderschöne Palette vorgestellt, die so richtig Spaß macht :)
+Dieses Prinzip gilt für alle oben vorgestellten ästhetischen Attribute. Deiner Phantasie sind keine Grenzen gesetzt. Bevor du jetzt anfängst, wild mit Farben um dich zu schmeißen wäre es allerdings wichtig, dass du das Unterkapitel *Barrierefreiheit* liest - da ist eine wunderschöne Palette vorgestellt, die so richtig Spaß macht :)
 
 ```{r aes-quest}
 quiz(caption = "Quiz zum aesthetic mapping",
      
 question("Welche der folgenden Attribute können als ästhetische Attribute genutzt
          werden?",
-         answer("x Achse",
+         answer("x-Achse",
                  correct = T),
-         answer("y Achse",
+         answer("y-Achse",
                  correct = T),
-        answer("colour",
+        answer("color",
                  correct = T),
         answer("fill",
                  correct = T),
@@ -1305,17 +1326,17 @@ question("Welche der folgenden Attribute können als ästhetische Attribute genu
                incorrect = "Das stimmt leider nicht, probier es noch mal!"),
 
 question("Füllung und Farbe, was stimmt??",
-               answer("fill geht grundsätzlich nur für kategoriale Daten.",
-                     message = "Gerade in Heatmaps funktioniert fill für stetige
+               answer("`fill` geht grundsätzlich nur für kategoriale Daten.",
+                     message = "Gerade in Heatmaps funktioniert `fill` für stetige
                      Daten ganz wunderbar."),
-               answer("colour bestimmt immer die Farbe der geometrischen Objekte.",
+               answer("`color` bestimmt immer die Farbe der geometrischen Objekte.",
                       message = "Jain. 
-                      Bei Balkendiagrammen und Histogrammen wird mit colour die
+                      Bei Balkendiagrammen und Histogrammen wird mit `color` die
                       Umrandungsfarbe der Balken bzw. Intervalle festgelegt."),
-               answer("colour kann als ästhetisches Atrribut eine weitere Variable
+               answer("`color` kann als ästhetisches Atrribut eine weitere Variable
                       abbilden.",
                       correct = T),
-                answer("fill kann als ästhetisches Atrribut eine weitere Variable
+                answer("`fill` kann als ästhetisches Atrribut eine weitere Variable
                       abbilden.",
                       correct = T),
                allow_retry = TRUE,
@@ -1323,20 +1344,19 @@ question("Füllung und Farbe, was stimmt??",
                correct = "Richtig!",
                incorrect = "Das stimmt leider nicht, probier es noch mal!"),
 
-question("Shape: Was stimmt?",
-              answer("shape kann als ästhetisches Atrribut eine weitere Variable
+question("`shape`: Was stimmt?",
+              answer("`shape` kann als ästhetisches Atrribut eine weitere Variable
                       abbilden.",
                       correct = T),
-              answer("Shape ist vor allem für Punktdiagramme ein relevantes
+              answer("`shape` ist vor allem für Punktdiagramme ein relevantes
                      Attribut.",
                      correct = T),
-               answer("Mit shape ist es möglich, 
+               answer("Mit `shape` ist es möglich, 
                       der Punktewolke eine Form nach eigener Wahl zu geben.",
                       message = "Das ist mit keiner einzigen Funktion möglich. 
                       Das wäre nämlich basically wissenschaftlicher Betrug. 
-                      Shape gibt den einzelnen Punkten eine Form der eigenen
-                      Wahl."),
-               answer("Shape kann stetige Variablen abbilden.",
+                      `shape` gibt den einzelnen Punkten eine spezifizierte Form  beeinflusst dabei aber nicht die Verteilung der Punkte und dem sich daraus ergebendem Muster."),
+               answer("`shape` kann stetige Variablen abbilden.",
                       message = "Das ist Quatsch. 
                       Einzelne Formen bilden aus sich heraus natürliche Kategorien,
                       deswegen können sie auch nur für Variablen verwendet werden,
@@ -1346,42 +1366,42 @@ question("Shape: Was stimmt?",
                correct = "Richtig!",
                incorrect = "Das stimmt leider nicht, probier es noch mal!"),
 
-question("size: Was stimmt?",
-              answer("size kann als ästhetisches Atrribut eine weitere Variable
+question("`size`: Was stimmt?",
+              answer("`size` kann als ästhetisches Atrribut eine weitere Variable
                       abbilden.",
                       correct = T),
-              answer("size ist vor allem für Punktdiagramme ein relevantes
+              answer("`size` ist vor allem für Punktdiagramme ein relevantes
                      Attribut.",
                      correct = T),
-               answer("size ist das Mittel der Wahl, 
+               answer("`size` ist das Mittel der Wahl, 
                       um eine weitere Variable in den Plot einzubinden.",
                       message = "Auf gar keinen Fall. 
-                      Mittel der Wahl sind fill und colour. 
-                      Nur in dezidierten Fällen ist size eine geeignete Wahl."),
-               answer("size bestimmt die Größe des gesamten Plots.",
-                      message = "size bestimmt die Größe der Punkte IM Plot."),
+                      Mittel der Wahl sind `fill` und `color`. 
+                      Nur in dezidierten Fällen ist `size` eine geeignete Wahl."),
+               answer("`size` bestimmt die Größe des gesamten Plots.",
+                      message = "`size` bestimmt die Größe der Punkte IM Plot."),
                allow_retry = TRUE,
                random_answer_order = TRUE,
                correct = "Richtig!",
                incorrect = "Das stimmt leider nicht, probier es noch mal!"),
 
-question("alpha: Was stimmt?",
-              answer("alpha kann als ästhetisches Atrribut eine weitere Variable
+question("`alpha`: Was stimmt?",
+              answer("`alpha` kann als ästhetisches Atrribut eine weitere Variable
                       abbilden.",
                       correct = T),
-              answer("alpha ist vor allem für Punktdiagramme ein relevantes
+              answer("`alpha` ist vor allem für Punktdiagramme ein relevantes
                      Attribut.",
                      correct = T),
-               answer("alpha ist das Mittel der Wahl, 
+               answer("`alpha` ist das Mittel der Wahl, 
                       um eine weitere Variable in den Plot einzubinden.",
                       message = "Auf gar keinen Fall. 
-                      Mittel der Wahl sind fill und colour. 
-                      Nur in dezidierten Fällen ist alpha eine geeignete Wahl."),
-               answer("alpha bestimmt das Maß der Durchsichtigkeit des
+                      Mittel der Wahl sind fill und color. 
+                      Nur in dezidierten Fällen ist `alpha` eine geeignete Wahl."),
+               answer("`alpha` bestimmt das Maß der Durchsichtigkeit des
                       Hintergrundes des gesamten Plots.",
-                      message = "alpha bestimmt die Durchsichtigkeit der Punkte IM
+                      message = "`alpha` bestimmt die Durchsichtigkeit der Punkte IM
                       Plot."),
-                answer("alpha lohnt sich besonders als ästhetisches Attribut ohne mapping.",
+                answer("`alpha` lohnt sich besonders als ästhetisches Attribut ohne mapping.",
                       correct = T),
                allow_retry = TRUE,
                random_answer_order = TRUE,
@@ -1401,7 +1421,7 @@ question("aesthetic mapping: Was stimmt?",
                       geschrieben.",
                       correct = T),
                answer("Ästhetische Attribute, die nicht gemapped werden sollen kommen ebenfalls in die aes() Funktion.",
-                      message = "Da kommen genau nur die Attribute rein, 
+                      message = "in die aes() Funktion kommen genau nur jene Attribute rein, 
                       die gemapped werden sollen."),
                allow_retry = TRUE,
                random_answer_order = TRUE,
@@ -1554,12 +1574,12 @@ ggplot(einkaufen_recoded, aes(x = verkehrsmittel, fill = ladenart)) +
   theme_bw()
 ```
 
-**Zu 2:** Ist in den allermeisten Fällen das Mittel der Wahl. Die beiden Hauptpunkte sind: Punkte und Titel der Legende verändern. Alles andere (Schriftart und -größe, Position, Ausrichtung, Hintergrund, Umrandung etc. kannst du in den oben vorgeschlagenen Seiten nachschauen). Es folgt eigentlich immer dem gleichen Prinzip: Du fügst deinem ggplot eine weitere Ebene hinzu und innerhalb dieser Ebene legst du Dinge fest. Welche Funktion bzw. Argumente du wählst hängt von deinen Variablen und ästhetischen Attributen ab: diskret oder kontinuierlich? Fill oder Colour? Daraus ergibt sich folgende Kreuztabelle
+**Zu 2:** Ist in den allermeisten Fällen das Mittel der Wahl. Die beiden Hauptpunkte sind: Punkte und Titel der Legende verändern. Alles andere (Schriftart und -größe, Position, Ausrichtung, Hintergrund, Umrandung etc. kannst du in den oben vorgeschlagenen Seiten nachschauen). Es folgt eigentlich immer dem gleichen Prinzip: Du fügst deinem ggplot eine weitere Ebene hinzu und innerhalb dieser Ebene legst du Dinge fest. Welche Funktion bzw. Argumente du wählst hängt von deinen Variablen und ästhetischen Attributen ab: diskret oder kontinuierlich? `fill` oder `color`? Daraus ergibt sich folgende Kreuztabelle
 
-|                    | `colour`                             | `fill`                            |
+|                    | `color`                             | `fill`                            |
 |------------------|-----------------------------|--------------------------|
-| **diskret**        | `scale_colour_viridis(discrete = T)` | `scale_fill_virdis(discrete = T)` |
-| **kontinuierlich** | `scale_colour_virdis()`              | `scale_fill_viridis()` \*         |
+| **diskret**        | `scale_color_viridis(discrete = T)` | `scale_fill_virdis(discrete = T)` |
+| **kontinuierlich** | `scale_color_virdis()`              | `scale_fill_viridis()` \*         |
 
 \* Steht nur der Vollständigkeit halber hier, ist keinem der vorgestellten geoms sinnvoll einsetzbar. Wird vor allem für Heatmaps verwendet.
 
@@ -1580,16 +1600,16 @@ ggplot(einkaufen_recoded, aes(x = verkehrsmittel, fill = bioladen)) +
 ```
 
 ::: aufgabe
-Finde für die Funktionen `scale_colour_viridis(discrete = T)` und `scale_colour_viridis()` eine Anwendungsmöglichkeit in einen der bereits ausgeführten Plots dieses Tutorials und füge diese Ebene hinzu. Füge auch gerne ein Theme deiner Wahl sowie passende Achsenbeschriftungen hinzu.
+Finde für die Funktionen `scale_color_viridis(discrete = T)` und `scale_color_viridis()` eine Anwendungsmöglichkeit in einen der bereits ausgeführten Plots dieses Tutorials und füge diese Ebene hinzu. Füge auch gerne ein Theme deiner Wahl sowie passende Achsenbeschriftungen hinzu.
 
 \*Extraaufgabe: schreibe einen komplett eigenen Plot.
 :::
 
 ```{r d_legends_3-solution}
-ggplot(einkaufen_recoded, aes(x = alter, y = weg, colour = kochen)) +
+ggplot(einkaufen_recoded, aes(x = alter, y = weg, color = kochen)) +
    geom_point() +
   # \n sagt R, dass du einen Zeilenumbruch möchtest
-   scale_colour_viridis(guide_legend(title = "Kochen/ \n Woche")) +
+   scale_color_viridis(guide_legend(title = "Kochen/ \n Woche")) +
   labs(
     title = "Weg und Alter",
     x = "Alter",
@@ -1597,9 +1617,9 @@ ggplot(einkaufen_recoded, aes(x = alter, y = weg, colour = kochen)) +
     ) +
   theme_bw()
 
- ggplot(einkaufen_recoded, aes(x = verkehrsmittel, y = alter, colour = bioladen)) +
+ ggplot(einkaufen_recoded, aes(x = verkehrsmittel, y = alter, color = bioladen)) +
    geom_boxplot(position = position_dodge(preserve = "single")) +
-   scale_colour_viridis(discrete = T,
+   scale_color_viridis(discrete = T,
      labels = c("bio", "konven."),
     guide_legend(title = "Ladenart")) +
    labs(
@@ -1659,13 +1679,13 @@ dat <- data.frame(x = rnorm(10000), y = rnorm(10000))
 
 p <- ggplot(dat, aes(x = x, y = y)) +
   geom_hex() + coord_fixed() +
-  scale_fill_gradientn(colours = viridis(256, option = "D")) +
+  scale_fill_gradientn(colors = viridis(256, option = "D")) +
   theme_bw()
 
 p
 ```
 
-Und die obenstehende Grafik ist ein gutes Beispiel dafür, wie hell-dunkel Kontraste verwendet werden können. So ist das Ganze in schwarz-weiß immer noch lesbar, was insbesondere für Menschen mit eingeschränkter Farbwahrnehmung klasse ist, denn alles was schwarz weiß gut lesbar ist, ist immer auch colorblind-friendly. Die Farben sind nicht unbeding neu für dich, spätestens seit dem letzten Abschnitt (Legends) bist du mit ihnen vertraut. Der Punkt ist: wir haben dir da schon eine colourblind friendly scale untergemogelt, damit du von anfang an sauber mit Farben in Grafiken umgehst.
+Und die obenstehende Grafik ist ein gutes Beispiel dafür, wie hell-dunkel Kontraste verwendet werden können. So ist das Ganze in schwarz-weiß immer noch lesbar, was insbesondere für Menschen mit eingeschränkter Farbwahrnehmung klasse ist, denn alles was schwarz weiß gut lesbar ist, ist immer auch colorblind-friendly. Die Farben sind nicht unbeding neu für dich, spätestens seit dem letzten Abschnitt (Legends) bist du mit ihnen vertraut. Der Punkt ist: wir haben dir da schon eine colorblind friendly scale untergemogelt, damit du von anfang an sauber mit Farben in Grafiken umgehst.
 
 In diesem Unterkapitel lernst du neues über die Hintergründe der Farben (erledigt!) und du lernst verschiedene Paletten kennen: auf der [Hilfeseite](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html)) sind alle Optionen mit Namen angegeben. Du kannst dich nun für eine Option entscheiden und diese mit dem Argument `option =` und ihrem Namen (`"viridis"` (default), `"magma"`, `"plasma"`, `"inferno"`, `"cividis"`, `"mako"`, `"rocket"` oder `"turbo"`) einfügen.
 
@@ -1690,9 +1710,9 @@ ggplot(einkaufen_recoded, aes(x = verkehrsmittel, fill = bioladen)) +
   )+
   theme_bw()
 
- ggplot(einkaufen_recoded, aes(x = verkehrsmittel, y = alter, colour = bioladen)) +
+ ggplot(einkaufen_recoded, aes(x = verkehrsmittel, y = alter, color = bioladen)) +
    geom_boxplot(position = position_dodge(preserve = "single")) +
-   scale_colour_viridis(discrete = T, option = "turbo",
+   scale_color_viridis(discrete = T, option = "turbo",
      labels = c("bio", "konven."),
     guide_legend(title = "Ladenart")) +
    labs(
@@ -1702,9 +1722,9 @@ ggplot(einkaufen_recoded, aes(x = verkehrsmittel, fill = bioladen)) +
    ) +
    theme_bw()
 
-ggplot(einkaufen_recoded, aes(x = alter, y = weg, colour = kochen)) +
+ggplot(einkaufen_recoded, aes(x = alter, y = weg, color = kochen)) +
    geom_point() +
-   scale_colour_viridis(option = "plasma",
+   scale_color_viridis(option = "plasma",
      guide_legend(title = "Kochen/ \n Woche")) +
   labs(
     title = "Weg und Alter",
