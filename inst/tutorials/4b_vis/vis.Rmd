@@ -15,7 +15,7 @@ resource_files:
 - css/boxes.css
 tutorial:
       id: ggplot
-      version: 5
+      version: 5.1
 ---
 
 ```{r setup, include=FALSE}
@@ -1069,7 +1069,7 @@ Funktion: `geom_line()`
 
 Hierfür wird ein anderer Datensatz benötigt, da wir für ein Liniendiagramm eine wiederholte Messung brauchen. `einkaufen` enthält 160 unabhängige Messungen, keine der Personen wurde ein zweites Mal befragt. Deswegen ist `einkaufen` nicht geeignet um einen Verlauf über die Zeit darzustellen.
 
-<!-- Maybe use the `economics` data set from ggplot2 here -->
+<!-- Maybe use the `economics` data set from ggplot2 here instead? -->
 
 ```{r include = FALSE}
 ggplot(economics, aes(date, unemploy)) +
@@ -1114,18 +1114,14 @@ Für schöne Achsenbeschriftungen siehe das Kapitel „Themes und Labs“.
 ```{r line-quest}
 quiz(caption = "Quiz zum Liniendiagramm",
      
-question("Welche Daten lassen sich gut in einem Liniendiagramm darstellen?",
+question_radio("Welche Daten lassen sich gut in einem Liniendiagramm darstellen?",
                answer("Eine einzelne, stetig Variable.",
                       message = "Das ist schon ein guter Anfang.Es fehlt noch eine weitere, sequentielle Variable. Für diese Datenart eignet sich ein Histogramm."),
                answer("Zwei kategoriale Variablen.",
                       message = "Für diese Datenart 
                       eignet sich eine Kreuztabelle."),
-               answer("Zwei stetige Variablen.",
-                      message = "Fast richtig. 
-                      Es geht um zwei stetige Variablen, 
-                      aber für ein Liniendiagramm ist es essentiell, 
-                      dass eine von ihnen sequentiell ist. 
-                      Für diese Datenart eignet sich ein Punktdiagramm."),
+               answer("Eine metrische und eine nominale Variable.",
+                      message = "Für ein Liniendiagramm brauchst du eine metrische/stetige und eine sequentielle Variable, wie die Zeit. Für stetig + kategorial eignen sich Boxplots oder Violin Plots."),
                 answer("Eine stetige und eine sequentielle Varible.",
                       correct = T),
                allow_retry = TRUE,
@@ -1133,38 +1129,31 @@ question("Welche Daten lassen sich gut in einem Liniendiagramm darstellen?",
                correct = "Richtig!",
                incorrect = "Das stimmt leider nicht, probier es noch mal!"),
 
-question("Grafik 1: Was ist richtig?",
-               answer("Es werden sechs Jahre abgebildet.",
-                     correct = T),
-               answer("Es existieren Daten für jeden einzelnen Tag in der
-                      angegebenen Zeit.",
-                      message = "Die Wintermonate fehlen"),
-               answer("Die fehlenden Werte werden einfach mit einem Strich
-                      überbrückt.",
-                      correct = T),
+question_radio("Welches Argument wurde in `aes()` verwendet, um die Linie zwischen den einzelnen Sommern nicht zu verbinden?",
+         answer("`group`", 
+                correct = TRUE,
+                message = "`group` bestimmt, nach welcher Variable gruppiert wird. Manche `geom`-Funktionen zeichnen dann je Gruppe eine neue geometrische Form (z.B. eine eigene Linie für jedes Jahr, wenn das Jahr die Gruppenvariable ist)"),
+         answer("`x`", message = "`x` bestimmt, welche Variable auf der x-Achse abgebildet wird."),
+         answer("`y`", message = "`y` bestimmt, welche Variable auf der y-Achse abgebildet wird."),
+         answer("`color`", message = "`color` ändert die Farbe der Linie."),
+         answer("`fill`", message = "`fill` ändert die Farbfüllung und hat keine Auswirkungen auf die Linie."),
+         answer("`alpha`", message = "`alpha` ändert die Transparenz."),
                allow_retry = TRUE,
                random_answer_order = TRUE,
-               correct = "Richtig!",
-               incorrect = "Das stimmt leider nicht, probier es noch mal!"),
+               correct = random_praise("de"),
+               incorrect = random_encouragement("de")),
 
 question("Grafik 3: Was stimmt?",
               answer("Es werden sechs Jahre abgebildet.",
                      correct = T),
                answer("Die Wintermonate wurden einfach rausgelöscht.",
                       message = "Die Wintermonate waren nie vorhanden!"),
-               answer("Das Argument `group` ist essentiell, damit R weiß, 
-                      welche Werte wie zusammengehören.",
-                      correct = T),
-               answer("`lubridate` ist ein super Paket, 
-                      um mit Daten und Zeitangaben umzugehen",
-                      correct = T),
-               answer("`weathermetrics` ist ein super Paket, 
-                      um mit Wetterdaten zu rechnen.",
+               answer("Das Argument `group` ist essentiell, damit für jede Gruppe eine einzelne Linie gezeichnet werden kann.",
                       correct = T),
                allow_retry = TRUE,
                random_answer_order = TRUE,
-               correct = "Richtig!",
-               incorrect = "Das stimmt leider nicht, probier es noch mal!")
+                correct = random_praise("de"),
+               incorrect = random_encouragement("de"))
 )
 ```
 
@@ -1234,7 +1223,7 @@ Das `fill` bzw `color` Attribut kann genauso gut auf kontinuierliche Variablen a
 
 ```{r am_f_c_kontinuierlich, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "continuous color"}
 ggplot(einkaufen_recoded, aes(x = alter, y = weg, color = kochen)) +
-  geom_point()
+  geom_point(size = 3) # größere Punkte, um die Farbe sichtbarer zu machen
 ```
 
 ### Shape
@@ -1258,21 +1247,24 @@ ggplot(einkaufen_recoded, aes(x = alter, y = weg, shape = verkehrsmittel, color 
 Auch Mittels Größe kann eine weitere Dimension rein gebracht werden. Das ist allerdings mit Vorsicht zu genießen, da es in vielen Fällen die Wahrnehmung zu bestimmten Zusammenhängen verzerrt:
 
 ```{r am_size, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "size"}
-ggplot(einkaufen_recoded, aes(x = alter, y = weg, size = bioladen)) +
-  geom_point()
+ggplot(einkaufen_recoded, aes(x = alter, 
+                              y = verkehrsmittel, 
+                              size = weg)) +
+  geom_jitter(height = 0.2, 
+              alpha = 0.2)
 ```
 
-Bei diesem Beispiel wird deutlich: Dieses Attribunt ist ungünstig verteilt. es macht den Plot viel unübersichtlicher im Vergleich zu der Info, die die lesende Person daraus ziehen kann. `color` aus dem vorherigen Abschnitt war die deutlich bessere Wahl.
+<!-- Bei diesem Beispiel wird deutlich: Dieses Attribut ist ungünstig verteilt. es macht den Plot viel unübersichtlicher im Vergleich zu der Info, die die lesende Person daraus ziehen kann. `color` aus dem vorherigen Abschnitt war die deutlich bessere Wahl. -->
 
-Im Grunde gibt es nur 3 Gründe, `size` als ästhetisches Attribut zu nutzen:
+<!-- Im Grunde gibt es nur 3 Gründe, `size` als ästhetisches Attribut zu nutzen: -->
 
-1.  Bei diskreten Daten, wo die Punkte sonst so sehr übereinander liegen würden, dass die Grafik total Gegenstandslos wäre. (Hierfür wurde allerdings das `geom_count()` entwickelnt)
-2.  In Momenten, in denen mit der Größe wirklich eine Relation ausgedrückt werden kann (bspw. Gewicht, Quadratmeter oder Bruttoinlandsprodukt)
-3.  In Korrelationstabellen.
+<!-- 1.  Bei diskreten Daten, wo die Punkte sonst so sehr übereinander liegen würden, dass die Grafik total Gegenstandslos wäre. (Hierfür wurde allerdings das `geom_count()` entwickelnt) -->
+<!-- 2.  In Momenten, in denen mit der Größe wirklich eine Relation ausgedrückt werden kann (bspw. Gewicht, Quadratmeter oder Bruttoinlandsprodukt) -->
+<!-- 3.  In Korrelationstabellen. -->
 
 ### Alpha
 
-Zu guter letzt folgt die Dichte. Die ist grundsätzlich auch eher ungeeignet. Der Vollständigkeit halber, lernst du sie hier trotzdem kennen:
+Zu guter letzt folgt die Dichte. Die ist grundsätzlich eher ungeeignet. Der Vollständigkeit halber, lernst du sie hier trotzdem kennen:
 
 ```{r am_alpha, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "alpha"}
 ggplot(einkaufen_recoded, aes(x = alter, y = weg, alpha = kochen)) +
@@ -1303,7 +1295,9 @@ Dieses Prinzip gilt für alle oben vorgestellten ästhetischen Attribute. Deiner
 
 ```{r aes-quest}
 quiz(caption = "Quiz zum aesthetic mapping",
-     
+
+     # Diese Frage muss überarbeitet werden. 
+       
 question("Welche der folgenden Attribute können als ästhetische Attribute genutzt
          werden?",
          answer("x-Achse",
