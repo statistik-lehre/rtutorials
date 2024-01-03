@@ -1,0 +1,182 @@
+
+
+
+## Exkurs: Extreme Werte
+
+In diesem Abschnitt hast du die Mögichkeit, einen Blick in die Praxis zu werfen: Der Umgang mit Ausreißerwerten. Es ist komplett freiwillig. Wenn du lieber mit dem rein grafischen weitermachen willst, springe zu Kapitel 5: Liniendiagramme.
+
+Das ist ein klassischer Fall von Datenaufbereitung. Es wird **vor** den Analysen gemacht, s. Tutorial Data Wrangling.
+
+Und genau deswegen ist es so cool, dass wir diesen echten Datensatz zur Verfügung haben: Du wirst mit Problemen konfrontiert, die dir auch in Praxis begegnen werden, aber eben nicht in simulierten Datensätzen.
+
+Wie du in der Grafik siehst, gibt es einzelne Werte, die extrem von allen anderen abweichen. Das verzerrt nicht nur die Grafik, sondern auch die Analyse. Das sind sog. **Ausreißer**. Es gibt, wie eigentlich immer in der Statistik, nicht den einen Weg, damit umzugehen. Was allerdings immer gilt, wenn Ausreißer auftreten: **Check your data!** Extreme Werte können unterschiedlichste Gründe haben. Und je nachdem wodurch sie entstanden sind, können sie unterschiedliche Reaktionen erfordern.
+
+Die Ausreißeranalyse der Daten lässt sich sowohl numerisch als auch optisch bewerkstelligen.
+
+::: aufgabe
+Nutze eine der dir bekannten Möglichkeiten, dir die Spalte `weg` aus dem `einkaufen`-Datensatz numerisch und optisch anzuschauen.
+:::
+
+```{r ausreisser-solution}
+# numerische Möglichkeit
+summary(einkaufen$weg)
+
+# optische Möglichkeit
+ggplot(einkaufen, aes(x = weg)) +
+  geom_histogram()
+```
+
+```{r ausreisser, exercise = TRUE, exercise.cap = "Daten checken"}
+
+```
+
+```{r ausreisser-hint}
+# Zusammenfassung über eine Variable
+
+# optische Möglichkeit mittels `histogram`
+```
+
+Der Median liegt bei 3 km, das bedeutet: 50% der Personen haben einen Anfahrtsweg von höchstens 3 km. Das 3. Quantil ist bei 7 km: 75% der Personen haben einen Anfahrtsweg von höchstens 7km. Und das arithmetische Mittel liegt bei 12.76 km. Das deutet sehr stark auf Ausreißerwerte hin. Das Maximum liegt bei 600, was die Vermutung noch bestärkt. Auch optisch im Histogramm wird deutlich, dass fast alle Ausprägungen unter 100 km liegen.
+
+### Ursachenanalyse
+
+Dass die Ausreißer da sind kann, auch in diesem Fall, verschiedene Gründe haben:
+
+1. Ein Laden, nämlich der Biomarkt Greger, liegt in der Nähe eines ICE-Bahnhofs. Die Ausreißer könnten also von Fernreisenden kommen. Wenn das stimmt, dann müssten die Ausreißerwerte in diesem Laden erhoben worden sein (`ort`).
+
+Das lässt sich prüfen. (In diesem Unterkapitel wird nur nach Optik geprüft. In der freien Wildbahn wären statistische Analysen notwendig!)
+
+```{r ausreisser2, exercise = TRUE,  exercise.cap = "Ursachenanalyse"}
+ggplot(einkaufen, aes(x = weg, y = ort)) +
+  geom_boxplot()
+```
+
+Die Vermutung wird durch die Daten nicht wirklich gestützt. Bei Greger in der Willi-Allee zeigt der Boxplot gerade mal einen Wert außerhalb von $Q3 + 1.5\cdot IQR$ (gekennzeichnet als Punkt). Manche Studierende haben leider nicht dokumentiert, an welchem Laden sie Daten gesammelt haben, deswegen gibt es `NA`s bei der Variable `ort`. `NA` heißt, es ist nicht klar, um welchen und wie viele Läden es sich handelt.
+
+Es wurde miterhoben, wer welche Beobachtung aufgeschrieben hat (`befragung`), vielleicht gibt das Aufschluss. Sowohl numerisch, als auch optisch. `geom_count()` ist eine Möglichkeit, Kreuztabellen optisch darzustellen.
+
+```{r ausreisser3, exercise = TRUE,  exercise.cap = "Verteilung checken"}
+# numerisch
+table(einkaufen$ort, einkaufen$befragung, useNA = "always")
+
+# grafische Darstellung
+ggplot(einkaufen, aes(x = befragung, y = ort)) +
+  geom_count()
+```
+
+Sowohl in der Kreuztabelle als auch in der Grafik kannst du sehen, dass jede Person lediglich in einem Laden erhoben hat. LE hat scheinbar bei einer Person vergessen, den Laden einzutragen. LM und DS haben beide keinen Laden eingetragen. Es könnte also ein Laden sein oder auch zwei, das können wir aus den Daten nicht wissen.
+
+Sidefact: Die erhebenden Personen sind btw. klassische Metadaten - also Daten über Daten. Sie scheinen erstmal relativ wenig aussagekräftig. Das ist natürlich quatsch, Metadaten sind richtig mächtig. Hier ist ein sehr unterhaltsames [Beispiel](https://www.youtube.com/watch?v=-YpwsdRKt8Q).
+
+### Ausschluss
+
+Jetzt ist ein wenig mehr Orientierung bzgl. der Ausreißer da. Die Entscheidung, wie damit umgegangen wird ist nach wie vor offen. Spätestens jetzt ist es sehr wichtig, sich nochmal die Eingangsfrage der eigenen Forschung zu stellen: Was wollte ich eigentlich untersuchen? In diesem Fall ging es um die Frage, ob es einen Zusammenhang zwischen Einkaufsweg und Alter gibt. 
+
+#### Plausibilitätscheck
+
+Wenn da Fernreisende mit drin sind, bieten diese logischerweise keine interessante Info für die Frage. Eine Möglichkeit wäre, den Laden am Bahnhof kategorisch auszuschließen. Allerdings ist unklar, ob in den NA Werten nur dieser Laden hinter steckt, deswegen müssten wir alle NAs rausschmeißen, was zum Verlust von 42 Beobachtungen führen würde. Das ist absurd viel. Außerdem kann davon ausgegangen werden, dass Menschen auch ihre Alltagseinkäufe dort machen, die wären dadurch kategorisch auch ausgeschlossen. 
+
+Die nächste Möglichkeit wäre, eine feste Grenze zu setzen. Klassischerweise könnte diese aus der bestehenden Literatur bezogen werden. Also wenn es z.B. ein Paper geben würde, dass sagen würde: klassische Einkäufe finden in einem Umkreis von 10km statt, könnten alle Werte über 10km ausgeschlossen werden. Das wären schon deutlich weniger. 
+
+#### statistischer Check
+
+Eine andere Möglichkeit ist die statistische: entweder die Werte außerhalb des Intervalls $[Q_1 - 1.5 \cdot IQR; Q_3 + 1.5 \cdot IQR]$ oder die Werte außerhalb des Intervalls $[\mu \pm 3 \cdot \sigma]$. Wenn die Daten normalverteilt sind (wie angenommen wird für die allermeisten statistischen Analysen, wenn nicht, haben wir noch ganz andere Probleme!), liegen in diesem Bereich 99.8% aller Werte. Es gibt keine Funktion in R, die automatisiert entsprechende Werte rausschmeißt. Das liegt daran, dass die Entscheidung so situationsabhängig ist und es einfach wichtig ist, sich jedes Mal wieder Gedanken zu machen, wie du damit umgehen möchtest. Hier sind beide Möglichkeiten:
+
+```{r ausreisser4, exercise = TRUE,  exercise.cap = "Verschiedene Definitionen"}
+quantile(einkaufen$weg, .75, na.rm = T) + (1.5 * IQR(einkaufen$weg, na.rm = T))
+
+mean(einkaufen$weg, na.rm = T) + (3 * sd(einkaufen$weg, na.rm = T))
+```
+
+Es wird sehr deutlich, dass die Quantilversion die robustere ist. 15 km Anfahrtsweg für Alltagseinkäufe scheinen deutlich logischer als 172. In diesem Fall wäre also eine Möglichkeit, alle Werte überhalb von 15km auszuschließen. Das geht dann so:
+
+```{r ausreisser5, exercise = TRUE, exercise.setup = "bp_neuerdf",  exercise.cap = "Ausreißer raus"}
+# Maximalwert festlegen
+maximalwert <- quantile(einkaufen$weg, .75, na.rm = T) + (1.5 * IQR(einkaufen$weg, na.rm = T))
+
+# Ein Subset aus dem aktuellen Datensatz treffen und in dem schon oben neu angelegten Objekt speichern
+einkaufen_recoded <- einkaufen_recoded[einkaufen_recoded$weg < maximalwert, ]
+
+# und NAs entfernen
+einkaufen_recoded <- einkaufen_recoded[!is.na(einkaufen_recoded$weg), ]
+```
+
+::: rot
+#### Dokumentation
+
+**Ganz wichtig!**: Wenn du Daten ausschließt **musst** du das, inklusive der Argumentation warum, gut dokumentieren. Sonst ist das wissenschaftlicher Betrug!
+
+Im Normalfall sollte bereits vor der Datenerhebung festgelegt werden, nach welchen Kriterien Daten ausgeschlossen werden müssen - damit die Versuchsleiter nicht nachträglich die Möglichkeit haben, das Ergebnis in eine bestimmte Richtung zu lenken.
+:::
+
+Und jetzt nochmal der Plot ganz vom Anfang:
+
+```{r sp_dokumentation, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "Scatterplot ohne Ausreißer"}
+ggplot(einkaufen_recoded, aes(x = alter, y = weg)) +
+  geom_point()
+```
+
+Das sieht doch deutlich stimmiger aus.
+
+```{r scatter-quest}
+quiz(caption = "Quiz zum Punktediagramm",
+     
+question("Welche Daten lassen sich gut in einem Punktediagramm darstellen?",
+               answer("Eine einzelne, kategoriale Variable.",
+                      message = "Fast richtig. 
+                      Nur dass die Variable stetig ist und nicht kategorial. 
+                      Hier würde sich ein Balkendiagramm anbieten."),
+               answer("Eine einzelne, stetig Variable.",
+                      message = "Dafür eignet sich ein Histogramm."),
+               answer("Zwei kategoriale Variablen.",
+                      message = "Für diese Datenart 
+                      eignet sich eine Kreuztabelle."),
+               answer("Zwei stetige Variablen.",
+                      correct = TRUE),
+               allow_retry = TRUE,
+               random_answer_order = TRUE,
+               correct = "Richtig!",
+               incorrect = "Das stimmt leider nicht, probier es noch mal!"),
+
+question("Was ist zu tun bei extremen Werten?",
+               answer("Alle Entscheidungen kleinstschrittig dokumentieren.",
+                      correct = TRUE),
+               answer("Willkürlich einen Wert festlegen, 
+                      über- oder unterhalb dessen einfach alle Daten rausgeworfen
+                      werden.",
+                      message = "Das geht gar nicht. 
+                      Es muss alles begründet sein!"),
+               answer("Sich die Zusammenhänge anschauen und Ideen sammeln, 
+                      womit die extremen Werte zu tun haben könnten.",
+                      correct = T),
+               answer("Ignorieren.",
+                      message = "Auch quatsch. 
+                      Wenn du dich entschließt, sie drin zu behalten, 
+                      dann sollte auch das gut argumentiert sein."),
+               allow_retry = TRUE,
+               random_answer_order = TRUE,
+               correct = "Richtig!",
+               incorrect = "Das stimmt leider nicht, probier es noch mal!"),
+
+question("Was sind zwei übliche Daumenregeln für die Definition von Ausreißern??",
+               answer("Mittelwert plus/minus 3 Standardabweichungen",
+                      correct = TRUE),
+               answer("Q1 - 1.5 * IQR bzw. Q3 + 1.5 * IQR",
+                      correct = T),
+               answer("Mittelwert plus/minus 1.96 Standardabweichungen",
+                      message = "Mittelwert plus/minus 1.96 Standardabweichungen 
+                      umschließen bei der Standardnormalverteilung genau 95% der 
+                      Fläche, sind also sehr relevant zur Errechnung des p Wertes.
+                      Für die extremen Werte ist dieses Intervall jedoch
+                      irrelevant."),
+               answer("Mittelwert plus/minus 1.5 * IQR",
+                      message = "Da hast du zwei, zugegeben sehr ähnliche, Maßen
+                      durcheinander bekommen. 
+                      Lies dir den Abschnitt nochmal zur Erinnerung durch :)"),
+               allow_retry = TRUE,
+               random_answer_order = TRUE,
+               correct = "Richtig!",
+               incorrect = "Das stimmt leider nicht, probier es noch mal!")
+)
+```
+
