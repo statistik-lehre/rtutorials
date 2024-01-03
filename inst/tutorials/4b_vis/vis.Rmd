@@ -884,7 +884,7 @@ Das ist ein klassischer Fall von Datenaufbereitung. Es wird **vor** den Analysen
 
 Und genau deswegen ist es so cool, dass wir diesen echten Datensatz zur Verfügung haben: Du wirst mit Problemen konfrontiert, die dir auch in Praxis begegnen werden, aber eben nicht in simulierten Datensätzen.
 
-Wie du in der Grafik siehst, gibt es einzelne Werte, die doll von allen anderen abweichen. Das verzerrt nicht nur die Grafik, sondern auch die Analyse. Das sind sog. **Ausreißer**. Es gibt, wie eigentlich immer in der Statistik, nicht den einen Weg, damit umzugehen. Was allerdings immer gilt, wenn Ausreißer auftreten: **Check your data!** Extreme Werte können unterschiedlichste Gründe haben. Und je nachdem wodurch sie entstanden sind, können sie unterschiedliche Reaktionen erfordern.
+Wie du in der Grafik siehst, gibt es einzelne Werte, die extrem von allen anderen abweichen. Das verzerrt nicht nur die Grafik, sondern auch die Analyse. Das sind sog. **Ausreißer**. Es gibt, wie eigentlich immer in der Statistik, nicht den einen Weg, damit umzugehen. Was allerdings immer gilt, wenn Ausreißer auftreten: **Check your data!** Extreme Werte können unterschiedlichste Gründe haben. Und je nachdem wodurch sie entstanden sind, können sie unterschiedliche Reaktionen erfordern.
 
 Die Ausreißeranalyse der Daten lässt sich sowohl numerisch als auch optisch bewerkstelligen.
 
@@ -1436,12 +1436,14 @@ Funktion: `facet_grid()` und `facet_wrap()`.
 
 ### `facet_grid()`
 
-Für eine oder zwei Variablen. Wie auch bei anderen Indizierungen in R gilt: bei der 1. Stelle werden die Zeilen benannt, in der 2. die Spalten. In diesem Fall werden sie durch eine Tilde (`~`) verbunden. Wenn du nur eines von beiden willst kannst du einfach die Stelle vor bzw. nach der Tilde leer lassen.
+Für eine oder zwei Variablen. Wie auch bei anderen Indizierungen in R gilt: bei der 1. Stelle werden die Zeilen benannt, in der 2. die Spalten. In diesem Fall werden sie durch eine Tilde (`~`) verbunden. Wenn du nur eines von beiden willst kannst du einfach die Stelle vor bzw. nach der Tilde mit einem `.` versehen.
 
 In diesem Fall wird der veränderte Datensatz verwendet. Alle Veränderungen wurden im Laufe des bisherigen Tutorials argumentiert und dokumentiert.
 
 ::: aufgabe
-Führe den Code aus und mache dich mit dem Ergebnis vertraut. Lösche jeweils einmal die Variable vor sowie nach der Tilde heraus und schaue, wie sich das Ergebnis verändert.
+Führe den Code aus und mache dich mit dem Ergebnis vertraut. 
+Vertausche doch   einmal die Variable vor und nach der Tilde und schaue, wie sich das Ergebnis verändert. 
+Lasse auch eine der Variablen weg, in dem du sie mit einem `.` austauschst.
 :::
 
 ```{r special, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "facet_grid()"}
@@ -1537,11 +1539,13 @@ ggplot(einkaufen_recoded, aes(x = alter, y = weg)) +
 
 ### Legends
 
-[ ](images/legends.webp){width="50%"}
+```{r}
+knitr::include_graphics("images/legends.png")
+```
 
 [source](https://www.reddit.com/media?url=https%3A%2F%2Fpreview.redd.it%2Fgbjhlcz41i871.jpg%3Fauto%3Dwebp%26s%3D7a940a1c20340cefabf513e1a5987359542a3b72)
 
-Die Legende sind eine Sache für sich. Es wird hier nur angeschnitten, solltest du damit arbeiten wollen, wirst du eh auf den bekannten Seiten (su.) nachschauen. Obacht: Das ist ein klassischer Fall, in dem ChatGPT häufig mehr Verwirrung als Klarheit reinbringt. Im Folgenden sind die ganz grundlegenden Mechanismen erklärt. Wenn du die verstanden hast sollte die Nutzung von ChatGPT tatsächlich einigermaßen flüssig funktionieren (wenn du es dann überhaupt noch nutzen möchtest und nicht viel lieber in der deutlich besser strukturierten [R Graph Gallery](https://r-graph-gallery.com/239-custom-layout-legend-ggplot2.html), der [Hilfeseite](https://ggplot2.tidyverse.org/reference/guide_legend.html) oder dem [Cookbook](http://www.cookbook-r.com/Graphs/Legends_(ggplot2)/) nachschauen willst ;)).
+Die Legende ist eine Sache für sich. Es wird hier nur angeschnitten, solltest du damit arbeiten wollen, wirst du eh auf den bekannten Seiten (su.) nachschauen. Obacht: Das ist ein klassischer Fall, in dem ChatGPT häufig mehr Verwirrung als Klarheit reinbringt. Im Folgenden sind die ganz grundlegenden Mechanismen erklärt. Wenn du die verstanden hast sollte die Nutzung von ChatGPT tatsächlich einigermaßen flüssig funktionieren (wenn du es dann überhaupt noch nutzen möchtest und nicht viel lieber in der deutlich besser strukturierten [R Graph Gallery](https://r-graph-gallery.com/239-custom-layout-legend-ggplot2.html), der [Hilfeseite](https://ggplot2.tidyverse.org/reference/guide_legend.html) oder dem [Cookbook](http://www.cookbook-r.com/Graphs/Legends_(ggplot2)/) nachschauen willst ;)).
 
 Es gibt sehr viele Wege, sie zu verändern und anzupassen und je nach Ausgangslage und Ergebnisvorstellung haben viele ihr Für und Wider. Eine dicke Empfehlung ist, es konsistent innerhalb von einem Plot zu machen (und spätestens hier verliert ChatGPT!).
 
@@ -1658,7 +1662,9 @@ Eine der verbreitetesten ist das Paket `viridis`. Es hat auch seine eigene [Hilf
 
 Die verfügbaren Farbpaletten sind:
 
-[ ](images/viridis.png){width="50%"}
+```{r}
+knitr::include_graphics("images/viridis.png")
+```
 
 [source](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html)
 
@@ -1866,6 +1872,28 @@ shiny::br()
 shiny::textOutput("score")
 shiny::br()
 ```
+
+### Zusammenfassung
+
+Du hast die große Kunst der Erstellung von Plots in R nun gemeistert! Super gemacht! Jetzt bist du in der Lage mithilfe des [ggplot Cheat Sheet](https://rstudio.github.io/cheatsheets/data-visualization.pdf) sowie der [R Graph Gallery](https://r-graph-gallery.com/) deine eigenen Plots zu erstellen.🚀
+
+
+### Neue Funktionen
+eine Tabelle mit den wichtigesten Codes des Tutorials
+
+| Code                   | Beschreibung                                     |
+|------------------------|--------------------------------------------------|
+| `ggplot()`           | Nützliche Funktion zum plotten von Daten           |
+| `geom_bar()`           | Balkendiagramm                                   |
+| `geom_histogram()`     | Histogramm                                       |
+| `geom_boxplot()`       | Boxplot                                          |
+| `geom_point()`         | Punktdiagramm                                    |
+| `geom_line()`          | Linienplot                                       |
+| `aes(x, y, color, fill, shape, size, alpha)` | Ästhetisches Mapping von Variablen  |
+| `facet_grid()` und `facet_wrap()` | Aufteilung von Diagrammen in Raster |
+| `labs(title, subtitle, x, y, caption)` | Anpassung von Diagrammtiteln und Achsenbeschriftungen |
+| `scale_color_viridis()` | Anpassung der Farbskala mit Viridis-Farben      |
+
 
 ## Credit
 
