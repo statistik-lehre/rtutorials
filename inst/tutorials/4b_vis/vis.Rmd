@@ -28,6 +28,7 @@ library(dplyr)
 library(viridis)
 knitr::opts_chunk$set(echo = FALSE)
 colnames(einkaufen) <- tolower(colnames(einkaufen))
+
 ```
 
 ## Inhalt
@@ -86,7 +87,7 @@ Wie gesagt, wir fangen Schritt für Schritt an und daher sind das hier die Ziele
 <input type="checkbox" unchecked> colorblind-friendly sein </input>
 
 ::: info
-Am besten maximierst du das Fenster des Tutorials, um alle Abbildungen vollständig sehen zu könnnen. Ansonsten kann es passieren, dass du z.B. eine Legende nicht siehst oder andere Teile des Diagramms verdeckt sind. 
+Am besten maximierst du das Fenster des Tutorials, um alle Abbildungen vollständig sehen zu könnnen. Ansonsten kann es passieren, dass du z.B. eine Legende nicht siehst oder andere Teile des Diagramms verdeckt sind.
 :::
 
 ### Die fünf essentiellen Diagrammtypen
@@ -143,8 +144,8 @@ Es gibt (wie immer) tausend verschiedene Wege, Visualisierungen mit R zu erstell
 Der Grund, warum wir dir diesen Weg beibringen:
 
 -   **klares Baukastenprinzip**: Auch später können komplexe Anpassungen der Grafik an die eigenen Vorstellungen relativ schmerzfrei umgesetzt werden.
--   **Popularität**: Es gibt auf Google viele gute Anleitungen. 
-- **Funktionalität**: `ggplot2` kann eigentlich alles, was du brauchst, und wenn es etwas nicht kann, gibt es dafür mit hoher Wahrscheinlichkeit bereits ein Paket. 
+-   **Popularität**: Es gibt auf Google viele gute Anleitungen.
+-   **Funktionalität**: `ggplot2` kann eigentlich alles, was du brauchst, und wenn es etwas nicht kann, gibt es dafür mit hoher Wahrscheinlichkeit bereits ein Paket.
 
 ### Grammar of Graphs
 
@@ -168,18 +169,24 @@ library()
 library(ggplot2)
 ```
 
-### Einordnung in das R-Ökosystem
+<details>
+
+<summary><a>▼ \* ### Einordnung in das R-Ökosystem </a></summary>
+
 
 `ggplot2` ist nur eins von mehreren Interfaces für die unterhalb der Oberfläche liegenden Grafik-Strukturen von R. Es ist also nur eine Spitze des Eisbergs, und der Eisberg hat mehrere Spitzen, zum Beispiel das Paket `lattice` oder Visualisierungsfunktionen aus *base R*.
 
 Ein Beispiel:\
 Wenn du im Internet nach „Balkendiagramm erstellen mit R“ suchst, wirst du vermutlich Anleitungen für die *base R*-Variante `barplot()` finden. Trotzdem geht das auch mit `ggplot2`. Du kannst am Ende den Weg verwenden, der dir näher liegt. Wir denken, dass `ggplot2` zu einem intuitven Interface für dich werden kann, aber möchten dir bewusst machen, dass es keinesfalls das einzig Wahre ist! Jede Variante hat eigene Vor- und Nachteile.
 
-Letztlich nutzen alle *higher level* Grafik-Funktionen unter der Oberfläche entweder `grid` oder `graphics`, um Grafiken zu erstellen. `ggplot2` gehört zur Familie der `grid`-basierten Grafikpakete. 
+Letztlich nutzen alle *higher level* Grafik-Funktionen unter der Oberfläche entweder `grid` oder `graphics`, um Grafiken zu erstellen. `ggplot2` gehört zur Familie der `grid`-basierten Grafikpakete.
 
 ![](images/compress/deep_r_gagolewski.png){width="80%"}
 
 Bild aus: [@gagolewski2023]: [Deep R Programming](https://deepr.gagolewski.com/chapter/250-graphics.html)
+
+</details>
+
 
 ### Einordnung in den wissenschaftlichen Prozess
 
@@ -628,34 +635,7 @@ ggplot(einkaufen, aes(x = verkehrsmittel, y = alter)) +
   geom_boxplot()
 ```
 
-<details>
 
-<summary><a>**▼ \* Zusatz: Zusammenfassen von Kategorien**</a></summary>
-
-Es wird auch deutlich, dass die Kategorien "E-Roller" und "Motorrad" so klein sind, dass sie sich nicht als eigene Analyse-Kategorie eignen, deswegen werden sie mit "Andere" zusammengefasst. Hierfür wird ein neuer Datensatz mit dem Namen `einkaufen_recoded` erstellt. Die NAs dürfen allerdings nicht einfach umgecodet werden, weil wir es in diesem Fall einfach wirklich nicht wissen.
-
-::: rot
-Das Zusammenfassen von Kategorien sollte vor der Datenerhebung geplant sein, damit nicht nachträglich Kategorien zusammengefasst werden und dadurch die Ergebnisse verändert werden können. Wenn es nachträglich geschieht, muss es auf jeden Fall gut begründet und **dokumentiert** werden, sonst ist das wissenschaftlicher Betrug!
-:::
-
-```{r bp_neuerdf, exercise = TRUE}
-# Erstelle ein neues Objekt und speichere den bisherigen Datensatz darin
-einkaufen_recoded <- einkaufen
-
-# Verändere Variablen nach deinen Wünschen im NEUEN Objekt
-# in diesem Fall mit der recode Funktion aus dem Paket dplyr
-# die bisherige Variable wird einfach mit der neuen überschrieben
-einkaufen_recoded$verkehrsmittel <- recode(einkaufen$verkehrsmittel,
-      "E-Roller" = "Andere",
-      "Motorrad" = "Andere"
-)
-
-# und nochmal der gleiche Plot
-ggplot(einkaufen_recoded, aes(x = verkehrsmittel, y = alter)) +
-  geom_boxplot()
-```
-
-</details>
 
 ```{r question_boxplot}
 quiz(caption = "Interpretation üben",
@@ -717,17 +697,15 @@ question_radio("Zeigt der Boxplot die Gruppengröße jedes Verkehrsmittels?",
 
 ### \# Show your data!
 
-Der obige Boxplot hat einen großen Nachteil: Es ist nicht zu sehen, wie viele Personen in jeder Gruppe sind. Dabei wissen wir eigentlich, dass die Gruppengröße der unterschiedlichen Verkehrsmittel unterschiedlich ist. Manchmal wird halt ein ganzer Boxplot gezeichnet, während lediglich 6 Personen dahinter stehen, und er ist nicht zu unterscheiden von einem für ein Verkehrsmittel, was 100 Menschen nutzen. 
+Der obige Boxplot hat einen großen Nachteil: Es ist nicht zu sehen, wie viele Personen in jeder Gruppe sind. Dabei wissen wir eigentlich, dass die Gruppengröße der unterschiedlichen Verkehrsmittel unterschiedlich ist. Manchmal wird halt ein ganzer Boxplot gezeichnet, während lediglich 6 Personen dahinter stehen, und er ist nicht zu unterscheiden von einem für ein Verkehrsmittel, was 100 Menschen nutzen.
 
 Du kannst dem Plot die fehlenden Informationen in einer neuen Ebene hinzufügen!
 
-Die Funktion `geom_jitter()` zeichnet genau wie `geom_point()` einzelne Datenpunkte, nur dass ein bisschen zufälliger *jitter* angewandt wird, um sie ein bisschen durcheinander zu schütteln, sodass nicht mehr alle Punkte übereinander liegen und Information verloren geht an der Stelle. 
+Die Funktion `geom_jitter()` zeichnet genau wie `geom_point()` einzelne Datenpunkte, nur dass ein bisschen zufälliger *jitter* angewandt wird, um sie ein bisschen durcheinander zu schütteln, sodass nicht mehr alle Punkte übereinander liegen und Information verloren geht an der Stelle.
 
-- `size` kennzeichnet die Größe der Punkte
-- `alpha` bestimmt die Transparenz der Punkte (von 0 - 1)
-- `width` ist die Stärke des horizontalen zufälligen Jitters,
-`height` wäre für den vertikalen Jitter
-
+-   `size` kennzeichnet die Größe der Punkte
+-   `alpha` bestimmt die Transparenz der Punkte (von 0 - 1)
+-   `width` ist die Stärke des horizontalen zufälligen Jitters, `height` wäre für den vertikalen Jitter
 
 ```{r showyourdata, exercise = TRUE, echo=TRUE}
 ggplot(einkaufen, aes(x = verkehrsmittel, y = alter)) +
@@ -831,7 +809,6 @@ quiz(caption = "Quizfragen zum Boxplot",
      )
 ```
 
-
 ## 4. Punktdiagramm
 
 ::: infobox
@@ -843,11 +820,6 @@ Funktion: `geom_point()`
 <br>
 
 Punktediagramme können dir auch unter den Namen: *Streudiagramm*, *Punktewolke* oder englisch *Scatterplot* begegnen.
-
-```{r scatterplot, exercise = TRUE, exercise.cap = "Streudiagramm"}
-ggplot(einkaufen, aes(x = alter, y = weg)) +
-  geom_point()
-```
 
 ```{r scatterplot, exercise = TRUE, exercise.cap = "Streudiagramm"}
 ggplot(economics, aes(x = uempmed, y = unemploy)) +
@@ -870,10 +842,9 @@ question_checkbox("Verständnis-Check: Wie alt ist die Person, die 600km Anreise
 
 ### "Lügen" mit log-transformierten Achsen
 
-Bevor wir versuchen, die extremen Werte auszuschließen, hier noch ein alternativer Weg, die undifferenzierbare Masse am unteren Rand der Grafik besser darzustellen: Die y-Achse logarithmisch transformieren! Das geht in `ggplot` sehr einfach, du musst nur eine neue Ebene zum Plot hinzufügen mit der Funktion `scale_y_log10()`. 
+Bevor wir versuchen, die extremen Werte auszuschließen, hier noch ein alternativer Weg, die undifferenzierbare Masse am unteren Rand der Grafik besser darzustellen: Die y-Achse logarithmisch transformieren! Das geht in `ggplot` sehr einfach, du musst nur eine neue Ebene zum Plot hinzufügen mit der Funktion `scale_y_log10()`.
 
-Die logarithmische Transformation ist sehr praktisch, um extreme Werte mit auf der Bildschirmfläche unterzubringen, und gleichzeitig eine sinnvolle Skalierung der normalen Werte aufrecht zu erhalten. Das kann natürlich missbraucht werden,
-deswegen sollte das immer deutlich gekennzeichnet werden!
+Die logarithmische Transformation ist sehr praktisch, um extreme Werte mit auf der Bildschirmfläche unterzubringen, und gleichzeitig eine sinnvolle Skalierung der normalen Werte aufrecht zu erhalten. Das kann natürlich missbraucht werden, deswegen sollte das immer deutlich gekennzeichnet werden!
 
 ```{r logtransform, exercise = TRUE, exercise.cap = "log-transformiertes Streudiagramm"}
 ggplot(einkaufen, aes(x = alter, y = weg)) +
@@ -1026,7 +997,7 @@ ggplot(einkaufen, aes(x = verkehrsmittel, fill = bioladen)) +
   geom_bar(position = position_dodge(preserve = "single"))
 ```
 
-#### color
+#### Color
 
 Farbe (`color`) ist ein bisschen tricky: Bei Balkendiagrammen, Histogrammen und Boxplots wird damit die Umrandung der Balken beeinflusst. Ohne das Attribut *Füllung* sieht ein Plot dann so aus:
 
@@ -1038,32 +1009,35 @@ ggplot(einkaufen, aes(x = verkehrsmittel, color = bioladen)) +
 <!-- bug Bei Punktdiagrammen und Liniendiagrammen wird die Punkt- bzw. Linienfarbe durch `color` bestimmt. Wird das Attribut *Füllung* vergeben passiert einfach nichts. Probiere es gerne selbst aus und ändere `color` zu `fill`.  -->
 
 <!-- ```{r am_f_color_2, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "color im Scatterplot"} -->
+
 <!-- ggplot(einkaufen_recoded, aes(x = alter, y = weg, color = bioladen)) + -->
+
 <!--   geom_point() -->
+
 <!-- ``` -->
 
 #### kontinuierlich
 
 Das `fill` bzw `color` Attribut kann genauso gut auf kontinuierliche Variablen angewendet werden:
 
-```{r am_f_c_kontinuierlich, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "continuous color"}
-ggplot(einkaufen_recoded, aes(x = alter, y = weg, color = kochen)) +
-  geom_point(size = 3) # größere Punkte, um die Farbe sichtbarer zu machen
-```
+<!-- ggplot(einkaufen_recoded, aes(x = alter, y = weg, color = kochen)) + -->
+<!--   geom_point(size = 3) # größere Punkte, um die Farbe sichtbarer zu machen -->
+
 
 ### Shape
 
 Die Form eignet sich, um in Punktediagrammen eine weitere kategoriale Variable einzubauen.
 
-```{r am_shape, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "shape"}
-ggplot(einkaufen_recoded, aes(x = alter, y = weg, shape = verkehrsmittel)) +
+!eco
+```{r am_shape, exercise = TRUE,  exercise.cap = "shape"}
+ggplot(einkaufen, aes(x = alter, y = weg, shape = verkehrsmittel)) +
   geom_point()
 ```
 
 Insbesondere wenn es kombiniert wird mit `color` wird es besonders eindeutig
 
-```{r am_shape_2, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "shape & color"}
-ggplot(einkaufen_recoded, aes(x = alter, y = weg, shape = verkehrsmittel, color = verkehrsmittel)) +
+```{r am_shape_2, exercise = TRUE, exercise.cap = "shape & color"}
+ggplot(einkaufen, aes(x = alter, y = weg, shape = verkehrsmittel, color = verkehrsmittel)) +
   geom_point()
 ```
 
@@ -1071,7 +1045,7 @@ ggplot(einkaufen_recoded, aes(x = alter, y = weg, shape = verkehrsmittel, color 
 
 Auch Mittels Größe kann eine weitere Dimension rein gebracht werden. Das ist allerdings mit Vorsicht zu genießen, da es in vielen Fällen die Wahrnehmung zu bestimmten Zusammenhängen verzerrt:
 
-```{r am_size, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "size"}
+```{r am_size, exercise = TRUE,   exercise.cap = "size"}
 ggplot(einkaufen, aes(x = alter, 
                               y = verkehrsmittel, 
                               size = weg)) +
@@ -1084,15 +1058,18 @@ ggplot(einkaufen, aes(x = alter,
 <!-- Im Grunde gibt es nur 3 Gründe, `size` als ästhetisches Attribut zu nutzen: -->
 
 <!-- 1.  Bei diskreten Daten, wo die Punkte sonst so sehr übereinander liegen würden, dass die Grafik total Gegenstandslos wäre. (Hierfür wurde allerdings das `geom_count()` entwickelnt) -->
+
 <!-- 2.  In Momenten, in denen mit der Größe wirklich eine Relation ausgedrückt werden kann (bspw. Gewicht, Quadratmeter oder Bruttoinlandsprodukt) -->
+
 <!-- 3.  In Korrelationstabellen. -->
 
 ### Alpha
 
 Zu guter letzt folgt die Dichte. Die ist grundsätzlich eher ungeeignet. Der Vollständigkeit halber, lernst du sie hier trotzdem kennen:
 
-```{r am_alpha, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "alpha"}
-ggplot(einkaufen_recoded, aes(x = alter, y = weg, alpha = kochen)) +
+!eco
+```{r am_alpha, exercise = TRUE,   exercise.cap = "alpha"}
+ggplot(einkaufen, aes(x = alter, y = weg, alpha = kochen)) +
   geom_point()
 ```
 
@@ -1107,6 +1084,7 @@ Schaue dir den folgenden Codeabschnitt an, führe den Code aus und finde den Unt
 :::
 
 <!-- bug -->
+
 ```{r am_aesthetische, exercise = TRUE,  exercise.cap = "aes ohne mapping"}
 ggplot(einkaufen, aes(x = alter, color = bioladen)) +
   geom_histogram(binwidth = 5, 
@@ -1239,7 +1217,7 @@ question("aesthetic mapping: Was stimmt?",
 ## 7. Special: Facets
 
 ::: infobox
-Facets sind geeignet, um die Daten anhand von ein oder zwei Variablen aufzuteilen und mehr Information bei relativ guter Übersichtlichkeit in die Darstellung zu bekommen.
+Facets sind nützlich, um mehrdimensionale Informationen in einem Diagramm darzustellen, indem sie es anhand einer kategorischen Variable in kleinere Teile aufteilen, die einfacher zu interpretieren sind.
 
 Funktion: `facet_grid()` und `facet_wrap()`.
 :::
@@ -1248,18 +1226,28 @@ Funktion: `facet_grid()` und `facet_wrap()`.
 
 ### `facet_grid()`
 
+Mit `facet_grid()` kannst du kontrollieren in welchem Raster, die kleineren Diagramme dargestellt werden. Die Funktion nimmt zwei Argumente, die 1. Variable zum Aufteilen anhand von *Spalten* und die 2. Variable zur Aufteilung der *Zeilen*. 
+
+Schauen wir es uns doch einfach mal zusammen an, dann verstehst du was hier gemeint ist. Nehmen wir aus unserem Beispieldatensatz die Variable `bioladen` für die Spalten und `verkehrsmittel` für die Zeilen.
+
+```{r special, exercise = TRUE,   exercise.cap = "facet_grid()"}
+ggplot(einkaufen, aes(x = weg, y = alter, na.rm = T))  +
+  geom_point() +
+  facet_grid(bioladen  ~ Verkehr_Kategorien)
+```
+<!-- bug Verkehr Kategorien nur als Versuch, damit es nicht zu viele Kategorien werden.  -->
+
 Für eine oder zwei Variablen. Wie auch bei anderen Indizierungen in R gilt: bei der 1. Stelle werden die Zeilen benannt, in der 2. die Spalten. In diesem Fall werden sie durch eine Tilde (`~`) verbunden. Wenn du nur eines von beiden willst kannst du einfach die Stelle vor bzw. nach der Tilde mit einem `.` versehen.
 
 In diesem Fall wird der veränderte Datensatz verwendet. Alle Veränderungen wurden im Laufe des bisherigen Tutorials argumentiert und dokumentiert.
 
 ::: aufgabe
-Führe den Code aus und mache dich mit dem Ergebnis vertraut. 
-Vertausche doch   einmal die Variable vor und nach der Tilde und schaue, wie sich das Ergebnis verändert. 
-Lasse auch eine der Variablen weg, in dem du sie mit einem `.` austauschst.
+Führe den Code aus und mache dich mit dem Ergebnis vertraut. Vertausche doch einmal die Variable vor und nach der Tilde und schaue, wie sich das Ergebnis verändert. Lasse auch eine der Variablen weg, in dem du sie mit einem `.` austauschst.
 :::
 
-```{r special, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "facet_grid()"}
-ggplot(einkaufen_recoded, aes(x = alter, y = weg)) +
+eco!
+```{r special, exercise = TRUE,   exercise.cap = "facet_grid()"}
+ggplot(einkaufen, aes(x = alter, y = weg)) +
   geom_point() +
   facet_grid(bioladen ~ verkehrsmittel)
 ```
@@ -1274,8 +1262,10 @@ Für den Fall, dass die Facetten nur anhand einer Variable aufmachen möchtest, 
 Führe den Code aus, mach dich mit den Auswirkungen von `nrow` vertraut und setze anstatt dessen `ncol` ein.
 :::
 
-```{r s_facet, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "facet_wrap()"}
-ggplot(einkaufen_recoded, aes(x = alter, y = weg)) +
+!eco
+
+```{r s_facet, exercise = TRUE,   exercise.cap = "facet_wrap()"}
+ggplot(einkaufen, aes(x = alter, y = weg)) +
   geom_point() +
   facet_wrap(~verkehrsmittel, nrow = 3)
 ```
@@ -1317,15 +1307,17 @@ Es gibt verschiedene Themes, welche Hintergrundfarbe, Umrandungen etc. bestimmen
 Suche dir ein Theme deiner Wahl aus und füge es dem untenstehenden Plot hinzu
 :::
 
+!eco
 ```{r drumherum-solution}
 # Ein Beispiel:
-ggplot(einkaufen_recoded, aes(x = alter, y = weg)) +
+ggplot(einkaufen, aes(x = alter, y = weg)) +
   geom_point() +
   theme_bw()
 ```
 
-```{r drumherum, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "themes"}
-ggplot(einkaufen_recoded, aes(x = alter, y = weg)) +
+!eco
+```{r drumherum, exercise = TRUE,   exercise.cap = "themes"}
+ggplot(einkaufen, aes(x = alter, y = weg)) +
   geom_point()
 ```
 
@@ -1337,8 +1329,9 @@ Die Beschriftungen sind ebenfalls eine weitere Lage und werden mittels `labs()` 
 Ändere die Beschriftungen so, dass sie informativ sind.
 :::
 
-```{r d_labs, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "labs"}
-ggplot(einkaufen_recoded, aes(x = alter, y = weg)) +
+!eco
+```{r d_labs, exercise = TRUE,   exercise.cap = "labs"}
+ggplot(einkaufen, aes(x = alter, y = weg)) +
   geom_point() +
   labs(
     title = "Titel",
@@ -1363,18 +1356,23 @@ Es gibt sehr viele Wege, sie zu verändern und anzupassen und je nach Ausgangsla
 
 Im Grunde gibt es zwei Möglichkeiten, etwas an der Legende zu ändern:
 
-1.  Im Vektor an sich (also vorher)
+1.  Im Vektor an sich (also vorher) - ergo *Datenaufbereitung*
 2.  In der Legende (also im ggplot an sich)
 
-**Zu 1**: Bietet sich an, wenn es die Daten dadurch noch übersichtlicher macht bzw. nichts an Übersichtlichkeit verloren geht. Im Beispiel der Variablen `bioladen`: aktuell noch logical würde sie durchaus übersichtlicher werden, wenn Einträge "bio" und "konventionell" wären. Hier begegnen wir unserem alten Bekannten, dem `factor`, wieder. Es wird eine neue Variable mit dem Namen "ladenart" erstellt. Es wäre allerdings auch denkbar, die alte zu überschreiben. - **Pro:** Geringere Gefahr, dass sich Fehler aufgrund von falscher Beschriftung einschleichen. - **Con:** Eher seltener der Fall, da das Datawrangling (s. entsprechendes Tutorial) ja eigentlich schon vorher abgeschlossen sein sollte und die Daten eigentlich in sehr hoher Qualität vorliegen sollten.
+#### Saubere Datenaufbereitung
 
-```{r d_legends, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "legends"}
-# Factor erstellen (ei Fragen dazu: Wiederhole gerne das Tutorial Vektoren)
-einkaufen_recoded$ladenart <- factor(einkaufen_recoded$bioladen, 
+Bietet sich an, wenn es die Daten dadurch noch übersichtlicher macht bzw. nichts an Übersichtlichkeit verloren geht. Im Beispiel der Variablen `bioladen`: aktuell noch logical würde sie durchaus übersichtlicher werden, wenn Einträge "bio" und "konventionell" wären. Hier begegnen wir unserem alten Bekannten, dem `factor`, wieder. Es wird eine neue Variable mit dem Namen "ladenart" erstellt. Es wäre allerdings auch denkbar, die alte zu überschreiben. 
+
+- **Pro:** Geringere Gefahr, dass sich Fehler aufgrund von falscher Beschriftung einschleichen. 
+- **Contra:** Eher seltener der Fall, da das Datawrangling (s. entsprechendes Tutorial) ja eigentlich schon vorher abgeschlossen sein sollte und die Daten eigentlich in sehr hoher Qualität vorliegen sollten.
+
+```{r d_legends, exercise = TRUE,  exercise.cap = "legends"}
+# Factor erstellen (bei Fragen dazu: Wiederhole gerne das Tutorial Vektoren)
+einkaufen$ladenart <- factor(einkaufen$bioladen, 
                                   levels = c(TRUE, FALSE), 
                                   labels = c("bio", "konven."))
 
-ggplot(einkaufen_recoded, aes(x = verkehrsmittel, fill = ladenart)) +
+ggplot(einkaufen, aes(x = verkehrsmittel, fill = ladenart)) +
   geom_bar(position = position_dodge(preserve = "single")) +
   labs(
     title = "Verkehrsmittel und Ladenart",
@@ -1384,19 +1382,26 @@ ggplot(einkaufen_recoded, aes(x = verkehrsmittel, fill = ladenart)) +
   theme_bw()
 ```
 
-**Zu 2:** Ist in den allermeisten Fällen das Mittel der Wahl. Die beiden Hauptpunkte sind: Punkte und Titel der Legende verändern. Alles andere (Schriftart und -größe, Position, Ausrichtung, Hintergrund, Umrandung etc. kannst du in den oben vorgeschlagenen Seiten nachschauen). Es folgt eigentlich immer dem gleichen Prinzip: Du fügst deinem ggplot eine weitere Ebene hinzu und innerhalb dieser Ebene legst du Dinge fest. Welche Funktion bzw. Argumente du wählst hängt von deinen Variablen und ästhetischen Attributen ab: diskret oder kontinuierlich? `fill` oder `color`? Daraus ergibt sich folgende Kreuztabelle
+#### Legende im ggplot
+
+Ist in den allermeisten Fällen das Mittel der Wahl. Die beiden Hauptpunkte sind: Punkte und Titel der Legende verändern. Alles andere (Schriftart und -größe, Position, Ausrichtung, Hintergrund, Umrandung etc. kannst du in den oben vorgeschlagenen Seiten nachschauen). Es folgt eigentlich immer dem gleichen Prinzip: Du fügst deinem ggplot eine weitere Ebene hinzu und innerhalb dieser Ebene legst du Dinge fest. Welche Funktion bzw. Argumente du wählst hängt von deinen Variablen und ästhetischen Attributen ab: diskret oder kontinuierlich? `fill` oder `color`? Daraus ergibt sich folgende Kreuztabelle
 
 |                    | `color`                             | `fill`                            |
-|------------------|-----------------------------|--------------------------|
+|------------------|----------------------------|--------------------------|
 | **diskret**        | `scale_color_viridis(discrete = T)` | `scale_fill_virdis(discrete = T)` |
 | **kontinuierlich** | `scale_color_virdis()`              | `scale_fill_viridis()` \*         |
 
 \* Steht nur der Vollständigkeit halber hier, ist keinem der vorgestellten geoms sinnvoll einsetzbar. Wird vor allem für Heatmaps verwendet.
 
-\-**2a Punkte verändern:** Wenn du die passende Funktion ausgewählt hast fügst du das Argument `labels = c("label 1", "label 2")` hinzu. Wobei die Sortierung die gleiche Reihenfolge haben sollte, wie die aktuelle. **PRÜFE DAS**, sonst kann es zu schwerwiegenden inhaltlichen Fehlern kommen! -**2b Titel verändern:** In die gleiche Funktion fügst du die Funktion `guide_legend()` mit dem Argument `title = "some title"` ein. - **Zusammenfassung:** - **Pro:** Kein rumgemurkse mit den Daten. Kann für jeden Plot individuell passend verändert werden. - **Con:** Erhöhte Fehlergefahr aufgrund von flaschen Beschriftungen.
+\-**2a Punkte verändern:** Wenn du die passende Funktion ausgewählt hast fügst du das Argument `labels = c("label 1", "label 2")` hinzu. Wobei die Sortierung die gleiche Reihenfolge haben sollte, wie die aktuelle. **PRÜFE DAS**, sonst kann es zu schwerwiegenden inhaltlichen Fehlern kommen! 
+
+-**2b Titel verändern:** In die gleiche Funktion fügst du die Funktion `guide_legend()` mit dem Argument `title = "some title"` ein. 
+- **Zusammenfassung:** 
+- **Pro:** Kein rumgemurkse mit den Daten. Kann für jeden Plot individuell passend verändert werden. 
+- **Contra:** Erhöhte Fehlergefahr aufgrund von flaschen Beschriftungen.
 
 ```{r d_legends_2, exercise = TRUE, exercise.setup = "d_legends",  exercise.cap = "guide_legend()"}
-ggplot(einkaufen_recoded, aes(x = verkehrsmittel, fill = bioladen)) +
+ggplot(einkaufen, aes(x = verkehrsmittel, fill = bioladen)) +
   geom_bar(position = position_dodge(preserve = "single")) +
   scale_fill_viridis(discrete = T,
     labels = c("bio", "konven."),
@@ -1416,7 +1421,7 @@ Finde für die Funktionen `scale_color_viridis(discrete = T)` und `scale_color_v
 :::
 
 ```{r d_legends_3-solution}
-ggplot(einkaufen_recoded, aes(x = alter, y = weg, color = kochen)) +
+ggplot(einkaufen, aes(x = alter, y = weg, color = kochen)) +
    geom_point() +
   # \n sagt R, dass du einen Zeilenumbruch möchtest
    scale_color_viridis(guide_legend(title = "Kochen/ \n Woche")) +
@@ -1427,7 +1432,7 @@ ggplot(einkaufen_recoded, aes(x = alter, y = weg, color = kochen)) +
     ) +
   theme_bw()
 
- ggplot(einkaufen_recoded, aes(x = verkehrsmittel, y = alter, color = bioladen)) +
+ ggplot(einkaufen, aes(x = verkehrsmittel, y = alter, color = bioladen)) +
    geom_boxplot(position = position_dodge(preserve = "single")) +
    scale_color_viridis(discrete = T,
      labels = c("bio", "konven."),
@@ -1508,7 +1513,7 @@ Nutze für jeden der Plots aus dem letzten Unterkapitel (Legends) eine andere vi
 :::
 
 ```{r barrierefreiheit-solution}
-ggplot(einkaufen_recoded, aes(x = verkehrsmittel, fill = bioladen)) +
+ggplot(einkaufen, aes(x = verkehrsmittel, fill = bioladen)) +
   geom_bar(position = position_dodge(preserve = "single")) +
   scale_fill_viridis(discrete = T, option = "cividis",
                      # Titel und Beschriftung der Legende ändern
@@ -1522,7 +1527,7 @@ ggplot(einkaufen_recoded, aes(x = verkehrsmittel, fill = bioladen)) +
   )+
   theme_bw()
 
- ggplot(einkaufen_recoded, aes(x = verkehrsmittel, y = alter, color = bioladen)) +
+ ggplot(einkaufen, aes(x = verkehrsmittel, y = alter, color = bioladen)) +
    geom_boxplot(position = position_dodge(preserve = "single")) +
    scale_color_viridis(discrete = T, option = "turbo",
      labels = c("bio", "konven."),
@@ -1534,7 +1539,7 @@ ggplot(einkaufen_recoded, aes(x = verkehrsmittel, fill = bioladen)) +
    ) +
    theme_bw()
 
-ggplot(einkaufen_recoded, aes(x = alter, y = weg, color = kochen)) +
+ggplot(einkaufen, aes(x = alter, y = weg, color = kochen)) +
    geom_point() +
    scale_color_viridis(option = "plasma",
      guide_legend(title = "Kochen/ \n Woche")) +
@@ -1689,23 +1694,22 @@ shiny::br()
 
 Du hast die große Kunst der Erstellung von Plots in R nun gemeistert! Super gemacht! Jetzt bist du in der Lage mithilfe des [ggplot Cheat Sheet](https://rstudio.github.io/cheatsheets/data-visualization.pdf) sowie der [R Graph Gallery](https://r-graph-gallery.com/) deine eigenen Plots zu erstellen.🚀
 
-
 ### Neue Funktionen
+
 eine Tabelle mit den wichtigesten Codes des Tutorials
 
-| Code                   | Beschreibung                                     |
-|------------------------|--------------------------------------------------|
-| `ggplot()`             | Erstellt die Grundebene für einen Plot           |
-| `geom_bar()`           | Balkendiagramm                                   |
-| `geom_histogram()`     | Histogramm                                       |
-| `geom_boxplot()`       | Boxplot                                          |
-| `geom_point()`         | Punktdiagramm                                    |
-| `geom_line()`          | Linienplot                                       |
-| `aes(x, y, color, fill, shape, size, alpha)` | Ästhetisches Mapping von Variablen  |
-| `facet_grid()` und `facet_wrap()` | Aufteilung von Diagrammen in Raster |
-| `labs(title, subtitle, x, y, caption)` | Anpassung von Diagrammtiteln und Achsenbeschriftungen |
-| `scale_color_viridis()` | Anpassung der Farbskala mit Viridis-Farben      |
-
+| Code                                         | Beschreibung                                          |
+|------------------------|-----------------------------------------------|
+| `ggplot()`                                   | Erstellt die Grundebene für einen Plot                |
+| `geom_bar()`                                 | Balkendiagramm                                        |
+| `geom_histogram()`                           | Histogramm                                            |
+| `geom_boxplot()`                             | Boxplot                                               |
+| `geom_point()`                               | Punktdiagramm                                         |
+| `geom_line()`                                | Linienplot                                            |
+| `aes(x, y, color, fill, shape, size, alpha)` | Ästhetisches Mapping von Variablen                    |
+| `facet_grid()` und `facet_wrap()`            | Aufteilung von Diagrammen in Raster                   |
+| `labs(title, subtitle, x, y, caption)`       | Anpassung von Diagrammtiteln und Achsenbeschriftungen |
+| `scale_color_viridis()`                      | Anpassung der Farbskala mit Viridis-Farben            |
 
 ## Credit
 

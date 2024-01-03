@@ -180,3 +180,37 @@ question("Was sind zwei übliche Daumenregeln für die Definition von Ausreißer
 )
 ```
 
+
+
+## Zusammenfassen von Variablen
+
+
+ Zusatz: Zusammenfassen von Kategorien
+
+Es wird auch deutlich, dass die Kategorien "E-Roller" und "Motorrad" so klein sind, dass sie sich nicht als eigene Analyse-Kategorie eignen. Solange sich eine sinvolle Überkategorie erstellen lässt kannst du sie auch als eine neue Gruppe (z.B. "motorisierte Zweiräder") zusammenfassen. In diesem Fall wäre das jedoch nicht empfehlenswert, da E-Roller und Motorräder sich nur schlecht in eine nachvollziehbare und gut abgegrenzte Gruppe zusammenfassen lassen. Daher könntest du sie auch als Kategorie "Andere" zusammenfassen. Die neu erstellte Kategorie lässt sich jedoch nicht mehr schlüssig in deine Analyse einbeziehen, da du über "Andere(s)" keine generalisierbaren Aussagen mehr treffen kannst.
+
+Zum Umcodieren könntest du z.B. eine neue Variable mit dem Namen `verkehrsmittel_recoded` erstellen. 
+
+NAs dürfen allerdings nicht einfach umgecodet werden, weil wir in diesem Fall nicht wissen, was sich genau dahinter verbirgt.
+
+::: rot
+Das Zusammenfassen von Kategorien sollte vor der Datenerhebung geplant sein, damit nicht nachträglich Kategorien zusammengefasst werden und dadurch die Ergebnisse verändert werden können. Wenn es nachträglich geschieht, muss es auf jeden Fall gut begründet und **dokumentiert** werden!
+:::
+
+```{r bp_neuerdf, exercise = TRUE}
+# Erstelle ein neues Objekt und speichere den bisherigen Datensatz darin
+einkaufen_recoded <- einkaufen
+
+# Verändere Variablen nach deinen Wünschen im NEUEN Objekt
+# in diesem Fall mit der recode Funktion aus dem Paket dplyr
+# die bisherige Variable wird einfach mit der neuen überschrieben
+einkaufen_recoded$verkehrsmittel <- recode(einkaufen$verkehrsmittel,
+      "E-Roller" = "Andere",
+      "Motorrad" = "Andere"
+)
+
+# und nochmal der gleiche Plot
+ggplot(einkaufen_recoded, aes(x = verkehrsmittel, y = alter)) +
+  geom_boxplot()
+```
+
