@@ -237,8 +237,8 @@ ggplot(data = einkaufen,
 
 Dabei wird deutlich, dass der Code durch eine klare Sprache organisiert ist:
 
--   in `data` wird ein Datensatz an die Funktion übergeben
--   in `mapping` wird festgelegt, welche Variablen aus dem Datensatz wo gezeigt werden
+-   im Argument `data` wird ein Datensatz an die Funktion übergeben
+-   im Argument `mapping` wird festgelegt, welche Variablen aus dem Datensatz wo gezeigt werden
 -   das `+` fügt eine neue Ebene hinzu, genau wie in Photoshop / Gimp / bei Overhead-Folien
 -   `geom_bar()` fügt ein `geom`etrisches Objekt, nämlich die Balken (`bar`s), hinzu
 
@@ -262,15 +262,18 @@ Wichtig ist zu wissen, dass `ggplot()` nur *data frames* als Daten akzeptiert.
 
 ### aesthetic mapping
 
-`aes()` steht für *aesthetic attributes*. Beim `aesthetic mapping` (oben im Code: `mapping = aes(x = verkehrsmittel)`) wird einer Variable eine *grafische Eigenschaft* zugeordnet. Grafische Eigenschaften sind:
+Die Funktion `aes()` konstruiert *aesthetic mappings*. Auf Deutsch: Stellt eine Verbindung mit einer Variable aus den Daten mit einer bestimmten grafischen Eigenschaft des Plots her. Dazu sagen wir auch *Mapping* einer Variable auf ein *ästhetisches Attribut*. 
+
+Oben im Code: `aes(x = verkehrsmittel)`: Die Variable Verkehrsmittel wird auf die `x`-Achse gemappt. 
+
+#### Verfügbare aesthetische Attribute
 
 -   Achsen (`x`, `y`)
 -   Farbe (`color`)
 -   Füllung (`fill`)
 -   Größe (`size`)
 -   Transparenz (`alpha`)
-
-Im Diagramm oben wurde der *x-Achse* die Variable *Verkehrsmittel* zugewiesen.
+- ... 
 
 ::: aufgabe
 Ändere den Code so, dass die Variable Verkehrsmittel statt auf der `x`-Achse nun auf die `y`-Achse gemappt wird. Wie wird sich das Diagramm wohl verändern?
@@ -522,38 +525,42 @@ question_radio("Was stimmt zur Schreibweise des Arguments `color`?",
                allow_retry = TRUE,
                random_answer_order = TRUE,
                correct = random_praise("de"),
-               incorrect = random_encouragement("de")),
+               incorrect = random_encouragement("de"))#,
 
-question_radio("Was stimmt bzgl. des Arguments `boundary`?",
-               answer("Spezifiziert den Grenzpunkt zwischen zwei Kategorien",
-                      correct = TRUE),
-               answer("Spezifiziert die Grenzen des gesamten Plots.",
-                      message = "Dafür gibt es andere Funktionen (z.B. `coord_cartesian()`)."),
-               answer("Umrandet die bins in einer frei gewählten Farbe.",
-                      message = "Das gesuchte Argument heißt `color`."),
-               allow_retry = TRUE,
-               random_answer_order = TRUE,
-               correct = random_praise("de"),
-               incorrect = random_encouragement("de")),
+### ohne den Abschnitt über das Argument `boundary` ergeben diese beiden
+###  Fragen keinen Sinn 
 
-question_radio("Letzter Plot: Wie alt ist die älteste Person?",
-               answer("Zwischen 85 und 90 Jahren.",
-                      correct = TRUE),
-               answer("89 Jahre, 11 Monate und 3 Tage.",
-                      message = "Das könnte zwar sein, könnte aber auch nicht sein. Du kannst nur wissen, das diese Person sich im Intervall zwischen 85 und 90 Jahren befindet."),
-               answer("100",
-                      message = "Die höchste Kategorie hört bei 90 aus, also maximal 90 Jahre."),
-               allow_retry = TRUE,
-               random_answer_order = TRUE,
-               correct = random_praise("de"),
-               incorrect = random_encouragement("de"))
+# question_radio("Was stimmt bzgl. des Arguments `boundary`?",
+#                answer("Spezifiziert den Grenzpunkt zwischen zwei Kategorien",
+#                       correct = TRUE),
+#                answer("Spezifiziert die Grenzen des gesamten Plots.",
+#                       message = "Dafür gibt es andere Funktionen (z.B. `coord_cartesian()`)."),
+#                answer("Umrandet die bins in einer frei gewählten Farbe.",
+#                       message = "Das gesuchte Argument heißt `color`."),
+#                allow_retry = TRUE,
+#                random_answer_order = TRUE,
+#                correct = random_praise("de"),
+#                incorrect = random_encouragement("de"))#,
+
+
+# question_radio("Letzter Plot: Wie alt ist die älteste Person?",
+#                answer("Zwischen 85 und 90 Jahren.",
+#                       correct = TRUE),
+#                answer("89 Jahre, 11 Monate und 3 Tage.",
+#                       message = "Das könnte zwar sein, könnte aber auch nicht sein. Du kannst nur wissen, das diese Person sich im Intervall zwischen 85 und 90 Jahren befindet."),
+#                answer("100",
+#                       message = "Die höchste Kategorie hört bei 90 aus, also maximal 90 Jahre."),
+#                allow_retry = TRUE,
+#                random_answer_order = TRUE,
+#                correct = random_praise("de"),
+#                incorrect = random_encouragement("de"))
 
 )
 ```
 
 ### aus Fehlern lernen
 
-Und jetzt kommt das praktische: Es gibt noch sehr viele weitere `geom_...()` Funktionen. Zum Beispiel `geom_point()`, welches ein Punktediagramm aus deinen Daten erstellt.
+Und jetzt kommt das Praktische: Es gibt noch sehr viele weitere `geom_...()`-Funktionen. Zum Beispiel `geom_point()`, diese Funktion zeichnet Punkte in deinen Plot.
 
 ::: aufgabe
 Probiere das doch einfach mal aus und tausche `geom_histogram()` durch `geom_point()`.
@@ -582,7 +589,7 @@ Caused by error in `compute_geom_1()`:
 
 -   Schon die erste Zeile gibt dir eine wichtige Information: Der Fehler trat beim Hinzufügen des `geom`etrischen Objekts auf und nicht an irgendeiner anderen Stelle
 -   Die zweite Zeile sagt, dass der Fehler in der ersten Zeile / Ebene passiert ist. Das wird relevant, wenn du mehrere Ebenen mit `+` übereinanderlegst in deinem Plot.
--   Die dritte Zeile musst du nicht genau verstehen, das ist irgendwas internes von `ggplot2`
+-   Die dritte Zeile musst du nicht genau verstehen, das ist irgendwas Internes von `ggplot2`
 -   die vierte Zeile schließlich sagt dir ganz genau, wo das Problem ist: Du brauchst eine zweite Variable. Und zwar auf der y-Achse. Das ergibt auch Sinn, denn ein Punkt hat immer zwei Koordinaten, eine `x`- und eine `y`-Koordinate! Logischerweise kann kein Punkt gezeichnet werden, wenn du nur eine `x`-Koordinate angibst.
 
 ::: aufgabe
@@ -601,7 +608,9 @@ ggplot(einkaufen, aes(x = alter, y = weg)) +
   geom_point()
 ```
 
-Ok, das Diagramm ist jetzt nicht sehr informativ, weil wir nur diese zwei metrischen Variablen in unserem Datensatz zur Verfügung haben, aber du hast gelernt: 
+Jetzt hast du ein Punktdiagramm gezeichnet! Es zeigt dir hier, wie Alter und Weg zusammenhängen. Wegen ein paar extremen Werten beim Weg ist nicht wirklich etwas zu erkennen. Der übliche Weg, den Menschen in Kassel zum Einkaufen zurücklegen, liegt eher in einer Größenordnung von 0-10 km, und eher nicht zwischen 0 und 600 km. Der Großteil der Werte zusammengepackt am unteren Rand des Diagramms, und es ist nicht wirklich etwas zu erkennen, weil die Punkte sich überlagern. Mehr dazu im Kapitel über Punktdiagramme!
+
+Du kannst mitnehmen:
 
 - Fehlermeldungen sind freundlich, 
 - `ggplot` funktioniert wie ein Baukasten, 
@@ -686,7 +695,7 @@ Der obige Boxplot hat einen großen Nachteil: Es ist nicht zu sehen, wie viele P
 
 Du kannst dem Plot die fehlenden Informationen in einer neuen Ebene hinzufügen!
 
-Die Funktion `geom_jitter()` zeichnet einzelne Datenpunkte, und fügt diesen einen zufälliges *zittern* hinzu, um sie ein bisschen durcheinander zu schütteln, sodass nicht mehr alle Punkte übereinander liegen und Datenpunkte von anderen überdeckt werden.
+Die Funktion `geom_jitter()` zeichnet einzelne Datenpunkte, und fügt diesen einen zufälliges *Zittern* (engl. *jitter*) hinzu, um sie ein bisschen durcheinander zu schütteln, sodass nicht mehr alle Punkte übereinander liegen und Datenpunkte von anderen überdeckt werden.
 
 -   `size` kennzeichnet die Größe der Punkte
 -   `alpha` bestimmt die Transparenz der Punkte (von 0 - 1)
@@ -695,18 +704,19 @@ Die Funktion `geom_jitter()` zeichnet einzelne Datenpunkte, und fügt diesen ein
 ```{r showyourdata, exercise = TRUE, echo=TRUE}
 ggplot(einkaufen, aes(x = verkehrsmittel, y = alter)) +
   geom_boxplot() +
-  geom_jitter(alpha = 0.2, 
-              width = 0.1, 
-              size = 3)
+  geom_jitter(alpha = 0.2,
+              size = 3,
+              width = 0.2, 
+              height = 0)
 ```
 
 ::: infobox
-Der jitter führt in dieser Art der Verwendung nicht zu einem Informationsverlust/-verzerrung, da wir die Punkte horizontal innerhalb der Kategorien variieren lassen und nicht auf der y-Achse mit der metrischen Variable.
+Der Jitter führt in dieser Art der Verwendung nicht zu einem Informationsverlust/-verzerrung, da wir die zwar Punkte horizontal innerhalb der Kategorien variieren lassen (`width = 0.2`), aber nicht vertikal auf der stetigen y-Achse (`height = 0`).
 :::
 
 <br>
 
-Achte mal auf das Verkehrsmittel "Andere". Wir sehen manchmal wird ein ganzer Boxplot gezeichnet, während lediglich 7 Personen dahinter stehen, und er ist nicht zu unterscheiden von einem Boxplot für "Auto", was 46 Menschen nutzen. Aber mithilfe der Punkte können wir nun sehen, dass dort weit weniger Datenpunkte vorliegen und wir daher bei der Interpretation dieser Gruppe Vorsicht walten lassen sollten, da sie von der Gruppengröße her nicht mit den anderen zu vergleichen ist. Das triff mehr noch für die Kategorien "Motorrad" und "E-Roller" zu.
+Achte mal auf das Verkehrsmittel "Andere". Wir sehen: Es wird ein ganzer Boxplot gezeichnet, während lediglich 7 Personen dahinter stehen, und die Box ist nicht zu unterscheiden von denen für "Auto", wo 46 Menschen hinter stehen. Aber mithilfe der Punkte können wir nun sehen, dass bei "Andere" weit weniger Datenpunkte vorliegen und wir daher bei der Interpretation dieser Gruppe Vorsicht walten lassen sollten, da sie von der Gruppengröße her nicht mit den anderen zu vergleichen ist. Das triff mehr noch für die Kategorien "Motorrad" und "E-Roller" zu.
 
 ::: aufgabe
 **Aufgabe**
@@ -849,18 +859,20 @@ Schau dir das Diagramm mal an. Einige extrem hohe Werte der Variable `weg` führ
 
 *Da solche Werte potentiell Ausreißer sein könnten empfielt es sich, die Daten nochmal genauer unter die Lupe zu nehmen. Dazu in einem späteren Kapitel mehr.*
 
-### "Lügen" mit log-transformierten Achsen
+### "Lügen" mit log-skalierten Achsen
 
 Bevor wir uns mit Ausreißern beschäftigen, hier noch ein alternativer Weg, die undifferenzierbare Masse am unteren Rand der Grafik besser darzustellen: Die y-Achse logarithmisch transformieren! Das geht in `ggplot` sehr einfach, du fügst, wie bereits gewohnt, eine neue Ebene zum Plot mit der Funktion `scale_y_log10()` hinzu.
 
-Die logarithmische Transformation ist sehr praktisch, um extreme Werte mit auf der Bildschirmfläche unterzubringen, und gleichzeitig eine sinnvolle Skalierung der normalen Werte aufrecht zu erhalten. Der Logarithmus verändert die Aussage des Diagramms wesentlich und sollte daher immer deutlich gekennzeichnet sein (siehe Achsenbeschriftung)!
+Die logarithmische Transformation ist sehr praktisch, um extreme Werte mit auf der Bildschirmfläche unterzubringen, und gleichzeitig eine sinnvolle Skalierung der normalen Werte aufrecht zu erhalten. Der Logarithmus verändert die Aussage des Diagramms wesentlich und sollte daher immer deutlich gekennzeichnet sein (siehe Diagrammbeschriftung)!
 
 ```{r logtransform, exercise = TRUE, exercise.cap = "log-transformiertes Streudiagramm"}
 ggplot(einkaufen, aes(x = alter, y = weg)) +
   geom_point() +
   scale_y_log10() +
-  labs( y = "log10(Weg)")
+  labs(subtitle = "y-Achse logarithmisch skaliert") 
 ```
+
+Um mehr über Diagrammbeschriftungen mit `labs()` zu erfahren, schau ins Kapitel 8.
 
 ## 5. Liniendiagramm
 
@@ -879,11 +891,11 @@ Hierfür nehmen wir wieder den `economics` Datensatz, da wir für ein Liniendiag
 Lassen wir uns also mittels der Variablen `date` und `unemploy` den Verlauf der Arbeitslosenrate über die Zeit darstellen.
 
 ```{r line, exercise = TRUE, exercise.cap = "Liniendiagramm"}
-ggplot(economics, aes( x = date, y = unemploy)) +
+ggplot(economics, aes(x = date, y = unemploy)) +
   geom_line()
 ```
 
-Der Zeitverlauf zeigt uns einen deutlichen "Peak" der Arbeitslosenzahlen um das Jahr 2010. Geschichtsfreunde werden wissen, dass dies wahrscheinlich durch die Wirtschaftskriese aus dem Jahre 2008 bedingt wurde. 
+Der Zeitverlauf zeigt uns einen deutlichen "Peak" der Arbeitslosenzahlen um das Jahr 2010. Geschichtsfreunde werden wissen, dass dies wahrscheinlich durch die Wirtschaftskrise aus dem Jahre 2008 bedingt wurde. 
 
 Es ist aber auch wichtig zu beachten, dass es ganz auf den betrachteten Zeitabschnitt ankommt, was als "Peak" gewertet wird und wie wir unsere Daten aufbereiten. Kritische Köpfe könnten jetzt anmerken, dass die Bevölkerung in dieser großen Zeitspanne auch deutlich zugenommen hat. Da hier absolute Zahlen an Arbeitslosen die Datengrundlage sind, ist das ein berechtigter Einwand. 
 
@@ -893,19 +905,19 @@ Nutze `/` als "geteilt"-Operator
 :::
 
 ```{r line2, exercise = TRUE, exercise.cap = "Liniendiagramm"}
-ggplot(economics, aes( x = date, y = unemploy)) +
+ggplot(economics, aes(x = date, y = unemploy)) +
   geom_line()
 ```
 
 ```{r line2-hint}
 # füge lediglich hinter `unemploy` den `/` Opertator und die Variable `pop` ein
-ggplot(economics, aes( x = date, y = unemploy)) +
+ggplot(economics, aes(x = date, y = unemploy)) +
   geom_line()
 ```
 
 ```{r line2-solution}
 # füge lediglich hinter `unemploy` den `/` Opertator und die Variable `pop` ein
-ggplot(economics, aes( x = date, y = unemploy/pop)) +
+ggplot(economics, aes(x = date, y = unemploy / pop)) +
   geom_line()
 ```
 
@@ -929,7 +941,7 @@ question_radio("Welche Daten lassen sich gut in einem Liniendiagramm darstellen?
                allow_retry = TRUE,
                random_answer_order = TRUE,
                correct = "Richtig!",
-               incorrect = "Das stimmt leider nicht, probier es noch mal!"),
+               incorrect = "Das stimmt leider nicht, probier es noch mal!")
 )
 ```
 
@@ -938,7 +950,7 @@ question_radio("Welche Daten lassen sich gut in einem Liniendiagramm darstellen?
 Jetzt kennst du bereits die 5 häufigsten Diagrammformen. Jetzt bringst du Farbe ins Spiel. Du bist einigen *aesthetic attributes* bereits über den Weg gelaufen, denn seien wir ehrlich, ohne sieht es oft wirklich trist und unbrauchbar aus. Hier aber noch einmal von vorne und genau erklärt was sich hinter diesen Argumenten verbirgt:
 
 ::: infobox
-`aes()` steht für *aesthetic attributes*, und weist den einzelnen Variablen, wie z.B. dem Verkehrsmittel, eine *grafische Eigenschaft* zu. Grafische Eigenschaften sind:
+`aes()` konstruiert *aesthetic mappings*, und verknüpft Variablen mit einem *aesthetischen Attribut*. Solche Attribute können sein: 
 
 -   Achsen (`x`, `y`)
 -   Farbe (`color`)
@@ -948,13 +960,13 @@ Jetzt kennst du bereits die 5 häufigsten Diagrammformen. Jetzt bringst du Farbe
 -   Transparenz (`alpha`)
 :::
 
-Also: jeder Variable wird ein ästethisches Attribut zugeordnet. Bedeutet umgekehrt: Es lassen sich bis zu 6 verschiedenen Variablen in einem Plot unterbringen. Wie sinnvoll es ist, das auszureizen, sei dahingestellt.
+Bisher haben wir nur auf die `x`- und `y`-Achse gemappt. Aber was passiert, wenn wir zusätzlich noch eine weitere Variable mit der Farbe verknüpfen?
 
 ### Füllung und Farbe
 
 #### Fill
 
-Was allerdings in vielen Fällen sinnvoll ist, ist eine weitere Variable über das Attribut Füllung (`fill`) zu plotten. Das gilt sowohl für *kategoriale* als auch *metrische* bzw. kontinuierliche Daten.
+Um mehr Informationen in einem Plot darzustellen, kannst du eine zusätzliche Variable über das Attribut Füllung (`fill`) mappen.  Dafür eigenen sich sowohl *diskrete* als auch *stetige* Daten.
 
 ```{r aestheticmapping, exercise = TRUE,  exercise.cap = "fill"}
 ggplot(einkaufen, aes(y = ort, fill = verkehrsmittel)) +
@@ -1085,9 +1097,7 @@ Dieses Prinzip gilt für alle oben vorgestellten ästhetischen Attribute. Deiner
 
 ```{r aes-quest}
 quiz(caption = "Quiz zum aesthetic mapping",
-
-     # Diese Frage muss überarbeitet werden. 
-       
+     
 question_checkbox("Welche *aesthetic mappings* in `aes()` brauchst du, um ein gestapeltes Balkendiagramm zu erstellen?",
                answer("entweder `x` **oder** `y`",
                       correct = TRUE,
@@ -1117,7 +1127,7 @@ question_radio("Was passiert, wenn du in `aes()` eine Variable auf `alpha` mapps
                incorrect = random_encouragement("de"),
                correct = random_praise("de")),
 
-question_radio("Welche Variablen können auf das Attribut `fill` gemappt werden?",
+question_checkbox("Welche Variablen können auf das Attribut `fill` gemappt werden?",
                   answer("Stetige Variablen", correct = TRUE,
                          message = "Dann wird ein Farbverlauf erzeugt"),
                   answer("Diskrete Variablen",
@@ -1217,10 +1227,10 @@ Schauen wir es uns doch einfach mal zusammen an, dann verstehst du was hier geme
 ```{r special, exercise = TRUE,   exercise.cap = "facet_grid()"}
 ggplot(einkaufen, aes(x = alter))  +
   geom_histogram(binwidth = 5) +
-  facet_grid(bioladen  ~ verkehrsmittel)
+  facet_grid(bioladen ~ verkehrsmittel)
 ```
 
-Die Argumente für *factes* sind besonders, da sie durch eine Tilde (`~`) anstelle eines Kommas verbunden werden. Wenn du nur eine Variable zur Aufteilung benutzen möchtest, kannst du  die Stelle vor bzw. nach der Tilde mit einem `.` versehen.
+Die Argumente für *facets* sind besonders, da sie durch eine Tilde (`~`) anstelle eines Kommas verbunden werden. Wenn du nur eine Variable zur Aufteilung benutzen möchtest, kannst du die Stelle vor bzw. nach der Tilde mit einem `.` als Platzhalter versehen.
 
 ::: aufgabe
 Jetzt bist du dran! 
@@ -1336,10 +1346,20 @@ Was noch fehlt um die Grafiken ganz grundlegend ein bisschen schöner zu machen 
 
 ### Themes
 
-Es gibt verschiedene Themes, welche Hintergrundfarbe, Umrandungen etc. bestimmen. Eine Übersicht findest du [hier](https://ggplot2.tidyverse.org/reference/ggtheme.html). Themes werden als eine weitere Lage dem Plot hinzugefügt.
+Es gibt verschiedene Themes, welche Hintergrundfarbe, Umrandungen etc. bestimmen. Eine Übersicht findest du [hier](https://ggplot2.tidyverse.org/reference/ggtheme.html). Themes werden mit `+` als eine weitere Lage dem Plot hinzugefügt.
 
 ::: aufgabe
-Suche dir ein Theme deiner Wahl aus und füge es dem untenstehenden Plot hinzu
+Suche dir ein Theme deiner Wahl aus und füge es dem untenstehenden Plot hinzu.
+Zur Auswahl stehen z.B:
+
+- `theme_modern()`
+- `theme_classic()`
+- `theme_light()`
+- `theme_dark()`
+- `theme_minimal()`
+- `theme_void()`
+- `theme_bw()`
+
 :::
 
 !eco
@@ -1347,18 +1367,19 @@ Suche dir ein Theme deiner Wahl aus und füge es dem untenstehenden Plot hinzu
 # Ein Beispiel:
 ggplot(einkaufen, aes(x = alter, y = weg)) +
   geom_point() +
-  theme_bw()
+  theme_void()
 ```
 
 !eco
 ```{r drumherum, exercise = TRUE,   exercise.cap = "themes"}
 ggplot(einkaufen, aes(x = alter, y = weg)) +
-  geom_point()
+  geom_point() +
+  theme_bw()
 ```
 
-### Labs
+### Beschriftungen
 
-Die Beschriftungen sind ebenfalls eine weitere Lage und werden mittels `labs()` Funktion hinzu gefügt.
+Die Beschriftungen sind ebenfalls eine weitere Ebene und werden mittels `labs()` Funktion hinzugefügt.
 
 ::: aufgabe
 Ändere die Beschriftungen so, dass sie informativ sind.
@@ -1426,13 +1447,19 @@ Ist in den allermeisten Fällen das Mittel der Wahl. Die beiden Hauptpunkte sind
 | **diskret**        | `scale_color_viridis(discrete = T)` | `scale_fill_virdis(discrete = T)` |
 | **kontinuierlich** | `scale_color_virdis()`              | `scale_fill_viridis()` \*         |
 
-\* Steht nur der Vollständigkeit halber hier, ist keinem der vorgestellten geoms sinnvoll einsetzbar. Wird vor allem für Heatmaps verwendet.
 
-\-**2a Punkte verändern:** Wenn du die passende Funktion ausgewählt hast fügst du das Argument `labels = c("label 1", "label 2")` hinzu. Wobei die Sortierung die gleiche Reihenfolge haben sollte, wie die aktuelle. **PRÜFE DAS**, sonst kann es zu schwerwiegenden inhaltlichen Fehlern kommen! 
+\* Steht nur der Vollständigkeit halber hier, ist keinem der vorgestellten `geoms` sinnvoll einsetzbar. Wird vor allem für Heatmaps verwendet.
 
--**2b Titel verändern:** In die gleiche Funktion fügst du die Funktion `guide_legend()` mit dem Argument `title = "some title"` ein. 
+<!-- Dann solle es vielleicht nicht hier stehen. Rauskürzen? -->
+
+- **2a Punkte verändern:** Wenn du die passende Funktion ausgewählt hast fügst du das Argument `labels = c("label 1", "label 2")` hinzu. Wobei die Sortierung die gleiche Reihenfolge haben sollte, wie die aktuelle. **PRÜFE DAS**, sonst kann es zu schwerwiegenden inhaltlichen Fehlern kommen! 
+
+- **2b Titel verändern:** In die gleiche Funktion fügst du die Funktion `guide_legend()` mit dem Argument `title = "some title"` ein. 
+
 - **Zusammenfassung:** 
+
 - **Pro:** Kein rumgemurkse mit den Daten. Kann für jeden Plot individuell passend verändert werden. 
+
 - **Contra:** Erhöhte Fehlergefahr aufgrund von flaschen Beschriftungen.
 
 ```{r d_legends_2, exercise = TRUE, exercise.setup = "d_legends",  exercise.cap = "guide_legend()"}
@@ -1502,7 +1529,11 @@ question("Was stimmt?",
                 wird der Plot gespeichert und die Legende dann extern mittels Paint
                 oder Gimp nach den eigenen Wünschen nachgestaltet.",
                  message = "Da gibt es deutlich galantere Wege. 
-                Lies dir den Abschnitt lieber nochmal genauer durch."))
+                Lies dir den Abschnitt lieber nochmal genauer durch."),
+        allow_retry = TRUE,
+        random_answer_order = TRUE,
+        incorrect = random_encouragement("de"),
+        correct = random_praise("de"))
 )
 ```
 
