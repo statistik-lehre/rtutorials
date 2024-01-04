@@ -1,4 +1,55 @@
 
+used but rearranged:
+
+### histogram
+
+#### `boundary`
+
+Das sieht schon mal ein Stück weit besser aus. Jetzt könntest du noch, dass die Kategorien nicht bei den markanten Zahlen anfangen, sondern z.B. die 50 in der Mitte einer Kategorie liegt. Dafür kannst du das Argument `boundary` nutzen, um einen Grenzwert zu bestimmen, der die Kategorien an diesem Punkt teilt (sog. "bin break"):
+
+```{r boundary, exercise = TRUE, exercise.cap = "Boundary-Argument"}
+ggplot(einkaufen, aes(x = alter)) +
+  geom_histogram(binwidth = 5,
+                 boundary = 50,
+                 color = "black",
+                 fill = "grey")
+```
+
+### punktdiagramm
+
+Im Datensatz `rtutorials::heated` ist die maximale Tagestemperatur (`maxtemp`) in Grad Fahrenheit sowie das Tagesdatum (`enddate`) gespeichert. Es handelt sich um wiederholte Messungen, weil der gleiche Gegenstand (die Temperatur in New York) immer wieder (täglich) erhoben wurde.
+
+```{r linegraph, exercise = TRUE, exercise.cap = "Liniendiagramm"}
+ggplot(heated, aes(x = enddate, y = maxtemp)) +
+  geom_line()
+```
+
+Zwischen den Jahren sind komische, gerade Linien. Das liegt daran, dass nur die Monate Mai bis September im Datensatz vorhanden sind. Dieses geometrische Objekt `geom_line()` (Liniendiagramm) verbindet alle Punkte, die ihm zur Verfügung gestellt werden miteinander. Wenn dann länger keine Daten da sind, wird der Verbindungsstrich einfach zum nächsten vorhandenen Datenpunkt gezogen. Das Problem ist, dass dieser Verbindungsstrich den Anschein erweckt, als gäbe es Daten, die eben in echt gar nicht gibt. Um damit gut umzugehen braucht es in den `aes`thetics das `group` Argument. Das sagt dem geometrischen Objekt in welchen Gruppen es die Daten behandeln soll. In diesem Fall wäre eine Gruppe für jedes Jahr sinnvoll.\
+Der Umgang mit Datumsformaten in R würde hier komplett den Rahmen sprengen, aber die Lösung ist:\
+Mit der Funktion `year()` aus dem Paket `lubridate()` ziehst du *nur* das Jahr aus dem Datum und erschaffst somit eine Gruppe pro Jahr.
+
+```{r linegraph2, exercise = TRUE,  exercise.cap = "Daten Gruppieren!"}
+ggplot(heated, aes(x = enddate, 
+                   y = maxtemp, 
+                   group = lubridate::year(enddate))) +
+  geom_line()
+```
+
+Sehr gut, jetzt werden keine Zusammenhänge mehr angedeutet, wo gar keine sind. Und weils noch schöner ist, wenn die lesende Person intuitiv die Zahlen deuten kann wird im letzten Schritt die *Grad Fahrenheit* Skala in eine *Grad Celsius* Skala umgerechnet. Dies geht mit der Funktion `convert_temperature()` aus dem Paket `weathermetrics`.
+
+```{r linegraph3, exercise = TRUE,  exercise.cap = "Sauberes Liniendiagramm"}
+
+# hier werden die Temperaturen konvertiert und in einer neuen Spalte gespeichert
+heated$maxtemp_celsius <- weathermetrics::convert_temperature(heated$maxtemp,
+                                                              old_metric = "f", 
+                                                              new_metric = "c")
+
+ggplot(heated, aes(x = enddate, 
+                   y = maxtemp_celsius, 
+                   group = lubridate::year(enddate))) +
+  geom_line()
+```
+
 
 
 ## Exkurs: Extreme Werte

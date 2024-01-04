@@ -33,9 +33,9 @@ colnames(einkaufen) <- tolower(colnames(einkaufen))
 
 ## Inhalt
 
-Jetzt kommt wirklich einer der allercoolsten Teile des ganzen Kurses. R ist einfach unfassbar mächtig, was das Visualisieren von Daten angeht, viel ausgefeilter und vielfältiger, als Excel und SPSS es je erreichen können. Unser Ziel ist euch ein paar schnelle Kochrezepte für die wichtigsten Visualisierungsaufgaben mitzugeben, und die Neugier auf mehr zu wecken, in dem wir eine kleine Einführung in das Visualisierungspaket `ggplot2` geben.
+Jetzt kommt wirklich einer der allercoolsten Teile des ganzen Kurses. R ist einfach unfassbar mächtig, was das Visualisieren von Daten angeht, viel ausgefeilter und vielfältiger, als Excel und SPSS es je erreichen können. Unser Ziel ist euch ein paar schnelle Kochrezepte für die wichtigsten Visualisierungsaufgaben mitzugeben, und die Neugier auf mehr zu wecken, in dem wir eine Einführung in das Visualisierungspaket `ggplot2` geben.
 
-Mit R sind abgefahrene Sachen möglich. Eine vielfältige Übersicht darüber, was alles geht, erhältst du in der [R Graph Gallery](https://r-graph-gallery.com/). Hier sind ein paar Beispiele:
+Mit R sind abgefahrene Sachen möglich. Eine vielfältige Übersicht darüber, was alles möglich ist, erhältst du in der [R Graph Gallery](https://r-graph-gallery.com/). Hier sind ein paar Beispiele:
 
 #### [Eine Karte im Stil von Jacques Bertin](https://r-graph-gallery.com/web-valued-dots-map-bertin.html)
 
@@ -86,56 +86,9 @@ Wie gesagt, wir fangen Schritt für Schritt an und daher sind das hier die Ziele
 
 <input type="checkbox" unchecked> colorblind-friendly sein </input>
 
-::: info
+::: gelb
 Am besten maximierst du das Fenster des Tutorials, um alle Abbildungen vollständig sehen zu könnnen. Ansonsten kann es passieren, dass du z.B. eine Legende nicht siehst oder andere Teile des Diagramms verdeckt sind.
 :::
-
-### Die fünf essentiellen Diagrammtypen
-
-```{r echo=FALSE}
-de <- c("Balkendiagramm", "Histogramm","Boxplot", "Punktdiagramm","Liniendiagramm")
-en <- c("barplot", "histogram", "boxplot", "scatterplot","linegraph")
-vars <- c("1 kategoriale Variable", "1 stetige Variable", "1 kategoriale & 1 stetige Variable", "2 stetige Variablen", "1 stetige und 1 zeitlich geordnete Variable")
-tibble(` `= c("1.", "2.", "3.", "4.", "5."), de, en, `geeignet für` = vars) |>
-  kbl() |>
-  kable_styling()
-```
-
-```{r fiveplots, fig.height=8, out.width="100%"}
-par(mfrow = c(3, 2),
-    bty = "n")
-barplot({einkaufen$verkehrsmittel |> table()}[1:5],
-        main = "1.",
-        axes = F,
-        ylab = NA,
-        xlab = NA,
-        names.arg = NA)
-hist(heated$maxtemp,
-     main = "2.",
-     axes = F,
-     ylab = NA,
-     xlab = NA)
-boxplot(heated$maxtemp ~ factor(lubridate::month(heated$enddate)),
-        main = "3.",
-        axes = F,
-        ylab = NA,
-        xlab = NA)
-plot(heated[ ,c("maxtemp", "edvisits")],
-     main = "4.",
-     axes = F,
-     ylab = NA,
-     xlab = NA)
-plot(heated$enddate[heated$enddate > as.Date("2022-03-24")], 
-     heated$maxtemp[heated$enddate > as.Date("2022-03-24")],
-     type = "l",
-     main = "5.",
-     axes = F,
-     ylab = NA,
-     xlab = NA)
-# reset par
-par(mfrow = c(1, 1),
-    bty = "o")
-```
 
 ## Einführung
 
@@ -171,7 +124,7 @@ library(ggplot2)
 
 <details>
 
-<summary><a>▼ \* ### Einordnung in das R-Ökosystem </a></summary>
+<summary><a>▼ \* Exkurs: Einordnung in das R-Ökosystem </a></summary>
 
 
 `ggplot2` ist nur eins von mehreren Interfaces für die unterhalb der Oberfläche liegenden Grafik-Strukturen von R. Es ist also nur eine Spitze des Eisbergs, und der Eisberg hat mehrere Spitzen, zum Beispiel das Paket `lattice` oder Visualisierungsfunktionen aus *base R*.
@@ -190,7 +143,7 @@ Bild aus: [@gagolewski2023]: [Deep R Programming](https://deepr.gagolewski.com/c
 
 ### Einordnung in den wissenschaftlichen Prozess
 
-Sind die Daten erhoben und importiert folgt die Arbeit mit Grafiken. Sie sind ein guter Weg, Zusammenhänge in den Daten sichtbar zu machen. Zum einen, um sich selbst in den Daten zu orientieren, und zum anderen, um die Ergebnisse der Analyse zu präsentieren. Visualisierungen werden also an zwei Stellen im Prozess benötigt:
+Sind die Daten erhoben und importiert folgt die Arbeit mit Grafiken. Sie sind ein guter Weg, Zusammenhänge in den Daten sichtbar zu machen. Zum einen, um sich selbst **in den Daten zu orientieren**, und zum anderen, um die **Ergebnisse der Analyse zu präsentieren**. Visualisierungen werden also an zwei Stellen im Prozess benötigt:
 
 -   um einen **Überblick** zu gewinnen
 -   um am Ende **Ergebnisse** zu **kommunizieren**
@@ -204,14 +157,55 @@ Grob kann unterschieden werden zwischen:
 -   Plots, die die **Verteilung einer** einzelnen Variablen darstellen
 -   Plots, die den **Zusammenhang** zwischen **zwei oder mehr** Variablen zeigen
 
-Die am häufigsten verwendeten und in diesem Tutorial vorgestellten Plots sind:
 
-|                             | kategorial                      | kontinuierlich                    |
-|------------------|:-----------------------|:-----------------------------|
-| **keine**                   | Balkendiagramm <br>`geom_bar()` | Histogramm <br>`geom_histogram()` |
-| **kategorial**              | (`geom_count()`)                | Boxplot<br>`geom_boxplot()`       |
-| **kontinuierlich**          | \-                              | Punktdiagramm<br>`geom_point()`   |
-| **sequentiell (z.B. Zeit)** | \-                              | Liniendiagramm<br>`geom_line()`   |
+### Die fünf essentiellen Diagrammtypen
+
+Eine kurze grafische Übersicht, darf bei einem Tutorial über Grafiken natürlich nicht fehlen:
+
+```{r echo=FALSE}
+de <- c("Balkendiagramm", "Histogramm","Boxplot", "Punktdiagramm","Liniendiagramm")
+en <- c("barplot", "histogram", "boxplot", "scatterplot","linegraph")
+vars <- c("1 kategoriale Variable", "1 stetige Variable", "1 kategoriale & 1 stetige Variable", "2 stetige Variablen", "1 stetige und 1 zeitlich geordnete Variable")
+tibble(` `= c("1.", "2.", "3.", "4.", "5."), de, en, `geeignet für` = vars) |>
+  kbl() |>
+  kable_styling()
+```
+
+```{r fiveplots, fig.height=8, out.width="100%"}
+par(mfrow = c(2, 3),
+    bty = "n")
+barplot({einkaufen$verkehrsmittel |> table()}[1:5],
+        main = "1.",
+        axes = F,
+        ylab = NA,
+        xlab = NA,
+        names.arg = NA)
+hist(heated$maxtemp,
+     main = "2.",
+     axes = F,
+     ylab = NA,
+     xlab = NA)
+boxplot(heated$maxtemp ~ factor(lubridate::month(heated$enddate)),
+        main = "3.",
+        axes = F,
+        ylab = NA,
+        xlab = NA)
+plot(heated[ ,c("maxtemp", "edvisits")],
+     main = "4.",
+     axes = F,
+     ylab = NA,
+     xlab = NA)
+plot(heated$enddate[heated$enddate > as.Date("2022-03-24")], 
+     heated$maxtemp[heated$enddate > as.Date("2022-03-24")],
+     type = "l",
+     main = "5.",
+     axes = F,
+     ylab = NA,
+     xlab = NA)
+# reset par
+par(mfrow = c(1, 1),
+    bty = "o")
+```
 
 Steigen wir direkt ein!
 
@@ -258,7 +252,13 @@ Leland Wilkonson, Begründer der *Grammar of Graphs*-Theorie sagt, dass sich jed
 -   `aesthetic mapping`
 -   `geom`etric objects
 
-Mit `data` kennst du dich ja jetzt schon aus, daher können wir direkt zum *mapping* übergehen. Wichtig ist nur zu wissen, dass `ggplot()` nur *data frames* als Daten akzeptiert.
+Mit `data` kennst du dich ja jetzt schon aus, daher können wir direkt zum *mapping* übergehen. 
+
+::: gelb
+Wichtig ist zu wissen, dass `ggplot()` nur *data frames* als Daten akzeptiert.
+:::
+
+</br>
 
 ### aesthetic mapping
 
@@ -309,55 +309,6 @@ ggplot(einkaufen, aes(x = verkehrsmittel))
 Jetzt versteht du vielleicht, wofür die `geom_bar()`-Funktion da ist: Geometrische Formen, in diesem Fall Balken, in den Plot zu zeichnen! Der Plot ist leer, aber die Achsen sind bereits beschriftet und perfekt vorbereitet, aber es fehlt noch das geometrische Objekt.
 
 Innerhalb der `geom_bar()`-Funktion finden Berechnungen statt: die einzelnen Ausprägungen der Verkehrsmittel werden gezählt, um die Höhe der Balken zu bestimmen. Aber das passiert alles im Hintergrund.
-
-Und jetzt kommt das Ding: Es gibt auch noch andere `geom_...()` Funktionen. Zum Beispiel `geom_point()`, welche dem Plot Punkte hinzufügt! Oder `geom_histogram()`, welche ein Histogramm zeichnet, siehe nächster Abschnitt.
-
-::: aufgabe
-Probiere das doch einfach mal aus und tausche `geom_bar()` durch `geom_point()`.
-:::
-
-```{r error-solution}
-ggplot(einkaufen, aes(x = verkehrsmittel)) +
-  geom_point()
-```
-
-```{r error, exercise = TRUE, exercise.cap = "Fehlermeldung"}
-ggplot(einkaufen, aes(x = verkehrsmittel)) +
-  geom_bar()
-
-```
-
-Dass hier eine Fehlermeldung aufploppt, ist völlig normal! Fehlermeldungen sind freundlich, denn Programmierer\*innen geben sich (oft) viel Mühe, diese möglichst informativ und genau zu machen. Also hab keine Angst, und lies dir tatsächlich mal durch was da steht!
-
-```         
-! Problem while setting up geom.
-ℹ Error occurred in the 1st layer.
-Caused by error in `compute_geom_1()`:
-! `geom_point()` requires the following missing aesthetics: y
-```
-
--   Schon die erste Zeile gibt dir eine wichtige Information: Der Fehler trat beim Hinzufügen des `geom`etrischen Objekts auf und nicht an irgendeiner anderen Stelle
--   Die zweite Zeile sagt, dass der Fehler in der ersten Zeile / Ebene passiert ist. Das wird relevant, wenn du mehrere Ebenen mit `+` übereinanderlegst in deinem Plot.
--   Die dritte Zeile musst du nicht genau verstehen, das ist irgendwas internes von `ggplot2`
--   die vierte Zeile schließlich sagt dir ganz genau, wo das Problem ist: Du brauchst eine zweite Variable. Und zwar auf der y-Achse. Das ergibt auch Sinn, denn ein Punkt hat immer zwei Koordinaten, eine `x`- und eine `y`-Koordinate! Logischerweise kann kein Punkt gezeichnet werden, wenn du nur eine `x`-Koordinate angibst.
-
-::: aufgabe
-Löse das Problem, indem du in `aes()` noch das Argument `y = weg` angibst. Denk daran, Argumente werden durch Kommata getrennt.
-
-"`weg`" ist eine stetige Variable, die den zurückgelegten Anreiseweg der Person zum Laden, wo die Erhebung stattfand, in km enthält.
-:::
-
-```{r weg, exercise = TRUE, exercise.cap = "aesthetic mapping hinzufügen für y-Achse"}
-ggplot(einkaufen, aes(x = verkehrsmittel)) +
-  geom_point()
-```
-
-```{r weg-solution}
-ggplot(einkaufen, aes(x = verkehrsmittel, y = weg)) +
-  geom_point()
-```
-
-Ok, das Diagramm ist vielleicht nicht ultra informativ, weil ganz viele Punkte übereinandergelagert wurden an manchen Stellen. Es gibt definitiv ein anderes, geeigneteres Diagramm! Hier ging es nur darum, das Prinzip zu zeigen: Fehlermeldungen sind freundlich, `ggplot` funktioniert wie ein Baukasten, und das `geom` können wir austauschen, so lange dafür gesorgt wird, dass in den `aes`thetic mappings Variablen und Skalenniveau zu dem jeweiligen `geom` passen!
 
 ```{r weg-quest}
 quiz(caption = "Quiz zu den Balkendiagrammen",
@@ -489,6 +440,8 @@ ggplot(einkaufen, aes(x = alter)) +
   geom_histogram(binwidth = 5)
 ```
 
+Generell gilt hier, je breiter die *binwidth* des Histogramms, desto "gröber" wird die Darstellung der Informationen. Das wird besonders deutlich wenn du dir die `binwidth = 1` und die `binwidth = 20` anzeigen lässt. Versuche stets einen geeigneten Wert zu finden, der erlaubt, die Informationen der Grafik schnell zu vermitteln ohne dabei zu komplex zu sein. 
+
 ### `color` und `fill`
 
 Da die Balken gerade visuell in einer großen grauen Masse verschwinden, wird noch nicht so ganz deutlich worum es eigentlich geht. Deswegen wäre es hilfreich, wenn alle Balken eine schwarze Umrandung hätten und etwas hellgrauer wären. Beachte, dass jetzt nach dem `binwidth`-Argument dafür noch die Argumente `color` und `fill` stehen.
@@ -502,19 +455,7 @@ ggplot(einkaufen, aes(x = alter)) +
                  fill = "grey")
 ```
 
-Später in diesem Tutorial wird es noch ein eigenes Kapitel zu Farben geben.
-
-### `boundary`
-
-Das sieht schon mal ein Stück weit besser aus. Jetzt ist noch etwas störend, dass die Kategorien nicht bei den markanten Zahlen anfangen, sondern z.B. die 50 in der Mitte einer Kategorie liegt. Dafür kannst du das Argument `boundary` nutzen, um einen Grenzwert zu bestimmen, der die Kategorien an diesem Punkt teilt (sog. "bin break"):
-
-```{r boundary, exercise = TRUE, exercise.cap = "Boundary-Argument"}
-ggplot(einkaufen, aes(x = alter)) +
-  geom_histogram(binwidth = 5,
-                 boundary = 50,
-                 color = "black",
-                 fill = "grey")
-```
+Später in diesem Tutorial wird es noch farbenfroher, aber dazu im Kapitel über Farben mehr.
 
 ```{r hist-quest}
 quiz(caption = "Quiz zu den Histogrammen",
@@ -610,6 +551,62 @@ question_radio("Letzter Plot: Wie alt ist die älteste Person?",
 )
 ```
 
+### aus Fehlern lernen
+
+Und jetzt kommt das praktische: Es gibt noch sehr viele weitere `geom_...()` Funktionen. Zum Beispiel `geom_point()`, welches ein Punktediagramm aus deinen Daten erstellt.
+
+::: aufgabe
+Probiere das doch einfach mal aus und tausche `geom_histogram()` durch `geom_point()`.
+:::
+
+```{r error-solution}
+ggplot(einkaufen, aes(x = alter)) +
+   geom_point()
+  
+```
+
+```{r error, exercise = TRUE, exercise.cap = "Fehlermeldung"}
+ggplot(einkaufen, aes(x = alter)) +
+  geom_histogram()
+
+```
+
+Dass hier eine Fehlermeldung aufploppt, ist völlig normal! Fehlermeldungen sind freundlich, denn Programmierer\*innen geben sich (oft) viel Mühe, diese möglichst informativ und genau zu machen. Also hab keine Angst, und lies dir tatsächlich mal durch was da steht!
+
+```         
+! Problem while setting up geom.
+ℹ Error occurred in the 1st layer.
+Caused by error in `compute_geom_1()`:
+! `geom_point()` requires the following missing aesthetics: y
+```
+
+-   Schon die erste Zeile gibt dir eine wichtige Information: Der Fehler trat beim Hinzufügen des `geom`etrischen Objekts auf und nicht an irgendeiner anderen Stelle
+-   Die zweite Zeile sagt, dass der Fehler in der ersten Zeile / Ebene passiert ist. Das wird relevant, wenn du mehrere Ebenen mit `+` übereinanderlegst in deinem Plot.
+-   Die dritte Zeile musst du nicht genau verstehen, das ist irgendwas internes von `ggplot2`
+-   die vierte Zeile schließlich sagt dir ganz genau, wo das Problem ist: Du brauchst eine zweite Variable. Und zwar auf der y-Achse. Das ergibt auch Sinn, denn ein Punkt hat immer zwei Koordinaten, eine `x`- und eine `y`-Koordinate! Logischerweise kann kein Punkt gezeichnet werden, wenn du nur eine `x`-Koordinate angibst.
+
+::: aufgabe
+Löse das Problem, indem du in `aes()` noch das Argument `y = weg` angibst. Denk daran, Argumente werden durch Kommata getrennt.
+
+"`weg`" ist eine stetige Variable, die den zurückgelegten Anreiseweg zum Laden in km enthält.
+:::
+
+```{r weg, exercise = TRUE, exercise.cap = "aesthetic mapping hinzufügen für y-Achse"}
+ggplot(einkaufen, aes(x = alter)) +
+  geom_point()
+```
+
+```{r weg-solution}
+ggplot(einkaufen, aes(x = alter, y = weg)) +
+  geom_point()
+```
+
+Ok, das Diagramm ist jetzt nicht sehr informativ, weil wir nur diese zwei metrischen Variablen in unserem Datensatz zur Verfügung haben, aber du hast gelernt: 
+
+- Fehlermeldungen sind freundlich, 
+- `ggplot` funktioniert wie ein Baukasten, 
+- das `geom_...` können wir austauschen, so lange dafür gesorgt wird, dass in den `aes`thetic mappings Variablen und Skalenniveau zu dem jeweiligen `geom` passen!
+
 ## 3. Boxplot
 
 ::: infobox
@@ -626,33 +623,21 @@ Du erinnerst dich vielleicht daran im letzten Tutorial selbst bereits einen Boxp
 
 [image source](https://leansigmacorporation.com/box-plot-with-minitab/)
 
-Boxplots werden eigentlich niemals einzeln gezeigt, sondern immer im Vergleich neben anderen Boxplots. Das heißt dann *side-by-side boxplot*. Das macht auch Sinn, denn für die Verteilung einer einzelnen stetigen Variablen haben wir ja bereits das Histogramm. Boxplots hingegen sind gut darin, mehrere Verteilungen übersichtlich zu vergleichen. Histogramme sind gut darin, eine einzelne Verteilung detailliert darzustellen.
+Boxplots werden eigentlich niemals einzeln gezeigt, sondern immer im Vergleich neben anderen Boxplots. Das heißt dann **side-by-side boxplot**. Das macht auch Sinn, denn für die Verteilung einer einzelnen stetigen Variablen haben wir ja bereits das Histogramm. Boxplots hingegen sind gut darin, mehrere Verteilungen übersichtlich zu vergleichen. Histogramme sind gut darin, eine einzelne Verteilung detailliert darzustellen.
 
-*Side-by-side boxplots* entstehen, wenn zu der **stetigen** noch eine **kategoriale** Variable hinzukommt. Im Plot unten wird die stetige Variable `alter` nach der kategorialen Variable `verkehrsmittel` aufgeschlüsselt. Für jedes Verkehrsmittel ergibt sich nun eine eigene Altersverteilung. Da zeigen sich dann die ersten spannenden Zusammenhänge!
+*Side-by-side boxplots* entstehen, wenn zu der **stetigen** noch eine **kategoriale** Variable hinzukommt. 
+
+Im Plot unten wird die stetige Variable `alter` nach der kategorialen Variable `verkehrsmittel` aufgeschlüsselt. Für jedes Verkehrsmittel ergibt sich nun eine eigene Altersverteilung. Da zeigen sich dann die ersten spannenden Einblicke in unsere Daten!
 
 ```{r sidebysideboxplot, exercise = TRUE, message=FALSE, warning=FALSE}
 ggplot(einkaufen, aes(x = verkehrsmittel, y = alter)) +
   geom_boxplot()
 ```
 
-
+Aus der Grafik können wir sehen, dass die Kategorien "E-Roller", "Motorrad" und die "fehlenden Werte (NA)" jeweils nur einen Datenpunkt beinhalten und der Boxplot daher nur aus dem Median besteht.
 
 ```{r question_boxplot}
 quiz(caption = "Interpretation üben",
-     question("Welche Daten lassen sich gut im Boxplot darstellen?",
-               answer("Eine einzelne, kategoriale Variable.",
-                      message = "Fast richtig. Nur dass noch eine weitere, stetige Variable benötigt wird. Hier würde sich ein Balkendiagramm anbieten."),
-               answer("Eine einzelne, stetige Variable.",
-                      message = "An sich nicht falsch, aber Histogramme sind geeigneter in diesem Fall."),
-               answer("Eine stetige Variable aufgeteilt nach den Kategorien einer kategorialen Variable",
-                      correct = T),
-               answer("Zwei stetige Variablen.",
-                      message = "Fast richtig. Nur dass die zweite Variable kategorial ist und nicht stetig. 
-                      Für diese Datenart eignet sich ein Punktdiagramm."),
-               allow_retry = TRUE,
-               random_answer_order = TRUE,
-               correct = "Richtig!",
-               incorrect = "Das stimmt leider nicht, probier es noch mal!"),
      
 question("Wie ist das obere und untere Ende der Box bei den Autofahrenden zu interpretieren? Der untere Rand der Box liegt ungefähr bei 37, der obere bei ca. 60 Jahren.",
                answer("Diese Altersspanne umfasst die mittleren 50% der Autofahrenden",
@@ -697,11 +682,11 @@ question_radio("Zeigt der Boxplot die Gruppengröße jedes Verkehrsmittels?",
 
 ### \# Show your data!
 
-Der obige Boxplot hat einen großen Nachteil: Es ist nicht zu sehen, wie viele Personen in jeder Gruppe sind. Dabei wissen wir eigentlich, dass die Gruppengröße der unterschiedlichen Verkehrsmittel unterschiedlich ist. Manchmal wird halt ein ganzer Boxplot gezeichnet, während lediglich 6 Personen dahinter stehen, und er ist nicht zu unterscheiden von einem für ein Verkehrsmittel, was 100 Menschen nutzen.
+Der obige Boxplot hat einen großen Nachteil: Es ist nicht zu sehen, wie viele Personen in jeder Gruppe sind.
 
 Du kannst dem Plot die fehlenden Informationen in einer neuen Ebene hinzufügen!
 
-Die Funktion `geom_jitter()` zeichnet genau wie `geom_point()` einzelne Datenpunkte, nur dass ein bisschen zufälliger *jitter* angewandt wird, um sie ein bisschen durcheinander zu schütteln, sodass nicht mehr alle Punkte übereinander liegen und Information verloren geht an der Stelle.
+Die Funktion `geom_jitter()` zeichnet einzelne Datenpunkte, und fügt diesen einen zufälliges *zittern* hinzu, um sie ein bisschen durcheinander zu schütteln, sodass nicht mehr alle Punkte übereinander liegen und Datenpunkte von anderen überdeckt werden.
 
 -   `size` kennzeichnet die Größe der Punkte
 -   `alpha` bestimmt die Transparenz der Punkte (von 0 - 1)
@@ -716,17 +701,17 @@ ggplot(einkaufen, aes(x = verkehrsmittel, y = alter)) +
 ```
 
 ::: infobox
-Hier siehst du, was ein Boxplot tatsächlich aussagt: Er zeigt wirklich nur die Quartile, Minimum und Maximum und den Median (das ist ja ein Quartil).
+Der jitter führt in dieser Art der Verwendung nicht zu einem Informationsverlust/-verzerrung, da wir die Punkte horizontal innerhalb der Kategorien variieren lassen und nicht auf der y-Achse mit der metrischen Variable.
 :::
 
 <br>
 
-Achte mal auf das Verkehrsmittel "Andere". Dort gibt es wirklich nur eine handvoll Punkte, aber die Box ist kaum von den anderen Verkehrsmitteln zu unterscheiden. Aber mithilfe der Punkte können wir nun sehen, dass dort weit weniger Datenpunkte vorliegen und wir daher bei der Interpretation dieser Gruppe Vorsicht walten lassen sollten, da sie von der Gruppengröße her nicht mit den anderen zu vergleichen ist, von Motorrad, E-Roller und NA ganz zu schweigen.
+Achte mal auf das Verkehrsmittel "Andere". Wir sehen manchmal wird ein ganzer Boxplot gezeichnet, während lediglich 7 Personen dahinter stehen, und er ist nicht zu unterscheiden von einem Boxplot für "Auto", was 46 Menschen nutzen. Aber mithilfe der Punkte können wir nun sehen, dass dort weit weniger Datenpunkte vorliegen und wir daher bei der Interpretation dieser Gruppe Vorsicht walten lassen sollten, da sie von der Gruppengröße her nicht mit den anderen zu vergleichen ist. Das triff mehr noch für die Kategorien "Motorrad" und "E-Roller" zu.
 
 ::: aufgabe
 **Aufgabe**
 
-Probiere es doch mal aus, und schaue welche anderen zwei Variablen aus dem Beispieldatensatz `einkaufen` du gut für einen Boxplot nutzen kannst.
+Probiere es auch mal aus, und schaue welche anderen zwei Variablen aus dem Beispieldatensatz `einkaufen` du gut für einen Boxplot nutzen kannst.
 
 Achte darauf, immer eine **metrische** mit einer **kategorialen** Variable zu kombinieren! Sonst gibt es komische Fehlermeldungen / komisch aussehende Plots.
 
@@ -763,14 +748,17 @@ ggplot(einkaufen, aes(x = , y =  )) +
 
 ```{r boxplot-quest}
 question_text("Welche Variablen hast du gefunden, die sich für einen Boxplot mit 2 Variablen eignen?",
-              answer_fn(\(x) correct(messages = "Wie oben erwähnt, ist es am aussagekräftigsten eine metrische Variable und eine kategoriale Variable zu verwenden. Zum Beispiel Ort (kategorial) und Weg (kontinuierlich).")),
+              answer_fn(\(x) correct(messages = "Wie oben erwähnt, ist es am aussagekräftigsten eine metrische Variable und eine kategoriale Variable zu verwenden. Zum Beispiel ort (kategorial) und kochen (kontinuierlich).")),
               placeholder = "Musterlösung erscheint bei Abgabe deiner Antwort...")
 ```
+
+Wie bereits erwähnt, eignen sich die Beispieldaten nicht per se für jede Diagrammart. Wundere dich daher nicht, wenn es teilweise komisch aussieht auch wenn du zwei richtig skalierte Variablen benutzt hast. Du machst das super bisher! 🥳
 
 ### Boxplot-Quiz
 
 ```{r boxquiz}
 quiz(caption = "Quizfragen zum Boxplot",
+     
      question_radio("Welche Information zeigt ein klassischer Boxplot **nicht**?",
                      answer("Die Gruppengröße", correct = TRUE),
                      answer("Den Median"),
@@ -781,18 +769,7 @@ quiz(caption = "Quizfragen zum Boxplot",
                      incorrect = random_encouragement("de"),
                      allow_retry = TRUE,
                      random_answer_order = TRUE),
-     question_radio("Wofür ist ein Boxplot *besonders* gut geeignet?",
-                    answer("Die Verteilung einer stetigen Variablen über die Ausprägungen einer kategorialen Variablen hinweg zu betrachten", correct = TRUE),
-                    answer("Die Verteilung einer einzelnen kategorialen Variable darzustellen",
-                           message = "Dafür eignen sich Balkendiagramme."),
-                    answer("Die Verteilung einer einzelnen, stetigen Variable darstellen",
-                           message = "Das geht zwar mit einem Boxplot, aber Histogramme sind eventuell informativer an dieser Stelle!"),
-                    answer("Den Zusammenhang zweier stetiger Variablen grafisch darzustellen",
-                           message = "Dafür sind Punktdiagramme gedacht."),
-                    correct = random_praise("de"),
-                    incorrect = random_encouragement("de"),
-                    allow_retry = TRUE,
-                    random_answer_order = TRUE),
+     
      question_radio("Wofür steht die Länge der Box in einem Boxplot?",
                     answer("Für den Interquartilsabstand (IQR)", 
                            correct = TRUE,
@@ -819,17 +796,45 @@ Funktion: `geom_point()`
 
 <br>
 
-Punktediagramme können dir auch unter den Namen: *Streudiagramm*, *Punktewolke* oder englisch *Scatterplot* begegnen.
+Punktediagramme können dir auch unter den Namen: *Streudiagramm*, *Punktewolke* oder englisch **Scatterplot** begegnen. 
+
+Du hast ja bereits erfolgreich ein Punktediagramm erstellt, aber wir wollen dir auch zeigen, wie die Punktewolke aussieht, wenn tatsächlich ein Zusammenhang zwischen den Variablen zu erwarten ist:
+
+Für dieses Diagramm wollen wir dir daher noch einen neuen Datensatz zeigen, der metrische Variablen mit vielzähligen Einträgen enthält: der *economics* Datensatz. *Economics* enthält Zeitreihendaten zu wirtschaftlichen Indikatoren in den USA. Die 6 Variablen umfassen Informationen wie Verbraucherausgaben (*pce - personal consumption expenditures, in billion dollars*) und Datum (*month of data collection*). 
+
+Im folgenden Punktediagramm wurden die Variablen `uempmed` (*median duration of unemployment, in weeks*) und `unemploy` (*number of unemployed in thousands*) dargestellt. Sieh dir doch mal die Punktewolke dieser Variablen an.
 
 ```{r scatterplot, exercise = TRUE, exercise.cap = "Streudiagramm"}
 ggplot(economics, aes(x = uempmed, y = unemploy)) +
   geom_point()
 ```
 
-Schau dir das Diagramm mal an. Einige Extremwerte der Variable `weg` definieren die Skala der y-Achse auf 0 - 600 km, wodurch die "normalen" Werte am unteren Rand zu einer undifferenzierbaren Masse zusammenschrumpfen. Im nächsten Kapitel erfährst du Möglichkeiten, mit extremen Werten umzugehen, und wie das Punktdiagramm ohne sie aussehen würde.
+Die Punktewolke zeigt einen möglichen Zusammenhang zwischen der Anzahl an Arbeitslosen und der Anzahl an Wochen, die Menschen arbeitslos gemeldet sind. Je höher die Werte auf der x-Achse, desto höher auch die Werte der y-Achse. Zur Berechnung solcher Zusammenhänge erfährst du in einem späteren Tutorial zu Korrelationen noch mehr.
+
+Zunächst bist du wieder gefragt. 
+
+::: aufgabe
+Erstelle ein Punktediagramm für den Beispieldatensatz `einkaufen`. Verwende dafür die metrischen Variablen des Datensatzes (`weg` und `alter`).
+Versuche diesmal die Funktion des Beispiels an unsere Daten anzupassen. (So wirst du es später außerhalb des Tutorials auch oft anwenden)
+:::
+
+```{r scatterplot2, exercise = TRUE, exercise.cap = "Streudiagramm"}
+ggplot(economics, aes(x = uempmed, y = unemploy)) +
+  geom_point()
+```
+
+```{r scatterplot2-hint}
+ggplot(data, aes(x = , y = )) +
+  geom_point()
+```
+
+```{r scatterplot2-solution}
+ggplot(einkaufen, aes(x = alter, y = weg )) +
+  geom_point()
+```
 
 ```{r scatterquiz}
-question_checkbox("Verständnis-Check: Wie alt ist die Person, die 600km Anreiseweg hat?",
+question_radio("Verständnis-Check: Wie alt ist die Person, die 600km Anreiseweg hat?",
                answer("ca. 40 Jahre alt.",
                      correct = T),
                answer("Über 75 Jahre alt."),
@@ -840,11 +845,15 @@ question_checkbox("Verständnis-Check: Wie alt ist die Person, die 600km Anreise
                incorrect = "Das stimmt leider nicht, probier es noch mal!")
 ```
 
+Schau dir das Diagramm mal an. Einige extrem hohe Werte der Variable `weg` führen dazu, dass die Skala der y-Achse von 0 - 600 km reicht, wodurch die "normalen" Werte am unteren Rand zu einer undifferenzierbaren Masse zusammenschrumpfen.
+
+*Da solche Werte potentiell Ausreißer sein könnten empfielt es sich, die Daten nochmal genauer unter die Lupe zu nehmen. Dazu in einem späteren Kapitel mehr.*
+
 ### "Lügen" mit log-transformierten Achsen
 
-Bevor wir versuchen, die extremen Werte auszuschließen, hier noch ein alternativer Weg, die undifferenzierbare Masse am unteren Rand der Grafik besser darzustellen: Die y-Achse logarithmisch transformieren! Das geht in `ggplot` sehr einfach, du musst nur eine neue Ebene zum Plot hinzufügen mit der Funktion `scale_y_log10()`.
+Bevor wir uns mit Ausreißern beschäftigen, hier noch ein alternativer Weg, die undifferenzierbare Masse am unteren Rand der Grafik besser darzustellen: Die y-Achse logarithmisch transformieren! Das geht in `ggplot` sehr einfach, du fügst, wie bereits gewohnt, eine neue Ebene zum Plot mit der Funktion `scale_y_log10()` hinzu.
 
-Die logarithmische Transformation ist sehr praktisch, um extreme Werte mit auf der Bildschirmfläche unterzubringen, und gleichzeitig eine sinnvolle Skalierung der normalen Werte aufrecht zu erhalten. Das kann natürlich missbraucht werden, deswegen sollte das immer deutlich gekennzeichnet werden!
+Die logarithmische Transformation ist sehr praktisch, um extreme Werte mit auf der Bildschirmfläche unterzubringen, und gleichzeitig eine sinnvolle Skalierung der normalen Werte aufrecht zu erhalten. Der Logarithmus verändert die Aussage des Diagramms wesentlich und sollte daher immer deutlich gekennzeichnet sein (siehe Achsenbeschriftung)!
 
 ```{r logtransform, exercise = TRUE, exercise.cap = "log-transformiertes Streudiagramm"}
 ggplot(einkaufen, aes(x = alter, y = weg)) +
@@ -865,49 +874,44 @@ Funktion: `geom_line()`
 
 <br>
 
-Hierfür wird ein anderer Datensatz benötigt, da wir für ein Liniendiagramm eine wiederholte Messung brauchen. `einkaufen` enthält 160 unabhängige Messungen, keine der Personen wurde ein zweites Mal befragt. Deswegen ist `einkaufen` nicht geeignet um einen Verlauf über die Zeit darzustellen.
+Hierfür nehmen wir wieder den `economics` Datensatz, da wir für ein Liniendiagramm einen zeitlichen Verlauf (eine wiederholte Messung) brauchen. `einkaufen` enthält zwar 160 unabhängige Messungen, aber keine der Personen wurde ein zweites Mal befragt. Deswegen ist `einkaufen` nicht geeignet um einen Verlauf über die Zeit darzustellen.
 
-<!-- Maybe use the `economics` data set from ggplot2 here instead? pce and unemploy -->
+Lassen wir uns also mittels der Variablen `date` und `unemploy` den Verlauf der Arbeitslosenrate über die Zeit darstellen.
 
-```{r include = FALSE}
-ggplot(economics, aes(date, unemploy)) +
+```{r line, exercise = TRUE, exercise.cap = "Liniendiagramm"}
+ggplot(economics, aes( x = date, y = unemploy)) +
   geom_line()
 ```
 
-Im Datensatz `rtutorials::heated` ist die maximale Tagestemperatur (`maxtemp`) in Grad Fahrenheit sowie das Tagesdatum (`enddate`) gespeichert. Es handelt sich um wiederholte Messungen, weil der gleiche Gegenstand (die Temperatur in New York) immer wieder (täglich) erhoben wurde.
+Der Zeitverlauf zeigt uns einen deutlichen "Peak" der Arbeitslosenzahlen um das Jahr 2010. Geschichtsfreunde werden wissen, dass dies wahrscheinlich durch die Wirtschaftskriese aus dem Jahre 2008 bedingt wurde. 
 
-```{r linegraph, exercise = TRUE, exercise.cap = "Liniendiagramm"}
-ggplot(heated, aes(x = enddate, y = maxtemp)) +
+Es ist aber auch wichtig zu beachten, dass es ganz auf den betrachteten Zeitabschnitt ankommt, was als "Peak" gewertet wird und wie wir unsere Daten aufbereiten. Kritische Köpfe könnten jetzt anmerken, dass die Bevölkerung in dieser großen Zeitspanne auch deutlich zugenommen hat. Da hier absolute Zahlen an Arbeitslosen die Datengrundlage sind, ist das ein berechtigter Einwand. 
+
+::: aufgabe
+Verbessere die Grafik in dem du die Anzahl an Arbeitslosen in Tausend (`unemploy`) durch die Population in Tausend (`pop`) verrechnest. 
+Nutze `/` als "geteilt"-Operator
+:::
+
+```{r line2, exercise = TRUE, exercise.cap = "Liniendiagramm"}
+ggplot(economics, aes( x = date, y = unemploy)) +
   geom_line()
 ```
 
-Zwischen den Jahren sind komische, gerade Linien. Das liegt daran, dass nur die Monate Mai bis September im Datensatz vorhanden sind. Dieses geometrische Objekt `geom_line()` (Liniendiagramm) verbindet alle Punkte, die ihm zur Verfügung gestellt werden miteinander. Wenn dann länger keine Daten da sind, wird der Verbindungsstrich einfach zum nächsten vorhandenen Datenpunkt gezogen. Das Problem ist, dass dieser Verbindungsstrich den Anschein erweckt, als gäbe es Daten, die eben in echt gar nicht gibt. Um damit gut umzugehen braucht es in den `aes`thetics das `group` Argument. Das sagt dem geometrischen Objekt in welchen Gruppen es die Daten behandeln soll. In diesem Fall wäre eine Gruppe für jedes Jahr sinnvoll.\
-Der Umgang mit Datumsformaten in R würde hier komplett den Rahmen sprengen, aber die Lösung ist:\
-Mit der Funktion `year()` aus dem Paket `lubridate()` ziehst du *nur* das Jahr aus dem Datum und erschaffst somit eine Gruppe pro Jahr.
-
-```{r linegraph2, exercise = TRUE,  exercise.cap = "Daten Gruppieren!"}
-ggplot(heated, aes(x = enddate, 
-                   y = maxtemp, 
-                   group = lubridate::year(enddate))) +
+```{r line2-hint}
+# füge lediglich hinter `unemploy` den `/` Opertator und die Variable `pop` ein
+ggplot(economics, aes( x = date, y = unemploy)) +
   geom_line()
 ```
 
-Sehr gut, jetzt werden keine Zusammenhänge mehr angedeutet, wo gar keine sind. Und weils noch schöner ist, wenn die lesende Person intuitiv die Zahlen deuten kann wird im letzten Schritt die *Grad Fahrenheit* Skala in eine *Grad Celsius* Skala umgerechnet. Dies geht mit der Funktion `convert_temperature()` aus dem Paket `weathermetrics`.
-
-```{r linegraph3, exercise = TRUE,  exercise.cap = "Sauberes Liniendiagramm"}
-
-# hier werden die Temperaturen konvertiert und in einer neuen Spalte gespeichert
-heated$maxtemp_celsius <- weathermetrics::convert_temperature(heated$maxtemp,
-                                                              old_metric = "f", 
-                                                              new_metric = "c")
-
-ggplot(heated, aes(x = enddate, 
-                   y = maxtemp_celsius, 
-                   group = lubridate::year(enddate))) +
+```{r line2-solution}
+# füge lediglich hinter `unemploy` den `/` Opertator und die Variable `pop` ein
+ggplot(economics, aes( x = date, y = unemploy/pop)) +
   geom_line()
 ```
 
-Für schöne Achsenbeschriftungen siehe das Kapitel „Themes und Labs“.
+Du siehst, Grafiken sind sehr anfällig für unsere Wahl der Darstellung. Bleib kritisch, auch dir selbst gegenüber. 
+
+Für schönere Achsenbeschriftungen werden wir später auch noch im Kapitel „Themes und Labs“ sorgen. 
 
 ```{r line-quest}
 quiz(caption = "Quiz zum Liniendiagramm",
@@ -926,38 +930,12 @@ question_radio("Welche Daten lassen sich gut in einem Liniendiagramm darstellen?
                random_answer_order = TRUE,
                correct = "Richtig!",
                incorrect = "Das stimmt leider nicht, probier es noch mal!"),
-
-question_radio("Welches Argument wurde in `aes()` verwendet, um die Linie zwischen den einzelnen Sommern nicht zu verbinden?",
-         answer("`group`", 
-                correct = TRUE,
-                message = "`group` bestimmt, nach welcher Variable gruppiert wird. Manche `geom`-Funktionen zeichnen dann je Gruppe eine neue geometrische Form (z.B. eine eigene Linie für jedes Jahr, wenn das Jahr die Gruppenvariable ist)"),
-         answer("`x`", message = "`x` bestimmt, welche Variable auf der x-Achse abgebildet wird."),
-         answer("`y`", message = "`y` bestimmt, welche Variable auf der y-Achse abgebildet wird."),
-         answer("`color`", message = "`color` ändert die Farbe der Linie."),
-         answer("`fill`", message = "`fill` ändert die Farbfüllung und hat keine Auswirkungen auf die Linie."),
-         answer("`alpha`", message = "`alpha` ändert die Transparenz."),
-               allow_retry = TRUE,
-               random_answer_order = TRUE,
-               correct = random_praise("de"),
-               incorrect = random_encouragement("de")),
-
-question("Grafik 3: Was stimmt?",
-              answer("Es werden sechs Jahre abgebildet.",
-                     correct = T),
-               answer("Die Wintermonate wurden einfach rausgelöscht.",
-                      message = "Die Wintermonate waren nie vorhanden!"),
-               answer("Das Argument `group` ist essentiell, damit für jede Gruppe eine einzelne Linie gezeichnet werden kann.",
-                      correct = T),
-               allow_retry = TRUE,
-               random_answer_order = TRUE,
-                correct = random_praise("de"),
-               incorrect = random_encouragement("de"))
 )
 ```
 
 ## 6. Aesthetic Mapping
 
-Jetzt kennst du die 5 häufigsten Diagrammformen. Jetzt kommt Farbe ins Spiel. Wie im ersten Kapitel bereits besprochen ist: Die ästhetischen Attribute eines Plots werden festgelegt. Bisher haben wir lediglich die Zuweisung zur x- und ggf. y-Achse genutzt, da geht allerdings noch viel mehr. Als Erinnerung:
+Jetzt kennst du bereits die 5 häufigsten Diagrammformen. Jetzt bringst du Farbe ins Spiel. Du bist einigen *aesthetic attributes* bereits über den Weg gelaufen, denn seien wir ehrlich, ohne sieht es oft wirklich trist und unbrauchbar aus. Hier aber noch einmal von vorne und genau erklärt was sich hinter diesen Argumenten verbirgt:
 
 ::: infobox
 `aes()` steht für *aesthetic attributes*, und weist den einzelnen Variablen, wie z.B. dem Verkehrsmittel, eine *grafische Eigenschaft* zu. Grafische Eigenschaften sind:
@@ -976,26 +954,26 @@ Also: jeder Variable wird ein ästethisches Attribut zugeordnet. Bedeutet umgeke
 
 #### Fill
 
-Was allerdings in vielen Fällen sinnvoll ist, ist eine weitere Variable über das Attribut Füllung (`fill`) zu plotten. Das gilt sowohl für *kategoriale* als auch *metrische* Daten.
+Was allerdings in vielen Fällen sinnvoll ist, ist eine weitere Variable über das Attribut Füllung (`fill`) zu plotten. Das gilt sowohl für *kategoriale* als auch *metrische* bzw. kontinuierliche Daten.
 
 ```{r aestheticmapping, exercise = TRUE,  exercise.cap = "fill"}
-ggplot(einkaufen, aes(x = verkehrsmittel, fill = bioladen)) +
+ggplot(einkaufen, aes(y = ort, fill = verkehrsmittel)) +
   geom_bar()
 ```
 
-Dazu kommt nun, dass unterschieden werden kann zwischen Bio- und Nicht-Bioläden. Aber **Achtung**: Es ist kein ausgewogenes Design, es wurde in deutlich mehr Bio- als Nicht-Bioläden erhoben. Das kann in der statistischen Analyse später noch besondere Beachtung benötigen. Doch zu dem Plot: Scheint erstmal recht einleuchtend. Was jedoch noch besser wäre, um es vergleichbarer zu machen, wäre wenn die farbigen Balken *nebeneinander* und nicht aufeinander stünden. Das lässt sich mit dem Argument `position = "dodge"` erreichen:
+<!-- Dazu kommt nun, dass unterschieden werden kann zwischen Bio- und Nicht-Bioläden. Aber **Achtung**: Es ist kein ausgewogenes Design, es wurde in deutlich mehr Bio- als Nicht-Bioläden erhoben. Das kann in der statistischen Analyse später noch besondere Beachtung benötigen. Doch zu dem Plot: Scheint erstmal recht einleuchtend. Was jedoch noch besser wäre, um es vergleichbarer zu machen, wäre wenn die farbigen Balken *nebeneinander* und nicht aufeinander stünden. Das lässt sich mit dem Argument `position = "dodge"` erreichen: -->
 
-```{r am_fuellung, exercise = TRUE,  exercise.cap = "position dodge"}
-ggplot(einkaufen, aes(x = verkehrsmittel, fill = bioladen)) +
-  geom_bar(position = "dodge")
-```
+<!-- ```{r am_fuellung, exercise = TRUE,  exercise.cap = "position dodge"} -->
+<!-- ggplot(einkaufen, aes(x = verkehrsmittel, fill = bioladen)) + -->
+<!--   geom_bar(position = "dodge") -->
+<!-- ``` -->
 
-Jetzt ist nur noch bisschen hässlich, dass die Balken unterschiedlich breit sind, je nachdem, ob eine oder beide Faktorstufen vorkommen. Das lässt sich mit dem Argument `position = position_dodge(preserve = "single")` umgestalten:
+<!-- Jetzt ist nur noch bisschen hässlich, dass die Balken unterschiedlich breit sind, je nachdem, ob eine oder beide Faktorstufen vorkommen. Das lässt sich mit dem Argument `position = position_dodge(preserve = "single")` umgestalten: -->
 
-```{r am_f_fill, exercise = TRUE,  exercise.cap = "postion dodge in single"}
-ggplot(einkaufen, aes(x = verkehrsmittel, fill = bioladen)) +
-  geom_bar(position = position_dodge(preserve = "single"))
-```
+<!-- ```{r am_f_fill, exercise = TRUE,  exercise.cap = "postion dodge in single"} -->
+<!-- ggplot(einkaufen, aes(x = verkehrsmittel, fill = bioladen)) + -->
+<!--   geom_bar(position = position_dodge(preserve = "single")) -->
+<!-- ``` -->
 
 #### Color
 
@@ -1139,7 +1117,7 @@ question_radio("Was passiert, wenn du in `aes()` eine Variable auf `alpha` mapps
                incorrect = random_encouragement("de"),
                correct = random_praise("de")),
 
-question_checkbox("Welche Variablen können auf das Attribut `fill` gemappt werden?",
+question_radio("Welche Variablen können auf das Attribut `fill` gemappt werden?",
                   answer("Stetige Variablen", correct = TRUE,
                          message = "Dann wird ein Farbverlauf erzeugt"),
                   answer("Diskrete Variablen",
@@ -1150,7 +1128,7 @@ question_checkbox("Welche Variablen können auf das Attribut `fill` gemappt werd
                incorrect = random_encouragement("de"),
                correct = random_praise("de")),
 
-question("`size`: Was stimmt?",
+question_checkbox("`size`: Was stimmt?",
               answer("`size` kann als ästhetisches Atrribut eine weitere Variable
                       abbilden.",
                       correct = T),
@@ -1169,7 +1147,7 @@ question("`size`: Was stimmt?",
                correct = "Richtig!",
                incorrect = "Das stimmt leider nicht, probier es noch mal!"),
 
-question("`alpha`: Was stimmt?",
+question_checkbox("`alpha`: Was stimmt?",
               answer("`alpha` kann als ästhetisches Atrribut eine weitere Variable
                       abbilden.",
                       correct = T),
@@ -1192,7 +1170,7 @@ question("`alpha`: Was stimmt?",
                correct = "Richtig!",
                incorrect = "Das stimmt leider nicht, probier es noch mal!"),
 
-question("aesthetic mapping: Was stimmt?",
+question_checkbox("aesthetic mapping: Was stimmt?",
               answer("Ästhetische Attribute können auch ohne mapping genutzt
                      werden.",
                       correct = T),
@@ -1217,81 +1195,138 @@ question("aesthetic mapping: Was stimmt?",
 ## 7. Special: Facets
 
 ::: infobox
-Facets sind nützlich, um mehrdimensionale Informationen in einem Diagramm darzustellen, indem sie es anhand einer kategorischen Variable in kleinere Teile aufteilen, die einfacher zu interpretieren sind.
+*Facets* sind nützlich, um mehrdimensionale Informationen in einem Diagramm darzustellen. Anhand von 1-2 kategorischen Variablen werden die Diagramme in kleinere Teile aufgeteilt und lassen sich so anhand dieser Ausprägungen optisch vergleichen.
 
 Funktion: `facet_grid()` und `facet_wrap()`.
 :::
 
 <br>
 
-### `facet_grid()`
-
-Mit `facet_grid()` kannst du kontrollieren in welchem Raster, die kleineren Diagramme dargestellt werden. Die Funktion nimmt zwei Argumente, die 1. Variable zum Aufteilen anhand von *Spalten* und die 2. Variable zur Aufteilung der *Zeilen*. 
-
-Schauen wir es uns doch einfach mal zusammen an, dann verstehst du was hier gemeint ist. Nehmen wir aus unserem Beispieldatensatz die Variable `bioladen` für die Spalten und `verkehrsmittel` für die Zeilen.
-
-```{r special, exercise = TRUE,   exercise.cap = "facet_grid()"}
-ggplot(einkaufen, aes(x = weg, y = alter, na.rm = T))  +
-  geom_point() +
-  facet_grid(bioladen  ~ Verkehr_Kategorien)
-```
-<!-- bug Verkehr Kategorien nur als Versuch, damit es nicht zu viele Kategorien werden.  -->
-
-Für eine oder zwei Variablen. Wie auch bei anderen Indizierungen in R gilt: bei der 1. Stelle werden die Zeilen benannt, in der 2. die Spalten. In diesem Fall werden sie durch eine Tilde (`~`) verbunden. Wenn du nur eines von beiden willst kannst du einfach die Stelle vor bzw. nach der Tilde mit einem `.` versehen.
-
-In diesem Fall wird der veränderte Datensatz verwendet. Alle Veränderungen wurden im Laufe des bisherigen Tutorials argumentiert und dokumentiert.
-
-::: aufgabe
-Führe den Code aus und mache dich mit dem Ergebnis vertraut. Vertausche doch einmal die Variable vor und nach der Tilde und schaue, wie sich das Ergebnis verändert. Lasse auch eine der Variablen weg, in dem du sie mit einem `.` austauschst.
+::: gelb
+Die in diesem Kapitel verwendeten Variablen dienen nur zu Darstellungszwecken. Inhaltlich ist kein Zusammenhang o.ä. zu erwarten. 
 :::
 
-eco!
+<br>
+
+### `facet_grid()`
+
+Mit `facet_grid()` kannst du kontrollieren in welchem Raster, die kleineren Diagramme dargestellt werden. Die Funktion nimmt zwei Argumente, die **1. Variable** zum Aufteilen anhand der **rows** (Zeilen) und die **2. Variable** zur Aufteilung der **column** (Spalten). 
+
+Schauen wir es uns doch einfach mal zusammen an, dann verstehst du was hier gemeint ist. Nehmen wir aus unserem Beispieldatensatz die Variable `bioladen` (2 Ausprägungen) für die Zeilen und `verkehrsmittel`(8 Ausprägungen) für die Spalten und lassen uns für jede entstehende Facette das `alter` als Histogramm ausgeben. 
+
 ```{r special, exercise = TRUE,   exercise.cap = "facet_grid()"}
-ggplot(einkaufen, aes(x = alter, y = weg)) +
-  geom_point() +
+ggplot(einkaufen, aes(x = alter))  +
+  geom_histogram(binwidth = 5) +
+  facet_grid(bioladen  ~ verkehrsmittel)
+```
+
+Die Argumente für *factes* sind besonders, da sie durch eine Tilde (`~`) anstelle eines Kommas verbunden werden. Wenn du nur eine Variable zur Aufteilung benutzen möchtest, kannst du  die Stelle vor bzw. nach der Tilde mit einem `.` versehen.
+
+::: aufgabe
+Jetzt bist du dran! 
+Vertausche doch einmal die Variable vor und nach der Tilde und schaue, wie sich das Ergebnis verändert. Lasse auch eine der Variablen weg, in dem du sie mit einem `.` austauschst und schaue dir an, wie das die Darstellung verändert.
+:::
+
+```{r special2, exercise = TRUE,   exercise.cap = "facet_grid()"}
+ggplot(einkaufen, aes(x = alter)) +
+  geom_histogram(binwidth = 5) +
   facet_grid(bioladen ~ verkehrsmittel)
 ```
 
-Beachte: Hier wird (erneut) deutlich, welche Auswirkungen ein unbalanciertes Design hat. Da es sehr viel weniger Beobachtungen aus nicht Bioläden gibt, können die Zusammenhänge im Zweifel nicht wirklich dargestellt werden.
+```{r special2-solution}
+# Vertauschen von verkehrsmittel und bioladen
+ggplot(einkaufen, aes(x = alter)) +
+  geom_histogram(binwidth = 5) +
+  facet_grid(verkehrsmittel ~ bioladen)
+
+# Nur verkehrsmittel
+ggplot(einkaufen, aes(x = alter)) +
+  geom_histogram(binwidth = 5) +
+  facet_grid(verkehrsmittel ~ .)
+
+# Nur bioladen
+ggplot(einkaufen, aes(x = alter)) +
+  geom_histogram(binwidth = 5) +
+  facet_grid(. ~ bioladen)
+```
+
+::: blau-nb
+Beachte: Hier wird deutlich, dass es sehr viel weniger Beobachtungen aus nicht Bioläden wie auch für manche Verkehrsmittel existieren. Eine Auswertung auf dieser Basis wäre also nicht möglich und dient hier nur zu Darstellungszwecken.
+:::
+
+<br>
+
+Bildlich dargestellt fungiert `facet_grid()` also folgendermaßen:
+
+![](images/facetgrid.png){width="70%"}
 
 ### `facet_wrap()`
 
-Für den Fall, dass die Facetten nur anhand einer Variable aufmachen möchtest, du aber flexibler in der Form bleiben möchtest. Du kannst die Zeilen- **oder** die Spaltenanzahl bestimmen durch die Argumente `ncol` bzw. `nrow`.
+Mit der Funktion `facet_wrap()` hingegen lassen sich ebenfalls rechteckige Anordnungen von kleineren Diagrammen umsetzten. Hier hast du zusätzlich noch die Möglichkeit die Zeilen- **oder** die Spaltenanzahl durch die Argumente `ncol` bzw. `nrow` bestimmen.
 
 ::: aufgabe
-Führe den Code aus, mach dich mit den Auswirkungen von `nrow` vertraut und setze anstatt dessen `ncol` ein.
+1. Führe den Code aus und mach dich mit den Auswirkungen von `facet_wrap()` vertraut. 
+2. Überlege dir, wie du mit dem Argument `nrow` die Anzahl der Zeilen auf `2` setzen kannst.
+3. Wenn du es geschafft hast, probiere auch anstatt dessen `ncol` einzusetzen und schaue dir an wie sich die Anordnung verändert.
 :::
 
-!eco
-
 ```{r s_facet, exercise = TRUE,   exercise.cap = "facet_wrap()"}
-ggplot(einkaufen, aes(x = alter, y = weg)) +
-  geom_point() +
-  facet_wrap(~verkehrsmittel, nrow = 3)
+ggplot(einkaufen, aes(x = alter)) +
+  geom_histogram() +
+  facet_wrap(~ verkehrsmittel)
 ```
 
+```{r s_facet-hint}
+# 2. füge der Funktion facet_wrap() das Argument `nrow = 2` hinzu
+ggplot(einkaufen, aes(x = alter)) +
+  geom_histogram() +
+  facet_wrap(~ verkehrsmittel)
+```
+
+```{r s_facet-solution}
+# 3. um stattdessen die Spaltenzahl zu bestimmen, ersetzte `nrow` mit `ncol`
+ggplot(einkaufen, aes(x = alter)) +
+  geom_histogram() +
+  facet_wrap(~ verkehrsmittel, nrow = 2)
+```
+
+Auch hier ist für dich der Effekt von `facet_wrap()` einmal bildlich dargestellt:
+
+![](images/facetwrap.png){width="70%"}
+
 ```{r facets-quest}
-quiz(caption = "Quiz zu den facets",
+quiz(caption = "Quiz zu den *Facets*",
      
-question("Facetten: Was stimmt?",
-         answer("Facetten ermöglichen es auf eine sehr übersichtliche Weise noch weitere Variablen (Informationen) mit in die Grafik zu bringen.",
+question_checkbox("Was stimmt?",
+         answer("Facets ermöglichen es auf eine sehr übersichtliche Weise noch weitere Variablen (Informationen) mit in die Grafik zu bringen.",
                  correct = T),
-         answer("facet_grid() ist besonders für 2 Variablen im Stile einer
-                Kreuztabelle geeignet.",
+         answer("`facet_grid()` ist besonders für für die Aufteilung anhand von zwei Variablen im Stile einer Kreuztabelle geeignet.",
                  correct = T),
-        answer("facet_wrap() ist besonders für eine Varibale in einer selbst
-               gewählten Anordnung geeignet.",
+        answer("`facet_wrap()` ist besonders für die Aufteilung anhand einer Variable und in einer selbst gewählten Anordnung geeignet.",
                  correct = T),
-        answer("Die Tilde (~) verbindet die beiden Variablen, 
-               die abgebildet werden sollen",
+        answer("Die Tilde (~) wird in `facet_grid()` für die Trennung der Argumente (der kategorischen Variablen) genutzt",
                  correct = T),
-         answer("Facetten sind wie verschiedene Fenster im Browser, 
+         answer("Facets sind wie verschiedene Fenster im Browser, 
                 zwischen denen man hin und her wechseln kann.",
                  message = "Sie ermöglichen alle Infos auf einen Blick zu bekommen."),
                allow_retry = TRUE,
                random_answer_order = TRUE,
                correct = "Richtig!",
-               incorrect = "Das stimmt leider nicht, probier es noch mal!")
+               incorrect = "Das stimmt leider nicht, probier es noch mal!"),
+
+question_radio("Wie sieht das Raster deiner Diagramme aus, wenn du eine binäre Variable `x` in facet_grid(. ~ x) nutzt?",
+               answer("Das Raster wird anhand von 2 *columns* gebildet", 
+                      correct = TRUE),
+               answer("Das Raster wird anhand von 2 *rows* gebildet",
+                      message = "Schau dir nochmal die Abbildung zu facet_grid() an. Die zweite Variable beeinflusst die Spaltenanzahl (columns) des Rasters."),
+               answer("Das Raster wird anhand von 3 *columns* gebildet ",
+                      message = "Schau dir nochmal die Abbildung zu facet_grid() an. Beachte, binäre Variablen haben nach Definition nur zwei Kategorien."),
+               answer("Das Raster wird anhand von 3 *rows* gebildet ",
+                      message = "Schau dir nochmal die Abbildung zu facet_grid() an. Die zweite Variable beeinflusst die Spaltenanzahl (columns) des Rasters. Beachte, binäre Variablen haben nach Definition nur zwei Kategorien."),
+               allow_retry = TRUE,
+               incorrect = random_encouragement("de"),
+               correct = random_praise("de"))
+
 )
 ```
 
@@ -1636,6 +1671,28 @@ Es lassen sich eigentlich alle Grafiken nuzten, um Ergebnisse zu kommunizieren, 
 
 Dieser Art der Nutzung von Visualisierungen wirst du in späteren Tutorials erneut begegnen, wenn wir diese zur Überprüfung der Voraussetzungen für eine statistische Testgröße verwenden. Jetzt hast du es bereits schon einmal gehört - oder eher *gelesen* - und weißt dann, wenn die Zeit gekommen ist, schon Bescheid was wir zur Verfügung haben.
 
+## Abschlussquizz
+
+```{r abschlussquizz}
+quiz(caption = "Teste dein Wissen",
+  question_radio("Welche Daten lassen sich gut im Boxplot darstellen?",
+               answer("Eine einzelne, kategoriale Variable.",
+                      message = "Fast richtig. Nur dass noch eine weitere, stetige Variable benötigt wird. Für eine einzelne, kategoriale Variable würde sich ein Balkendiagramm anbieten."),
+               answer("Eine einzelne, stetige Variable.",
+                      message = "An sich nicht falsch, aber Histogramme sind geeigneter in diesem Fall."),
+               answer("Eine stetige Variable aufgeteilt nach den Kategorien einer kategorialen Variable",
+                      correct = T),
+               answer("Zwei stetige Variablen.",
+                      message = "Fast richtig. Nur dass die zweite Variable kategorial sein sollte und nicht stetig. Für zwei stetige Variablen eignet sich ein Punktdiagramm besser."),
+               allow_retry = TRUE,
+               random_answer_order = TRUE,
+               correct = "Richtig!",
+               incorrect = "Das stimmt leider nicht, probier es noch mal!")
+  
+)
+```
+
+
 ## Learnings
 
 So hast du heute abgeschnitten:
@@ -1691,6 +1748,17 @@ shiny::br()
 ```
 
 ### Zusammenfassung
+
+Diese Tabelle fasst dir die am häufigsten verwendeten und in diesem Tutorial vorgestellten Plots nochmal zusammen und zeigt, welche Variablen diese erfordern:
+
+|                             | kategorial                      | kontinuierlich                    |
+|------------------|:-----------------------|:-----------------------------|
+| **keine**                   | Balkendiagramm <br>`geom_bar()` | Histogramm <br>`geom_histogram()` |
+| **kategorial**              | (`geom_count()`)                | Boxplot<br>`geom_boxplot()`       |
+| **kontinuierlich (stetig)** | \-                              | Punktdiagramm<br>`geom_point()`   |
+| **sequentiell (z.B. Zeit)** | \-                              | Liniendiagramm<br>`geom_line()`   |
+
+
 
 Du hast die große Kunst der Erstellung von Plots in R nun gemeistert! Super gemacht! Jetzt bist du in der Lage mithilfe des [ggplot Cheat Sheet](https://rstudio.github.io/cheatsheets/data-visualization.pdf) sowie der [R Graph Gallery](https://r-graph-gallery.com/) deine eigenen Plots zu erstellen.🚀
 
