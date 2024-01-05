@@ -282,3 +282,80 @@ Jetzt ist nur noch bisschen hässlich, dass die Balken unterschiedlich breit sin
 ggplot(einkaufen, aes(x = verkehrsmittel, fill = bioladen)) +
   geom_bar(position = position_dodge(preserve = "single"))
 ```
+
+
+#### Saubere Datenaufbereitung
+
+Bietet sich an, wenn es die Daten dadurch noch übersichtlicher macht bzw. nichts an Übersichtlichkeit verloren geht. Im Beispiel der Variablen `bioladen`: aktuell noch logical würde sie durchaus übersichtlicher werden, wenn Einträge "bio" und "konventionell" wären. Hier begegnen wir unserem alten Bekannten, dem `factor`, wieder. Es wird eine neue Variable mit dem Namen "ladenart" erstellt. Es wäre allerdings auch denkbar, die alte zu überschreiben. 
+
+- **Pro:** Geringere Gefahr, dass sich Fehler aufgrund von falscher Beschriftung einschleichen. 
+- **Contra:** Eher seltener der Fall, da das Datawrangling (s. entsprechendes Tutorial) ja eigentlich schon vorher abgeschlossen sein sollte und die Daten eigentlich in sehr hoher Qualität vorliegen sollten.
+
+```{r d_legends, exercise = TRUE,  exercise.cap = "legends"}
+# Factor erstellen (bei Fragen dazu: Wiederhole gerne das Tutorial Vektoren)
+einkaufen$ladenart <- factor(einkaufen$bioladen, 
+                                  levels = c(TRUE, FALSE), 
+                                  labels = c("bio", "konven."))
+
+ggplot(einkaufen, aes(x = verkehrsmittel, fill = ladenart)) +
+  geom_bar(position = position_dodge(preserve = "single")) +
+  labs(
+    title = "Verkehrsmittel und Ladenart",
+    y = "Absolute Anzahl der Nutzenden",
+    x = "Verkehrsmittel"
+  )+
+  theme_bw()
+```
+
+
+Ist in den allermeisten Fällen das Mittel der Wahl. Die beiden Hauptpunkte sind: Punkte und Titel der Legende verändern. Alles andere (Schriftart und -größe, Position, Ausrichtung, Hintergrund, Umrandung etc. kannst du in den oben vorgeschlagenen Seiten nachschauen). Es folgt eigentlich immer dem gleichen Prinzip: Du fügst deinem ggplot eine weitere Ebene hinzu und innerhalb dieser Ebene legst du Dinge fest. Welche Funktion bzw. Argumente du wählst hängt von deinen Variablen und ästhetischen Attributen ab: diskret oder kontinuierlich? `fill` oder `color`? Daraus ergibt sich folgende Kreuztabelle
+
+|                    | `color`                             | `fill`                            |
+|------------------|----------------------------|--------------------------|
+| **diskret**        | `scale_color_viridis(discrete = T)` | `scale_fill_virdis(discrete = T)` |
+| **kontinuierlich** | `scale_color_virdis()`              | `scale_fill_viridis()` \*         |
+
+
+\* Steht nur der Vollständigkeit halber hier, ist keinem der vorgestellten `geoms` sinnvoll einsetzbar. Wird vor allem für Heatmaps verwendet.
+
+
+### barrierefreiheit
+
+```{r barrierefreiheit-solution}
+ggplot(einkaufen, aes(x = verkehrsmittel, fill = bioladen)) +
+  geom_bar(position = position_dodge(preserve = "single")) +
+  scale_fill_viridis(discrete = T, option = "cividis",
+                     # Titel und Beschriftung der Legende ändern
+                     guide = guide_legend(title = "Ladenart"), 
+                     labels = c("konven.", "bio")
+                     ) +
+  labs(
+    title = "Verkehrsmittel und Ladenart",
+    y = "Absolute Anzahl der Nutzenden",
+    x = "Verkehrsmittel"
+  )+
+  theme_bw()
+
+ ggplot(einkaufen, aes(x = verkehrsmittel, y = alter, color = bioladen)) +
+   geom_boxplot(position = position_dodge(preserve = "single")) +
+   scale_color_viridis(discrete = T, option = "turbo",
+     labels = c("bio", "konven."),
+    guide_legend(title = "Ladenart")) +
+   labs(
+     title = "Genutze Verkehrsmittel und Alter",
+     x = "Verkehrsmittel",
+     y = "Alter"
+   ) +
+   theme_bw()
+
+ggplot(einkaufen, aes(x = alter, y = weg, color = kochen)) +
+   geom_point() +
+   scale_color_viridis(option = "plasma",
+     guide_legend(title = "Kochen/ \n Woche")) +
+  labs(
+    title = "Weg und Alter",
+    x = "Alter",
+    y = "Weg (in km)"
+    ) +
+  theme_bw()
+```

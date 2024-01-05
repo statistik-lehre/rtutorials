@@ -857,11 +857,11 @@ question_radio("Verständnis-Check: Wie alt ist die Person, die 600km Anreiseweg
 
 Schau dir das Diagramm mal an. Einige extrem hohe Werte der Variable `weg` führen dazu, dass die Skala der y-Achse von 0 - 600 km reicht, wodurch die "normalen" Werte am unteren Rand zu einer undifferenzierbaren Masse zusammenschrumpfen.
 
-*Da solche Werte potentiell Ausreißer sein könnten empfielt es sich, die Daten nochmal genauer unter die Lupe zu nehmen. Dazu in einem späteren Kapitel mehr.*
+*Da solche Werte potentiell Ausreißer sein könnten empfielt es sich, die Daten nochmal genauer unter die Lupe zu nehmen. Dazu in einem späteren Tutorial mehr.*
 
 ### "Lügen" mit log-skalierten Achsen
 
-Bevor wir uns mit Ausreißern beschäftigen, hier noch ein alternativer Weg, die undifferenzierbare Masse am unteren Rand der Grafik besser darzustellen: Die y-Achse logarithmisch transformieren! Das geht in `ggplot` sehr einfach, du fügst, wie bereits gewohnt, eine neue Ebene zum Plot mit der Funktion `scale_y_log10()` hinzu.
+In Fällen, in denen deine Daten sehr ungleich verteilt sind und sich aufgrund von einzelnen extremen Werten eine undifferenzierbare Masse am Rand der Grafik gesammelt hat, gibt es eine Möglichkeit, dies besser darzustellen: Die y-Achse logarithmisch transformieren! Das geht in `ggplot` sehr einfach, du fügst, wie bereits gewohnt, eine neue Ebene bzw. die Funktion `scale_y_log10()` hinzu.
 
 Die logarithmische Transformation ist sehr praktisch, um extreme Werte mit auf der Bildschirmfläche unterzubringen, und gleichzeitig eine sinnvolle Skalierung der normalen Werte aufrecht zu erhalten. Der Logarithmus verändert die Aussage des Diagramms wesentlich und sollte daher immer deutlich gekennzeichnet sein (siehe Diagrammbeschriftung)!
 
@@ -1082,9 +1082,9 @@ Dieses Prinzip gilt für alle oben vorgestellten ästhetischen Attribute. Deiner
 
 ### Ästhetische Attribute in Geoms 
 
-Jedes geom_---() hat seine eigenen Attribute, um es für deine Zwecke anzupassen. Du findest diese wie immer dort, wo du Hilfe bekommst - in den R Studio Hilfe Seiten oder auch im entsprechenden [Cheat Sheet](https://rstudio.github.io/cheatsheets/data-visualization.pdf) des Paketes. 
+Jedes `geom_xx()` hat seine eigenen Attribute, um es für deine Zwecke anzupassen. Du findest diese wie immer dort, wo du Hilfe bekommst - in den R Studio Hilfe Seiten oder auch im entsprechenden [Cheat Sheet](https://rstudio.github.io/cheatsheets/data-visualization.pdf) des Paketes. 
 
-Was du aber noch wissen solltest ist, wie du ohne eine Variable die Farbe anpassen kannst. Da die Geom Funktionen einen einzelnen Wert für ihre Attribute benötigen, um sie auf alle Daten anzuwenden, kannst du die Standardfarben auf englisch ausschrieben z.B. "black" oder "green" oder für individualisierte Farben den jeweiligen **Hex-Code** (das sieht dann u.a. so aus "#1f661b", mehr [hier](https://www.color-hex.com/color-wheel/)) verwenden. 
+Was du aber noch wissen solltest ist, wie du ohne eine Variable in aes() zu mappen die Farbe anpassen kannst. Da die geom Funktionen einen einzelnen Wert für ihre Attribute benötigen, um sie auf alle Daten anzuwenden, kannst du die Standardfarben auf englisch ausschrieben z.B. "black" oder "green" oder für individualisierte Farben den jeweiligen [**Hex-Code**](https://www.color-hex.com/color-wheel/)) (das sieht dann u.a. so aus "#1f661b") verwenden. 
 
 ::: aufgabe
 Probiere es doch gleich mal aus. 
@@ -1096,7 +1096,7 @@ ggplot(einkaufen, aes(x = verkehrsmittel)) +
   geom_bar(fill = "#1f661b")
 ```
 
-Als letztes Wort zu den Ästhetischen Attributen, das wohl am beeindruckenste: Das Vereinen von aes() und geom() mit der Funktion `scale_fill_manual()`. 
+Als letztes Wort zu den Ästhetischen Attributen, und das wohl am beeindruckenste: Das Vereinen von `aes()` und `geom()` mit der Funktion wie `scale_fill_manual()`. 
 Schau dir diesen Code an und versuche zu verstehen was dort passiert.
 
 ```{r am_aesundgeom, exercise = TRUE,  exercise.cap = "aes und geom"}
@@ -1105,10 +1105,10 @@ ggplot(einkaufen, aes(x = verkehrsmittel, fill = bioladen )) +
   scale_fill_manual(values = c("#1f661b", "purple"))
 ```
 
-Es werden die Infomationen der Variable `bioladen` hinzugefügt und eine Legende erstellt, aber du kannst diesen Kategorien selbst Farben zuordnen. Logischerweise benötigt die Funktion dafür entsprechend der Anzahl an Kategorien, die gleiche Anzahl an Farben. 
+Es werden über `aes()` die Infomationen der Variable `bioladen` hinzugefügt und eine Legende erstellt. Du lässt dir mittels `geom_bar()` ein Balkendiagramm erstellen und fügst mit der Funktion `scale_fill_manual()` deine eigenen Farbwünsche dem Plot hinzu. Logischerweise benötigt die Funktion dafür entsprechend der Anzahl an Kategorien, die gleiche Anzahl an Farben. 
 
 
-```{r aes-quest}
+```{r aes-question}
 quiz(caption = "Quiz zum aesthetic mapping",
      
 question_radio("Welche *aesthetic mappings* in `aes()` brauchst du, um ein gestapeltes Balkendiagramm zu erstellen?",
@@ -1125,7 +1125,8 @@ question_radio("Welche *aesthetic mappings* in `aes()` brauchst du, um ein gesta
                correct = random_praise("de")),
 
 question_radio("Was passiert, wenn du in `aes()` eine Variable auf `alpha` mappst?",
-               answer("Die Transparenz wird je nach Ausprägung der Variable angepasst", correct = TRUE),
+               answer("Die Transparenz wird je nach Ausprägung der Variable angepasst", 
+                      correct = TRUE),
                answer("Die Form wird je nach Ausprägung der Variable angepasst",
                       message = "Für die Form von Punkten ist das Attribut `shape` zuständig."),
                answer("Die Farbe wird je nach Ausprägung der Variable angepasst",
@@ -1136,7 +1137,8 @@ question_radio("Was passiert, wenn du in `aes()` eine Variable auf `alpha` mapps
                correct = random_praise("de")),
 
 question_checkbox("Welche Variablen können auf das Attribut `fill` gemappt werden?",
-                  answer("Stetige Variablen", correct = TRUE,
+                  answer("Stetige Variablen", 
+                         correct = TRUE,
                          message = "Für stetige Variablen wird ein Farbverlauf erzeugt"),
                   answer("Diskrete Variablen",
                          correct = TRUE,
@@ -1149,10 +1151,10 @@ question_checkbox("Welche Variablen können auf das Attribut `fill` gemappt werd
 question_checkbox("`size`: Was stimmt?",
               answer("`size` kann als ästhetisches Atrribut eine weitere Variable
                       abbilden.",
-                      correct = T),
+                      correct = TRUE),
               answer("`size` ist vor allem für Punktdiagramme ein relevantes
                      Attribut.",
-                     correct = T),
+                     correct = TRUE),
                answer("`size` ist das Mittel der Wahl, 
                       um eine weitere Variable in den Plot einzubinden.",
                       message = "Auf gar keinen Fall. 
@@ -1168,10 +1170,10 @@ question_checkbox("`size`: Was stimmt?",
 question_checkbox("`alpha`: Was stimmt?",
               answer("`alpha` kann als ästhetisches Atrribut eine weitere Variable
                       abbilden.",
-                      correct = T),
+                      correct = TRUE),
               answer("`alpha` ist vor allem für Punktdiagramme ein relevantes
                      Attribut.",
-                     correct = T),
+                     correct = TRUE),
                answer("`alpha` ist das Mittel der Wahl, 
                       um eine weitere Variable in den Plot einzubinden.",
                       message = "Auf gar keinen Fall. 
@@ -1182,7 +1184,7 @@ question_checkbox("`alpha`: Was stimmt?",
                       message = "`alpha` bestimmt die Durchsichtigkeit der Punkte IM
                       Plot."),
                 answer("`alpha` lohnt sich besonders als ästhetisches Attribut ohne mapping.",
-                      correct = T),
+                      correct = TRUE),
                allow_retry = TRUE,
                random_answer_order = TRUE,
                correct = "Richtig!",
@@ -1191,15 +1193,15 @@ question_checkbox("`alpha`: Was stimmt?",
 question_checkbox("ästhetische Attribute: Was stimmt?",
               answer("Ästhetische Attribute können auch ohne mapping genutzt
                      werden.",
-                      correct = T),
+                      correct = TRUE),
               answer("Wenn ästhetische Attribute in `geom()` angewendet werden,
                      geht es wirklich um rein ästhetische Aspekte, nicht darum,
                      noch eine weitere Variable (also mehr Information)
                      einzufügen.",
-                     correct = T),
+                     correct = TRUE),
                answer("Farben werden auf englisch und in Anführungszeichen
                       geschrieben.",
-                      correct = T),
+                      correct = TRUE),
                answer("Ästhetische Attribute, die nicht gemapped werden sollen kommen ebenfalls in die `aes()` Funktion.",
                       message = "in die `aes()` Funktion kommen genau nur jene Attribute rein, 
                       die gemapped werden sollen."),
@@ -1210,7 +1212,216 @@ question_checkbox("ästhetische Attribute: Was stimmt?",
 )
 ```
 
-## 7. Special: Facets
+## 7. Das Drumherum: Themes, Labs und Legenden
+
+Was noch fehlt um die Grafiken ganz grundlegend ein bisschen schöner zu machen ist die grundsätzliche Gestaltung der Plots sowie die grundsätzlichen Beschriftungen.
+
+### Themes
+
+Es gibt verschiedene Themes, welche Hintergrundfarbe, Umrandungen etc. bestimmen. Eine Übersicht findest du [hier](https://ggplot2.tidyverse.org/reference/ggtheme.html). Themes werden mit `+` als eine weitere Lage dem Plot hinzugefügt.
+
+::: aufgabe
+Suche dir ein Theme deiner Wahl aus und füge es dem untenstehenden Plot hinzu.
+Zur Auswahl stehen z.B:
+
+- `theme_modern()`
+- `theme_classic()`
+- `theme_light()`
+- `theme_dark()`
+- `theme_minimal()`
+- `theme_void()`
+- `theme_bw()`
+
+:::
+
+```{r drumherum-solution}
+# Ein Beispiel:
+ggplot(economics, aes(x = uempmed, y = unemploy)) +
+  geom_point() +
+  theme_void()
+```
+
+```{r drumherum, exercise = TRUE,   exercise.cap = "themes"}
+ggplot(economics, aes(x = uempmed, y = unemploy)) +
+  geom_point() +
+  theme_bw()
+```
+
+### Beschriftungen
+
+Die Beschriftungen sind ebenfalls eine weitere Ebene und werden mittels `labs()` Funktion hinzugefügt.
+
+::: aufgabe
+Ändere die Beschriftungen so, dass sie informativ sind.
+
+Die Variablen `uempmed` (*median duration of unemployment, in weeks*) und `unemploy` (*number of unemployed in thousands*) sind aus dem Datensatz *economics*, der Zeitreihendaten zur US-Wirtschaft darstellt.
+:::
+
+```{r d_labs, exercise = TRUE,   exercise.cap = "labs"}
+ggplot(economics, aes(x = uempmed, y = unemploy)) +
+  geom_point() +
+  labs(
+    title = "Titel",
+    subtitle = "Untertitel",
+    x = "x-Achse",
+    y = "y-Achse",
+    caption = "Fußnote"
+  )
+```
+
+```{r d_labs-solution, exercise = TRUE,   exercise.cap = "labs"}
+ggplot(economics, aes(x = uempmed, y = unemploy)) +
+  geom_point() +
+  labs(
+    title = "Zeitreihendaten zur US-Wirtschaft",
+    subtitle = "Zusammenhang von Arbeitslosigkeitsdauer und Anzahl arbeitsloser Personen",
+    x = "Arbeitslosigkeitsdauer",
+    y = "Anzahl arbeitsloser Personen",
+    caption = "economics Datensatz"
+  )
+```
+
+
+```{r drumherum-quest}
+quiz(caption = "Quiz zum Drumherum",
+     
+question("Was stimmt?",
+         answer("Themes sind vorgefertigte Muster (Hintergrund, Schriftart etc.), nach denen Plots gestaltet werden.",
+                 correct = T),
+         answer("Themes sind Themenfelder, 
+                welche inhaltlich in Plotsabgearbeitet werden.",
+                 message = "Lies dir den Abschnitt lieber nochmal genauer durch."),
+        answer("Labs sind die Beschriftungen eines Plots.",
+                 correct = T),
+        answer("Labs ist die Laborkennung, 
+               in dem die analysierten Daten erhoben wurden.",
+                 message = "Lies dir den Abschnitt lieber nochmal genauer durch."),
+        allow_retry = TRUE,
+        random_answer_order = TRUE,
+        incorrect = random_encouragement("de"),
+        correct = random_praise("de"))
+)
+```
+
+## 8. Barrierefreiheit
+
+Es mag erstmal überraschen, aber: auch in visuellen Darstellungen ist Barrierefreiheit ein relevantes Thema. Etwa 8% aller Männer und 0.4 % aller Frauen können bestimmte Farben nicht unterscheiden. Deswegen wurden von schlauen Menschen Farbpaletten entworfen, die keine ambivalenten Farben wie rot und grün enthalten, und auch ganz ohne Farbwahrnehmung nur über Helligkeit und Dunkelheit der Farben, also in schwarz weiß funktionieren. Der letzte Punkt ist ebenfalls relevant für alle Plots, die in schwarz weiß (wie bspw. in manchen Journals) abgebildet werden.
+
+Ein weit verbreitetetes Paket namens `viridis` enthält solche Farbpaletten. Es hat auch seine eigene [Hilfeseite](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html), auf der die Verwendung und die Hintergründe gut dokumentiert sind.
+
+Und so sieht das ganze dann in Aktion aus:
+
+```{r viridis-demo, message=FALSE, warning=FALSE}
+library(hexbin)
+library(viridis)
+
+dat <- data.frame(x = rnorm(10000), y = rnorm(10000))
+
+ggplot(dat, aes(x = x, y = y)) +
+  geom_hex() + 
+  coord_fixed() +
+  scale_fill_gradientn(colors = viridis(256, option = "D")) +
+  theme_bw()
+```
+
+Die obenstehende Grafik ist auch ein gutes Beispiel dafür, wie hell-dunkel Kontraste verwendet werden können. So ist das Ganze in schwarz-weiß immer noch lesbar, was insbesondere für Menschen mit eingeschränkter Farbwahrnehmung klasse ist, denn alles was schwarz weiß gut lesbar ist, ist immer auch colorblind-friendly.
+
+Wie bekommst du diese Farbpaletten in deine Plots? Du nutzt wie gewohnt den `+` Pipe Operator um eine weitere Funktion in `ggplot()` zu füttern. Du kennst bereits die manuelle Variante `scale_fill_manual()`, mit der du den Kategorien des `aes()` `color`-Attributs mittels dieser Funktion manuell selbstgewählte Farben zugeteilt hast. Farbpaletten nehmen dir diese Arbeit ab, solange du darauf achtest die entsprechende Funktion anhand des Skalenniveaus deiner farbgebenden Variable zu wählen. Hier eine kurze Tabelle mit einer kleinen Auswahl an möglichen Funktionen aus dem Paket `viridis`:
+
+|                    | `color`                             | `fill`                            |
+|------------------|----------------------------|--------------------------|
+| **diskret**        | `scale_color_viridis(discrete = T)` | `scale_fill_virdis(discrete = T)` |
+| **kontinuierlich** | `scale_color_virdis()`              | `scale_fill_viridis()` \*         |
+
+</br>
+
+::: aufgabe
+Du kannst es dir bestimmt schon denken: Wähle aus der Tabelle die geeignete Funktion und aus und ersetze damit die dir bekannte Funktion `scale_fill_manual(values = c("#1f661b", "purple"))`. 
+:::
+
+```{r am_scalefill, exercise = TRUE,  exercise.cap = "aes und geom"}
+ggplot(einkaufen, aes(x = verkehrsmittel, fill = bioladen )) +
+  geom_bar() + 
+  scale_fill_manual(values = c("#1f661b", "purple"))
+```
+
+```{r am_scalefill-solution}
+ggplot(einkaufen, aes(x = verkehrsmittel, fill = bioladen )) +
+  geom_bar() + 
+  scale_fill_viridis(discrete = T)
+```
+
+### Farbpaletten
+
+Die `viridis`-Funktion nimmt jedoch noch weitere Argumente, mit denen du hier die Farbpaletten selbst wählen kannst.
+Ein Ausschnitt der verfügbaren Farbpaletten ist hier:
+
+```{r}
+knitr::include_graphics("images/viridis.png")
+```
+
+[source](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html)
+
+Auch auf der [Hilfeseite](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html)) sind alle Optionen mit Namen angegeben. Den Namen der Palette kannst du nutzen, um sie mit dem Argument `option =` in die entsprechende `viridis()` Funktion aus der Tabelle einzugeben.
+
+::: aufgabe
+Suche die benötigte Funktion anhand der Tabelle raus und nutze eine `viridis` Farbpalette deiner Wahl.
+
+(`"viridis"` (default), `"magma"`, `"plasma"`, `"inferno"`, `"cividis"`, `"mako"`, `"rocket"` oder `"turbo"`)
+:::
+
+```{r barrierefreiheit-solution}
+ggplot(einkaufen, aes(x = alter, y = weg, color = kochen)) +
+  geom_point() +
+  scale_color_viridis(option = "plasma") +
+  scale_y_log10()
+```
+
+```{r barrierefreiheit, exercise = TRUE, exercise.cap = "Barrierefreiheit"}
+ggplot(einkaufen, aes(x = alter, y = weg, color = kochen)) +
+   geom_point() +
+   
+```
+
+<details>
+
+<summary><a>▼ \* Du hast noch nicht genug? Hier lernst du wie du auch noch die Legende anpassen kannst. </a></summary>
+
+### Legends
+
+```{r}
+knitr::include_graphics("images/legends.png")
+```
+
+[source](https://www.reddit.com/media?url=https%3A%2F%2Fpreview.redd.it%2Fgbjhlcz41i871.jpg%3Fauto%3Dwebp%26s%3D7a940a1c20340cefabf513e1a5987359542a3b72)
+
+Die Legende ist eine Sache für sich. Es wird hier nur angeschnitten, solltest du damit arbeiten wollen, wirst du eh auf den bekannten Seiten (su.) nachschauen. Im Folgenden sind die ganz grundlegenden Mechanismen erklärt. Wenn du die verstanden hast sollte die Nutzung von der gut strukturierten [R Graph Gallery](https://r-graph-gallery.com/239-custom-layout-legend-ggplot2.html), der [Hilfeseite](https://ggplot2.tidyverse.org/reference/guide_legend.html) oder dem [Cookbook](http://www.cookbook-r.com/Graphs/Legends_(ggplot2)/) ein Kinderspiel für dich sein ;)).
+
+Es gibt sehr viele Wege, sie zu verändern und anzupassen und je nach Ausgangslage und Ergebnisvorstellung haben viele ihr Für und Wider. Eine dicke Empfehlung ist, es konsistent innerhalb von einem Plot zu machen.
+
+Im Grunde gibt es zwei Möglichkeiten, etwas an der Legende zu ändern:
+
+1.  Mittels der `aes()` Attribute - *das kannst du ja bereits*
+2.  In der Legende (also im ggplot an sich) - *das lernst du jetzt*
+
+#### Legende verändern
+
+- **Kategorienamen der Legende verändern:** Nachdem du die passende `viridis`-Funktion ausgewählt hast fügst du ihr das Argument `labels = c("label 1", "label 2")` 
+hinzu. Wobei die Sortierung die gleiche Reihenfolge haben sollte, wie die aktuelle. **PRÜFE DAS**, sonst kann es zu schwerwiegenden inhaltlichen Fehlern kommen! 
+
+- **Titel der Legende verändern:** In die gleiche Funktion fügst du die Funktion `guide_legend()` mit dem Argument `title = "some title"` ein, um die Überschrift der Legende zu ändern. 
+
+Das kann dann am Ende z.B. so aussehen:
+
+```{r d_legends_2, exercise = TRUE,  exercise.cap = "labels & guide_legend()"}
+ggplot(einkaufen, aes(x = verkehrsmittel, fill = bioladen)) +
+  geom_bar() +
+  scale_fill_viridis(discrete = T,
+    labels = c("konventionell", "bio"),
+    guide_legend(title = "Ladenart"))
+```
+
+## 9. Special: Facets
 
 ::: infobox
 *Facets* sind nützlich, um mehrdimensionale Informationen in einem Diagramm darzustellen. Anhand von 1-2 kategorischen Variablen werden die Diagramme in kleinere Teile aufgeteilt und lassen sich so anhand dieser Ausprägungen optisch vergleichen.
@@ -1348,286 +1559,6 @@ question_radio("Wie sieht das Raster deiner Diagramme aus, wenn du eine binäre 
 )
 ```
 
-## 8. Das Drumherum: Themes, Labs und Legenden
-
-Was noch fehlt um die Grafiken ganz grundlegend ein bisschen schöner zu machen ist die grundsätzliche Gestaltung der Plots sowie die grundsätzlichen Beschriftungen.
-
-### Themes
-
-Es gibt verschiedene Themes, welche Hintergrundfarbe, Umrandungen etc. bestimmen. Eine Übersicht findest du [hier](https://ggplot2.tidyverse.org/reference/ggtheme.html). Themes werden mit `+` als eine weitere Lage dem Plot hinzugefügt.
-
-::: aufgabe
-Suche dir ein Theme deiner Wahl aus und füge es dem untenstehenden Plot hinzu.
-Zur Auswahl stehen z.B:
-
-- `theme_modern()`
-- `theme_classic()`
-- `theme_light()`
-- `theme_dark()`
-- `theme_minimal()`
-- `theme_void()`
-- `theme_bw()`
-
-:::
-
-!eco
-```{r drumherum-solution}
-# Ein Beispiel:
-ggplot(economics, aes(x = unemploy, y = uempmed)) +
-  geom_point() +
-  theme_void()
-```
-
-!eco
-```{r drumherum, exercise = TRUE,   exercise.cap = "themes"}
-ggplot(economics, aes(x = unemploy, y = uempmed)) +
-  geom_point() +
-  theme_bw()
-```
-
-### Beschriftungen
-
-Die Beschriftungen sind ebenfalls eine weitere Ebene und werden mittels `labs()` Funktion hinzugefügt.
-
-::: aufgabe
-Ändere die Beschriftungen so, dass sie informativ sind.
-:::
-
-!eco
-```{r d_labs, exercise = TRUE,   exercise.cap = "labs"}
-ggplot(economics, aes(x = unemploy, y = uempmed)) +
-  geom_point() +
-  labs(
-    title = "Titel",
-    subtitle = "Untertitel",
-    x = "x-Achse",
-    y = "y-Achse",
-    caption = "Fußnote"
-  )
-```
-
-### Legends
-
-```{r}
-knitr::include_graphics("images/legends.png")
-```
-
-[source](https://www.reddit.com/media?url=https%3A%2F%2Fpreview.redd.it%2Fgbjhlcz41i871.jpg%3Fauto%3Dwebp%26s%3D7a940a1c20340cefabf513e1a5987359542a3b72)
-
-Die Legende ist eine Sache für sich. Es wird hier nur angeschnitten, solltest du damit arbeiten wollen, wirst du eh auf den bekannten Seiten (su.) nachschauen. Obacht: Das ist ein klassischer Fall, in dem ChatGPT häufig mehr Verwirrung als Klarheit reinbringt. Im Folgenden sind die ganz grundlegenden Mechanismen erklärt. Wenn du die verstanden hast sollte die Nutzung von ChatGPT tatsächlich einigermaßen flüssig funktionieren (wenn du es dann überhaupt noch nutzen möchtest und nicht viel lieber in der deutlich besser strukturierten [R Graph Gallery](https://r-graph-gallery.com/239-custom-layout-legend-ggplot2.html), der [Hilfeseite](https://ggplot2.tidyverse.org/reference/guide_legend.html) oder dem [Cookbook](http://www.cookbook-r.com/Graphs/Legends_(ggplot2)/) nachschauen willst ;)).
-
-Es gibt sehr viele Wege, sie zu verändern und anzupassen und je nach Ausgangslage und Ergebnisvorstellung haben viele ihr Für und Wider. Eine dicke Empfehlung ist, es konsistent innerhalb von einem Plot zu machen (und spätestens hier verliert ChatGPT!).
-
-Im Grunde gibt es zwei Möglichkeiten, etwas an der Legende zu ändern:
-
-1.  Im Vektor an sich (also vorher) - ergo *Datenaufbereitung*
-2.  In der Legende (also im ggplot an sich)
-
-#### Saubere Datenaufbereitung
-
-Bietet sich an, wenn es die Daten dadurch noch übersichtlicher macht bzw. nichts an Übersichtlichkeit verloren geht. Im Beispiel der Variablen `bioladen`: aktuell noch logical würde sie durchaus übersichtlicher werden, wenn Einträge "bio" und "konventionell" wären. Hier begegnen wir unserem alten Bekannten, dem `factor`, wieder. Es wird eine neue Variable mit dem Namen "ladenart" erstellt. Es wäre allerdings auch denkbar, die alte zu überschreiben. 
-
-- **Pro:** Geringere Gefahr, dass sich Fehler aufgrund von falscher Beschriftung einschleichen. 
-- **Contra:** Eher seltener der Fall, da das Datawrangling (s. entsprechendes Tutorial) ja eigentlich schon vorher abgeschlossen sein sollte und die Daten eigentlich in sehr hoher Qualität vorliegen sollten.
-
-```{r d_legends, exercise = TRUE,  exercise.cap = "legends"}
-# Factor erstellen (bei Fragen dazu: Wiederhole gerne das Tutorial Vektoren)
-einkaufen$ladenart <- factor(einkaufen$bioladen, 
-                                  levels = c(TRUE, FALSE), 
-                                  labels = c("bio", "konven."))
-
-ggplot(einkaufen, aes(x = verkehrsmittel, fill = ladenart)) +
-  geom_bar(position = position_dodge(preserve = "single")) +
-  labs(
-    title = "Verkehrsmittel und Ladenart",
-    y = "Absolute Anzahl der Nutzenden",
-    x = "Verkehrsmittel"
-  )+
-  theme_bw()
-```
-
-#### Legende im ggplot
-
-Ist in den allermeisten Fällen das Mittel der Wahl. Die beiden Hauptpunkte sind: Punkte und Titel der Legende verändern. Alles andere (Schriftart und -größe, Position, Ausrichtung, Hintergrund, Umrandung etc. kannst du in den oben vorgeschlagenen Seiten nachschauen). Es folgt eigentlich immer dem gleichen Prinzip: Du fügst deinem ggplot eine weitere Ebene hinzu und innerhalb dieser Ebene legst du Dinge fest. Welche Funktion bzw. Argumente du wählst hängt von deinen Variablen und ästhetischen Attributen ab: diskret oder kontinuierlich? `fill` oder `color`? Daraus ergibt sich folgende Kreuztabelle
-
-|                    | `color`                             | `fill`                            |
-|------------------|----------------------------|--------------------------|
-| **diskret**        | `scale_color_viridis(discrete = T)` | `scale_fill_virdis(discrete = T)` |
-| **kontinuierlich** | `scale_color_virdis()`              | `scale_fill_viridis()` \*         |
-
-
-\* Steht nur der Vollständigkeit halber hier, ist keinem der vorgestellten `geoms` sinnvoll einsetzbar. Wird vor allem für Heatmaps verwendet.
-
-<!-- Dann solle es vielleicht nicht hier stehen. Rauskürzen? -->
-
-- **2a Punkte verändern:** Wenn du die passende Funktion ausgewählt hast fügst du das Argument `labels = c("label 1", "label 2")` hinzu. Wobei die Sortierung die gleiche Reihenfolge haben sollte, wie die aktuelle. **PRÜFE DAS**, sonst kann es zu schwerwiegenden inhaltlichen Fehlern kommen! 
-
-- **2b Titel verändern:** In die gleiche Funktion fügst du die Funktion `guide_legend()` mit dem Argument `title = "some title"` ein. 
-
-- **Zusammenfassung:** 
-
-- **Pro:** Kein rumgemurkse mit den Daten. Kann für jeden Plot individuell passend verändert werden. 
-
-- **Contra:** Erhöhte Fehlergefahr aufgrund von flaschen Beschriftungen.
-
-```{r d_legends_2, exercise = TRUE, exercise.setup = "d_legends",  exercise.cap = "guide_legend()"}
-ggplot(einkaufen, aes(x = verkehrsmittel, fill = bioladen)) +
-  geom_bar(position = position_dodge(preserve = "single")) +
-  scale_fill_viridis(discrete = T,
-    labels = c("bio", "konven."),
-    guide_legend(title = "Ladenart")) +
-  labs(
-    title = "Verkehrsmittel und Ladenart",
-    y = "Absolute Anzahl der Nutzenden",
-    x = "Verkehrsmittel"
-  )+
-  theme_bw()
-```
-
-::: aufgabe
-Finde für die Funktionen `scale_color_viridis(discrete = T)` und `scale_color_viridis()` eine Anwendungsmöglichkeit in einen der bereits ausgeführten Plots dieses Tutorials und füge diese Ebene hinzu. Füge auch gerne ein Theme deiner Wahl sowie passende Achsenbeschriftungen hinzu.
-
-\*Extraaufgabe: schreibe einen komplett eigenen Plot.
-:::
-
-```{r d_legends_3-solution}
-ggplot(einkaufen, aes(x = alter, y = weg, color = kochen)) +
-   geom_point() +
-  # \n sagt R, dass du einen Zeilenumbruch möchtest
-   scale_color_viridis(guide_legend(title = "Kochen/ \n Woche")) +
-  labs(
-    title = "Weg und Alter",
-    x = "Alter",
-    y = "Weg (in km)"
-    ) +
-  theme_bw()
-
- ggplot(einkaufen, aes(x = verkehrsmittel, y = alter, color = bioladen)) +
-   geom_boxplot(position = position_dodge(preserve = "single")) +
-   scale_color_viridis(discrete = T,
-     labels = c("bio", "konven."),
-    guide_legend(title = "Ladenart")) +
-   labs(
-     title = "Genutze Verkehrsmittel und Alter",
-     x = "Verkehrsmittel",
-     y = "Alter"
-   ) +
-   theme_bw()
-```
-
-```{r d_legends_3, exercise = TRUE, exercise.setup = "d_legends", exercise.cap = "Legenden"}
-
-```
-
-```{r drumherum-quest}
-quiz(caption = "Quiz zum Drumherum",
-     
-question("Was stimmt?",
-         answer("Themes sind vorgefertigte Muster (Hintergrund, Schriftart etc.), nach denen Plots gestaltet werden.",
-                 correct = T),
-         answer("Themes sind Themenfelder, 
-                welche inhaltlich in Plotsabgearbeitet werden.",
-                 message = "Lies dir den Abschnitt lieber nochmal genauer durch."),
-        answer("Labs sind die Beschriftungen eines Plots.",
-                 correct = T),
-        answer("Labs ist die Laborkennung, 
-               in dem die analysierten Daten erhoben wurden.",
-                 message = "Lies dir den Abschnitt lieber nochmal genauer durch."),
-         answer("Um eine Legende zu verändern, 
-                wird der Plot gespeichert und die Legende dann extern mittels Paint
-                oder Gimp nach den eigenen Wünschen nachgestaltet.",
-                 message = "Da gibt es deutlich galantere Wege. 
-                Lies dir den Abschnitt lieber nochmal genauer durch."),
-        allow_retry = TRUE,
-        random_answer_order = TRUE,
-        incorrect = random_encouragement("de"),
-        correct = random_praise("de"))
-)
-```
-
-## 9. Barrierefreiheit
-
-Es mag erstmal überraschen, aber: auch in visuellen Darstellungen ist Barrierefreiheit ein relevantes Thema. Ein nicht zu vernachlässigender Anteil der Bevölkerung kann bestimmte Farben nicht unterscheiden. Deswegen wurden von schlauen Menschen Farbpaletten entworfen, die keine ambivalenten Farben wie rot und grün enthalten, und auch ganz ohne Farbwahrnehmung nur über Helligkeit und Dunkelheit der Farben, also in schwarz weiß funktionieren. Der letzte Punkt ist ebenfalls relevant für alle Plots, die in schwarz weiß (wie bspw. in manchen Journals) abgebildet werden.
-
-Eine der verbreitetesten ist das Paket `viridis`. Es hat auch seine eigene [Hilfeseite](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html), auf der die Verwendung und die Hintergründe gut dokumentiert sind.
-
-Die verfügbaren Farbpaletten sind:
-
-```{r}
-knitr::include_graphics("images/viridis.png")
-```
-
-[source](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html)
-
-Hier ein Beispiel in action:
-
-```{r viridis-demo, message=FALSE, warning=FALSE}
-library(ggplot2)
-library(hexbin)
-library(viridis)
-
-dat <- data.frame(x = rnorm(10000), y = rnorm(10000))
-
-p <- ggplot(dat, aes(x = x, y = y)) +
-  geom_hex() + coord_fixed() +
-  scale_fill_gradientn(colors = viridis(256, option = "D")) +
-  theme_bw()
-
-p
-```
-
-Und die obenstehende Grafik ist ein gutes Beispiel dafür, wie hell-dunkel Kontraste verwendet werden können. So ist das Ganze in schwarz-weiß immer noch lesbar, was insbesondere für Menschen mit eingeschränkter Farbwahrnehmung klasse ist, denn alles was schwarz weiß gut lesbar ist, ist immer auch colorblind-friendly. Die Farben sind nicht unbeding neu für dich, spätestens seit dem letzten Abschnitt (Legends) bist du mit ihnen vertraut. Der Punkt ist: wir haben dir da schon eine colorblind friendly scale untergemogelt, damit du von anfang an sauber mit Farben in Grafiken umgehst.
-
-In diesem Unterkapitel lernst du neues über die Hintergründe der Farben (erledigt!) und du lernst verschiedene Paletten kennen: auf der [Hilfeseite](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html)) sind alle Optionen mit Namen angegeben. Du kannst dich nun für eine Option entscheiden und diese mit dem Argument `option =` und ihrem Namen (`"viridis"` (default), `"magma"`, `"plasma"`, `"inferno"`, `"cividis"`, `"mako"`, `"rocket"` oder `"turbo"`) einfügen.
-
-::: aufgabe
-Nutze für jeden der Plots aus dem letzten Unterkapitel (Legends) eine andere viridis Farbpalette.
-
-\*Extraaufgabe: schreibe einen komplett eigenen Plot.
-:::
-
-```{r barrierefreiheit-solution}
-ggplot(einkaufen, aes(x = verkehrsmittel, fill = bioladen)) +
-  geom_bar(position = position_dodge(preserve = "single")) +
-  scale_fill_viridis(discrete = T, option = "cividis",
-                     # Titel und Beschriftung der Legende ändern
-                     guide = guide_legend(title = "Ladenart"), 
-                     labels = c("konven.", "bio")
-                     ) +
-  labs(
-    title = "Verkehrsmittel und Ladenart",
-    y = "Absolute Anzahl der Nutzenden",
-    x = "Verkehrsmittel"
-  )+
-  theme_bw()
-
- ggplot(einkaufen, aes(x = verkehrsmittel, y = alter, color = bioladen)) +
-   geom_boxplot(position = position_dodge(preserve = "single")) +
-   scale_color_viridis(discrete = T, option = "turbo",
-     labels = c("bio", "konven."),
-    guide_legend(title = "Ladenart")) +
-   labs(
-     title = "Genutze Verkehrsmittel und Alter",
-     x = "Verkehrsmittel",
-     y = "Alter"
-   ) +
-   theme_bw()
-
-ggplot(einkaufen, aes(x = alter, y = weg, color = kochen)) +
-   geom_point() +
-   scale_color_viridis(option = "plasma",
-     guide_legend(title = "Kochen/ \n Woche")) +
-  labs(
-    title = "Weg und Alter",
-    x = "Alter",
-    y = "Weg (in km)"
-    ) +
-  theme_bw()
-```
-
-```{r barrierefreiheit, exercise = TRUE, exercise.setup = "d_legends", exercise.cap = "Barrierefreiheit"}
-
-```
 
 ## 10. Becoming a Pro
 
@@ -1637,11 +1568,11 @@ ggplot(einkaufen, aes(x = alter, y = weg, color = kochen)) +
 
 Durch dieses Tutorial hast du nun die Grundlagen, um in Zukunft deine Plots ganz nach deinen Wünschen gestalten zu können. Deiner Phantasie sind kaum Grenzen gesetzt. Um zum nächsten Level zu kommen hilft: Recherche! Informiere dich im Internet was für deine Zwecke möglich ist und passe den Beispielcode auf deine Daten an. (Das gilt übrigens für alle Tutorials und Alles, was du hier in diesem Kurs lernst).
 
-In den ersten Tutorials haben wir dir bereits *Cheat Sheets* verlinkt und auch zu Beginn dieses Tutorials die super hilfreiche Seite [R Graph Gallery](https://r-graph-gallery.com/) empfohlen.
+In den ersten Tutorials haben wir dir bereits *Cheat Sheets* verlinkt und auch im Verlauf dieses Tutorials die super hilfreiche Seite [R Graph Gallery](https://r-graph-gallery.com/) empfohlen.
 
 **Cheat Sheets** Sind eine fantastische erste Anlaufstelle, wenn du dir Zeit nimmst sie zu verstehen. Sie geben dir für ein bestimmtes Paket einen guten Überblick zu den vielzähligen Funktionen und deren Code. Somit fungieren Sie wie die `Hilfe` Seite einer Funktion oder eines Paketes, das für dich visuell aufbereitet wurde.
 
-Hier kannst du die [von R Studio erstellten Cheat Sheets](https://rstudio.github.io/cheatsheets/) finden. Es gibt aber auch noch weitere *Cheat Sheets* von anderen Instanzen.
+Hier kannst du alle [von R Studio erstellten Cheat Sheets](https://rstudio.github.io/cheatsheets/) finden. Es gibt aber auch noch weitere *Cheat Sheets* von anderen Instanzen.
 
 ::: aufgaberstudio
 Hier mal eine besondere Aufgabe: Schau dir das [ggplot Cheat Sheet](https://rstudio.github.io/cheatsheets/data-visualization.pdf) genau an und beantworte dann folgende Fragen.
@@ -1673,32 +1604,25 @@ question_radio("Welche Art von Variablen wird für die Funktion `g + geom_count(
                answer("Zwei diskrete Variablen", 
                       correct = TRUE, 
                       message = "Das Cheat Sheet ist so aufgebaut, dass die Buchstaben vor den Funktionen (z.B. das `g +` vor `geom_count()`) im Abschnitt `Geoms` für die entsprechenden Skalenniveaus und Anzahl der Variablen stehen."),
-               answer("Eine kontinuierliche Variable"),
-               answer("Zwei kontinuierliche Variablen"),
+               answer("Eine kontinuierliche Variable",
+                      message = "Das Cheat Sheet ist so aufgebaut, dass die Buchstaben vor den Funktionen (z.B. das `g +` vor `geom_count()`) im Abschnitt `Geoms` für die entsprechenden Skalenniveaus und Anzahl der Variablen stehen."),
+               answer("Zwei kontinuierliche Variablen",
+                      message = "Das Cheat Sheet ist so aufgebaut, dass die Buchstaben vor den Funktionen (z.B. das `g +` vor `geom_count()`) im Abschnitt `Geoms` für die entsprechenden Skalenniveaus und Anzahl der Variablen stehen."),
                allow_retry = T,
                random_answer_order = T,
-               incorrect = "Leider nicht richtig, probier es noch mal!"),
-
-question_radio("Wie kannst du deiner Grafik Achsebeschriftungen hinzufügen?",
-               answer("`labs(x = , y = )`",
-                      correct = TRUE,
-                      message = "Richtig, du kannst für die jeweiligen Variablen auf Achse x und y eine Legende einfügen lassen."),
-               answer("`labels(x = , y = )`"),
-               answer("`leg(x = , y = )`"),
-               allow_retry = TRUE,
-               random_answer_order = TRUE,
-               incorrect = random_encouragement(language = "de"))
+               incorrect = "Leider nicht richtig, probier es noch mal!")
 )
 ```
 
-Noch ein paar Worte zu *ChatGPT*: Schau gut, inwieweit es für dich hilfreich ist. Jetzt wo du die grundlegenden Zusammenhänge verstanden hast kannst du es wahrscheinlich gut nutzen. Meine ganz persönliche Sicht: Seit ich mich für dieses Tutorial nochmal so richtig in ggplot reingearbeitet habe, nutze ich es gar nicht mehr - ich hab (endlich) verstanden, wie die Zusammenhänge funktionieren und bin deutlich schneller und effizienter mit den verlinkten Hilfeseiten und der R Graph Gallery. Sich da einzuarbeiten ist wirklich ein lohnendes Investment!
+Noch ein paar Worte zu *ChatGPT*: Schau gut, inwieweit es für dich hilfreich ist. Jetzt wo du die grundlegenden Zusammenhänge verstanden hast kannst du es wahrscheinlich gut nutzen und erkennst die Fehler die sich dort eventuell in den Code eingeschlichen haben. Mit deinem Wissen bist du aber wahrscheinlich deutlich schneller und effizienter, wenn du mit den verlinkten Hilfeseiten und der R Graph Gallery arbeitest. Sich da einzuarbeiten ist wirklich ein lohnendes Investment!
 
-## Zu guter Letzt: Überblick bekommen
+
+## Den Überblick bekommen
 
 Wie ganz zu Beginn erwähnt, benutzen wir Visualisierungen für zweierlei Zwecke:
 
 -   einmal um einen **Überblick** zu gewinnen
--   am Ende um **Ergebnisse** zu **kommunizieren**
+-   sowie am Ende um **Ergebnisse** zu **kommunizieren**
 
 Es lassen sich eigentlich alle Grafiken nuzten, um Ergebnisse zu kommunizieren, aber welche eignen sich dafür einen Überblick zu bekommen, um deine (zunächst unverständlich großen) Daten besser zu verstehen? Hier nur eine kurze Auflistung:
 
