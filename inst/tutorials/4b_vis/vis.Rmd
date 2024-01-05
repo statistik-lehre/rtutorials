@@ -15,7 +15,7 @@ resource_files:
 - css/boxes.css
 tutorial:
       id: ggplot
-      version: 5.1
+      version: 5.2
 ---
 
 ```{r setup, include=FALSE}
@@ -1234,7 +1234,7 @@ question_checkbox("ästhetische Attribute: Was stimmt?",
 )
 ```
 
-## 7. Das Drumherum: Themes, Labs und Legenden
+## 7. Das Drumherum: Themes und Beschriftungen
 
 Was noch fehlt um die Grafiken ganz grundlegend ein bisschen schöner zu machen ist die grundsätzliche Gestaltung der Plots sowie die grundsätzlichen Beschriftungen.
 
@@ -1311,7 +1311,7 @@ question("Was stimmt?",
          answer("Themes sind vorgefertigte Muster (Hintergrund, Schriftart etc.), nach denen Plots gestaltet werden.",
                  correct = T),
          answer("Themes sind Themenfelder, 
-                welche inhaltlich in Plotsabgearbeitet werden.",
+                welche inhaltlich in Plots abgearbeitet werden.",
                  message = "Lies dir den Abschnitt lieber nochmal genauer durch."),
         answer("Labs sind die Beschriftungen eines Plots.",
                  correct = T),
@@ -1416,7 +1416,7 @@ ggplot(einkaufen, aes(x = alter,
 
 <summary><a>▼ \* Du hast noch nicht genug? Hier lernst du wie du auch noch die Legende anpassen kannst. </a></summary>
 
-### Legends
+**Legends**
 
 ```{r}
 knitr::include_graphics("images/legends.png")
@@ -1433,7 +1433,7 @@ Im Grunde gibt es zwei Möglichkeiten, etwas an der Legende zu ändern:
 1.  Mittels der `aes()` Attribute - *das kannst du ja bereits*
 2.  In der Legende (also im ggplot an sich) - *das lernst du jetzt*
 
-#### Legende verändern
+**Legende verändern**
 
 - **Kategorienamen der Legende verändern:** Nachdem du die passende `viridis`-Funktion ausgewählt hast fügst du ihr das Argument `labels = c("label 1", "label 2")` 
 hinzu. Wobei die Sortierung die gleiche Reihenfolge haben sollte, wie die aktuelle. **PRÜFE DAS**, sonst kann es zu schwerwiegenden inhaltlichen Fehlern kommen! 
@@ -1449,6 +1449,8 @@ ggplot(einkaufen, aes(x = verkehrsmittel, fill = bioladen)) +
     labels = c("konventionell", "bio"),
     guide_legend(title = "Ladenart"))
 ```
+
+</details>
 
 ## 9. Special: Facets
 
