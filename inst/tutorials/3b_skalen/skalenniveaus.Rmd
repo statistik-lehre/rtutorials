@@ -5,6 +5,7 @@ output:
     language: de
     css: css/boxes.css
     fig_caption: no
+tutorial:
 runtime: shiny_prerendered
 bibliography: ref.json
 link-citations: TRUE
@@ -321,6 +322,7 @@ In R können wir verschiedene Skalenniveaus finden, darunter nominale, ordinale,
 - Beispiel: Anzahl an Fahrrädern im Keller (0, 3, 12)
 
 </br>
+
 ::: blau-nb
 Für dich wichtig im Umgang mit R: Die nominale und orinale Skala beinhalten **kategoriale** Variablen die Intervall-, Verhältnis- und Absolutskala hingegen **metrische** Variablen.
 :::
