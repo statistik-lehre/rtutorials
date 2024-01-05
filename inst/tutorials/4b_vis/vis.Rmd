@@ -991,64 +991,86 @@ Probiere es gerne selbst aus und ändere `color` zu `fill`.
 ::: 
 
 ```{r am_f_color_2, exercise = TRUE, exercise.cap = "color im Scatterplot"}
-ggplot(einkaufen, aes(x = alter, y = weg, color = ort)) +
-  geom_point() +
-  scale_y_log10()
+ggplot(einkaufen, aes(x = alter, 
+                      y = weg, 
+                      color = ort)) +
+  geom_point(size = 3) +
+  scale_y_log10() +
+  labs(subtitle ="logarithmisch skalierte y-Achse")
 
 ```
+
+Das Diagramm ist übrigens so nicht barrierefrei, da z.B. rot und grün von manchen Menschen nicht unterschieden werden können. Mehr dazu im Kapitel "Barrierefreiheit"' 
 
 ### Shape
 
-Auch mittels des `shape` Arguments lässt sich die Information einer kategorialen Variable in ein Punktediagramm einbeziehen.
+Auch mittels des `shape` Arguments lässt sich die Information einer kategorialen Variable in ein Punktediagramm einbeziehen. Hier die Variable "Frequenz", die angibt, wie häufig die Menschen in einen Bioladen gehen. 
 
 ```{r am_shape, exercise = TRUE,  exercise.cap = "shape"}
-ggplot(einkaufen, aes(x = alter, y = weg, shape = verkehrsmittel)) +
-  geom_point() +
-  scale_y_log10()
+ggplot(einkaufen, aes(x = alter, 
+                      y = weg, 
+                      shape = frequenz)) +
+  geom_point(size = 3) +
+  scale_y_log10() +
+  labs(subtitle ="logarithmisch skalierte y-Achse")
 ```
 
-Insbesondere wenn es kombiniert wird mit `color` wird es besonders eindeutig
+Insbesondere wenn es kombiniert wird mit `color` wird es besonders eindeutig.
+Beachte, wie die gleiche Variable (`frequenz`) einfach auf mehrere Attribute gleichzeitig gemappt werden kann. 
+
+Edward Tufte, Autor des Klassikers "The Visualization of quantitative Data" (2001) wäre auf jeden Fall gegen eine solche Dopplung, da statistische Grafiken seiner Meinung nach möglichst nichts reduntantes enthalten sollten. Aber wir zeigen es euch trotzdem: 
 
 ```{r am_shape_2, exercise = TRUE, exercise.cap = "shape & color"}
-ggplot(einkaufen, aes(x = alter, y = weg, shape = verkehrsmittel, color = verkehrsmittel)) +
-  geom_point() +
-  scale_y_log10()
-
+ggplot(einkaufen, aes(x = alter, 
+                      y = weg, 
+                      shape = frequenz, 
+                      color = frequenz)) +
+  geom_point(size = 3) +
+  scale_y_log10() +
+  labs(subtitle ="logarithmisch skalierte y-Achse")
 ```
 
 ### Size
 
-Auch Mittels der Größe kann eine weitere Dimension in den Plot gebracht werden. Das ist allerdings mit Vorsicht zu genießen, da es in vielen Fällen die Wahrnehmung zu bestimmten Zusammenhängen verzerrt:
+Auch mittels der Größe von Punkten kann eine weitere Dimension in ein Punktdiagramm gebracht werden. Das ist allerdings mit Vorsicht zu genießen, da hier der Flächeninhalt genutzt wird um eine Variable darzustellen, und Menschen sind nicht besonders gut darin Flächeninhalt korrekt einzuschätzen. 
+
+Den Flächeninhalt eines Kreises zu variieren verzerrt in vielen Fällen die Wahrnehmung zu bestimmten Zusammenhängen.
 
 ```{r am_size, exercise = TRUE,   exercise.cap = "size"}
-ggplot(einkaufen, aes(x = alter, y = verkehrsmittel, size = weg)) +
-  geom_jitter(height = 0.2,
-              width = 0)
+ggplot(einkaufen, aes(x = alter, 
+                      y = verkehrsmittel, 
+                      size = weg)) +
+  geom_jitter(height = 0.25,
+              width = 0,
+              alpha = 0.6) 
 ```
-
-Bei diesem Beispiel wird deutlich: Dieses Attribut ist ungünstig verteilt. es macht den Plot viel unübersichtlicher im Vergleich zu der Info, die die lesende Person daraus ziehen kann. `color` aus dem vorherigen Abschnitt war die deutlich bessere Wahl.
-
-Meist wird `size` als ästhetisches Attribut in Momenten, in denen mit der Größe wirklich eine Relation ausgedrückt werden kann (bspw. Gewicht, Quadratmeter oder Bruttoinlandsprodukt) genutzt.
 
 ### Alpha
 
 Zu guter letzt folgt der `alpha` Wert, der die Transparenz von Objekten für das *mapping* nutzbar macht. 
 
-Jedoch ist auch hier Vorsicht geboten, nur weil etwas möglich ist, heißt es nicht, dass es sinnvoll ist. Schau dir doch mal an, was passiert, wenn wir die Verkehrsmittel als Kategorien über `alpha` mappen:
+Jedoch ist auch hier Vorsicht geboten, nur weil etwas möglich ist, heißt es nicht, dass es sinnvoll ist. 
+Hier trotzdem mal ein Beispiel: Das Alter, aufgeschlüsselt nach Frequenz des Einkaufens, kombiniert mit der Variable "Kochen", die angibt, an wie vielen Tagen pro Woche selbst gekocht wird. 
+
+Es wäre vielleicht zu erwarten, dass Menschen, die öfter selbst kochen, auch öfter einkaufen gehen. Aber vielleicht kaufen Menschen, die viel kochen, auch nur ganz selten ein, weil sie weniger Zeit haben, aber dafür kaufen sie dann sehr viel auf einmal? Mal sehen, ob das Diagramm einen klaren Trend zeigt.
 
 ```{r am_alpha, exercise = TRUE,   exercise.cap = "alpha mapping"}
-ggplot(einkaufen, aes(x = alter, y = weg, alpha = verkehrsmittel)) +
-  geom_point() + 
-  scale_y_log10()
+ggplot(einkaufen, aes(x = alter, 
+                      y = frequenz, 
+                      alpha = kochen)) +
+  geom_jitter(size = 3,
+              height = 0.25,
+              width = 0)
 ```
 
-Durch die Transparenz wird eine unterschiedliche Gewichtung der Daten suggeriert, die so zwischen den Kategorien natürlich nicht besteht. `alpha` auf diese Art zu nutzen solltest du also vermeiden, da eignen sich Farben und Formen doch deutlich besser. 
+
+Aber wie gesagt, ein Mapping auf `color` wäre vermutlich die bessere Wahl an dieser Stelle, und nicht auf `alpha`. Überlagern sich zum Beispiel zwei halb-transparente Punkte, wirken sie zusamen wie ein nicht-transparenter Punkt. 
 
 *Wofür ist `alpha` denn dann nützlich?*
 Vielleicht erinnerst du dich, dass du `alpha` bereits in der Funktion `geom_jitter()` verwendet hast, um die Punkte etwas durchsichtiger zu machen. So lassen sich also besonders für diskrete Variablen Überdeckungen reduzieren. 
 
 ::: aufgabe
-Erstelle einen zweiten Plot ohne `alpha` in der `aes()`-Funktion. Setze dafür das Argument alpha in der `geom()`-Funktion auf den Wert `0.2`.
+Erstelle einen zweiten Plot ohne `alpha` in der `aes()`-Funktion. Setze dafür das Argument `alpha` in der `geom()`-Funktion auf den Wert `0.2`.
 :::
 
 ```{r geom_alpha, exercise = TRUE,   exercise.cap = "alpha im geom"}
@@ -1096,7 +1118,7 @@ ggplot(einkaufen, aes(x = verkehrsmittel)) +
   geom_bar(fill = "#1f661b")
 ```
 
-Als letztes Wort zu den Ästhetischen Attributen, und das wohl am beeindruckenste: Das Vereinen von `aes()` und `geom()` mit der Funktion wie `scale_fill_manual()`. 
+Als letztes Wort zu den ästhetischen Attributen, und das wohl am beeindruckenste: Das Vereinen von `aes()` und `geom()` mit der Funktion wie `scale_fill_manual()`. 
 Schau dir diesen Code an und versuche zu verstehen was dort passiert.
 
 ```{r am_aesundgeom, exercise = TRUE,  exercise.cap = "aes und geom"}
@@ -1362,24 +1384,31 @@ knitr::include_graphics("images/viridis.png")
 
 [source](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html)
 
-Auch auf der [Hilfeseite](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html)) sind alle Optionen mit Namen angegeben. Den Namen der Palette kannst du nutzen, um sie mit dem Argument `option =` in die entsprechende `viridis()` Funktion aus der Tabelle einzugeben.
+Auch auf der [Hilfeseite](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html) sind alle Optionen mit Namen angegeben. Den Namen der Palette kannst du nutzen, um sie mit dem Argument `option =` in die entsprechende `viridis()` Funktion aus der Tabelle einzugeben.
 
 ::: aufgabe
-Suche die benötigte Funktion anhand der Tabelle raus und nutze eine `viridis` Farbpalette deiner Wahl.
+Füge auch hier wieder eine neue Ebene mit der passenden `scale_..._viridis()`-Funktion hinzu. Suche die benötigte Funktion anhand der Tabelle raus und nutze eine Farbpalette deiner Wahl. 
 
-(`"viridis"` (default), `"magma"`, `"plasma"`, `"inferno"`, `"cividis"`, `"mako"`, `"rocket"` oder `"turbo"`)
+`option =` (`"viridis"` (default), `"magma"`, `"plasma"`, `"inferno"`, `"cividis"`, `"mako"`, `"rocket"` oder `"turbo"`)
 :::
 
 ```{r barrierefreiheit-solution}
-ggplot(einkaufen, aes(x = alter, y = weg, color = kochen)) +
-  geom_point() +
-  scale_color_viridis(option = "plasma") +
-  scale_y_log10()
+ggplot(einkaufen, aes(x = alter, 
+                      y = weg, 
+                      color = kochen)) +
+   geom_point(size = 4) +
+   scale_y_log10() +
+   labs(subtitle = "log-skalierte y-Achse") +   
+   scale_color_viridis(option = "magma")
 ```
 
 ```{r barrierefreiheit, exercise = TRUE, exercise.cap = "Barrierefreiheit"}
-ggplot(einkaufen, aes(x = alter, y = weg, color = kochen)) +
-   geom_point() +
+ggplot(einkaufen, aes(x = alter, 
+                      y = weg, 
+                      color = kochen)) +
+   geom_point(size = 4) +
+   scale_y_log10() +
+   labs(subtitle = "log-skalierte y-Achse")
    
 ```
 
