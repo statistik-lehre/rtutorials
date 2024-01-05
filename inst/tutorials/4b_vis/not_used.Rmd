@@ -265,3 +265,20 @@ ggplot(einkaufen_recoded, aes(x = verkehrsmittel, y = alter)) +
   geom_boxplot()
 ```
 
+
+
+## color 
+
+Dazu kommt nun, dass unterschieden werden kann zwischen Bio- und Nicht-Bioläden. Aber **Achtung**: Es ist kein ausgewogenes Design, es wurde in deutlich mehr Bio- als Nicht-Bioläden erhoben. Das kann in der statistischen Analyse später noch besondere Beachtung benötigen. Doch zu dem Plot: Scheint erstmal recht einleuchtend. Was jedoch noch besser wäre, um es vergleichbarer zu machen, wäre wenn die farbigen Balken *nebeneinander* und nicht aufeinander stünden. Das lässt sich mit dem Argument `position = "dodge"` erreichen:
+
+```{r am_fuellung, exercise = TRUE,  exercise.cap = "position dodge"}
+ggplot(einkaufen, aes(x = verkehrsmittel, fill = bioladen)) +
+  geom_bar(position = "dodge")
+```
+
+Jetzt ist nur noch bisschen hässlich, dass die Balken unterschiedlich breit sind, je nachdem, ob eine oder beide Faktorstufen vorkommen. Das lässt sich mit dem Argument `position = position_dodge(preserve = "single")` umgestalten:
+
+```{r am_f_fill, exercise = TRUE,  exercise.cap = "postion dodge in single"}
+ggplot(einkaufen, aes(x = verkehrsmittel, fill = bioladen)) +
+  geom_bar(position = position_dodge(preserve = "single"))
+```

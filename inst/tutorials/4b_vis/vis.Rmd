@@ -973,46 +973,32 @@ ggplot(einkaufen, aes(y = ort, fill = verkehrsmittel)) +
   geom_bar()
 ```
 
-<!-- Dazu kommt nun, dass unterschieden werden kann zwischen Bio- und Nicht-Bioläden. Aber **Achtung**: Es ist kein ausgewogenes Design, es wurde in deutlich mehr Bio- als Nicht-Bioläden erhoben. Das kann in der statistischen Analyse später noch besondere Beachtung benötigen. Doch zu dem Plot: Scheint erstmal recht einleuchtend. Was jedoch noch besser wäre, um es vergleichbarer zu machen, wäre wenn die farbigen Balken *nebeneinander* und nicht aufeinander stünden. Das lässt sich mit dem Argument `position = "dodge"` erreichen: -->
-
-<!-- ```{r am_fuellung, exercise = TRUE,  exercise.cap = "position dodge"} -->
-<!-- ggplot(einkaufen, aes(x = verkehrsmittel, fill = bioladen)) + -->
-<!--   geom_bar(position = "dodge") -->
-<!-- ``` -->
-
-<!-- Jetzt ist nur noch bisschen hässlich, dass die Balken unterschiedlich breit sind, je nachdem, ob eine oder beide Faktorstufen vorkommen. Das lässt sich mit dem Argument `position = position_dodge(preserve = "single")` umgestalten: -->
-
-<!-- ```{r am_f_fill, exercise = TRUE,  exercise.cap = "postion dodge in single"} -->
-<!-- ggplot(einkaufen, aes(x = verkehrsmittel, fill = bioladen)) + -->
-<!--   geom_bar(position = position_dodge(preserve = "single")) -->
-<!-- ``` -->
-
 #### Color
 
 Farbe (`color`) ist ein bisschen tricky: Bei Balkendiagrammen, Histogrammen und Boxplots wird damit die Umrandung der Balken beeinflusst. Ohne das Attribut *Füllung* sieht ein Plot dann so aus:
 
 ```{r am_f_color, exercise = TRUE,  exercise.cap = "color"}
-ggplot(einkaufen, aes(x = verkehrsmittel, color = bioladen)) +
+ggplot(einkaufen, aes(y = ort, color = verkehrsmittel)) +
   geom_bar()
 ```
 
-<!-- bug Bei Punktdiagrammen und Liniendiagrammen wird die Punkt- bzw. Linienfarbe durch `color` bestimmt. Wird das Attribut *Füllung* vergeben passiert einfach nichts. Probiere es gerne selbst aus und ändere `color` zu `fill`.  -->
+Bei Punktdiagrammen und Liniendiagrammen wird die Punkt- bzw. Linienfarbe durch `color` bestimmt. Wird das Attribut *Füllung* vergeben passiert einfach nichts. Probiere es gerne selbst aus und ändere `color` zu `fill`.
 
-<!-- ```{r am_f_color_2, exercise = TRUE, exercise.setup = "ausreisser5",  exercise.cap = "color im Scatterplot"} -->
+```{r am_f_color_2, exercise = TRUE, exercise.cap = "color im Scatterplot"}
+ggplot(einkaufen, aes(x = alter, y = weg, color = bioladen)) +
+  geom_point()
 
-<!-- ggplot(einkaufen_recoded, aes(x = alter, y = weg, color = bioladen)) + -->
-
-<!--   geom_point() -->
-
-<!-- ``` -->
+```
 
 #### kontinuierlich
 
 Das `fill` bzw `color` Attribut kann genauso gut auf kontinuierliche Variablen angewendet werden:
 
-<!-- ggplot(einkaufen_recoded, aes(x = alter, y = weg, color = kochen)) + -->
-<!--   geom_point(size = 3) # größere Punkte, um die Farbe sichtbarer zu machen -->
+```{r}
+ggplot(einkaufen_recoded, aes(x = alter, y = weg, color = kochen)) +
+  geom_point(size = 3) # größere Punkte, um die Farbe sichtbarer zu machen
 
+```
 
 ### Shape
 
@@ -1129,10 +1115,10 @@ question_radio("Was passiert, wenn du in `aes()` eine Variable auf `alpha` mapps
 
 question_checkbox("Welche Variablen können auf das Attribut `fill` gemappt werden?",
                   answer("Stetige Variablen", correct = TRUE,
-                         message = "Dann wird ein Farbverlauf erzeugt"),
+                         message = "Für stetige Variablen wird ein Farbverlauf erzeugt"),
                   answer("Diskrete Variablen",
                          correct = TRUE,
-                         message = "Dann werden einzelne Farben für jede Ausprägung vergeben, ohne Farbverläufe."),
+                         message = "Für diskrete Daten werden einzelne Farben für jede Ausprägung vergeben, ohne Farbverläufe."),
                random_answer_order = TRUE,
                allow_retry = TRUE,
                incorrect = random_encouragement("de"),
