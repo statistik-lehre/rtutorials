@@ -1,0 +1,222 @@
+[
+    {
+        "ISBN": "978-3-465-04339-3",
+        "author": [
+            {
+                "family": "Schlaudt",
+                "given": "Oliver"
+            }
+        ],
+        "call-number": "JC574 .S35 2018",
+        "collection-number": "102",
+        "collection-title": "KlostermannRoteReihe",
+        "edition": "Originalausgabe",
+        "id": "schlaudt2018",
+        "issued": {
+            "date-parts": [
+                [
+                    2018
+                ]
+            ]
+        },
+        "key": "CIMIH47P",
+        "libraryid": "1",
+        "number-of-pages": "192",
+        "providerkey": "Zotero",
+        "publisher": "Vittorio Klostermann",
+        "publisher-place": "Frankfurt am Main",
+        "source": "Library of Congress ISBN",
+        "title": "Die politischen Zahlen: über Quantifizierung im Neoliberalismus",
+        "title-short": "Die politischen Zahlen",
+        "type": "book"
+    },
+    {
+        "author": [
+            {
+                "family": "Damerow",
+                "given": "Peter"
+            },
+            {
+                "family": "Nissen",
+                "given": "H. J."
+            },
+            {
+                "family": "Englund",
+                "given": "Robert K."
+            }
+        ],
+        "container-title": "Spektrum der Wissenschaft",
+        "id": "damerow1988",
+        "issued": {
+            "date-parts": [
+                [
+                    1988
+                ]
+            ]
+        },
+        "key": "ZMSC8DYT",
+        "libraryid": "1",
+        "page": "74-85",
+        "providerkey": "Zotero",
+        "title": "Die Entstehung der Schrift",
+        "type": "article-journal",
+        "volume": "2"
+    },
+    {
+        "ISBN": "978-1-4919-1039-9 978-1-4919-1036-8",
+        "author": [
+            {
+                "family": "Wickham",
+                "given": "Hadley"
+            },
+            {
+                "family": "Grolemund",
+                "given": "Garrett"
+            }
+        ],
+        "call-number": "QA276.45.R3 W53 2016",
+        "edition": "First edition",
+        "id": "wickham2016",
+        "issued": {
+            "date-parts": [
+                [
+                    2016
+                ]
+            ]
+        },
+        "key": "NYFUJ8UJ",
+        "libraryid": "1",
+        "number-of-pages": "492",
+        "oclc": "ocn968213225",
+        "providerkey": "2509FBBE-5BB0-44C4-B119-6083A81ED673",
+        "publisher": "O’Reilly",
+        "publisher-place": "Sebastopol, CA",
+        "source": "Library of Congress ISBN",
+        "title": "R for data science: import, tidy, transform, visualize, and model data",
+        "title-short": "R for data science",
+        "type": "book"
+    },
+    {
+        "URL": "https://moderndive.com/",
+        "author": [
+            {
+                "family": "Ismay",
+                "given": "Chester"
+            },
+            {
+                "family": "Kim",
+                "given": "Albert Y."
+            }
+        ],
+        "container-title-short": "Modern Dive",
+        "id": "ismay2022",
+        "issued": {
+            "date-parts": [
+                [
+                    2022
+                ]
+            ]
+        },
+        "libraryid": "",
+        "providerkey": "2509FBBE-5BB0-44C4-B119-6083A81ED673",
+        "title": "Statistical Inference via Data Science A ModernDive into R and the Tidyverse",
+        "type": "book"
+    },
+    {
+        "ISBN": "978-0-387-98140-6",
+        "author": [
+            {
+                "family": "Wickham",
+                "given": "Hadley"
+            }
+        ],
+        "call-number": "QA90 .W53 2009",
+        "collection-title": "Use R!",
+        "id": "wickham2009",
+        "issued": {
+            "date-parts": [
+                [
+                    2009
+                ]
+            ]
+        },
+        "key": "JM6NVVL6",
+        "libraryid": "1",
+        "number-of-pages": "212",
+        "oclc": "ocn382399721",
+        "providerkey": "2509FBBE-5BB0-44C4-B119-6083A81ED673",
+        "publisher": "Springer",
+        "publisher-place": "New York",
+        "source": "Library of Congress ISBN",
+        "title": "Ggplot2: elegant graphics for data analysis",
+        "title-short": "Ggplot2",
+        "type": "book"
+    },
+    {
+        "DOI": "10.1007/0-387-28695-0",
+        "ISBN": "978-0-387-24544-7",
+        "URL": "http://link.springer.com/10.1007/0-387-28695-0",
+        "accessed": {
+            "date-parts": []
+        },
+        "author": [
+            {
+                "family": "Wilkinson",
+                "given": "Leland"
+            }
+        ],
+        "collection-title": "Statistics and Computing",
+        "id": "wilkinson2005",
+        "issued": {
+            "date-parts": [
+                [
+                    2005
+                ]
+            ]
+        },
+        "key": "5V2MYZWD",
+        "language": "en",
+        "libraryid": "1",
+        "providerkey": "2509FBBE-5BB0-44C4-B119-6083A81ED673",
+        "publisher": "Springer-Verlag",
+        "publisher-place": "New York",
+        "source": "DOI.org (Crossref)",
+        "title": "The Grammar of Graphics",
+        "type": "book"
+    },
+    {
+        "DOI": "10.5281/ZENODO.7490464",
+        "ISBN": "9780645571929",
+        "URL": "https://zenodo.org/record/7490464",
+        "accessed": {
+            "date-parts": []
+        },
+        "author": [
+            {
+                "family": "Gagolewski",
+                "given": "Marek"
+            }
+        ],
+        "id": "gagolewski2023",
+        "issued": {
+            "date-parts": [
+                [
+                    2023,
+                    6,
+                    28
+                ]
+            ]
+        },
+        "key": "2FGU9XGW",
+        "language": "en",
+        "libraryid": "1",
+        "note": "Version Number: v1.0.0-book",
+        "providerkey": "2509FBBE-5BB0-44C4-B119-6083A81ED673",
+        "publisher": "Zenodo",
+        "rights": "Creative Commons Attribution Non Commercial No Derivatives 4.0 International, Open Access",
+        "source": "DOI.org (Datacite)",
+        "title": "Deep R Programming",
+        "type": "article-journal",
+        "version number": "v1.0.0-book"
+    }
+]
