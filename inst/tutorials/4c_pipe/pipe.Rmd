@@ -7,6 +7,9 @@ output:
     fig_caption: no
     progressive: true
     allow_skip: true
+tutorial:
+  id: pipe
+  version: 1
 runtime: shiny_prerendered
 bibliography: ref.json
 link-citations: TRUE

@@ -6,6 +6,9 @@ output:
     css: css/boxes.css    
     fig_caption: no
     df_print: default
+tutorial:
+  id: introduction
+  version: 1
 runtime: shiny_prerendered
 bibliography: ref.json
 link-citations: TRUE

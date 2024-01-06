@@ -5,6 +5,9 @@ output:
     language: de
     css: css/boxes.css
     fig_caption: no
+tutorial:
+  id: zentrale_tendenj
+  version: 1
 runtime: shiny_prerendered
 bibliography: ref.json
 link-citations: TRUE
