@@ -6,6 +6,9 @@ output:
     css: css/boxes.css
     fig_caption: no
     allow_skip: true
+tutorial:
+  id: dispersion
+  version: 1
 runtime: shiny_prerendered
 bibliography: ref.json
 link-citations: TRUE
