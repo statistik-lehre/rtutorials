@@ -7,15 +7,16 @@ output:
     fig_caption: no
     progressive: true
     allow_skip: true
+tutorial:
+      id: ggplot
+      version: 5.2
 runtime: shiny_prerendered
 bibliography: ref.json
 link-citations: TRUE
 description: Schnelle Diagramme erstellen, schöne Diagramme erstellen. Die Grammar of Graphs wird kurz erklärt, das Prinzip wonach ggplot2 aufgebaut ist. Die Erstellung verschiedener Diagrammarten wird geübt. Aesthetic Mappings, Geoms, Facets. 
 resource_files:
 - css/boxes.css
-tutorial:
-      id: ggplot
-      version: 5.2
+
 ---
 
 ```{r setup, include=FALSE}
