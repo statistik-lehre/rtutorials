@@ -16,9 +16,6 @@ link-citations: TRUE
 description: Lerne den Pipe-Operator kennen, und wie Code dadurch lesbarer wird. 
 resource_files:
 - css/boxes.css
-tutorial:
-  id: pipe
-  version: 1
 ---
 
 ```{r setup, include=FALSE}
