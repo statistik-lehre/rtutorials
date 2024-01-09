@@ -1362,9 +1362,7 @@ ggplot(einkaufen, aes(x = verkehrsmittel, fill = bioladen )) +
 Die `viridis`-Funktion nimmt jedoch noch weitere Argumente, mit denen du hier die Farbpaletten selbst wählen kannst.
 Ein Ausschnitt der verfügbaren Farbpaletten ist hier:
 
-```{r}
-knitr::include_graphics("images/viridis.png")
-```
+![](images/viridis.png){width="75%"}
 
 [source](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html)
 
@@ -1402,9 +1400,9 @@ ggplot(einkaufen, aes(x = alter,
 
 **Legends**
 
-```{r}
-knitr::include_graphics("images/legends.png")
-```
+![](images/legends.png){width="30%"}
+
+
 
 [source](https://www.reddit.com/media?url=https%3A%2F%2Fpreview.redd.it%2Fgbjhlcz41i871.jpg%3Fauto%3Dwebp%26s%3D7a940a1c20340cefabf513e1a5987359542a3b72)
 
