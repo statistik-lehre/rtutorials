@@ -42,6 +42,13 @@ kleine Checkliste mit abhakbaren Checkboxen:
 -   <input type="checkbox" unchecked> ausklappbare Abschnitte </input>
 -   <input type="checkbox" unchecked> LaTex </input>
 
+<hr>
+
+Einiges im folgenden orientiert sich an einem tollen, frei verfügbaren R Tutorial namens [*DoSStoolkit*](https://dosstoolkit.com/) [[Copyright (c) 2021 Rohan Alexander](https://dosstoolkit.com/LICENSE.html)]. Wir haben die Reihenfolge geändert, Sachen übersetzt und paraphrasiert und unsere eigenen Gedanken hinzugefügt.
+
+Es ist in vielen Teilen ausführlicher als dieses Tutorial und Allen, die vor englischer Sprache nicht zurückstrecken, wärmstens zu empfehlen dort einen Blick hinein zu werfen. 
+
+<hr>
 
 ## Tidyverse
 
@@ -63,15 +70,18 @@ Folgende Pakete gehören zum Tidyverse:
 
 ![](images/ggplot.png){width="20%"} 
 
--   `ggplot2`: konsistente *Grammar of Graphs* für Visualisierungen
+-   `ggplot2`: konsistente *Grammar of Graphs* für Visualisierungen (kannst du ja sogar schon 👏)
+
+![](images/tidyr.png){width="20%"}
+
+-   `tidyr`: Daten in ein *tidy*-Format bringen
+
 
 ![](images/dplyr.png){width="20%"}
 
 -   `dplyr`: *Data Plyers* "Datenzange"
 
-![](images/tidyr.png){width="20%"}
 
--   `tidyr`: Daten in ein *tidy*-Format bringen
 
 -   ... und noch einige mehr, unter anderem `tibble`, `readr` and `purrr`.
 
@@ -79,7 +89,7 @@ Alle diese Pakete können entweder einzeln installiert werden oder alle auf einm
 
 ```{r tidyinstall, exercise = TRUE}
 # Nur EIN Mal zur Installation ausführen
-# install.packages("tidyverse") # ist bereits installiert
+# install.packages("tidyverse") # ist jedoch mit dem Tutorial bereits installiert
 
 # für jede Session ausführen, in der tidyverse 
 # Pakete genutzt werden sollen
@@ -161,12 +171,160 @@ Source: [R for Data Science, H. Wickham, M. Cetinkaya-Rundel, G. Grolemund](http
 
 Mit diesen drei Grundregeln werden Sie weniger Kopfschmerzen bei der Analyse von Daten mit R bekommen.
 
-
-
 ## dplyr
+
+Das dplyr-Paket wird verwendet, um einen Datensatz zu manipulieren, den du mit readr und tidyr erstellt hast.
+
+    select() ermöglicht es dir, Variablen anhand ihrer Namen auszuwählen.
+    filter() ermöglicht es dir, Fälle basierend auf ihren Werten auszuwählen.
+    summarise() fasst mehrere Werte zu einer einzigen Zusammenfassung zusammen.
+    arrange() ermöglicht es dir, die Reihenfolge der Zeilen zu ändern.
+    group_by() ermöglicht es dir, die Mutation gruppenweise durchzuführen.
+
+Das sind einige gute Beispiele für Funktionen, die du im Modul lernen wirst.
+
+Die repräsentativste Funktion, die von tidyr und dplyr unterstützt wird, ist der Pipe-Operator %>%. Durch die Verwendung dieses Operators werden Redundanz und Ineffizienz von duplizierten Variablennamen im Code vermieden. Nicht nur der Pipe-Operator, sondern es gibt auch viele andere nützliche Funktionen, die diese beiden Pakete zu lernen unerlässlich machen.
+
+Hier findest du weitere Informationen zum dplyr-Paket.
+
+### select
+
+In dieser Lektion werden wir lernen, wie man die Funktion `select()` verwendet.
+
+Wenn du mit Daten arbeitest, stellst du möglicherweise fest, dass es zu viele Variablen gibt, und vielleicht fragst du dich, wie du nur die Variablen auswählen kannst, die du für die Analyse verwenden möchtest. Nun, es gibt eine super einfache Möglichkeit, die von dir ausgewählten Variablen zu sehen, indem du dich auf Variablen anhand des Namens der Spalte beziehst, und das mit nur einer einfachen Funktion.
+
+`select()` ist eine Funktion, die nur die von dir angegebenen Variablen behält.
+
+Die Ausgabe der Funktion ist eine Teilmenge der Eingabedaten (Spalten), möglicherweise in einer anderen Reihenfolge. Die Funktion select() verändert jedoch nicht den Originaldatensatz/die Originalspalten. Wenn du also die neuen ausgewählten Spalten verwenden möchtest, musst du den Wert einer neuen Variable zuweisen.
+
+Vorausgesetzte Fähigkeiten sind:
+
+- Du solltest ein gutes Verständnis von Daten (Spalte, Zeile, Variable) und davon haben, wie man Daten importiert.
+
+- Du solltest auch wissen, wie man den Pipe-Operator (%>%) verwendet.
+
+Hier ist ein einfacher Datensatz mit durchschnittlichen Temperaturen für jede Jahreszeit. Wie du im Ergebnis sehen kannst, gibt es 3 Beobachtungen (Zeilen) und 4 Variablen (Spalten) im Datensatz.
+
+```{r echo = F}
+temperature_data <- tibble(spring = c(3, 5, 10), 
+                  summer = c(23, 27, 25), 
+                  fall = c(19, 17, 14), 
+                  winter = c(2, -1, -8)) 
+temperature_data
+```
+
+Nehmen wir an, wir möchten nur die Temperaturen im Frühling sehen. Um dies zu tun, wähle die Variablen aus, die du behalten möchtest, indem du den Variablennamen mit der Funktion select in den Parameter einfügst. Hier möchte ich nur die Spalte "spring" sehen, indem ich den Code wie folgt schreibe:
+
+
+```{r}
+select(temperature_data, spring)
+```
+
+Es ist jedoch wichtig zu wissen, dass sich die Daten in `temperature_data` nicht geändert haben, wie du sehen kannst. Die Funktion verändert den Originaldatensatz nicht.
+
+```{r}
+temperature_data
+```
+
+Wenn du den neuen Datensatz mit der Variable "spring" verwenden möchtest, musst du die ausgewählte(n) Spalte(n) einer neuen Variable zuweisen:
+
+```{r}
+new_data = select(temperature_data, spring)
+new_data
+```
+
+#### Operatoren:
+
+Jetzt wissen wir, wie man die Funktion select im Minimum verwendet. Es gibt verschiedene Möglichkeiten, die Funktion mit einigen Operatoren zu verwenden.
+
+- `|`  **ODER**-Operator
+- `&` **UND**-Operator
+- `!`  eine Aussage oder eine Spalte zu **negieren**
+- `-` eine Spalte **ausschließen**
+- `:` eine Reihe **aufeinanderfolgender Variablen auswählen**
+
+**1. Du kannst mehrere Variablen durch Kommas getrennt auswählen. Die Reihenfolge der Eingabe ist wichtig**
+
+```{r}
+select(temperature_data, winter, summer)
+```
+
+
+**2. Eine andere Möglichkeit, mehrere Variablen auszuwählen, besteht darin, den Operator `c()`. zu verwenden.**\ Die Reihenfolge ist hierbei jedoch zu beachten. 
+
+```{r}
+temperature_data %>%
+select(c(winter, fall))
+```
+
+**3.Der Operator `!`** verneint eine Auswahl, der Operator `&` bedeutet "UND" (Schnittmenge), während `|` die Vereinigung der Auswahlen (ODER) vornimmt.**
+
+```{r}
+temperature_data %>%
+select(!winter)
+select(temperature_data, !winter & !summer)
+```
+
+`select(temperature_data, winter & summer)` würde einen Fehler verursachen, da es keine Variable geben kann, die sowohl Winter als auch Sommer ist.
+
+**4.Der Operator `:`** wählt einen Bereich aufeinanderfolgender Variablen aus, beginnend mit der Variable links des Doppelpunkts bis zur Variable rechts des Doppelpunkts.
+
+```{r}
+temperature_data %>% 
+  select(summer:winter)
+```
+
+**5.Der Operator `-`** schließt eine Spalte aus.
+
+Wenn du die meisten Spalten im Datensatz auswählen möchtest und nur einige Spalten ausschließen möchtest, gibt es eine einfachere Möglichkeit. Du kannst einfach - vor den Namen der Spalte setzen, die du ausschließen möchtest. Zum Beispiel möchte ich die Spalten "summer" und "winter" ausschließen, dann setze ich einfach ein - vor die Spalten:
+
+```{r}
+temperature_data %>% 
+  select(-summer, -winter)
+```
+
+::: Aufgabe
+Ändere diesen Code so, dass wir nur die Spalten "winter" und
+"sommer" sehen können, indem du den Operator "|" verwendest.
+:::
+
+```{r q1_select, exercise=TRUE}
+temperature_data <- tibble(spring = c(3, 5, 10), 
+                  summer = c(23, 27, 25), 
+                  fall = c(19, 17, 14), 
+                  winter = c(2, -1, -8)) 
+
+select(temperature_data, spring)
+```
+
+```{r q1_select-solution}
+select(temperature_data, winter|summer)
+```
+
+```{r q2_select}
+question_checkbox(
+  "Es gibt Variablen 'id', 'gpa', 'age', 'height', 'weight' in einem Datensatz 'data'. Du möchtest nur die Variablen 'id', 'height' und 'weight' auswählen. Was solltest du schreiben? (Wähle alle zutreffenden Optionen aus)",
+  answer("data %>% select(id, height, weight)", 
+         correct = T),
+  answer("data %>% select(id & height & weight)", 
+         message = "Bei dem & Operator ist es etwas tricky. Erinnere dich, dass alle Bedingungen TRUE sein müssen, damit die Bedingung erfüllt ist. Es gibt logischerweise keine Variable, die sowohl id, height und weight  beinhaltet."),
+  answer("data %>% select(id | height | weight)", 
+         correct = T),
+  answer("data %>% select(id | height:weight)", 
+         correct = T),
+  allow_retry = T,
+  random_answer_order = T,
+  incorrect = "Versuche es erneut. Du schaffst das!"
+)
+```
 
 ## tidyr
 
+Das tidyr Paket hilft uns dabei unsere Daten in ein *tidy*-Format zu bringen. Die Hauptfunktionen von *tidyr* sind:
+
+- Pivoting: Dies ermöglicht die Umwandlung zwischen der langen und breiten Form eines Data Frames. In diesem Kapitel werden die Funktionen `pivot_wider()` und `pivot_longer()` vorgestellt. 
+
+- Umgang mit fehlenden Werten: Du kannst NA-Werte mit der Funktion `drop_na()` entfernen oder du kannst  `replace_na()` verwenden, um die NA-Werte durch einen bestimmten Wert zu ersetzen.
 
 ## Abschlussquiz
 
