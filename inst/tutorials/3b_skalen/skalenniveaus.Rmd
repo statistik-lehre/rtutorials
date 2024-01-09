@@ -8,7 +8,6 @@ output:
 tutorial:
   id: skalenniveaus
   version: 1
-tutorial:
 runtime: shiny_prerendered
 bibliography: ref.json
 link-citations: TRUE
