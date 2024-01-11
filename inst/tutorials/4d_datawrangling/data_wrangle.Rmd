@@ -10,11 +10,11 @@ output:
 runtime: shiny_prerendered
 bibliography: ref.json
 link-citations: TRUE
-description: Mit Daten ringen.
+description: Mit Daten ringen. Insbesondere dplyr Funktionen werden eingeführt und geübt. 
 resource_files:
 - css/boxes.css
 tutorial:
-      id: visbasic
+      id: datawrangle
       version: 1
 editor_options: 
   markdown: 
@@ -23,16 +23,20 @@ editor_options:
 
 ```{r setup, include=FALSE}
 library(learnr)
-library(dplyr)
-library(tidyr)
+library(rtutorials)
+library(tidyverse)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
 ## Inhalt
 
-kurze Beschreibung des Inhalts
+Im wissenschaftlichen Prozess steht die Daten-Aufbereitung
+logischerweise vor der Visualisierung und Auswertung. Die Daten werden
+so arrangiert, dass Sie später im richtigen Format für die Auswertung
+vorliegen. Dabei werden unter anderem auch Ausreißer analysiert und
+fehlende Werte betrachtet.
 
-Verortung auf der Roadmap
+![](images/prozess.png){width="80%"}
 
 ## Lernziele
 
@@ -46,8 +50,9 @@ In diesem Tutorial lernst du:
 <hr>
 
 Einiges im folgenden orientiert sich an einem tollen, frei verfügbaren R
-Tutorial namens [*DoSStoolkit*](https://dosstoolkit.com/) [@rohan2023]. Wir haben die Reihenfolge geändert, Sachen übersetzt und
-paraphrasiert und unsere eigenen Gedanken hinzugefügt.
+Tutorial namens [*DoSStoolkit*](https://dosstoolkit.com/) [@rohan2023].
+Wir haben die Reihenfolge geändert, Sachen übersetzt und paraphrasiert
+und unsere eigenen Gedanken hinzugefügt.
 
 Es ist in vielen Teilen ausführlicher als dieses Tutorial und Allen, die
 vor englischer Sprache nicht zurückstrecken, wärmstens zu empfehlen dort
@@ -90,19 +95,16 @@ Folgende Pakete gehören zum *tidyverse*:
 
 -   `ggplot2`: konsistente *Grammar of Graphs* für Visualisierungen
     (kannst du ja sogar schon 👏)
-    
-![](images/ggplot.png){width="20%"}
 
+![](images/ggplot.png){width="20%"}
 
 -   `tidyr`: Daten in ein *tidy*-Format bringen
 
 ![](images/tidyr.png){width="20%"}
 
-
 -   `dplyr`: *Data Plyers* "Datenzange"
 
 ![](images/dplyr.png){width="20%"}
-
 
 -   ... und noch einige mehr, unter anderem `tibble`, `readr` and
     `purrr`.
@@ -144,8 +146,8 @@ df |> arrange(Height) |> pivot_wider(id_cols = "id",
 
 ## Datenerhebung
 
-Im Falle unseres Beispieldatensatzes `einkaufen` haben 8 Studierende sich
-vor Bioläden in und um Kassel gestellt und den Kund_innen Fragen
+Im Falle unseres Beispieldatensatzes `einkaufen` haben 8 Studierende
+sich vor Bioläden in und um Kassel gestellt und den Kund_innen Fragen
 gestellt - zum Beispiel zum Lieblingsessen, wie oft sie selbst kochen
 und wie weit der Weg bis zum Laden war.
 
@@ -231,8 +233,12 @@ group_by() ermöglicht es dir, die Mutation gruppenweise durchzuführen.
 Das sind einige gute Beispiele für Funktionen, die du im Modul lernen
 wirst.
 
-Jetzt ist auch die Zeit, in der dein Wissen und Können zum Thema Pipe-Operator `|>` nützlich wird. Diesen werden wir heute umfassend nutzen. Falls du im Internet Code findest der diese Pipe `%>%`
-verwendet, die stammt ebenfalls aus dem *tidyverse*. Erinnere dich daran, dass du die Pipe ganz easy mit der Tastenkombination `strg bzw. Cmd + shift + M` hinzufügen kannst.  
+Jetzt ist auch die Zeit, in der dein Wissen und Können zum Thema
+Pipe-Operator `|>` nützlich wird. Diesen werden wir heute umfassend
+nutzen. Falls du im Internet Code findest der diese Pipe `%>%`
+verwendet, die stammt ebenfalls aus dem *tidyverse*. Erinnere dich
+daran, dass du die Pipe ganz easy mit der Tastenkombination
+`strg bzw. Cmd + shift + M` hinzufügen kannst.
 
 ## select
 
@@ -300,7 +306,9 @@ new_data <- select(temperature_data, spring)
 new_data
 ```
 
-Du kannst auch **mehrere Variablen durch Kommas getrennt auswählen**, solange der Datensatz der erste Input der Funktion ist. Geanu hier ist dann auch die Pipe nützlich, da wir das damit sicherstellen.
+Du kannst auch **mehrere Variablen durch Kommas getrennt auswählen**,
+solange der Datensatz der erste Input der Funktion ist. Geanu hier ist
+dann auch die Pipe nützlich, da wir das damit sicherstellen.
 
 ```{r select4, exercise = TRUE, exercise.setup = "temperature"}
 temperature_data |>
@@ -309,8 +317,9 @@ temperature_data |>
 
 ### Operatoren:
 
-Jetzt wissen wir, wie die Funktion `select()` funktioniert. Es
-gibt darüber hinaus noch verschiedene Möglichkeiten, die Funktion mit diesen hilfreichen Operatoren zu erweitern:
+Jetzt wissen wir, wie die Funktion `select()` funktioniert. Es gibt
+darüber hinaus noch verschiedene Möglichkeiten, die Funktion mit diesen
+hilfreichen Operatoren zu erweitern:
 
 -   `!` eine Aussage oder eine Spalte **negieren**
 -   `|` **ODER**-Operator
@@ -326,7 +335,8 @@ select(!winter)
 select(temperature_data, !winter & !summer)
 ```
 
-**die Operatoren `|` und `&`** wählen die Vereinigung (`|`) oder eine Schnittmenge (`&`) der Auswahlen aus.
+**die Operatoren `|` und `&`** wählen die Vereinigung (`|`) oder eine
+Schnittmenge (`&`) der Auswahlen aus.
 
 ```{r select6, exercise = TRUE, exercise.setup = "temperature"}
 # ODER OPERATOR
@@ -335,10 +345,16 @@ select(winter | summer)
 ```
 
 ::: gelb
-Beachte: `select(temperature_data, winter & summer)` würde hingegen einen Fehler verursachen, da es keine Werte geben kann, die eine Schnittmenge aus Winter und Sommer sind. `&` ist besser dafür geeignet nach Bedingungen zu filtern, wie du es vielleicht noch vom Indizieren her kennst.
+Beachte: `select(temperature_data, winter & summer)` würde hingegen
+einen Fehler verursachen, da es keine Werte geben kann, die eine
+Schnittmenge aus Winter und Sommer sind. `&` ist besser dafür geeignet
+nach Bedingungen zu filtern, wie du es vielleicht noch vom Indizieren
+her kennst.
 :::
 
-**4.Der Operator `:`** wählt einen Bereich aufeinanderfolgender Variablen aus, beginnend mit der Variable links des Doppelpunkts bis zur Variable rechts des Doppelpunkts.
+**4.Der Operator `:`** wählt einen Bereich aufeinanderfolgender
+Variablen aus, beginnend mit der Variable links des Doppelpunkts bis zur
+Variable rechts des Doppelpunkts.
 
 ```{r select7, exercise = TRUE, exercise.setup = "temperature"}
 temperature_data |> 
@@ -360,8 +376,9 @@ temperature_data |>
 
 Jetzt bist du dran!
 
-::: Aufgabe
-*1.* Lasse dir vom Datensatz `einkaufen` nur die Variablen `verkehrsmittel` und `alter` ausgeben.
+::: aufgabe
+*1.* Lasse dir vom Datensatz `einkaufen` nur die Variablen
+`verkehrsmittel` und `alter` ausgeben.
 :::
 
 ```{r q1_select, exercise = TRUE}
@@ -379,8 +396,9 @@ einkaufen |>
    select(verkehrsmittel, alter) 
 ```
 
-::: Aufgabe
-*2.* Lasse dir vom Datensatz `einkaufen` alle Variablen bis auf `id` und `datum` ausgeben.
+::: aufgabe
+*2.* Lasse dir vom Datensatz `einkaufen` alle Variablen bis auf `id` und
+`datum` ausgeben.
 :::
 
 ```{r q2_select, exercise = TRUE}
@@ -414,42 +432,61 @@ question_checkbox("Es gibt Variablen 'id', 'gpa', 'age', 'height', 'weight' in e
 )
 ```
 
-Super, das sitzt! 👌
-Dann kann es jetzt zur nächsten dplyr Funktion weitergehen.
+Super, das sitzt! 👌 Dann kann es jetzt zur nächsten dplyr Funktion
+weitergehen.
 
 ## filter
 
-Die `filter()`-Funktion wird verwendet, um Zeilen aus einem gegebenen Data Frame basierend auf bestimmten Kriterien zu extrahieren. Alle Zeilen, die diese Kriterien nicht erfüllen, werden verworfen.
+Die `filter()`-Funktion wird verwendet, um Zeilen aus einem gegebenen
+Data Frame basierend auf bestimmten Kriterien zu extrahieren. Alle
+Zeilen, die diese Kriterien nicht erfüllen, werden verworfen.
 
-Diese Kriterien werden in Form von logischen Bedingungen geschrieben, die ausgewertet werden können. Zum Beispiel können wir, wenn ein DataFrame `ToothGrowth` eine Variable namens `len` für *length* hat, alle Zeilen extrahieren, bei denen `len` gleich 22 ist, mit dem Ausdruck `len == 22.0`. Es können eine einzelne Bedingung oder mehrere Bedingungen vorhanden sein.
+Diese Kriterien werden in Form von logischen Bedingungen geschrieben,
+die ausgewertet werden können. Zum Beispiel können wir, wenn ein
+DataFrame `ToothGrowth` eine Variable namens `len` für *length* hat,
+alle Zeilen extrahieren, bei denen `len` gleich 22 ist, mit dem Ausdruck
+`len == 22.0`. Es können eine einzelne Bedingung oder mehrere
+Bedingungen vorhanden sein.
 
 Einige nützliche Funktionen und Operatoren sind:
 
 -   `==`, `>`, `<`, `>=`, `<=`
 -   `&`, `|`, `!`, `xor()`
--   `is.na()
+-   \`is.na()
 
-`filter()` funktioniert dabei ähnlich wie das Indizieren anhand von eckigen Klammern `[]` in `Base R`. Allerdings, falls beim Auswerten unserer Bedingungen auf einer Zeile NAs auftreten, verwirft `filter()` diese Zeilen, während `[]` diese weiterhin extrahiert. Das solltest du also unbedingt im Kopf behalten.
+`filter()` funktioniert dabei ähnlich wie das Indizieren anhand von
+eckigen Klammern `[]` in `Base R`. Allerdings, falls beim Auswerten
+unserer Bedingungen auf einer Zeile NAs auftreten, verwirft `filter()`
+diese Zeilen, während `[]` diese weiterhin extrahiert. Das solltest du
+also unbedingt im Kopf behalten.
 
 ### Welche Argumente nimmt `filter()`?
 
-- `.data`: den Data Frame, mit dem wir arbeiten
-- ` ...`: die Bedingungen für die zu extrahierenden Zeilen
-- `.preserve`: ob wir die Gruppierung des Data Frames erhalten möchten
+-   `.data`: den Data Frame, mit dem wir arbeiten
+-   `...`: die Bedingungen für die zu extrahierenden Zeilen
+-   `.preserve`: ob wir die Gruppierung des Data Frames erhalten möchten
 
 ### Welchen Wert gibt `filter()` zurück?
 
-`filter()` gibt einen Data Frame zurück, der eine Teilmenge der Zeilen des Data Frames basierend auf den definierten Bedingungen oder Kriterien enhält. Dabei bleiben die Spalten unverändert und die Reihenfolge der Zeilen bleibt ebenfalls gleich. Aber schauen wir es uns doch einfach mal an. 
+`filter()` gibt einen Data Frame zurück, der eine Teilmenge der Zeilen
+des Data Frames basierend auf den definierten Bedingungen oder Kriterien
+enhält. Dabei bleiben die Spalten unverändert und die Reihenfolge der
+Zeilen bleibt ebenfalls gleich. Aber schauen wir es uns doch einfach mal
+an.
 
-Angenommen, wir interessieren uns nur für die Antworten von Menschen, deren Lieblingsessen "Pasta" ist. So könnten wir mit dem folgenden Code entsprechend nur jene Zeilen ausgeben lassen, bei denen die Befragten "Pasta" als Lieblingsessen angaben.
+Angenommen, wir interessieren uns nur für die Antworten von Menschen,
+deren Lieblingsessen "Pasta" ist. So könnten wir mit dem folgenden Code
+entsprechend nur jene Zeilen ausgeben lassen, bei denen die Befragten
+"Pasta" als Lieblingsessen angaben.
 
 ```{r filter1, exercise = TRUE}
 einkaufen |> 
 filter(essen == "Pasta")
 ```
 
-::: Aufgabe
-Ändere den Code so um, dass stattdessen nach dem Verkehrsmittel "Fahrrad" gefiltert wird. 
+::: aufgabe
+Ändere den Code so um, dass stattdessen nach dem Verkehrsmittel
+"Fahrrad" gefiltert wird.
 :::
 
 ```{r filter2, exercise = TRUE}
@@ -462,10 +499,12 @@ einkaufen |>
 filter(verkehrsmittel == "Fahrrad")
 ```
 
-Das hat doch schon mal super geklappt! Gehen wir also einen Schritt weiter. 
+Das hat doch schon mal super geklappt! Gehen wir also einen Schritt
+weiter.
 
-::: Aufgabe
-Ändere den Code so um, dass sowohl nach dem Verkehrsmittel "Fahrrad" als auch einer Weglänge (`weg`) von über `5`km gefiltert wird. 
+::: aufgabe
+Ändere den Code so um, dass sowohl nach dem Verkehrsmittel "Fahrrad" als
+auch einer Weglänge (`weg`) von über `5`km gefiltert wird.
 :::
 
 ```{r filter3, exercise = TRUE}
@@ -484,7 +523,12 @@ einkaufen |>
 filter(verkehrsmittel == "Fahrrad" & weg > 5)
 ```
 
-Noch eine kurze Übung zu den NAs. Wie du oben bereits gelesen hast, werden als default NAs in deiner zu filternden Variable herausgefiltert. Möchtest du dir hingegen nur die NAs einer Variable anzeigen lassen, so ist auch das mit der `filter()` Funktion möglich. Dafür nutzen wir die Funktion `is.na(*variable*)` innerhalb der `filter()` Funktion. Das sieht dann so aus:
+Noch eine kurze Übung zu den NAs. Wie du oben bereits gelesen hast,
+werden als default NAs in deiner zu filternden Variable herausgefiltert.
+Möchtest du dir hingegen nur die NAs einer Variable anzeigen lassen, so
+ist auch das mit der `filter()` Funktion möglich. Dafür nutzen wir die
+Funktion `is.na(*variable*)` innerhalb der `filter()` Funktion. Das
+sieht dann so aus:
 
 ```{r filter4, exercise = TRUE}
 einkaufen |> 
@@ -512,24 +556,35 @@ Super, auch das hast du gemeistert! Weiter geht´s!
 
 ## mutate()
 
-Die `mutate()`-Funktion in R, die durch das Paket dplyr bereitgestellt wird, ermöglicht es, neue Spalten zu deinem Data Frame hinzuzufügen oder vorhandene Spalten zu verändern, basierend auf bestimmten Berechnungen oder Transformationen. Dies ist besonders nützlich, um neue Informationen aus vorhandenen Daten zu generieren oder um bestehende Daten zu modifizieren.
+Die `mutate()`-Funktion in R, die durch das Paket dplyr bereitgestellt
+wird, ermöglicht es, neue Spalten zu deinem Data Frame hinzuzufügen oder
+vorhandene Spalten zu verändern, basierend auf bestimmten Berechnungen
+oder Transformationen. Dies ist besonders nützlich, um neue
+Informationen aus vorhandenen Daten zu generieren oder um bestehende
+Daten zu modifizieren.
 
-Um `mutate()` zu nutzen, müssen wir angeben, welcher Data Frame bearbeitet werden soll, gefolgt von der Definition der neuen oder zu verändernden Spalte(n). Die Syntax lautet:
+Um `mutate()` zu nutzen, müssen wir angeben, welcher Data Frame
+bearbeitet werden soll, gefolgt von der Definition der neuen oder zu
+verändernden Spalte(n). Die Syntax lautet:
 
 `mutate(.data, new_column = expression)`
 
--.data: Das DataFrame, das bearbeitet werden soll.
-- new_column: Der Name der neuen Spalte oder einer vorhandenen Spalte, die modifiziert werden soll.
-- expression: Die Berechnung oder Transformation, die auf die Daten angewendet werden soll.
+-.data: Das DataFrame, das bearbeitet werden soll. - new_column: Der
+Name der neuen Spalte oder einer vorhandenen Spalte, die modifiziert
+werden soll. - expression: Die Berechnung oder Transformation, die auf
+die Daten angewendet werden soll.
 
-Mutate ist somit eine *window function*, das bedeutet, die Funktion nimmt als Input einen Vektor und gibt auch wieder einen gleichlangen Vektor aus. 
-![](images/windowfunc.png){width="70%"}
-[Source - dplyr cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
-
+Mutate ist somit eine *window function*, das bedeutet, die Funktion
+nimmt als Input einen Vektor und gibt auch wieder einen gleichlangen
+Vektor aus. ![](images/windowfunc.png){width="70%"} [Source - dplyr
+cheat
+sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
 
 ### Beispiel
 
-Angenommen, wir wollen für unseren Data Frame `einkaufen` den Weg nicht nur in km sondern auch in Meter verfügbar haben. Um eine neue Spalte `weg_m` zu berechnen, könnten wir folgenden Code verwenden:
+Angenommen, wir wollen für unseren Data Frame `einkaufen` den Weg nicht
+nur in km sondern auch in Meter verfügbar haben. Um eine neue Spalte
+`weg_m` zu berechnen, könnten wir folgenden Code verwenden:
 
 ```{r mutate1, exercise = TRUE}
 # nur weg auswählen, um den data frame zur Veranschaulichung klein zu halten
@@ -538,7 +593,8 @@ einkaufen |>
   mutate(weg_m = weg*1000)
 ```
 
-Willst du die neue Variable jedoch deinem Data Frame hinzufügen, so musst du diese mit dem Assignment auch noch zuweisen:
+Willst du die neue Variable jedoch deinem Data Frame hinzufügen, so
+musst du diese mit dem Assignment auch noch zuweisen:
 
 ```{r mutate2, exercise = TRUE}
 einkaufen <-  einkaufen |> 
@@ -546,21 +602,32 @@ einkaufen <-  einkaufen |>
 ```
 
 ::: gelb
-Vorsicht, benutzt du bei dem Assignment in der Pipe auch die `select()`-Funktion, so verlierst du dabei die anderen Variablen deines Datensatzes. Für solche Fälle kannst du besser einen neuen Data Frame erstellen. 
+Vorsicht, benutzt du bei dem Assignment in der Pipe auch die
+`select()`-Funktion, so verlierst du dabei die anderen Variablen deines
+Datensatzes. Für solche Fälle kannst du besser einen neuen Data Frame
+erstellen.
 :::
 
 Das Ergebnis, kannst du dir grafisch so vorstellen:
 
-![](images/dfmutate.png){width="80%"}
-[Source - dplyr cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
+![](images/dfmutate.png){width="80%"} [Source - dplyr cheat
+sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
 
-Aber `mutate()` kann noch vieles mehr als eine neue Variable berechnen. Schau dir dafür gerne auch das  [cheat sheet vom Paket dyplr](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) an.
+Aber `mutate()` kann noch vieles mehr als eine neue Variable berechnen.
+Schau dir dafür gerne auch das [cheat sheet vom Paket
+dyplr](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
+an.
 
 ### Expertenlevel
 
-Eine sehr interessante Möglichkeiten von `mutate()` ist die bedingte Mutation. Hier können Spalten basierend auf bestimmten Bedingungen erstellt werden.
+Eine sehr interessante Möglichkeiten von `mutate()` ist die bedingte
+Mutation. Hier können Spalten basierend auf bestimmten Bedingungen
+erstellt werden.
 
-Nehmen wir an, wir wollen eine unserer metrischen Variablen in selbst gewählte Kategorien aufteilen. Dafür nutzen wir die Funktion `ifelse(B, y, z)` in `mutate()`. Damit sagen wir R, wenn Bedingung `B`, dann `x` ansonsten `y`.
+Nehmen wir an, wir wollen eine unserer metrischen Variablen in selbst
+gewählte Kategorien aufteilen. Dafür nutzen wir die Funktion
+`ifelse(B, y, z)` in `mutate()`. Damit sagen wir R, wenn Bedingung `B`,
+dann `x` ansonsten `y`.
 
 In einem Beispiel ist dies bestimmt leichter zu verstehen:
 
@@ -572,12 +639,17 @@ einkaufen |>
   select(weg, weglaenge)
 ```
 
-Hier haben wir eine neue Spalte weglaenge erstellt, die basierend auf der Bedingung, ob der Weg "größer" als 5km ist, den Wert "weit" oder ansonsten "nah" enthält. Ziemlich cool, wenn man verstanden hat wie es funktionert. 
+Hier haben wir eine neue Spalte weglaenge erstellt, die basierend auf
+der Bedingung, ob der Weg "größer" als 5km ist, den Wert "weit" oder
+ansonsten "nah" enthält. Ziemlich cool, wenn man verstanden hat wie es
+funktionert.
 
-Wenn du magst, probiere es doch gleich mal selbst aus: 
+Wenn du magst, probiere es doch gleich mal selbst aus:
 
-::: Aufgabe
-Erstelle eine neue kategoriale Variable `alterskategorien` aus `alter`. Wähle dabei nach deinem Ermessen was du für "jung" und "alt" hälst, denn das ist nicht objektiv, wie es bei einer metrischen Variable wäre.
+::: aufgabe
+Erstelle eine neue kategoriale Variable `alterskategorien` aus `alter`.
+Wähle dabei nach deinem Ermessen was du für "jung" und "alt" hälst, denn
+das ist nicht objektiv, wie es bei einer metrischen Variable wäre.
 
 Zur Hilfe: `ifelse(Bedingung, "erfüllt", "nicht_erfüllt")`
 :::
@@ -605,7 +677,8 @@ einkaufen_alter <-  einkaufen |>
 einkaufen_alter |>  count(alterskategorien)
 ```
 
-Wow, das war wirklich nicht leicht! Dann sind die folgenden Frage für dich kein Problem:
+Wow, das war wirklich nicht leicht! Dann sind die folgenden Frage für
+dich kein Problem:
 
 ```{r q1_mutate}
 quiz(caption = "Teste dein Wissen zu `mutate()`!",
@@ -633,15 +706,373 @@ quiz(caption = "Teste dein Wissen zu `mutate()`!",
 )
 ```
 
-## summarise() 
-
-
-
-
-## arrange() 
 ## group_by()
 
+Ein wichtiger Teil der Datenanalyse besteht darin, zu sehen, wie **deine
+Daten in bestimmten Gruppen** aussehen, und die `group_by()` Funktion
+ist dabei sehr hilfreich. Die `group_by()` Funktion nimmt einen
+Datensatz und ermöglicht es dir, andere Funktionen zu verwenden, um eine
+Vorstellung davon zu bekommen, wie diese Gruppen aussehen.
 
+Wenn du beispielsweise einen Datensatz mit den Höhen und Gewichten
+verschiedener Tiere hast, ist die `group_by()` Funktion nützlich, um
+Dinge wie das durchschnittliche Gewicht jedes Tiertyps im Datensatz zu
+finden. Die Funktion `ungroup()` wird verwendet, um die Gruppierung
+durch die `group_by()` Funktion aufzuheben.
+
+Normalerweise wird die `group_by()` Funktion mit anderen
+dplyr-Funktionen kombiniert, um deine Analyse durchzuführen.
+
+Zusammengefasst:
+
+-   Die `group_by` Funktion ermöglicht es dir, Datensätze nach von dir
+    ausgewählten Variablen zu gruppieren.
+-   `group_by` funktioniert am besten, wenn es mit anderen
+    dplyr-Funktionen kombiniert wird, um entweder die Anzahl der
+    Elemente in einer Gruppe zu zählen oder neue Variablen aus den
+    Gruppen zu erstellen.
+-   möchtest du die Gruppierung wieder aufheben, nutzt du die Funktion
+    `ungroup()`.
+
+Grafisch kannst du dir das Gruppieren so vorstellen:
+
+![](images/groupby1.png){width="80%"} [Source: Cheat
+Sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
+
+### Argumente
+
+-   **`group_by()`**: Die beiden Hauptargumente für `group_by` sind die
+    **Daten**, die du analysieren möchtest, und die **Variablen, nach
+    denen du gruppieren möchtest**.
+
+-   **`ungroup()`**: Die Funktion `ungroup()` nimmt **ein Argument**
+    entgegen, den gruppierten **Datensatz**, den du aufheben möchtest.
+
+### Beispiel
+
+Lass uns direkt einsteigen und den `einkaufen` Datensatz nach
+Verkehrsmittel aufteilen und als neuen Datensatz `einkaufen_grouped`
+speichern.
+
+```{r example_1groupby, exercise = TRUE}
+einkaufen_grouped <- einkaufen |>  
+  group_by(verkehrsmittel)
+
+head(einkaufen_grouped)
+```
+
+Huch da scheint erstmal nichts passiert zu sein, die Reiehnfolge ist
+weiterhin zufällig. Das liegt daran, dass die Funktion normalerweise in
+Kombination mit anderen Funktionen erst zur Geltung kommt.
+
+Zählen wir mit der Funktion `count()` z.B. noch die Verkehrsmittel, wird
+es ersichtlich:
+
+```{r example_2groupby, exercise = TRUE}
+einkaufen |>  
+  group_by(verkehrsmittel) |> 
+  count()
+
+einkaufen |>  
+  select(verkehrsmittel) |> 
+  count()
+```
+
+Anstelle der Anzahl an Einträgen (166) für verkehrsmittel zählt
+`count()` mithilfe der `group_by()` Funktion die Anzahl für jede
+Kategorie.
+
+Das kannst du dir grafisch so vorstellen:
+
+![](images/groupby2.png){width="80%"} [Source: Cheat
+Sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
+
+### Probiere es doch selbst mal aus.
+
+::: aufgabe
+Gruppiere (`group_by()`) den Datensatz `einkaufen` nach `ort` und lass
+dir mit `count()` anzeigen wie viele Einträge es für jeden Ort gibt.
+:::
+
+```{r groupby1, exercise = TRUE, excercise.caption = "Gruppieren üben"}
+
+```
+
+```{r groupby1-hint}
+# füge der Funktion group_by() das entsprechende Argument hinzu
+einkaufen |> 
+  group_by() |> 
+  count()
+```
+
+```{r groupby1-solution}
+einkaufen |> 
+  group_by(ort) |> 
+  count()
+```
+
+Nice! Die Grundlage hast du nun verstanden. Gehen wir also einen kleinen
+Schritt weiter und Gruppieren den Datensatz nach 2 Variabeln. Dafür
+kannst du wie gewohnt einfach durch ein Komma getrennt eine weitere
+Variable in die Funktion `group_by()` einfügen.
+
+::: aufgabe
+Gruppiere den Datensatz `einkaufen` nach `bioladen` UND
+`verkehrsmittel`, lass dir mit `count()` anzeigen wie viele Einträge es
+für die entehenden Gruppen gibt.
+:::
+
+```{r groupby2, exercise = TRUE, excercise.caption = "Gruppieren mit 2 Variablen"}
+einkaufen |> 
+  group_by() |> 
+  count()
+```
+
+```{r groupby2-solution}
+einkaufen |> 
+  group_by(ort, verkehrsmittel) |> 
+  count()
+```
+
+Es lassen sich zwar beliebig viele Variablen zur Gruppierung hinzufügen,
+aber sinnvoll ist das nicht unbedingt, da die Kategorien schnell so
+viele neue Gruppen erstellen, das jede Gruppe am Ende aus 1-2 Einträgen
+besteht. Einen Mittelwert oder ähnliches hieraus zu berechnen wäre nicht
+sinnvoll.
+
+```{r groupby3, exercise = TRUE, excercise.caption = "Gruppieren mit vielen Variablen"}
+einkaufen_gbvwa <- einkaufen |> 
+  group_by(verkehrsmittel, weg, alter) |> 
+  count()
+```
+
+### group_by() und mutate()
+
+Kommen wir zu unserem "Expertenlevel" der Funktion `group_by()`. Die Verknüpfung mit der zuvor gelernten Funktion `mutate()`.
+
+<!-- help -->
+einkaufen |>
+  group_by(ort) |>
+  mutate(neue_variable = mean(weg))
+
+
+```{r q1_groupmutate}
+
+question_radio("Was denkst du passiert wenn wir group_by() und mutate() verknüpfen?)",
+  answer("Zeilenanzahl von `neue_variable` entspricht der Anzahl der Zeilen von `weg`",
+         correct = TRUE),
+  answer("Zeilenanzahl von `neue_variable` entspricht der Anzahl der Kategorien von `bioladen`",
+         message = "Das war ein guter Gedanke, tatsächlich enthält die Variable jedoch genau so viele Zeilen wie weg. Lies weiter im Tutorial, um zu verstehen warum das so ist."),
+  allow_retry = TRUE,
+  random_answer_order = TRUE,
+  incorrect = random_encouragement("de"),
+  correct = random_praise("de"))
+
+```
+
+#### neue Variablen mit group_by()
+
+Was dir vielleicht zunächst komisch erscheint, hat dennoch ein hinterliegendes System und Verwendung.
+
+Um zu verstehen was durch die Verknüpfung mit `mutate()` entstanden ist auch hier für dich die grafische Darstellung:
+
+![](images/groupby3.png){width="70%"}
+
+[Source: Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
+
+Willst du wie im angegebenen Beispiel für jede Gruppe den Mittelwert berechnen und als neue Variable abspeichern, erhältst du logischerweise einen Vektor mit Dopplungen für jeden Eintrag einer Kategorie. Sehen wir uns die Ausgabe gemeinsam an:
+
+```{r groupmutate, exercise = TRUE}
+
+einkaufen_gbf <- einkaufen |>
+  group_by(frequenz) |>
+  mutate(weg_mean = mean(weg, na.rm = T))
+
+einkaufen_gbf |>
+  select(weg_mean, verkehrsmittel)
+
+```
+
+Auf diesem Wege könntest du z.B. händisch die Abweichung vom Mittelwert der Gruppe errechnen, in dem du die Spalte weg - weg_mean rechnest. 
+
+```{r groupmutate1, exercise = TRUE}
+einkaufen_gbf <-  einkaufen_gbf |>
+  mutate(weg_abw = weg - weg_mean)
+
+einkaufen_gbf |>
+  select(weg, weg_mean, weg_abw)
+```
+
+###  ungroup()
+Zu guter letzt noch die versprochene `ungroup()` Funktion, die du nutzen
+kannst, wenn du keinen neuen Data Frame erstellt hast und stattdessen
+deinen ursprünglichen Data Frame wieder un-gruppieren möchtest:
+
+```{r ungroupby1, exercise = TRUE, excercise.caption = "Gruppieren mit vielen Variablen"}
+einkaufen |> 
+  group_by( bioladen) |> 
+  count()
+
+einkaufen |> 
+  group_by( bioladen) |> 
+  ungroup() |> 
+  count()
+```
+
+Du siehst, die Funktion `ungroup()` revidiert die Aufhebung. R sagt dir auch vor jedem Output, dass die Daten Gruppiert wurden. Hier mit `bioladen` und [2] Kategorien.
+Von: 
+<!-- help -->
+A tibble: 2 × 2
+Groups:   bioladen [2]
+ 
+zu:
+<!-- help -->
+A tibble: 1 × 1
+
+Natürlich würdest du es in deinem Code nicht so schreiben wie oben dargestellt, sondern als
+alleinstehende Zeile nach deinen Analysen der Gruppen den Code so anfügen:
+
+<!-- help -->
+einkaufen <- einkaufen |> 
+  ungroup()  
+
+
+## summarise()
+
+`summarise()` verwendet Zusammenfassungs-Funktionen, d.h. die Funktionen nehmen einen Vektor von Werten und geben einen einzelnen Wert zurück:
+
+![](images/summarize.png){width="80%"} [Source: Cheat
+Sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
+
+Es gibt viele Zusammenfassungs-Funktionen, die du innerhalb von `summarise()` verwenden kannst, unter anderem:
+
+-   `min()` (Minimum)
+
+-   `max()` (Maximum)
+
+-   `sum()` (Summe)
+
+-   `var()` (Varianz)
+
+-   `sd()` (Standardabweichung)
+
+-   `mean()` (Mittelwer)
+
+
+Dabei wird `summarise()` wird oft mit `group_by()` verwendet.
+
+Schauen wir uns die Verwendung der Funktion in Aktion an:
+
+```{r summarise1, exercise = TRUE}
+einkaufen |> 
+  summarise(weg_m = sum(weg))
+```
+
+Wir bekommen ein NA? Komisch?
+Nein, erinnere dich daran, dass R sobald ein NA in der Rechnung beteiligt ist, dir stehts NA als Antwort ausgibt. 
+
+Für uns kein Problem, wir sagen der Funktion `sum()` mit dem Zusatzargument `(na.rm = T)`, dass sie die NAs nicht mit in die Rechnung einbeziehen soll:
+
+```{r summarise2, exercise = TRUE}
+einkaufen |> 
+  summarise(weg_m = sum(weg, na.rm = T))
+```
+
+Jetzt bist du dran! 
+
+::: aufgabe
+Finde den Maximalwert für die Variable `weg` für jeden `ort`. Verwende wieder `na.rm = T` in der Zusammenfassungs-Funktion
+:::
+
+```{r summarise3, exercise = TRUE}
+
+```
+
+```{r summarise3-hint}
+einkaufen |>
+  group_by() |> 
+  summarise()
+```
+
+```{r summarise3-solution}
+einkaufen |>
+  group_by(ort) |> 
+  summarise(weg_max = max(weg, na.rm = T))
+```
+
+Ich möchte dir noch eine Zusammenfassungs-Funktion zeigen, die für den Beispieldatensatz hilfreich ist:
+`n_distinct()`. Die Funktion zählt alle unterschiedlichen (distinkten) Werte in einer Variable. Das können wir gut für die Variable essen nutzen.
+
+Probiere es doch mal aus:
+
+```{r summarise4, exercise = TRUE}
+einkaufen |>
+  summarise(anzahl_lieblingsgerichte = n_distinct())
+```
+
+```{r summarise4-solution}
+einkaufen |>
+  summarise(anzahl_lieblingsgerichte = n_distinct(essen))
+```
+
+Super auch das hast du jetzt verstanden! Vielleicht geht dir auch langsam die Logik von R ins Blut und die Finger über. 🧙
+
+## arrange()
+
+Manchmal möchtest du einen Datensatz in einer bestimmten Reihenfolge anzeigen lassen. Datensätze
+werden oft in der Reihenfolge angezeigt, in der die Daten eingegeben wurden, aber du möchtest
+ihn möglicherweise nach einer anderen Variable sortiert sehen. Du kannst die *tidyverse* `arrange()`-Funktion verwenden, um einen Datensatz nach einer bestimmten
+Spalte zu sortieren.
+
+Die `arrange()`-Funktion nimmt einen Dataframe und die zu sortierenden Spalten als Eingabe entgegen und gibt den neu geordneten Dataframe aus. `arrange()` ändert dabei keine Werte in deinen Daten, sondern ändert nur die Darstellung.
+
+```{r arrange1, exercise = TRUE}
+einkaufen |>
+  arrange(weg) |> 
+  select(weg, alter, frequenz)
+```
+
+Du siehst, die Weglänge ist nun aufsteigend arrangiert worden. Auch hier kannst du die Funktion für mehrere Variablen gleichzeitig nutzen:
+
+```{r arrange2, exercise = TRUE}
+einkaufen |>
+  arrange(weg, alter) |> 
+  select(weg, alter, essen)
+```
+
+::: blau
+Auch hier gilt: Es gibt viele Wege das gleiche Ziel zu erreichen. Die *Base R* Variante `sort()` kennst du ja auch bereits, die ebenfalls einen Vektor sortieren kann: 
+:::
+
+```{r sort, exercise = TRUE}
+einkaufen$weg |>
+  sort(decreasing  = T) 
+```
+
+## rename
+
+Highlights:
+
+-   We can rename multiple columns in a dataframe at once using
+    `rename()`.
+-   It is helpful to rename columns into something simpler and clearer.
+-   We can name columns that do not already have a name using
+    `rename()`.
+    
+`rename(new = old)`
+
+
+```{r rename-1, exercise = TRUE}
+einkaufen <- einkaufen |>
+  rename(freq = frequenz)
+```
+
+```{r rename-1, exercise = TRUE}
+einkaufen |>
+  rename(mode = names(.)[2])
+```
+
+## Ausreißer
 
 ## Abschlussquiz
 
