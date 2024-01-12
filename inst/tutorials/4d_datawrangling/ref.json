@@ -160,5 +160,82 @@
         "providerkey": "Zotero",
         "title": "DoSStoolkit: Self-Paced Modules to Help You Learn R",
         "type": "book"
+    },
+    {
+        "DOI": "10.5334/irsp.289",
+        "author": [
+            {
+                "family": "Leys",
+                "given": "Christophe"
+            },
+            {
+                "family": "Delacre",
+                "given": "Marie"
+            },
+            {
+                "family": "Mora",
+                "given": "Youri"
+            },
+            {
+                "family": "Lakens",
+                "given": "Daniël"
+            },
+            {
+                "family": "Ley",
+                "given": "Christophe"
+            }
+        ],
+        "container-title": "International Review of Social Psychology",
+        "container-title-short": "International Review of Social Psychology",
+        "id": "leys2019",
+        "issued": {
+            "date-parts": [
+                [
+                    2019,
+                    4,
+                    30
+                ]
+            ]
+        },
+        "key": "3JL3RIMW",
+        "libraryid": "1",
+        "providerkey": "Zotero",
+        "source": "ResearchGate",
+        "title": "How to Classify, Detect, and Manage Univariate and Multivariate Outliers, With Emphasis on Pre-Registration",
+        "type": "article-journal",
+        "volume": "32"
+    },
+    {
+        "ISBN": "978-0-367-40982-1 978-0-367-40987-6",
+        "author": [
+            {
+                "family": "Ismay",
+                "given": "Chester"
+            },
+            {
+                "family": "Kim",
+                "given": "Albert Y."
+            }
+        ],
+        "collection-title": "The R series",
+        "id": "ismay2020",
+        "issued": {
+            "date-parts": [
+                [
+                    2020
+                ]
+            ]
+        },
+        "key": "GF2VJB94",
+        "language": "eng",
+        "libraryid": "1",
+        "number-of-pages": "430",
+        "providerkey": "Zotero",
+        "publisher": "CRC Press, Taylor & Francis Group",
+        "publisher-place": "Boca Raton London New York",
+        "source": "K10plus ISBN",
+        "title": "Statistical inference via data science: a ModernDive into R and the tidyverse",
+        "title-short": "Statistical inference via data science",
+        "type": "book"
     }
 ]
