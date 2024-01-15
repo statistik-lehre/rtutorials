@@ -1,5 +1,5 @@
 ---
-title: "Logik von Signifikanztests"
+title: "Mittelwertsunterschiede testen"
 output:
   learnr::tutorial:
     language: de
@@ -10,7 +10,7 @@ output:
 runtime: shiny_prerendered
 bibliography: ref.json
 link-citations: TRUE
-description: Power-Analyse
+description: Mittelwertunterschiede von Gruppen testen
 resource_files:
 - css/boxes.css
 tutorial:
@@ -20,12 +20,28 @@ tutorial:
 
 ```{r setup, include=FALSE}
 library(learnr)
+library(rtutorials)
 knitr::opts_chunk$set(echo = FALSE)
+colnames(einkaufen) <- tolower(colnames(einkaufen))
 ```
+
+## Inhalt
+
+kurze Beschreibung des Inhalts
+
+Verortung auf der Roadmap:
 
 ## Lernziele
 
-Im letzten Tutorial hast du über Stichprobenziehung gelernt, und was Stichprobenvariation ist. In diesem Tutorial geht es darum zu verstehen, wie Nullhypothesen-Signifikanztestung funktioniert.
+kleine Checkliste mit abhakbaren Checkboxen:
+
+-   <input type="checkbox" unchecked> Wie verschiedene Überschriften
+    gerendert werden </input>
+-   <input type="checkbox" unchecked> farbige HTML-Boxen </input>
+-   <input type="checkbox" unchecked> HTML-Tag für Absätze </input>
+-   <input type="checkbox" unchecked> ausklappbare Abschnitte </input>
+-   <input type="checkbox" unchecked> LaTex </input>
+
 
 ## Nullhypothesen-Signifikanztests
 
@@ -40,9 +56,123 @@ Der Wissensgewinn ist hier die Verneinung der Nullhypothese. Lautet sie zum Beis
 
 
 
-
 ## Abschlussquiz
+
+**Wichtig:** Argument setzen: `allow_retry = TRUE`
+
+
+```{r Abschlussquizz}
+quiz(caption = "Teste dein Wissen!",
+
+learnr::question_checkbox("Was hast du über die Maße der zentralen Tendenz gelernt?",
+         answer("Der Median ist das Zentrum einer sortierten Datenmenge und weniger anfällig für Ausreißer.", 
+                 correct = TRUE,
+                 message = "Richtig! Der Median ist robust gegenüber Ausreißern."),
+         answer("Der Median ist der Wert, der am häufigsten in einer Datenmenge vorkommt.",
+                 message = "Der Modus nicht der Median repräsentiert den am häufigsten auftretenden Wert."),
+         answer("Das artihmetische Mittel ist die Summe aller Werte geteilt durch die Anzahl der Werte.",
+                 correct = TRUE,
+                 message = "Genau, der Mittelwert wird durch die Summe der Werte geteilt durch ihre",
+                 "Anzahl errechnet."),
+         allow_retry = TRUE,
+         random_answer_order = TRUE
+         ),
+
+learnr::question_radio("Welches Maß der zentralen Tendenz eignet sich für eine metrisch skalierte Variable mit großen Ausreißerwerten?",
+         answer("Der Modus.",
+              message = "Du könntest auch den Modus für diese Variable bestimmen,",
+              "aber du möchtest ja die eine Zahl finden, die deine Daten mit den geringsten Abweichungen",
+              "beschreibt. Dafür die lediglich häufigste Ausprägung zu verwenden wäre also nicht zielführend."),
+         answer("Der Median.",
+              correct = TRUE,
+              message = "Richtig, der Median eignet sich gut dafür ein Maß der zentralen Tendenz zu bestimmen,",
+              "dass gegen Ausreißer robust ist."),
+         answer("Das artihmetische Mittel.",
+              message = "Das arithmetische Mittel gibt uns für Variablen OHNE Ausreißer eine gute",
+              "Zusammenfassung unserer Daten, aber bei großen Ausreißern ist es anfällig für Verzerrungen."),
+         allow_retry = TRUE,
+         random_answer_order = TRUE
+         ))
+```
+
+
 
 ## Learnings
 
+So hast du heute abgeschnitten:
 
+```{r context="server"}
+# Shiny App um die Anzahl richtig beantworteter Fragen anzuzeigen. 
+# Funktioniert in jedem Tutorial
+
+shiny::observeEvent(
+  input$get_score, 
+  {
+    objs2 = learnr:::get_tutorial_state()
+    
+    # Number of correct questions
+    
+    n_correct <- 
+      # Access the $correct sublist item in each list item
+        lapply(objs2, purrr::pluck, "correct") |>
+           # make it a vector containing: TRUE and FALSE and NAs
+           # NA is appearing for list items which don't have
+           # a $correct subitem
+                unlist() |> 
+           # Taking the sum of a logical Vector returns the number of TRUEs
+                sum(na.rm=TRUE)
+    
+    # Number of total questions
+    
+    total_questions <- 
+      # 1. Access $type in each list item and make it a vector of types
+      lapply(objs2, purrr::pluck, "type") |> unlist()
+    
+    # 2. Count the number of "question" in that vector
+    total_questions <- total_questions[total_questions == "question"] |> 
+      length()
+      
+      
+    output$score = shiny::renderText(
+      paste0(n_correct, " von ", total_questions,
+        " im gesamten Tutorial beantworteten Fragen waren richtig.")
+)
+    invisible()
+  }
+)
+```
+
+```{r score, echo=FALSE}
+shiny::br()
+shiny::actionButton("get_score", "Auswertung!")
+shiny::br()
+shiny::br()
+shiny::textOutput("score")
+shiny::br()
+```
+
+
+
+### Zusammenfassung
+
+Hier ein kleiner Text, was gelernt wurde und vlt. auch warum das wichtig ist.
+
+### Diese neuen Konzepte kennst du nun:
+-     Stichpunktartige Beschreibung
+
+### Neue Funktionen
+eine Tabelle mit den wichtigesten Codes des Tutorials
+| Code           | Beschreibung                           |
+|----------------|----------------------------------------|
+| `[ ]`          | Indizierung                            |
+| `&`            | UND-Operator für logische Indizierung  |
+
+## Credit
+<!-- vielleicht in diese Richtung? -->
+Dieses Tutorial wurde (größtenteils) von Lukas Bruelheide sowie in Teilen von Marie Klosterkamp geschrieben. 
+
+ggf.: Bei der Erstellung (u.a. der Beispiele, Aufgaben und Zusammenfassung) wurde teilweise von ChatGPT gebrauch gemacht.
+
+### Literaturverzeichnis
+
+<!--  Wird automatisch generiert aus den @autorYYYY-Zitationen und der Bibliothek in ref.json. Das Literaturverzeichnis wird immer ans Ende generiert, deswegen muss das hier die letzte Überschrift bleiben. -->
