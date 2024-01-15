@@ -9,7 +9,7 @@ output:
     allow_skip: true
 tutorial:
       id: ggplot
-      version: 5.2
+      version: 5.3
 runtime: shiny_prerendered
 bibliography: ref.json
 link-citations: TRUE
@@ -601,7 +601,7 @@ Du kannst mitnehmen:
 ## 3. Boxplot
 
 ::: infobox
-Ein Boxplot ist eine effektive und robuste Methode, um die Verteilung **einer stetigen** Variable aufgeschlüsselt nach den Auprägungen **einer kategorialen** Variable zu visualisieren. Darüber hinaus lässt es uns auch Ausreißer identifizieren.
+Ein Boxplot ist eine effektive und robuste Methode, um die Verteilung **einer stetigen** Variable aufgeschlüsselt nach den Ausprägungen **einer kategorialen** Variable zu visualisieren. Darüber hinaus lässt es uns auch Ausreißer identifizieren.
 
 Funktion: `geom_boxplot()`
 :::
