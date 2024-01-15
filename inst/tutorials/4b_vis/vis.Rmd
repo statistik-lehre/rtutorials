@@ -601,7 +601,7 @@ Du kannst mitnehmen:
 ## 3. Boxplot
 
 ::: infobox
-Ein Boxplot ist eine effektive und robuste Methode, um die Verteilung **einer stetigen** Variable aufgeschlüsselt nach den Auprägungen **einer kategorialen** Variable zu visualisieren. Darüber hinaus lässt es uns auch Ausreißer identifizieren.
+Ein Boxplot ist eine effektive und robuste Methode, um die Verteilung **einer stetigen** Variable aufgeschlüsselt nach den Ausprägungen **einer kategorialen** Variable zu visualisieren. Darüber hinaus lässt es uns auch Ausreißer identifizieren.
 
 Funktion: `geom_boxplot()`
 :::
