@@ -133,7 +133,6 @@ learnr::available_tutorials(package = "rtutorials")
 #>   - 4b_vis             : "Visualisierung"
 #>   - 4c_pipe            : "Pipe"
 #>   - 4d_datawrangling   : "Data Wrangling"
-#>   - template           : "template"
 ```
 
 And to run the individual tutorials, run:
