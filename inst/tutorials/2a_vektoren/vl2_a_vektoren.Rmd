@@ -910,7 +910,7 @@ vec_log <- c(T, F, T, F)
 ```
 
 
-```{r class1-solution, exercise.setup = "class1"}
+```{r class1-solution}
 
 typeof(vec_dou) # Datentyp
 class(vec_dou)  # Klasse
