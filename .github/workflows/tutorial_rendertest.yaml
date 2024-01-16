@@ -51,5 +51,3 @@ jobs:
       - name: Test render of tutorials
         run: Rscript .github/rscripts/tutorial_action.R
 
-      - name: Rebuild Readme.md from Readme.Rmd
-        run: Rscript -e "devtools::build_readme()"
