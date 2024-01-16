@@ -32,7 +32,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 Im wissenschaftlichen Prozess steht die Daten-Aufbereitung
 logischerweise vor der Visualisierung und Auswertung. Die Daten werden
-so arrangiert, dass Sie später im richtigen Format für die Auswertung
+so arrangiert, dass sie später im richtigen Format für die Auswertung
 vorliegen. Dabei werden unter anderem auch Ausreißer analysiert und
 fehlende Werte betrachtet.
 
@@ -57,20 +57,16 @@ Tutorial namens [*DoSStoolkit*](https://dosstoolkit.com/) [@rohan2023].
 Wir haben die Reihenfolge geändert, Sachen übersetzt und paraphrasiert
 und unsere eigenen Gedanken hinzugefügt.
 
-Es ist in vielen Teilen ausführlicher als dieses Tutorial und Allen, die
-vor englischer Sprache nicht zurückstrecken, wärmstens zu empfehlen dort
-einen Blick hinein zu werfen.
-
 <hr>
 
 ## Tidyverse
 
-Wenn unsere Welt mal wieder im Chaos versinkt, gibt es einen
+Wenn unsere Daten-Welt mal wieder im Chaos versinkt, gibt es einen
 Rückzugsort, wo die Welt noch in *Ordnung* ist: das **tidyverse**.
 
 ![](images/messy_tidy.jpg){width="70%"}
 
-Was ist das **tidyverse**? Es ist ein Universum von Paketen, die sich
+*Was ist das tidyverse?* Es ist ein **Universum von Paketen**, die sich
 einem bestimmten Ziel widmen, nämlich R für *Data Science* zu nutzen.
 Dazu gehört vor allem die Arbeit mit Tabellen und Daten.
 
@@ -81,7 +77,7 @@ deswegen macht es auch Sinn, sie zu nutzen.
 
 ::: gelb
 Trotzdem *ein Wort der Warnung*: Alles, was mit *tidyverse*-Paketen
-möglich ist, lässt sich auch mit `base R` erreichen. Es wäre nicht so
+möglich ist, lässt sich auch mit *Base R* erreichen. Es wäre nicht so
 schlau, die "Basis" zu vergessen, und nur noch *tidyverse* zu lernen.
 *Tidyverse* schreibt selbst auf seiner
 [Website](https://www.tidyverse.org/), es sei ein „opinionated R
@@ -117,7 +113,7 @@ auf einmal, indem das Schirmpaket `tidyverse` installiert wird.
 
 Ein Beispiel für die Design-Richtlinien, nach denen sich
 *tidyverse*-Funktionen richten müssen, ist keine Punkte zu verwenden in
-Funktionsnamen (wie z.B. `base R`: `as.data.frame()`), sondern
+Funktionsnamen (wie z.B. *Base R*: `as.data.frame()`), sondern
 Unterstriche wie in `as_tibble()`. Das ist ein klassisches Zeichen, dass
 wir uns im *tidyverse* bewegen. Außerdem ist dort alles *lowercase*,
 also kleingeschrieben, damit es nicht zu Verwirrungen wegen Groß- und
@@ -131,7 +127,7 @@ verbringen Forschende damit, Daten in die richtige Form zu bringen. Die
 Auswertung selbst geht dann oft vergleichsweise schnell.
 
 Den ganzen Aufräumprozess kannst du erleichtern, wenn du die Daten von
-Anfang an so organisierst, dass R gut damit umgehen kann.
+Anfang an so organisierst, dass *R* gut damit umgehen kann.
 
 Aber was gibt es eigentlich für Formen in denen Daten vorliegen können?
 
@@ -154,7 +150,7 @@ sich vor Bioläden in und um Kassel gestellt und den Kund_innen Fragen
 gestellt - zum Beispiel zum Lieblingsessen, wie oft sie selbst kochen
 und wie weit der Weg bis zum Laden war.
 
-Die Antworten wurden mitgeschrieben und später in Excel oder OpenOffice
+Die Antworten wurden mitgeschrieben und später in *Excel* oder *OpenOffice*
 eingetippt. Damit die Analyse in R später gut funktioniert, müssen die
 Daten in dieser speziellen Form eingegeben werden:
 
@@ -231,11 +227,12 @@ enthält essentielle Funktionen um deine Daten in Form zu bringen:
 -   `rename()` lässt dich deine Variablen umbenennen.
 -   `select()` ermöglicht es dir, Variablen anhand ihrer Namen
     auszuwählen.
--   `filter()`, um Fälle basierend auf ihren Werten auszuwählen.
--   `summarise()`, fasst mehrere Werte zu einer einzigen Zusammenfassung
-    zusammen.
 -   `arrange()`, um die Reihenfolge der Zeilen zu ändern.
--   `group_by()`, um Funktionen gruppenweise durchzuführen.
+-   `filter()`, um Fälle basierend auf ihren Werten auszuwählen.
+-   `mutate()`, um neue Variablen zu berechnen
+-   `group_by()`, um Funktionen gruppenweise durchzuführen
+-   `summarise()`, fasst mehrere Werte zu einer einzigen Zusammenfassung
+    zusammen
 
 Starten wir direkt mit der ersten Funktion `rename()`.
 
@@ -254,14 +251,14 @@ Möchtest du dein Skript im nachhinein an die neue Schreibweise anpassen
 kannst du mit dem Tastenkürzel `strg + f` das entsprechende Wort im
 Skript suchen und ersetzen lassen (`replace`). *Der Befehl öffnet ein
 kleines Extra Menü über deinem Skript.* Auch außerhalb von R Studio ist
-es übrigens ein sehr hilfreiches Feature Texte zu durchsuchen.
+es übrigens ein sehr hilfreiches Tastenkürzel um Texte zu durchsuchen.
 :::
 
 </br>
 
 Was kann die Funktion `rename()`:
 
--   `rename`()\` ist hilfreich, um Spalten in etwas einfacheres und
+-   `rename()` ist hilfreich, um Spalten in etwas einfacheres und
     eindeutigeres umzubenennen.
 -   Es lassen sich auch mehrere Spalten in einem Data Frame auf einmal
     umbenennen.
@@ -343,8 +340,10 @@ experimentieren.
 
 Damit hast du die erste Funktion bereits erfolgreich erkundet.👏
 
+::: blau-nb
 Richtig lernen, wie es funktioniert wirst du am besten, wenn du den Code
-auf deine eigenen Daten außerhalb dieses Tutorials anwendest.
+auf deine eigenen Daten außerhalb dieses Tutorials anwendest. Denn wir Menschen lernen durch die Handlung, nicht durch das Lesen. 
+:::
 
 ## select()
 
@@ -352,7 +351,7 @@ In diesem Kaptiel wirst du lernen, wie du die Funktion `select()`
 verwendest.
 
 Wenn du mit großen Datensätzen arbeitest, stellst du möglicherweise
-fest, dass ein Überblick deines Datensatzen unübersichtlich ist.
+fest, dass es schwierig ist, einen Überblick über deinen Datensatzen zu behalten.
 Vielleicht fragst du dich, wie du nur die Variablen auswählen kannst,
 die du für die Analyse oder Ausgabe verwenden möchtest. Nun, es gibt
 eine super Möglichkeit, die von dir ausgewählten Variablen zu fassen:
@@ -445,7 +444,6 @@ select(!winter)
 Schnittmenge (`&`) der Auswahlen aus.
 
 ```{r select6, exercise = TRUE, exercise.setup = "temperature"}
-# ODER OPERATOR
 temperature_data |>
 select(winter | summer)
 ```
@@ -577,7 +575,13 @@ einkaufen |>
   select(weg, alter, essen)
 ```
 
-::: blau
+::: gelb
+Aber Vorsicht: Dir wird aufgefallen sein, dass Alter zwar etwas sortiert wurde, aber nur in den Fällen, in denen die Menschen die gleiche Weglänge angegeben haben. Es wird also primär nach `weg` sortiert und dann erst nach `alter`.
+:::
+
+</br>
+
+::: blau-nb
 Auch hier gilt: Es gibt viele Wege das Ziel zu erreichen. Die *Base R*
 Variante `sort()` kennst du ja auch bereits, die einen gegebenen
 **Vektor** sortieren kann:
@@ -598,10 +602,10 @@ Data Frame *basierend auf bestimmten Kriterien zu extrahieren*. Alle
 Zeilen, die diese Kriterien nicht erfüllen, werden verworfen.
 
 Diese Kriterien werden in Form von **logischen Bedingungen**
-geschrieben, die ausgewertet werden können. Zum Beispiel können wir,
+geschrieben. Zum Beispiel können wir,
 wenn ein DataFrame `ToothGrowth` eine Variable namens `len` für *length*
 hat, alle Zeilen extrahieren, bei denen `len` gleich 22 ist, mit dem
-Ausdruck `len == 22.0`. Es können eine einzelne Bedingung oder mehrere
+Ausdruck `len == 22.0`. Es kann eine *einzelne* Bedingung oder *mehrere*
 Bedingungen vorhanden sein.
 
 Einige nützliche Funktionen und Operatoren sind:
@@ -611,20 +615,22 @@ Einige nützliche Funktionen und Operatoren sind:
 -   `is.na()`
 
 `filter()` funktioniert dabei ähnlich wie das Indizieren anhand von
-eckigen Klammern `[]` in `Base R`. Allerdings, falls beim Auswerten
+eckigen Klammern `[]` in *Base R*. Allerdings, falls beim Auswerten
 unserer Bedingungen auf einer Zeile NAs auftreten, verwirft `filter()`
 diese Zeilen, während `[]` diese weiterhin extrahiert. Das solltest du
 also unbedingt im Kopf behalten.
 
 ### Welche Argumente nimmt `filter()`?
 
+`filter(data, Bedingungen)`
+
 -   `.data`: den Data Frame, mit dem wir arbeiten
 -   `...`: die Bedingungen für die zu extrahierenden Zeilen
--   `.preserve`: ob wir die Gruppierung des Data Frames erhalten möchten
+
 
 ### Welchen Wert gibt `filter()` zurück?
 
-`filter()` gibt einen Data Frame zurück, der eine Teilmenge der Zeilen
+`filter()` gibt einen Data Frame zurück, der eine *Teilmenge der Zeilen*
 des Data Frames basierend auf den definierten Bedingungen oder Kriterien
 enhält. Dabei bleiben die Spalten unverändert und die Reihenfolge der
 Zeilen bleibt ebenfalls gleich. Aber schauen wir es uns doch einfach mal
@@ -712,7 +718,7 @@ Super, auch das hast du gemeistert! Weiter geht´s!
 
 ## mutate()
 
-Die `mutate()`-Funktion in R, die durch das Paket dplyr bereitgestellt
+Die `mutate()`-Funktion in R, die durch das Paket `dplyr` bereitgestellt
 wird, ermöglicht es, neue Spalten zu deinem Data Frame hinzuzufügen oder
 vorhandene Spalten zu verändern, basierend auf bestimmten Berechnungen
 oder Transformationen. Dies ist besonders nützlich, um neue
@@ -723,16 +729,15 @@ Um `mutate()` zu nutzen, müssen wir angeben, welcher Data Frame
 bearbeitet werden soll, gefolgt von der Definition der neuen oder zu
 verändernden Spalte(n). Die Syntax lautet:
 
-`mutate(.data, new_column = expression)`
+`mutate(data, new_column = expression)`
 
--.data: Das DataFrame, das bearbeitet werden soll. - new_column: Der
-Name der neuen Spalte oder einer vorhandenen Spalte, die modifiziert
-werden soll. - expression: Die Berechnung oder Transformation, die auf
+- `data`: Der Data Frame, der bearbeitet werden soll. 
+- `new_column`: Der Name der neuen Spalte oder einer vorhandenen Spalte, die modifiziert werden soll. 
+- `expression`: Die Berechnung oder Transformation, die auf
 die Daten angewendet werden soll.
 
 Mutate ist somit eine *window function*, das bedeutet, die Funktion
-nimmt als Input einen Vektor und gibt auch wieder einen gleichlangen
-Vektor aus.
+**nimmt** als Input **einen Vektor und gibt auch wieder einen gleichlangen Vektor aus**.
 
 ![](images/windowfunc.png){width="70%"}
 
@@ -740,9 +745,7 @@ Vektor aus.
 
 ### Beispiel
 
-Angenommen, wir wollen für unseren Data Frame `einkaufen` den Weg nicht
-nur in km sondern auch in Meter verfügbar haben. Um eine neue Spalte
-`weg_m` zu berechnen, könnten wir folgenden Code verwenden:
+Angenommen, wir wollen für unseren Data Frame `einkaufen` den Weg nicht nur in km sondern auch in Meter verfügbar haben. Um eine neue Spalte `weg_m` zu berechnen, könnten wir folgenden Code verwenden:
 
 ```{r mutate1, exercise = TRUE}
 # nur weg auswählen, um den data frame zur Veranschaulichung klein zu halten
@@ -768,7 +771,7 @@ erstellen.
 
 </br>
 
-Das Ergebnis, kannst du dir grafisch so vorstellen:
+Das Ergebnis des obrigen Codebeispiels, kannst du dir grafisch so vorstellen:
 
 ![](images/dfmutate.png){width="80%"} 
 
@@ -801,7 +804,7 @@ einkaufen |>
   select(weg, weglaenge)
 ```
 
-Hier haben wir eine neue Spalte weglaenge erstellt, die basierend auf
+Hier haben wir eine neue Spalte `weglaenge` erstellt, die basierend auf
 der Bedingung, ob (*if*) der Weg "größer" als 5km ist, den Wert "fern"
 oder ansonsten (*else*) "nah" enthält. Ziemlich cool, wenn man
 verstanden hat wie es funktionert.
@@ -849,8 +852,8 @@ quiz(caption = "Teste dein Wissen zu `mutate()`!",
   question_radio("Welche Aussage über `mutate()` ist korrekt?",
     answer("Die durch `mutate()` neu berechnete Variable hat *gleich viele* Zeilen wie die Variable aus der sie berechnet wurde",
          correct = TRUE),
-    answer("Die durch `mutate()` neu berechnete Variable kann auch *mehr Zeilen* als die Variable aus der sie berechnet wurde", 
-         message = "Das die neu berechnete Variable mehr Zeilen hat ist rechnerisch nicht möglich, da sie sich ja aus den bestehenden Werten berechnet"),
+    answer("Die durch `mutate()` neu berechnete Variable kann auch *mehr Zeilen* als die Variable aus der sie berechnet wurde enthalten", 
+         message = "Dass die neu berechnete Variable mehr Zeilen hat, ist rechnerisch nicht möglich, da sie sich ja aus den bestehenden Werten berechnet"),
   allow_retry = TRUE,
   random_answer_order = TRUE,
   incorrect = random_encouragement("de"),
@@ -884,14 +887,14 @@ finden. Die Funktion `ungroup()` wird verwendet, um die Gruppierung
 durch die `group_by()` Funktion aufzuheben.
 
 Normalerweise wird die `group_by()` Funktion mit anderen
-dplyr-Funktionen kombiniert, um deine Analyse durchzuführen.
+`dplyr`-Funktionen kombiniert, um deine Analyse durchzuführen.
 
 Zusammengefasst:
 
 -   Die `group_by` Funktion ermöglicht es dir, Datensätze nach von dir
     ausgewählten Variablen zu gruppieren.
 -   `group_by` funktioniert am besten, wenn es mit anderen
-    dplyr-Funktionen kombiniert wird, um entweder die Anzahl der
+    `dplyr`-Funktionen kombiniert wird, um entweder die Anzahl der
     Elemente in einer Gruppe zu zählen oder neue Variablen aus den
     Gruppen zu erstellen.
 -   möchtest du die Gruppierung wieder aufheben, nutzt du die Funktion
@@ -909,7 +912,7 @@ Grafisch kannst du dir das Gruppieren so vorstellen:
     **Daten**, die du analysieren möchtest, und die **Variablen, nach denen du gruppieren möchtest**.
 
 -   **`ungroup(data)`**: Die Funktion `ungroup()` nimmt **ein Argument**
-    entgegen, den gruppierten **Datensatz**, den du aufheben möchtest.
+    entgegen, den gruppierten **Datensatz**, für den du die Gruppierung aufheben möchtest.
 
 ### Beispiel
 
@@ -924,9 +927,8 @@ einkaufen_grouped <- einkaufen |>
 head(einkaufen_grouped)
 ```
 
-Huch da scheint erstmal nichts passiert zu sein, die Reiehnfolge ist
-weiterhin zufällig. Das liegt daran, dass die Funktion normalerweise in
-Kombination mit anderen Funktionen erst zur Geltung kommt.
+Huch da scheint erstmal nichts passiert zu sein, die Reihenfolge ist
+weiterhin zufällig. Das liegt daran, dass die Funktion normalerweise in Kombination mit anderen Funktionen erst zur Geltung kommt.
 
 Zählen wir mit der Funktion `count()` z.B. noch die Verkehrsmittel, wird
 es ersichtlich:
@@ -941,7 +943,7 @@ einkaufen |>
   count()
 ```
 
-Anstelle der Anzahl an Einträgen (166) für verkehrsmittel zählt
+Anstelle der Anzahl an Einträgen (166) für `verkehrsmittel` zählt
 `count()` mithilfe der `group_by()` Funktion die Anzahl für jede
 Kategorie.
 
@@ -1000,9 +1002,7 @@ einkaufen |>
 
 Es lassen sich zwar beliebig viele Variablen zur Gruppierung hinzufügen,
 aber sinnvoll ist das nicht unbedingt, da die Kategorien schnell so
-viele neue Gruppen erstellen, das jede Gruppe am Ende aus 1-2 Einträgen
-besteht. Einen Mittelwert oder ähnliches hieraus zu berechnen wäre nicht
-sinnvoll.
+viele neue Gruppen erstellen, dass jede Gruppe am Ende aus 1-2 Einträgen besteht. Einen Mittelwert oder ähnliches hieraus zu berechnen wäre nicht sinnvoll.
 
 ```{r groupby3, exercise = TRUE, excercise.cap = "Gruppieren mit vielen Variablen"}
 einkaufen |> 
@@ -1029,7 +1029,7 @@ question_radio("Was denkst du passiert wenn wir group_by() und mutate() wie im o
   answer("Zeilenanzahl von `neue_variable` entspricht der Anzahl der Zeilen von `weg`",
          correct = TRUE),
   answer("Zeilenanzahl von `neue_variable` entspricht der Anzahl der Kategorien von `bioladen`",
-         message = "Das war ein guter Gedanke, tatsächlich enthält die Variable jedoch genau so viele Zeilen wie weg. Lies weiter im Tutorial, um zu verstehen warum das so ist."),
+         message = "Das war ein guter Gedanke, tatsächlich enthält die Variable jedoch genau so viele Zeilen wie `weg`. Lies weiter im Tutorial, um zu verstehen warum das so ist."),
   allow_retry = TRUE,
   random_answer_order = TRUE,
   incorrect = random_encouragement("de"),
@@ -1065,7 +1065,7 @@ einkaufen|>
 ```
 
 Auf diesem Wege könntest du z.B. händisch die Abweichung vom Mittelwert
-der Gruppe errechnen, in dem du die Spalte weg - weg_mean rechnest.
+der Gruppe errechnen, in dem du die Spalte `weg - weg_mean` rechnest. 
 
 ```{r groupmutate1, exercise = TRUE, exercise.setup = "groupmutate", excercise.cap = "group & mutate"}
  einkaufen |>
@@ -1073,11 +1073,13 @@ der Gruppe errechnen, in dem du die Spalte weg - weg_mean rechnest.
   select(weg, weg_mean, weg_abw)
 ```
 
+Aber keine Angst, auch dafür gibt es in *R* bereits geeignete Funktionen, das soll hier nur als Beispiel dienen.
+
 ### ungroup()
 
 Zu guter letzt noch die versprochene `ungroup()` Funktion, die du nutzen
 kannst, wenn du keinen neuen Data Frame erstellt hast und stattdessen
-deinen ursprünglichen Data Frame wieder un-gruppieren möchtest:
+deinen ursprünglichen Data Frame wieder *un-gruppieren* möchtest:
 
 ```{r ungroupby1, exercise = TRUE, exercise.cap = "Gruppieren mit vielen Variablen"}
 einkaufen |> 
@@ -1106,8 +1108,7 @@ und Ausgabe von `count()` nach `ungroup()`:
 ```
 
 Natürlich würdest du es in deinem Code nicht so schreiben wie oben
-dargestellt, sondern als alleinstehende Zeile nach deinen Analysen der
-Gruppen den Code so anfügen:
+dargestellt, sondern als alleinstehende Zeile nach deinen Analysen der Gruppen den Code so anfügen:
 
 ```         
 einkaufen <- einkaufen |> 
@@ -1117,7 +1118,7 @@ einkaufen <- einkaufen |>
 ## summarise()
 
 `summarise()` verwendet Zusammenfassungs-Funktionen, d.h. die Funktionen
-nehmen einen Vektor von Werten und geben einen einzelnen Wert zurück:
+*nehmen einen Vektor von Werten* und geben einen **einzelnen Wert** *zurück*:
 
 ![](images/summarize.png){width="80%"}
 
@@ -1136,7 +1137,7 @@ Es gibt viele Zusammenfassungs-Funktionen, die du innerhalb von
 
 -   `sd()` (Standardabweichung)
 
--   `mean()` (Mittelwer)
+-   `mean()` (Mittelwert)
 
 Dabei wird `summarise()` wird oft mit `group_by()` verwendet.
 
@@ -1147,12 +1148,10 @@ einkaufen |>
   summarise(weg_m = sum(weg))
 ```
 
-Wir bekommen ein NA? Komisch? Nein, erinnere dich daran, dass R sobald
-ein NA in der Rechnung beteiligt ist, dir stehts NA als Antwort ausgibt.
+Wir bekommen ein `NA`?! Komisch? Nein, erinnere dich daran, dass R sobald ein `NA` in der Rechnung beteiligt ist, dir stehts `NA` als Antwort ausgibt.
 
 Für uns kein Problem, wir sagen der Funktion `sum()` mit dem
-Zusatzargument `(na.rm = T)`, dass sie die NAs nicht mit in die Rechnung
-einbeziehen soll:
+Zusatzargument `(na.rm = T)`, dass sie die `NA`s nicht mit in die Rechnung einbeziehen soll:
 
 ```{r summarise2, exercise = TRUE}
 einkaufen |> 
@@ -1204,7 +1203,7 @@ einkaufen |>
 ```
 
 Super auch das hast du jetzt verstanden! Vielleicht geht dir auch
-langsam die Logik von R ins Blut und die Finger über. 🧙
+langsam die Logik von R ins Blut und die Finger über und du beherrscht so langsam die Daten-Magie. 🧙
 
 ## Exkurs: Check your data
 
@@ -1246,11 +1245,8 @@ Auch hier ein Beispiel: Im Falle eines Fragebogens kann es z.B.
 passieren, dass die Probanden eine Frage falsch verstanden haben. Wird
 nach dem Geburtsjahr gefragt und du hast einige Antworten die
 offensichtilich die Anzahl an Jahren sind (z.B: `61`) handelt es sich um
-einen Mess- bzw. Tippfehler. Ist die Antwort hingegen `3050` können wir
-davon ausgehen, dass der Wert nicht zu unserer Population gehört, da
-dies als Geburtsjahr nicht möglich ist. Haben wir als Antwort jedoch den
-Wert `1920` ist dies zwar ein extremer Wert, aber möglich wäre es
-durchaus.
+einen *Mess- bzw. Tippfehler*. Ist die Antwort hingegen `3050` können wir
+davon ausgehen, dass der *Wert nicht zu unserer Population* gehört, da dies als Geburtsjahr nicht möglich ist. Haben wir als Antwort jedoch den Wert `1920` ist dies zwar ein extremer Wert, aber möglich wäre es durchaus.
 
 Wichtig für dich also: **Check your data!**
 
@@ -1276,7 +1272,7 @@ erscheint.
 Vielleicht erinnerst du dich aus dem Visualisierung Tutorial, daran,
 dass wir z.B. Boxplots verwenden können, um Ausreißer zu identifizieren.
 Der Boxplot basiert dabei auf der Annahme, dass alles was außerhalb
-$ 1.5\cdot IQR$ also 1.5x der Länge des Interquartilsabstands liegt, als
+$1.5 \cdot IQR$ also 1.5x der Länge des Interquartilsabstands liegt, als
 Ausreißer gewertet werden *kann*. Sei dir dabei jedoch bewusst, dass
 dies nur *eine* mögliche statistische Definition ist. Es gibt weitaus
 mehr Verfahren zur mathematischen Identifikation und alle sind mehr und
@@ -1285,15 +1281,18 @@ Literatur ist @leys2019 zu empfehlen. Generell beruhen diese Verfahren
 alle auf der Annahme, dass diese Werte in unserer Verteilung einfach
 sehr unwahrscheinlich sind.
 
-Das Kriterium $ 1.5\cdot IQR$ ist nichtsdestotrotz ein guter
-Anhaltspunkt und findet viel Anwendung in der Literatur. Daher wollen
-auch wir es nutzen, um unseren Datensatz einkaufen zu bereinigen.
+Das Kriterium $1.5 \cdot IQR$ ist nichtsdestotrotz ein guter
+Anhaltspunkt und findet viel Anwendung in der Literatur. Daher wollen auch wir es nutzen, um als Beispiel die Variable `weg` aus unserem Datensatz `einkaufen` zu bereinigen.
 
-```{r ausreisser1, exercise = TRUE, exercise.cap = "Ausreißer raus"}
+Boxplot **vor** dem Ausschluss von Ausreißern in `weg`:
+```{r box_mit_ausr, echo = FALSE}
 # Boxplot vor Ausschluss
 ggplot(einkaufen, aes(y = weg))+
   geom_boxplot()
+```
 
+Code zum Ausschluss von Werten außerhalb der 1.5-fachen *IQR*:
+```{r ausreisser1, exercise = TRUE, exercise.cap = "Ausreißer raus"}
 # zuerst berechnen wir die Grenzwerte Q1 & Q3, sowie die Länge der IQR
 Q1 <- quantile(einkaufen$weg, .25, na.rm=T)
 Q3 <- quantile(einkaufen$weg, .75, na.rm=T)
@@ -1305,6 +1304,19 @@ no_outliers <- einkaufen |>
 
 # mit `nrow` können wir feststellen, wie viele Zeilen von einkaufen in no_outliers rausgefiltert wurden 
 nrow(einkaufen) - nrow(no_outliers)
+```
+
+
+Boxplot **nach** dem Ausschluss von Ausreißern in `weg`:
+```{r box_ohne_ausr}
+# zuerst berechnen wir die Grenzwerte Q1 & Q3, sowie die Länge der IQR
+Q1 <- quantile(einkaufen$weg, .25, na.rm=T)
+Q3 <- quantile(einkaufen$weg, .75, na.rm=T)
+IQR <- IQR(einkaufen$weg, na.rm=T)
+
+# dann können wir diese benutzen, um ein Subset aus einkaufen zu filtern, bei dem diese Werte ausgeschlossen werden
+no_outliers <- einkaufen |> 
+  filter(weg > (Q1 - 1.5*IQR) & weg < (Q3 + 1.5*IQR))
 
 # Boxplot nach Ausschluss
 ggplot(no_outliers, aes(y = weg))+
@@ -1321,26 +1333,24 @@ In unserem Fall würdest du also berichten, dass nach
 Ausreißerbeseitigung 20 Personen/bzw. Einträge ausgeschlossen
 wurden.
 
-Beachte, dass damit also auch alle anderen Antworten der Personen
-rausgefiltert wurden und somit auch für andere Fragestellungen abseits
+::: gelb
+Beachte, dass damit also auch **alle anderen Antworten der Personen
+rausgefiltert** wurden und somit auch für andere Fragestellungen abseits
 der Analyse des `weg`s wegfallen! Daher sollte ein Ausschluss gut begründet und notwendig sein.
+:::
+
 
 ### NAs ausschließen
 
 Besonders in Fragebögen kommt es oftmals dazu, dass Personen den
-Fragebogen nach einer bestimmten Zeit abbrechen und somit viele NAs in
-unserem Datensatz entstehen. Da diese Fälle für eine Analyse meist
-unbrauchbar sind, gibt es auch hier eine Möglichkeit unseren Datensatz
-davon zu "reinigen".
+Fragebogen nach einer bestimmten Zeit abbrechen und somit viele `NA`s in unserem Datensatz entstehen. Da diese Fälle für eine Analyse meist unbrauchbar sind, gibt es auch hier eine Möglichkeit unseren Datensatz davon zu "reinigen".
 
 ```{r narm, exercise = TRUE}
 # nur rows mit weniger oder genau 50% NA Werten werden beibehalten
 einkaufen[rowMeans(is.na(einkaufen)) <= .5,]
 ```
 
-Doch auch hier ist wieder Vorsicht geboten. Der Schwellen-Wert (hier 50%) sollte im
-Vorhinein gut überlegt sein und der **Auschluss der Daten dokumentiert
-und bericht** werden!
+Doch auch hier ist wieder Vorsicht geboten. Der Schwellenwert (hier 50%) sollte im Vorhinein gut überlegt sein und der **Auschluss der Daten gut dokumentiert und berichtet** werden!
 
 ```{r naquizz}
 question_radio("Welchen Wert solltest du wählen, wenn du möchtest, dass nur Zeilen mit weniger als 20% NA-Werten beibehalten werden ",
@@ -1355,7 +1365,7 @@ question_radio("Welchen Wert solltest du wählen, wenn du möchtest, dass nur Ze
 ```
 
 Mehr und ausführlichere Infos zum Thema Ausreißer und wie du damit
-verfahren solltest findest du
+verfahren solltest findest du auch
 [hier.](https://statistikguru.de/r/ungepaarter-t-test-r/umgang-mit-ausreissern-2.html)
 
 ## Abschlussquiz
@@ -1379,6 +1389,18 @@ quiz(caption="Teste dein Wissen...",
                     answer("Sie zählt die Kategorien unserer Daten anhand von `x`.",
                            message = "Nicht ganz, aber zusammen mit der Funktion `count()` lässt es sich bewerkstelligen."),
                     answer("Sie erstellt Kategorien anhand von `x`.",
+                            correct = TRUE),
+                    allow_retry = TRUE,
+                    random_answer_order = TRUE,
+                    incorrect = random_encouragement("de"),
+                    correct = random_praise("de")),
+     
+     question_radio("Mit welcher Funktion kannst du eine Teilmenge der Zeilen auswählen",
+                    answer("Mit `group_by(data, variable)`.",
+                           message = "Nicht ganz, da du mit group_by() die Daten nur gruppierst, aber keine Teilmenge erstellst."),
+                    answer("Mit `select(data, variable)`.",
+                           message = "Nicht ganz, aber mit select lässt sich eine Teilmenge der Spalten auswählen."),
+                    answer("Mit `filter(data, bedingung)`.",
                             correct = TRUE),
                     allow_retry = TRUE,
                     random_answer_order = TRUE,
