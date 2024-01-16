@@ -129,6 +129,10 @@ learnr::available_tutorials(package = "rtutorials")
 #>   - 3a_import          : "Datenimport"
 #>   - 3b_skalen          : "Skalenniveaus"
 #>   - 3c_zentraletendenz : "Maße der zentralen Tendenz"
+#>   - 4a_dispersion      : "Dispersionsmaße"
+#>   - 4b_vis             : "Visualisierung"
+#>   - 4c_pipe            : "Pipe"
+#>   - 4d_datawrangling   : "Data Wrangling"
 #>   - template           : "template"
 ```
 
