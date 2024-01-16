@@ -6,6 +6,10 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/statistik-lehre/rtutorials/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/statistik-lehre/rtutorials/actions/workflows/R-CMD-check.yaml)
+
+[![Tutorial Render
+Check](https://github.com/statistik-lehre/rtutorials/actions/workflows/tutorial_rendertest.yaml/badge.svg)](https://github.com/statistik-lehre/rtutorials/actions/workflows/tutorial_rendertest.yaml)
+
 <!-- badges: end -->
 
 *This R package is currently under active development.*
@@ -133,6 +137,7 @@ learnr::available_tutorials(package = "rtutorials")
 #>   - 4b_vis             : "Visualisierung"
 #>   - 4c_pipe            : "Pipe"
 #>   - 4d_datawrangling   : "Data Wrangling"
+#>   - 5a_sampling        : "Inferenzstatistik"
 ```
 
 And to run the individual tutorials, run:

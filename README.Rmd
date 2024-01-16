@@ -18,6 +18,9 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/statistik-lehre/rtutorials/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/statistik-lehre/rtutorials/actions/workflows/R-CMD-check.yaml)
+
+[![Tutorial Render Check](https://github.com/statistik-lehre/rtutorials/actions/workflows/tutorial_rendertest.yaml/badge.svg)](https://github.com/statistik-lehre/rtutorials/actions/workflows/tutorial_rendertest.yaml)
+
 <!-- badges: end -->
 
 *This R package is currently under active development.*
