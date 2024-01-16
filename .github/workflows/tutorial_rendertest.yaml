@@ -37,6 +37,7 @@ jobs:
             any::cowsay
             any::nycflights13
             github::NicolasH2/ggbrace
+            github::statistik-lehre/rtutorials
 
 
       - name: Check out repository
