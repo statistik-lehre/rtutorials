@@ -1,0 +1,241 @@
+[
+    {
+        "ISBN": "978-3-465-04339-3",
+        "author": [
+            {
+                "family": "Schlaudt",
+                "given": "Oliver"
+            }
+        ],
+        "call-number": "JC574 .S35 2018",
+        "collection-number": "102",
+        "collection-title": "KlostermannRoteReihe",
+        "edition": "Originalausgabe",
+        "id": "schlaudt2018",
+        "issued": {
+            "date-parts": [
+                [
+                    2018
+                ]
+            ]
+        },
+        "key": "CIMIH47P",
+        "libraryid": "1",
+        "number-of-pages": "192",
+        "providerkey": "Zotero",
+        "publisher": "Vittorio Klostermann",
+        "publisher-place": "Frankfurt am Main",
+        "source": "Library of Congress ISBN",
+        "title": "Die politischen Zahlen: über Quantifizierung im Neoliberalismus",
+        "title-short": "Die politischen Zahlen",
+        "type": "book"
+    },
+    {
+        "author": [
+            {
+                "family": "Damerow",
+                "given": "Peter"
+            },
+            {
+                "family": "Nissen",
+                "given": "H. J."
+            },
+            {
+                "family": "Englund",
+                "given": "Robert K."
+            }
+        ],
+        "container-title": "Spektrum der Wissenschaft",
+        "id": "damerow1988",
+        "issued": {
+            "date-parts": [
+                [
+                    1988
+                ]
+            ]
+        },
+        "key": "ZMSC8DYT",
+        "libraryid": "1",
+        "page": "74-85",
+        "providerkey": "Zotero",
+        "title": "Die Entstehung der Schrift",
+        "type": "article-journal",
+        "volume": "2"
+    },
+    {
+        "ISBN": "978-1-4919-1039-9 978-1-4919-1036-8",
+        "author": [
+            {
+                "family": "Wickham",
+                "given": "Hadley"
+            },
+            {
+                "family": "Grolemund",
+                "given": "Garrett"
+            }
+        ],
+        "call-number": "QA276.45.R3 W53 2016",
+        "edition": "First edition",
+        "id": "wickham2016",
+        "issued": {
+            "date-parts": [
+                [
+                    2016
+                ]
+            ]
+        },
+        "key": "NYFUJ8UJ",
+        "libraryid": "1",
+        "number-of-pages": "492",
+        "oclc": "ocn968213225",
+        "providerkey": "2509FBBE-5BB0-44C4-B119-6083A81ED673",
+        "publisher": "O’Reilly",
+        "publisher-place": "Sebastopol, CA",
+        "source": "Library of Congress ISBN",
+        "title": "R for data science: import, tidy, transform, visualize, and model data",
+        "title-short": "R for data science",
+        "type": "book"
+    },
+    {
+        "URL": "https://github.com/RohanAlexander/DoSStoolkit",
+        "author": [
+            {
+                "family": "Rohan",
+                "given": "Alexander"
+            },
+            {
+                "family": "Caetano",
+                "given": "Samantha-Jo"
+            },
+            {
+                "family": "Collins",
+                "given": "Annie"
+            },
+            {
+                "family": "Chen",
+                "given": "Haoluan"
+            },
+            {
+                "family": "Ehrlich"
+            },
+            {
+                "family": "Walaa",
+                "given": "Mariam"
+            },
+            {
+                "family": "Pejcinovska",
+                "given": "Marija"
+            },
+            {
+                "family": "Wankiewicz",
+                "given": "Matthew"
+            },
+            {
+                "family": "Chong",
+                "given": "Michael"
+            },
+            {
+                "family": "Hodgetts",
+                "given": "Paul"
+            },
+            {
+                "family": "Deng",
+                "given": "Shirley"
+            },
+            {
+                "family": "Joo",
+                "given": "Yena"
+            }
+        ],
+        "id": "rohan2023",
+        "issued": {
+            "date-parts": [
+                [
+                    2023
+                ]
+            ]
+        },
+        "key": "JMXUVR2S",
+        "libraryid": "1",
+        "providerkey": "Zotero",
+        "title": "DoSStoolkit: Self-Paced Modules to Help You Learn R",
+        "type": "book"
+    },
+    {
+        "DOI": "10.5334/irsp.289",
+        "author": [
+            {
+                "family": "Leys",
+                "given": "Christophe"
+            },
+            {
+                "family": "Delacre",
+                "given": "Marie"
+            },
+            {
+                "family": "Mora",
+                "given": "Youri"
+            },
+            {
+                "family": "Lakens",
+                "given": "Daniël"
+            },
+            {
+                "family": "Ley",
+                "given": "Christophe"
+            }
+        ],
+        "container-title": "International Review of Social Psychology",
+        "container-title-short": "International Review of Social Psychology",
+        "id": "leys2019",
+        "issued": {
+            "date-parts": [
+                [
+                    2019,
+                    4,
+                    30
+                ]
+            ]
+        },
+        "key": "3JL3RIMW",
+        "libraryid": "1",
+        "providerkey": "Zotero",
+        "source": "ResearchGate",
+        "title": "How to Classify, Detect, and Manage Univariate and Multivariate Outliers, With Emphasis on Pre-Registration",
+        "type": "article-journal",
+        "volume": "32"
+    },
+    {
+        "ISBN": "978-0-367-40982-1 978-0-367-40987-6",
+        "author": [
+            {
+                "family": "Ismay",
+                "given": "Chester"
+            },
+            {
+                "family": "Kim",
+                "given": "Albert Y."
+            }
+        ],
+        "collection-title": "The R series",
+        "id": "ismay2020",
+        "issued": {
+            "date-parts": [
+                [
+                    2020
+                ]
+            ]
+        },
+        "key": "GF2VJB94",
+        "language": "eng",
+        "libraryid": "1",
+        "number-of-pages": "430",
+        "providerkey": "Zotero",
+        "publisher": "CRC Press, Taylor & Francis Group",
+        "publisher-place": "Boca Raton London New York",
+        "source": "K10plus ISBN",
+        "title": "Statistical inference via data science: a ModernDive into R and the tidyverse",
+        "title-short": "Statistical inference via data science",
+        "type": "book"
+    }
+]
