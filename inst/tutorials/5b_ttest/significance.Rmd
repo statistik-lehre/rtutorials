@@ -22,7 +22,6 @@ tutorial:
 library(learnr)
 library(rtutorials)
 knitr::opts_chunk$set(echo = FALSE)
-colnames(einkaufen) <- tolower(colnames(einkaufen))
 ```
 
 ## Inhalt
