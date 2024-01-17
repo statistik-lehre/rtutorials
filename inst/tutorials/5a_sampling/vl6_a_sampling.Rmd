@@ -1,5 +1,5 @@
 ---
-title: "Inferenzstatistik"
+title: "Stichprobenkennwerteverteilung"
 output:
   learnr::tutorial:
     language: de
@@ -10,7 +10,7 @@ output:
 runtime: shiny_prerendered
 bibliography: ref.json
 link-citations: TRUE
-description: statistische Hypothesen testen
+description: Demonstration des Konzepts mit realer und simulierter Stichprobenziehung
 resource_files:
 - css/boxes.css
 tutorial:
