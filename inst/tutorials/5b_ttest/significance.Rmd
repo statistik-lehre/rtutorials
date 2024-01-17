@@ -5,11 +5,11 @@ output:
     language: de
     css: css/boxes.css
     fig_caption: no
-    allow_skip: true
-    progressive: true
+    allow_skip: false
+    progressive: false
 runtime: shiny_prerendered
 bibliography: ref.json
-link-citations: TRUE
+link-citations: true
 description: Mittelwertunterschiede von Gruppen testen
 resource_files:
 - css/boxes.css
@@ -21,6 +21,7 @@ tutorial:
 ```{r setup, include=FALSE}
 library(learnr)
 library(rtutorials)
+library(ggplot2)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
@@ -34,31 +35,185 @@ Verortung auf der Roadmap:
 
 kleine Checkliste mit abhakbaren Checkboxen:
 
--   <input type="checkbox" unchecked> Wie verschiedene Überschriften
-    gerendert werden </input>
--   <input type="checkbox" unchecked> farbige HTML-Boxen </input>
+-   <input type="checkbox" unchecked> Verstehen was ein t-Test ist </input>
+-   <input type="checkbox" unchecked> </input>
 -   <input type="checkbox" unchecked> HTML-Tag für Absätze </input>
 -   <input type="checkbox" unchecked> ausklappbare Abschnitte </input>
 -   <input type="checkbox" unchecked> LaTex </input>
 
 
-## Nullhypothesen-Signifikanztests
+## Der t-Test
 
-Diese Art von Tests machen eine Annahme darüber, wie die Stichprobenkennwerte verteilt sein müssten,
-wenn es keinerlei Effekt gäbe. Das heißt auch Nullhypothese. Die Stichprobenkennwerteverteilung unter Annahme der Nullhypothese ist bekannt. 
+Der T-Test ist ein statistisches Verfahren, das verwendet wird, um zu testen, ob es einen signifikanten Unterschied zwischen den Mittelwerten zweier Gruppen gibt. Er hilft dir zu entscheiden, ob die Unterschiede zwischen diesen Mittelwerten groß genug sind, um als *statistisch signifikant* zu gelten. Das bedeutet, dass sie wahrscheinlich *nicht nur durch Zufall entstanden* sind. Klingt spannend, oder? 
+
+Stell dir also vor, du möchtest wissen, ob Linkshänder wirklich schlauer sind
+als Rechtshänder. Oder ob Kaffee wirklich wach macht. Der T-Test hilft dir dabei zu entscheiden, ob die Unterschiede, die du siehst, wirklich signifikant sind oder einfach nur Zufall. In der Welt der Statistik heißt 'signifikant' also so viel wie 'wahrscheinlich nicht durch Zufall'.
+
+Es gibt drei Haupttypen von T-Tests:
+
+-   **Unabhängiger T-Test**: Vergleicht die Mittelwerte von zwei *unabhängigen Gruppen*. Perfekt, wenn du zwei verschiedene Gruppen hast (wie Linkshänder und Rechtshänder).
+-   **Abhängiger oder gepaarter T-Test**: Vergleicht die Mittelwerte *derselben Gruppe* zu zwei verschiedenen Zeitpunkten. Ideal, wenn du dieselben Personen vor und nach einer Veränderung testest (wie vor und nach dem Kaffeetrinken).
+-   **Einstichproben-T-Test**: Testet, ob der Mittelwert *einer Gruppe* signifikant *von einem bekannten Wert* abweicht. Nützlich, wenn du einen Gruppenmittelwert mit einem bekannten Mittelwert (z.B. den durchschnittlichen BMI in Deutschland) vergleichen möchtest.
+
+```{r quizz1}
+quiz(caption = "Welchen T-Test brauchst du?",
+      
+
+  learnr::question_radio("Du möchtest testen, ob sich die durchschnittlichen Blutdruckwerte von Männern und Frauen unterscheiden. Welcher T-Test ist am geeignetsten?",
+      answer("Unabhängiger T-Test", 
+             correct = TRUE),
+      answer("Abhängiger T-Test"),
+      answer("Einstichproben-T-Test"),
+      random_answer_order = TRUE,
+      allow_retry = TRUE),
+
+    learnr::question_radio("Du führst eine Studie durch, in der du die Schlafqualität von Personen vor und nach der Anwendung einer neuen Schlaftherapie vergleichst. Welcher T-Test sollte verwendet werden?",
+      answer("Unabhängiger T-Test"),
+      answer("Abhängiger T-Test", 
+             correct = TRUE),
+      answer("Einstichproben-T-Test"),
+      random_answer_order = TRUE,
+      allow_retry = TRUE),
+
+    learnr::question_radio("Du möchtest überprüfen, ob der durchschnittliche IQ in Ihrer Stichprobe signifikant vom nationalen Durchschnitt von 100 abweicht. Welcher T-Test ist hierfür geeignet?",
+      answer("Unabhängiger T-Test"),
+      answer("Abhängiger T-Test"),
+      answer("Einstichproben-T-Test", 
+             correct = TRUE),
+      random_answer_order = TRUE,
+      allow_retry = TRUE)
+)
+```
+
+Super, das hat schonmal geklappt.
+
+## Vor dem T-Test
+
+Bevor wir mit der Berechnung eines T-Tests anfangen, haben wir zuvor jeweils noch 2 Aufgaben zu erledigen:
+
+1. Entscheiden, ob wir einen **gerichteten oder ungerichteten** T-Test rechnen wollen
+2. **Voraussetzungen** für den T-Test (unabhänigiger, abhängiger oder Einstichproben-T-Test) prüfen
+
+### 1. Gerichtete vs. Ungerichtete Hypothesen
+
+Die Richtung des T-Test wird bestimmt von der Richtung unserer Hypothese. Eine Hypothese ist wie eine Vermutung - sie sagt etwas darüber aus, was du in deiner Studie erwartest. In der Statistik haben wir oft zwei Hypothesen: die **Nullhypothese (H0)** und die **Alternativhypothese (H1 oder HA)**. Sagen dir diese Begriffe zunächst nichts, oder du möchtest dein Wissen zu Hypothesen und dem Signifikanzniveau aufzufrischen lässt sich dieses Statistikbuch von @planing2022 empfehlen, dass auch [online](https://statistikgrundlagen.de/ebook/chapter/hypothesentest-signifikanztest/) frei verfügbar ist. 
+
+- **Gerichtete Hypothese**: Hier sagst du voraus, *in welche Richtung der Unterschied geht*. Zum Beispiel: "Gruppe A wird besser abschneiden als Gruppe B."
+- **Ungerichtete Hypothese**: Hierbei vermutest du nur, dass es einen Unterschied gibt, aber du *sagst nicht, in welche Richtung der Unterschied geht*. Zum Beispiel: "Es gibt einen Unterschied in den Testergebnissen zwischen Gruppe A und Gruppe B."
 
 
+*Wie wirkt sich das auf den T-Test aus?*
 
-Dann wird geschaut, wie wahrscheinlich der beobachtete Stichprobenkennwert unter Annahme der Nullhypothese auftreten könnte. Ist diese Wahrscheinlichkeit sehr gering, klassischerweise wird die Grenze da bei $p \leq 5 \%$ gesetzt, wird die Nullhypothese verworfen.
+Durch die Richtung des T-Test "verändert" sich das **Alphaniveau**, das wir für den Test ansetzten - aber zunächst die Basics: Das Alphaniveau (auch Signifikanzniveau genannt) ist ein kritischer Wert, den wir vor einem statistischen Test festlegen. Es bestimmt, wie stark die Beweise gegen unsere Nullhypothese (H0) sein müssen, damit wir sie ablehnen. Das Alphaniveau ist meistens **0.05**, was bedeutet, dass wir eine *5%ige Chance akzeptieren, die Nullhypothese fälschlicherweise abzulehnen*, wenn sie tatsächlich wahr ist (dies wird als *Typ-1-Fehler* bzw. *Alpha-Fehler* bezeichnet).
 
-Der Wissensgewinn ist hier die Verneinung der Nullhypothese. Lautet sie zum Beispiel: "Die Mittelwerte unterscheiden sich nicht", und das was wir beobachten 
+- Bei einer **gerichteten** Hypothese verwendest du einen **einseitigen** T-Test. Du interessierst dich **nur für eine Richtung** - entweder ob Gruppe A besser ist als Gruppe B ODER umgekehrt (das hängt davon ab, wie du deine *Alternativhypothese* **H1** gerichtet hast). Dementsprechend erwartest du einen größeren oder einen kleineren Mittelwert. In der Grafik haben wir dir den *kritischen Wert*, der das Alpha-Niveau (*blau*) markiert in *rot* eingezeichnet. Ein gemessener (*empirischer*) t-Wert, der diesen kritschen Wert überschreitet wird als signifikant deklariert und wir lehnen die Nullhypothese ab.
+
+```{r gerichtet_links}
+# Verteilung erstellen und einteilen
+df    <- data.frame(x=seq(-3,3, by=0.005))
+df$y  <- dnorm(df$x)
+df$sd <- "B"
+df$sd[df$x < 2.3] <- "C"
+df$sd[df$x < -2.3] <- "A"
 
 
+ggplot(df, aes(x, y, fill = sd)) + 
+  geom_area() +   
+  ylab("") + 
+  xlab("t-Werte Verteilung gerichtet, H1: Mittelwert kleiner als Vergleichswert") + 
+  scale_fill_manual(values=c("lightblue", "gray", "gray")) +
+  geom_vline(xintercept= -2.3, col="red", linewidth=0.5, linetype = "dotted")+
+  theme(legend.position = "none", axis.text.x = element_blank(),axis.ticks.x = element_blank(),axis.text.y = element_blank(),axis.ticks.y = element_blank()) 
+
+ggplot(df, aes(x, y, fill = sd)) + 
+  geom_area() +   
+  ylab("") + 
+  xlab("t-Werte Verteilung gerichtet, H1: Mittelwert größer als Vergleichswert") + 
+  scale_fill_manual(values=c("gray", "lightblue","gray" )) +
+  geom_vline(xintercept= 2.3, col="red", linewidth=0.5, linetype = "dotted")+
+  theme(legend.position = "none", axis.text.x = element_blank(),axis.ticks.x = element_blank(),axis.text.y = element_blank(),axis.ticks.y = element_blank()) 
+
+```
+    
+Was siehst du also da oben? Du kannst es dir vorstellen wie die Stichprobenkennwerteverteilung für unsere H0: der Annahme, dass es keinen Unterschied zwischen den Gruppen gibt, und der wahre Wert in Wirklichkeit also 0 ist. Ein Mittelwertsunterschied im hellblauen Bereich zu erhalten, hat eine Wahrscheinlichkeit von 5% = (alphaniveau: $p = .05$). Haben wir einen solchen Wert gefunden, gehen wir davon aus, dass wir die H0 mit einer 95% Wahrscheinlichkeit verwerfen können.
+    
+- Bei einer **ungerichteten** Hypothese verwendest du einen **zweiseitigen** T-Test. Du schaust **in beide Richtungen** - ob Gruppe A besser ist als Gruppe B und ob Gruppe B besser ist als Gruppe A.
+
+```{r ungerichtet}
+# Verteilung erstellen und einteilen
+df    <- data.frame(x=seq(-3,3, by=0.005))
+df$y  <- dnorm(df$x)
+df$sd <- "B"
+df$sd[df$x < 2.6] <- "C"
+df$sd[df$x < -2.6] <- "A"
+
+
+ggplot(df, aes(x, y, fill = sd)) + 
+  geom_area() +   
+  ylab("") + 
+  xlab("t-Werte Verteilung ungerichtet, H1: Mittelwert größer oder kleiner") + 
+  scale_fill_manual(values=c("lightblue", "lightblue", "gray")) +
+  geom_vline(xintercept= -2.6, col="red", linewidth=0.5, linetype = "dotted") +
+  geom_vline(xintercept= 2.6, col="red", linewidth=0.5, linetype = "dotted") +
+  theme(legend.position = "none", axis.text.x = element_blank(),axis.ticks.x = element_blank(),axis.text.y = element_blank(),axis.ticks.y = element_blank()) 
+```
+
+Das hat wie du siehst Auswirkungen auf das Alphaniveau (*blau*). Das Alphaniveau wird hier auf **beide Enden** der Verteilung aufgeteilt. Bei einem Alphaniveau von 0.05 würden wir also jeweils 2.5% auf das linke und rechte Ende der Verteilung legen, um weiterhin nur mit einer 5%-igen Wahrscheinlichkeit einen Alpha-Fehler zu begehen. Dementsprechend muss der *p-Wert* < 0.025 sein.
+
+Wenn das jetzt zu schnell ging, kannst du wie erwähnt auch im Statistikbuch z.B. von @planing2022 diese Zusammenhänge nachlesen ([online hier](https://statistikgrundlagen.de/ebook/chapter/hypothesentest-signifikanztest/)). 
+
+Keine Bange, das ganze ist dann bei der Berechnugn in R nur *ein Argument* in der T-Test-Funktion: `alternative = "two.sided"`. Das schauen wir uns dann später nochmal an. 
+
+## Einstichproben-T-Test
+
+### Voraussetzungen
+
+Der Einstichproben-T-Test hat ein paar Voraussetzungen, die erfüllt sein müssen, damit die Ergebnisse verlässlich sind. Dazu gehören:
+
+- **Normalverteilung** der Daten: Die Daten sollten annähernd normalverteilt sein.
+- **Unabhängigkeit der Beobachtungen**: Jede Beobachtung sollte unabhängig von den anderen sein.
+
+Nehmen wir an, wir haben Daten über die Dauer der täglichen Bildschirmzeit von einer Gruppe von Personen. Zuerst laden wir die notwendigen Pakete und bereiten unsere Daten vor.
+
+```{r}
+# Pakete laden
+library(ggplot2)
+library(dplyr)
+
+# Beispieldaten erstellen
+set.seed(123) # Für reproduzierbare Ergebnisse
+bildschirmzeit <- rnorm(50, mean = 3, sd = 1) # Angenommen in Stunden
+daten <- data.frame(bildschirmzeit)
+```
+
+#### Normalverteilung prüfen
+
+Um **grafisch** zu prüfen, ob unsere Daten normalverteilt sind, können wir ein Histogramm mit einer Normalverteilungskurve darüber legen.
+
+```{r Normalverteilung, exercise = TRUE, exercise.cap = "Normalverteilung prüfen"}
+ggplot(daten, aes(x = bildschirmzeit)) +
+  geom_histogram(aes(y = ..density..), binwidth = 0.2, fill = "blue", alpha = 0.7) +
+  stat_function(fun = dnorm, args = list(mean = mean(daten$bildschirmzeit), sd = sd(daten$bildschirmzeit)), color = "red") +
+  labs(title = "Histogramm der Bildschirmzeit mit Normalverteilungskurve",
+       x = "Bildschirmzeit (Stunden)",
+       y = "Dichte")
+```
+
+Um die Normalverteilung **statistisch** zu testen, können wir den Shapiro-Wilk-Test verwenden.
+
+```{r}
+shapiro.test(daten$bildschirmzeit)
+```
+
+#### Unabhängigkeit der Beobachtungen
+
+Die Unabhängigkeit der Beobachtungen ist meistens durch das Design der Studie gewährleistet. Stelle sicher, dass jede Beobachtung (in unserem Fall jede Person) unabhängig von den anderen ist.
+
+Und schon bist du fertig! Jetzt hast du gelernt, wie du die Voraussetzungen für einen Einstichproben-T-Test in R prüfen kannst. Du hast sowohl visuelle als auch statistische Methoden kennengelernt, um deine Daten auf Normalverteilung zu überprüfen. Super gemacht! 🌟
 
 ## Abschlussquiz
 
 **Wichtig:** Argument setzen: `allow_retry = TRUE`
-
 
 ```{r Abschlussquizz}
 quiz(caption = "Teste dein Wissen!",
@@ -93,8 +248,6 @@ learnr::question_radio("Welches Maß der zentralen Tendenz eignet sich für eine
          random_answer_order = TRUE
          ))
 ```
-
-
 
 ## Learnings
 
@@ -150,28 +303,30 @@ shiny::textOutput("score")
 shiny::br()
 ```
 
-
-
 ### Zusammenfassung
 
 Hier ein kleiner Text, was gelernt wurde und vlt. auch warum das wichtig ist.
 
 ### Diese neuen Konzepte kennst du nun:
--     Stichpunktartige Beschreibung
+
+-   
+
+    ```         
+    Stichpunktartige Beschreibung
+    ```
 
 ### Neue Funktionen
-eine Tabelle mit den wichtigesten Codes des Tutorials
-| Code           | Beschreibung                           |
-|----------------|----------------------------------------|
-| `[ ]`          | Indizierung                            |
-| `&`            | UND-Operator für logische Indizierung  |
+
+eine Tabelle mit den wichtigesten Codes des Tutorials \| Code \| Beschreibung \| \|----------------\|----------------------------------------\| \| `[ ]` \| Indizierung \| \| `&` \| UND-Operator für logische Indizierung \|
 
 ## Credit
+
 <!-- vielleicht in diese Richtung? -->
-Dieses Tutorial wurde (größtenteils) von Lukas Bruelheide sowie in Teilen von Marie Klosterkamp geschrieben. 
+
+Dieses Tutorial wurde (größtenteils) von Lukas Bruelheide sowie in Teilen von Marie Klosterkamp geschrieben.
 
 ggf.: Bei der Erstellung (u.a. der Beispiele, Aufgaben und Zusammenfassung) wurde teilweise von ChatGPT gebrauch gemacht.
 
-### Literaturverzeichnis
+## Literaturverzeichnis
 
 <!--  Wird automatisch generiert aus den @autorYYYY-Zitationen und der Bibliothek in ref.json. Das Literaturverzeichnis wird immer ans Ende generiert, deswegen muss das hier die letzte Überschrift bleiben. -->
