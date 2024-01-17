@@ -219,22 +219,23 @@ vorliegen, dann kannst du sie mithilfe des *tidyverse* nach deinen
 Wünschen arrangieren. Im folgenden stellen wir dir dafür dir das Pakete
 `dplyr` und dessen Funktionen vor.
 
-## dplyr()
+## Das Paket `dplyr`
 
-Das `dplyr`-Paket wird verwendet, um einen Datensatz zu manipulieren. Es
-enthält essentielle Funktionen um deine Daten in Form zu bringen:
+![](images/dplyr.png){width="20%"}
+
+`dplyr` steht für *Data Plyers*, "Datenzange". Es
+enthält essentielle Funktionen um deine Daten zu greifen und in Form zu bringen:
 
 -   `rename()` lässt dich deine Variablen umbenennen.
 -   `select()` ermöglicht es dir, Variablen anhand ihrer Namen
     auszuwählen.
 -   `arrange()`, um die Reihenfolge der Zeilen zu ändern.
--   `filter()`, um Fälle basierend auf ihren Werten auszuwählen.
--   `mutate()`, um neue Variablen zu berechnen
+-   `filter()`, um Zeilen basierend auf ihren Werten auszuwählen.
+-   `mutate()`, um neue Variablen zu erstellen
 -   `group_by()`, um Funktionen gruppenweise durchzuführen
--   `summarise()`, fasst mehrere Werte zu einer einzigen Zusammenfassung
-    zusammen
+-   `summarise()`, dampt mehrere Zeilen ein zu einer einzigen zusammenfassenden Zahl
 
-Starten wir direkt mit der ersten Funktion `rename()`.
+Starten wir direkt mit der ersten Funktion: `rename()`.
 
 ## rename()
 
