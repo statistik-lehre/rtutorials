@@ -1,99 +1,57 @@
 [
     {
-        "ISBN": "978-3-465-04339-3",
-        "author": [
-            {
-                "family": "Schlaudt",
-                "given": "Oliver"
-            }
-        ],
-        "call-number": "JC574 .S35 2018",
-        "collection-number": "102",
-        "collection-title": "KlostermannRoteReihe",
-        "edition": "Originalausgabe",
-        "id": "schlaudt2018",
+        "DOI": "10.1007/978-3-211-76751-1",
+        "ISBN": "978-3-211-76750-4 978-3-211-76751-1",
+        "URL": "http://link.springer.com/10.1007/978-3-211-76751-1",
+        "accessed": {
+            "date-parts": []
+        },
+        "id": "planungs2008",
         "issued": {
             "date-parts": [
                 [
-                    2018
+                    2008
                 ]
             ]
         },
-        "key": "CIMIH47P",
+        "key": "KSEUB8V6",
+        "language": "de",
         "libraryid": "1",
-        "number-of-pages": "192",
         "providerkey": "Zotero",
-        "publisher": "Vittorio Klostermann",
-        "publisher-place": "Frankfurt am Main",
-        "source": "Library of Congress ISBN",
-        "title": "Die politischen Zahlen: über Quantifizierung im Neoliberalismus",
-        "title-short": "Die politischen Zahlen",
+        "publisher": "Springer",
+        "publisher-place": "Vienna",
+        "source": "DOI.org (Crossref)",
+        "title": "Planungshandbuch Radverkehr",
         "type": "book"
     },
     {
+        "ISBN": "978-3-949730-02-3",
         "author": [
             {
-                "family": "Damerow",
-                "given": "Peter"
-            },
-            {
-                "family": "Nissen",
-                "given": "H. J."
-            },
-            {
-                "family": "Englund",
-                "given": "Robert K."
+                "family": "Planing",
+                "given": "Patrick"
             }
         ],
-        "container-title": "Spektrum der Wissenschaft",
-        "id": "damerow1988",
+        "id": "planing2022",
         "issued": {
             "date-parts": [
                 [
-                    1988
+                    2022,
+                    9,
+                    26
                 ]
             ]
         },
-        "key": "ZMSC8DYT",
+        "key": "KXI78F8H",
+        "language": "Deutsch",
         "libraryid": "1",
-        "page": "74-85",
+        "number-of-pages": "377",
         "providerkey": "Zotero",
-        "title": "Die Entstehung der Schrift",
-        "type": "article-journal",
-        "volume": "2"
-    },
-    {
-        "ISBN": "978-1-4919-1039-9 978-1-4919-1036-8",
-        "author": [
-            {
-                "family": "Wickham",
-                "given": "Hadley"
-            },
-            {
-                "family": "Grolemund",
-                "given": "Garrett"
-            }
-        ],
-        "call-number": "QA276.45.R3 W53 2016",
-        "edition": "First edition",
-        "id": "wickham2016",
-        "issued": {
-            "date-parts": [
-                [
-                    2016
-                ]
-            ]
-        },
-        "key": "NYFUJ8UJ",
-        "libraryid": "1",
-        "number-of-pages": "492",
-        "oclc": "ocn968213225",
-        "providerkey": "2509FBBE-5BB0-44C4-B119-6083A81ED673",
-        "publisher": "O’Reilly",
-        "publisher-place": "Sebastopol, CA",
-        "source": "Library of Congress ISBN",
-        "title": "R for data science: import, tidy, transform, visualize, and model data",
-        "title-short": "R for data science",
+        "publisher": "Planing Publishing",
+        "publisher-place": "Stuttgart",
+        "source": "Amazon",
+        "title": "Statistik Grundlagen: Das interaktive Lehrbuch mit über 150 YouTube-Videos rund um die Burgerkette FIVE PROFS",
+        "title-short": "Statistik Grundlagen",
         "type": "book"
     }
 ]
