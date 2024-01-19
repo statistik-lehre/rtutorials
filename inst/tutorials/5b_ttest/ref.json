@@ -53,5 +53,27 @@
         "title": "Statistik Grundlagen: Das interaktive Lehrbuch mit über 150 YouTube-Videos rund um die Burgerkette FIVE PROFS",
         "title-short": "Statistik Grundlagen",
         "type": "book"
+    },
+    {
+        "author": [
+            {
+                "family": "Cohen",
+                "given": "J"
+            }
+        ],
+        "id": "cohen1988",
+        "issued": {
+            "date-parts": [
+                [
+                    1988
+                ]
+            ]
+        },
+        "key": "WPF99VLL",
+        "libraryid": "1",
+        "providerkey": "Zotero",
+        "publisher": "Hoboken: Taylor and Francis",
+        "title": "Statistical Power Analysis for the Behavioral Sciences",
+        "type": "book"
     }
 ]
