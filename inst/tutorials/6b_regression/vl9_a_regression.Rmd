@@ -85,7 +85,7 @@ Die Höhe `Height` lassen wir heute außen vor.
 
 Der Durchmesser heißt im Datensatz fälschlicherweise `Girth`, was Umfang bedeutet. (Das ist einfach ein Fehler in der Benennung, siehe `?trees`).
 
-Beheben Sie das, in dem Sie in `trees` eine neue Variable namens `Diameter` erstellen, die den Inhalt der Variable `Girth` enthält.
+Beheben Sie das, in dem Sie in `trees` mittels Assignments eine neue Variable namens `Diameter` erstellen, die den Inhalt der Variable `Girth` enthält.
 :::
 
 ```{r girth, exercise = TRUE}
@@ -101,7 +101,7 @@ trees$Diameter <- trees$Girth
 
 Die Variablen sind (typisch USA) alle in nicht-metrischen Einheiten angegeben.
 
-Rechnen Sie `Diameter` und `Girth` in metrische Einheiten um, damit das Beispiel intuitiver verständlich ist.
+Rechnen Sie `Diameter` und `Volume` in metrische Einheiten um, damit das Beispiel intuitiver verständlich ist.
 
 `Diameter` = Inch. Ziel: cm
 
@@ -293,24 +293,28 @@ ggplot() +
 ```
 
 ```{r guess}
-quiz(
+quiz(caption = "Schulmathe auffrischen",
   question_numeric(
   "Welche Steigung (b1) hat die gestrichelte Linie?",
-  answer(1, correct = T)
+  answer(1, correct = T),
+  allow_retry = TRUE
   ),
   question_numeric(
   "Welche Steigung (b1) hat die durchgezogene Linie?",
-  answer(0.5, correct = T)
+  answer(0.5, correct = T),
+  allow_retry = TRUE
   ),
   question_numeric(
     "Welches Intercept (b0) hat die gestrichelte Linie?",
-    answer(10, correct = T)
+    answer(10, correct = T),
+  allow_retry = TRUE
   ),
   question_numeric(
     "Welches Intercept (b0) hat die durchgezogene Linie?",
-    answer(5, correct = T)
-  ),
-  caption = "Schulmathe auffrischen"
+    answer(5, correct = T),
+  allow_retry = TRUE
+  )
+  
 )
 ```
 
@@ -518,15 +522,26 @@ Bild: [ghbat.com](https://gbhat.com/machine_learning/linear_regression.html)
 **1.**
 Um die Formeln noch mal selbst anzuwenden, ist hier eine kleine Praxisaufgabe. 
 
-In der Tabelle `trees_predict` finden Sie zwei Spalten: Das tatsächliche Volumen ($y_i$) und das vorhergesagte Volumen ($\hat y_i$).
+In der Tabelle `trees_predict` finden Sie zwei Spalten: Das tatsächliche Volumen ($y_i$) und das vorhergesagte Volumen ($\hat y_i$, *predict*).
 
 a) Schauen Sie sich `trees_predict` an. 
-b) Berechnen Sie eine neue Spalte mit den Residuen für jeden einzelnen Messwert!
-c) Berechnen Sie die Summe der quadrierten Residuen!
+b) Berechnen Sie eine neue Spalte mit den Residuen für jeden einzelnen Messwert! (`Residuen <- tatsächlicher Wert - vorhergesagter Wert`)
+c) Berechnen Sie die Summe der quadrierten Residuen! (`Sum(residuen ^ 2)`)
 :::
 </br>
 ```{r predict, exercise = TRUE, exercise.setup = "silentsetup"}
 trees_predict
+```
+
+```{r predict-hint}
+# a)
+head(trees_predict)
+
+# b)
+trees_predict$resid <- trees_predict$XXX - trees_predict$predict
+
+# c)
+sum(XXX ^ 2)
 ```
 
 ```{r predict-solution}
@@ -645,7 +660,7 @@ Jetzt sind Sie dran!
 Erstellen Sie mit `lm()` ein lineares Modell zur Erklärung des Volumens durch den Durchmesser im `trees`-Datensatz und speichern Sie es ab als `fit`.
 :::
 
-```{r model, exercise = TRUE}
+```{r model, exercise = TRUE, exercise.setup = "silentsetup"}
 
 ```
 
@@ -795,11 +810,19 @@ summary(fit_centered)
 ```{r centerquestion}
 quiz(
 question_numeric("Wie lautet $b_0$ (*Intercept*) (auf drei Nachkommastellen)?",
-                 answer(0.854347, correct = T),
-                 answer(0.854, correct = T)),
+                 answer(0.854347, 
+                        correct = T,
+                        allow_retry = TRUE),
+                 answer(0.854, 
+                        correct = T,
+                        allow_retry = TRUE)),
 question_numeric("Wie lautet $b_1$ (*Slope*) (auf drei Nachkommestellen)?",
-                 answer(0.056476, correct = T),
-                 answer(0.056, correct = T)),
+                 answer(0.056476, 
+                        correct = T,
+                        allow_retry = TRUE),
+                 answer(0.056, 
+                        correct = T,
+                        allow_retry = TRUE)),
 caption = "3. Koeffizienten finden")
 ```
 
@@ -837,18 +860,30 @@ Die Steigung $b_1$ ändert sich durch das Zentrieren nicht.
 
 ```{r questioncenter}
 question_checkbox("4. Wie würden Sie $b_0$ jetzt interpretieren, wo der Prädiktor zentriert wurde?",
-                  answer("Bei einem mittleren Baumdurchmesser sagt das Modell 0.854 m³ Holzernte voraus.", correct = TRUE, message = "$b_0$ ist der vorhergesagte Wert, wenn der Prädiktor den Wert 0 annimt. Da nun 0 dem Mittelwert entspricht, können wir von einem mittleren Durchmesser sprechen"),
-                  answer("Wenn man das Volumen um eine Einheit erhöht, steigt der mittlere Durchmesser um 0.854 cm", correct = FALSE, message = "Hier ist alles verdreht. Zunächst, das Volumen ist unser Kriterium, also können wir daraus nicht den Durchmesser vorhersagen. Aber selbst dann wäre das Schema „Wenn man Prädiktor um 1 Einheit erhöht, um wie viel ändert sich dann die Vorhersage?“ für die Interpretation für das Regressionsgewicht $b_1$ geeignet und nicht für die Regressionskonstante $b_0$. Zuletzt: Die Koeffizienten liegen immer in Einheiten des Kriteriums vor, also ist cm hier auch nicht die richtige Einheit."),
-                  answer("Bei einem hypothetischen Durchmesser von 0.854 cm nimmt das vorhergesagte Volumen den Mittelwert an", correct = F, message = "Das stimmt leider nicht, denn die Koeffizienten liegen immer in Einheiten des Kriteriums vor, also in diesem Fall m³. Und dann ist auch noch der Mittelwert an der falschen Stelle, nämlich eigentlich ist 0.854 das vorhergesagte Volumen in m³ bei einem Durchmesser von 0 - da wir aber zentriert haben, entspricht das einem mittleren Durchmesser.")
+                  answer("Bei einem mittleren Baumdurchmesser sagt das Modell 0.854 m³ Holzernte voraus.", 
+                         correct = TRUE, 
+                         message = "$b_0$ ist der vorhergesagte Wert, wenn der Prädiktor den Wert 0 annimt. Da nun 0 dem Mittelwert entspricht, können wir von einem mittleren Durchmesser sprechen"),
+                  answer("Wenn man das Volumen um eine Einheit erhöht, steigt der mittlere Durchmesser um 0.854 cm", 
+                         correct = FALSE, 
+                         message = "Hier ist alles verdreht. Zunächst, das Volumen ist unser Kriterium, also können wir daraus nicht den Durchmesser vorhersagen. Aber selbst dann wäre das Schema „Wenn man Prädiktor um 1 Einheit erhöht, um wie viel ändert sich dann die Vorhersage?“ für die Interpretation für das Regressionsgewicht $b_1$ geeignet und nicht für die Regressionskonstante $b_0$. Zuletzt: Die Koeffizienten liegen immer in Einheiten des Kriteriums vor, also ist cm hier auch nicht die richtige Einheit."),
+                  answer("Bei einem hypothetischen Durchmesser von 0.854 cm nimmt das vorhergesagte Volumen den Mittelwert an", 
+                         correct = F, 
+                         message = "Das stimmt leider nicht, denn die Koeffizienten liegen immer in Einheiten des Kriteriums vor, also in diesem Fall m³. Und dann ist auch noch der Mittelwert an der falschen Stelle, nämlich eigentlich ist 0.854 das vorhergesagte Volumen in m³ bei einem Durchmesser von 0 - da wir aber zentriert haben, entspricht das einem mittleren Durchmesser."),
+                  allow_retry = TRUE
                   )
 ```
 
 ```{r importantcenter}
 question_text("5. Haben Sie das Wichtigste mitgenommen? Was repräsentiert der Wert 0 bei einer zentrierten Variablen? (Stichwort)", 
-            correct = "Super! Sie haben das Wichtigste verstanden.", incorrect = "Probieren Sie es nochmal (vielleicht eine andere Schreibweise). Zentrierte Daten haben als Wert ihren Abstand zum Mittelwert. Der Mittelwert hat den Abstand 0 zum Mittelwert",
-                 answer("den Mittelwert", correct = T),
-                 answer("arithmetisches Mittel", correct = T),
-                 answer("Mittelwert", correct = T)
+                 answer("den Mittelwert", 
+                        correct = T),
+                 answer("arithmetisches Mittel", 
+                        correct = T),
+                 answer("Mittelwert", 
+                        correct = T),
+            correct = "Super! Sie haben das Wichtigste verstanden.", 
+            incorrect = "Probieren Sie es nochmal (vielleicht eine andere Schreibweise). Zentrierte Daten haben als Wert ihren Abstand zum Mittelwert. Der Mittelwert hat den Abstand 0 zum Mittelwert",
+            allow_retry = TRUE
 )
 ```
 
@@ -935,7 +970,10 @@ cor(trees$Diameter, trees$Volume)
 
 ```{r korrelationsfrage}
 question_numeric("Geben Sie Ihren errechneten Wert der Pearson-Korrelation zwischen Volumen und Durchmesser ein, gerundet auf 4 Nachkommastellen!",
-                 answer(0.9671, correct = TRUE, message = "Wir runden auf 4 Nachkommastellen, weil R² uns nicht präziser gegeben ist."))
+                 answer(0.9671, 
+                        correct = TRUE, 
+                        message = "Wir runden auf 4 Nachkommastellen, weil R² uns nicht präziser gegeben ist."),
+                 allow_retry = TRUE)
 ```
 
 #### Reminder: Interpretation Korrelation
@@ -1773,16 +1811,14 @@ h4 + geom_smooth(method = "lm", se = F) +
 car::durbinWatsonTest(fit4)
 ```
 
-<details>
-<summary><a>▼ Wie eine Auto-Korrelation berechnet wird</a></summary>
+<!-- <details> -->
+<!-- <summary><a>▼ Wie eine Auto-Korrelation berechnet wird</a></summary> -->
 
-```{r, echo = TRUE}
+<!-- ```{r, echo = TRUE} -->
 
-```
+<!-- ``` -->
 
-</details>
-
-
+<!-- </details> -->
 
 
 ### 8. Normalverteilung der Residuen
