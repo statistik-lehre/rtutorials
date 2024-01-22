@@ -95,5 +95,53 @@
         "title": "R for data science: import, tidy, transform, visualize, and model data",
         "title-short": "R for data science",
         "type": "book"
+    },
+    {
+        "author": [
+            {
+                "family": "Cohen",
+                "given": "J"
+            }
+        ],
+        "id": "cohen1988",
+        "issued": {
+            "date-parts": [
+                [
+                    1988
+                ]
+            ]
+        },
+        "key": "WPF99VLL",
+        "libraryid": "1",
+        "providerkey": "Zotero",
+        "publisher": "Hoboken: Taylor and Francis",
+        "title": "Statistical Power Analysis for the Behavioral Sciences",
+        "type": "book"
+    },
+    {
+        "URL": "https://wgruber.github.io/Modellbildung2/korrelationen.html#pearson-produkt-moment-korrelation",
+        "accessed": {
+            "date-parts": []
+        },
+        "author": [
+            {
+                "family": "Gruber",
+                "given": "Walter"
+            }
+        ],
+        "id": "gruber2019",
+        "issued": {
+            "date-parts": [
+                [
+                    2019
+                ]
+            ]
+        },
+        "key": "MNVTHM5R",
+        "libraryid": "1",
+        "providerkey": "Zotero",
+        "source": "wgruber.github.io",
+        "title": "Statistik mit R für Fortgeschrittene",
+        "type": "book"
     }
 ]
