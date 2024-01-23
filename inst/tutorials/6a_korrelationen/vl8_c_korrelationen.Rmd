@@ -15,6 +15,9 @@ resource_files:
 
 ```{r setup, include=FALSE}
 library(learnr)
+library(ggplot2)
+library(tidyverse)
+library(rtutorials)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
@@ -62,7 +65,7 @@ plot(zigaretten, lungenkapazitaet,
      main="Negative Korrelation: Rauchen und Lungenkapazität", 
      xlab="Zigaretten (Stück/Tag)", 
      ylab="Lungenkapazität", 
-     col="green")
+     col="blue")
 ```
 
 ::: gelb
@@ -100,9 +103,9 @@ Die Pearson-Korrelation misst die Stärke und Richtung des **linearen** Zusammen
 
 Die Pearson-Produkt-Moment Korrelation (kurz: Pearson-Korrelation), ist ein Maß für den linearen Zusammenhang zwischen zwei Variablen. Sie variiert zwischen -1 und +1, wobei +1 eine perfekte positive Korrelation, -1 eine perfekte negative Korrelation und 0 keine Korrelation bedeutet. Dazu lassen sich diese Korrelationen auch nach ihrer Stärke einordnen:
 
--   \|r\| = .10 **geringe / schwache Korrelation**
--   \|r\| = .30 **mittlere / moderate Korrelation**
--   \|r\| = .50 **große / starke Korrelation**
+-   \|*r*\| = .10 **geringe / schwache Korrelation**
+-   \|*r*\| = .30 **mittlere / moderate Korrelation**
+-   \|*r*\| = .50 **große / starke Korrelation**
 
 Diese Interpretation wurde, wie auch die Effektstärke, von @cohen1988 hergeleitet.
 
@@ -122,8 +125,8 @@ Hypothesen:
 
 ```{r economics, exercise = TRUE, exercise.cap = "Beispieldaten" }
 # Laden des economics Datensatzes
-library(ggplot2)
-library(tidyverse)
+# library(ggplot2)
+# library(tidyverse)
 
 head(economics) |> 
   select(uempmed, unemploy)
@@ -138,7 +141,16 @@ Damit wir Aussagen von unserer Stichprobe auf die Grundgesamtheit übertragen (I
 
 Voraussetzungen für Korrelationen:
 
--   **keine Ausreißer**
+- keine Ausreißer
+- keine Kluster
+- Normalverteilung
+- Endliche Varianz
+- Linearität
+- Homoskedastizität
+
+Wir gehen diese eins nach dem anderen durch:
+
+#### keine Ausreißer
 
 Korrelationen sind sehr empfindlich gegenüber Ausreißern. Daher sollten wir unsere Daten im Vorhinein entsprechend mittels Visualisierungen überprüfen und ggf. aufbereiten.
 
@@ -149,24 +161,21 @@ boxplot(economics$uempmed, main="uempmed: durchschnittliche Dauer der Arbeitslos
 boxplot(economics$unemploy, main="unemploy: Arbeitslosenquote")
 ```
 
-```{r ausreißerquiz}
-quiz(
+```{r ausreisserquiz}
   question_radio("Denkst du wir haben Ausreißer in den Daten?",
     answer("Es gibt eine Menge an Ausreißern in beiden Variablen.", 
            correct = TRUE),
     answer("In der Variable `uempmed` gibt es 1 Ausreißer.", 
            message = "Es gibt einen Ausreißer der heraussticht, aber auch alle anderen Punkte bis zum Wisker, können als Ausreißer interpretiert werden."),
-    answer("Es gibt keine Ausreißer in den Daten."),
+    answer("Es gibt keine Ausreißer in den Daten.",
+           message = "alle Punkte, die nach dem Wisker eingezeichnet sind, können als Ausreißer interpretiert werden."),
     correct  = "In dem Fall des Boxplots sind Daten die Auserhalb der 1.5xIQR liegen als Ausreißer markiert. Das sind hier alle Punkte die auserhalb des Wiskers liegen.",
     incorrect = random_encouragement("de"),
     allow_retry = TRUE,
     random_answer_order = TRUE
-  ))
+  )
 ```
 
-var(economics$uempmed) var(economics$unemploy)
-
-plot(economics$uempmed, economics$unemploy, main="Homoskedastizität & Linearität") abline(lm(economics$unemploy ~ economics$uempmed), col="red")
 
 #### keine Kluster
 
@@ -185,7 +194,6 @@ plot(economics$uempmed, economics$unemploy, main="Scatterplot: durchschnittliche
 ```
 
 ```{r klusterquiz}
-quiz(
   question_radio("Denkst du wir haben Kluster in den Daten?",
     answer("Es gibt keine erkennbaren Kluster in den Daten.", 
            correct = TRUE),
@@ -195,7 +203,7 @@ quiz(
     incorrect = random_encouragement("de"),
     allow_retry = TRUE,
     random_answer_order = TRUE
-  ))
+  )
 ```
 
 #### Normalverteilung
@@ -247,11 +255,9 @@ Wenn die Varianz einen endlichen Wert zurückgibt, der nicht extrem hoch ist, ka
 
 In unserem Beispiel ist die Varianz zwar nicht unendlich, aber sie ist für die Arbeitslosenzahlen doch schon sehr hoch (6979948).
 
-#### Linearität 
+#### Linearität
 
-Da wir den linearen Zusammenhang testen, sollten wir auch davon ausgehen, dass unsere
-Daten einen linearen Zusammenhang darstellen. 
-
+Da wir den linearen Zusammenhang testen, sollten wir auch davon ausgehen, dass unsere Daten einen linearen Zusammenhang darstellen.
 
 ```{r}
 set.seed(123)
@@ -286,11 +292,16 @@ abline(a=0, b=1.5, col="red")
 
 ```
 
-
 #### Homoskedastitzität: gleichmäßige Streeung der Daten
 
 Wieder mal ein langes und kompliziertes Wort, das dir da begegnet. Aber nicht verzagen, es meint lediglich: sind die Varianzen der Daten gleich verteilt.
 
+
+```
+var(economics$uempmed) var(economics$unemploy)
+
+plot(economics$uempmed, economics$unemploy, main="Homoskedastizität & Linearität") abline(lm(economics$unemploy ~ economics$uempmed), col="red")
+```
 ## Abschlussquiz
 
 ```{r Abschlussquiz}
@@ -415,7 +426,7 @@ shiny::br()
 ### Neue Funktionen
 
 | Funktion in R          | Erklärung                                                                    |
-|------------------------|------------------------------------------------|
+|------------------------|-----------------------------------------------|
 | `t.test()`             | Durchführung eines T-Tests, einschließlich aller Varianten                   |
 | `qqnorm()`, `qqline()` | Erstellung von QQ-Plots zur Überprüfung der **Normalverteilung**             |
 | `shapiro.test()`       | Durchführung des Shapiro-Wilk-Tests zur Überprüfung der **Normalverteilung** |
