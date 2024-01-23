@@ -1,5 +1,5 @@
 ---
-title: "Mittelwertsunterschiede testen"
+title: "t-Tests"
 output:
   learnr::tutorial:
     language: de
@@ -10,7 +10,7 @@ output:
 runtime: shiny_prerendered
 bibliography: ref.json
 link-citations: true
-description: Mittelwertunterschiede von Gruppen testen
+description: Mittelwertsunterschiede testen. Mit Einstichproben-, unabhängigen oder abhängigen t-Tests. Dafür werden jeweils auch Voraussetzungen geprüft wie Normalverteilung und Varianzhomogenität. Outputs von Signifikanztests interpretieren. Ergebnisse APA-konform berichten.
 resource_files:
 - css/boxes.css
 tutorial:
@@ -29,17 +29,21 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Inhalt
 
-kurze Beschreibung des Inhalts
+Dieses Tutorial bringt dir die Durchführung und Interpretation von verschiedenen *t*-Tests bei. 
+Außerdem lernst du, die jeweiligen Voraussetzungen zu überprüfen. 
 
-Verortung auf der Roadmap:
+**Verortung auf der Roadmap**
+
+Das hier ist der Kernbestandteil der statistischen Auswertung deiner Daten, und auch das Berichten der Ergebnisse nach APA-Richtlinien wird in diesem Tutorial gleich mit angeschnitten.
+![](images/prozess.png){width = "80%"}
 
 ## Lernziele
 
-kleine Checkliste mit abhakbaren Checkboxen:
+kleine Checkliste:
 
 -   <input type="checkbox" unchecked> Was der *t*-Test ist und wann er angewendet wird </input>
 -   <input type="checkbox" unchecked> Wie man die Voraussetzungen für den *t*-Test überprüft</input>
--   <input type="checkbox" unchecked> Wie man den *t*-Test in R durchführt </input>
+-   <input type="checkbox" unchecked> Wie der *t*-Test in R berechnet wird </input>
 -   <input type="checkbox" unchecked> Die Bedeutung von Effektstärken </input>
 -   <input type="checkbox" unchecked> Berichten der Ergebnisse nach APA-Richtlinien </input>
 
@@ -634,11 +638,12 @@ Der Levene-Test testet die H0, dass die Varianzen gleich sind zwischen den Grupp
 **Der $p$-Wert findet sich im Output unter der Formulierung `Pr(>F)`.** 
 
 ```{r levenequiz}
+quiz(caption = "Levene-Test-Quiz",
 learnr::question_numeric("Wie lautet der $p$-Wert des Levene-Tests (alle Nachkommastellen)?",
                          answer(0.03384, correct = TRUE),
                          allow_retry = TRUE,
                          correct = random_praise("de"),
-                         incorrect = random_encouragement("de"))
+                         incorrect = random_encouragement("de")),
 
   learnr::question_radio("Was sagt das Ergebnis des Levene-Tests über die Varianzhomogenität aus?",
       answer("Die Varianzen der Gruppen sind nicht gleich.", 
@@ -649,7 +654,7 @@ learnr::question_numeric("Wie lautet der $p$-Wert des Levene-Tests (alle Nachkom
       random_answer_order = TRUE,
       allow_retry = TRUE,
       correct = random_praise("de"),
-      incorrect= random_encouragement("de"))
+      incorrect= random_encouragement("de")))
 ```
 
 Praktischerweise gibt es in der `t.test()`-Funktion das Argument `var.equal = FALSE` (default), welches sogar der Standardwert ist. Die Funktion ist so schlau, dass sie, wenn wir es nicht explizit anders wünschen, selbst prüft, ob Varianzhomogenität gegeben ist und bei Verletzung dieser Voraussetzung statt des *t*-Tests einen Welch *t*-Test rechnet, der diese Varianzungleichheit in die Berechnung einbezieht. Daher können wir zur Berechnung fortschreiten.
@@ -675,7 +680,7 @@ t.test(puls_autofahrende, puls_radfahrende)
       random_answer_order = TRUE,
       allow_retry = TRUE,
       correct = "Genau! Unsere H1 sagt, die Mittelwerte der Autofahrenden sind GRÖßER als die von den Radfahrenden.",
-      incorrect= random_encouragement("de"))
+      incorrect = random_encouragement("de"))
 ```
 
 ::: aufgabe
@@ -717,7 +722,7 @@ learnr::question_radio("Was sagt der t-Wert 2.81 über unsere Mittelwerte?",
       random_answer_order = TRUE,
       allow_retry = TRUE,
       correct = "Genau! Unsere H1 testet, ob der Puls von Autofahrenden höher ist. Deshalb geben wir auch der `t.test()`-Funktion zuerst die Autofahrenden (x) und dann den Vergleichswert (y) der Radfahrenden.",
-      incorrect= random_encouragement("de"))
+      incorrect = random_encouragement("de"))
 )
 ```
 
@@ -747,7 +752,7 @@ Der *abhängige* bzw. *gepaarte* *t*-Test ist ein statistisches Verfahren, das v
 
 Wir wollen untersuchen, ob durch den Umbau einer Straße in eine Fahrradstraße, die Anzahl an Radfahrenden zugenommen hat. Dafür messen wir vor und nach dem Umbau die Anzahl an Radfahrenden pro Stunde (tageszeit).
 
-Aufgrund von vorhergehenden Forschungsergebnissen gehen wir für unsere H1 davon aus, dass die Anzahl der Radfahrenden sich durch den Umbau erhöht.
+Aufgrund von vorhergehenden Forschungsergebnissen gehen wir für unsere H1 davon aus, dass die Anzahl der Radfahrenden sich durch den Umbau in eine Fahrradstraße erhöht.
 
 ```{r gepaarthypotesenquiz}
 learnr::question_radio("Was wäre unsere H0?",
@@ -756,7 +761,7 @@ learnr::question_radio("Was wäre unsere H0?",
       answer("Die Anzahl der Radfahrenden ist nach dem Umbau höher als vor dem Umbau.",
              message = "Die H0 geht davon aus, dass es keinen Unterschied zwischen den Mittelwerten vor und nach dem Umbau gibt."),
       answer("Die Anzahl der Radfahrenden ist nach dem Umbau geringer als vor dem Umbau.",
-             message = "Die H0 geht davon aus, dass es keinen Unterschied zwischen den Mittelwerten vor und nach dem Umbau gibt."),
+             message = "Die H0 muss immer die Gleichheitsrelation enthalten."),
       random_answer_order = TRUE,
       allow_retry = TRUE,
       correct = "Genau! Die H0 geht davon aus, dass es keinen Unterschied zwischen den Mittelwerten vor und nach dem Umbau gibt.",
@@ -764,9 +769,9 @@ learnr::question_radio("Was wäre unsere H0?",
 
 ```
 
-Hier ein kurzer Einblick in die Generierung unserer Beispieldaten.
+Hier wieder ein kurzer Einblick in die Generierung unserer Beispieldaten, dieser Schritt sollte bei euch durch das Erheben und Einlesen eigener Daten ersetzt werden.
 
-```{r fahrradstrasse, exercise = TRUE, exercise.cap = "Daten vorbereiten" }
+```{r fahrradstrasse, exercise = TRUE, exercise.cap = "Datenerhebung simulieren..." }
 set.seed(121)  # Für reproduzierbare Ergebnisse
 anzahl_vorher <- rnorm(45, mean = 45, sd = 10)  # Mittelwert: 45, SD: 10
 anzahl_nachher <- rnorm(45, mean = 46, sd = 8)   # Mittelwert: 46, SD: 8
@@ -774,8 +779,8 @@ tageszeit <- rep(c(0:24),
                  length.out = length(anzahl_vorher))
 
 df <- data.frame(anzahl_vorher,
-                  anzahl_nachher, 
-                  tageszeit)
+                anzahl_nachher, 
+                tageszeit)
 ```
 
 ### Voraussetzungen prüfen
@@ -793,9 +798,10 @@ Der abhängige *t*-Test hat einige Voraussetzungen:
 Schauen wir uns also die Verteilung der Differenzen an. Dafür müssen wir zunächst natürlich erst die Differenzen berechnen.
 
 ::: aufgabe
-Nutze die 'mutate()'-Funktion, um die Differenzen von vorher-nachher zu berechnen.
+1. Nutze die 'mutate()'-Funktion, um die Differenzen von vorher-nachher zu berechnen. Nenne die neue Spalte `diff`.
+Wir haben das dafür benötigte Paket `dplyr` im Tutorial bereits geladen.
 
-Lasse dir dann mit `qqnorm(diff)`und `qqline(diff, col = "red")` das Q-Q-Plot ausgeben.
+2. Lasse dir dann mit `qqnorm(diff)`und `qqline(diff, col = "red")` das Q-Q-Plot der paarweisen Differenzen ausgeben.
 :::
 
 ```{r differenzen, exercise = TRUE, exercise.setup = "fahrradstrasse", exercise.cap = "Differenz berechen" }
@@ -827,7 +833,7 @@ learnr::question_radio("Wie interpretierst du den Q-Q-Plot bezüglich der Normal
 
 ```
 
-Zur Sicherheit schauen wir uns also noch das Ergebnis des Shaprio-Wilk Tests für unsere Differenzen an:
+Zur Sicherheit schauen wir uns also noch das Ergebnis des Shapiro-Wilk-Tests für unsere Differenzen an:
 
 ```{r shapiro, exercise = TRUE, exercise.setup = "fahrradstrasse", exercise.cap = "Differenz evaluieren" }
 df <-  df |> 
@@ -839,7 +845,7 @@ shapiro.test(df$diff)
 learnr::question_radio("Wie interpretierst du den Shapiro-Wilk Test bezüglich der Normalverteilung der Differenzen?",
       answer("Sieht gut aus. Sind normalverteilt.", 
              correct = TRUE),
-      answer("Weiß ich nicht, digga.",
+      answer("Weiß ich nicht...",
              message = "Kein Problem. Erinnere dich daran, dass die H0 des Tests besagt, dass die Daten normalverteilt sind."),
       answer("Sieht nicht gut aus. Sind nicht normalverteilt.",
              message = "Erinnere dich daran, dass die H0 des Tests besagt, dass die Daten normalverteilt sind. Ein *p*-Wert über 0.05 lässt uns schließen, dass wir diese Hypothese beibehalten können."),
@@ -850,9 +856,9 @@ learnr::question_radio("Wie interpretierst du den Shapiro-Wilk Test bezüglich d
 
 ```
 
-### *t*-Test abhängige Gruppen berechnen
+### *t*-Test für abhängige Gruppen berechnen
 
-Nach der Prüfung der Voraussetzungen steht unserem *t*-Test jetzt nichts mehr im Wege. Wir müssen der Funktion nur noch mit `paired = TRUE` mitteilen, dass unsere Daten paarweise analysiert werden sollen (abhängig voneinander). Dabei ist wichtig zu beachten, dass unsere Daten den Zeilen nach (in unserem Beispiel pro Tageszeit) analysiert werden, in anderen Beispielen würden wir pro Person vergleichen (vor und nach einer Intervention).
+Nach der Prüfung der Voraussetzungen steht unserem *t*-Test jetzt nichts mehr im Wege. Wir müssen der Funktion nur noch mit dem Argument `paired = TRUE` mitteilen, dass unsere Daten paarweise analysiert werden sollen (abhängig voneinander). Dabei ist wichtig zu beachten, dass unsere Daten den Zeilen nach (in unserem Beispiel pro Tageszeit) analysiert werden, in anderen Beispielen würden wir pro Person vergleichen (vor und nach einer Intervention).
 
 ``` r
 t.test(x, y, paired = TRUE)
@@ -861,7 +867,7 @@ t.test(x, y, paired = TRUE)
 Also los gehts, du bist dran:
 
 ::: aufgabe
-Finde anhand des *t*-Tests heraus, ob es einen signifikanten Unterschied an der Anzahl an Radfahrenden durch den Umbau der Straße gegeben hat. Vergleiche dafür `df$anzahl_vorher` mit `df$anzahl_nachher`. Vergiss nicht, dass es ein gepaarter *t*-Test ist und passe auch das Argument für `alternative` an.
+Finde anhand des *t*-Tests heraus, ob es einen signifikanten Unterschied an der Anzahl an Radfahrenden durch den Umbau der Straße gegeben hat. Vergleiche dafür `df$anzahl_vorher` mit `df$anzahl_nachher`. Vergiss nicht, dass es ein gepaarter *t*-Test ist und passe auch das Argument für `alternative` an die Art der Hypothese an! ("two.sided", "greater" oder "less")
 :::
 
 ```{r pairedt, exercise = TRUE, exercise.setup = "fahrradstrasse", exercise.cap = "Differenz evaluieren" }
@@ -880,14 +886,14 @@ learnr::question_radio("Wie interpretierst du das Ergebnis des gepaarten t-Test 
              message = "Das stimmt zwar, aber unser *p*-Wert sagt uns, dass dies kein signifikanter Anstieg der Anzahl an Radfahrenden ist und daher vernachlässigt werden kann."),
       random_answer_order = TRUE,
       allow_retry = TRUE,
-      correct = "Genau! Ein *p*-Wert über 0.05 lässt uns schließen, dass wir die H0 beibehalten können. Es gibt also keinen Unterschied in der Anzahl an Radfahrenden vor und nach dem Umbau der Straße.",
-      incorrect= random_encouragement("de"))
+      correct = "Genau! Ein *p*-Wert über 0.05 lässt uns schließen, dass wir die H0 beibehalten müssen. Es gibt also keinen Unterschied in der Anzahl an Radfahrenden vor und nach dem Umbau der Straße.",
+      incorrect = random_encouragement("de"))
 
 ```
 
 #### Interpretieren und berichten
 
-Auch das ist Teil der Wissenschaft. Nicht alle Effekte die wir vermuten, sind auch tatsächlich vorhanden. Es ist dennoch sehr wichtig, dass wir auch diese nicht bestätigten Hypothesen gut berichten:
+Auch das ist Teil der Wissenschaft. Nicht alle Effekte die wir vermuten, sind auch tatsächlich vorhanden. Es ist dennoch sehr wichtig, dass wir auch diese nicht bestätigten Hypothesen gut berichten, da auch im Nicht-Finden eines Effekts sehr viel wichtige Information steckt - nur leider wird dies in der Praxis oft vernachlässigt (siehe Publication Bias, d.h. hauptsächlich signifikante Ergebnisse werden veröffentlicht, während nicht-signifikante Ergebnisse oft sinnloserweise in der Schublade liegen bleiben).
 
 ::: blau-nb
 In der Studie wurde ein abhängiger *t*-Test durchgeführt, um zu untersuchen, ob sich die Anzahl der Radfahrenden pro Stunde nach dem Umbau einer Straße in eine Fahrradstraße signifikant erhöht hat. Die Analyse ergab keinen signifikanten Anstieg in der Anzahl der Radfahrenden ($t(44) = 0.038, p = .485$). Vor dem Umbau betrug die Anzahl der Radfahrenden ($M = 45.08, SD = 8.32$) , nach dem Umbau ($M = 45.01, SD = 7.76$).
@@ -897,11 +903,11 @@ Wow! Du hast es geschafft! Jetzt bist du ein *t*-Test-Profi! Eine letzte Sache m
 
 ## Effektstärke
 
-Die Effektstärke ist ein Maß dafür, **wie groß der Unterschied** oder die Beziehung **zwischen zwei Variablen in einer Studie ist**. Während der *p*-Wert uns sagt, ob ein Ergebnis im Falle unserer H0 wahrscheinlich ist, gibt uns die Effektstärke Aufschluss darüber, wie bedeutend oder wichtig dieses Ergebnis ist.
+Die Effektstärke ist ein Maß dafür, **wie groß der Unterschied** oder die Beziehung **zwischen zwei Variablen in einer Studie ist**. Während der *p*-Wert uns sagt, wie wahrscheinlich ein Ergebnis ist im Falle dass die H0 gilt, gibt uns die Effektstärke Aufschluss darüber, wie bedeutend oder wichtig dieses Ergebnis ist.
 
 ### Warum ist die Effektstärke wichtig?
 
--   **Ergänzung zum *p*-Wert**: Ein statistisch signifikanter P-Wert (z.B. p \< 0.05) bedeutet nicht automatisch, dass ein Effekt praktisch bedeutsam ist. Die Effektstärke hilft, die praktische Relevanz eines statistischen Ergebnisses zu bewerten.
+-   **Ergänzung zum *p*-Wert**: Ein statistisch signifikanter P-Wert (z.B. p \< 0.05) bedeutet nicht automatisch, dass ein Effekt praktisch bedeutsam ist. Selbst der kleinste Mittelwertsunterschied kann signifikant gemacht werden, wenn die Stichprobe bloß groß genug ist, da der *p*-Wert mit der Stichprobengröße zusammenhängt. Die Effektstärke hilft, die praktische Relevanz eines statistischen Ergebnisses zu bewerten.
 -   **Vergleichbarkeit**: Sie ermöglicht den Vergleich der Stärke von Effekten über verschiedene Studien hinweg.
 -   **Interpretation**: Effektstärken liefern ein tieferes Verständnis der Daten, das über die bloße Signifikanz hinausgeht.
 
@@ -911,17 +917,23 @@ Als Maß für die Effektstärke wird oft Cohens *d* verwendet.
 
 
 
-Cohen (@cohen1988) hat uns auch eine Interpretation dieser Werte in seinem Wissenschaftsbeitrag mitgeliefert:
+Cohen (@cohen1988) hat uns auch eine Faustregel zur Interpretation dieser Werte in seinem Wissenschaftsbeitrag mitgeliefert:
 
 Interpretation von Cohens $d$:
 
--   **Kleine** Effektgröße: $|d| = 0.2$
--   **Mittlere** Effektgröße: $|d| = 0.5$
--   **Große** Effektgröße: $|d| = 0.8$
+-   **Kleine** Effektgröße: $|d|$ um die $0.2$
+-   **Mittlere** Effektgröße: $|d|$ um die $0.5$
+-   **Große** Effektgröße: $|d|$ um die $0.8$
+
+::: gelb
+**Diclaimer!**
+
+Das ist nur eine grobe Daumenregel und einfach nur ausgedacht. Ob ein Effekt bedeutsam ist, hängt sehr vom Forschungsgegenstand ab und sollte immer individuell betrachtet werden. 
+:::
 
 Berechnen wir also mit der Funktion `cohens_d` aus dem `effectsize`-Paket die Effektgröße für unsere Beispiele:
 
-Die Funktion `cohens_d()` hat die gleiche Funktionsweise wie unser `t.test()`.
+Die Funktion `cohens_d()` hat die gleiche Funktionsweise wie `t.test()`.
 
 ```r
 cohens_d(
@@ -933,7 +945,7 @@ cohens_d(
 )
 ```
 ::: aufgabe
-Ermittle die Effektgröße für unseren unabhängigen *t*-Test, der den Ruhepuls von Autofahrenden und Radfahrenden vergleicht.
+Ermittle die Effektgröße für den unabhängigen *t*-Test, der den Ruhepuls von Autofahrenden und Radfahrenden vergleicht.
 
 Gib der Funktion dafür die Variablen `puls_autofahrende` und `puls_radfahrende`.
 :::
@@ -947,26 +959,26 @@ effectsize::cohens_d(puls_autofahrende, puls_radfahrende)
 ```
 
 ```{r gepaartquiz}
-learnr::question_radio("Wie interpretierst du die Effektstärke für diesen Unterschied nach der Konvention von Cohen?",
-      answer("**Mittlere** Effektgröße", 
+learnr::question_radio("Wie interpretierst du die Effektstärke für diesen Unterschied nach der Daumenregel von Cohen?",
+      answer("**Mittlere** bis **große** Effektgröße", 
              correct = TRUE),
       answer("**Kleine** Effektgröße",
-             message = "Alles unter 0.2 wird als kleiner Effekt bezeichnet."),
-      answer("**Große** Effektgröße",
-             message = "Als großer Effekt gelten nach Cohen erst Effektstärken ab 0.8"),
+             message = "Alles um die 0.2 wird als kleiner Effekt bezeichnet."),
+      answer("Am besten gar nicht interpretieren, da es nicht erlaubt ist",
+             message = "Warum sollte es nicht erlaubt sein?"),
       random_answer_order = TRUE,
       allow_retry = TRUE,
-      correct = "Genau! Ein *d* von 0.73 kann als mittlere Effektstärke nach Cohen klassifiziert werden.",
+      correct = "Genau! Ein *d* von 0.73 kann als mittlere bis große Effektstärke nach Cohen klassifiziert werden.",
       incorrect= random_encouragement("de"))
 
 ```
 
 ### Berichten der Effektstärke
 
-Auch die Effektstärke solltest du dann bei deinem Ergebnissteil berichten. Dazu kannst du diese beim Berichten des *t*-Tests mit angeben:
+Auch die Effektstärke solltest du unbedingt im Ergebnissteil berichten. So sieht das dann aus:
 
 ::: blau-nb
-"Der unabhängige-*t*-Test ergab einen statistisch signifikanten Unterschied zwischen dem Ruhepuls von Autofahrenden ($M = 79.53, SD = 9.81$) und dem Ruhepuls von Radfahrenden($M = 73.42, SD = 6.68$), $t(51.14) = 2.82, p < .001$ mit einer nach @cohen1988 mittleren Effektstärke, $d = 0.72 [0.20, 1.25]$. Dieses Ergebnis deutet darauf hin, dass Autofahrende im durchschnittlich einen höheren Ruhepuls als Radfahrende besitzten."
+"Der unabhängige-*t*-Test ergab einen statistisch signifikanten Unterschied zwischen dem Ruhepuls von Autofahrenden ($M = 79.53, SD = 9.81$) und dem Ruhepuls von Radfahrenden($M = 73.42, SD = 6.68$), $t(51.14) = 2.82, p < .001$ mit einer nach @cohen1988 mittleren bis großen Effektstärke, $d = 0.72 [0.20, 1.25]$. Dieses Ergebnis deutet darauf hin, dass Autofahrende im durchschnittlich einen höheren Ruhepuls als Radfahrende besitzen."
 :::
 
 ## Abschlussquiz
@@ -983,7 +995,9 @@ quiz(caption = "Teste dein Wissen!",
          answer("Gerichtete Hypothesen testen Unterschiede in mehr als zwei Gruppen.",
                  message = "Das ist nicht korrekt. Die Anzahl der Gruppen beeinflusst nicht, ob eine Hypothese gerichtet ist oder nicht."),
          allow_retry = TRUE,
-         random_answer_order = TRUE
+         random_answer_order = TRUE,
+         correct = random_praise("de"),
+         incorrect = random_encouragement("de")
          ),
 
   learnr::question_radio("Welche Aussage trifft auf den abhängigen *t*-Test zu?",
@@ -1000,24 +1014,26 @@ quiz(caption = "Teste dein Wissen!",
 
   learnr::question_radio("Wofür wird die Effektstärke in einer statistischen Analyse verwendet?",
          answer("Um die Wahrscheinlichkeit eines Typ-1-Fehlers zu bestimmen.",
-              message = "Das ist nicht korrekt. Die Effektstärke misst die Größe eines Effekts, nicht die Wahrscheinlichkeit eines Fehlers."),
+              message = "Das ist nicht korrekt. Die Effektstärke misst die Größe eines Effekts, nicht die Wahrscheinlichkeit eines Alpha-Fehlers."),
          answer("Um die Größe eines beobachteten Effekts zu quantifizieren.",
               correct = TRUE,
               message = "Richtig! Die Effektstärke gibt Aufschluss über die praktische Bedeutung eines statistischen Ergebnisses."),
          answer("Um zu entscheiden, welche statistische Testmethode verwendet werden soll.",
               message = "Das ist nicht ganz richtig. Die Entscheidung für eine Testmethode basiert auf anderen Kriterien, wie dem Studiendesign und den Verteilungsannahmen."),
          allow_retry = TRUE,
-         random_answer_order = TRUE
+         random_answer_order = TRUE,
+         correct = random_praise("de"),
+         incorrect = random_encouragement("de")
          ),
 
   learnr::question_radio("Wie berichtet man die Ergebnisse eines *t*-Tests nach APA-Richtlinien?",
-         answer("Indem man nur den *p*-Wert angibt.",
+         answer("Indem man nur den *p*-Wert (auf drei Nachkommastellen) angibt.",
               message = "Das ist nicht ausreichend. Nach APA-Richtlinien sollten auch der *t*-Wert, die Freiheitsgrade und die Mittelwerte mit Standardabweichungen berichtet werden."),
-         answer("Indem man den *t*-Wert, die Freiheitsgrade, den *p*-Wert sowie Mittelwerte und Standardabweichungen angibt.",
+         answer("Indem man den *t*-Wert, die Freiheitsgrade, den *p*-Wert sowie Effektstärke, außerdem Mittelwerte und Standardabweichungen der Gruppen angibt.",
               correct = TRUE,
               message = "Genau! Ein vollständiger Bericht nach APA-Richtlinien umfasst all diese statistischen Informationen."),
          answer("Indem man eine ausführliche Beschreibung der deskriptiven Analyse gibt.",
-              message = "Während die Beschreibung der deskriptiven Analyse wichtig ist, erfordern APA-Richtlinien spezifische statistische Informationen wie *t*-Wert, Freiheitsgrade und *p*-Wert."),
+              message = "Während die Beschreibung der deskriptiven Analyse wichtig ist, erfordern APA-Richtlinien spezifische statistische Informationen wie *t*-Wert, Freiheitsgrade, Effektstärke und *p*-Wert."),
          allow_retry = TRUE,
          random_answer_order = TRUE
          ))
@@ -1082,11 +1098,11 @@ shiny::br()
 
 - Was der *t*-Tests ist und wann er angewendet wird: Der *t*-Tests ist ein statistisches Verfahren, das verwendet wird, um zu testen, ob sich die Mittelwerte zweier Stichproben signifikant voneinander unterscheiden. Es gibt verschiedene Arten von *t*-Tests, einschließlich des Einstichproben-, des unabhängigen und des abhängigen *t*-Tests.
 
-- Wie man die Voraussetzungen für den *t*-Tests überprüft: Dazu gehört die Überprüfung der Normalverteilung und der Varianzhomogenität.
+- Wie man die Voraussetzungen für den *t*-Tests überprüft: Dazu gehört die Überprüfung der Normalverteilung und der Varianzhomogenität. Außerdem braucht es Messungen mit metrischem Skalenniveau.
 
-- Wie man den *t*-Test in R durchführt: Du hast gelernt, wie du den *t*-Tests mit realen und simulierten Daten durchführst und wie du die Ergebnisse interpretierst.
+- Wie man den *t*-Test in R durchführt: Du hast gelernt, wie du den *t*-Tests mit simulierten Daten durchführst und solltest in der Lage sein, das auf deine eigenen Daten zu übertragen. Du hast gelernt, wie du den Output interpretierst.
 
-- Die Bedeutung von Effektstärken: Neben dem P-Wert ist auch die Effektstärke wichtig, um die praktische Bedeutung der Ergebnisse zu beurteilen.
+- Die Bedeutung von Effektstärken: $p$-Werte haben keine Aussagekraft über die Bedeutsamkeit eines Ergebnisses, da bereits kleinste Unterschiede signifikant werden können, wenn die Stichprobenn bloß groß genug sind. Deswegen ist die Effektstärke wichtig, um die praktische Bedeutung eines signifikanten Ergebnisses zu beurteilen.
 
 - Berichten der Ergebnisse nach APA-Richtlinien: Du hast gesehen, wie man die Ergebnisse eines *t*-Tests präzise und gemäß den APA-Standards berichtet.
 
@@ -1099,12 +1115,11 @@ shiny::br()
 | `qqnorm()`, `qqline()`     | Erstellung von QQ-Plots zur Überprüfung der **Normalverteilung**|
 | `shapiro.test()`           | Durchführung des Shapiro-Wilk-Tests zur Überprüfung der **Normalverteilung** |
 | `leveneTest()`             | Durchführung des Levene-Tests zur Überprüfung der **Varianzhomogenität** |
-| `mean()`, `sd()`           | Berechnung von Mittelwert und Standardabweichung.           |
-| `cohen.d()`                | Berechnung der **Effektstärke** (Cohens d) für *t*-Tests.         |
+| `effectsize::cohens_d()`                | Berechnung der **Effektstärke** (Cohens *d*) für *t*-Tests.         |
 
 ## Credit
 
-Dieses Tutorial wurde von Marie Klosterkamp sowie in Teilen von Lukas Bruelheide geschrieben.
+Dieses Tutorial wurde von Marie Klosterkamp geschrieben, sowie von Lukas Bruelheide reviewt.
 
 ## Literaturverzeichnis
 
