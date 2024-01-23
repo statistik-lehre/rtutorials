@@ -37,8 +37,8 @@ Verortung auf der Roadmap:
 
 kleine Checkliste mit abhakbaren Checkboxen:
 
--   <input type="checkbox" unchecked> Was der *t*-Tests ist und wann er angewendet wird </input>
--   <input type="checkbox" unchecked> Wie man die Voraussetzungen für den *t*-Tests überprüft</input>
+-   <input type="checkbox" unchecked> Was der *t*-Test ist und wann er angewendet wird </input>
+-   <input type="checkbox" unchecked> Wie man die Voraussetzungen für den *t*-Test überprüft</input>
 -   <input type="checkbox" unchecked> Wie man den T-Test in R durchführt </input>
 -   <input type="checkbox" unchecked> Die Bedeutung von Effektstärken </input>
 -   <input type="checkbox" unchecked> Berichten der Ergebnisse nach APA-Richtlinien </input>
@@ -46,9 +46,9 @@ kleine Checkliste mit abhakbaren Checkboxen:
 
 ## Grundlagen
 
-Der *t*-Test ist ein statistisches Verfahren, das verwendet wird, um zu testen, ob es einen signifikanten Unterschied zwischen den Mittelwerten zweier Gruppen gibt. Er hilft dir zu entscheiden, ob die Unterschiede zwischen diesen Mittelwerten groß genug sind, um als *statistisch signifikant* zu gelten. Das bedeutet, dass sie wahrscheinlich *nicht nur durch Zufall entstanden* sind. Klingt spannend, oder?
+Der *t*-Test ist ein statistisches Verfahren, das verwendet wird, um zu testen, ob zwei Mittelwerte sich voneinander unterscheiden. Er hilft dir zu entscheiden, ob die Unterschiede zwischen diesen Mittelwerten groß genug sind, um als *statistisch signifikant* zu gelten. Das bedeutet, dass sie wahrscheinlich *nicht nur durch Zufall entstanden* sind. Klingt spannend, oder?
 
-Stell dir also vor, du möchtest wissen, ob Linkshänder wirklich schlauer sind als Rechtshänder. Oder ob Kaffee wirklich wach macht. Der *t*-Test hilft dir dabei zu entscheiden, ob die Unterschiede, die du siehst, wirklich signifikant sind oder einfach nur Zufall. In der Welt der Statistik heißt 'signifikant' also so viel wie 'wahrscheinlich nicht durch Zufall'.
+Stell dir also vor, du möchtest wissen, ob Linkshänder wirklich schlauer sind als Rechtshänder. Oder ob Kaffee wirklich wach macht. Der *t*-Test hilft dir dabei zu entscheiden, ob die Unterschiede, die du siehst, wirklich signifikant sind oder ob sie als zufällige Variation eingeordnet werden sollten. Dabei werden wir niemals herausfinden, wie wahrscheinlich es ist, ob es den Unterschied wirklich gibt - aber wir können berechnen, wie wahrscheinlich unsere Daten sind unter der Annahme, dass es in Wahrheit keinen Unterschied gibt. Sind die Daten sehr schlecht vereinbar mit dieser Annahme, dass es keinen Unterschied gibt, können wir davon ausgehen, dass es wirklich einen Unterschied gibt! 
 
 Es gibt drei Haupttypen von *t*-Tests:
 
@@ -65,6 +65,8 @@ quiz(caption = "Welchen *t*-Test brauchst du?",
       answer("Abhängiger *t*-Test"),
       answer("Einstichproben-*t*-Test"),
       random_answer_order = TRUE,
+      correct = random_praise("de"),
+      incorrect = random_encouragement("de"),
       allow_retry = TRUE),
 
     learnr::question_radio("Du führst eine Studie durch, in der du die Schlafqualität von Personen vor und nach der Anwendung einer neuen Schlaftherapie vergleichst. Welcher *t*-Test sollte verwendet werden?",
@@ -73,6 +75,8 @@ quiz(caption = "Welchen *t*-Test brauchst du?",
              correct = TRUE),
       answer("Einstichproben-*t*-Test"),
       random_answer_order = TRUE,
+      correct = random_praise("de"),
+      incorrect = random_encouragement("de"),
       allow_retry = TRUE),
 
     learnr::question_radio("Du möchtest überprüfen, ob der durchschnittliche IQ in Ihrer Stichprobe signifikant vom nationalen Durchschnitt von 100 abweicht. Welcher *t*-Test ist hierfür geeignet?",
@@ -81,6 +85,8 @@ quiz(caption = "Welchen *t*-Test brauchst du?",
       answer("Einstichproben-*t*-Test", 
              correct = TRUE),
       random_answer_order = TRUE,
+      correct = random_praise("de"),
+      incorrect = random_encouragement("de"),
       allow_retry = TRUE)
 )
 ```
@@ -112,49 +118,60 @@ Bei einer **gerichteten** Hypothese verwendest du einen **einseitigen** *t*-Test
 df    <- data.frame(x=seq(-3,3, by=0.005))
 df$y  <- dnorm(df$x)
 df$sd <- "B"
-df$sd[df$x < 2.6] <- "C"
-df$sd[df$x < -2.6] <- "A"
+df$sd[df$x < 1.65] <- "C"
+df$sd[df$x < -1.65] <- "A"
 
 
 ggplot(df, aes(x, y, fill = sd)) + 
   geom_area() +   
   ylab("") + 
   xlab("t-Werte Verteilung der H0") + 
-  scale_fill_manual(values=c("lightblue", "gray", "gray")) +
-  geom_vline(xintercept= -2.6, col="red", linewidth=0.5, linetype = "dotted")+
-  theme(legend.position = "none", axis.text.x = element_blank(),axis.ticks.x = element_blank(),axis.text.y = element_blank(),axis.ticks.y = element_blank())
+  scale_fill_manual(values=c("lightblue", "grey90", "grey90")) +
+  geom_vline(xintercept= -1.65, col="red", linewidth=0.8, linetype = "dotted")+
+  theme(legend.position = "none", 
+        # axis.text.x = element_blank(),
+        # axis.ticks.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(), panel.background = element_blank())
 
 ggplot(df, aes(x, y, fill = sd)) + 
   geom_area() +   
   ylab("") + 
   xlab("t-Werte Verteilung der H0") + 
-  scale_fill_manual(values=c("gray", "lightblue","gray" )) +
-  geom_vline(xintercept= 2.6, col="red", linewidth=0.5, linetype = "dotted")+
-  theme(legend.position = "none", axis.text.x = element_blank(),axis.ticks.x = element_blank(),axis.text.y = element_blank(),axis.ticks.y = element_blank()) 
+  scale_fill_manual(values=c("grey90", "lightblue","grey90" )) +
+  geom_vline(xintercept= 1.65, col="red", linewidth=0.8, linetype = "dotted")+
+  theme(legend.position = "none", 
+        #axis.text.x = element_blank(), 
+        #axis.ticks.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        panel.background = element_blank()) 
 
 ```
 
-Was siehst du also da oben? Du kannst es dir vorstellen wie die Stichprobenkennwerteverteilung für unsere H0: der Annahme, dass es keinen Unterschied zwischen den Gruppen gibt, und der wahre Wert in Wirklichkeit 0 ist. Ein *t*-Wert im hellblauen Bereich zu erhalten, hat eine Wahrscheinlichkeit von 5% = (alphaniveau: $p = .05$). Haben wir einen solchen Wert gefunden, gehen wir davon aus, dass wir die H0 verwerfen können.
+Was siehst du also da oben? Es ist wie eine Stichprobenkennwerteverteilung der Nullhypothese. Also die möglichen Mittelwertsunterschiede, die du erhalten könntest, unter der Annahme, dass es keinen Unterschied zwischen den Gruppen gibt, sprich: der wahre Unterschied in Wirklichkeit 0 ist. Einen *t*-Wert im hellblauen Bereich zu erhalten, hat eine Wahrscheinlichkeit von 5% = (Signifikanzniveau: $\alpha = .05$). Haben wir einen solchen Wert gefunden, gehen wir davon aus, dass wir die H0 verwerfen können.
 
 Bei einer **ungerichteten** Hypothese verwendest du einen **zweiseitigen** *t*-Test. Du schaust **in beide Richtungen** - ob Gruppe A *besser* ist als Gruppe B und ob Gruppe A *schlechter* ist als Gruppe B.
 
 ```{r ungerichtet}
-# Verteilung erstellen und einteilen
-df    <- data.frame(x=seq(-3,3, by=0.005))
-df$y  <- dnorm(df$x)
+# Verteilung neu einteilen
 df$sd <- "B"
-df$sd[df$x < 2.6] <- "C"
-df$sd[df$x < -2.6] <- "A"
-
+df$sd[df$x < 1.96] <- "C"
+df$sd[df$x < -1.96] <- "A"
 
 ggplot(df, aes(x, y, fill = sd)) + 
   geom_area() +   
   ylab("") + 
   xlab("t-Werte Verteilung der H0") + 
-  scale_fill_manual(values=c("lightblue", "lightblue", "gray")) +
-  geom_vline(xintercept= -2.6, col="red", linewidth=0.5, linetype = "dotted") +
-  geom_vline(xintercept= 2.6, col="red", linewidth=0.5, linetype = "dotted") +
-  theme(legend.position = "none", axis.text.x = element_blank(),axis.ticks.x = element_blank(),axis.text.y = element_blank(),axis.ticks.y = element_blank()) 
+  scale_fill_manual(values=c("lightblue", "lightblue", "grey90")) +
+  geom_vline(xintercept= -1.96, col="red", linewidth=0.5, linetype = "dotted") +
+  geom_vline(xintercept= 1.96, col="red", linewidth=0.5, linetype = "dotted") +
+  theme(legend.position = "none", 
+        # axis.text.x = element_blank(),
+        # axis.ticks.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        panel.background = element_blank()) 
 ```
 
 Das hat wie du siehst Auswirkungen auf das Alphaniveau (*blau*). Das Alphaniveau wird hier auf **beide Enden** der Verteilung aufgeteilt. Bei einem Alphaniveau von 5% würden wir also jeweils 2.5% auf das linke und rechte Ende der Verteilung legen, um weiterhin nur mit einer 5%-igen Wahrscheinlichkeit einen Alpha-Fehler zu begehen. Dementsprechend muss der *p-Wert* \< 0.025 sein damit wir die H0 verwerfen.
@@ -166,19 +183,19 @@ Keine Bange, das ganze ist dann bei der Berechnugn in R nur *ein Argument* in de
 ## Einstichproben-*t*-Test
 
 ::: gelb
-Der Einstichproben-*t*-Test testet eine **intervallskalierte** abhängige Variable in hinsicht auf einen **festgelegten** Wert.
+Der Einstichproben-*t*-Test testet eine **intervallskalierte** abhängige Variable in Hinsicht auf einen **festgelegten** Wert.
 :::
 
 </br>
 
-Mit dem Einstichproben*-t*-Test, wollen wir untersuchen, ob der Mittelwert unserer Stichprobe von einem bekannten Mittelwert signifikant abweicht.
+Mit dem Einstichproben*-t*-Test, wollen wir untersuchen, ob der Mittelwert einer Stichprobe von einem bekannten Mittelwert signifikant abweicht.
 
 ### Hypothesen aufstellen
 
 Wir stellen für unser Beispiel folgende Hypothesen auf:
 
--   H0: Der durchschnittliche Blutzuckerspiegel unserer Studierenden weicht **nicht signifikant** vom Durchschnittswert 110 ab.
--   H1: Der durchschnittliche Blutzuckerspiegel unserer Studierenden weicht **signifikant** vom Durchschnittswert 110 ab.
+-   H0: Der durchschnittliche Blutzuckerspiegel von Studierenden entspricht dem Populations-Durchschnittswert von 110.
+-   H1: Der durchschnittliche Blutzuckerspiegel von Studierenden weicht vom Durchschnittswert 110 ab.
 
 ```{r richtungsFrage}
   learnr::question_radio("Welche Art von Hypothese haben wir hier?",
@@ -191,6 +208,8 @@ Wir stellen für unser Beispiel folgende Hypothesen auf:
       incorrect = random_encouragement("de"),
       correct = "Richtig! Da wir nicht spezifizieren, in welche Richtung (größer oder kleiner) wir einen Effekt erwarten, ist es eine ungerichtete Hypothese.")
 ```
+
+<!-- Ich habe im Kopf dass R den p-Wert bei zweiseitigen Tests automatisch verdoppelt, so das wir alpha nicht halbieren müssen. Das wäre wichtig herauszufinden! ~ L-->
 
 ```{r richtungsFrage2}
   learnr::question_radio("Was ist daher unser kritischer p-Wert?",
