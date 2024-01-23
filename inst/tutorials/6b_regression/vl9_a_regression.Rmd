@@ -811,18 +811,16 @@ summary(fit_centered)
 quiz(
 question_numeric("Wie lautet $b_0$ (*Intercept*) (auf drei Nachkommastellen)?",
                  answer(0.854347, 
-                        correct = T,
-                        allow_retry = TRUE),
+                        correct = T),
                  answer(0.854, 
-                        correct = T,
-                        allow_retry = TRUE)),
+                        correct = T),
+                        allow_retry = TRUE),
 question_numeric("Wie lautet $b_1$ (*Slope*) (auf drei Nachkommestellen)?",
                  answer(0.056476, 
-                        correct = T,
-                        allow_retry = TRUE),
+                        correct = T),
                  answer(0.056, 
-                        correct = T,
-                        allow_retry = TRUE)),
+                        correct = T),
+                        allow_retry = TRUE),
 caption = "3. Koeffizienten finden")
 ```
 
