@@ -15,7 +15,7 @@ resource_files:
 - css/boxes.css
 tutorial:
   id: significance
-  version: 1
+  version: 2
 ---
 
 ```{r setup, include=FALSE}
@@ -39,7 +39,7 @@ kleine Checkliste mit abhakbaren Checkboxen:
 
 -   <input type="checkbox" unchecked> Was der *t*-Test ist und wann er angewendet wird </input>
 -   <input type="checkbox" unchecked> Wie man die Voraussetzungen für den *t*-Test überprüft</input>
--   <input type="checkbox" unchecked> Wie man den T-Test in R durchführt </input>
+-   <input type="checkbox" unchecked> Wie man den *t*-Test in R durchführt </input>
 -   <input type="checkbox" unchecked> Die Bedeutung von Effektstärken </input>
 -   <input type="checkbox" unchecked> Berichten der Ergebnisse nach APA-Richtlinien </input>
 
@@ -107,9 +107,13 @@ Die Richtung des *t*-Test wird bestimmt von der Richtung unserer Hypothese. Eine
 -   **Gerichtete Hypothese**: Hier sagst du voraus, *in welche Richtung der Unterschied geht*. Zum Beispiel: "Gruppe A wird besser abschneiden als Gruppe B."
 -   **Ungerichtete Hypothese**: Hierbei vermutest du nur, dass es einen Unterschied gibt, aber du *sagst nicht, in welche Richtung der Unterschied geht*. Zum Beispiel: "Es gibt einen Unterschied in den Testergebnissen zwischen Gruppe A und Gruppe B."
 
-*Wie wirkt sich das auf den t-Test aus?*
+*Wie wirkt sich das auf den *t*-Test aus?*
 
-Durch die Richtung des *t*-Test "verändert" sich das **Alphaniveau**, das wir für den Test ansetzten - aber zunächst die Basics: Das Alphaniveau (auch Signifikanzniveau genannt) ist ein kritischer Wert, den wir vor einem statistischen Test festlegen. Es bestimmt, wie stark die Beweise gegen unsere Nullhypothese (H0) sein müssen, damit wir sie ablehnen. Das Alphaniveau ist meistens **0.05**, was bedeutet, dass wir eine 5%ige Chance akzeptieren, die Nullhypothese fälschlicherweise abzulehnen, wenn sie tatsächlich wahr ist (dies wird als *Typ-1-Fehler* bzw. *Alpha-Fehler* bezeichnet).
+### Signifikanzniveau $\alpha$
+
+Das Signifikanzniveau ist eine willkürlich gesetzte Grenze, die wir **vor** einem statistischen Test festlegen. Es bestimmt, wie unwahrscheinlich die Daten unter Annahme der Nullhypothese (H0) sein müssen, damit wir davon ausgehen können dass die Nullhypothese nicht gilt.
+Per Konvention ist diese Grenze bei **0.05**. Das bedeutet auch, dass wir in 5% der Fälle
+die Nullhypothese fälschlicherweise ablehnen, falls sie tatsächlich wahr ist (dies wird als *Typ-1-Fehler* bzw. *$\alpha$-Fehler* bezeichnet).
 
 Bei einer **gerichteten** Hypothese verwendest du einen **einseitigen** *t*-Test. Du interessierst dich **nur für eine Richtung** - entweder ob Gruppe A besser ist als Gruppe B ODER umgekehrt (das hängt davon ab, wie du deine *Alternativhypothese* **H1** gerichtet hast). Dementsprechend erwartest du einen *größeren* oder einen *kleineren* Mittelwert. In der Grafik haben wir dir das Alpha-Niveau (*blau*) markiert und in *rot* den *kritischen Wert* eingezeichnet. Ein gemessener (*empirischer*) *t*-Wert, der diesen kritschen *t*-Wert überschreitet wird als signifikant bezeichnet und wir lehnen die Nullhypothese ab. Der *p*-Wert, hingegen zeigt uns dabei auf, wie wahrscheinlich ein solcher *t*-Wert im Falle unserer H0-Wäre.
 
@@ -149,7 +153,8 @@ ggplot(df, aes(x, y, fill = sd)) +
 
 ```
 
-Was siehst du also da oben? Es ist wie eine Stichprobenkennwerteverteilung der Nullhypothese. Also die möglichen Mittelwertsunterschiede, die du erhalten könntest, unter der Annahme, dass es keinen Unterschied zwischen den Gruppen gibt, sprich: der wahre Unterschied in Wirklichkeit 0 ist. Einen *t*-Wert im hellblauen Bereich zu erhalten, hat eine Wahrscheinlichkeit von 5% = (Signifikanzniveau: $\alpha = .05$). Haben wir einen solchen Wert gefunden, gehen wir davon aus, dass wir die H0 verwerfen können.
+Was siehst du also da oben? Es ist wie eine Stichprobenkennwerteverteilung der Nullhypothese. Die Verteilung ist quasi die Verteilung der möglichen Mittelwertsunterschiede, die du erhalten könntest, unter der Annahme, dass es keinen Unterschied zwischen den Gruppen gibt, sprich: der wahre Unterschied in Wirklichkeit 0 ist. Einen *t*-Wert im hellblauen Bereich zu erhalten, hat eine Wahrscheinlichkeit von 5% = (Signifikanzniveau: $\alpha = .05$), wenn wir unendlich oft
+Stichproben aus der Nullhypthesen-Population ziehen könnten. Haben wir einen solchen Wert gefunden, gehen wir davon aus, dass wir die H0 verwerfen können.
 
 Bei einer **ungerichteten** Hypothese verwendest du einen **zweiseitigen** *t*-Test. Du schaust **in beide Richtungen** - ob Gruppe A *besser* ist als Gruppe B und ob Gruppe A *schlechter* ist als Gruppe B.
 
@@ -174,7 +179,7 @@ ggplot(df, aes(x, y, fill = sd)) +
         panel.background = element_blank()) 
 ```
 
-Das hat wie du siehst Auswirkungen auf das Alphaniveau (*blau*). Das Alphaniveau wird hier auf **beide Enden** der Verteilung aufgeteilt. Bei einem Alphaniveau von 5% würden wir also jeweils 2.5% auf das linke und rechte Ende der Verteilung legen, um weiterhin nur mit einer 5%-igen Wahrscheinlichkeit einen Alpha-Fehler zu begehen. Dementsprechend muss der *p-Wert* \< 0.025 sein damit wir die H0 verwerfen.
+Das hat wie du siehst Auswirkungen auf das Alphaniveau (*blau*). Das Alphaniveau wird hier auf **beide Enden** der Verteilung aufgeteilt. Bei einem Alphaniveau von 5% würden wir also jeweils 2.5% auf das linke und rechte Ende der Verteilung legen, um weiterhin nur mit einer 5%-igen Wahrscheinlichkeit einen Alpha-Fehler zu begehen. 
 
 Wenn das jetzt zu schnell ging, kannst du wie erwähnt auch im Statistikbuch z.B. von @planing2022 diese Zusammenhänge nachlesen ([online hier](https://statistikgrundlagen.de/ebook/chapter/hypothesentest-signifikanztest/)).
 
@@ -212,15 +217,15 @@ Wir stellen für unser Beispiel folgende Hypothesen auf:
 <!-- Ich habe im Kopf dass R den p-Wert bei zweiseitigen Tests automatisch verdoppelt, so das wir alpha nicht halbieren müssen. Das wäre wichtig herauszufinden! ~ L-->
 
 ```{r richtungsFrage2}
-  learnr::question_radio("Was ist daher unser kritischer p-Wert?",
-      answer("Der p-Wert muss kleiner als 0.05 sein, um als signifikant zu gelten.",
-             message = "Da wir eine ungerichtete Hypothese haben, verteilt sich das Alpha-Niveau von 5% auf beide Seiten der Verteilung und der p-Wert muss entsprechenden kleiner als 0.05/2 = 0.025 sein."),
-      answer("Der p-Wert muss kleiner als 0.025 sein, um als signifikant zu gelten.", 
+  learnr::question_radio("Wird diese Hypothese einseitig oder zweiseitig getestet?",
+      answer("Einseitig",
+             message = "Da wir eine ungerichtete Hypothese haben, könnte der Effekt in beide Richtungen gehen."),
+      answer("Zweiseitig", 
              correct = TRUE),
       random_answer_order = TRUE,
       allow_retry = TRUE,
       incorrect = random_encouragement("de"),
-      correct = "Richtig! Da wir eine ungerichtete Hypothese haben, verteilt sich das Alpha-Niveau von 5% auf beide Seiten der Verteilung und der p-Wert muss entsprechenden kleiner als 0.05/2 = 0.025 sein.")
+      correct = "Richtig! Da wir eine ungerichtete Hypothese haben, kann der Effekt in beide Richtungen gehen.")
 ```
 
 Doch bevor wir diese Hypothesen testen, sollten wir zunächst überprüfen, ob die Voraussetzungen für diesen *t*-Test erfüllt sind.
@@ -230,13 +235,13 @@ Doch bevor wir diese Hypothesen testen, sollten wir zunächst überprüfen, ob d
 Der Einstichproben-*t*-Test hat ein paar Voraussetzungen, die erfüllt sein müssen, damit die Ergebnisse verlässlich sind. Dazu gehören:
 
 -   **Normalverteilung** der Daten: Die Daten sollten annähernd normalverteilt sein.
--   **Unabhängigkeit der Beobachtungen**: Jede Beobachtung sollte unabhängig von den anderen sein.
+-   **Unabhängigkeit der Beobachtungen**: Jede Beobachtung sollte unabhängig von den anderen sein. 
 
 Ebenso kannst du einen *t*-Test nur rechnen, wenn du eine **metrisch-skalierte abhängige Variable** untersuchst. Da wir einen Mittelwert errechnen, muss unsere Variable ein entsprechendes Skalenniveau (metrisch) vorweisen.
 
-Nehmen wir an, wir haben eine Stichprobe von Daten, die den durchschnittlichen Blutzuckerspiegel einer Gruppe von (30) Studierenden repräsentiert. Wir wollen testen, ob dieser Durchschnitt signifikant von dem bekannten Durchschnittswert (sagen wir 110 mg/dL) abweicht.
+Nehmen wir an, wir haben eine Stichprobe von Daten, die den durchschnittlichen Blutzuckerspiegel einer Gruppe von 30 Studierenden repräsentiert. Wir wollen testen, ob dieser Durchschnitt signifikant von dem bekannten Durchschnittswert (sagen wir 110 mg/dL) abweicht.
 
-Dafür erstellen wir hier schnell ein paar Beispieldaten:
+Dafür simulieren wir hier schnell ein paar Beispieldaten - in der realen Welt würdet ihr an dieser Stelle eine Stichprobe erheben.
 
 ```{r blutzucker, exercise = TRUE, exercise.cap = "Daten vorbereiten"}
 # Beispieldaten
@@ -255,43 +260,60 @@ Um **grafisch** zu prüfen, ob unsere Daten normalverteilt sind, können wir ein
 
 ```{r grafischNV, exercise = TRUE, exercise.setup = "blutzucker", exercise.cap = "Normalverteilung grafisch prüfen"}
 ggplot(df, aes(x = blutzucker_werte)) +
-  geom_histogram(aes(y = after_stat(density)), binwidth = 0.4, fill = "blue", alpha = 0.7) +
-  stat_function(fun = dnorm, args = list(mean = mean(df$blutzucker_werte), sd = sd(df$blutzucker_werte)), color = "red") +
+  geom_histogram(aes(y = after_stat(density)),
+                 binwidth = 0.4,
+                 fill = "blue",
+                 alpha = 0.5) +
+  stat_function(fun = dnorm, 
+                args = list(mean = mean(df$blutzucker_werte), 
+                            sd = sd(df$blutzucker_werte)), 
+                color = "red") +
   labs(title = "Histogramm der Blutzuckerwerte mit Normalverteilungskurve",
        x = "Bildschirmzeit (Stunden)",
        y = "Dichte")
 ```
 
-Da diese grafische Interpretation, doch sehr viel Übung bedarf, kann ich dir die statistische Variante zu Beginn sehr empfehlen:
+Da diese grafische Interpretation jedoch relativ viel Übung bedarf, kann ich dir die statistische Variante zu Beginn sehr empfehlen:
 
-Um die Normalverteilung **statistisch** zu testen, können wir den *Shapiro-Wilk-Test* (`shapiro.test(variable)`) aus dem in *R* bereits enthaltenden `stats`-Paket verwenden. Dieser Test prüft sozusagen die H0: "Die Daten sind normalverteilt".
+#### Shapiro-Wilk-Test
+
+Um die Normalverteilung **statistisch** zu testen, können wir den *Shapiro-Wilk-Test* (`shapiro.test(variable)`) aus dem in *R* bereits enthaltenen `stats`-Paket verwenden. 
+
+::: infobox
+**Wichtig**
+
+Die Nullhypothese beim Shapiro-Wilk-Test lautet: "Die Daten sind normalverteilt".
+Ist der Test signifikant, d.h. der $p$-Wert kleiner als $\alpha = .05$, müssen wir diese Nullhypothese verwerfen, das heißt davon ausgehen dass`die Normalverteilungsannahme nicht gilt.
+:::
 
 ```{r shapiroblut, exercise = TRUE, exercise.setup = "blutzucker", exercise.cap = "Normalverteilung statistisch prüfen"}
 shapiro.test(df$blutzucker_werte)
 ```
 
-Die Ausgabe ist etwas schwer zu lesen, aber vesuch es doch trotzdem mal:
+Die Ausgabe ist etwas schwer zu lesen, aber vesuch es doch trotzdem mal. Das Einzige, was wirklich wichtig ist, ist der $p$-Wert. Der `W`-Wert ist die Teststatistik, das ist nur ein Zwischenschritt auf der Berechnung ders $p$-Werts. `W` sagt uns ohne tiefere Kenntnis des Tests nichts aus und kann für unsere Zwecke vernachlässigt werden.
 
 ```{r quiz3}
 quiz( caption ="Interpretation des Shapiro-Wilk-Tests:",
   learnr::question_numeric("Wie groß ist der *p*-Wert für den Shapiro-Wilk-Test für unsere Daten? (alle Nachkommastellen))",
                  answer(0.6902, 
                         correct = TRUE),
-                 allow_retry = TRUE),
+                 allow_retry = TRUE,
+                 correct = random_praise("de"),
+                 incorrect = random_encouragement("de")),
   
   learnr::question_radio("Was sagt uns ein signifikanter *p*-Wert (p < .05) beim Shapiro-Wilk-Test über die Normalverteilung unserer Daten?",
-      answer("Die H0: 'Die Daten sind normalverteilt' ist sehr *un*wahrscheinlich, daher sind die Daten nicht normalverteilt.", 
+      answer("Die Daten sind unter Annahme der H0: 'Die Daten sind normalverteilt' sehr *unwahrscheinlich*, deswegen sollte angenommen werden, dass die Daten nicht normalverteilt sind (die H0 nicht gilt).", 
              correct = TRUE),
-      answer("Die H0: 'Die Daten sind normalverteilt' ist sehr *wahrscheinlich* und die Daten sind daher normalverteilt.",
-             message = "Ein signifikanter Wert sagt uns, dass wir die H0 mit einer 5%-igen Chance eines Alpha-Fehlers verwerfen können. Demnach ist eine Normalverteilung der Daten nicht wahrscheinlich."),
+      answer("Die Daten sind unter der H0: 'Die Daten sind normalverteilt' sehr *wahrscheinlich* und daher kann die H0 beibehalten werden, wir können davon ausgehen dass die Daten normalverteilt sind.",
+             message = "Ein signifikanter Wert sagt uns, dass die Daten unter Annahme der H0 so unwahrscheinlich sind, dass wir die H0 verwerfen sollten. Da die H0 bei diesem Test lautet ‚Die Daten sind normalverteilt’, wird diese Annahme verworfen, und wir können davon ausgehen dass die Daten nicht normalverteilt sind."),
       random_answer_order = TRUE,
       allow_retry = TRUE,
-      correct = "Ein signifikanter *p-*Wert sagt uns, dass wir die H0 mit einer 5%-igen Chance eines Alpha-Fehlers verwerfen können. Demnach ist eine Normalverteilung der Daten nicht wahrscheinlich."),
+      correct = "Richtig, bei Signifikanz wird die Nullhypothese verworfen."),
   
-  learnr::question_radio("Was sagt uns der von uns beobachtete *p*-Wert über die Normalverteilung unserer Daten?",
-      answer("Die Daten sind sehr wahrscheinlich nicht normalverteilt.",
-             message = "Ein nicht-signifikanter (*p* > .05) Wert sagt uns, dass wir die H0 beibehalten sollten."),
-      answer("Die Daten sind sehr wahrscheinlich normalverteilt.", 
+  learnr::question_radio("Was sagt uns der oben berechnete *p*-Wert über die Normalverteilung unserer Daten?",
+      answer("Die Daten sind nicht normalverteilt.",
+             message = "Ein nicht-signifikanter (*p* > .05) Wert sagt uns, dass wir die H0 beibehalten sollten. Die H0 besagt, dass die Daten normalverteilt sind."),
+      answer("Die Daten sind normalverteilt.", 
              correct = TRUE),
       random_answer_order = TRUE,
       allow_retry = TRUE)
@@ -306,7 +328,7 @@ Nutze die Funktion `pander()`, um dir das Ergebnis, des shapiro.test() darstelle
 
 ```{r pander, exercise = TRUE, exercise.setup = "blutzucker", exercise.cap = "pander()"}
 # Pipe das Ergebniss des Shapiro-Wilk Tests in die pander() Funktion
-shapiro.test(df$blutzucker) |>
+shapiro.test(df$blutzucker) |> 
   
 ```
 
@@ -327,9 +349,9 @@ Wie kann man Unabhängigkeit sicherstellen?
 
 -   **Keine Beeinflussung zwischen Teilnehmenden**: Achte darauf, dass die Teilnehmenden sich untereinander nicht beeinflussen können. Das heißt, die Erfahrungen oder Antworten einer Person sollten keinen Einfluss auf eine andere Person haben.
 
--   **Kontrolle von externen Faktoren**: Versuche, externe Faktoren, die deine Teilnehmenden beeinflussen könnten, zu kontrollieren oder zu minimieren.
+-   **Kontrolle von externen Faktoren**: Versuche, externe Faktoren, die deine Stichprobe beeinflussen könnten, zu kontrollieren oder zu minimieren.
 
-Und schon bist du fertig! Jetzt hast du gelernt, wie du die Voraussetzungen für einen *Einstichproben-t-Test* in *R* prüfen kannst. Super gemacht! 🌟 Jetzt zum spannenden Teil: der Berchenung des eigentlichen *t*-Tests.
+Und schon bist du fertig! Jetzt hast du gelernt, wie du die Voraussetzungen für einen *Einstichproben-*t*-Test* in *R* prüfen kannst. Super gemacht! 🌟 Jetzt zum spannenden Teil: der Berchenung des eigentlichen *t*-Tests.
 
 ### Berechnen des Einstichproben *t*-Test
 
@@ -338,13 +360,13 @@ Jetzt führen wir den eigentlichen *t*-Test durch, indem wir die `t.test()`-Funk
 Die Funktion für den Einstichproben-*t*-Test sieht folgendermaßen aus:
 
 ```{r, echo = TRUE, eval = FALSE}
-# Einstichproben-T-Test
-t.test(x = data, mu = 100, alternative = "two.sided")
+# Einstichproben-*t*-Test
+t.test(x = variable, mu = 100, alternative = "two.sided")
 ```
 
 Wobei:
 
--   `x` unsere Daten entgegennimmt
+-   `x` unsere Variable mit den Messungen entgegennimmt
 -   `mu` den bekannten Mittelwert, gegen den wir testen wollen, darstellt
 -   das Argument `alternative = "two.sided"` sagt, dass wir eine **ungerichtete** Hypothese testen (*default*).
 
@@ -352,7 +374,7 @@ Wobei:
 Nutze den grade gelernten Code um unsere `blutzucker_werte` gegen den Populationsmittelwert `110` zu testen und beachte, dass wir eine *ungerichtete* Hypothese testen.
 :::
 
-```{r Einttest, exercise = TRUE, exercise.setup = "blutzucker", exercise.cap = "Daten vorbereiten"}
+```{r Einttest, exercise = TRUE, exercise.setup = "blutzucker", exercise.cap = "Einstichproben-t-Test selbst durchführen"}
 t.test() 
 ```
 
@@ -378,20 +400,28 @@ Die getesteten Daten sind: blutzucker_werte
 t = -32.72, df = 29, p-value < 2.2e-16
 ```
 
-Hier bekommen wir unsere gewünschten statistischen Größen: den *t*-Wert = -32.72, die Freiheitsgrade(df) = 29 und unseren *p*-Wert (in der **wissenschafltlichen Notation**). Die wissenschaftliche Notation sagt uns, dass der *p*-Wert `2.2` noch 16 Nullen vor dem Komma führt (`-16`) also ist der *p*-Wert 0.000000000000000022. (Eine 9.546**e+11** würde wiederum bedeuten, dass elf Nullen vor dem Komma stehen: 2.200.000.000.000).
+Hier bekommen wir unsere gewünschten statistischen Größen: den *t*-Wert = -32.72, die Freiheitsgrade(df) = 29 und unseren *p*-Wert (in der **wissenschafltlichen Notation**). Die wissenschaftliche Notation **e-16** sagt uns, dass der *p*-Wert `2.2` noch mit 
+$10^{-16}$ multipliziert werden muss, also 16 Nullen vor dem Komma führt (`-16`).
+Also ist der *p*-Wert 0.000000000000000022. 
+(Eine 9.546**e+11** würde wiederum bedeuten, dass elf Nullen vor dem Komma stehen: 2.200.000.000.000).
 
 ``` r
 alternative hypothesis: true mean is not equal to 110
 ```
 
-Hier gibt uns *R* sogar die H1: "der Mittelwert ist nicht gleich 110." mit aus.
+Hier gibt uns *R* sogar freundlicherweise eine Erinnerung, was die H1 war: 
+"der Mittelwert ist nicht gleich 110." mit aus.
 
 ``` r
 95 percent confidence interval:
  104.7114 105.3336
 ```
 
-Zusätzlich erhälst du die obere und untere Grenze des 95% Intervalls. Hier bedeutet es, dass der wahre Mittelwert unserer Stichprobe mit 95%iger Wahrscheinlichkeit in dem Intervall von 104.7114 und 105.3336 liegt.
+Zusätzlich erhälst du die obere und untere Grenze des 95%-Konfidenzintervalls um den Stichprobenmittelwert. Es bedeutet, dass der unbekannte wahre Mittelwert der Population, aus welcher die Stichprobe gezogen wurde, von 95% der Konfidenzintervalle überdeckt wird, die bei unendlicher und unabhängiger Wiederholung des Experiments errechnet werden könnten. Ob unser konkretes Intervall von 104.7 bis 105.3 eins der KI's ist, wo der unbekannte wahre Wert enthalten ist, oder ob es zu den 5% gehört, wo er nicht drin ist, werden wir nie erfahren.
+
+In dem Konfidenzintervall steckt aber eine wichtige Info: Hier könnt ihr sehen, ob
+der der MittelWert 110, gegen den getestet wurde, im Intervall enthalten ist oder nicht.
+Ist der Wert enthalten, ist der Test nicht signifikant. 
 
 ``` r
 sample estimates:
@@ -405,27 +435,42 @@ Zu guter letzt erhalten wir noch den Mittelwert unserer Stichprobe (105.02). Um 
 sd(blutzucker_werte)
 ```
 
-Jetzt weißt du wo du deine Werte findest und wir können zur Interpretation und dem Berichten weiter gehen.
+Jetzt weißt du, wo du deine Werte findest und wir können zur Interpretation und dem Berichten weiter gehen.
 
 #### Ergebnisse interpretieren und berichten
 
 Das Ergebnis des *t*-Tests gibt uns mehrere wichtige Informationen:
 
--   ***t*****-Wert**: Setzt die Entfernung des Stichprobenmittelwerts vom Populationsmittelwert in Relation zur Stichprobenvarianz. (Achte hier auch auf das Vorzeichen: `-` = der Mittelwert ist **niedriger** als der Populationswert, `+` der Wert ist **höher**.)
+-   ***t*-Wert**: Das ist die Teststatistik. Sie setzt die Entfernung des Stichprobenmittelwerts vom Populationsmittelwert in Relation zur Stichprobenvarianz und Stichprobengröße. (Achte hier auch auf das Vorzeichen: `-` = der Mittelwert ist **niedriger** als der Populationswert, `+` der Wert ist **höher**.)
 -   Freiheitsgrade (**df**): Anzahl der Werte in der Stichprobe, die frei variieren können (meist definiert als die `Anzahl an Beobachtungen - 1`).
--   **p-Wert**: Gibt die Wahrscheinlichkeit an, unter der Nullhypothese einen solchen oder extremeren Wert zu erhalten. Ein niedriger *p-Wert* (typischerweise *p \< 0.05*, für unsere ungerichtete Hypothese *0.025*) deutet darauf hin, dass wir die Nullhypothese verwerfen können.
+-   ***p*-Wert**: Gibt die Wahrscheinlichkeit an, unter Annahme der Nullhypothese einen solchen oder extremeren Wert zu erhalten. Ein niedriger *p-Wert* (typischerweise *p \< 0.05*) deutet darauf hin, dass unsere Daten unter Annahme der Nullhypothese sehr unwahrscheinlich sind, und wir die Nullhypothese verwerfen können. 
 
-Damit ist der *p*-Wert kleiner als unser zweiseitiges Alphaniveau von 0.025 und kann daher als signifikant gewertet werden.
+::: gelb
+**Achtung! Fehlinterpretationen des $p$-Werts**
+
+Der $p$-Wert kann uns niemals die Wahrscheinlichkeit sagen, zu welcher die Nullhypothese gilt.
+Das wüssten wir zwar sehr gerne, doch wir werden es nie erfahren (außer die gesamte Population wird getestet, was in der Praxis aber oft unmöglich ist, z.B. da wir oft nicht wissen wo Populationen anfangen oder aufhören).
+
+**Der $p$-Wert kann lediglich sagen, wie wahrscheinlich die vorliegenden oder extremere Stichprobendaten sind, gegeben dass die Nullhypothese gilt. **
+
+Also kurz gesagt: 
+
+- Was wir gerne hätten: Wahrscheinlichkeit von H0 gegeben unsere Daten
+- Was der p-Wert uns gibt: Wahscheinlichkeit von Daten gegeben H0
+
+Das ist ein wichtiger Unterschied, und viele, viele Forschende verstehen ihn nicht und 
+treffen inkorrekte Aussagen wie - zu $p$ % können wir davon ausgehen, dass die H0 gilt. Oder zu $p$ % sind unsere Ergebnisse reiner Zufall - das ist tatsächlich oft zu lesen, aber nicht korrekt. Alles was wir sagen können ist: Falls die Nullhypothese gilt, ist die Wahrscheinlichkeit, Daten zu ziehen, die gleich oder extremer als die vorliegenden Daten sind, $p$ %.
+:::
+
+Der *p*-Wert oben ist kleiner als das vorher angesetzte Alphaniveau von .05 wird daher als signifikant gewertet.
 
 **Beispielinterpretation**
 
-Hast du den *t*-Test durchgeführt und möchtest die Ergebnisse in deiner Forschungsarbeit angeben würdest du es nach **APA Standard** wie folgt schreiben ([mehr zu APA](https://apastyle.apa.org/) oder hier eine gute [Zusammenmfassung der Universität Stuttgart wie statistische Kenngrößen nach APA 7 berichtet werden](https://www.inspo.uni-stuttgart.de/institut/aii/dokumente/APA-Manuskriptgestaltung-Angabe-statistischer-Werte-Zitieren-Literatur.pdf)):
+Hast du den *t*-Test durchgeführt und möchtest die Ergebnisse in deiner Forschungsarbeit angeben, würdest du es nach **APA Standard** wie folgt schreiben ([mehr zu APA](https://apastyle.apa.org/) oder hier eine gute [Zusammenmfassung der Universität Stuttgart wie statistische Kenngrößen nach APA 7 berichtet werden](https://www.inspo.uni-stuttgart.de/institut/aii/dokumente/APA-Manuskriptgestaltung-Angabe-statistischer-Werte-Zitieren-Literatur.pdf)):
 
-Für den Bericht eines *p*-Werts werden zuerst die Kennwerte der Stichprobe (*M* = "Mittelwert", *SD* = "Standardabweichung") angegeben. Dann die statistischen Größen nach diesem Schema: `t("df") = "t-Wert", p "Signifikanzniveau"`. Dabei werden die statistischen Kennwerte, wie z.B. *t* und *p* kursiv geschrieben. Die Werte in "" erstetzt du durch die entsprechenden Werte der Ausgabe. Das Signifikanzniveau, das dein *p*-Wert überschreiten kann, ist dabei in 3 Level aufgeteilt:
+Für den Bericht eines *p*-Werts werden zuerst die Kennwerte der Stichprobe (*M* = "Mittelwert", *SD* = "Standardabweichung") angegeben. Dann die statistischen Größen nach diesem Schema: *t*("df") = "*t*-Wert", *p* = "p-Wert" (mit drei Nachkommastellen). Dabei werden die statistischen Kennwerte, wie z.B. *t* und *p* kursiv geschrieben. Die Werte in "" erstetzt du durch die entsprechenden Werte der Ausgabe. 
 
--   p \< .05\* signifikant
--   p \< .01\*\* hoch signifikant
--   p \< .001\*\*\* höchst signifikant
+Da der *p*-Wert nur mit drei Nachkommastellen berichtet wird, wird alles was kleiner als .001 ist, mit *p* < .001 angegeben. (Niemals *p* = 0, da der *p*-Wert niemals genau 0 sein kann, egal wie klein er ist, er nähert sich der 0 nur an.)
 
 Das kann dann z.B so aussehen:
 
@@ -441,19 +486,20 @@ Das kann dann z.B so aussehen:
 
 Super! Als nächstes schauen wir uns an, wie wir für zwei unabhängige Gruppen einen *t*-Test berechnen können.
 
-## t-Test für unabhängige Gruppen
+## *t*-Test für unabhängige Gruppen
 
 ::: gelb
-Der unabhängige *t*-Test testet eine unabhängige Variable mit **2 Ausprägungen** (Kategorien/ Gruppen) in Hinsicht auf eine **intervallskalierte** abhängige Variable.
+Der *t*-Test für zwei unabhängige Gruppen ist geeignet, um die Mittelwerte zweier Gruppen zu vergleichen. Er testet eine unabhängige Variable mit **2 Ausprägungen** (Kategorien/ Gruppen) in Hinsicht auf eine **intervallskalierte** abhängige Variable.
 :::
 
 </br>
 
-Der unabhängige *Zweistichproben-T-Test* wird verwendet, wenn du **zwei unterschiedliche Gruppen** miteinander vergleichen möchtest. Zum Beispiel:
+Der unabhängige *Zweistichproben-*t*-Test* wird verwendet, wenn du **zwei unterschiedliche Gruppen** miteinander vergleichen möchtest. Zum Beispiel:
 
 -   Die Wirkung eines Medikaments im Vergleich zu einem Placebo.
 -   Die Leistung von Schülern in zwei verschiedenen Klassen.
 -   Die Kundenzufriedenheit in zwei Filialen eines Geschäfts.
+-   Kontrollgruppe und Treatment-Gruppe
 
 Der Schlüsselpunkt ist, dass die beiden Gruppen *unabhängig* voneinander sein müssen, d.h., die Daten der einen Gruppe dürfen die der anderen Gruppe nicht beeinflussen.
 
@@ -468,11 +514,12 @@ quiz(caption = "Hypothesen erstellen:",
       
   learnr::question_radio("Jetzt haben wir bereits eine H1, aber was wäre die zu testende H0?",
       answer("Autofahrende haben den gleichen Ruhepuls wie Radfahrende.", 
-             correct = TRUE),
+             correct = TRUE,
+             message = "Die H0 muss immer die Gleichheitsrelation enthalten. Sie dürfte auch lauten, Autofahrende haben den gleichen oder einen kleineren Ruhepuls als Radfahrende, das wäre auch korrekt."),
       answer("Radfahrende haben einen höheren Ruhepuls als Autofahrende.",
              message = "Die H0 geht immer davon aus, das wir keinen signifikanten Unterschied haben."),
       answer("Autofahrende haben einen kleineren Ruhepuls als Radfahrende.",
-             message = "Die H0 geht immer davon aus, das wir keinen signifikanten Unterschied haben."),
+             message = "Die H0 muss immer die Gleichheitsrelation enthalten"),
       random_answer_order = TRUE,
       allow_retry = TRUE,
       correct = random_praise("de"),
@@ -489,9 +536,11 @@ quiz(caption = "Hypothesen erstellen:",
 )
 ```
 
-Hier ein kurzer Einblick in die Generierung unserer Beispieldaten.
+Hier ein kurzer Einblick in die Generierung unserer Beispieldaten. In der Praxis 
+werden keine Daten simuliert, sondern im Experiment erhoben! Diesen Schritt müsst
+ihr also nicht übernehmen wenn ihr später mal selber *t*-Tests rechnn wollt.
 
-```{r ruhepuls, exercise = TRUE, exercise.cap = "Daten vorbereiten" }
+```{r ruhepuls, exercise = TRUE, exercise.cap = "künstliche Stichprobe erzeugen..." }
 set.seed(123)  # Für reproduzierbare Ergebnisse
 puls_autofahrende <- rnorm(30, mean = 80, sd = 10)  # Mittelwert: 80, SD: 10
 puls_radfahrende <- rnorm(30, mean = 72, sd = 8)   # Mittelwert: 72, SD: 8
@@ -509,7 +558,7 @@ Auch hier gibt es wieder spezifische Voraussetzungen zu prüfen, bevor wir diese
 
 Wie du die **Normalverteilung** prüfst hast du ja grade bereits gelernt. Es gibt da, wie so oft, neben dem Histogram noch eine weitere grafische Möglichkeit deine Daten auf eine Normalverteilung zu überprüfen: das *Q-Q-Plot*.
 
-Ein **Q-Q-Plot** ist ein grafisches Werkzeug zur Prüfung der Normalverteilung einer Datenserie. Es zeigt, ob die Verteilung einer Variablen mit der einer Normalverteilung übereinstimmt. **Wenn die Daten normalverteilt sind, sollten die Punkte im QQ-Plot etwa entlang einer geraden Linie liegen**. Die Funktion `qqnorm(data)` trägt deine Daten gegen die Daten der Normalverteilung in einen Plot auf. Um mehr über die Funktion zu erfahren kannst du wie gewohnt auch `?qqnorm` in deine Console eingeben.
+Ein **Q-Q-Plot** ist ein grafisches Werkzeug zur Prüfung der Normalverteilung einer Datenserie. Es zeigt, ob die Verteilung einer Variablen mit der einer Normalverteilung übereinstimmt. **Wenn die Daten normalverteilt sind, sollten die Punkte im QQ-Plot etwa entlang einer Diagonalen liegen**. Die Funktion `qqnorm(data)` trägt deine Daten gegen die Daten der Normalverteilung in einen Plot auf. Um mehr über die Funktion zu erfahren kannst du wie gewohnt auch `?qqnorm` in deine Console eingeben.
 
 ```{r qqplot, exercise = TRUE, exercise.setup = "ruhepuls", exercise.cap = "QQ-Plot"}
 # QQ-Plot erstellen
@@ -531,7 +580,7 @@ Auch dafür gibt es bereits einen statistischen Test, den wir nutzen können, um
 
 ``` r
 library(car)
-leveneTest(Modell, daten)
+leveneTest(messung ~ gruppen, datensatz)
 ```
 
 Die Funktion möchte von uns jedoch, dass die Daten in einer Spalte und die Gruppen in einer zweite Spalte aufbereitet sind. Aber mit den neuen data wrangling Tricks, ist das für uns kein Problem:
@@ -539,22 +588,33 @@ Die Funktion möchte von uns jedoch, dass die Daten in einer Spalte und die Grup
 ```{r wrangling, exercise = TRUE, exercise.setup = "ruhepuls"}
 df <- data.frame(
   puls = c(puls_autofahrende, puls_radfahrende), #Daten als 1 Vektor
-  gruppe = factor(c(rep("Autofahrende", length.out = length(puls_autofahrende)), rep("Radfahrende", length.out = length(puls_autofahrende)))) #repeat "" für die Länge von x
+  gruppe = factor(c(rep("Autofahrende", length.out = length(puls_autofahrende)),
+                    rep("Radfahrende", length.out = length(puls_autofahrende))))
+  #repeat "" für die Länge von x
 )
 df
 ```
 
-Für unsere Zwecke können wir so der Funktion unsere Ruhepuls-Daten als einen Vektor geben und einen Factor für die beiden Gruppen, die wir auf Varianzhomogenität untersuchen wollen.
+So können wir der Levene-Test-Funktion alle Ruhepuls-Messungen als eine Variable geben und eine zweite Variable, die angibt aus welcher Gruppe die Pulsmessung stammt. Dann können die beiden Gruppen auf Varianzhomogenität getestet werden.
+
+::: aufgabe
+Ersetze die Platzhalter `messung` und `gruppe` durch die richtigen Variablen im Datensatz `df`, um einen Test auf Varianzhomogenität durchzuführen!
+:::
 
 ```{r levene, exercise = TRUE, exercise.setup = "wrangling", exercise.cap = "levene test"}
 library(car)
-leveneTest(daten ~ factor, df)
+leveneTest(messung ~ gruppen, df)
 ```
 
 ```{r levene-solution}
 library(car)
 leveneTest(puls ~ gruppe, df)
 ```
+
+::: infobox
+Die Formelschreibweise mit `~` ist ein gängiges Format in R, um Modelle zu spezifizieren.
+Dafür müssen die Daten aber in einem Data Frame der "Langform" sein, also die Gruppenzugehörigkeit muss eine eigenständige kategoriale Variable sein, und die Messungen müssen alle in der selben Spalte liegen. Wenn das gegeben ist, kannst du die Formelschreibweise z.B. auch für einen *t*-Test nutzen.
+:::
 
 Als Output bekommst du folgenden Code:
 
@@ -566,28 +626,37 @@ group  1  4.7241 0.03384 *
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 ```
+Der Levene-Test testet die H0, dass die Varianzen gleich sind zwischen den Gruppen.
 
 -   Ein signifikantes Ergebnis (*p* \< 0.05) im Levene-Test deutet darauf hin, dass die Varianzen zwischen den Gruppen signifikant unterschiedlich sind.
 -   Ein nicht signifikantes Ergebnis bedeutet, dass die Annahme der Varianzhomogenität erfüllt ist.
 
+**Der $p$-Wert findet sich im Output unter der Formulierung `Pr(>F)`.** 
+
 ```{r levenequiz}
-     
-  learnr::question_radio("Was sagt das Ergebnis des Levene Tests über unsere Varianzhomogenität aus",
+learnr::question_numeric("Wie lautet der $p$-Wert des Levene-Tests (alle Nachkommastellen)?",
+                         answer(0.03384, correct = TRUE),
+                         allow_retry = TRUE,
+                         correct = random_praise("de"),
+                         incorrect = random_encouragement("de"))
+
+  learnr::question_radio("Was sagt das Ergebnis des Levene-Tests über die Varianzhomogenität aus?",
       answer("Die Varianzen der Gruppen sind nicht gleich.", 
-             correct = TRUE),
+             correct = TRUE,
+             message = "Richtig, da der p-Wert unter dem Signifikanzniveau alpha liegt, muss die H0 verworfen werden."),
       answer("Die Varianzen der Gruppen sind gleich.",
-             message = "Die H0 geht immer davon aus, das wir keinen signifikanten Unterschied haben, also kein Unterschied in den Varianzen vorliegt. Anhand unseres *p*-Wertes (0.034) können wir die H0 jedoch verwerfen."),
+             message = "Die H0 besagt, dass kein Unterschied in den Varianzen vorliegt. Anhand unseres *p*-Wertes (0.034) sollten wir die H0 jedoch verwerfen."),
       random_answer_order = TRUE,
       allow_retry = TRUE,
-      correct = "Die H0 geht immer davon aus, das wir keinen signifikanten Unterschied haben, also kein Unterschied in den Varianzen vorliegt. Anhand unseres *p*-Wertes (0.034) können wir die H0 jedoch verwerfen.",
+      correct = random_praise("de"),
       incorrect= random_encouragement("de"))
 ```
 
-Praktischerweise gibt es in der `t.test()`-Funktion das Argument `var.equal = FALSE` (default), welches sogar der Standardwert ist. Die Funktion ist so schlau, dass sie, wenn wir dieses Argument nicht händisch umcodieren, selbst prüft, ob Varianzhomogenität gegeben ist und bei Verletzung dieser Voraussetzung statt des t-Tests einen Welch t-Test rechnet, der diese Varianzungleichheit in die Berechnung einbezieht. Daher können wir zur Berechnung fortschreiten.
+Praktischerweise gibt es in der `t.test()`-Funktion das Argument `var.equal = FALSE` (default), welches sogar der Standardwert ist. Die Funktion ist so schlau, dass sie, wenn wir es nicht explizit anders wünschen, selbst prüft, ob Varianzhomogenität gegeben ist und bei Verletzung dieser Voraussetzung statt des *t*-Tests einen Welch *t*-Test rechnet, der diese Varianzungleichheit in die Berechnung einbezieht. Daher können wir zur Berechnung fortschreiten.
 
-### Berechnen des unabhängigen t-Tests
+### Berechnen des unabhängigen *t*-Tests
 
-Es ist soweit, wir können jetzt den t-Test für unabhängige Gruppen rechnen, und feststellen, ob unsere Autofahrenden einen höheren Ruhepuls als die Radfahrenden haben. Dafür testen wir wie gewohnt die *H0: Es gibt keinen Unterschied zwischen dem Ruhepuls von Autofahrenden und Radfahrenden*.
+Es ist soweit, wir können jetzt den *t*-Test für unabhängige Gruppen rechnen, und feststellen, ob die Autofahrenden einen höheren Ruhepuls als die Radfahrenden haben. Dafür testen wir wie gewohnt die *H0: Es gibt keinen Unterschied zwischen dem Ruhepuls von Autofahrenden und Radfahrenden*.
 
 Der `t.test()` für unabhängige Gruppen hat die gleichen Argumente wie zuvor, nur das wir nun anstelle des `mu` gegen eine zweite Variable testen.
 
@@ -610,21 +679,21 @@ t.test(puls_autofahrende, puls_radfahrende)
 ```
 
 ::: aufgabe
-Rechne den *t*-Test für unsere Variablen `puls_autofahrende` und `puls_radfahrende` und wähle das benötigte Argument für `alternative` (`two.sided` / `less`/ `greater`).
+Rechne den *t*-Test für die Variablen `puls_autofahrende` und `puls_radfahrende` und wähle das benötigte Argument für `alternative =` `"two.sided"`, `"less"` oder `"greater"`).
 
-Errechne außerdem die Standardabweichung (sd) für beide Variablen.
+Errechne außerdem die Standardabweichung (*SD*) für beide Variablen.
 
 \*Anmerkung: Die Variablen wurden nicht in einem Data Frame gespeichert.
 :::
 
 ```{r twosample2, exercise = TRUE, exercise.setup = "ruhepuls", exercise.cap = "unabhängiger t-Test"}
-# ändere x und y und füge der alternative ein Argument hinzu
+# 1. ändere x und y und füge der alternative ein Argument hinzu
 t.test(x, y, alternative = "")
-# errechne den sd für beide Variablen
+# 2. errechne noch sd für beide Variablen
 ```
 
 ```{r twosample2-solution}
-# wir erwarten, dass der Mittelwert größer ist, daher greater 
+# wir erwarten, dass der Mittelwert von autofahranden größer ist, daher greater 
 t.test(puls_autofahrende, 
        puls_radfahrende, 
        alternative = "greater")
@@ -641,9 +710,9 @@ quiz(caption = "Analyse üben:",
                  allow_retry = TRUE),
 
 learnr::question_radio("Was sagt der t-Wert 2.81 über unsere Mittelwerte?",
-      answer("Die Autofahrenden haben im Mittel einen 2.81 höherern Ruhepuls als die Radfahrenden", 
+      answer("Die Autofahrenden haben im Mittel einen 2.81 Einheiten höheren Ruhepuls als die Radfahrenden", 
              correct = TRUE),
-      answer("Die Radfahrenden haben im Mittel einen 2.81 höherern Ruhepuls als die Autofahrenden.",
+      answer("Die Radfahrenden haben im Mittel einen 2.81 Einheiten höheren Ruhepuls als die Autofahrenden.",
              message = "Unsere H1 testet, ob der Puls von Autofahrenden höher ist. Deshalb geben wir auch der t-Test Funktion zuerst die Autofahrenden (x) und dann den Vergleichswert (y) der Radfahrenden."),
       random_answer_order = TRUE,
       allow_retry = TRUE,
@@ -655,10 +724,10 @@ learnr::question_radio("Was sagt der t-Wert 2.81 über unsere Mittelwerte?",
 #### Ergebnisse interpretieren und berichten
 
 ::: blau-nb
-"Der unabhängige-*t*-Test ergab einen statistisch signifikanten Unterschied zwischen dem Ruhepuls von Autofahrenden ($M = 79.53, SD = 9.81$) und dem Ruhepuls von Radfahrenden($M = 73.42, SD = 6.68$), $t(51.14) = 2.82, p < .001$. Dieses Ergebnis deutet darauf hin, dass Autofahrende im durchschnittlich einen höheren Ruhepuls als Radfahrende besitzten."
+"Der unabhängige-*t*-Test (einseitig) ergab einen statistisch signifikanten Unterschied zwischen dem Ruhepuls von Autofahrenden ($M = 79.53, SD = 9.81$) und dem Ruhepuls von Radfahrenden($M = 73.42, SD = 6.68$), $t(51.14) = 2.82, p < .001$. Dieses Ergebnis deutet darauf hin, dass Autofahrende durchschnittlich einen höheren Ruhepuls als Radfahrende haben"
 :::
 
-## t-Test für abhängige Gruppen
+## *t*-Test für abhängige Gruppen
 
 ::: gelb
 Der abhängige *t*-Test testet eine **intervallskalierte** abhängige Variable in hinsicht auf eine unabhängige Variable mit **2 Ausprägungen** (Kategorien/ Gruppen).
@@ -668,7 +737,7 @@ Der abhängige *t*-Test testet eine **intervallskalierte** abhängige Variable i
 
 Der *abhängige* bzw. *gepaarte* *t*-Test ist ein statistisches Verfahren, das verwendet wird, um zu prüfen, ob sich die Mittelwerte zweier verbundener Stichproben signifikant voneinander unterscheiden. Dieser Test ist besonders nützlich, wenn du dieselben Personen, Objekte oder Fälle unter zwei verschiedenen Bedingungen (zum Beispiel *vor* und *nach* einer Intervention) untersuchen möchtest.
 
-*Wann wird der abhängige T-Test verwendet?*
+*Wann wird der abhängige *t*-Test verwendet?*
 
 -   **Vorher-Nachher-Vergleiche**: Zum Beispiel, um die Wirkung eines Trainingsprogramms auf die Fitness zu beurteilen, indem du die Fitnesswerte vor und nach dem Programm vergleichst.
 -   **Gepaarte Beobachtungen**: Wie etwa der Vergleich der Reaktionen von Paaren in einer Studie.
@@ -781,7 +850,7 @@ learnr::question_radio("Wie interpretierst du den Shapiro-Wilk Test bezüglich d
 
 ```
 
-### t-Test abhängige Gruppen berechnen
+### *t*-Test abhängige Gruppen berechnen
 
 Nach der Prüfung der Voraussetzungen steht unserem *t*-Test jetzt nichts mehr im Wege. Wir müssen der Funktion nur noch mit `paired = TRUE` mitteilen, dass unsere Daten paarweise analysiert werden sollen (abhängig voneinander). Dabei ist wichtig zu beachten, dass unsere Daten den Zeilen nach (in unserem Beispiel pro Tageszeit) analysiert werden, in anderen Beispielen würden wir pro Person vergleichen (vor und nach einer Intervention).
 
@@ -792,7 +861,7 @@ t.test(x, y, paired = TRUE)
 Also los gehts, du bist dran:
 
 ::: aufgabe
-Finde anhand des t-Tests heraus, ob es einen signifikanten Unterschied an der Anzahl an Radfahrenden durch den Umbau der Straße gegeben hat. Vergleiche dafür `df$anzahl_vorher` mit `df$anzahl_nachher`. Vergiss nicht, dass es ein gepaarter *t*-Test ist und passe auch das Argument für `alternative` an.
+Finde anhand des *t*-Tests heraus, ob es einen signifikanten Unterschied an der Anzahl an Radfahrenden durch den Umbau der Straße gegeben hat. Vergleiche dafür `df$anzahl_vorher` mit `df$anzahl_nachher`. Vergiss nicht, dass es ein gepaarter *t*-Test ist und passe auch das Argument für `alternative` an.
 :::
 
 ```{r pairedt, exercise = TRUE, exercise.setup = "fahrradstrasse", exercise.cap = "Differenz evaluieren" }
@@ -821,10 +890,10 @@ learnr::question_radio("Wie interpretierst du das Ergebnis des gepaarten t-Test 
 Auch das ist Teil der Wissenschaft. Nicht alle Effekte die wir vermuten, sind auch tatsächlich vorhanden. Es ist dennoch sehr wichtig, dass wir auch diese nicht bestätigten Hypothesen gut berichten:
 
 ::: blau-nb
-In der Studie wurde ein abhängiger T-Test durchgeführt, um zu untersuchen, ob sich die Anzahl der Radfahrenden pro Stunde nach dem Umbau einer Straße in eine Fahrradstraße signifikant erhöht hat. Die Analyse ergab keinen signifikanten Anstieg in der Anzahl der Radfahrenden ($t(44) = 0.038, p = .485$). Vor dem Umbau betrug die Anzahl der Radfahrenden ($M = 45.08, SD = 8.32$) , nach dem Umbau ($M = 45.01, SD = 7.76$).
+In der Studie wurde ein abhängiger *t*-Test durchgeführt, um zu untersuchen, ob sich die Anzahl der Radfahrenden pro Stunde nach dem Umbau einer Straße in eine Fahrradstraße signifikant erhöht hat. Die Analyse ergab keinen signifikanten Anstieg in der Anzahl der Radfahrenden ($t(44) = 0.038, p = .485$). Vor dem Umbau betrug die Anzahl der Radfahrenden ($M = 45.08, SD = 8.32$) , nach dem Umbau ($M = 45.01, SD = 7.76$).
 :::
 
-Wow! Du hast es geschafft! Jetzt bist du ein t-Test-Profi! Eine letzte Sache möchte ich dir noch mit an die Hand geben, bevor du dich eigenständig auf den Weg in die Welt der Unterschiede begibst: Die Effektstärke.
+Wow! Du hast es geschafft! Jetzt bist du ein *t*-Test-Profi! Eine letzte Sache möchte ich dir noch mit an die Hand geben, bevor du dich eigenständig auf den Weg in die Welt der Unterschiede begibst: Die Effektstärke.
 
 ## Effektstärke
 
@@ -864,7 +933,7 @@ cohens_d(
 )
 ```
 ::: aufgabe
-Ermittle die Effektgröße für unseren unabhängigen t-Test, der den Ruhepuls von Autofahrenden und Radfahrenden vergleicht.
+Ermittle die Effektgröße für unseren unabhängigen *t*-Test, der den Ruhepuls von Autofahrenden und Radfahrenden vergleicht.
 
 Gib der Funktion dafür die Variablen `puls_autofahrende` und `puls_radfahrende`.
 :::
@@ -1011,11 +1080,11 @@ shiny::br()
 
 ### Zusammenfassung
 
-- Was der *t*-Tests ist und wann er angewendet wird: Der *t*-Tests ist ein statistisches Verfahren, das verwendet wird, um zu testen, ob sich die Mittelwerte zweier Stichproben signifikant voneinander unterscheiden. Es gibt verschiedene Arten von *t*-Tests, einschließlich des Einstichproben-, des unabhängigen und des abhängigen T-Tests.
+- Was der *t*-Tests ist und wann er angewendet wird: Der *t*-Tests ist ein statistisches Verfahren, das verwendet wird, um zu testen, ob sich die Mittelwerte zweier Stichproben signifikant voneinander unterscheiden. Es gibt verschiedene Arten von *t*-Tests, einschließlich des Einstichproben-, des unabhängigen und des abhängigen *t*-Tests.
 
 - Wie man die Voraussetzungen für den *t*-Tests überprüft: Dazu gehört die Überprüfung der Normalverteilung und der Varianzhomogenität.
 
-- Wie man den T-Test in R durchführt: Du hast gelernt, wie du den *t*-Tests mit realen und simulierten Daten durchführst und wie du die Ergebnisse interpretierst.
+- Wie man den *t*-Test in R durchführt: Du hast gelernt, wie du den *t*-Tests mit realen und simulierten Daten durchführst und wie du die Ergebnisse interpretierst.
 
 - Die Bedeutung von Effektstärken: Neben dem P-Wert ist auch die Effektstärke wichtig, um die praktische Bedeutung der Ergebnisse zu beurteilen.
 
@@ -1026,12 +1095,12 @@ shiny::br()
 
 | Funktion in R              | Erklärung                                                  |
 |----------------------------|-------------------------------------------------------------|
-| `t.test()`                 | Durchführung eines T-Tests, einschließlich aller Varianten |
+| `t.test()`                 | Durchführung eines *t*-Tests, einschließlich aller Varianten |
 | `qqnorm()`, `qqline()`     | Erstellung von QQ-Plots zur Überprüfung der **Normalverteilung**|
 | `shapiro.test()`           | Durchführung des Shapiro-Wilk-Tests zur Überprüfung der **Normalverteilung** |
 | `leveneTest()`             | Durchführung des Levene-Tests zur Überprüfung der **Varianzhomogenität** |
 | `mean()`, `sd()`           | Berechnung von Mittelwert und Standardabweichung.           |
-| `cohen.d()`                | Berechnung der **Effektstärke** (Cohens d) für T-Tests.         |
+| `cohen.d()`                | Berechnung der **Effektstärke** (Cohens d) für *t*-Tests.         |
 
 ## Credit
 
