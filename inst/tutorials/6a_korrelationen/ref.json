@@ -143,5 +143,33 @@
         "source": "wgruber.github.io",
         "title": "Statistik mit R für Fortgeschrittene",
         "type": "book"
+    },
+    {
+        "URL": "https://www.discovr.rocks/discovr/",
+        "accessed": {
+            "date-parts": []
+        },
+        "author": [
+            {
+                "family": "Field",
+                "given": "Andy"
+            }
+        ],
+        "issued": {
+            "date-parts": [
+                [
+                    2022
+                ]
+            ]
+        },
+        "container-title": "discovr",
+        "id": "field",
+        "key": "YDWULWX8",
+        "language": "en-us",
+        "libraryid": "1",
+        "providerkey": "Zotero",
+        "title": "discovr: a package of interactive tutorials",
+        "title-short": "discovr",
+        "type": "webpage"
     }
 ]

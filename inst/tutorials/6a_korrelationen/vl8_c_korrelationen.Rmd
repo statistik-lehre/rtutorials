@@ -99,6 +99,8 @@ Aber zurück zur Korrelation: Es gibt in der Statistik **vielreiche Arten eine K
 
 ::: gelb
 Die Pearson-Korrelation misst die Stärke und Richtung des **linearen** Zusammenhangs zwischen zwei **metrisch** skalierten Variablen.
+
+Korrelationen werden in der Statistik mit dem Buchstaben *r* abgekürzt.
 :::
 
 Die Pearson-Produkt-Moment Korrelation (kurz: Pearson-Korrelation), ist ein Maß für den linearen Zusammenhang zwischen zwei Variablen. Sie variiert zwischen -1 und +1, wobei +1 eine perfekte positive Korrelation, -1 eine perfekte negative Korrelation und 0 keine Korrelation bedeutet. Dazu lassen sich diese Korrelationen auch nach ihrer Stärke einordnen:
@@ -141,12 +143,11 @@ Damit wir Aussagen von unserer Stichprobe auf die Grundgesamtheit übertragen (I
 
 Voraussetzungen für Korrelationen:
 
-- keine Ausreißer
-- keine Kluster
-- Normalverteilung
-- Endliche Varianz
-- Linearität
-- Homoskedastizität
+-   keine Ausreißer
+-   keine Kluster
+-   Normalverteilung
+-   Endliche Varianz
+-   Linearität
 
 Wir gehen diese eins nach dem anderen durch:
 
@@ -175,7 +176,6 @@ boxplot(economics$unemploy, main="unemploy: Arbeitslosenquote")
     random_answer_order = TRUE
   )
 ```
-
 
 #### keine Kluster
 
@@ -232,7 +232,7 @@ quiz(
     answer("Die Daten weichen insbesondere an den Enden sehr stark von der Diagonalen ab, daher sind die Daten *nicht* normalverteilt.",
            correct = TRUE),
     answer("Die Daten weichen nur marignal von der Diagonalen ab, daher sind die Daten normalverteilt.", 
-           message = "Obwohl es nur an den Rändern abweicht, ist das Maß der Abweichung doch so stark, dass diese Daten nicht mehr als normalverteilt bezeichnert werden sollten"),
+           message = "Obwohl es nur an den Rändern abweicht, ist das Maß der Abweichung doch so stark, dass diese Daten nicht mehr als normalverteilt bezeichnert werden sollten."),
     correct  = "Falls es Kluster gibt, so lassen diese sich auf dem ersten Blick nicht deutlich erkennen.",
     incorrect = random_encouragement("de"),
     allow_retry = TRUE,
@@ -257,9 +257,12 @@ In unserem Beispiel ist die Varianz zwar nicht unendlich, aber sie ist für die 
 
 #### Linearität
 
-Da wir den linearen Zusammenhang testen, sollten wir auch davon ausgehen, dass unsere Daten einen linearen Zusammenhang darstellen.
+Da wir mit der Korrelation den linearen Zusammenhang testen, sollten wir auch davon ausgehen können, dass unsere Daten einen linearen Zusammenhang aufweisen. 
+Um dies zu überprüfen würden wir uns ebenfalls das Punktdiagramm unserer Daten anschauen.
 
-```{r}
+Hier haben wir für dich einige Zusammenhänge simuliert, und mit rot jeweils eine Linie des Zusammenhangs (Korrelationsgerade) eingezeichnet. In nicht linearen Zusammenhängen bekommen wir teilweise starke Abweichungen der Daten von unserem Liniearen Schätzer, die damit zu einer Verzerrung des Korrelationskoeffizienten führen können. Plump ausgedrück: Ist der Zusammenhang der Daten nicht linear, ist es nicht die beste Idee deneren Zusammenhang mit einer Linie auszudrücken. Es wäre evtl. zwei Linien benötigt oder sogar eine Bogenform (exponentieller Zusammenhang).
+
+```{r Linearitaet, , message=FALSE, warning=FALSE}
 set.seed(123)
 
 # Definieren der Anzahl der Datenpunkte
@@ -274,6 +277,9 @@ y_outlier <- c(rep(5, n-1), 50) + rnorm(n, mean=0, sd=0.5)  # Extrem hoher Ausre
 
 # Berechnung des Korrelationskoeffizienten für linearen Zusammenhang
 cor_linear <- cor(x, y_linear)
+cor_exp <- cor(x, y_exponential)
+cor_cluster <- cor(x,y_cluster)
+cor_outlier <- cor(x,y_outlier)
 
 # Erstellen der Plots
 par(mfrow=c(2,2))
@@ -281,26 +287,80 @@ par(mfrow=c(2,2))
 plot(x, y_linear, main=paste("Linearer Zusammenhang\nKorrelation:", round(cor_linear, 2)), ylim=c(0, 55), pch=19)
 abline(a=0, b=1.5, col="red")
 
-plot(x, y_exponential, main="Exponentieller Zusammenhang", ylim=c(0, 55), pch=19)
+plot(x, y_exponential, main=paste("Exponentieller Zusammenhang\nKorrelation:", round(cor_exp, 2)), ylim=c(0, 55), pch=19)
 abline(a=0, b=1.5, col="red")
 
-plot(x, y_cluster, main="Kluster-Effekt", ylim=c(0, 55), pch=19)
+plot(x, y_cluster, main=paste("Kluster-Effekt\nKorrelation:", round(cor_cluster, 2)), ylim=c(0, 55), pch=19)
 abline(a=0, b=1.5, col="red")
 
-plot(x, y_outlier, main="Effekt durch hohen Ausreißer", ylim=c(0, 55), pch=19)
+plot(x, y_outlier, main=paste("Effekt durch hohen Ausreißer\nKorrelation: r=", round(cor_outlier, 2)), ylim=c(0, 55), pch=19)
 abline(a=0, b=1.5, col="red")
 
 ```
 
-#### Homoskedastitzität: gleichmäßige Streeung der Daten
+In nicht simulierten Daten ist es natürlich nicht ganz so einfach zu sehen, ob ein linearer Zusammenhang besteht. Frage dich einfach: Gibt es einen generellen Trend für eine Diagonale in den Daten, die auf einen solchen Zusammenhang hindeuten würde?
 
-Wieder mal ein langes und kompliziertes Wort, das dir da begegnet. Aber nicht verzagen, es meint lediglich: sind die Varianzen der Daten gleich verteilt.
+::: aufgabe
+Sieh dir nochmal unsere economics Daten an und überlege, ob wir einen linearen Zusammenhang vermuten können.
+:::
 
+```{r linear, exercise = TRUE, exercise.cap = "Linearität identifizieren"}
+plot(economics$uempmed, economics$unemploy, main="Scatterplot: durchschnittliche Dauer der Arbeitslosigkeit vs. Quote")
 ```
-var(economics$uempmed) var(economics$unemploy)
 
-plot(economics$uempmed, economics$unemploy, main="Homoskedastizität & Linearität") abline(lm(economics$unemploy ~ economics$uempmed), col="red")
+```{r normquiz2}
+  question_radio("Denkst du wir haben eine Linearität für unsere Daten?",
+    answer("Es gibt einen klar zu erkennenden, positiven linearen Zusammenhang.",
+           correct = TRUE),
+    answer("Es gibt einen klar zu erkennenden, negativen linearen Zusammenhang.", 
+           message = "Die Daten gehen von links unten nach rechts oben, das heißt also je mehr x desto mehr y - also ein positiver Zusammenhang."),
+    answer("Es gibt keinen klar zu erkennenden linearen Zusammenhang.", 
+           message = "Generell lässt sich schon ein Trend für einen positiven linearen Zusammenhang erkennen. Die Daten gehen von links unten nach rechts oben."),
+    correct  = "Die Daten gehen von links unten nach rechts oben, das heißt also je mehr x desto mehr y - also ein positiver Zusammenhang.",
+    incorrect = random_encouragement("de"),
+    allow_retry = TRUE,
+    random_answer_order = TRUE
+  )
 ```
+
+## pearsons *r* berechnen
+
+<hr>
+
+Dieser Abschnitt basiert zu großen Teilen auf dem hervorragenden R Tutorial [Discovr](https://www.discovr.rocks/discovr/) von Andy @field.
+
+<hr>
+
+Das Paket `correlation` bündelt viele korrelationsbezogene Funktionen in einem praktischen und leicht zu nutzenden Paket. Seine Hauptfunktion trägt den Namen … Trommelwirbel … `correlation()`.
+
+
+```r 
+correlation::correlation(data,
+                         method = "pearson",
+                         p_adjust = "holm",
+                         ci = 0.95
+                         )
+```
+
+Hier sind die für dich wichtigsten Argumente aufgelistet, aber es gibt natürlich noch weitere. Fürs Erste schauen wir uns nur die Hauptargumente an, die wir verwenden werden:
+
+- `data`: Hier nennst du den Data Frame, der die Variablen enthält, die du korrelieren möchtest.
+- `method` Dieses Argument legt die Methode für den Korrelationskoeffizienten fest. Standardmäßig ist es auf `pearson` gesetzt (für Pearsons Korrelation), kann aber unter anderem auf `spearman` (Spearman´s Rho) und `kendall` geändert werden. Wir schauen uns dabei nur *pearson* und *spearman* an.
+- `p_adjust`: Standardmäßig korrigiert die Funktion den *p*-Wert für die Anzahl der durchgeführten Tests (eine gute Idee) mit der Holm-Bonferroni-Methode, die die Fehlerrate vom Typ I kontrolliert, aber mit einem geringeren Risiko für einen Fehler vom Typ II. Du kannst dieses Argument auf `none` (also keine Korrektur für multiple Tests, eine schlechte Idee), `bonferroni` (um die Standard-Bonferroni-Methode anzuwenden) oder mehrere andere Methoden ändern.
+- `ci`: Dieses Argument legt die Breite des Konfidenzintervalls fest. Standardmäßig ist es 0.95 für ein 95%iges Konfidenzintervall, was wahrscheinlich das sein wird, was du normalerweise verwenden wirst.
+
+Um die Funktion zu nutzen, nimm deinen Tibble, leite ihn in die Funktion `select()` von `dplyr` weiter, um die Variablen auszuwählen, die du korrelieren möchtest, und leite das dann in die Korrelationsfunktion weiter. Du kannst dieselbe Code-Struktur verwenden, egal ob du zwei Variablen korrelieren möchtest oder alle Korrelationen zwischen Paaren von mehreren Variablen berechnen möchtest.
+
+#### Code example
+
+Um die Pearson-Korrelation zwischen den Variablen **exam_grade** und **revise** in data, würden wir folgendes ausführen:
+
+```{r basicr, exercise = TRUE, exercise.lines = 5}
+exam_tib |> 
+  dplyr::select(exam_grade, revise) |> 
+  correlation::correlation()
+```
+
 
 
 ## Abschlussquiz
@@ -414,17 +474,10 @@ shiny::br()
 
 ### Zusammenfassung
 
-
 ### Neue Funktionen
 
-| Funktion in R          | Erklärung                                                                    |
-|------------------------|-----------------------------------------------|
-| `t.test()`             | Durchführung eines T-Tests, einschließlich aller Varianten                   |
-| `qqnorm()`, `qqline()` | Erstellung von QQ-Plots zur Überprüfung der **Normalverteilung**             |
-| `shapiro.test()`       | Durchführung des Shapiro-Wilk-Tests zur Überprüfung der **Normalverteilung** |
-| `leveneTest()`         | Durchführung des Levene-Tests zur Überprüfung der **Varianzhomogenität**     |
-| `mean()`, `sd()`       | Berechnung von Mittelwert und Standardabweichung.                            |
-| `cohen.d()`            | Berechnung der **Effektstärke** (Cohens d) für T-Tests.                      |
+| Funktion in R | Erklärung |
+|---------------|-----------|
 
 ## Credit
 
