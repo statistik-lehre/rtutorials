@@ -296,12 +296,13 @@ abline(a=0, b=1.5, col="red")
 
 Wieder mal ein langes und kompliziertes Wort, das dir da begegnet. Aber nicht verzagen, es meint lediglich: sind die Varianzen der Daten gleich verteilt.
 
-
 ```
 var(economics$uempmed) var(economics$unemploy)
 
 plot(economics$uempmed, economics$unemploy, main="Homoskedastizität & Linearität") abline(lm(economics$unemploy ~ economics$uempmed), col="red")
 ```
+
+
 ## Abschlussquiz
 
 ```{r Abschlussquiz}
@@ -413,15 +414,6 @@ shiny::br()
 
 ### Zusammenfassung
 
--   Was der *t*-Tests ist und wann er angewendet wird: Der *t*-Tests ist ein statistisches Verfahren, das verwendet wird, um zu testen, ob sich die Mittelwerte zweier Stichproben signifikant voneinander unterscheiden. Es gibt verschiedene Arten von *t*-Tests, einschließlich des Einstichproben-, des unabhängigen und des abhängigen T-Tests.
-
--   Wie man die Voraussetzungen für den *t*-Tests überprüft: Dazu gehört die Überprüfung der Normalverteilung und der Varianzhomogenität.
-
--   Wie man den T-Test in R durchführt: Du hast gelernt, wie du den *t*-Tests mit realen und simulierten Daten durchführst und wie du die Ergebnisse interpretierst.
-
--   Die Bedeutung von Effektstärken: Neben dem P-Wert ist auch die Effektstärke wichtig, um die praktische Bedeutung der Ergebnisse zu beurteilen.
-
--   Berichten der Ergebnisse nach APA-Richtlinien: Du hast gesehen, wie man die Ergebnisse eines *t*-Tests präzise und gemäß den APA-Standards berichtet.
 
 ### Neue Funktionen
 
