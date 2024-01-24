@@ -1680,6 +1680,12 @@ R^2 &= \frac{0}{\text{Gesamtvarianz in y}} = 0
 
 ### 5. Homoskedastizität
 
+Wieder mal ein langes und kompliziertes Wort, das dir da begegnet. Aber nicht verzagen, es meint lediglich: **die Varianz der Daten sind über die Variable gleich verteilt**. Das bedeutet, dass die Streuung der Residuen um die Regressionslinie für alle Werte der unabhängigen Variablen gleich bleibt. Wenn diese Bedingung erfüllt ist, spricht man von Homoskedastizität. Ist sie nicht erfüllt, also wenn die Varianz der Residuen mit den Werten der unabhängigen Variablen variiert, spricht man von Heteroskedastizität.
+
+Die Einhaltung der Homoskedastizität ist wichtig, da viele statistische Tests, insbesondere in der linearen Regression, auf der Annahme basieren, dass diese Bedingung gegeben ist. Heteroskedastizität kann zu ungenauen Schätzungen und zu irreführenden Testergebnissen führen.
+
+Was ist hier gemeint? Schau dir die Grafiken an und versuche zu verstehen, welche der Variablen keine gleichverteilten Residuen hat.
+
 ```{r homoskedasis_grafiken, message=FALSE, warning=FALSE}
 # H1 Homosked.
 set.seed(1)
