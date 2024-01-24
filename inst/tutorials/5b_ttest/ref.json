@@ -1,0 +1,79 @@
+[
+    {
+        "DOI": "10.1007/978-3-211-76751-1",
+        "ISBN": "978-3-211-76750-4 978-3-211-76751-1",
+        "URL": "http://link.springer.com/10.1007/978-3-211-76751-1",
+        "accessed": {
+            "date-parts": []
+        },
+        "id": "planungs2008",
+        "issued": {
+            "date-parts": [
+                [
+                    2008
+                ]
+            ]
+        },
+        "key": "KSEUB8V6",
+        "language": "de",
+        "libraryid": "1",
+        "providerkey": "Zotero",
+        "publisher": "Springer",
+        "publisher-place": "Vienna",
+        "source": "DOI.org (Crossref)",
+        "title": "Planungshandbuch Radverkehr",
+        "type": "book"
+    },
+    {
+        "ISBN": "978-3-949730-02-3",
+        "author": [
+            {
+                "family": "Planing",
+                "given": "Patrick"
+            }
+        ],
+        "id": "planing2022",
+        "issued": {
+            "date-parts": [
+                [
+                    2022,
+                    9,
+                    26
+                ]
+            ]
+        },
+        "key": "KXI78F8H",
+        "language": "Deutsch",
+        "libraryid": "1",
+        "number-of-pages": "377",
+        "providerkey": "Zotero",
+        "publisher": "Planing Publishing",
+        "publisher-place": "Stuttgart",
+        "source": "Amazon",
+        "title": "Statistik Grundlagen: Das interaktive Lehrbuch mit über 150 YouTube-Videos rund um die Burgerkette FIVE PROFS",
+        "title-short": "Statistik Grundlagen",
+        "type": "book"
+    },
+    {
+        "author": [
+            {
+                "family": "Cohen",
+                "given": "J"
+            }
+        ],
+        "id": "cohen1988",
+        "issued": {
+            "date-parts": [
+                [
+                    1988
+                ]
+            ]
+        },
+        "key": "WPF99VLL",
+        "libraryid": "1",
+        "providerkey": "Zotero",
+        "publisher": "Hoboken: Taylor and Francis",
+        "title": "Statistical Power Analysis for the Behavioral Sciences",
+        "type": "book"
+    }
+]
