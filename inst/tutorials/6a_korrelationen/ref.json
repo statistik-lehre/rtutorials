@@ -194,5 +194,46 @@
         "title": "Interpreting Correlations: An Interactive Visualization",
         "type": "book",
         "versionnumber": "0.7.1"
+    },
+    {
+        "DOI": "10.1145/3025453.3025912",
+        "ISBN": "978-1-4503-4655-9",
+        "URL": "https://dl.acm.org/doi/10.1145/3025453.3025912",
+        "accessed": {
+            "date-parts": []
+        },
+        "author": [
+            {
+                "family": "Matejka",
+                "given": "Justin"
+            },
+            {
+                "family": "Fitzmaurice",
+                "given": "George"
+            }
+        ],
+        "container-title": "Proceedings of the 2017 CHI Conference on Human Factors in Computing Systems",
+        "event": "CHI ’17: CHI Conference on Human Factors in Computing Systems",
+        "id": "matejka2017",
+        "issued": {
+            "date-parts": [
+                [
+                    2017,
+                    5,
+                    2
+                ]
+            ]
+        },
+        "key": "RIBH945S",
+        "language": "en",
+        "libraryid": "1",
+        "page": "1290-1294",
+        "providerkey": "2509FBBE-5BB0-44C4-B119-6083A81ED673",
+        "publisher": "ACM",
+        "publisher-place": "Denver Colorado USA",
+        "source": "DOI.org (Crossref)",
+        "title": "Same Stats, Different Graphs: Generating Datasets with Varied Appearance and Identical Statistics through Simulated Annealing",
+        "title-short": "Same Stats, Different Graphs",
+        "type": "paper-conference"
     }
 ]
