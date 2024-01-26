@@ -171,5 +171,28 @@
         "title": "discovr: a package of interactive tutorials",
         "title-short": "discovr",
         "type": "webpage"
+    },
+    {
+        "URL": "https://rpsychologist.com/correlation/",
+        "author": [
+            {
+                "family": "Magnusson",
+                "given": "Kristoffer"
+            }
+        ],
+        "id": "magnusson2023",
+        "issued": {
+            "date-parts": [
+                [
+                    2023
+                ]
+            ]
+        },
+        "key": "NESAP88M",
+        "libraryid": "1",
+        "providerkey": "Zotero",
+        "title": "Interpreting Correlations: An Interactive Visualization",
+        "type": "book",
+        "versionnumber": "0.7.1"
     }
 ]
