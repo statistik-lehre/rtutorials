@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# rtutorials
+# rtutorials <a href="https://github.com/statisti-lehre/rtutorials"><img src="man/figures/hex-rtutorials.png" align="right" height="138" /></a>
 
 <!-- badges: start -->
 
@@ -14,8 +14,9 @@ Check](https://github.com/statistik-lehre/rtutorials/actions/workflows/tutorial_
 
 *This R package is currently under active development.*
 
-Acquire basic statistics and R knowledge (somewhat) interactively and
-self paced.
+By installing this package, you add 15 handcrafted lessons to your
+RStudio Tutorials Pane. Get to know basic statistics and R interactively
+and self paced.
 
 - **Language**: German
 
@@ -23,9 +24,6 @@ self paced.
   bachelor students of environmental and civil engineering
 
 ### Quick Start / Installation
-
-By installing this package, you add handcrafted lessons to your RStudio
-Tutorials Pane.
 
 **Prerequisites**: R + RStudio installed
 
@@ -37,6 +35,11 @@ and hit Enter.
 install.packages(c("devtools", "learnr"))
 devtools::install_github("statistik-lehre/rtutorials")
 ```
+
+<details>
+<summary style="cursor:pointer;">
+Installation Error Help
+</summary>
 
 **Error**: If R reports an error like
 
@@ -63,12 +66,12 @@ Solution: Try to connect to the internet. If you are connected, wait a
 few minutes and try again. Likely, this error occurs because you hit the
 download rate limit of the GitHub API, e.g. installed too many large
 packages from GitHub in a short period of time.
+</details>
 
 ## Contents
 
 All tutorials are in German. Here are the titles translated to English
-for the convenience of the English readers. A German detailed overview
-can be found at the end.
+for the convenience of the English readers.
 
 Note that tutorials are being written and published step by step, the
 list below includes planned tutorials as well. Look at `inst/tutorials`
@@ -113,6 +116,8 @@ It might require an RStudio restart until the tutorials of the
 
 Click “Start Tutorial” to learn interactively. That’s it!
 
+<img src="man/figures/tutorials-pane.png" style="width:60.0%" />
+
 Below is some code which achieves the same thing without a navigating a
 click- and scrollable menu surface.
 
@@ -137,7 +142,8 @@ learnr::available_tutorials(package = "rtutorials")
 #>   - 4b_vis             : "Visualisierung"
 #>   - 4c_pipe            : "Pipe"
 #>   - 4d_datawrangling   : "Data Wrangling"
-#>   - 5a_sampling        : "Inferenzstatistik"
+#>   - 5a_sampling        : "Stichprobenkennwerteverteilung"
+#>   - 5b_ttest           : "t-Tests"
 ```
 
 And to run the individual tutorials, run:
@@ -193,4 +199,4 @@ Klosterkamp, who is also leading the project.
 
 ## Funding
 
-Kassel University, HessenHub, 2022 - 2023
+Kassel University, HessenHub, 2022 - 2024
