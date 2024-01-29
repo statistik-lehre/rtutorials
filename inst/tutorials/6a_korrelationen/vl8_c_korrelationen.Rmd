@@ -20,6 +20,7 @@ library(tidyverse)
 library(rtutorials)
 library(GGally)
 library(correlation)
+library(datasauRus)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
@@ -336,7 +337,7 @@ par(mfrow = c(1, 1))
 
 #### Datasaurus Dozen
 
-Um den Punkt zu verdeutlichen, dass es wichtig ist, die Daten visuell darzustellen und sich nicht bloß summary stats anzusehen, haben Forschende die *Datasaurus Dozen* entwickelt: 12 Datensätze, **alle mit gleichem Mittelwert, Standardabweichung und Korrelation**. [@matejka2017]
+Um den Punkt zu verdeutlichen, dass es wichtig ist, die Daten visuell darzustellen und sich nicht bloß *summary stats* anzusehen, haben Forschende die *Datasaurus Dozen* entwickelt: 12 Datensätze, **alle mit gleichem Mittelwert, Standardabweichung und Korrelation**. [@matejka2017]
 
 ```{r, fig.height=6, fig.width=4, out.width="70%", fig.align="center"}
 datasauRus::datasaurus_dozen |>
@@ -387,6 +388,7 @@ plot(economics$uempmed, economics$unemploy,
     incorrect = random_encouragement("de")
   )
 ```
+
 
 ### Beispiel
 
@@ -734,7 +736,39 @@ Super! Mit dem Verständnis können wir jetzt unsere Ergebnisse berichten.
 ::: gelb
 "In einer Analyse von 574 Beobachtungen wurde eine signifikante Korrelation (Spearman's rho) zwischen der medianen Dauer der Arbeitslosigkeit und der Anzahl an Arbeitslosen festgestellt, $rho = 0.85, 95% CI [0.83, 0.87], p < .001$. Nach Cohen (1988) ist dies ein starker Zusammenhang."
 :::
+
 <br>
+
+
+## Modelle
+
+Du hast jetzt gelernt, den Zusammenhang von Variablen als **linearen Zusammenhang** zu beschreiben. Damit hast du 
+ohne es wirklich zu merken ein Modell erstellt.
+
+### *Was sind Modelle?*
+
+### In Bezug auf unsere Daten:
+Modelle sind wie Werkzeuge, mit denen wir unsere **Daten erklären und Vorhersagen treffen** können. Wenn wir sagen, wir "fitten" ein Modell an unsere Daten, bedeutet das, wir verwenden ein mathematisches Modell, um **Muster in unseren Daten zu erkennen und zu beschreiben**. Erinnere dich an die Streudiagramme und die Korrelationsgerade: Diese Linie ist dein "Modell", das versucht, die Beziehung zwischen den Variablen zu erklären.
+
+### Erklärung der "Realität":
+In der realen Welt werden Sachverhalte oft durch komplexe Beziehungen und Wechselwirkungen bestimmt. Modelle helfen uns, diese **Beziehungen zu vereinfachen und zu verstehen**. Sie sind wie Landkarten, die uns helfen, die Landschaft der realen Welt zu navigieren. Aber genau wie eine Landkarte **nicht jedes Detail der wirklichen Welt zeigen** kann, kann auch ein statistisches Modell nicht alles perfekt erfassen. Es ist eine vereinfachte Darstellung der Realität.
+Diese Beziehungen werden meist als **aufeinander einflussnehmende Boxen** dargestellt. So könnten wir den Einfluss von Sonnencremenutzung auf das Hautkrebsrisiko wie folgt darstellen:
+
+![](images/modell.png){width="90%"}
+
+Du kannst dir bestimmt bereits vorstellen, dass dieses Modell nicht sehr genaue Vorhersagen des Hautkrebsrisikos erlauben wird, da noch weit mehr Wechselwirkungen in der Realität vorliegen. Mir fallen spontan noch ein Mediationseffekt (Hauttyp und Sonnencremenutzung) und ein Moderationseffekt (Wetter beeinflusst den Effekt von Sonnencremenutzung) ein:
+
+![](images/modell2.png){width="90%"}
+
+Falls du dich fragst was Moderation und Mediation ist, findest du [hier eine ausführliche Erklärung](https://statistikguru.de/blog/mediation-und-moderation.html). 
+
+Je mehr relevante Variablen wir also in unser Modell aufnehmen, desto besser können wir die Realität widerspiegeln. Gleichzeitig wollen wir aber auch so wenig Variablen wie nötig inkludieren, um die Komplexität der Realität zu reduzieren, damit wir diese besser verstehen können.
+
+::: gelb
+**Modelle** sind also mächtige Werkzeuge, die uns **helfen, Daten zu analysieren und Schlüsse über die Realität zu ziehen**. Aber es ist wichtig zu verstehen, dass sie **Vereinfachungen** sind und nicht die ganze Komplexität der realen Welt erfassen können.
+:::
+
+</br>
 
 Damit hast du nun auch das Tutorial zu Korrelationen erfolgreich gemeistert!! Super!
 
@@ -747,7 +781,6 @@ datasauRus::datasaurus_dozen |>
 ```
 
 <h4 style="text-align:center"> Datasaurus says: „Danke für deine Aufmerksamkeit!“</h4>
-
 
 ## Learnings
 
@@ -811,6 +844,8 @@ Du hast gelernt
 -   dass Korrelationen keine Kausalitätsaussagen erlauben
 -   dass ein 95% KI den wahren Wert entweder enthält oder nicht, aber nicht mit 95% Wahrscheinlichkeit enthält
 -   dass es verschiedene Verfahren zur Berechnung von Korrelationen gibt
+-   dass unsere Korrelationsgerade ein Modell für unsere Daten ist
+-   Modelle sind essenziell, aber dennoch nur starke Vereinfachungen der Realität
 
 Dabei hast du bereits 2 Arten von Korrelationen kennengelernt. Natürlich gibt es noch weit mehr. Hier eine tabellarische Zusammenfassung:
 
@@ -828,13 +863,13 @@ Dabei hast du bereits 2 Arten von Korrelationen kennengelernt. Natürlich gibt e
 
 ### Neue Funktionen
 
-+-----------------------------------------------------------------------------------------------------+--------------------------------------------+
-| Funktion in R                                                                                       | Beschreibung                               |
-+=====================================================================================================+============================================+
-| `ggscatmat(data, colums = "x","y")`                                                               |                                            |
-+-----------------------------------------------------------------------------------------------------+--------------------------------------------+
-| `| Erstellt eine Zusammenhangsvisualisierung für metrische Daten   | |`correlation::correlation()\` | Praktisch zur Berchenung von Korrelationen |
-+-----------------------------------------------------------------------------------------------------+--------------------------------------------+
++---------------------------------------------+-----------------------------------------------------------------+
+| Funktion in R                               | Beschreibung                                                    |
++=============================================+=================================================================+
+| `GGally::ggscatmat(data, colums = "x","y")` |  Erstellt eine Zusammenhangsvisualisierung für metrische Daten  |
++---------------------------------------------+-----------------------------------------------------------------+
+| `correlation::correlation()`                | Praktisch zur Berchenung von Korrelationen                      |
++---------------------------------------------+-----------------------------------------------------------------+
 
 ::: gelb
 Sieh dir auch die Info Seite von `correlation` an, um dich mit den anderen Arten (wie Kendalls Tau) zur Berechenung von Korrelationen vertraut zu machen.
