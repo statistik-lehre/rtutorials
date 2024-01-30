@@ -1,0 +1,884 @@
+---
+title: "Korrelationen"
+output:
+  learnr::tutorial:
+    language: de
+    css: css/boxes.css
+    fig_caption: no
+runtime: shiny_prerendered
+bibliography: ref.json
+link-citations: TRUE
+description: Pearson-Korrelationskoeffizient, Spearman's Rho
+resource_files:
+- css/boxes.css
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(ggplot2)
+library(tidyverse)
+library(rtutorials)
+library(GGally)
+library(correlation)
+library(datasauRus)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Inhalt
+
+Heute wirst du verschiedene Zusammenhänge mittels Korrelation erforschen und verstehen was der Ausspruch *"Korrelation ist nicht Kausalität"* bedeutet.
+
+In unserem wissenschaftlichen Prozess sind wir nun schon bei der Auswertung und dem Berichten unserer Ergebnisse angelangt: ![](images/prozess.png){width="90%"}
+
+## Lernziele
+
+In diesem Tutorial lernst du:
+
+-   <input type="checkbox" unchecked> Was eine Korrelation ist</input>
+-   <input type="checkbox" unchecked> Welche Arten von es Korrelation gibt</input>
+-   <input type="checkbox" unchecked> Was du bei Korrelationen beachten solltest</input>
+-   <input type="checkbox" unchecked> Wie du eine Korrelation berechnest</input>
+-   <input type="checkbox" unchecked> Das Berichten der Ergebnisse nach APA-Richtlinien </input>
+
+## Grundlagen
+
+Korrelationen sind eine Möglichkeit, den statistischen **Zusammenhang zwischen zwei Variablen** zu messen. Sie geben an, wie sich Veränderungen in einer Variable auf Veränderungen in einer anderen Variable auswirken (meist in einer *"je mehr/weniger XX, desto mehr/weniger YY"* - Beziehung). Es ist wichtig zu beachten, dass Korrelationen nur auf rechnerische Abhängigkeiten hinweisen, ohne einen kausalen Zusammenhang zwischen den Variablen herzustellen.
+
+Ein einfaches Beispiel für eine **positive bzw. gleichsinnge Korrelation** wäre die Beziehung zwischen der Anzahl der Stunden, die jemand pro Woche studiert, und den Punkten in der Abschlussprüfung. Wenn jemand **mehr Zeit** mit dem Studieren verbringt, **steigen** auch **die Punkte in der Abschlussprüfung**.
+
+```{r positive_korrelation}
+set.seed(341)
+noten <- runif(50, min=0, max=100)
+studienzeit <- noten * 0.2 + rnorm(50, mean =26, sd=1)
+
+plot(studienzeit, noten, 
+     main="Positive Korrelation: Studienzeit und Punkte in der Prüfung", 
+     xlab="Studienzeit (Stunden/Woche)", 
+     ylab="Punkte", 
+     col="blue")
+```
+
+Ebenso wäre **auch** eine Korrelation **gleichsinning, wenn beide Werte abnehmen**.
+
+Eine **negative bzw. gegenläufige Korrelation** könnte zwischen der Anzahl der gerauchten Zigaretten pro Tag und der Lungenkapazität bestehen. Je **mehr geraucht** wird, desto **stärker nimmt** tendenziell die **Lungenkapazität ab**.
+
+```{r negative_korrelation}
+set.seed(371)
+zigaretten <- runif(50, min=0, max=30)
+lungenkapazitaet <- 100 - zigaretten * 1.5 + rnorm(50, mean=0, sd=5)
+plot(zigaretten, lungenkapazitaet, 
+     main="Negative Korrelation: Rauchen und Lungenkapazität", 
+     xlab="Zigaretten (Stück/Tag)", 
+     ylab="Lungenkapazität", 
+     col="blue")
+```
+
+Wenn du Korrelation etwas interaktiver verstehen möchtest, besuche die [Seite "interpreting correlations"](https://rpsychologist.com/correlation/) von Kristoffer @magnusson2023 .
+
+### Stolperfallen
+
+::: gelb
+Es ist jedoch wichtig zu beachten, dass **Korrelationen nicht immer auf eine tatsächliche Beziehung hinweisen**. Zum Beispiel könnte es eine Korrelation zwischen der Anzahl der Eiscremebecher, die im Sommer verkauft werden, und der Anzahl der Badeunfälle geben, aber das bedeutet nicht, dass das Essen von Eiscreme zu Badeunfällen führt. Es könnte eine gemeinsame Ursache geben, wie warmes Wetter, das sowohl den Verkauf von Eiscreme als auch Badeunfälle beeinflusst (ist diese Variable nicht Teil unseres Schätzung wird sie als Störvariable bezeichnet, mehr dazu [hier](https://onlinekurslabor.phil.uni-augsburg.de/course/text/3869/3156)).
+:::
+
+```{r mediierte_korrelation}
+set.seed(371)
+eiscremebecher <- runif(50, min=0, max=5000)
+badeunfaelle <- eiscremebecher * 0.6 + rnorm(50, mean=50, sd=500)
+
+plot(eiscremebecher, badeunfaelle, 
+     main=" Korrelation: Eiscreme und Badeunfälle", 
+     xlab="Eiscremebecher (Anzahl)", 
+     ylab="Badeunfälle", 
+     col="red")
+```
+
+</br>
+
+Darüber hinaus hat sich das Mantra: **"Korrelation ist nicht Kausalität"** unter der Gruppe an Statistikgelehrten verbreitet. Es ist quasi das Codewort für den Club der Statistik, mit dem sich die Mitglieder auch gleichzeitig in der Öffentlichkeit wiedererkennen können. 😉
+
+Korrelation ist die totale Gleichberechtigung zwischen beiden Variablen. Es wird keine Annahme gemacht, ob und in welcher Weise eine der beiden Variablen die andere beeinflusst. Wollen wir das herausfinden, müssen wir zu komplexeren Methoden wie der Regression greifen und auch das Versuchsdesign entsprechend geschickt entwerfen.
+
+Aber zurück zur Korrelation: Es gibt in der Statistik **zahlreiche Arten eine Korrelation** zu berechnen. Wir wollen uns heute auf die zwei populärsten Arten Beschränken:
+
+-   **Pearson-Produkt-Moment-Korrelation** (für zwei intervallskalierte Variablen)
+-   **Spearman´s ρ** (bzw. rho) (für zwei mindestens ordinalskalierte Variablen)
+
+## Pearson-Korrelation
+
+::: gelb
+Die Pearson-Produkt-Korrelation schätzt die Stärke und Richtung des **linearen** Zusammenhangs zwischen zwei **metrisch** skalierten Variablen.
+
+Korrelationen werden in der Statistik meist mit dem Buchstaben *r* abgekürzt. Die wahre (meist unbekannte) Korrelation in der Population trägt den passenden altgriechischen Buchstaben, $\rho$ [rho].
+:::
+
+</br>
+
+Die Pearson-Produkt-Moment Korrelation (kurz: Pearson-Korrelation), ist ein Maß für den linearen Zusammenhang zwischen zwei Variablen. Sie variiert **zwischen -1 und +1**, wobei +1 eine perfekte positive Korrelation, -1 eine perfekte negative Korrelation und **0 keine Korrelation** bedeutet. Dabei lassen sich diese Korrelationen auch nach ihrer Stärke einordnen:
+
+-   \|*r*\| um den Wert .10 **geringe / schwache Korrelation**
+-   \|*r*\| um den Wert .30 **mittlere / moderate Korrelation**
+-   \|*r*\| um den Wert .50 **große / starke Korrelation**
+
+Diese Interpretation wurde, wie auch die Effektstärke, von @cohen1988 aufgestellt und ist ebenfalls nur eine Daumenregel.
+
+### Hypothesen aufstellen
+
+Auch für Korrelationsanalysen stellen wir, wie immer, zwei Hypothesen auf:
+
+-   H0 (Nullhypothese): Es besteht keine Korrelation zwischen den Variablen.
+-   H1 (Alternativhypothese): Es besteht eine Korrelation zwischen den Variablen.
+
+## Voraussetzungen prüfen
+
+Bevor wir mit der Korrelation den Zusammenhang berechnen, müssen wir sicherstellen, dass unsere Daten die notwendigen Voraussetzungen erfüllen.
+
+Damit wir Aussagen von unserer Stichprobe auf die Grundgesamtheit übertragen (Inferenzstatistik) können, müssen wir zuvor unsere Daten etwas genauer inspizieren.
+
+Voraussetzungen für Korrelationen:
+
++----------------------------------+-----------------------------+
+| Voraussetzungen                  | Überprüfung                 |
++==================================+=============================+
+| 1.  keine Ausreißer              | `boxplot()`                 |
++----------------------------------+-----------------------------+
+| 2.  keine Kluster                | `plot()`                    |
++----------------------------------+-----------------------------+
+| 3.  Normalverteilung             | `qqnorm()` und `qqline()`   |
++----------------------------------+-----------------------------+
+| 4.  Linearität                   | `plot()`                    |
++----------------------------------+-----------------------------+
+
+Nehmen wir an, wir untersuchen den Datensatz `economics` aus dem `ggplot2`-Paket in *R*, der Zeitreihendaten zur US-Wirtschaft enthält. Der `economics` Datensatz enthält unter anderem Daten zur Anzahl an Arbeitslosen (`unemploy`) und zur medianen Dauer der Arbeitslosigkeit in Wochen (`uempmed`).
+
+```{r economics, exercise = TRUE, exercise.cap = "Beispieldaten" }
+# Laden des economics Datensatzes
+# library(ggplot2)
+# library(tidyverse)
+
+head(economics) |> 
+  select(uempmed, unemploy)
+
+```
+
+Wir gehen diese Voraussetzungen eine nach dem anderen durch:
+
+### Keine Ausreißer
+
+Die **Pearson-Korrelation** ist sehr empfindlich gegenüber Ausreißern. Daher sollten wir unsere Daten im Vorhinein entsprechend mittels Visualisierungen überprüfen und bei Ausreißern ggf. robustere Verfahren zur Berechenung wählen (z.B. Spearman´s Rho).
+
+Am leichtesten lassen sich Ausreißer im `boxplot()` erkennen:
+
+```{r boxplot, exercise = TRUE, exercise.cap = "Ausreißer"}
+boxplot(economics$uempmed, 
+        main = "uempmed: durchschnittliche Dauer der Arbeitslosigkeit")
+boxplot(economics$unemploy, 
+        main = "unemploy: Anz. an Arbeitslosen")
+```
+
+::: blau-nb
+Wie bereits erwähnt, gibt es zahlreiche andere Wege zur Visualisierung außer `ggplot2`. Was du oben siehst, ist eine typische Anwendung von Visualisierungen mit base R.
+:::
+
+```{r ausreisserquiz}
+  question_radio("Denkst du wir haben Ausreißer in den Daten?",
+    answer("Es gibt eine Menge an Ausreißern in beiden Variablen.", 
+           correct = TRUE),
+    answer("In der Variable `uempmed` gibt es 1 Ausreißer.", 
+           message = "Es gibt einen Ausreißer der heraussticht, aber auch alle anderen Punkte bis zum Wisker, können als Ausreißer interpretiert werden."),
+    answer("Es gibt keine Ausreißer in den Daten.",
+           message = "alle Punkte, die nach dem Wisker eingezeichnet sind, können als Ausreißer interpretiert werden."),
+    correct  = "In dem Fall des Boxplots sind Daten, die Auserhalb der 1.5 x IQR liegen als Ausreißer markiert. Das sind hier alle Punkte die auserhalb des Wiskers liegen.",
+    incorrect = random_encouragement("de"),
+    allow_retry = TRUE,
+    random_answer_order = TRUE
+  )
+```
+
+### Keine Kluster
+
+Auch Kluster führen zu falschen Annahmen über unsere Daten. Das lässt sich am besten grafisch zeigen:
+
+![](images/Cluster_werner_gruber.JPG)
+
+Source: @gruber2019, [online](https://wgruber.github.io/Modellbildung2/)
+
+Ohne die Kluster zu beachten, würden wir hier von einem starken positiven Zusammenhang ausgehen (pinke Linie). Berechnen wir pro Kluster den Zusammenhang (gelbe und blaue Linie) sieht der Zusammenhang schon wesentlich schwächer aus.
+
+Schauen wir uns den `economics` Datensatz mittels `plot()` im Hinblick auf mögliche Kluster an:
+
+```{r kluster, exercise = TRUE, exercise.cap = "Kluster identifizieren"}
+plot(economics$uempmed, economics$unemploy, 
+     main="Scatterplot: durchschnittliche \n Dauer der Arbeitslosigkeit vs. Anzahl")
+```
+
+```{r klusterquiz}
+  question_radio("Denkst du wir haben Kluster in den Daten?",
+    answer("Es gibt keine erkennbaren Kluster in den Daten.", 
+           correct = TRUE),
+    answer("Die Daten lassen sich deutlich in 2 Kategorien unterscheiden.", 
+           message = "Ich sehe was du meinst: je höher der x-Wert, desto weniger Daten liegen vor, aber der Trend bleibt doch annähernd der gleiche daher können wir hier keine klaren Gruppen trennen."),
+    correct  = "Obwohl die Daten immer weniger werden je höher der x-Wert ist können wir keine klaren Gruppen trennen.",
+    allow_retry = TRUE,
+    random_answer_order = TRUE
+  )
+```
+
+### Normalverteilung
+
+Wie du auf eine Normalverteilung untersuchst, hast du im letzten Tutorial bereits gelernt, aber übung macht den Meister:
+
+Schau dir die **Q-Q-Plots** `qqnorm()` mit `qqline()` für unsere Beispieldaten an:
+
+durchschnittliche Dauer der Arbeitslosigkeit
+
+```{r normal_da, exercise = TRUE, exercise.cap = "Normalverteilung identifizieren"}
+qqnorm(economics$uempmed, ylab = "Median-Dauer Arbeitslosigkeit") 
+qqline(economics$uempmed, col= "red")
+```
+
+Arbeitslosenzahlen:
+
+```{r normal_az, exercise = TRUE, exercise.cap = "Normalverteilung identifizieren"}
+qqnorm(economics$unemploy, ylab = "Arbeitslosenzahl") 
+qqline(economics$unemploy, col= "red")
+```
+
+```{r normquiz}
+quiz(
+  question_radio("Denkst du wir haben eine Normalverteilung für unsere Daten?",
+    answer("Die Daten weichen insbesondere an den Enden sehr stark von der Diagonalen ab, daher sind die Daten *nicht* normalverteilt.",
+           correct = TRUE),
+    answer("Die Daten weichen nur marignal von der Diagonalen ab, daher sind die Daten normalverteilt.", 
+           message = "Obwohl es nur an den Rändern abweicht, ist das Maß der Abweichung doch so stark, dass diese Daten nicht mehr als normalverteilt bezeichnert werden sollten."),
+    correct  = "Genau! Die Daten sind nicht normalverteilt. Das könntest du auch überprüfen, indem du den shapiro.test() für die Variablen durchführst.",
+    incorrect = random_encouragement("de"),
+    allow_retry = TRUE,
+    random_answer_order = TRUE
+  ))
+```
+
+### Linearität
+
+Da wir mit der Korrelation den linearen Zusammenhang testen, sollten wir auch davon ausgehen können, dass unsere Daten einen linearen Zusammenhang aufweisen. Um dies zu überprüfen würden wir uns ebenfalls das Punktdiagramm unserer Daten anschauen.
+
+Hier haben wir für dich einige Zusammenhänge simuliert, und mit rot jeweils eine Linie des Zusammenhangs (Korrelationsgerade) eingezeichnet. In nicht linearen Zusammenhängen bekommen wir teilweise starke Abweichungen der Daten von unserem liniearen Schätzungsgeraden, die damit zu einer Verzerrung des Korrelationskoeffizienten führen können. Plump ausgedrück: Ist der Zusammenhang der Daten nicht linear, ist es nicht die beste Idee deneren Zusammenhang mit einer Linie auszudrücken. Es würden teilweise zwei Linien benötigt oder sogar eine Bogenform (exponentieller Zusammenhang).
+
+```{r Linearitaet, fig.height=6, message=FALSE, warning=FALSE, out.width="90%"}
+set.seed(123)
+
+# Definieren der Anzahl der Datenpunkte
+n <- 20
+
+# Erzeugen von Daten für vier verschiedene Szenarien
+x <- 1:n
+y_linear <- 1.5 * x + rnorm(n, mean=0, sd=1)  # Linearer Zusammenhang
+y_exponential <- 0.2 * exp(x/3) + rnorm(n, mean=0, sd=1)  # Exponentieller Zusammenhang
+y_cluster <- c(rep(5, 10), rep(20, 10)) + rnorm(n, mean=0, sd=0.5)  # Kluster-Effekt
+y_outlier <- c(rep(5, n-1), 35) + rnorm(n, mean=0, sd=0.5)  # Extrem hoher Ausreißer
+
+# Berechnung des Korrelationskoeffizienten für linearen Zusammenhang
+cor_linear <- cor(x, y_linear)
+cor_exp <- cor(x, y_exponential)
+cor_cluster <- cor(x,y_cluster)
+cor_outlier <- cor(x,y_outlier)
+
+# Erstellen der Plots
+par(mfrow = c(2, 2))
+
+plot(x, y_linear, main=paste("Linearer Zusammenhang\nKorrelation r =:", 
+                             round(cor_linear, 2)), 
+     ylim=c(0, 35), 
+     pch=19,
+     ylab = NA,
+     xlab = NA,
+     xaxt = "n",
+     yaxt = "n")
+reg_modell <- lm(y_linear ~ x)
+abline(reg_modell, col="red")
+
+plot(x, y_exponential, 
+     main=paste("Exponentieller Zusammenhang\nKorrelation r =:",
+                round(cor_exp, 2)), 
+     ylim=c(0, 100),
+     pch=19,
+     ylab = NA,
+     xlab = NA,
+     xaxt = "n",
+     yaxt = "n")
+reg_modele <- lm(y_exponential ~ x)
+abline(reg_modele, col="red")
+
+plot(x, y_cluster, 
+     main=paste("Kluster-Effekt\nKorrelation: r =", round(cor_cluster, 2)), 
+     ylim=c(0, 35), 
+     pch=19,
+     ylab = NA,
+     xlab = NA,
+     xaxt = "n",
+     yaxt = "n")
+reg_modelc <- lm(y_cluster ~ x)
+abline(reg_modelc, col="red")
+
+plot(x, y_outlier, main=paste("Effekt durch hohen Ausreißer\nKorrelation: r =",
+                              round(cor_outlier, 2)),
+     ylim=c(0, 35),
+     pch=19,
+     ylab = NA,
+     xlab = NA,
+     xaxt = "n",
+     yaxt = "n")
+reg_modelo <- lm(y_outlier ~ x)
+abline(reg_modelo, col="red")
+
+# reset graphics device option
+par(mfrow = c(1, 1))
+```
+
+#### Datasaurus Dozen
+
+Um den Punkt zu verdeutlichen, dass es wichtig ist, die Daten visuell darzustellen und sich nicht bloß *summary stats* anzusehen, haben Forschende die *Datasaurus Dozen* entwickelt: 12 Datensätze, **alle mit gleichem Mittelwert, Standardabweichung und Korrelation**. [@matejka2017]
+
+```{r, fig.height=6, fig.width=4, out.width="70%", fig.align="center"}
+datasauRus::datasaurus_dozen |>
+  dplyr::filter(dataset != "slant_up") |>
+ggplot(aes(x = x, y = y, colour = dataset))+
+    geom_point()+
+    theme_void()+
+    geom_abline(color = "red") +
+    theme(legend.position = "none")+
+    facet_wrap(~dataset, ncol = 3)
+```
+
+In nicht simulierten Daten ist es natürlich nicht ganz so einfach zu sehen, ob ein linearer Zusammenhang besteht. Frage dich einfach: Gibt es einen generellen Trend für eine Diagonale in den Daten, die auf einen solchen Zusammenhang hindeuten würde?
+
+::: aufgabe
+Sieh dir mittels `plot()` nochmal unsere `economics` Daten an und überlege, ob wir einen linearen Zusammenhang vermuten können.
+:::
+
+```{r linear, exercise = TRUE, exercise.cap = "Linearität identifizieren"}
+plot(economics$uempmed, economics$unemploy, 
+     main="Scatterplot: durchschnittliche \nDauer der Arbeitslosigkeit vs. Anzahl")
+```
+
+```{r normquize}
+  question_radio("Denkst du wir haben eine Linearität für unsere Daten?",
+    answer("Es gibt einen klar zu erkennenden, positiven linearen Zusammenhang.",
+           correct = TRUE),
+    answer("Es gibt einen klar zu erkennenden, negativen linearen Zusammenhang.", 
+           message = "Die Daten gehen von links unten nach rechts oben, es liegt ein gleichgerichteter Zusammenhang vor, hier: je mehr x desto mehr y."),
+    answer("Es gibt keinen klar zu erkennenden linearen Zusammenhang.", 
+           message = "Generell lässt sich schon ein Trend für einen positiven linearen Zusammenhang erkennen. Die Daten gehen von links unten nach rechts oben, sind also gleichsinnig."),
+    correct  = "Die Daten gehen von links unten nach rechts oben, es liegt ein gleichsinniger Zusammenhang vor, hier: je mehr x desto mehr y.",
+    incorrect = random_encouragement("de"),
+    allow_retry = TRUE,
+    random_answer_order = TRUE
+  )
+```
+
+```{r voraussetzungen}
+  question_radio("Nachdem wir alle Voraussetzungen nun geprüft haben, würdest du sagen wir können mit unseren Daten Pearsons *r* berechnen?",
+    answer("Lieber nicht, da die Voraussetzungen nicht erfüllt sind.",
+           correct = TRUE),
+    answer("Die Voraussetzungen sind zwar nicht alle erfüllt, aber zum Großteil schon.", 
+           message = "Das einzige was erfüllt ist, ist die Linearität. Die Daten sind nicht normalverteilt, daher wäre ein Signifikanztest nicht angebracht (zumindest keiner, der nicht auf unsere Verteilung angepasst ist). Außerdem gibt es sehr viele Ausreißer. Auch das würde verlangen, dass wir einen speziellen angepassten Test rechnen sollten."),
+    correct  = "Genau! Das einzige was erfüllt ist, ist die Linearität. Die Daten sind nicht normalverteilt, daher wäre ein Signifikanztest nicht angebracht (zumindest keiner, der nicht auf unsere Verteilung angepasst ist). Außerdem gibt es sehr viele Ausreißer. Auch das würde verlangen, dass wir einen speziellen angepassten Test rechnen sollten.",
+    allow_retry = TRUE,
+    random_answer_order = TRUE,
+    incorrect = random_encouragement("de")
+  )
+```
+
+
+### Beispiel
+
+Da der `economics` Datensatz nicht die Voraussetzungen für pearsons *r* erfüllt, wollen wir gemeinsam den Beispieldatensatz `mtcars` auf diese Voraussetzungen untersuchen.
+
+Die Daten den `mtcars` stammen aus der Zeitschrift *Motor Trend US* aus dem Jahr 1974 und umfassen den Kraftstoffverbrauch und 10 Aspekte der Fahrzeugkonstruktion und -leistung von 32 Fahrzeugen (Modelle von 1973-74). Wir schauen uns die Variablen `mpg`- *Miles/(US) gallon* und `wt` - *Weight (1000 lbs)* an.
+
+::: aufgabe
+Teste, ob die Variblen `mpg` und `wt` den Voraussetzungen für eine Pearson Korrelation entsprechen.
+
+-   keine Ausreißer: boxplot()
+-   keine Kluster: plot()
+-   Linearität: plot()
+-   Normalverteilung: qqnorm() + qqline()
+:::
+
+```{r mtcarsvoraussetzung, exercise = TRUE, exercise.cap = "Voraussetzungen überprüfen"}
+
+```
+
+```{r mtcarsvoraussetzung-solution}
+boxplot(mtcars$mpg, main="Miles/gallon")
+boxplot(mtcars$wt, main="weight")
+plot(mtcars$mpg, mtcars$wt)
+qqnorm(mtcars$mpg, main = "Miles/gallon Q-Q Plot")
+qqline(mtcars$mpg)
+qqnorm(mtcars$wt, main = "weight Q-Q Plot")
+qqline(mtcars$wt)
+```
+
+Uff, da kommt einiges an Code zusammen!
+
+Uns steht für die Visualisierung des Zusammenhangs von Variablen auch eine nette Funktion aus dem Paket `GGally` zur Verfügung.
+
+Die Funktion sieht so aus:
+
+``` r
+GGally::ggscatmat(data, colums = c("x","y"))
+```
+
+Sie nimmt deinen Data Frame (`data`) als Input, und du gibst ihr für das `colums` Argument alle Variablen, für die du dir den Zusammenhang visualisieren möchtest (in Anführungszeichen `"x"` und daher als Vektor `c()`).
+
+::: aufgabe
+Passe den Code für unser `mtcars` Beispiel mit `mpg` und `wt` an.
+:::
+
+```{r ggscatmat, exercise = TRUE, exercise.cap = "Visualisieren"}
+# library(GGally)
+data |> 
+  ggscatmat(columns = c("variable1", "variable2"))
+```
+
+```{r ggscatmat-solution}
+mtcars |> 
+  ggscatmat(columns = c("mpg", "wt"))
+```
+
+Du siehst in dieser Grafik gleich mehrere spannende Dinge:
+
+-   die **Verteilung** der jeweiligen Variablen (Diagonale),
+-   den **Scatterplot** der Variablen (unten links)
+-   **Pearsons** *r* (oben rechts)
+
+Auch so könntest du die Variablen auf die Kriterien hin untersuchen. In den Verteilungen kannst du gut erkennen, ob die Variablen normalverteilt sind und der Scatterplot gibt dir Auskunft über potentielle Ausreißer, Kluster und der Linearität.
+
+```{r weiterevoraussetzungen}
+  question_radio("Nachdem wir die Voraussetzungen nun geprüft haben, würdest du sagen wir können mit den `mtcars` Daten Pearsons *r* berechnen?",
+    answer("Die Normalverteilung und Linearität sind gegeben. Es gibt nur 3 extreme Werte, die jedoch nicht besonders stark von den anderen Daten abweichen.",
+           correct = TRUE),
+    answer("Lieber nicht, da die Voraussetzungen der Linearität nicht erfüllt sind.", 
+           message = "Die Daten lassen durchaus einen negativen linearen Trend erkennen."),
+    correct  = random_praise("de"),
+    allow_retry = TRUE,
+    random_answer_order = TRUE
+  )
+```
+
+Super! Machen wir weiter mit der Funktion zur Berechnung der Korrelation.
+
+## Pearsons *r* berechnen
+
+<hr>
+
+Dieser Abschnitt basiert zu großen Teilen auf dem hervorragenden R Tutorial [Discovr](https://www.discovr.rocks/discovr/) von Andy @field.
+
+<hr>
+
+Das Paket `correlation` bündelt viele korrelationsbezogene Funktionen in einem praktischen und leicht zu nutzenden Paket. Seine Hauptfunktion trägt den Namen … Trommelwirbel … `correlation()`.
+
+``` r
+correlation::correlation(data,
+                         method = "pearson",
+                         p_adjust = "holm",
+                         ci = 0.95
+                         )
+```
+
+Hier sind die für dich wichtigsten Argumente aufgelistet, aber es gibt natürlich noch weitere. Fürs Erste schauen wir uns nur die Hauptargumente an, die wir verwenden werden:
+
+-   `data`: Hier nennst du den Data Frame, der die Variablen enthält, die du korrelieren möchtest.
+-   `method` Dieses Argument legt die Methode für den Korrelationskoeffizienten fest. Standardmäßig ist es auf `pearson` gesetzt (für Pearsons Korrelation), kann aber unter anderem auf `spearman` (Spearman´s Rho) und `kendall` geändert werden. Wir schauen uns dabei nur *pearson* und *spearman* an.
+-   `p_adjust`: Standardmäßig korrigiert die Funktion den *p*-Wert für die Anzahl der durchgeführten Tests (eine gute Idee) mit der Holm-Bonferroni-Methode, die die Fehlerrate vom Typ I kontrolliert, aber mit einem geringeren Risiko für einen Fehler vom Typ II. Du kannst dieses Argument auf `none` (also keine Korrektur für multiple Tests, eine schlechte Idee), `bonferroni` (um die Standard-Bonferroni-Methode anzuwenden) oder mehrere andere Methoden ändern.
+-   `ci`: Dieses Argument legt die Breite des Konfidenzintervalls fest. Standardmäßig ist es 0.95 für ein 95%iges Konfidenzintervall, was wahrscheinlich das sein wird, was du normalerweise verwenden wirst.
+
+Um die Funktion zu nutzen, nimm deinen Data Frame, leite ihn in die Funktion `select()` von `dplyr` weiter, um die Variablen auszuwählen, die du korrelieren möchtest, und leite das dann in die Korrelationsfunktion weiter. Du kannst dieselbe Code-Struktur verwenden, egal ob du zwei Variablen korrelieren möchtest oder alle Korrelationen zwischen Paaren von mehreren Variablen berechnen möchtest.
+
+#### Die Funktion
+
+Um die Pearson-Korrelation zwischen den Variablen `mpg` und `wt` in `mtcars` zu berechnen, würden wir folgendes ausführen (da die Pearson-Variante das Standardargument ist):
+
+```{r basicr, exercise = TRUE, exercise.cap = "Korrelation berechnen"}
+mtcars |> 
+  select(mpg, wt) |> 
+  correlation() |> 
+  select(r, CI_low,CI_high, t, df_error,p)
+```
+
+```{r basicr-solution}
+#library(dplyr)
+#library(correlation)
+mtcars |> 
+  select(mpg, wt) |> 
+  correlation() |> 
+  select(r, CI_low, CI_high, t, df_error, p)
+```
+
+Du siehst als Ausgabe der Funktion eine lange Liste. Falls sie für dich zu lang ist kannst du natürlich mit `select()` die Ausgabe auf die für dich relevanten Größen kürzen.
+
+Wie würdest du dieses Ergebnis interpretieren?
+
+```{r pwert}
+question_radio("Der *p*-Wert für den Zusammenhang zwischen der Reichweite mit einer Gallone und dem Gewicht beträgt < 0,001. Was bedeutet dieser Wert?",
+    answer("Die Wahrscheinlichkeit, die vorliegende Stichprobe zu ziehen, wenn der Wert von *r* in der Population tatsächlich Null wäre, ist kleiner als 0,001. Ich gehe daher davon aus, dass der Zusammenhang nicht null ist.", 
+           correct = T),
+    answer("Die Wahrscheinlichkeit, dass *r* = -0,87 ein Zufallsergebnis ist, beträgt weniger als 0,001.", 
+           message = "*p*-Werte sagen uns nicht, ob Ergebnisse zufällig auftreten."),
+    answer("Die Wahrscheinlichkeit, dass zwischen der Reichweite mit einer Gallone und dem Gewicht kein Zusammenhang besteht, beträgt 0,001.", 
+           message = "*p*-Werte sagen uns nichts über die Wahrscheinlichkeit der Nullhypothese."),
+    answer("Ich habe einen anderen `*p*-Wert als 0,001 erhalten.", 
+           message = "Möglicherweise hast du die Analyse falsch durchgeführt oder die wissenschaftliche Notation (e-10) hat dich in die verwirrt?"),
+    correct = "Richtig, unter der Annahme der H0 ist dieses Ergebnis sehr unwahrscheinlich, daher gehen wir von einem Zusammenhang zwischen den Variablen aus.",
+    random_answer_order = TRUE,
+    allow_retry = T
+  )
+```
+
+Wie du den Zusammenhang interpretieren kannst, hast du heute auch bereits gelernt:
+
+-   \|*r*\| um den Wert .10 **geringe / schwache Korrelation**
+-   \|*r*\| um den Wert .30 **mittlere / moderate Korrelation**
+-   \|*r*\| um den Wert .50 **große / starke Korrelation**
+
+\*nach @cohen1988
+
+Wende es doch gleich auf unser Beispiel an:
+
+```{r rwert}
+question_radio("Der *r*-Wert für den Zusammenhang zwischen der Reichweite mit einer Gallone und dem Gewicht beträgt **-.87**. Was bedeutet dieser Wert?",
+    answer("Es besteht ein *starker* Zusammenhang zwischen der Reichweite mit einer Gallone und dem Gewicht. Je *höher* die Reichweite, desto *niedriger* das Gewicht.", 
+           correct = T),
+    answer("Es besteht ein *geringer* Zusammenhang zwischen der Reichweite mit einer Gallone und dem Gewicht. Je *höher* das Gewicht, desto *niedriger* die Reichweite.", 
+           message = "Nach Cohen handelt es sich um einen vergleichsweise *starken* Zusammenhang."),
+    answer("Es besteht ein *mittlerer* Zusammenhang zwischen der Reichweite mit einer Gallone und dem Gewicht. Je *höher* das Gewicht, desto *höher* die Reichweite.", 
+           message = "Das negative Vorzeichen des *r*-Werts zeigt uns, dass wir einen *gegenläufigen* Zusammenhang haben. Nach Cohen (1988) handelt es sich um einen vergleichsweise *starken* Zusammenhang."),
+    correct = "Richtig, das negative Vorzeichen des *r*-Werts zeigt uns, dass wir einen *gegenläufigen* Zusammenhang haben und nach Cohen (1988) handelt es sich um einen vergleichsweise *starken* Zusammenhang.",
+    random_answer_order = TRUE,
+    allow_retry = T
+  )
+```
+
+### Expertenfrage 🧙
+
+Du hast wahrscheinlich gesehen, dass wir auch hier ein Konfidenzintervall bekommen. Was sagt dies über unser *r*-Wert aus?
+
+```{r KI}
+question("Das Konfidenzintervall für die Assoziation zwischen der Reichweite mit einer Gallone und Gewicht liegt zwischen -0.93 und -0.74. Was sagt uns das?",
+    answer("Wenn dieses Konfidenzintervall eines der 95% ist, das den Populationswert enthält, dann liegt der Populationswert von *r* zwischen -0.93 und -0.74.", 
+           correct = TRUE),
+    answer("Es gibt eine 95%ige Chance, dass der Populationswert von *r* zwischen -0.93 und -0.74 liegt.", 
+           message = "Aus einem Konfidenzintervall können keine Wahrscheinlichkeitsaussagen gemacht werden. Wir wissen nicht, ob dieses spezielle KI eines der 95% ist, das den Populationswert von *r* enthält."),
+    answer("Die Wahrscheinlichkeit, dass dieses Konfidenzintervall den Populationswert enthält, beträgt 0.95.", 
+           message = "Die Wahrscheinlichkeit, dass dieses Konfidenzintervall den Populationswert enthält, ist entweder 0 (es enthält ihn nicht) oder 1 (es enthält ihn), aber es ist unmöglich zu wissen, welcher Fall zutrifft."),
+    answer("Ich kann zu 95% sicher sein, dass der Populationswert von *r* zwischen -0.93 und -0.74 liegt.", 
+           message = "Konfidenzintervalle quantifizieren nicht dein subjektives Vertrauen."),
+    random_answer_order = TRUE,
+    allow_retry = T,
+    incorrect = random_encouragement("de")
+  )
+
+```
+
+Wir haben bisher kaum über Konfidenzintervalle (KI) gesprochen, daher hier ein Versuch einer kurzen Erklärung:
+
+**Ein Konfidenzintervall ist eine auf Stichprobendaten basierende Schätzung**, die angibt, wo wir den wahren Populationswert vermuten können, wenn das Konfidenzintervall zu denen gehört, die den wahren Wert auch wirklich enthalten.
+
+Wie können wir wissen, dass 95% der KI eben jenen wahren Wert enthalten?
+
+Die Aussage, dass 95% der KI den wahren Wert enthalten, ist eine langfristige Frequenzaussage. Sie bedeutet, dass, wenn wir unter identischen Bedingungen **unendlich viele Stichproben** ziehen und für jede Stichprobe ein KI berechnen würden, **95% dieser Intervalle den wahren Populationswert enthalten** würden. Dank @magnusson2023 kannst du auch diesen Zusammenhang interaktiv austesten: [Interpreting Confidence Intervals](https://rpsychologist.com/d3/ci/).
+
+Für ein **einzelnes** Konfidenzintervall, das aus einer spezifischen Stichprobe berechnet wurde, können wir daher nicht sagen, dass es mit einer Wahrscheinlichkeit von 95% den wahren Wert enthält. **Ein spezifisches KI enthält entweder den wahren Wert oder nicht, aber wir wissen nicht, welcher dieser Fälle zutrifft**.
+
+Zusammenfassend lässt sich sagen, dass die Aussage, dass 95% der KIs den wahren Wert enthalten, eher ein theoretisches Konzept ist, das die Zuverlässigkeit der Methode zur Erstellung von KIs unter idealen Bedingungen beschreibt.
+
+### Berichten
+
+Selbstverständlich wollen wir auch dieses Ergebnis in der Forschungsarbeit berichten:
+
+*r* wird wie folgt berichtet: *r*("df") = "*r*-Wert", *p* = "*p*-Wert"
+
+::: gelb
+In einer Analyse von 32 Beobachtungen wurde eine signifikante negative Korrelation zwischen dem Kraftstoffverbrauch und dem Gewicht von Fahrzeugen festgestellt $r(30)= -.87, p<.001$. Dieses Ergebnis deutet darauf hin, dass mit zunehmendem Gewicht der Fahrzeuge der Kraftstoffverbrauch signifikant abnimmt. Nach Cohen (1988) ist dies ein starker Zusammenhang."
+:::
+
+## Spearman´s rho
+
+::: gelb
+Die **Spearman´s rho** (auch Rangkorrelation nach Spearman) schätzt die Stärke und Richtung des **linearen** Zusammenhangs zwischen zwei mindestens **ordinal** skalierten Variablen.
+
+Sie gehört zu den *nicht-parametrischen* Verfahren und kann auch mit nicht-normalverteilten Daten und Ausreißern umgehen!
+:::
+
+</br>
+
+**Fremdwörter**
+
+- parametrisch = verteilungsunterstellend (z.B. Normalverteilung)
+- non-parametrisch = verteilungsfrei
+
+*Spearman´s rho* ist das non-parametrische Äquivalent der Korrelationsanalyse nach Pearson und wird häufig angewandt, wenn die Voraussetzungen für ein parametrisches Verfahren nicht erfüllt sind. 
+
+Das Praktische für uns:
+
+-   Die Daten müssen nicht normalverteilt sein\
+-   die Variablen lediglich ordinalskaliert vorliegen
+-   kann auch bei kleinen Stichproben berechnet werden
+-   robust gegenüber Ausreissern
+-   die Daten müssen nicht unbedingt linear sein, aber sollten *monoton* sein.
+
+Somit ist die Voraussetzung für die Berchenung von *Spearmans rho*:
+
++---------------------------------------+--------------------------+
+| Voraussetzungen                       | Überprüfung              |
++=======================================+==========================+
+| 1.  mind. ordinal skalierte Variablen | Studiendesign            |
++---------------------------------------+--------------------------+
+
+Versuchen wir doch mit dieser Methode die vorher an Vorannahmen gescheiterte Schätzung des Zusammenhangs zwischen der Arbeitslosigkeitsdauer und der Anzahl an Arbeitslosen zu berechnen.
+
+### Hypothesen aufstellen
+
+-   H0 (Nullhypothese): Es gibt **keinen** Zusammenhang zwischen der Anzahl an Arbeitslosen und der Arbeitslosigkeitsdauer.
+-   H1 (Alternativhypothese): Es gibt **einen** Zusammenhang zwischen der Anzahl an Arbeitslosen und der Arbeitslosigkeitsdauer.
+
+### Berechnen von Spearman´s rho
+
+Wir können weiterhin die `correlation()` Funktion nutzen, und passen lediglich das Argmuent der `method` auf `spearman` an:
+
+``` r
+correlation::correlation(data,
+                         method = "spearman")
+```
+
+::: aufgabe
+Berechne Spearmans rho für den Zusammenhang von `uempmed` und `unemploy` aus dem `economics` Datensatz.
+:::
+
+```{r spear, exercise = TRUE, exercise.cap = "Spearmans rho"}
+economics |> 
+  select() |> 
+  correlation()
+```
+
+```{r spear-solution}
+economics |> 
+  select(uempmed, unemploy) |> 
+  correlation(method = "spearman")
+```
+
+Beachte das hier nun nicht mehr *r* sondern *rho* in der Ausgabe steht. Du kannst es jedoch so wie *r* interpretieren.
+
+```{r rwerte}
+quiz(caption = "Übe das Interpretieren:",
+question_radio("Was weißt du jetzt über den Zusammenhang von Arbeitslosigkeitsdauer und -Anzahl?",
+    answer("Es besteht ein *starker* Zusammenhang zwischen der Arbeitslosigkeitsdauer und der Anzahl. Je *höher* die Anzahl, desto *höher* die durchschnittliche Dauer", 
+           correct = T),
+    answer("Es besteht ein *starker* Zusammenhang zwischen der der Arbeitslosigkeitsdauer und der Anzahl. Je *höher* die Anzahl, desto *niedriger* die Arbeitslosigkeitsdauer.", 
+           message = "Wir haben ein positives Vorzeichen und daher einen gleichsinnigen Zusammenhang."),
+    answer("Es besteht ein *mittlerer* Zusammenhang zwischen der der Arbeitslosigkeitsdauer und der Anzahl. Je *höher* die Arbeitslosigkeitsdauer, desto *höher* die Anzahl.", 
+           message = "Nach Cohen (1988) handelt es sich um einen vergleichsweise starken Zusammenhang."),
+    correct = "Richtig, das positive Vorzeichen des *r*-Werts zeigt uns, dass wir einen *gleichsinnigen* Zusammenhang haben und nach Cohen (1988) handelt es sich um einen vergleichsweise *starken* Zusammenhang.",
+    random_answer_order = TRUE,
+    allow_retry = T
+  ),
+question_radio("Wie lautet der $p$-Wert?",
+               answer("$p < .001$", correct = TRUE),
+               answer("$p = 6.0237$", message = "Der p-Wert kann nur zwischen 0 und 1 liegen."),
+               answer("$p = 0.060237$", message = "Beachte, dass der p-Wert in wissenschaftlicher Notation angegeben wird, weil er so viele Nullen enthält. e-163 bedeutet „mal 10 hoch minus 163“, also das Komma 163 Nullen nach links schieben ..."),
+               incorrect = random_encouragement("de"),
+               correct = random_praise("de"),
+               random_answer_order = T,
+               allow_retry = T),
+question_radio("Ist der Test signifikant (gegeben das Signifikanzniveau $alpha = .05$)?",
+               answer("Ja, da $p < alpha$", correct = TRUE),
+               answer("Nein, da $p < alpha$", message = "Wenn p kleiner alpha, ist der Test immer signifikant. Nur die Interpretation ändert sich je nach Nullhypothese"),
+               incorrect = random_encouragement("de"),
+               correct = random_praise("de"),
+               random_answer_order = T,
+               allow_retry = T),
+question_radio("Welche Nullhypothese testet der Test?",
+               answer("H0: Die Korrelation beträgt in Wahrheit 0", correct = T),
+               answer("H0: Die Korrelation ist in Wahrheit ungleich 0", 
+                      message = "Das wäre eine ungerichtete Alternativhypothese"),
+               incorrect = random_encouragement("de"),
+               correct = random_praise("de"),
+               random_answer_order = T,
+               allow_retry = T),
+question_radio("Würdest du die Nullhypothese beibehalten oder verwerfen?",
+               answer("H0 beibehalten",
+                      message = "Das wäre nur die richtige Entscheidung, wenn p > alpha wäre."),
+               answer("H0 verwerfen",
+                      correct = TRUE, 
+                      message = "Das ist die richtige Entscheidung, da p < alpha"),
+               incorrect = random_encouragement("de"),
+               correct = random_praise("de"),
+               random_answer_order = T,
+               allow_retry = T),
+question_radio("Was weißt du noch über den Zusammenhang von Arbeitslosigkeitsdauer und -Anzahl?",
+    answer("Wir können nicht sagen, welche der Variablen die andere beeinflusst.", 
+           correct = T),
+    answer("Die durchschnittliche Arbeitslosigkeitsdauer beeinflusst die Anzahl.", 
+           message = "Korrelationen geben keine Auskunft über die Kausalität!"),
+    answer("Die Anzahl beeinflusst die durchschnittliche Arbeitslosigkeitsdauer.", 
+           message = "Korrelationen geben keine Auskunft über die Kausalität!"),
+    correct = "Richtig, Korrelationen geben keine Auskunft über die Kausalität! Wir können lediglich sagen, wie stark diese Variablen zusammenhängen und ob dieser Zusammenhang positiv oder negativ gerichtet ist.",
+    random_answer_order = TRUE,
+    allow_retry = T
+  )
+)
+```
+
+Super! Mit dem Verständnis können wir jetzt unsere Ergebnisse berichten.
+
+### Berichten von Spearmans rho
+
+::: gelb
+"In einer Analyse von 574 Beobachtungen wurde eine signifikante Korrelation (Spearman's rho) zwischen der medianen Dauer der Arbeitslosigkeit und der Anzahl an Arbeitslosen festgestellt, $rho = 0.85, 95% CI [0.83, 0.87], p < .001$. Nach Cohen (1988) ist dies ein starker Zusammenhang."
+:::
+
+<br>
+
+
+## Modelle
+
+Du hast jetzt gelernt, den Zusammenhang von Variablen als **linearen Zusammenhang** zu beschreiben. Damit hast du 
+ohne es wirklich zu merken ein Modell erstellt.
+
+### *Was sind Modelle?*
+
+### In Bezug auf unsere Daten:
+Modelle sind wie Werkzeuge, mit denen wir unsere **Daten erklären und Vorhersagen treffen** können. Wenn wir sagen, wir "fitten" ein Modell an unsere Daten, bedeutet das, wir verwenden ein mathematisches Modell, um **Muster in unseren Daten zu erkennen und zu beschreiben**. Erinnere dich an die Streudiagramme und die Korrelationsgerade: Diese Linie ist dein "Modell", das versucht, die Beziehung zwischen den Variablen zu erklären.
+
+### Erklärung der "Realität":
+In der realen Welt werden Sachverhalte oft durch komplexe Beziehungen und Wechselwirkungen bestimmt. Modelle helfen uns, diese **Beziehungen zu vereinfachen und zu verstehen**. Sie sind wie Landkarten, die uns helfen, die Landschaft der realen Welt zu navigieren. Aber genau wie eine Landkarte **nicht jedes Detail der wirklichen Welt zeigen** kann, kann auch ein statistisches Modell nicht alles perfekt erfassen. Es ist eine vereinfachte Darstellung der Realität.
+Diese Beziehungen werden meist als **aufeinander einflussnehmende Boxen** dargestellt. So könnten wir den Einfluss von Sonnencremenutzung auf das Hautkrebsrisiko wie folgt darstellen:
+
+![](images/modell.png){width="90%"}
+
+Du kannst dir bestimmt bereits vorstellen, dass dieses Modell nicht sehr genaue Vorhersagen des Hautkrebsrisikos erlauben wird, da noch weit mehr Wechselwirkungen in der Realität vorliegen. Mir fallen spontan noch ein Mediationseffekt (Hauttyp und Sonnencremenutzung) und ein Moderationseffekt (Wetter beeinflusst den Effekt von Sonnencremenutzung) ein:
+
+![](images/modell2.png){width="90%"}
+
+Falls du dich fragst was Moderation und Mediation ist, findest du [hier eine ausführliche Erklärung](https://statistikguru.de/blog/mediation-und-moderation.html). 
+
+Je mehr relevante Variablen wir also in unser Modell aufnehmen, desto besser können wir die Realität widerspiegeln. Gleichzeitig wollen wir aber auch so wenig Variablen wie nötig inkludieren, um die Komplexität der Realität zu reduzieren, damit wir diese besser verstehen können.
+
+::: gelb
+**Modelle** sind also mächtige Werkzeuge, die uns **helfen, Daten zu analysieren und Schlüsse über die Realität zu ziehen**. Aber es ist wichtig zu verstehen, dass sie **Vereinfachungen** sind und nicht die ganze Komplexität der realen Welt erfassen können.
+:::
+
+</br>
+
+Damit hast du nun auch das Tutorial zu Korrelationen erfolgreich gemeistert!! Super!
+
+```{r fig.height=2, fig.width=2, out.width="50%", fig.align='center'}
+datasauRus::datasaurus_dozen |>
+  dplyr::filter(dataset == "dino") |>
+  ggplot(aes(x, y)) +
+  geom_point() +
+  theme_void()
+```
+
+<h4 style="text-align:center"> Datasaurus says: „Danke für deine Aufmerksamkeit!“</h4>
+
+## Learnings
+
+So hast du heute abgeschnitten:
+
+```{r context="server"}
+# Shiny App um die Anzahl richtig beantworteter Fragen anzuzeigen. 
+# Funktioniert in jedem Tutorial
+
+shiny::observeEvent(
+  input$get_score, 
+  {
+    objs2 = learnr:::get_tutorial_state()
+    
+    # Number of correct questions
+    
+    n_correct <- 
+      # Access the $correct sublist item in each list item
+        lapply(objs2, purrr::pluck, "correct") |>
+           # make it a vector containing: TRUE and FALSE and NAs
+           # NA is appearing for list items which don't have
+           # a $correct subitem
+                unlist() |> 
+           # Taking the sum of a logical Vector returns the number of TRUEs
+                sum(na.rm=TRUE)
+    
+    # Number of total questions
+    
+    total_questions <- 
+      # 1. Access $type in each list item and make it a vector of types
+      lapply(objs2, purrr::pluck, "type") |> unlist()
+    
+    # 2. Count the number of "question" in that vector
+    total_questions <- total_questions[total_questions == "question"] |> 
+      length()
+      
+      
+    output$score = shiny::renderText(
+      paste0(n_correct, " von ", total_questions,
+        " im gesamten Tutorial beantworteten Fragen waren richtig.")
+)
+    invisible()
+  }
+)
+```
+
+```{r score, echo=FALSE}
+shiny::br()
+shiny::actionButton("get_score", "Auswertung!")
+shiny::br()
+shiny::br()
+shiny::textOutput("score")
+shiny::br()
+```
+
+### Zusammenfassung
+
+Du hast gelernt
+
+-   die Richtung und Stärke von Zusammenhängen anhand von Korrelationen zu schätzen
+-   dass Korrelationen keine Kausalitätsaussagen erlauben
+-   dass ein 95% KI den wahren Wert entweder enthält oder nicht, aber nicht mit 95% Wahrscheinlichkeit enthält
+-   dass es verschiedene Verfahren zur Berechnung von Korrelationen gibt
+-   dass unsere Korrelationsgerade ein Modell für unsere Daten ist
+-   Modelle sind essenziell, aber dennoch nur starke Vereinfachungen der Realität
+
+Dabei hast du bereits 2 Arten von Korrelationen kennengelernt. Natürlich gibt es noch weit mehr. Hier eine tabellarische Zusammenfassung:
+
++--------------------------------------+---------------------+-----------------------+----------------------+
+| Kriterium                            | Pearson-Korrelation | Spearman-Korrelation  | Kendalls Tau         |
++======================================+=====================+=======================+======================+
+| Skalenniveau                         | Metrisch            | Ordinal oder metrisch | Ordinal              |
++--------------------------------------+---------------------+-----------------------+----------------------+
+| Verteilung der Daten                 | Normalverteilung    | Beliebige Verteilung  | Beliebige Verteilung |
++--------------------------------------+---------------------+-----------------------+----------------------+
+| Empfindlichkeit gegenüber Ausreißern | Hoch                | Mittel                | Niedrig              |
++--------------------------------------+---------------------+-----------------------+----------------------+
+| Beziehungsart                        | Linear              | Monoton               | Monoton              |
++--------------------------------------+---------------------+-----------------------+----------------------+
+
+### Neue Funktionen
+
++---------------------------------------------+-----------------------------------------------------------------+
+| Funktion in R                               | Beschreibung                                                    |
++=============================================+=================================================================+
+| `GGally::ggscatmat(data, colums = "x","y")` |  Erstellt eine Zusammenhangsvisualisierung für metrische Daten  |
++---------------------------------------------+-----------------------------------------------------------------+
+| `correlation::correlation()`                | Praktisch zur Berchenung von Korrelationen                      |
++---------------------------------------------+-----------------------------------------------------------------+
+
+::: gelb
+Sieh dir auch die Info Seite von `correlation` an, um dich mit den anderen Arten (wie Kendalls Tau) zur Berechenung von Korrelationen vertraut zu machen.
+:::
+
+## Credit
+
+Dieses Tutorial wurde von Marie Klosterkamp verfasst und von Lukas Bruelheide reviewt.
+
+## Literaturverzeichnis
+
+<!--  Wird automatisch generiert aus den @autorYYYY-Zitationen und der Bibliothek in ref.json. Das Literaturverzeichnis wird immer ans Ende generiert, deswegen muss das hier die letzte Überschrift bleiben. -->

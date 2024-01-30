@@ -1,0 +1,239 @@
+[
+    {
+        "ISBN": "978-3-465-04339-3",
+        "author": [
+            {
+                "family": "Schlaudt",
+                "given": "Oliver"
+            }
+        ],
+        "call-number": "JC574 .S35 2018",
+        "collection-number": "102",
+        "collection-title": "KlostermannRoteReihe",
+        "edition": "Originalausgabe",
+        "id": "schlaudt2018",
+        "issued": {
+            "date-parts": [
+                [
+                    2018
+                ]
+            ]
+        },
+        "key": "CIMIH47P",
+        "libraryid": "1",
+        "number-of-pages": "192",
+        "providerkey": "Zotero",
+        "publisher": "Vittorio Klostermann",
+        "publisher-place": "Frankfurt am Main",
+        "source": "Library of Congress ISBN",
+        "title": "Die politischen Zahlen: über Quantifizierung im Neoliberalismus",
+        "title-short": "Die politischen Zahlen",
+        "type": "book"
+    },
+    {
+        "author": [
+            {
+                "family": "Damerow",
+                "given": "Peter"
+            },
+            {
+                "family": "Nissen",
+                "given": "H. J."
+            },
+            {
+                "family": "Englund",
+                "given": "Robert K."
+            }
+        ],
+        "container-title": "Spektrum der Wissenschaft",
+        "id": "damerow1988",
+        "issued": {
+            "date-parts": [
+                [
+                    1988
+                ]
+            ]
+        },
+        "key": "ZMSC8DYT",
+        "libraryid": "1",
+        "page": "74-85",
+        "providerkey": "Zotero",
+        "title": "Die Entstehung der Schrift",
+        "type": "article-journal",
+        "volume": "2"
+    },
+    {
+        "ISBN": "978-1-4919-1039-9 978-1-4919-1036-8",
+        "author": [
+            {
+                "family": "Wickham",
+                "given": "Hadley"
+            },
+            {
+                "family": "Grolemund",
+                "given": "Garrett"
+            }
+        ],
+        "call-number": "QA276.45.R3 W53 2016",
+        "edition": "First edition",
+        "id": "wickham2016",
+        "issued": {
+            "date-parts": [
+                [
+                    2016
+                ]
+            ]
+        },
+        "key": "NYFUJ8UJ",
+        "libraryid": "1",
+        "number-of-pages": "492",
+        "oclc": "ocn968213225",
+        "providerkey": "2509FBBE-5BB0-44C4-B119-6083A81ED673",
+        "publisher": "O’Reilly",
+        "publisher-place": "Sebastopol, CA",
+        "source": "Library of Congress ISBN",
+        "title": "R for data science: import, tidy, transform, visualize, and model data",
+        "title-short": "R for data science",
+        "type": "book"
+    },
+    {
+        "author": [
+            {
+                "family": "Cohen",
+                "given": "J"
+            }
+        ],
+        "id": "cohen1988",
+        "issued": {
+            "date-parts": [
+                [
+                    1988
+                ]
+            ]
+        },
+        "key": "WPF99VLL",
+        "libraryid": "1",
+        "providerkey": "Zotero",
+        "publisher": "Hoboken: Taylor and Francis",
+        "title": "Statistical Power Analysis for the Behavioral Sciences",
+        "type": "book"
+    },
+    {
+        "URL": "https://wgruber.github.io/Modellbildung2/korrelationen.html#pearson-produkt-moment-korrelation",
+        "accessed": {
+            "date-parts": []
+        },
+        "author": [
+            {
+                "family": "Gruber",
+                "given": "Walter"
+            }
+        ],
+        "id": "gruber2019",
+        "issued": {
+            "date-parts": [
+                [
+                    2019
+                ]
+            ]
+        },
+        "key": "MNVTHM5R",
+        "libraryid": "1",
+        "providerkey": "Zotero",
+        "source": "wgruber.github.io",
+        "title": "Statistik mit R für Fortgeschrittene",
+        "type": "book"
+    },
+    {
+        "URL": "https://www.discovr.rocks/discovr/",
+        "accessed": {
+            "date-parts": []
+        },
+        "author": [
+            {
+                "family": "Field",
+                "given": "Andy"
+            }
+        ],
+        "issued": {
+            "date-parts": [
+                [
+                    2022
+                ]
+            ]
+        },
+        "container-title": "discovr",
+        "id": "field",
+        "key": "YDWULWX8",
+        "language": "en-us",
+        "libraryid": "1",
+        "providerkey": "Zotero",
+        "title": "discovr: a package of interactive tutorials",
+        "title-short": "discovr",
+        "type": "webpage"
+    },
+    {
+        "URL": "https://rpsychologist.com/correlation/",
+        "author": [
+            {
+                "family": "Magnusson",
+                "given": "Kristoffer"
+            }
+        ],
+        "id": "magnusson2023",
+        "issued": {
+            "date-parts": [
+                [
+                    2023
+                ]
+            ]
+        },
+        "key": "NESAP88M",
+        "libraryid": "1",
+        "providerkey": "Zotero",
+        "title": "Interpreting Correlations: An Interactive Visualization",
+        "type": "book",
+        "versionnumber": "0.7.1"
+    },
+    {
+        "DOI": "10.1145/3025453.3025912",
+        "ISBN": "978-1-4503-4655-9",
+        "URL": "https://dl.acm.org/doi/10.1145/3025453.3025912",
+        "accessed": {
+            "date-parts": []
+        },
+        "author": [
+            {
+                "family": "Matejka",
+                "given": "Justin"
+            },
+            {
+                "family": "Fitzmaurice",
+                "given": "George"
+            }
+        ],
+        "container-title": "Proceedings of the 2017 CHI Conference on Human Factors in Computing Systems",
+        "event": "CHI ’17: CHI Conference on Human Factors in Computing Systems",
+        "id": "matejka2017",
+        "issued": {
+            "date-parts": [
+                [
+                    2017,
+                    5,
+                    2
+                ]
+            ]
+        },
+        "key": "RIBH945S",
+        "language": "en",
+        "libraryid": "1",
+        "page": "1290-1294",
+        "providerkey": "2509FBBE-5BB0-44C4-B119-6083A81ED673",
+        "publisher": "ACM",
+        "publisher-place": "Denver Colorado USA",
+        "source": "DOI.org (Crossref)",
+        "title": "Same Stats, Different Graphs: Generating Datasets with Varied Appearance and Identical Statistics through Simulated Annealing",
+        "title-short": "Same Stats, Different Graphs",
+        "type": "paper-conference"
+    }
+]
