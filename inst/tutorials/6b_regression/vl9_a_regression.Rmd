@@ -2003,8 +2003,9 @@ Hier nochmal die Vorannahmen, die wir jetzt prüfen:
 |     Prädiktor                       |                                |
 +-------------------------------------+--------------------------------+
 
-Wir brauen also ein Streudiagramm, das wir für die Überprüfung schnell mit dem 
-Befehl plot(variable1,variable2) erstellen können.
+::: aufgabe
+Erstelle ein Streudiagramm für `trees$volume` und `trees$diameter`, das für die Überprüfung der Annahmen 3 und 4 auch schnell mit dem Befehl `plot(variable1,variable2)` erstellt werden kann. 
+::: 
 
 ```{r vorannahmenuebung, exercise = TRUE, exercise.setup = "silentsetup", exercise.cap = "Vorannahmen prüfen"}
 
@@ -2040,7 +2041,7 @@ Super!
 
 Da du nun aber schon unsere Daten interpretiert hast. Nehmen wir für den jetztigen
 Abschnitt Berechnung noch ein anderes Beispiel her. Wir hatten für die Korrelation
-bereits den Datensatz mtcars genutzt, und den Zusammenhang von der Reichweite pro 
+bereits den Datensatz `mtcars` genutzt, und den Zusammenhang von der Reichweite pro 
 Gallone und dem Gewicht untersucht. Jetzt können wir testen, ob das Gewicht die
 Varianz in der Reichweite erklären kann:
 
@@ -2094,7 +2095,7 @@ question_checkbox("Was sollten wir auf Signifikanz überprüfen?",
 ```{r ueb_1a}
 question_text("Überlege dir die inhaltliche Interpretation der beiden Regressionskoeffizienten! (Intercept = 37.29, weight = -5.34)",
               answer_fn(~ correct()),
-              placeholder = "Eine Musterlösung erscheint, wenn Sie die Antwort einreichen, bitte vergleiche selbstständig.",
+              placeholder = "Eine Musterlösung erscheint, wenn du die Antwort einreichst, bitte vergleiche selbstständig.",
               correct = "Musterlösung: \n
 b0: Für ein Gewicht von 0 lbs sagt das Modell 37.29 Meilen pro Gallone Treibstoff vorher. Das ist inhaltlich natürlich sinnlos, aber technisch ist das die richtige Interpretation. \n
 b1: Wenn man das Gewicht um 1000 lbs erhöht, verringert sich die vorhergesagte Reichweite pro Gallone um -5.34 Meilen.")
@@ -2121,8 +2122,7 @@ Wow! Langsam wirst du doch schon richtig gut!
 ### Vorannahmen 2
 
 Zurück zu unseren Kirschbäumen und den verbleibenden Vorannahmen. 
-Wir haben unser Model als `fit` abgespeichert und wollen nun auch noch die letzten 
-Tests durchführen.
+Wir haben unser Model als `fit` abgespeichert und wollen nun auch noch die letzten Tests durchführen.
 
 +----------------------------------+-----------------------------------+
 | Vorannahmen                      | Überprüfung                       |
@@ -2148,13 +2148,32 @@ Tests durchführen.
 +----------------------------------+-----------------------------------+
 
 Plotten wir doch zuest unser erstelltes Modell, um die **Homoskedastizität** und **die 
-Unkorreliertheit der Residuen mit der unabhängigen Variable** zu überprüfen:
+Unkorreliertheit der Residuen mit der unabhängigen Variable** zu überprüfen. Dafür kannst du in der Base R Funktion einfach den Modellnamen `fit` eingeben und das Modell wird visualisiert. (Mit dem zusätzlichen Argument
+`which` lassen wir uns nur die ersten beiden Plots ausgeben).
 
 ```{r ueb2_voraussetzungen, exercise = TRUE, exercise.setup = "silentsetup", exercise.cap = "Voraussetzungen prüfen"}
 fit <- lm(volume ~ diameter, data = trees)
-plot(fit, which = 1)
-plot(resid(fit), which = 1)
+plot(fit, which = 1,2)
+lmtest::bptest(fit)
 ```
+
+Plot 1:
+Hier siehst du die Residuen abgetragen gegen unsere geschätzen Werte für die abhängige Variable. 
+Das Wichtigste ist, dass die roten Linie, die den Mittelwert der Residuen darstellen, im Grunde horizontal und um Null zentriert ist. Denn das sagt uns, dass die Residuen (also die Varianz die vom Modell nicht erklärt werden kann) keine Heteroskedasizität vorliegt.
+Willst du auf nummer sicher gehen kannst du auch analytisch ermitteln, ob Homoskedastizität vorliegt. Dafür kannst du das Modell in die Funktion `bptest()` aus dem Paket `lmtest` geben:
+
+```{r bptest, exercise = TRUE, exercise.setup = "silentsetup", exercise.cap = "Homoskedasitzität prüfen"}
+fit <- lm(volume ~ diameter, data = trees)
+# Breusch-Pagan-Test H0: Homoskedastizität
+lmtest::bptest(fit)
+```
+
+
+```{r plotwich2, message = F, echo = F, warning = F}
+fit <- lm(volume ~ diameter, data = trees)
+plot(fit, which = 2)
+```
+
 
 ```{r vorannahmenzwei_questions}
 question_checkbox("Welche der Vorannahmen würdest du anhand des plots als gegeben ansehen?",
