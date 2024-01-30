@@ -336,7 +336,7 @@ $\hat y_i = 9 - 1.5x_i$.
 -   Intercept $b_0 = 9$
 -   Steigung $b_1 = -1.5$
 
-```{r}
+```{r geraden_raten}
 .gerade <- function(x, intercept = 0, slope = 1){
   intercept + slope * x
 }
@@ -359,7 +359,7 @@ Für die Steigung berechnest du also die Differenz von y geteilt durch die Diffe
 
 ### Quiz
 
-```{r}
+```{r quizgraph}
 
 ggplot() +
   stat_function(fun = `.gerade`, xlim = c(0, 20),
@@ -729,7 +729,7 @@ in R geprüft werden können:
 | Vorannahme                       | Überprüfung                       |
 +==================================+===================================+
 | 5.  Homoskedastizität            | `plot(fit)`                       |
-+-------------------------------------+--------------------------------+
++----------------------------------+-----------------------------------+
 | 6.  Unkorreliertheit der         | `plot(fit)`                       |
 |     Residuen mit der UV          |                                   |
 +----------------------------------+-----------------------------------+
@@ -742,9 +742,8 @@ in R geprüft werden können:
 |                                  | Histogramm der                    |
 |                                  | standardisierten Residuen         |
 |                                  |                                   |
-|                                  | -`library(tidyverse)`             |
 |                                  |                                   |
-|                                  | -`resid(fit) |> scale() |> hist()`|                 
+|                                  | `resid(fit) |> scale() |> hist()` |    
 |                                  |                                   |
 +----------------------------------+-----------------------------------+
 
@@ -1044,15 +1043,16 @@ h4 + geom_smooth(method = "lm", se = F) +
 car::durbinWatsonTest(fit4)
 ```
 
-<!-- <details> -->
+```{r autocor_question}
+question_radio("Was ist deine Hypothesenentscheidung, wenn du den $p$-Wert des Tests mit $\alpha$ = 0.05 vergleichst?",
+               answer("H0 beibehalten", message = "Da $p$ < $alpha$ ist der Test signifikant. Bei Signifikanz muss die H0 abgelehnt werden."),
+               answer("H0 ablehnen", correct = T,
+                      message = "Da $p$ < $\alpha$, ist der Test signifikant."),
+               allow_retry = T,
+               correct = random_praise("de"),
+               incorrect = random_encouragement("de"))
+```
 
-<!-- <summary><a>▼ Wie eine Auto-Korrelation berechnet wird</a></summary> -->
-
-<!-- ```{r, echo = TRUE} -->
-
-<!-- ``` -->
-
-<!-- </details> -->
 
 ### 8. Normalverteilung der Residuen
 
@@ -2236,7 +2236,7 @@ Bei unserem Forst-Beispiel ist das ja auch so: Die **Höhe der Bäume** spielt n
 auch eine wichtige Rolle, und ist nicht zu vernachlässigen, wenn wir
 einen guten Schätzer für das Holzvolumen eines Baumes haben wollen.
 
-```{r}
+```{r multi}
 trees$Height <- trees$Height * 0.3048  # Umrechnung Fuß in Meter
 
 multiple_fit <- lm(volume ~ diameter + Height, data = trees)
