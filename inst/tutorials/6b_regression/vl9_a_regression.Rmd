@@ -2126,54 +2126,47 @@ quiz(caption = "Signifikanztests:",
                   answer("Nein, denn `Multiple R-squared:  0.7528` ",
                         message = "Das $R^2$ sagt uns, dass unser Modell 75% der Varianz in unserem Kriterium aufklären kann. Das ist schon sehr viel, aber die Signifikanz kannst du hier nicht ablesen."),
                   allow_retry = T,
-                random_answer_order = T)
+                random_answer_order = T),
+     
+    question_text("Interpretiere die Modellgüte!",
+        answer_fn(~ correct()),
+              correct = "Musterlösung: \n
+R² beträgt 0.7528. Das bedeutet, das Modell erklärt 75,28% der totalen Varianz der Reichweite. Das ist eine vergleichsweise hohe Varianzaufklärung.")
 )     
 ```
 
 ### Modell interpretieren
 
-```{r ueb_1a}
-question_text("Überlege dir die inhaltliche Interpretation der beiden Regressionskoeffizienten! (Intercept = 37.29, weight = -5.34)",
-              answer_fn(~ correct()),
-              placeholder = "Eine Musterlösung erscheint, wenn du die Antwort einreichst, bitte vergleiche selbstständig.",
-              correct = "Musterlösung: \n
-b0: Für ein Gewicht von 0 lbs sagt das Modell 37.29 Meilen pro Gallone Treibstoff vorher. Das ist inhaltlich natürlich sinnlos, aber technisch ist das die richtige Interpretation. \n
-b1: Wenn man das Gewicht um 1000 lbs erhöht, verringert sich die vorhergesagte Reichweite pro Gallone um -5.34 Meilen."
-)
-```
-
 ```{r test_this}
-question_radio("Überlege dir die inhaltliche Interpretation der beiden Regressionskoeffizienten! (Intercept = 37.29, weight = -5.34)",
-    answer_fn(~ correct()),
-    placeholder = "Bitte gib deine Interpretation der Regressionskoeffizienten ein.",
-    correct = "b0: Für ein Gewicht von 0 lbs sagt das Modell 37.29 Meilen pro Gallone Treibstoff vorher. Das ist inhaltlich natürlich sinnlos, aber technisch ist das die richtige Interpretation. \n
-b1: Wenn man das Gewicht um 1000 lbs erhöht, verringert sich die vorhergesagte Reichweite pro Gallone um -5.34 Meilen.",
-    distractor = "b0: Das Modell sagt voraus, dass Autos ohne Gewicht 37.29 Meilen pro Gallone fahren können.",
-    explanation_distractor1 = "Diese Interpretation ist technisch falsch. Der Intercept (b0) repräsentiert den vorhergesagten Wert der abhängigen Variable (Reichweite), wenn die unabhängige Variable (Gewicht) gleich Null ist. Es ist nicht wörtlich zu nehmen, da Autos ohne Gewicht unrealistisch sind.",
-    distractor = "b1: Eine Erhöhung des Gewichts um 1 lb verringert die Reichweite pro Gallone um 5.34 Meilen.",
-    explanation_distractor2 = "Diese Interpretation ist falsch. Der Koeffizient -5.34 bezieht sich auf eine Erhöhung um 1000 lbs, nicht um 1 lb.",
-    distractor = "b0: Der Intercept gibt an, wie viele Gallonen Treibstoff ein Auto mit 0 lbs Gewicht verbraucht.",
-    explanation_distractor3 = "Dies ist eine falsche Interpretation. Der Intercept (b0) bezieht sich auf die Reichweite pro Gallone, nicht auf den Treibstoffverbrauch.",
+quiz(caption="Korrelationskoeffizienten interpretieren",
+question_radio("Was sagt das Intercept (b0 = 37.29) in unserem Regressionsmodell aus?",
+    answer("Der Intercept gibt an, wie schwer die Autos im Durchschnitt sind, die 37.29 Meilen pro Gallonen verbrauchen.",
+        message = "Dies ist eine falsche Interpretation. Das Intercept (b0) ist der vorhergesagte Wert (Meilen pro Gallone), wenn der Prädiktor (Gewicht) den Wert 0
+annimt."),    
+answer("Der Intercept gibt an, dass die Autos im Durchschnitt mit einer Gallone 37.29 Meilen fahren können.",
+        message = "Dies ist eine falsche Interpretation. Das Intercept (b0) ist der vorhergesagte Wert (Meilen pro Gallone), wenn der Prädiktor (Gewicht) den Wert 0
+annimt. Es ist also nicht der Durchschnittswert sondern, der Wert für Gewicht = 0."),
+    answer("Für ein Gewicht von 0 lbs sagt das Modell 37.29 Meilen pro Gallone Treibstoff vorher.", 
+        correct = T,
+        message = "Richtig! Für ein Gewicht von 0 lbs sagt das Modell 37.29 Meilen pro Gallone Treibstoff vorher. Das ist inhaltlich natürlich sinnlos, aber technisch ist das die richtige Interpretation."),
+    random_answer_order = T,
+    allow_retry = T
+),
+
+question_radio("Was bedeutet der Steigungskoeffizient (b1 = -5.34) in unserem Regressionsmodell?",
+    answer("Eine Erhöhung des Gewichts um 1 lb verringert die Reichweite pro Gallone um 5.34 Meilen.",
+        message = "Diese Interpretation ist falsch. Der Koeffizient -5.34 bezieht sich auf eine Erhöhung um 1000 lbs, nicht um 1 lb."),
+    answer("Wenn man das Gewicht um 1000 lbs erhöht, verringert sich die vorhergesagte Reichweite pro Gallone um 5.34 Meilen.",
+        correct = T,
+        message = "Richtig! Der Steigungskoeffizient gibt an, wie sich die abhängige Variable (Reichweite) ändert, wenn die unabhängige Variable (Gewicht) um eine Einheit (hier 1000 lbs) erhöht wird."),
+    answer("Für eine Reduktion des Gewichtes um -5.34 lb steigt die Reichweite um 1 Meile  pro Gallone.",
+        message = "$b_1$ ist die vorhergesagte Änderung im Kriterium (Meilen pro Gallone), wenn der Prädiktor(Gewicht) um eine Einheit erhöht wird."),
+    random_answer_order = T,
+    correct = "Genau, wenn man das Gewicht um 1000 lbs erhöht, verringert sich die vorhergesagte Reichweite pro Gallone um -5.34 Meilen.",
     allow_retry = T
 )
 
-```
-
-
-```{r ueb_1b}
-question_text("Interpretiere die Modellgüte!",
-  answer_fn(~ correct()),
-              correct = "Musterlösung: \n
-R² beträgt 0.7528. Das bedeutet, das Modell erklärt 75,28% der totalen Varianz der Reichweite. Das ist eine vergleichsweise hohe Varianzaufklärung.")
-```
-
-
-```{r ueb_1c}
-question_text("Könnten wir die Ergebnisse auf eine größere Population übertragen? Interpretiere die Ergebnisse des Lokal- und des Gesamtmodelltests. Welche Hypothesen werden jeweils getestet, und wie fällt Ihre Hypothesenentscheidung bei einem Signifikanzniveau von $\\alpha$ = 5% aus?",
-  answer_fn(~ correct()),
-              correct = "Musterlösung: \n
-Der Lokaltest testet die Nullhypothese, dass das Regressionsgewicht „Gewicht“ in Wahrheit 0 beträgt. Diese Hypothese verwerfe ich, da der *p*-Wert kleiner als α ist. Das bedeutet, wir können davon ausgehen, dass die Stichprobe aus einer Population stammt, in der „Gewicht“ einen Einfluss auf die Reichweite hat. \n
-Analog dazu testet der Gesamtmodelltest die Nullhypothese, dass das Modell in der Population in Wahrheit keine Varianzaufklärung bietet. Da der *p*-Wert der gleiche ist, treffe ich hier die gleiche Hypothesenentscheidung und verwerfe die Nullhypothese, und gehe davon aus, dass das Modell auch in Wahrheit eine Varianzaufklärung verschieden von 0 hat.")
+)
 ```
 
 Wow! Das klappt doch schon richtig gut! 👏
@@ -2883,7 +2876,7 @@ try(
 
 ## Abschlussquiz
 
-Da du heute bereits so viele Fragen beantwortet hast, hier nur 1 Masterfrage:
+Da du heute bereits so viele Fragen beantwortet hast, hier nur 3 Masterfragen:
 
 ```{r novariation_abschluss, fig.height=5, fig.width=5}
 plot(x = rep(20, 100), y = rnorm(100), yaxt = "n", xaxt = "n", xlab = "x", ylab = "y")
@@ -2909,6 +2902,37 @@ R^2 &= \frac{0}{\text{Gesamtvarianz in y}} = 0
 :::
 
 </details>
+
+
+```{r ueb_1c}
+quiz(caption = "Hypothesen der Modelltests:",
+     
+     question_radio("Welche Hypothese wird im Lokaltest getestet, und wie lautet deine Hypothesenentscheidung bei einem Signifikanzniveau von α = 5%?",
+    answer("Der Lokaltest testet die Nullhypothese, dass das Regressionsgewicht „Gewicht“ in Wahrheit 0 beträgt. Diese Hypothese verwerfe ich, da der *p*-Wert kleiner als α ist.",
+        correct = T,
+        message = "Richtig! Der Lokaltest prüft, ob der Koeffizient der unabhängigen Variable signifikant von Null verschieden ist. Bei einem p-Wert kleiner als 0.05 verwerfen wir die Nullhypothese."),
+    answer("Die Nullhypothese besagt, dass das Gewicht einen Einfluss auf die Reichweite hat. Wenn der p-Wert größer als 0.05 ist, behalten wir die Nullhypothese bei.",
+        message = "Das ist nicht korrekt. Die Nullhypothese im Lokaltest ist, dass der Koeffizient gleich Null ist. Zudem führt nur ein p-Wert kleiner als 0.05 zur Ablehnung der Nullhypothese bei einem alpha von 5%."),
+    answer("Die Nullhypothese besagt, dass das Gewicht einen Einfluss auf die Reichweite hat, und die Alternativhypothese, dass es keinen Einfluss hat. Da der p-Wert kleiner als 0.05 ist, behalten wir die Nullhypothese bei.",
+        message = "Die Nullhypothese im Lokaltest ist, dass der Koeffizient gleich Null ist, was bedeutet, dass die unabhängige Variable keinen Einfluss hat. Ein p-Wert kleiner als 0.05 führt zur Ablehnung der Nullhypothese."),
+    random_answer_order = T,
+    allow_retry = T
+),
+
+question_radio("Was wird im Gesamtmodelltest getestet und wie lautet deine Entscheidung basierend auf einem p-Wert < 0.05?",
+    answer("Die Nullhypothese besagt, dass das der Prädiktor eine signifikante Varianzaufklärung bietet.",
+        message = "Die H0 geht immer von keinem Effekt aus. Zudem wird beim Gesamtmodell nur im Falle einer einfachen Regression der einzelne Prädiktor getestet. Die H0 geht also davon aus, dass das Model zu keiner Varianzaufklärung beiträgt."),
+    answer("Die Nullhypothese besagt, dass das Modell eine signifikante Varianzaufklärung bietet.",
+        message = "Die H0 geht immer von keinem Effekt aus - hier also keiner Varianzaufklärung."),
+    answer("Die Nullhypothese besagt, dass das Modell in der Population in Wahrheit keine Varianzaufklärung bietet.",
+        correct = T,
+        message = "Die Nullhypothese besagt, dass das Modell in der Population in Wahrheit keine Varianzaufklärung bietet. Wenn der p-Wert kleiner als 0.05 ist, verwerfe ich die Nullhypothese und nehme an, dass das Modell eine Varianzaufklärung verschieden von 0 hat."),
+    answer("Die Nullhypothese besagt, dass das Modell eine hohe Varianzaufklärung bietet. Da der p-Wert kleiner als 0.05 ist, bestätigen wir die Nullhypothese.",
+        message = "Die H0 geht immer von keinem Effekt aus - hier also keiner Varianzaufklärung."),
+    random_answer_order = T,
+    allow_retry = T)
+)
+```
 
 ## Learnings
 
