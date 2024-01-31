@@ -33,17 +33,17 @@ knitr::opts_chunk$set(echo = FALSE)
 ## Inhalt
 
 In diesem sehr umfangreichen Tutorial wirst du die Grundlagen von
-Regressionen verstehen, die Voraussetzungen testen und die Berechnung
+Regressionen verstehen, deren Voraussetzungen testen und die Berechnung
 und Interpretation üben.
 
-Die Kapitel, die mit "Ex:" beginnen, bieten dabei eine interaktive Vermittlung der
+Die Kapitel, die mit "**Ex:**" beginnen, bieten dabei eine interaktive Vermittlung der
 Grundlagen. Wenn du diese bereits verinnerlicht hast kannst du diese auch überspringen
-(auf eigene Gefahr 😉).
+(natülich auf eigene Gefahr, etwas interessantes zu verpassen😉).
 
 In unserem wissenschaftlichen Prozess sind wir weiterhin bei der
 Auswertung und dem Berichten unserer Ergebnisse:
 
-![](images/prozess.png){width="90%"}
+![](images/prozess.png){width="70%"}
 
 ## Lernziele
 
@@ -55,7 +55,9 @@ Am Ende wirst du folgendes gelernt haben:
 -   <input type="checkbox" unchecked> Modelgüte zu schätzen </input>
 -   <input type="checkbox" unchecked> Regressionsergebnisse zu
     interpretieren </input>
-
+-   <input type="checkbox" unchecked> Regressionsergebnisse zu
+    visualisieren </input>
+    
 ## Unser Beispiel
 
 Als Förster\*in in den USA stehst du vor einer spätblühenden
@@ -218,7 +220,7 @@ Proportion aussieht.
 Glücklicherweise sieht der Zusammenhang linear aus, das heißt, wir
 könnten ihn sinnvoll mit einer Gerade beschreiben:
 
-```{r echo=F, message=FALSE, warning=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(trees, aes(x = diameter, y = volume)) +
   geom_point() +
   geom_smooth(method = "lm", se = F) +
@@ -974,20 +976,27 @@ question_checkbox("Welche der Grafiken zeigen eine homoskedastische Verteilung?"
 
 ### 6. Unkorreliertheit der Residuen mit Kriterium
 
-Werden die Residuen zum Beispiel größer, je größer das Kriterium wird,
-dann ist das ein Hinweis auf Heteroskedastizität. Vergleichen wir dafür
-noch einmal zwei Plots:
+Wir wollen also auch untersuchen, ob die standardisierten Residuen mit unserer 
+abhängigen Variable (Kriterium) korrelieren. Auch dafür schauen wir uns ein Scatterplot
+diese beiden Größen an.
+Verlaufen die Residuen in einer erkennbaren Form mit dem Kriterium, dann ist das ein Hinweis auf einen nicht-linearen (quadratischen/ logarithmischen) Zusammenhang der Variablen. 
+Vergleichen wir dafür noch einmal zwei Plots:
 
-```{r, echo=T, message=F, warning=F}
-h1 + geom_smooth(method = "lm", se = F)
+<!-- not needed (double): -->
+<!-- h1 + geom_smooth(method = "lm", se = F) -->
+<!-- h4 + geom_smooth(method = "lm", se = F) -->
+
+```{r, echo=T, message=FALSE, warning=FALSE, setup = "homoskedasis_grafiken"}
 fit1 <- lm(y ~ x, data = df1)
 plot(fit1, which = 1)
 
-h6 + geom_smooth(method = "lm", se = F)
-fit6 <- lm(y ~ x, data = df6)
-
-plot(fit6, which = 1)
+fit4 <- lm(y ~ x, data = df4)
+plot(fit4, which = 1)
 ```
+
+Der erste Plot zeigt die gewünschte gleichmäßige Verteilung, der zweite einen deutlichen 
+quadratischen Zusammenhang, der darauf hinweißt, dass die Annahme der Unkorreliertheit 
+hier verletzt ist.
 
 ### 7. keine Auto-Korrelation der Residuen
 
@@ -1011,17 +1020,18 @@ steht.
 #### Überprüfung in R
 
 Die Auto-Korrelation kann in R berechnet und ausgegeben werden mitsamt
-eines Hypothesentests, der die Nullhypothese $\rho = 0$ testet („Die
+eines Hypothesentests, der die Nullhypothese *rho* = 0 testet („Die
 Auto-Korrelation beträgt in Wahrheit 0“).
 
 ```{r autocor-question}
-question_checkbox("Wie müsste der p-Wert aussehen, wenn unsere Daten vermutlich aus einer Population ohne Autokorrelation stammen?",
-                  answer("$p \\le 0.05$", message = "Wenn p kleiner als 0.05 wäre, müssten wir die Nullhypothese verwerfen. Da die Nullhypothese aber enthält, dass die Autokorrelation in Wahrheit 0 ist, wäre das also nicht der erwünschte Fall, diese Annahme zu verwerfen - das wäre dann ein Hinweis darauf, dass es Autokorrelation gibt."),
-                  answer("$p > 0.05$", correct = T, message = "Genau! In diesem Fall halten wir danach Ausschau, dass der Test nicht signifikant wird, der p-Wert größer als 0.05 bleibt, damit die Nullhypothese beibehalten werden darf, da das das „erwünschte“ Ergebnis ist."),
-                  allow_retry = T)
+question_checkbox("Wie müsste der *p*-Wert aussehen, wenn unsere Daten vermutlich aus einer Population ohne Autokorrelation stammen?",
+                  answer("$p \\le 0.05$", message = "Wenn *p* kleiner als 0.05 wäre, müssten wir die Nullhypothese verwerfen. Da die Nullhypothese aber enthält, dass die Autokorrelation in Wahrheit 0 ist, wäre das also nicht der erwünschte Fall, diese Annahme zu verwerfen - das wäre dann ein Hinweis darauf, dass es Autokorrelation gibt."),
+                  answer("$p > 0.05$", correct = T, message = "Genau! In diesem Fall halten wir danach Ausschau, dass der Test nicht signifikant wird, der *p*-Wert größer als 0.05 bleibt, damit die Nullhypothese beibehalten werden darf, da das das „erwünschte“ Ergebnis ist."),
+                  allow_retry = T,
+              random_answer_order = T)
 ```
 
-Geprüft wird das mit einem Durbin-Watson-Test. Das Paket `car` stellt
+Geprüft wird das mit einem **Durbin-Watson-Test**. Das Paket `car` stellt
 eine Funktion dafür bereit:
 
 Testen wir das zunächst an einem extremen Beispiel, was ich simuliert
@@ -1049,6 +1059,7 @@ question_radio("Was ist deine Hypothesenentscheidung, wenn du den $p$-Wert des T
                answer("H0 ablehnen", correct = T,
                       message = "Da $p$ < $\alpha$, ist der Test signifikant."),
                allow_retry = T,
+              random_answer_order = T,
                correct = random_praise("de"),
                incorrect = random_encouragement("de"))
 ```
@@ -1080,8 +1091,8 @@ resid(fit) |> scale() |> hist()
 #### visuelle Überprüfung
 
 Es mag willkürlich erscheinen, rein aus dem Visuellen grob zu bestimmen,
-ob etwas normalverteilt ist oder nicht. Mit diesem kleinen Spiel können
-Sie Ihre Intuition etwas schärfen:
+ob etwas normalverteilt ist oder nicht. Mit diesem kleinen Spiel kannst du deine
+Intuition etwas schärfen:
 
 ```{r ui_distribution-guesser}
 verteilungen <- c("Normal", "Uniform", "Bimodal")
@@ -1584,7 +1595,9 @@ question_checkbox("Wie interpretiert man noch mal den Korrelationskoeffizienten?
                         message = "Die Vorzeichen sagen uns die Richtung des Zusammenhangs."),
                  answer("Als Richtung des Effektes", 
                         message = "Wir runden auf 4 Nachkommastellen, weil R² uns nicht präziser gegeben ist."),
-                 allow_retry = TRUE)
+                 allow_retry = TRUE,
+              random_answer_order = T
+              )
 ```
 
 Demnach ist unser $\sqrt{R^2} = r$ mit 0.9671 ein starker positiver Zusammenhang“.
@@ -1666,7 +1679,8 @@ learnr::question_radio("Wie würde darauf basierend deine Hypothesenentscheidung
                answer("Nullhypothese verwerfen", 
                       correct = TRUE, 
                       message = "Da *p* unglaublich klein ist, auf jeden Fall kleiner als das Signifikanzniveau von 0.05, ist es richtig, die Nullhypothese zu verwerfen."),
-               allow_retry = TRUE
+               allow_retry = TRUE,
+              random_answer_order = T
 )
 ```
 
@@ -1750,7 +1764,8 @@ question_radio("Wie würdest du $b_1$ = 0.056 jetzt interpretieren?",
                          correct = FALSE, 
                          message = "Das stimmt leider nicht, denn die Koeffizienten liegen immer in Einheiten des Kriteriums vor, also in diesem Fall m³."),
                   allow_retry = TRUE,
-               correct = "das generelle Schema lautet „Wenn man Prädiktor (Durchmesser) um 1 Einheit (cm) erhöht, um wie viel ändert sich dann die Vorhersage (Volumen um 0.056m³)?"
+                  random_answer_order = T,
+                  correct = "das generelle Schema lautet „Wenn man Prädiktor (Durchmesser) um 1 Einheit (cm) erhöht, um wie viel ändert sich dann die Vorhersage (Volumen um 0.056m³)?"
                   )
 ```
 
@@ -1851,8 +1866,13 @@ Meilen pro Stunde, und die maximale Tagestemperatur in Grad Fahrenheit gemessen.
 
 ```{r slopeestim}
 question_radio("Gib einen Tipp ab: Welche Steigung wird die Regressionsgerade vermutlich haben?",
-               answer("positiv", message = "Leider nicht so wahrscheinlich - dann würde es heißer werden, wenn der Wind schneller weht."),
-               answer("negativ", correct = T, message = "Sinnvoll, da höhere Windgeschwindigkeit eher zu niedrigeren Temperaturen führt -> negativer Zusammenhang"))
+               answer("positiv", 
+                      message = "Leider nicht so wahrscheinlich - dann würde es heißer werden, wenn der Wind schneller weht."),
+               answer("negativ", 
+                      correct = T, 
+                      message = "Sinnvoll, da höhere Windgeschwindigkeit eher zu niedrigeren Temperaturen führt -> negativer Zusammenhang"),
+              random_answer_order = T
+               )
 ```
 
 ::: aufgabe
@@ -1896,7 +1916,7 @@ abline(temp_model) # Regressionsgerade zum Plot hinzufügen
 
 Und hier der zweite Weg mit `ggplot`:
 
-```{r, echo = T}
+```{r, echo = TRUE}
 library(ggplot2) # Paket laden
 
 ggplot(trees, aes(x = diameter, y = volume)) +   # Daten und Mappings definieren
@@ -1980,12 +2000,12 @@ visuell dargestellt werden kann!
 
 ## Übungskapitel
 
-### Vorannahmen prüfen 1
-
 Hier findest du eine Reihe von Aufgaben zu Regressionen in R. Dabei wollen wir einen
 *natürlichen* Verlauf zeigen: d.h. erst die Vorannahmen testen, dann ein Modell berechnen, 
 letzte Vorannahmen bezogen auf die Modellresiduen prüfen und dann die Ergebnisse 
 interpretieren.
+
+### Vorannahmen prüfen 1
 
 Hier nochmal die Vorannahmen, die wir jetzt prüfen:
 
@@ -2040,9 +2060,9 @@ Super!
 ### Modell berechnen 
 
 Da du nun aber schon unsere Daten interpretiert hast. Nehmen wir für den jetztigen
-Abschnitt Berechnung noch ein anderes Beispiel her. Wir hatten für die Korrelation
+Abschnitt *Modell berechnen* noch ein anderes Beispiel her: Wir hatten für die Korrelation
 bereits den Datensatz `mtcars` genutzt, und den Zusammenhang von der Reichweite pro 
-Gallone und dem Gewicht untersucht. Jetzt können wir testen, ob das Gewicht die
+Gallone und dem Gewicht untersucht. Jetzt können wir testen, ob das Gewicht einen signifikanten Teil der
 Varianz in der Reichweite erklären kann:
 
 ::: aufgabe
@@ -2076,18 +2096,38 @@ Bevor wir zur Interpretation kommen, sollten wir anhand des Outputs überprüfen
 ob unser Modell siginikant zur Erklärung der Varianz der abhängigen Variable beiträgt.
 
 ```{r signifikanz_pruefen}
-question_checkbox("Was sollten wir auf Signifikanz überprüfen?",
+quiz(caption = "Signifikanztests:",
+     
+     question_checkbox("Was sollten wir auf Signifikanz überprüfen?",
                   answer("das Gesamtmodell", 
                          correct = T, 
-                         message = "Richtig, wir testen das Gesamtmodell, um zu sehen, 
-                         ob wir nicht ein Modell haben, dass nur zufällig die Varianz in der
-                         abhängigen Variable aufklärt."),
+                         message = "Richtig, wir testen das Gesamtmodell, um zu überprüfen, 
+                         ob wir ein Modell haben, dass die Varianz in der
+                         abhängigen Variable besser als deren Mittelwert aufklärt."),
                   answer("das Lokalmodell",
                         correct = T, 
                         message = "Da unser Modell nur einen Prädiktor hat, ist mit der 
-                        Sigifikanz des Gesamtmodells auch das Lokalmodell signifikant."),
-                  allow_retry = T
-)
+                        Sigifikanz des Gesamtmodells auch das Lokalmodell signifikant. Wir können
+                        also von beiden die Signifikanz des Modells ablesen."),
+                  answer("die Residuen",
+                        message = "Die Residuen sind der Teil der Varianz, die wir mit unserem Modell nicht aufklären können. Diese werden nur in Hinsicht auf Erfüllung unserer Vorannahmen getestet."),
+                  allow_retry = T,
+                random_answer_order = T),
+     
+     question_radio("Ist das Gesamtmodell signifikant?",
+                  answer("Ja, denn `p-value: 1.294e-10`", 
+                         correct = T, 
+                         message = "Richtig das Gesamtmodell ist signifikant"),
+                  answer("Ja, denn Pr(>|t|):  1.29e-10 ",
+                        message = "Das ist der p-Wert des Lokalmodels (für unseren Prädiktor weight).
+                        Dennoch können wir bei einer einfachen Regression bei einem signifikanten Lokalmodel 
+                        auch von einem signifikanten Gesamtmodel ausgehen, da das Modell nur aus diesem einen
+                        Prädiktor und dem Intercept besteht."),
+                  answer("Nein, denn `Multiple R-squared:  0.7528` ",
+                        message = "Das $R^2$ sagt uns, dass unser Modell 75% der Varianz in unserem Kriterium aufklären kann. Das ist schon sehr viel, aber die Signifikanz kannst du hier nicht ablesen."),
+                  allow_retry = T,
+                random_answer_order = T)
+)     
 ```
 
 ### Modell interpretieren
@@ -2098,8 +2138,27 @@ question_text("Überlege dir die inhaltliche Interpretation der beiden Regressio
               placeholder = "Eine Musterlösung erscheint, wenn du die Antwort einreichst, bitte vergleiche selbstständig.",
               correct = "Musterlösung: \n
 b0: Für ein Gewicht von 0 lbs sagt das Modell 37.29 Meilen pro Gallone Treibstoff vorher. Das ist inhaltlich natürlich sinnlos, aber technisch ist das die richtige Interpretation. \n
-b1: Wenn man das Gewicht um 1000 lbs erhöht, verringert sich die vorhergesagte Reichweite pro Gallone um -5.34 Meilen.")
+b1: Wenn man das Gewicht um 1000 lbs erhöht, verringert sich die vorhergesagte Reichweite pro Gallone um -5.34 Meilen."
+)
 ```
+
+```{r test_this}
+question_radio("Überlege dir die inhaltliche Interpretation der beiden Regressionskoeffizienten! (Intercept = 37.29, weight = -5.34)",
+    answer_fn(~ correct()),
+    placeholder = "Bitte gib deine Interpretation der Regressionskoeffizienten ein.",
+    correct = "b0: Für ein Gewicht von 0 lbs sagt das Modell 37.29 Meilen pro Gallone Treibstoff vorher. Das ist inhaltlich natürlich sinnlos, aber technisch ist das die richtige Interpretation. \n
+b1: Wenn man das Gewicht um 1000 lbs erhöht, verringert sich die vorhergesagte Reichweite pro Gallone um -5.34 Meilen.",
+    distractor = "b0: Das Modell sagt voraus, dass Autos ohne Gewicht 37.29 Meilen pro Gallone fahren können.",
+    explanation_distractor1 = "Diese Interpretation ist technisch falsch. Der Intercept (b0) repräsentiert den vorhergesagten Wert der abhängigen Variable (Reichweite), wenn die unabhängige Variable (Gewicht) gleich Null ist. Es ist nicht wörtlich zu nehmen, da Autos ohne Gewicht unrealistisch sind.",
+    distractor = "b1: Eine Erhöhung des Gewichts um 1 lb verringert die Reichweite pro Gallone um 5.34 Meilen.",
+    explanation_distractor2 = "Diese Interpretation ist falsch. Der Koeffizient -5.34 bezieht sich auf eine Erhöhung um 1000 lbs, nicht um 1 lb.",
+    distractor = "b0: Der Intercept gibt an, wie viele Gallonen Treibstoff ein Auto mit 0 lbs Gewicht verbraucht.",
+    explanation_distractor3 = "Dies ist eine falsche Interpretation. Der Intercept (b0) bezieht sich auf die Reichweite pro Gallone, nicht auf den Treibstoffverbrauch.",
+    allow_retry = T
+)
+
+```
+
 
 ```{r ueb_1b}
 question_text("Interpretiere die Modellgüte!",
@@ -2117,7 +2176,7 @@ Der Lokaltest testet die Nullhypothese, dass das Regressionsgewicht „Gewicht�
 Analog dazu testet der Gesamtmodelltest die Nullhypothese, dass das Modell in der Population in Wahrheit keine Varianzaufklärung bietet. Da der *p*-Wert der gleiche ist, treffe ich hier die gleiche Hypothesenentscheidung und verwerfe die Nullhypothese, und gehe davon aus, dass das Modell auch in Wahrheit eine Varianzaufklärung verschieden von 0 hat.")
 ```
 
-Wow! Langsam wirst du doch schon richtig gut!
+Wow! Das klappt doch schon richtig gut! 👏
 
 ### Vorannahmen 2
 
@@ -2125,14 +2184,14 @@ Zurück zu unseren Kirschbäumen und den verbleibenden Vorannahmen.
 Wir haben unser Model als `fit` abgespeichert und wollen nun auch noch die letzten Tests durchführen.
 
 +----------------------------------+-----------------------------------+
-| Vorannahmen                      | Überprüfung                       |
+| Vorannahme                       | Überprüfung                       |
 +==================================+===================================+
-| 5.  Homoskedastizität            | `plot(resid(fit))`                |
-+-------------------------------------+--------------------------------+
-| 6.  Unkorreliertheit der         | `plot(fit, which = 1)`            |
+| 5.  Homoskedastizität            | `plot(fit)`                       |
++----------------------------------+-----------------------------------+
+| 6.  Unkorreliertheit der         | `plot(fit)`                       |
 |     Residuen mit der UV          |                                   |
 +----------------------------------+-----------------------------------+
-| 7.  keine Autokorrelation der    | `car::durbinWatsonTest()`         |
+| 7.  keine Autokorrelation der    | `car::durbinWatsonTest(fit)`      |
 |     Residuen                     |                                   |
 +----------------------------------+-----------------------------------+
 | 8.  Normalverteilung der         | Q-Q-Plot: der zweite Plot bei     |
@@ -2141,54 +2200,71 @@ Wir haben unser Model als `fit` abgespeichert und wollen nun auch noch die letzt
 |                                  | Histogramm der                    |
 |                                  | standardisierten Residuen         |
 |                                  |                                   |
-|                                  | -`library(tidyverse)`             |
 |                                  |                                   |
-|                                  | -`resid(fit) |> scale() |> hist()`|                 
+|                                  | `resid(fit) |> scale() |> hist()` |    
 |                                  |                                   |
 +----------------------------------+-----------------------------------+
 
 Plotten wir doch zuest unser erstelltes Modell, um die **Homoskedastizität** und **die 
-Unkorreliertheit der Residuen mit der unabhängigen Variable** zu überprüfen. Dafür kannst du in der Base R Funktion einfach den Modellnamen `fit` eingeben und das Modell wird visualisiert. (Mit dem zusätzlichen Argument
-`which` lassen wir uns nur die ersten beiden Plots ausgeben).
+Unkorreliertheit der Residuen mit der unabhängigen Variable** zu überprüfen. Dafür kannst du in der *Base R* Funktion `plot()` einfach den Modellnamen `fit` eingeben und das Modell wird visualisiert. (Mit dem zusätzlichen Argument `which` lassen wir uns nur die ersten beiden Plots ausgeben).
 
 ```{r ueb2_voraussetzungen, exercise = TRUE, exercise.setup = "silentsetup", exercise.cap = "Voraussetzungen prüfen"}
 fit <- lm(volume ~ diameter, data = trees)
-plot(fit, which = 1,2)
+plot(fit, which = 1)
 lmtest::bptest(fit)
+plot(fit, which = 2)
 ```
 
-Plot 1:
-Hier siehst du die Residuen abgetragen gegen unsere geschätzen Werte für die abhängige Variable. 
-Das Wichtigste ist, dass die roten Linie, die den Mittelwert der Residuen darstellen, im Grunde horizontal und um Null zentriert ist. Denn das sagt uns, dass die Residuen (also die Varianz die vom Modell nicht erklärt werden kann) keine Heteroskedasizität vorliegt.
-Willst du auf nummer sicher gehen kannst du auch analytisch ermitteln, ob Homoskedastizität vorliegt. Dafür kannst du das Modell in die Funktion `bptest()` aus dem Paket `lmtest` geben:
+**Plot 1:**
+Hier siehst du die standardisierten Residuen abgetragen gegen unsere geschätzen Werte für die abhängige Variable. 
 
-```{r bptest, exercise = TRUE, exercise.setup = "silentsetup", exercise.cap = "Homoskedasitzität prüfen"}
+```{r ,setup = "silentsetup", message = FALSE, echo = FALSE, warning = FALSE}
+fit <- lm(volume ~ diameter, data = trees)
+plot(fit, which = 1)
+```
+
+Das Wichtigste ist, dass die rote Linie, die den Mittelwert der Residuen darstellt, im Grunde horizontal und um Null zentriert ist. Denn das sagt uns, dass für die Residuen (also die Varianz die vom Modell nicht erklärt werden kann)  Homoskedasizität vorliegt.
+
+Willst du auf nummer sicher gehen kannst du auch **analytisch ermitteln**, ob Homoskedastizität vorliegt. Dafür kannst du das Modell in die Funktion `bptest(model)` aus dem Paket `lmtest` geben. Der `bptest()` (Der Breusch-Pagan-Test) prüft die Nullhypothese, dass Homoskedastizität vorliegt. Ein signifikanter p-Wert sagt dir also auch hier, dass unsere Vorannahme *nicht* gegeben ist.
+
+```{r ,setup = "silentsetup", message = FALSE, echo = FALSE, warning = FALSE}
 fit <- lm(volume ~ diameter, data = trees)
 # Breusch-Pagan-Test H0: Homoskedastizität
 lmtest::bptest(fit)
 ```
 
+**Plot 2:**
+Hier siehst du die Verteilung der Residuen anhand des QQ-Plots und kannst sie 
+hinsichtlich der Einhaltung der **Normalverteilung** überprüfen. Je mehr die 
+Residuen von der Linie abweichen, desto eher solltest du davon ausgehen, dass 
+die Residuen nicht normalverteilt sind. Natürlich wäre auch hier ein `shapiro.test(resid(model))` 
+möglich.
 
-```{r plotwich2, message = F, echo = F, warning = F}
+```{r ,setup = "silentsetup", message = FALSE, echo = FALSE, warning = FALSE}
 fit <- lm(volume ~ diameter, data = trees)
 plot(fit, which = 2)
 ```
 
 
 ```{r vorannahmenzwei_questions}
-question_checkbox("Welche der Vorannahmen würdest du anhand des plots als gegeben ansehen?",
+question_checkbox("Welche der Vorannahmen würdest du anhand der plots als gegeben ansehen?",
                   answer("Homoskedastizität", 
-                         correct = T, 
-                         message = ""),
+                         message = "Sowohl der Plot 1 als auch der bp-Test deuten darauf hin,
+                         dass Homoskedastizität nicht gegeben ist."),
                   answer("Unkorreliertheit der Residuen mit der unabhängigen Variable", 
+                        message = "Der Plot 1 zeigt einen parabelförmigen Zusammenhang
+                        der Residuen mit dem Kriterium. Daher ist eine Korrelation vorhanden."),
+                  answer("Normalverteilung der Residuen", 
                         correct = T, 
-                        message = ""),
-                  allow_retry = T
+                        message = "Genau, die Residuen sind annähernd normalverteilt. Dies kannst
+                        du auch mit dem `shaprio.test()` der Residuen(`resid(fit)`) überprüfen."),
+                  allow_retry = T,
+                  random_answer_order = T
 )
 ```
 
-Als nächstes testen wir die Autokorrelation der Residuen mit dem `car::durbinWatsonTest(model)`.
-Du merkst vielleicht bereits, dass es super angenehm ist, dass die Funktionen das Modell als Input nehmen. Mal wieder ein Grund warum *R* einfach toll ist 🥰.
+Als nächstes testen wir die **Autokorrelation** der Residuen mit dem `car::durbinWatsonTest(model)`.
+Du merkst vielleicht bereits, dass es super angenehm ist, dass die Funktionen das Modell als Input nehmen können und dementsprechen ihr Verhalten anpassen. Mal wieder ein Grund warum *R* einfach toll ist 🥰.
 
 ```{r ueb3_voraussetzungen, exercise = TRUE, exercise.setup = "silentsetup", exercise.cap = "Voraussetzungen prüfen"}
 fit <- lm(volume ~ diameter, data = trees)
@@ -2226,7 +2302,7 @@ question_checkbox("Ist die Vorannahmen erfüllt, dass die Residuen normalverteil
 )
 ```
 
-## EX: Ausblick in die Multiple lineare Regression
+## Ex: Ausblick in die Multiple lineare Regression
 
 In der Praxis wird selten nur eine einfache (im Sinne von 1-fach)
 lineare Regression gerechnet, sondern mehrere Prädiktoren werden
@@ -2236,10 +2312,10 @@ Bei unserem Forst-Beispiel ist das ja auch so: Die **Höhe der Bäume** spielt n
 auch eine wichtige Rolle, und ist nicht zu vernachlässigen, wenn wir
 einen guten Schätzer für das Holzvolumen eines Baumes haben wollen.
 
-```{r multi}
-trees$Height <- trees$Height * 0.3048  # Umrechnung Fuß in Meter
+```{r multi, setup = "silentsetup"}
+trees$height <- trees$Height * 0.3048  # Umrechnung Fuß in Meter
 
-multiple_fit <- lm(volume ~ diameter + Height, data = trees)
+multiple_fit <- lm(volume ~ diameter + height, data = trees)
 summary(multiple_fit)
 anova(fit, multiple_fit)
 ```
@@ -2297,7 +2373,7 @@ trees$diameter_centered <- trees$diameter - mean(trees$diameter)
 ```
 
 ```{r meancenter}
-question_numeric("Was ist der Mittelwert einer *zentrierten* Variable? Prüfen Sie notfalls im obigen Codeblock nach.",
+question_numeric("Was ist der Mittelwert einer *zentrierten* Variable? Prüfe notfalls im obigen Codeblock nach.",
                  answer(0, 
                         correct = TRUE, 
                         message = "Super! Der Mittelwert einer zentrierten Variablen ist immer 0, da wir die Daten so zentriert haben, dass sie die Abweichung zum Mittelwert beschreiben. Dabei weicht der Mittelwert logischerweise nicht von sich selbst ab: 20-20=0."),
@@ -2518,10 +2594,11 @@ extremeres $R^2$ zustande kommt?“
 > Wenn $p > 0.05$ -\> wahrscheinlich -\> Nullhypothese beibehalten
 
 ```{r pquestion}
-learnr::question_radio("Wie würde Ihre Hypothesenentscheidung für das Beispiel aussehen? (α = 0.05)",
+learnr::question_radio("Wie würde deine Hypothesenentscheidung für das Beispiel aussehen? (α = 0.05)",
                answer("Nullhypothese beibehalten", message = "Da p mit 0.00…22 kleiner als 0.05 ist, sollten wir die Nullhypothese verwerfen."),
                answer("Nullhypothese verwerfen", correct = TRUE, message = "Da p unglaublich klein ist, auf jeden Fall kleiner als das Signifikanzniveau von 0.05, ist es richtig, die Nullhypothese zu verwerfen."),
-               allow_retry = TRUE
+               allow_retry = TRUE,
+               random_answer_order = TRUE
 )
 ```
 
@@ -2601,9 +2678,9 @@ ggplot() +
 
 ```
 
-In der Übersicht sehen Sie den empirischen (=beobachteten) F-Wert, der
+In der Übersicht siehst du den empirischen (= beobachteten) F-Wert, der
 sich aus der Varianzaufklärung $R^2$ des Modells berechnen lässt. Er
-entspricht `F-statistic` im R-Output.
+entspricht `F-statistic` im *R*-Output.
 
 Hier noch mal die relevante Zeile aus dem Output:
 
@@ -2638,7 +2715,7 @@ Grenze, ist er innerhalb der gelben Fläche, also innerhalb den äußersten
 5%. Ab diesem Punkt wird die Nullhypothese als "unwahrscheinlich"
 verworfen - der Test wird signifikant.
 
-```{r zoom1, message = F, warning = F}
+```{r zoom1, message = FALSE, warning = FALSE}
 ### Zoom 1
 ggplot() +
   stat_function(geom = "area",
@@ -2806,6 +2883,7 @@ try(
 
 ## Abschlussquiz
 
+Da du heute bereits so viele Fragen beantwortet hast, hier nur 1 Masterfrage:
 
 ```{r novariation_abschluss, fig.height=5, fig.width=5}
 plot(x = rep(20, 100), y = rnorm(100), yaxt = "n", xaxt = "n", xlab = "x", ylab = "y")
@@ -2832,25 +2910,102 @@ R^2 &= \frac{0}{\text{Gesamtvarianz in y}} = 0
 
 </details>
 
-
 ## Learnings
 
-## Abstellgleis
+So hast du heute abgeschnitten:
 
-::: aufgabe
-Wie hoch ist $e_{20}$ (das Residuum von Messung 20) beim
-Eingangsbeispiel im `trees` Datensatz?
+```{r context="server"}
+# Shiny App um die Anzahl richtig beantworteter Fragen anzuzeigen. 
+# Funktioniert in jedem Tutorial
 
-Berechnen Sie mit R!
-
-$$
-e_{20} = y_{20} - \hat y_{20}
-$$
-:::
-
-```{r residuumberechnen, exercise = TRUE, exercise.cap = "Residuum"}
-e20 <- trees$volume[20] - predict(fit)[20]
-e20
-resid(fit)[20]
-
+shiny::observeEvent(
+  input$get_score, 
+  {
+    objs2 = learnr:::get_tutorial_state()
+    
+    # Number of correct questions
+    
+    n_correct <- 
+      # Access the $correct sublist item in each list item
+        lapply(objs2, purrr::pluck, "correct") |>
+           # make it a vector containing: TRUE and FALSE and NAs
+           # NA is appearing for list items which don't have
+           # a $correct subitem
+                unlist() |> 
+           # Taking the sum of a logical Vector returns the number of TRUEs
+                sum(na.rm=TRUE)
+    
+    # Number of total questions
+    
+    total_questions <- 
+      # 1. Access $type in each list item and make it a vector of types
+      lapply(objs2, purrr::pluck, "type") |> unlist()
+    
+    # 2. Count the number of "question" in that vector
+    total_questions <- total_questions[total_questions == "question"] |> 
+      length()
+      
+      
+    output$score = shiny::renderText(
+      paste0(n_correct, " von ", total_questions,
+        " im gesamten Tutorial beantworteten Fragen waren richtig.")
+)
+    invisible()
+  }
+)
 ```
+
+```{r score, echo=FALSE}
+shiny::br()
+shiny::actionButton("get_score", "Auswertung!")
+shiny::br()
+shiny::br()
+shiny::textOutput("score")
+shiny::br()
+```
+
+### Zusammenfassung
+
+Einführung in die lineare Regression:
+
+- Du hast die Grundlagen der linearen Regression verstanden und wie sie sich von Korrelationen unterscheidet.
+- Du hast gelernt, wie man ein lineares Regressionsmodell erstellt und visualisiert, die Voraussetzungen überprüft und die Ergebnisse interpretiert.
+
+und noch so vieles mehr!!
+    
+    
+### Diese neuen Konzepte kennst du nun:
+
+- was ein Modell ist 
+- das Bestimmheitsmaß R^2
+- die Regressionskoeffizienten (Intercept und Gewichte)
+- das Gesamtmodel und das Lokalmodel
+
+### Neue Funktionen
+
+Vorannahmen prüfen:
+| Funktion               | Beschreibung |
+|------------------------|--------------|
+| `plot(variable1, variable2)` | Erstellt ein Streudiagramm zur Überprüfung linearer Zusammenhänge und Variabilität bei Prädiktoren. |
+| Funktion               | Beschreibung |
+| `plot(model)`   | Visualisiert verschiedene Aspekte des Regressionsmodells, wie Residuenplots, um Homoskedastizität und Normalverteilung der Residuen zu überprüfen. |
+| `lmtest::bptest(model)`| Führt den Breusch-Pagan-Test auf Homoskedastizität der Residuen durch. |
+| `car::durbinWatsonTest(model)` | Testet auf Autokorrelation der Residuen im Regressionsmodell. |
+| `resid(model) %>% scale() %>% hist()` | Erstellt ein Histogramm der standardisierten Residuen zur Überprüfung der Normalverteilung. |
+
+Modell berechnen:
+| Funktion               | Beschreibung |
+|------------------------|--------------|
+| `lm(outcome ~ predictor, data)`    | Berechnet ein lineares Regressionsmodell.|
+| `summary(model)`       | Gibt eine detaillierte Zusammenfassung des Regressionsmodells aus, einschließlich Koeffizienten, Signifikanzniveaus und Modellgüte. |
+
+
+
+## Credit
+
+Dieses Tutorial wurde (größtenteils) von Lukas Bruelheide sowie in Teilen von Marie Klosterkamp geschrieben. 
+
+### Literaturverzeichnis
+
+<!--  Wird automatisch generiert aus den @autorYYYY-Zitationen und der Bibliothek in ref.json. Das Literaturverzeichnis wird immer ans Ende generiert, deswegen muss das hier die letzte Überschrift bleiben. -->
+
