@@ -15,8 +15,11 @@ resource_files:
 
 ```{r setup, include=FALSE}
 library(learnr)
-library(tidyverse)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-test
+```{r question}
+question_radio("$p < \\alpha$",
+               answer("1", correct = T, message = "$p < \alpha$"))
+```
+

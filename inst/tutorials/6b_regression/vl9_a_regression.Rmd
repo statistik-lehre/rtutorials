@@ -303,6 +303,7 @@ Daraus ergibt sich für uns folgendes Modell:
 $$
 \hat{Volumen_i} = b_0 + b_1 \cdot Durchmesser_i 
 $$
+
 </br>
 
 #### Was sind $b_0$ und $b_1$?
@@ -527,6 +528,7 @@ wenn sie sehr groß sind. **Kleine Residuen bedeuten, dass das Modell näher an 
 #### Formel
 
 Ein Residuum $e$ (wie Error) der Messung $i$ errechnet sich aus:
+
 $$e_i = y_i - \hat y_i$$
 
 dabei gilt:
@@ -796,7 +798,7 @@ Stichprobe als Faustregel ungefähr $n > 30$.
 Manche Daten werden besser nicht durch Geraden erklärt, sondern haben
 vielleicht quadratische Zusammenhänge, wie in diesem Beispiel:
 
-```{r}
+```{r sim_nonlinear_data}
 data <- data.frame(temperatur=c(6, 9, 12, 14, 30, 35, 40, 47, 51, 55, 60),
                    enzymaktivität=c(14, 28, 50, 70, 89, 94, 90, 75, 59, 44, 27))
 
@@ -986,7 +988,7 @@ Vergleichen wir dafür noch einmal zwei Plots:
 <!-- h1 + geom_smooth(method = "lm", se = F) -->
 <!-- h4 + geom_smooth(method = "lm", se = F) -->
 
-```{r, echo=T, message=FALSE, warning=FALSE, setup = "homoskedasis_grafiken"}
+```{r grafiken_homosked, echo=T, message=FALSE, warning=FALSE, setup = "homoskedasis_grafiken"}
 fit1 <- lm(y ~ x, data = df1)
 plot(fit1, which = 1)
 
@@ -1049,15 +1051,28 @@ h4 + geom_smooth(method = "lm", se = F) +
 
 ```
 
-```{r, echo = TRUE}
+```{r durbinwatsonfit, echo = TRUE}
 car::durbinWatsonTest(fit4)
 ```
 
-```{r autocor_question}
-question_radio("Was ist deine Hypothesenentscheidung, wenn du den $p$-Wert des Tests mit $\alpha$ = 0.05 vergleichst?",
+```{r autocor_question1}
+question_radio("Was ist deine Hypothesenentscheidung, wenn du den $p$-Wert des Tests mit $\\alpha = 0.05$ vergleichst?",
                answer("H0 beibehalten", message = "Da $p$ < $alpha$ ist der Test signifikant. Bei Signifikanz muss die H0 abgelehnt werden."),
                answer("H0 ablehnen", correct = T,
-                      message = "Da $p$ < $\alpha$, ist der Test signifikant."),
+                      message = "Da $p < \\alpha$, ist der Test signifikant."),
+               allow_retry = T,
+              random_answer_order = T,
+               correct = random_praise("de"),
+               incorrect = random_encouragement("de"))
+```
+
+<!-- Zur Frage oben: In Character Strings wird backslash als Escape-Character geparst und muss daher von einem weiteren backslash escaped werden, um in $$ an LaTex übergeben werden zu können. -->
+
+```{r autocor_question2}
+question_radio("Was bedeutet eine Entscheidung gegen die $H_0$ inhaltlich?",
+               answer("Es besteht Autokorrelation", correct = T, message = "Da $p$ < $alpha$ ist der Test signifikant. Bei Signifikanz muss die $H_0$ abgelehnt werden. Sie sagt, es gibt keine Autokorrelation. Wenn wir das ablehnen, dann gibt es demzufolge welche."),
+               answer("Es besteht keine Autokorrelation",
+                      message = "Die $H_0$ besagt genau das, aber wenn wir sie ablehnen gilt das eben nicht."),
                allow_retry = T,
               random_answer_order = T,
                correct = random_praise("de"),
@@ -1394,7 +1409,7 @@ Fall also als Volumen (m³).
 ### $b_0$ (Intercept)
 
 Generell gilt:
-*„$b_0$ ist der vorhergesagte Wert, wenn der Prädiktor den Wert 0
+*„$b_0$ ist der vorhergesagte Wert des Kriteriums, wenn der Prädiktor den Wert 0
 annimt."*
 
 Bezogen auf unser Beispiel:
@@ -1410,12 +1425,35 @@ so dass $x = 0$ einen sinnvollen Wert darstellt. Siehe den Exkurs: "Zentrieren".
 ### $b_1$ (Steigung)
 
 Generell:
-*„$b_1$ ist die vorhergesagte Änderung, wenn der Prädiktor um **eine Einheit** 
+*„$b_1$ ist die vorhergesagte Änderung im Kriterium, wenn der Prädiktor um **eine Einheit** 
 erhöht wird."*
 
 Für unser Beispiel:
 *„Pro Zentimeter Durchmesser mehr steigt unser erwartetes Volumen um
 0.0565 Kubikmeter."*
+
+Erinnert euch an Schulmathe, die Gerade und das Steigungsdreieck: Wenn man $x$ um eine Einheit erhöht, wie viel größer wird dann $y$? Das ist die Steigung der Geraden. 
+
+```{r steigungsdreieck}
+pred <- function(x) -1.05 + x*0.05605
+yend <- pred(5)
+ystart <- pred(4)
+ggplot() +
+  stat_function(fun = `.gerade`, xlim = c(-1, 22), args = list(slope = 0.05605, intercept = -1.05)) +
+  geom_segment(aes(x = 4, y = pred(4), yend = pred(4), xend = 5), color = "red", 
+               arrow = arrow(length = unit(0.03, "npc"))) +
+  geom_segment(aes(x = 5, xend = 5, y = !!pred(4), yend = !!pred(5)), color = "red",
+               arrow = arrow(length = unit(0.03, "npc"))) +
+  annotate("text", x = 4.5, y = pred(3.4), label = "1 cm") +
+  annotate("text", x = 5.8, y = pred(4.5), label = "0.0565 m³") +
+  coord_cartesian(xlim = c(0, 10), ylim = c(-1.06, -0.4), expand = F) +
+  scale_y_continuous(breaks = scales::breaks_pretty()) +
+  scale_x_continuous(breaks = 0:10) +
+  labs(y = "y: Vorherges. Holzvol. (m³)", x = "x: Durchmesser (cm)") +
+  theme_minimal()
+```
+
+Schön zu sehen ist auf der Grafik auch der Achsenabschnitt (*Intercept*) $b_0$ bei $x = 0$. 
 
 ::: gelb
 Das Regressionsgewicht $b_1$ ist eng verwandt mit der Korrelation, aber
@@ -1504,6 +1542,7 @@ höher, außer man korrigiert diese Verzerrung. Das heißt dann
 einfache lineare Regression machen, also nur einen Prädiktor verwenden.
 :::
 
+<br>
 </details>
 
 #### Interpretation
@@ -1540,7 +1579,7 @@ Im Fall der einfachen linearen Regression, aber nicht bei multipler
 Regression, entspricht $R^2$ der quadrierten Pearson-Korrelation $r$ des
 Prädiktors mit dem Kriterium. Daraus folgt: $\sqrt{R^2} = r$
 
-#### Übung
+**Übung**
 
 ::: aufgabe
 Berechnen Sie den Korrelationskoeffizienten auf zwei Wegen:
@@ -1580,7 +1619,7 @@ question_numeric("Geben Sie Ihren errechneten Wert der Pearson-Korrelation zwisc
                  allow_retry = TRUE)
 ```
 
-#### Reminder: Interpretation Korrelation
+**Reminder: Interpretation Korrelation**
 
 Wie interpretiert man noch mal den Korrelationskoeffizienten? Siehe
 Tutorial "Korrelation".
@@ -1640,10 +1679,11 @@ eigentlich generell im ganzen Wald nicht der Fall ist.
 
 ![](images/ftest.jpg){width="60%"}
 
-Die Nullhypothese $H_0$ des Gesamtmodells lautet daher: 
+Die Hypothesen des Gesamtmodelltests lauten daher: 
 
-$H_0 = R^2$ beträgt in Wahrheit 0.
-$H_1 = R^2$ ist ungleich 0.
+$H_0: R^2 = 0$
+
+$H_1: R^2 \neq 0$
 
 ### R-Output
 
@@ -1684,13 +1724,25 @@ learnr::question_radio("Wie würde darauf basierend deine Hypothesenentscheidung
 )
 ```
 
-### APA Bericht
+```{r gesamtmodelltest_inhaltsfrage}
+question_radio("Was bedeutet eine Entscheidung gegen die $H_0$ inhaltlich?",
+               answer("Das Modell leistet einen Beitrag zur Aufklärung der Varianz", correct = T, message = "Da $p$ < $alpha$ ist der Test signifikant. Bei Signifikanz muss die $H_0$ abgelehnt werden."),
+               answer("Das Modell leistet keinen Beitrag zur Aufklärung der Varianz",
+                      message = "Die $H_0$ besagt genau das, aber wenn wir sie ablehnen gilt das eben nicht."),
+               allow_retry = T,
+              random_answer_order = T,
+               correct = random_praise("de"),
+               incorrect = random_encouragement("de"))
+```
+
+
+**APA-Bericht**
 
 Super! Wir können also davon ausgehen, dass:
 
 ::: blau-nb
 *"Der Durchmesser von Kirschbäumen erklärt einen signifikanten Anteil der Varianz 
-des Volumens dieser Bäume $(F(1, 29) = 419.4, p < .001)$."*
+des Volumens dieser Bäume $(R^2 = .935,\ F(1, 29) = 419.4,\ p < .001)$."*
 ::: 
 
 ### Lokaltest
@@ -1699,9 +1751,10 @@ Der Lokaltest testet jeden Regressionskoeffizienten einzeln (und ist
 deswegen besonders für die multiple lineare Regression wichtig, wo es mehrere
 Prädiktoren gibt).
 
-Im Fall der einfachen linearen Regression entspricht der Signifikanztest 
-des Lokaltest dem Test für das Gesamtmodell, weil das gesamte Modell nur aus einem
+Im Fall der einfachen linearen Regression entspricht der Lokaltest dem Test für das Gesamtmodell, weil das gesamte Modell nur aus einem
 Prädiktor besteht. 
+
+![](images/duh-prince.gif){width="40%"}
 
 Das lässt sich auch schön zeigen anhand der Beziehung zwischen der
 $t$-Statistik aus dem Lokaltest und der $F$-Statistik aus dem
@@ -1829,7 +1882,7 @@ gut die Gerade die Datenpunkte "erklärt".
 
 ### Der schnelle Weg mit base R
 
-```{r, echo = TRUE}
+```{r fitvis, echo = TRUE}
 fit <- lm(volume ~ diameter, data = trees) # Modell erstellen
 
 plot(volume ~ diameter, data = trees) # Punktdiagramm erstellen
@@ -1916,7 +1969,7 @@ abline(temp_model) # Regressionsgerade zum Plot hinzufügen
 
 Und hier der zweite Weg mit `ggplot`:
 
-```{r, echo = TRUE}
+```{r ggplot_beauty, echo = TRUE}
 library(ggplot2) # Paket laden
 
 ggplot(trees, aes(x = diameter, y = volume)) +   # Daten und Mappings definieren
