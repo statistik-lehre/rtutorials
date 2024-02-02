@@ -220,7 +220,7 @@ Proportion aussieht.
 Glücklicherweise sieht der Zusammenhang linear aus, das heißt, wir
 könnten ihn sinnvoll mit einer Gerade beschreiben:
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r linplot, echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(trees, aes(x = diameter, y = volume)) +
   geom_point() +
   geom_smooth(method = "lm", se = F) +
@@ -1043,7 +1043,7 @@ Homoskedastizität-Abschnitt, die Residuen variieren systematisch!
 Wenn Auto-Korrelation besteht, dann variieren benachbarte Residuen
 gemeinsam.
 
-```{r , message=FALSE, warning=FALSE}
+```{r heterosked_plot, message=FALSE, warning=FALSE}
 fit4 <- lm(y ~ x, data = df4)
 pre4 <- predict(fit4)
 h4 + geom_smooth(method = "lm", se = F) +
@@ -1747,14 +1747,18 @@ des Volumens dieser Bäume $(R^2 = .935,\ F(1, 29) = 419.4,\ p < .001)$."*
 
 ### Lokaltest
 
-Der Lokaltest testet jeden Regressionskoeffizienten einzeln (und ist
-deswegen besonders für die multiple lineare Regression wichtig, wo es mehrere
-Prädiktoren gibt).
+Der Lokaltest testet jeden Regressionskoeffizienten $(b_0\ , b_1)$ einzeln. Dabei lautet die Nullhypothese:
 
-Im Fall der einfachen linearen Regression entspricht der Lokaltest dem Test für das Gesamtmodell, weil das gesamte Modell nur aus einem
-Prädiktor besteht. 
+$H_0:$ Regressionskoeffizient ist in Wahrheit 0. 
 
-![](images/duh-prince.gif){width="40%"}
+Der Lokaltest ist besonders für die *multiple* lineare Regression wichtig, wo es mehrere
+Prädiktoren gibt, die alle einen unterschiedlichen Beitrag zur Varianzaufklärung des gesamten Modells liefern können! Alle Prädiktoren haben dann jeweils ein eigenes Regressionsgewicht $(b_1, b_2, b_3)$ und so weiter, die alle einzeln vom Lokaltest getestet werden können. 
+
+**Im Fall der einfachen linearen Regression entspricht der Lokaltest des Regressionsgewichts des einen Prädiktors dem Test für das Gesamtmodell, weil das gesamte Modell nur aus einem
+Prädiktor besteht**
+
+
+![](images/duh-prince.gif){width="35%"}
 
 Das lässt sich auch schön zeigen anhand der Beziehung zwischen der
 $t$-Statistik aus dem Lokaltest und der $F$-Statistik aus dem
@@ -1807,10 +1811,10 @@ Kapitel gelernt, aber nutze doch das Quizz, um dein Wissen zu festigen.
 
 ```{r questionuncentered}
 question_radio("Wie würdest du $b_1$ = 0.056 jetzt interpretieren?",
-                  answer("Für jeden cm Baumdurchmesser steigt das Volumen um 0.056 m³.", 
+                  answer("Für jeden cm Baumdurchmesser steigt das vorhergesagte Volumen um 0.056 m³.", 
                          correct = TRUE, 
                          message = "$b_1$ ist der vorhergesagte Wert, wenn der Prädiktor den Wert 0 annimt. Da nun 0 dem Mittelwert entspricht, können wir von einem mittleren Durchmesser sprechen"),
-                  answer("Wenn man das Volumen um eine Einheit erhöht, steigt der Durchmesser um 0.056 cm", 
+                  answer("Wenn man das Volumen um eine Einheit erhöht, steigt der vorhergesagte Durchmesser um 0.056 cm", 
                          correct = FALSE, 
                          message = "Hier ist alles verdreht. Das Volumen ist unser Kriterium, also können wir daraus nicht den Durchmesser vorhersagen."),
                   answer("Bei einem Durchmesser von 0.056 cm nimmt das vorhergesagte Volumen um eine Einheit zu.", 
@@ -1818,7 +1822,7 @@ question_radio("Wie würdest du $b_1$ = 0.056 jetzt interpretieren?",
                          message = "Das stimmt leider nicht, denn die Koeffizienten liegen immer in Einheiten des Kriteriums vor, also in diesem Fall m³."),
                   allow_retry = TRUE,
                   random_answer_order = T,
-                  correct = "das generelle Schema lautet „Wenn man Prädiktor (Durchmesser) um 1 Einheit (cm) erhöht, um wie viel ändert sich dann die Vorhersage (Volumen um 0.056m³)?"
+                  correct = "Das generelle Schema lautet „Wenn man Prädiktor (Durchmesser) um 1 Einheit (cm) erhöht, um wie viel ändert sich dann die Vorhersage (Volumen um 0.056m³)?"
                   )
 ```
 
@@ -1834,10 +1838,10 @@ Prädiktor nach diesem Schema hinzu:
 
 ::: blau-nb
 *"Der Durchmesser von Kirschbäumen erklärt einen signifikanten Anteil der Varianz 
-des Volumens dieser Bäume $R^2 =.96, F(1, 29) = 419.4, p < .001)$." Für jeden cm 
-Baumdurchmesser steigt das Volumen um .056 m³ $t(29)=20.48, p<.001$*.
+des Volumens dieser Bäume $R^2 =.935,\ F(1, 29) = 419.4,\ p < .001)$." Für jeden cm 
+Baumdurchmesser steigt das Volumen um .056 m³ $t(29)=20.48,\ p<.001$*.
 ::: 
-
+<br>
 ::: gelb
 **Hinweis**: Bei einem **Intercept mit natürlichem Nullpunkt** würden wir bei 
 einer einfachen Regression auch dies hier in die Interpretation und den Bericht 
@@ -1846,20 +1850,21 @@ einfließen lassen und analog zum $b_1$ mit der entsprechenden Statistik versehe
 „Für Bäume deren Durchmesser 0 cm beträgt, ist das
 vorhergesagte Holzvolumen -1.05 m³ $t(29)=-10.98, p<.001$."
 :::
+<br>
 
-DU hast jetzt erfolgreich verstanden:
+Du hast jetzt erfolgreich verstanden:
 
 -   <input type="checkbox" unchecked> warum wir unser Modell testen  </input>
 -   <input type="checkbox" unchecked> was wir testen  </input>
 -   <input type="checkbox" unchecked> wo du den $p$-Wert findest, sowohl 
     für Lokaltest als auch Gesamtmodelltest  </input>
 -   <input type="checkbox" unchecked> wie du die Ergebnisse berichtest  </input>
-    
+
 ::: aufgabe
 Übungsaufgaben dazu findest du in einem eigenen Übungs-Kapitel, wo du
 alles Gelernte an einer Reihe von *R-Outputs* testen kannst.
 :::
-
+<br>
 Prima! Weiter geht es damit, wie du deine Daten und dein Modell visualisieren
 kannst.
 
@@ -2077,7 +2082,14 @@ Hier nochmal die Vorannahmen, die wir jetzt prüfen:
 +-------------------------------------+--------------------------------+
 
 ::: aufgabe
-Erstelle ein Streudiagramm für `trees$volume` und `trees$diameter`, das für die Überprüfung der Annahmen 3 und 4 auch schnell mit dem Befehl `plot(variable1,variable2)` erstellt werden kann. 
+**Aufgabe 1: Vorannahmen prüfen**
+
+Wir hatten für das Korrelations-Tutorial
+bereits den Datensatz `mtcars` genutzt, und den Zusammenhang von der Reichweite pro 
+Gallone Treibstoff `mtcars$mpg` und dem Gewicht der Autos `mtcars$wt` untersucht.
+Erstelle ein Streudiagramm für diese beiden Variablen, um die ersten Vorannahmen zu prüfen!
+
+**Tipp**: Nutze entweder `plot()` oder `ggplot()`, wie es dir lieber ist. 
 ::: 
 
 ```{r vorannahmenuebung, exercise = TRUE, exercise.setup = "silentsetup", exercise.cap = "Vorannahmen prüfen"}
@@ -2085,7 +2097,10 @@ Erstelle ein Streudiagramm für `trees$volume` und `trees$diameter`, das für di
 ```
 
 ```{r vorannahmenuebung-solution}
-plot(trees$volume, trees$diameter)
+plot(wt ~ mpg, data = mtcars)
+# oder ggplot:
+ggplot(mtcars, aes(wt, mpg)) +
+  geom_point()
 ```
 
 ```{r vorannahmen_questions}
@@ -2093,11 +2108,6 @@ question_checkbox("Welche der Vorannahmen würdest du nun als gegeben ansehen?",
                   answer("metrische Variablen", 
                          correct = T, 
                          message = "Beide Variablen Volumen und Durchmesser sind metrisch."),
-                  answer("Zufällige Stichprobe", 
-                        correct = T, 
-                        message = "Da die Bäume nach keinem uns bekannten Muster 
-                        ausgewählt wurden, können wir von
-                        einer zufälligen Stichprobe ausgehen."),
                   answer("Linearer Zusammenhang in den Daten",
                         correct = T, 
                         message = "Der Scatterplot zeigt einen linearen Zusammenhang."),
@@ -2110,15 +2120,13 @@ question_checkbox("Welche der Vorannahmen würdest du nun als gegeben ansehen?",
 
 Super! 
 
-### Modell berechnen 
-
-Da du nun aber schon unsere Daten interpretiert hast. Nehmen wir für den jetztigen
-Abschnitt *Modell berechnen* noch ein anderes Beispiel her: Wir hatten für die Korrelation
-bereits den Datensatz `mtcars` genutzt, und den Zusammenhang von der Reichweite pro 
-Gallone und dem Gewicht untersucht. Jetzt können wir testen, ob das Gewicht einen signifikanten Teil der
+### Modell berechnen
+Jetzt können wir testen, ob das Gewicht als Prädiktor einen signifikanten Teil der
 Varianz in der Reichweite erklären kann:
 
 ::: aufgabe
+**Aufgabe 2: Modell aufstellen**
+
 Berechne ein Modell (`car_fit`) zur Erklärung der Reichweite (`mpg`) anhand des Gewichts (`wt`).
 Lasse dir anschließend die Statistiken ausgeben (`summary()`):
 
@@ -2157,11 +2165,6 @@ quiz(caption = "Signifikanztests:",
                          message = "Richtig, wir testen das Gesamtmodell, um zu überprüfen, 
                          ob wir ein Modell haben, dass die Varianz in der
                          abhängigen Variable besser als deren Mittelwert aufklärt."),
-                  answer("das Lokalmodell",
-                        correct = T, 
-                        message = "Da unser Modell nur einen Prädiktor hat, ist mit der 
-                        Sigifikanz des Gesamtmodells auch das Lokalmodell signifikant. Wir können
-                        also von beiden die Signifikanz des Modells ablesen."),
                   answer("die Residuen",
                         message = "Die Residuen sind der Teil der Varianz, die wir mit unserem Modell nicht aufklären können. Diese werden nur in Hinsicht auf Erfüllung unserer Vorannahmen getestet."),
                   allow_retry = T,
@@ -2171,17 +2174,15 @@ quiz(caption = "Signifikanztests:",
                   answer("Ja, denn `p-value: 1.294e-10`", 
                          correct = T, 
                          message = "Richtig das Gesamtmodell ist signifikant"),
-                  answer("Ja, denn Pr(>|t|):  1.29e-10 ",
-                        message = "Das ist der p-Wert des Lokalmodels (für unseren Prädiktor weight).
-                        Dennoch können wir bei einer einfachen Regression bei einem signifikanten Lokalmodel 
-                        auch von einem signifikanten Gesamtmodel ausgehen, da das Modell nur aus diesem einen
-                        Prädiktor und dem Intercept besteht."),
+                  answer("Ja, denn `Pr(>|t|):  1.29e-10`", correct = T
+                        message = "Das ist der p-Wert des Lokalmodels (für unseren Prädiktor `weight`). Dennoch können wir bei einer einfachen Regression bei einem signifikanten Lokaltest des Prädiktors auch von einem signifikanten Gesamtmodell ausgehen, da das Modell nur aus diesem einen Prädiktor besteht."),
                   answer("Nein, denn `Multiple R-squared:  0.7528` ",
                         message = "Das $R^2$ sagt uns, dass unser Modell 75% der Varianz in unserem Kriterium aufklären kann. Das ist schon sehr viel, aber die Signifikanz kannst du hier nicht ablesen."),
                   allow_retry = T,
                 random_answer_order = T),
      
-    question_text("Interpretiere die Modellgüte!",
+    question_text("Interpretiere die Modellgüte $R^2$!",
+                  placeholder = "Musterlösung erscheint nach Einreichung deiner Antwort...",
         answer_fn(~ correct()),
               correct = "Musterlösung: \n
 R² beträgt 0.7528. Das bedeutet, das Modell erklärt 75,28% der totalen Varianz der Reichweite. Das ist eine vergleichsweise hohe Varianzaufklärung.")
@@ -2264,8 +2265,7 @@ plot(fit, which = 2)
 **Plot 1:**
 Hier siehst du die standardisierten Residuen abgetragen gegen unsere geschätzen Werte für die abhängige Variable. 
 
-```{r ,setup = "silentsetup", message = FALSE, echo = FALSE, warning = FALSE}
-fit <- lm(volume ~ diameter, data = trees)
+```{r standardised_resid, message = FALSE, echo = FALSE, warning = FALSE}
 plot(fit, which = 1)
 ```
 
@@ -2273,8 +2273,7 @@ Das Wichtigste ist, dass die rote Linie, die den Mittelwert der Residuen darstel
 
 Willst du auf nummer sicher gehen kannst du auch **analytisch ermitteln**, ob Homoskedastizität vorliegt. Dafür kannst du das Modell in die Funktion `bptest(model)` aus dem Paket `lmtest` geben. Der `bptest()` (Der Breusch-Pagan-Test) prüft die Nullhypothese, dass Homoskedastizität vorliegt. Ein signifikanter p-Wert sagt dir also auch hier, dass unsere Vorannahme *nicht* gegeben ist.
 
-```{r ,setup = "silentsetup", message = FALSE, echo = FALSE, warning = FALSE}
-fit <- lm(volume ~ diameter, data = trees)
+```{r breusch_pagan, message = FALSE, echo = FALSE, warning = FALSE}
 # Breusch-Pagan-Test H0: Homoskedastizität
 lmtest::bptest(fit)
 ```
@@ -2286,14 +2285,14 @@ Residuen von der Linie abweichen, desto eher solltest du davon ausgehen, dass
 die Residuen nicht normalverteilt sind. Natürlich wäre auch hier ein `shapiro.test(resid(model))` 
 möglich.
 
-```{r ,setup = "silentsetup", message = FALSE, echo = FALSE, warning = FALSE}
-fit <- lm(volume ~ diameter, data = trees)
-plot(fit, which = 2)
+```{r resid_qqplot, message = FALSE, echo = FALSE, warning = FALSE}
+car_fit <- lm(mpg ~ wt, data = mtcars)
+plot(car_fit, which = 1)
 ```
 
 
 ```{r vorannahmenzwei_questions}
-question_checkbox("Welche der Vorannahmen würdest du anhand der plots als gegeben ansehen?",
+question_checkbox("Welche der Vorannahmen würdest du anhand der Plots als gegeben ansehen?",
                   answer("Homoskedastizität", 
                          message = "Sowohl der Plot 1 als auch der bp-Test deuten darauf hin,
                          dass Homoskedastizität nicht gegeben ist."),
@@ -2357,13 +2356,98 @@ verwendet, um ein Kriterium vorherzusagen oder zu erklären.
 Bei unserem Forst-Beispiel ist das ja auch so: Die **Höhe der Bäume** spielt natürlich
 auch eine wichtige Rolle, und ist nicht zu vernachlässigen, wenn wir
 einen guten Schätzer für das Holzvolumen eines Baumes haben wollen.
+Ein zweiter Prädiktor kann hinzugefügt werden in der Formelschreibweise durch das Plus `+`. Die Formel lautet dann:
 
-```{r multi, setup = "silentsetup"}
+```
+volume ~ diameter + height
+```
+
+> „Volumen erklärt durch Durchmesser und Höhe“
+
+Der Rest funktioniert wie gehabt, nur dass vorher auch noch die Höhe von Fuß in Meter umgerechnet werden muss:
+
+```{r multi, echo = TRUE}
 trees$height <- trees$Height * 0.3048  # Umrechnung Fuß in Meter
+# Aufstellen eines multiplen Regressionsmodells
+multifit <- lm(volume ~ diameter + height, data = trees)
+# Ausgeben der Ergebnisse
+summary(multifit)
+```
 
-multiple_fit <- lm(volume ~ diameter + height, data = trees)
-summary(multiple_fit)
-anova(fit, multiple_fit)
+Der Output sieht nicht groß anders aus, außer dass `height` nun in der Liste der Prädiktoren auftaucht. 
+
+```{anova_quest}
+question_radio("Was denkst du, wie verändert sich die Modellgüte $R^2$ (auch Anpassungsgüte genannt) durch das Hinzufügen eines weiteren Prädiktors?",
+               answer("Die Anpassung des Modells an die Daten bleibt gleich"),
+               answer("Die Anpassung des Modells an die Daten steigt", correct = T,
+                      message = "Durch mehr Input liefert das Modell auch präziseren Output."),
+               answer("Die Anpassung des Modells an die Daten sinkt"),
+               allow_retry = T,
+               incorrect = random_encouragement("de"),
+               correct = random_praise("de"),
+               random_answer_order = T)
+
+```
+
+Ein zusätzlicher Prädiktor bedeutet mehr Informationen, mehr Daten. Das ermöglicht dem Modell, sich besser an die Daten anzupassen. Dementsprechend steigt die Anpassungsgüte $R^2$, mit mehr Informationen kann auch mehr Varianz aufgeklärt werden. Allerdings ist das ein zweischneidiges Schwert, was vor allem bei Big Data sichtbar wird, wo hunderte von Prädiktoren verfügbar sind. Es gibt nämlich auch so etwas wie Übermäßige Anpassung: Wenn das Modell zwar perfekte Vorhersagen für die Daten liefert auf denen es trainiert wurde, aber viel zu spezifisch ist um auch auf andere Daten generalisierbar zu sein - dann haben wir nichts gewonnen. Es ist also bei einer großen Anzahl von Prädiktoren immer ein Trade-Off zwischen Spezifität und Generalisierbarkeit. 
+
+```{r rsquaredmultiquestion}
+question_numeric("Wie lautet $R^2$ im multiplen Regressionsoutput oben?",
+                 answer(.948, correct = T),
+                 tolerance = .05,
+                 allow_retry = T,
+                 incorrect = random_encouragement("de"),
+                 correct = random_praise("de"))
+```
+
+```{r rsquared_multi_comparison_question}
+question_radio("Ist das mehr als das $R^2$ für das Modell mit nur einem Prädiktor?",
+               answer("Ja.", correct = TRUE, message = "$R^2$ für ein Modell mit nur einem Prädiktor beträgt 0.935, was weniger ist."),
+               answer("Nein.", message = "$R^2$ für ein Modell mit nur einem Prädiktor beträgt 0.935, was weniger ist."),
+               allow_retry = T,
+               incorrect = random_encouragement("de"),
+               correct = random_praise("de"),
+               random_answer_order = T)
+```
+
+Es besteht natürlich die Möglichkeit, dass die unterschiedlichen $R^2$ für die verschiedenen Modelle einfach durch zufällige Schwankung zustandekommen, was bei einer so geringen Stichprobengröße von $n = 31$ gut sein kann. 
+
+Das heißt, es ist wieder ein Signifikanztest gefragt, um die Modelle zu vergleichen. Dort geht nämlich die Stichprobengröße mit ins Ergebnis ein. Hier wird die Nullhypothese getestet, dass beide Modelle in Wahrheit das gleiche $R^2$ haben. Ist der Test signifikant, ist das ein Indiz dass der Unterschied in $R^2$, der durch das Hinzufügen des Prädiktors "Höhe" zustandekommt, nicht wahrscheinlich ist unter der Annahme dass eigentlich beide $R^2$ gleich sind.
+
+
+```{r sigtest_anova, echo = TRUE}
+anova(fit, multifit)
+```
+
+Der Modellvergleich passiert mit der Funktion `anova()`, wobei "anova" für **An**alysis **o**f **Va**riance steht. Hier interessiert uns auch wieder nur der $p$-Wert, der sich unter `Pr(>F)` versteckt. 
+
+```{r pvalquest}
+question_numeric("Wie lautet der $p$-Wert des Modellvergleichs? (3 Nachkommastellen)",
+                 answer(.01449, correct = T),
+                 tolerance = .001,
+                 allow_retry = T,
+                 incorrect = "Suche den $p$-Wert unter `Pr(>F)` im Output. Runde auf drei Nachkommastellen.",
+                 correct = random_praise("de"))
+```
+
+```{r significquest}
+question_radio("Ist der Modellvergleichs-Test signifikant? $(\\alpha = .05)$",
+               answer("Ja.", correct = TRUE, message = "Ja, $.014 < .05$!"),
+               answer("Nein.", message = "Schau noch mal genau hin. Wenn $p$ kleiner als $\\alpha$, dann muss der Test signifikant sein."),
+               allow_retry = T,
+               incorrect = random_encouragement("de"),
+               correct = random_praise("de"),
+               random_answer_order = T)
+```
+
+```{r signific_interpret_quest}
+question_radio("Würdest du sagen, das Hinzufügen des Prädiktors „Holz” hat die Anpassungsgüte $R^2$ des Modells signifikant verbessert?",
+               answer("Ja.", correct = TRUE, message = "Ja, da der Test signifikant war, sollte die $H_0$, dass die Modelle das gleiche $R^2$ haben, verworfen werden."),
+               answer("Nein.", message = "Schau noch mal, was die Nullhypothese bedeutet beim Modellvergleich. $H_0$: $R^2$ ist in Wahrheit gleich, es gibt keinen Unterschied. Bei Signifikanz muss die $H_0$ verworfen werden."),
+               allow_retry = T,
+               incorrect = random_encouragement("de"),
+               correct = random_praise("de"),
+               random_answer_order = T)
 ```
 
 ## Ex: Zentrieren
@@ -2944,6 +3028,8 @@ question_numeric("Welchen Wert würde $R^2$ im obigen Plot annehmen?",
 <details>
 
 <summary><a>▼ Erklärung</a></summary>
+<br>
+Da alle $y$-Werte auf dem gleichen $x$-Wert liegen, erklärt $x$ als Prädiktor überhaupt kein bisschen der Varianz in $y$. 
 
 ::: infobox
 ```{=tex}
@@ -2960,30 +3046,27 @@ R^2 &= \frac{0}{\text{Gesamtvarianz in y}} = 0
 ```{r ueb_1c}
 quiz(caption = "Hypothesen der Modelltests:",
      
-     question_radio("Welche Hypothese wird im Lokaltest getestet, und wie lautet deine Hypothesenentscheidung bei einem Signifikanzniveau von α = 5%?",
-    answer("Der Lokaltest testet die Nullhypothese, dass das Regressionsgewicht „Gewicht“ in Wahrheit 0 beträgt. Diese Hypothese verwerfe ich, da der *p*-Wert kleiner als α ist.",
-        correct = T,
-        message = "Richtig! Der Lokaltest prüft, ob der Koeffizient der unabhängigen Variable signifikant von Null verschieden ist. Bei einem p-Wert kleiner als 0.05 verwerfen wir die Nullhypothese."),
-    answer("Die Nullhypothese besagt, dass das Gewicht einen Einfluss auf die Reichweite hat. Wenn der p-Wert größer als 0.05 ist, behalten wir die Nullhypothese bei.",
-        message = "Das ist nicht korrekt. Die Nullhypothese im Lokaltest ist, dass der Koeffizient gleich Null ist. Zudem führt nur ein p-Wert kleiner als 0.05 zur Ablehnung der Nullhypothese bei einem alpha von 5%."),
-    answer("Die Nullhypothese besagt, dass das Gewicht einen Einfluss auf die Reichweite hat, und die Alternativhypothese, dass es keinen Einfluss hat. Da der p-Wert kleiner als 0.05 ist, behalten wir die Nullhypothese bei.",
-        message = "Die Nullhypothese im Lokaltest ist, dass der Koeffizient gleich Null ist, was bedeutet, dass die unabhängige Variable keinen Einfluss hat. Ein p-Wert kleiner als 0.05 führt zur Ablehnung der Nullhypothese."),
+     question_radio("Was ist die Nullhypothese des Lokaltests?",
+                    answer("Das Regressionsgewicht ($b_1$) beträgt in Wahrheit 0", correct = T),
+                    answer("Das Regressionsgewicht ist größer als 1"),
     random_answer_order = T,
     allow_retry = T
 ),
 
 question_radio("Was wird im Gesamtmodelltest getestet und wie lautet deine Entscheidung basierend auf einem p-Wert < 0.05?",
-    answer("Die Nullhypothese besagt, dass das der Prädiktor eine signifikante Varianzaufklärung bietet.",
+    answer("Die Nullhypothese besagt, dass das der Prädiktor Varianzaufklärung bietet.",
         message = "Die H0 geht immer von keinem Effekt aus. Zudem wird beim Gesamtmodell nur im Falle einer einfachen Regression der einzelne Prädiktor getestet. Die H0 geht also davon aus, dass das Model zu keiner Varianzaufklärung beiträgt."),
-    answer("Die Nullhypothese besagt, dass das Modell eine signifikante Varianzaufklärung bietet.",
-        message = "Die H0 geht immer von keinem Effekt aus - hier also keiner Varianzaufklärung."),
+    answer("Die Nullhypothese besagt, dass das Modell Varianzaufklärung bietet.",
+        message = "Die H0 geht immer von **keinem** Effekt aus - hier also keiner Varianzaufklärung."),
     answer("Die Nullhypothese besagt, dass das Modell in der Population in Wahrheit keine Varianzaufklärung bietet.",
         correct = T,
-        message = "Die Nullhypothese besagt, dass das Modell in der Population in Wahrheit keine Varianzaufklärung bietet. Wenn der p-Wert kleiner als 0.05 ist, verwerfe ich die Nullhypothese und nehme an, dass das Modell eine Varianzaufklärung verschieden von 0 hat."),
-    answer("Die Nullhypothese besagt, dass das Modell eine hohe Varianzaufklärung bietet. Da der p-Wert kleiner als 0.05 ist, bestätigen wir die Nullhypothese.",
+        message = "Die Nullhypothese besagt, dass das Modell in der Population in Wahrheit **keine** Varianzaufklärung bietet. Wenn der $p$-Wert kleiner als 0.05 ist, verwerfe ich die Nullhypothese und nehme an, dass das Modell eine Varianzaufklärung verschieden von 0 hat."),
+    answer("Die Nullhypothese besagt, dass das Modell eine **hohe** Varianzaufklärung bietet. Da der p-Wert kleiner als 0.05 ist, verwerfen wir die Nullhypothese.",
         message = "Die H0 geht immer von keinem Effekt aus - hier also keiner Varianzaufklärung."),
     random_answer_order = T,
-    allow_retry = T)
+    allow_retry = T,
+    correct = random_praise("de"),
+    incorrect = random_encouragement("de"))
 )
 ```
 
