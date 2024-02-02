@@ -2174,7 +2174,7 @@ quiz(caption = "Signifikanztests:",
                   answer("Ja, denn `p-value: 1.294e-10`", 
                          correct = T, 
                          message = "Richtig das Gesamtmodell ist signifikant"),
-                  answer("Ja, denn `Pr(>|t|):  1.29e-10`", correct = T
+                  answer("Ja, denn `Pr(>|t|):  1.29e-10`", correct = T,
                         message = "Das ist der p-Wert des Lokalmodels (für unseren Prädiktor `weight`). Dennoch können wir bei einer einfachen Regression bei einem signifikanten Lokaltest des Prädiktors auch von einem signifikanten Gesamtmodell ausgehen, da das Modell nur aus diesem einen Prädiktor besteht."),
                   answer("Nein, denn `Multiple R-squared:  0.7528` ",
                         message = "Das $R^2$ sagt uns, dass unser Modell 75% der Varianz in unserem Kriterium aufklären kann. Das ist schon sehr viel, aber die Signifikanz kannst du hier nicht ablesen."),
@@ -2227,8 +2227,7 @@ Wow! Das klappt doch schon richtig gut! 👏
 
 ### Vorannahmen 2
 
-Zurück zu unseren Kirschbäumen und den verbleibenden Vorannahmen. 
-Wir haben unser Model als `fit` abgespeichert und wollen nun auch noch die letzten Tests durchführen.
+Es gibt noch einige Voraussetzungen der Regression, die erst nach dem Erstellen des Modells geprüft werden können. Das tun wir jetzt:
 
 +----------------------------------+-----------------------------------+
 | Vorannahme                       | Überprüfung                       |
@@ -2255,95 +2254,110 @@ Wir haben unser Model als `fit` abgespeichert und wollen nun auch noch die letzt
 Plotten wir doch zuest unser erstelltes Modell, um die **Homoskedastizität** und **die 
 Unkorreliertheit der Residuen mit der unabhängigen Variable** zu überprüfen. Dafür kannst du in der *Base R* Funktion `plot()` einfach den Modellnamen `fit` eingeben und das Modell wird visualisiert. (Mit dem zusätzlichen Argument `which` lassen wir uns nur die ersten beiden Plots ausgeben).
 
+```{r car_fit_setup}
+car_fit <- lm(mpg ~ wt, data = mtcars)
+```
+
 ```{r ueb2_voraussetzungen, exercise = TRUE, exercise.setup = "silentsetup", exercise.cap = "Voraussetzungen prüfen"}
-fit <- lm(volume ~ diameter, data = trees)
-plot(fit, which = 1)
-lmtest::bptest(fit)
-plot(fit, which = 2)
+# 1. Modell aufstellen (haben wir oben auch schon mal gemacht
+# nur zur Veranschaulichung hier:)
+car_fit <- lm(mpg ~ wt, data = mtcars)
+
+# Residuen vs. vorhergesagte Werte
+plot(car_fit, which = 1)
+# Breusch-Pagan-Test
+lmtest::bptest(car_fit)
+# QQ-Plot
+plot(car_fit, which = 2)
 ```
 
-**Plot 1:**
-Hier siehst du die standardisierten Residuen abgetragen gegen unsere geschätzen Werte für die abhängige Variable. 
+**Plot 1: Residuals vs. Fitted**
+Hier siehst du die Residuen abgetragen gegen unsere vorhergesagten Werte (*Fitted*) für die abhängige Variable. 
 
-```{r standardised_resid, message = FALSE, echo = FALSE, warning = FALSE}
-plot(fit, which = 1)
+```{r car_fit_globalsetup}
+# This chunk is not used by any exercise, therefore car_fit appears in global environment
+car_fit <- lm(mpg ~ wt, data = mtcars)
 ```
 
-Das Wichtigste ist, dass die rote Linie, die den Mittelwert der Residuen darstellt, im Grunde horizontal und um Null zentriert ist. Denn das sagt uns, dass für die Residuen (also die Varianz die vom Modell nicht erklärt werden kann)  Homoskedasizität vorliegt.
+```{r standardised_resid, message = FALSE, echo = TRUE, warning = FALSE}
+plot(car_fit, which = 1)
+```
 
-Willst du auf nummer sicher gehen kannst du auch **analytisch ermitteln**, ob Homoskedastizität vorliegt. Dafür kannst du das Modell in die Funktion `bptest(model)` aus dem Paket `lmtest` geben. Der `bptest()` (Der Breusch-Pagan-Test) prüft die Nullhypothese, dass Homoskedastizität vorliegt. Ein signifikanter p-Wert sagt dir also auch hier, dass unsere Vorannahme *nicht* gegeben ist.
+Dieser Plot zeigt uns, wie gut die Vorhersage war: Sind die Residuen positiv (über 0) deutet das darauf hin, dass die Prognose an der Stelle zu niedrig gewesen sein könnte. Sind die Residuen negativ, deutet das darauf hin, dass die Prognose durch das Modell zu hoch ausgefallen ist. Wir wünschen uns, dass die rote Linie, die den Mittelwert der Residuen darstellt, im Grunde horizontal und um Null zentriert sein sollte. Denn das sagt uns, dass für die Residuen (Abweichung des Modells von der Realität)  Homoskedasizität vorliegt.
 
-```{r breusch_pagan, message = FALSE, echo = FALSE, warning = FALSE}
+Im obigen Plot wird z.B. die Reichweite des Chrysler Imperial unterschätzt, weswegen dessen Residuum sehr hoch ist. Im großen und ganzen verläuft die rote Linie relativ horizontal, und die Varianz um diese Linie scheint auch relativ gleichmäßig zu sein nach grober Einschätzung durch Augenmaß. Der Plot hilft euch vor allem, systematische Prognosefehler zu erkennen, und das ist etwas was wir nicht wollen: Die Residuen (aka Prognosefehler) müssen zufällig sein, also normalverteilt, damit die ganze Statistik drum herum funktioniert. Das heißt, auch die Streu-Breite des Prognosefehlers sollte gleichmäßig sein (aka Homeskedastizität) und nicht systematisch durch irgendwas beeinflusst. Um das per Augenmaß abzuschätzen, eignet sich dieser Plot hervorragend.
+
+Willst du auf Nummer sicher gehen kannst du auch **analytisch ermitteln**, ob Homoskedastizität vorliegt. Dafür kannst du das Modell in die Funktion `bptest()` aus dem Paket `lmtest` geben. Der `bptest()` (Breusch-Pagan-Test) prüft die Nullhypothese, dass Homoskedastizität vorliegt. Ein signifikanter p-Wert sagt dir also auch hier, dass unsere Vorannahme *nicht* gegeben ist.
+
+```{r breusch_pagan, message = FALSE, echo = TRUE, warning = FALSE}
 # Breusch-Pagan-Test H0: Homoskedastizität
-lmtest::bptest(fit)
+lmtest::bptest(car_fit)
 ```
 
 **Plot 2:**
 Hier siehst du die Verteilung der Residuen anhand des QQ-Plots und kannst sie 
 hinsichtlich der Einhaltung der **Normalverteilung** überprüfen. Je mehr die 
-Residuen von der Linie abweichen, desto eher solltest du davon ausgehen, dass 
-die Residuen nicht normalverteilt sind. Natürlich wäre auch hier ein `shapiro.test(resid(model))` 
-möglich.
+Residuen auf der Linie liegen, desto eher solltest du davon ausgehen, dass 
+die Residuen normalverteilt sind. 
 
-```{r resid_qqplot, message = FALSE, echo = FALSE, warning = FALSE}
-car_fit <- lm(mpg ~ wt, data = mtcars)
-plot(car_fit, which = 1)
+```{r resid_qqplot, message = FALSE, echo = TRUE, warning = FALSE}
+plot(car_fit, which = 2)
 ```
 
 
 ```{r vorannahmenzwei_questions}
 question_checkbox("Welche der Vorannahmen würdest du anhand der Plots als gegeben ansehen?",
-                  answer("Homoskedastizität", 
-                         message = "Sowohl der Plot 1 als auch der bp-Test deuten darauf hin,
-                         dass Homoskedastizität nicht gegeben ist."),
-                  answer("Unkorreliertheit der Residuen mit der unabhängigen Variable", 
-                        message = "Der Plot 1 zeigt einen parabelförmigen Zusammenhang
-                        der Residuen mit dem Kriterium. Daher ist eine Korrelation vorhanden."),
+                  answer("Homoskedastizität", correct = T,
+                         message = "Sowohl der Plot 1 als auch der bp-Test deuten darauf hin, dass Homoskedastizität gegeben ist."),
                   answer("Normalverteilung der Residuen", 
                         correct = T, 
-                        message = "Genau, die Residuen sind annähernd normalverteilt. Dies kannst
-                        du auch mit dem `shaprio.test()` der Residuen(`resid(fit)`) überprüfen."),
+                        message = "Genau, die Residuen sind annähernd normalverteilt. Das siehst du im QQ-Plot."),
                   allow_retry = T,
-                  random_answer_order = T
+                  random_answer_order = T,
+                  correct = random_praise("de"),
+                  incorrect = random_encouragement("de")
 )
 ```
 
 Als nächstes testen wir die **Autokorrelation** der Residuen mit dem `car::durbinWatsonTest(model)`.
 Du merkst vielleicht bereits, dass es super angenehm ist, dass die Funktionen das Modell als Input nehmen können und dementsprechen ihr Verhalten anpassen. Mal wieder ein Grund warum *R* einfach toll ist 🥰.
 
-```{r ueb3_voraussetzungen, exercise = TRUE, exercise.setup = "silentsetup", exercise.cap = "Voraussetzungen prüfen"}
-fit <- lm(volume ~ diameter, data = trees)
-car::durbinWatsonTest(fit)
+
+```{r ueb3_voraussetzungen, exercise = TRUE, exercise.setup = "car_fit_setup", exercise.cap = "Voraussetzungen prüfen"}
+car::durbinWatsonTest(car_fit)
 ```
 
 ```{r vorannahmendrei_questions}
-question_radio("Ist die Vorannahmen erfüllt, dass die Residuen keine Autokorrelation vorweisen?",
+question_radio("Ist die Vorannahme erfüllt, dass die Residuen keine Autokorrelation vorweisen? ($\\alpha = .05$)",
                   answer("Ja.", 
-                         correct = T, 
-                         message = ""),
+                         correct = F, 
+                         message = "Der $p$-Wert des Durbin-Watson-Tests ist kleiner als .05 und somit signifikant"),
                   answer("Nein.", 
                         correct = T, 
-                        message = ""),
-                  allow_retry = T
+                        message = "Genau, da $p = .03 < \\alpha = .05$ können wir die Nullhypthese verwerfen, dass es keine Autokorrelation gibt."),
+                  allow_retry = T,
+               correct = random_praise("de"),
+               incorrect = random_encouragement("de")
 )
 ```
 
 
-```{r ueb4_voraussetzungen, exercise = TRUE, exercise.setup = "silentsetup", exercise.cap = "Voraussetzungen prüfen"}
-fit <- lm(volume ~ diameter, data = trees)
-resid(fit) |> 
+```{r ueb4_voraussetzungen, exercise = TRUE, exercise.setup = "car_fit_setup", exercise.cap = "Voraussetzungen prüfen"}
+resid(car_fit) |> 
   scale() |> 
   hist()
 ```
 
 ```{r vorannahmenvier_questions}
-question_checkbox("Ist die Vorannahmen erfüllt, dass die Residuen normalverteilt sind (H0)?",
+question_radio("Ist die Vorannahme erfüllt, dass die Residuen normalverteilt sind?",
                   answer("Ja!", 
                          correct = T, 
-                         message = "..."),
+                         message = "Ja, das Histogramm sieht annähernd normalverteilt aus."),
                   answer("Nein!", 
-                        message = "..."),
-                  allow_retry = T
+                        message = "Es reicht eine annähernde Normalverteilung. Schau dir das Histogramm so lange an, bis du mir glaubst dass das als annähernde Normalverteilung gilt."),
+                  allow_retry = T,
+               correct = random_praise("de"),
+               incorrect = random_encouragement("de")
 )
 ```
 
@@ -3020,7 +3034,7 @@ plot(x = rep(20, 100), y = rnorm(100), yaxt = "n", xaxt = "n", xlab = "x", ylab 
 ```
 
 ```{r proquestion}
-question_numeric("Welchen Wert würde $R^2$ im obigen Plot annehmen?",
+question_numeric("1. Welchen Wert würde $R^2$ im obigen Plot annehmen?",
                  answer(0, correct = T),
                  allow_retry = T)
 ```
@@ -3041,19 +3055,19 @@ R^2 &= \frac{0}{\text{Gesamtvarianz in y}} = 0
 :::
 
 </details>
-
+<br>
 
 ```{r ueb_1c}
 quiz(caption = "Hypothesen der Modelltests:",
      
-     question_radio("Was ist die Nullhypothese des Lokaltests?",
+     question_radio("2. Was ist die Nullhypothese des Lokaltests?",
                     answer("Das Regressionsgewicht ($b_1$) beträgt in Wahrheit 0", correct = T),
                     answer("Das Regressionsgewicht ist größer als 1"),
     random_answer_order = T,
     allow_retry = T
 ),
 
-question_radio("Was wird im Gesamtmodelltest getestet und wie lautet deine Entscheidung basierend auf einem p-Wert < 0.05?",
+question_radio("3. Was wird im Gesamtmodelltest getestet und wie lautet deine Entscheidung basierend auf einem p-Wert < 0.05?",
     answer("Die Nullhypothese besagt, dass das der Prädiktor Varianzaufklärung bietet.",
         message = "Die H0 geht immer von keinem Effekt aus. Zudem wird beim Gesamtmodell nur im Falle einer einfachen Regression der einzelne Prädiktor getestet. Die H0 geht also davon aus, dass das Model zu keiner Varianzaufklärung beiträgt."),
     answer("Die Nullhypothese besagt, dass das Modell Varianzaufklärung bietet.",
@@ -3144,6 +3158,7 @@ und noch so vieles mehr!!
 ### Neue Funktionen
 
 Vorannahmen prüfen:
+
 | Funktion               | Beschreibung |
 |------------------------|--------------|
 | `plot(variable1, variable2)` | Erstellt ein Streudiagramm zur Überprüfung linearer Zusammenhänge und Variabilität bei Prädiktoren. |
@@ -3154,6 +3169,7 @@ Vorannahmen prüfen:
 | `resid(model) %>% scale() %>% hist()` | Erstellt ein Histogramm der standardisierten Residuen zur Überprüfung der Normalverteilung. |
 
 Modell berechnen:
+
 | Funktion               | Beschreibung |
 |------------------------|--------------|
 | `lm(outcome ~ predictor, data)`    | Berechnet ein lineares Regressionsmodell.|
