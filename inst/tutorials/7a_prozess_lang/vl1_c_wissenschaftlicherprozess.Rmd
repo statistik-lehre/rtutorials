@@ -8,7 +8,8 @@ output:
 runtime: shiny_prerendered
 bibliography: ref.json
 link-citations: TRUE
-description: "Ein grundlegender Überblick über den wissenschaftlichen Prozess als solchen mit Orientierung über Dinge, die wir dieses Semester behandeln und optionalem Nachschlagewerk der einzelnen Stationen."
+description: "Ein grundlegender Überblick über den wissenschaftlichen Prozess 
+als solchen mit optionalem Nachschlagewerk der einzelnen Stationen."
 resource_files:
 - css/boxes.css
 editor_options: 
@@ -18,6 +19,10 @@ editor_options:
 
 ```{r setup, include=FALSE}
 library(learnr)
+library(haven)
+library(car)
+library(mice)
+library(psych)
 knitr::opts_chunk$set(echo = FALSE)
 
 # data
@@ -25,165 +30,114 @@ publictr <- rtutorials::publictr
 
 ```
 
-## Inhalt
-
-In diesem Tutorial stellen wir euch die Roadmap des wissenschaftlichen
-Prozesses vor, an der wir alle weiteren Tutorials orientieren.
-
-::: aufgaberstudio
-**Aufgabe:**\
-Kopiere bitte folgenden Code in deine Konsole und drücke `Enter`:
-
-```{r pakete_installieren, message=FALSE, echo = TRUE}
-if (!require("haven")) 
-install.packages("haven")
-
-if (!require("car")) 
-install.packages("car")
-
-if (!require("psych")) 
-install.packages("psych")
-
-if (!require("mice")) 
-install.packages("mice")
-```
-
-(Hiermit werden automatisch Pakete installiert, die für dieses und die
-nächsten Tutorials gebraucht werden. Wenn ihr sie schon installiert
-habt, passiert gar nichts.)
-:::
-
-## Lernziele
-
--   <input type="checkbox" unchecked> Ich kenne die Roadmap des
-    wissenschaftlichen Prozesses und kann mich auf ihr orientieren
-    </input>
-
 ## Wissenschaftlicher Prozess
 
-Wir lieben Bilder, ihr liebt Bilder, hier gibt es Bilder:
+Heute gehen wir einmal *full circle* - den kompletten Wissenschaftlichen Prozess entlag. 
+Dabei erhälst du einen Überblick der wichtigesten Funktionen für jeden Schritt, 
+so dass du auch selbstständig deine Forschung mit *R* bewerkstelligen kannst.
+![](images/prozess.png){width="85%"}
 
-![](images/prozess.png){width="95%"}
-
-Die gesamten Tutorials orientieren sich an der "Roadmap des
-wissenschaftlichen Arbeitens". Sie soll euch zur Orientierung dienen und
-für zukünftige eigene Projekte einen strukturierten Ablauf vorgeben.
-
-Um es einfach zu halten, sind im Fließtext nur die allergröbsten
-Orientierungspunkte. Da wir es sinnvoll fanden, euch an dieser Stelle
-auch schon weitere Infos und Aufgaben zum Verständnis zu geben, gibt es
-dafür die ausklappbaren Menüs. Diejenigen, die mit einem `*`
-gekennzeichnet sind, sind wie in den anderen Tutorials vertiefendes
-Extrawissen. Die anderen Ausklappmenüs halten wir für sehr sinnvoll.
+Um es einfach zu halten, sind im Fließtext nur die groben
+Orientierungspunkte, weitere Infos gibt es in den ausklappbaren Menüs.
 
 ::: gelb
 Da wir euch quantitative Verfahren beibringen, bezieht sich die Roadmap
 speziell auf quantitative Verfahren. Solltet ihr qualitativ Forschen
-wollen, ändern sich die Schritte inhaltlich und ggf auch deren Abfolge
+wollen, ändern sich die Schritte inhaltlich und ggf. auch deren Abfolge
 teilweise.
 :::
 
-### I) Vorarbeit
+## I) Vorarbeit
 
 Ja, ein Großteil des wissenschaftlichen Arbeitens geschieht vor dem, was
-wir uns darunter Vorstellen: Mit Laborkittel und Lupe im Labor stehen
-und bunte Flüssigkeiten ineinander mixen...
+wir uns darunter Vorstellen: Die folgenden Punkte geben dir dafür einen 
+kleinen Überblick:
 
-Die Überschriften in Klammern sind zwar zentrale Bestandteile dieses
-Prozesses, doch sie sind weder Teil der Vorlesung, noch eurer kleinen
-Forschungsarbeit in diesem Modul, deswegen gehen wir nicht weiter darauf
-ein. Nichtsdestotrotz wollen wir ihren elementaren Stellenwert in diesem
-Prozess berücksichtigen.
-
-#### 1. Einarbeiten
+**1. Einarbeiten**
 
 Jede gute (wissenschaftliche) Arbeit braucht eine gute Vorarbeit: Ein
 Einlesen in die Matrie, sich mit dem Feld vertraut und neue Gedanken
 machen: was gibt es schon? was braucht es noch? Was kann/ möchte ich
-beitragen?
+beitragen? Das geschiet meist in Form einer Literaturanalyse.
 
-#### 2. Fragestellung
+**2. Fragestellung**
 
 Wenn mensch einen guten Überblick über das interessierende
 Forschungsfeld hat wird im nächsten Schritt eine konkrete Fragestellung
-entwickelt: Was GANZ GENAU möchte ich untersuchen?
+entwickelt: *Was möchte ich untersuchen?*
 
-#### 3. Operationalisierung der Variablen
+**3. Operationalisierung der Variablen**
 
 Und WIE genau möchte bzw. kann ich das untersuchen?\
-Ganz konkret: Wie kann ich das, was mich interessiert, in Zahlen oder
-Kategorien bringen?
+Ganz konkret: *Wie kann ich das, was mich interessiert, in Zahlen oder
+Kategorien bringen?*
 
-Hier wird auch das Abbruchkriterium festgelegt: Nach wie vielen
-Beobachtungen/ Zeiteinheiten etc. wird die Datenerhebung abgebrochen?
-(Meist nach Personenanzahl berechnet.)
+**4. Konkrete, testbare Hypothesen aufstellen**
 
-#### 4. Konkrete, testbare Hypothesen aufstellen
+Du fragst dich: *Welchen Sachverhalt/Effekt möchte ich untersuchen?* Du formulierst 
+für deine Forschungsfrage eine Null(H0)- und Alternativhypothese(H1):
 
-Was genau möchte ich untersuchen?
+H0: Der Sachverhalt den ich unteruschen möchte existiert nicht
+H1: Der Sachverhalt existiert. (eventuell auch bereits die Richtung des Effekts, 
+wenn aus der Literatur bekannt)
 
-#### (5. Ethikantrag)
+**(5. Ethikantrag & Datenschutzerklärung)**
 
-#### (6. Aquirierung von Geldern)
+Wenn du als Forschungsgegenstand mit Menschen zu tun hast solltest du vorher 
+abklären ob du einen Ethikantrag bei der Ethikkommission deiner Universität oder 
+auch eine Datenschutzerklärung mit der Datenschutzbeauftragten Person.  
 
-#### (7. Präregistrierung)
+**(6. Präregistrierung)**
 
-### II) Messen / Generieren von Daten
+Es ist gute wissenschaftliche Praxis deine Studie vor der Durchführung auf einem 
+*open science portal* wie dem Open Science Framework (OSF) für eine Präregistrierung
+anzumelden. Mehr dazu erfährst du [hier](https://www.cos.io/initiatives/prereg).
 
-#### 1. Vorbereitung
+## II) Messen / Generieren von Daten
 
-Hier werden, je nach dem Forschungsdesign vorbereitungen getroffen:
 
--   Online-Fragebögen werden ins Netz gestellt und verschickt
--   Pen & Paper Fragebögen werden designed und ausgedruckt
--   Die Aquirierung von Teilnehmenden
--   etc.
-
-#### 2. Erhebung
+**1. Erhebung**
 
 Der Teil, bei dem euch auf dem Campus Süßigkeiten für Studienteilnahmen
 angeboten werden (als teilnehmende Person).\
-Für die Forschenden Personen ist dieses der Teil, in dem sie Umfrage
+Für die Forschenden Personen ist dieses der Teil, in dem sie Umfragen
 durchführen, Einheiten (bspw. Fahrräder am Campus) zählen oder messen,
-wie lange eine Person für eine bestimmten braucht. Das wird so lange
-gemacht, bis das Abbruchkriterium (eine bestimmte Personenanzahl)
-erreicht ist.
+wie lange eine Person für eine bestimmten braucht. 
 
-### III) Datenaufbereitung
 
-Um ehrlich zu sein: Der ätzenste und gleichzeitig wichtigste Schritt des
-ganzen Prozesses. Hier bringt ihr die Daten aus der vorhandenen in eine
-verarbeitbare Form. Das konkrete Vorgehen hängt stark von den
-vorliegenden Daten ab. Deswegen treffen nicht alle der folgenden
-Schritte auf jedes Projekt zu.
+**2. Digitalisieren**
 
-#### 1. Digitalisieren
-
-Wenn ihr die Daten analog gesammelt habt (Pen & Paper Umfrage, zählen
-von Fahrrädern auf dem Campus etc.) müssen diese erstmal in eine für den
-Computer lesbare Form gebracht werden: Sie werden digitalisiert!\
-Es gibt Möglichkeiten, sie direkt in R zu schreiben, das bringt aber
-keinen Spaß. Die eleganteste Version ist, sie in Excel oder Open Office
-in eine Tabelle zu schreiben und diese dann zu speichern.
+Hast du die Daten analog gesammelt (Umfrage, Zählungen auswerten, etc.), 
+müssen diese erstmal in eine für den Computer lesbare Form gebracht werden: 
+Sie werden digitalisiert!\
+Es gibt Möglichkeiten, sie direkt in *R* zu schreiben, das bringt aber
+wenig Spaß. Die eleganteste Version ist, sie in Excel oder Open Office
+in eine Tabelle zu schreiben und diese dann zu importieren.
 
 <details>
 
-<summary><a>▼ \* Hilfreiche Aspekte bei der Digitalisierung in Excel
+<summary><a>▼ \* Hilfreiche Aspekte vor der Digitalisierung
 </a></summary>
 
 ::: infobox
-Damit R später gut mit den Daten umgehen kann und keine Fehler oder
+Damit *R* später gut mit den Daten umgehen kann und keine Fehler oder
 fehlenden Werte liest, ist es ratsam, auf ein paar zentrale Punkte zu
 achten:
 
-1.  **Sortierung**: Jede Spalte ist eine Variable, jede Zeile eine
-    Beobachtungseinheit, jede Zelle ein Wert!
+1.  **tidy data**: Du sparst dir jede Menge mühe, wenn du die folgenden 
+Prinzipien beachtest:
+
+- Jede Spalte ist eine Variable, 
+- jede Zeile eine Beobachtungseinheit, 
+- jede Zelle ein Wert!
+
 2.  **Datenformatierung**: Stelle sicher, dass die Daten korrekt
     formatiert sind. Dies bedeutet, dass numerische Werte als Zahlen zu
     formatieren (achte auch auf Dezimaltrennzeichen), Datumsangaben als
     Datumswerte usw. Bleibe dabei so grundlegend wie möglich und
     vermeide spezielle Zeichen oder Formatierungen, die zu Problemen
     führen könnten.
+    
 3.  **Spaltenüberschriften**: Verwende klare, kurze (am besten 1 Wort)
     und aussagekräftige Spaltenüberschriften. Diese werden als
     *Variable-Namen* verwendet, wenn die Daten in R eingelesen werden.
@@ -191,182 +145,105 @@ achten:
     R nicht als gültige Variablennamen verwendet werden können. Wenn du
     die Datei als CSV (s.u.) speichern möchtest (du möchtest sie als CSV
     speichern!), achte darauf, dass die Spaltenüberschriften in der 1.
-    Zeile sind und NUR in der ersten Zeile.
-4.  **Inhalte**: Auf das Datenblatt kommen *NUR* die Variablen. (Jede
-    Spalte ist eine Variable, Jede Zeile eine Beobachtung/ Person!) Für
-    die genauere Beschreibung der einzelnen Variablen (z.B. die
-    konkreten Fragen etc.) nutze eine *eigene Datei*.
-5.  **Leere Zellen und fehlende Werte**: Beachte, wie du leere Zellen
+    Zeile sind und NUR in der ersten Zeile.´
+    
+4.  **Leere Zellen und fehlende Werte**: Beachte, wie du leere Zellen
     und fehlende Werte behandeln möchtest. In R werden fehlende Werte
     oft mit "`NA`" repräsentiert. Achte darauf, *konsistent* mit
     fehlenden Werten umzugehen, um spätere Analysen nicht zu
     beeinträchtigen.
-6.  **Textkodierung**: Wenn die Daten Text enthalten (z.B. bei
+    
+5.  **Textkodierung**: Wenn die Daten Text enthalten (z.B. bei
     kategorischen Variablen), achte darauf, die richtige Textkodierung
     zu verwenden. `UTF-8` ist eine gängige Textkodierung, die sowohl in
-    Excel als auch in R unterstützt wird. (Hier kann es noch Probleme
-    mit den verschiedenen Betriebssystemen geben. Für eine Vertiefte
-    Betrachtung bitte unter [Wikipedia])
-7.  **Speichern / CSV-Format**: Speichere die Daten am besten im `.csv`
-    (Comma-Separated Values) Format. CSV ist ein einfaches Textformat,
-    das von R problemlos eingelesen werden kann.
-8.  **Spaltennamen in der ersten Zeile**: Nochmal, denn es ist wirklich
-    wichtig: Wenn Du das CSV-Format verwendest, stelle sicher, dass die
-    erste Zeile die Spaltenüberschriften enthält. Dies erleichtert das
-    Einlesen der Daten in R.
-9.  **Speicherort**: Merke dir den den Speicherort der Datei, in der du
+    *Excel* als auch in *R* unterstützt wird. 
+
+6.  **Speicherort**: Merke dir den den Speicherort der Datei, in der du
     die Daten gespeichert hast. Du benötigen diesen Pfad, um die Daten
     in R einzulesen. Noch besser: lege in deinem R-Projekt einen Ordner
     namens "`data`" an. Dort kannst du alle Datensätze für das Projekt
     speichern und dann ist der Pfad zu den daten immer
     `"data\datensatz.csv"`
-10. **Datumsformate**: *Spoiler*: In jedem Fall / jedem Programm sind
-    Datumsangaben pain in the ass. Um es handhabbar zu halten achte
-    dabei auf Folgendes: Stelle sicher, dass Datumsangaben im richtigen
+    
+7. **Datumsformate**: Stelle sicher, dass Datumsangaben im richtigen
     Format erfasst werden. In Excel könnten Datumsangaben je nach Region
     unterschiedlich formatiert sein (z. B. `MM/DD/YYYY` oder
-    `DD.MM.YYYY`). Stelle sicher, dass Du das richtige Format
-    verwendest, das später in R interpretiert werden kann.
+    `DD.MM.YYYY`). 
 
 ![](images/venn.jpg){width="25%" style="display:block; margin:auto;"}
 :::
 
 </details>
 
-#### 2. Datenimport
+### 2. Datenimport
 
-Als nächstes wird der (digitalisierte) Datensatz in R eingelesen.
-
-<details>
-
-<summary><a>▼ \* Übersicht über Datenformate </a></summary>
-
-Zuerst brauchen wir ein grundlegendes Verständnis davon, wie Daten für R
-aussehen:
-
-![](images/csv.png){width="95%" style="display:block; margin:auto;"}
-![](images/rda.png){width="95%" style="display:block; margin:auto;"}
-![](images/sav.png){width="95%" style="display:block; margin:auto;"}
-
-Oben seht ihr ein und denselben Datensatz in drei verschiedenen Formaten
-und wie er aussieht, wenn er nicht in R eingelesen ist.
-
-1.  **CSV (Excel)**: Ergibt einigermaßen Sinn für unser menschliches
-    Auge.
-2.  **RDA (R)**: Viele nicht lesbare Zeichen. Ist binär und enthält
-    spezifische Informationen für R.
-3.  **SAV (SPSS)**: Hier wirds richtig crazy für uns: Das ist eine
-    Mischung aus binär-Code und Metainformationen, die nur SPSS
-    entschlüsseln kann.
-
-Zum Glück müssen wir uns damit nicht weiter auseinander setzen. Es
-reicht, dass ihr das einmal gesehen habt.
-
-Wie ein und der selbe Code je nach Sprache schon für uns Menschen
-unterschiedlich aussieht, geht es auch R. Um Daten in R einzulesen,
-brauchen wir verschiedene Befehle. Quasi um R zu sagen, welche
-Übersetzungsprozesse R machen muss, um die Daten lesen und für uns
-Menschen verständlich anzeigen zu können.
-
-</details>
-
-<details>
-
-<summary><a>▼  Und deren Import **(mit Aufgabe)**</a></summary>
-
-Alle Datensätze, die wir in dieser gesamten Veranstaltung verwenden, hat
-Lukas netterweise direkt ins Paket eingebunden, das heißt, ihr müsst für
-die Tutorials und Abgaben gar nichts tun, da die Daten bereits
-eingelesen sind. Um R eine Orientierung zu geben, welchen Datensatz ihr
-verwenden wollt tippt folgendes: `rtutorials::datensatz`\
-Sobald ihr das warme Nest dieses Tutoriums verlasst, werdet ihr
-allerdings mit anderen Datenformaten konfrontiert sein. Desewgen wollen
-wir euch die drei wichtigsten Befehle mit auf den Weg geben:
+Als nächstes liest du deine Daten in *R* ein. Jetzt kommt es darauf an, in welcher
+Form diese Daten vorliegen, dementsprechend brauchen wir verschiedene Funktionen:
 
 1.  CSV: `daten <- read.csv("data/datensatz.csv")`
-2.  RDA: `daten <- load("data/datensatz.rda")`
-3.  SAV: `daten <- haven::read_sav("data/datensatz.csv")`
+2. Ecxel: `daten <- openxlsx::read.xlsx("data/datensatz.xlsx)`
 
-::: aufgaberstudio
-**Aufgabe:**\
-Lies den Datensatz `publictr.rda` aus dem Ordner `data` in dein Skript
-zu dieser Veranstaltung ein.\
-(Du könntest auch einfach `rtutorials::publictr` nutzen. Für
-Übungszwecke gehen wir aber hier den längeren Weg.)
-:::
-
-</details>
+Beachte das für manche Funktionen zuerst das entsprechende Paket (vor dem `::`) 
+installiert werden muss (`install.packages("openxlsx")`).
 
 <details>
 
-<summary><a>▼ \* Was passiert in dem Code? </a></summary>
-
+<summary><a>▼ \* Was macht der Code? </a></summary>
+::: gelb
 -   `data`: Zuerst erstellen wir ein Objekt, dass wir in diesem Fall
     `data` nennen. Bis jetzt ist es wie eine leere Box.
--   `<-`: Dann sagen wir R, das es was in die Box tun soll. Das ist eine
+-   `<-`: Dann sagen wir *R*, das es was in die Box tun soll. Das ist eine
     sehr einfache Funktion.
 -   `load()`: Auch das ist eine Funktion, es läd einen `rda` Datensatz.
 -   `"data/publictr.rda"`: Der Datensatz (`"publictr.rda"`) und wo er
     liegt (`"data/"`)
 
-Also nochmal in langsam und zum mitschreiben. Wir sagen zu R: Gehe bitte
+Also nochmal in langsam und zum mitschreiben. Wir sagen zu *R*: Gehe bitte
 diesen Weg (`"data/"`) und nimm diesen spezifischen, dort gespeicherten
 Datensatz (`"publictr.rda"`) und lade ihn ein (`load()`). Dann speichere
 ihn im Arbeitsspeicher (`<-`) unter diesem Namen (`data`).
-
+:::
 </details>
+
+</br>
 
 <details>
 
-<summary><a>▼ \* Bennenung von Datensätzen </a></summary>
+<summary><a>▼ \* Daten über die grafische Oberfläche einlesen </a></summary>
+::: gelb
+1) Steuere wieder das Fenster unten rechts in der R Studio Oberfläche an.
+![](images/rechts.png){width="100%"}
 
-Im Grunde ist es echt egal, wie ihr eure Datensätze in R nennt.
 
-Es gibt klassischerweise zwei Heransgehensweisen: sehr allgemein `data`
-oder sehr spezifisch den Namen, also `publictr`.
+2) Navigiere dort zum Reiter "Files", falls dieser nicht schon ausgewählt ist.
+![](images/files.png){width="100%"}
 
-**Verwendung von "data":** - Vorteile: - *Allgemeiner Begriff:* Der Name
-"data" ist ein allgemeiner Begriff, der leicht zu merken (und tippen)
-ist. - *Einfachheit:* Die Verwendung von "data" kann den Code einfach
-halten, da der Name kurz und prägnant ist. - *Wiederverwendbarkeit:* Da
-"data" so allgemein ist, könnte der Name für verschiedene Arten von
-Datensätzen verwendet werden.
+3) Wähle dort die Datei in deinem `working directory` aus, die du in R importieren 
+möchtest (hier CSV) und klicke auf "Import Dataset".
+![](images/selectcsv.png){width="50%"}
 
--   Nachteile:
-    -   *Verwechslungsgefahr:* Da "data" ein häufig verwendetes Wort
-        ist, könnten Verwechslungen oder Konflikte mit anderen
-        Variablennamen und Argumenten in Funktionen auftreten.
-    -   *Mangelnde Beschreibung:* Der Name "data" gibt keine Hinweise
-        auf den Inhalt oder Zweck des Datensatzes, was zu Verwirrung
-        führen könnte.
-    -   *Kollisionen:* Wenn mehrere Datensätze "data" heißen, könnte es
-        zu unerwarteten Konflikten führen.
 
-**Verwendung von "publictr":** - Vorteile: - *Spezifizität:* Der Name
-"publictr" ist spezifisch und weist auf den Inhalt des Datensatzes
-hin. - *Vermeidung von Verwechslungen:* Ein spezifischer Name wie
-"publictr" kann Verwechslungen mit anderen Variablennamen reduzieren. -
-*Kontextbetonung:* Der Name kann den Fokus auf den Kontext des
-Datensatzes legen.
+![](images/import_dataset.PNG){width="40%"}
+4) Ein Fenster öffnet sich in dem du eine Vorschau der Daten siehtst. 
+- Unten bei "Import Options" kannst du die Einstellungen ändern, 
+- Rechts (*blau*) kannst du den Code zum Import mit diesen Einstellungen in die 
+Zwischenablage speichern 
+- und ganz unten rechts (*rot*) den Import durchführen.
 
--   Nachteile:
-    -   *Mögliche Überkomplexität:* Sehr spezifische Namen könnten zu
-        lang oder komplex werden und das Schreiben von Code erschweren.
-    -   *Mögliche Vergessenheit*: Ein komplexer Name wie "publictr"
-        könnte schwer zu merken sein, insbesondere wenn er selten
-        verwendet wird.
-    -   *Eingeschränkte Wiederverwendbarkeit:* Ein sehr spezifischer
-        Name macht das kopieren von Code fürs nächste Projekt
-        anstrengender.
+![](images/grafisch.PNG){width="100%"}
 
+5) Nutze die Zwischenablage, um diesen Code deinem Skript zuzufügen, damit du 
+diese Schritte für das nächste Öffnen deines Datenasatzes nicht mehr benötigst.
+:::
 </details>
 
-#### 3. Datenaufbereitung / Cleaning
+Ausführliche Anleitungen findest du im Tutorial `3a_import`.
+
+### 3. Datenaufbereitung / Cleaning
 
 Jetzt kommt der Teil, der meistens lange dauert, in der Lehre häufig
-übersprungen wird und ganz objektiv am wenigsten Spaß macht: Die Daten
-müssen aufbereitet werden. Und gleichzeitig: wer sich hier Zeit lässt
-und sauber arbeitet hat später keine oder zumindest kaum Probleme bei
+übersprungen wird: Die Daten müssen aufbereitet werden. Wer sich hier Zeit lässt
+und sauber arbeitet, hat später keine oder zumindest kaum Probleme bei
 der Analyse. Wenn dieser wichtige Schritt abgeschlossen ist, kann der
 Spaß losgehen.
 
@@ -375,323 +252,272 @@ das
 [Skript](https://github.com/statistik-lehre/rtutorials/blob/main/data-raw/publictr.R)
 ansehen, in dem der `publictr` Datensatz aufgeräumt wird.
 
+Wichtig für dich **Check your Data**:
+
+*Gibt es Ausreißer in deinen Daten?* 
 <details>
+<summary><a>▼ \* Bei Verdacht auf Ausreißern: </a></summary>
+::: gelb
+Gründe für Ausreißer:
 
-<summary><a>▼  Cleaning für dieses Tutorial </a></summary>
+-   Mess- oder ggf. Tippfehler
+-   echter Ausreißer (Daten gehören nicht zur Population)
 
-Für das Beispiel in diesem Tutorial brauchen wir auch ein bisschen
-cleaning. Das machen wir jetzt zusammen. Für mehr und ausführlicher
-schaut gerne im folgenden Tutorial vorbei. Hier machen wir der
-einfachehit halber nur das, was wir auch wirklich brauchen.
+Ein Beispiel: Im Falle eines Fragebogens kann es z.B.
+passieren, dass die Probanden eine Frage falsch verstanden haben. Wird
+nach dem Geburtsjahr gefragt und du hast einige Antworten die
+offensichtilich die Anzahl an Jahren sind (z.B: `61`) handelt es sich um
+einen *Mess- bzw. Tippfehler*. Ist die Antwort hingegen `3050` können wir auch
+davon ausgehen, dass der *Wert nicht zu unserer Population* gehört, da dies als 
+Geburtsjahr nicht möglich ist. Haben wir als Antwort jedoch den Wert `1920` ist 
+dies zwar ein extremer Wert, aber möglich wäre es durchaus.
 
-Wenn wir uns die Daten anschauen wird deutlich, dass die
-Erhebungseinheiten sowohl die Einzelnen Verkehrsmittel beinhaltet als
-auch deren Zusammenfassung. Das macht Analysen witzlos, da jetzt jede
-Einheit doppelt vorkommt. Wir kreieren also einen neuen Datensatz, in
-dem die Zeilen rausschmeiß, welche die anderen Einträge zusammenfassen.
+Mehr und ausführlichere Infos zum Thema Ausreißer und Methoden wie du damit
+verfahren solltest findest du 
+[hier.](https://statistikguru.de/r/ungepaarter-t-test-r/umgang-mit-ausreissern-2.html)
 
-```{r cleaning, echo = T, context = "setup"}
-# Hier erstellen wir einen Index, in dem die position aller Beobachtungseinheiten
-# gespeichert ist, welche NICHT "insgesamt" als Typ angegeben haben
-index_to_keep <- which(!grepl("insgesamt", publictr$Typ))
+Eine der Methoden (Ausschluss von Ausreißern, die weiter als der 1.5fache *IQR* von 50% unserer
+Daten entfernt liegt) würdest du wie folgt umsetzen:
 
-# Jetzt erstellen wir einen neuen Datensatz, welcher nur die
-# Einträge aus dem alten Datensatz OHNE "insgesamt" enthält
-filtered_data <- publictr[index_to_keep, ]
+```{r ausreisser1, exercise = TRUE, exercise.cap = "Ausreißer beseitigen"}
+# zuerst berechnen wir die Grenzwerte Q1 & Q3, sowie die Länge der IQR
+Q1 <- quantile(einkaufen$weg, .25, na.rm=T)
+Q3 <- quantile(einkaufen$weg, .75, na.rm=T)
+IQR <- IQR(einkaufen$weg, na.rm=T)
+
+# dann können wir diese benutzen, um ein Subset aus einkaufen zu filtern, bei dem diese Werte ausgeschlossen werden
+no_outliers <- einkaufen |> 
+  filter(weg > (Q1 - 1.5*IQR) & weg < (Q3 + 1.5*IQR))
+
+# mit `nrow` können wir feststellen, wie viele Zeilen von einkaufen in no_outliers rausgefiltert wurden 
+nrow(einkaufen) - nrow(no_outliers)
+```
+:::
+</details>
+
+</br>
+
+
+*Gibt es Beobachtungen mit vielen NA Einträgen?*
+<details>
+<summary><a>▼ \* Bei großen Mengen an NAs im Datensatz </a></summary>
+::: gelb
+**NAs ausschließen**
+
+Besonders in Fragebögen kommt es oftmals dazu, dass Personen den
+Fragebogen nach einer bestimmten Zeit abbrechen und somit viele `NA`s in unserem 
+Datensatz entstehen. Da diese Fälle für eine Analyse meist unbrauchbar sind, 
+gibt es auch hier eine Möglichkeit unseren Datensatz davon zu "reinigen".
+
+```{r narm, exercise = TRUE}
+# nur rows mit weniger oder genau 50% NA Werten werden beibehalten
+einkaufen[rowMeans(is.na(einkaufen)) <= .5,]
 ```
 
-<\details\>
+Doch auch hier ist Vorsicht geboten. Der Schwellenwert (hier 50%) sollte im 
+Vorhinein gut überlegt sein und der **Auschluss der Daten gut dokumentiert 
+und berichtet** werden!
+:::
+</details>
+</br>
 
-### IV) Orientierung in den Daten
 
-Jetzt, wo wir alle unsere Daten in R eingelesen und aufgeräumt haben,
+*Sind deine Daten im richtigen Format vorhanden?* 
+
+Das Paket `dyplr` aus dem `Tidyverse` hat einige nützliche Funktionen dafür:
+
+-   `rename()` lässt dich deine Variablen umbenennen.
+-   `select()` ermöglicht es dir, Variablen anhand ihrer Namen
+    auszuwählen.
+-   `filter()`, um Fälle basierend auf ihren Werten auszuwählen.
+-   `summarise()`, fasst mehrere Werte zu einer einzigen Zusammenfassung
+    zusammen.
+-   `arrange()`, um die Reihenfolge der Zeilen zu ändern.
+-   `group_by()`, um Funktionen gruppenweise durchzuführen.
+
+Ausführliche Anleitungen findest du im Tutorial `4d_datawrangling`.
+
+## IV) Orientierung in den Daten
+
+Jetzt, wo du deine Daten in *R* eingelesen und aufgeräumt hast,
 wollen wir uns einen Eindruck verschaffen: Was haben wir da eigentlich
 erhoben?
 
-#### 1. Numerisch
+**1. Numerische Orientierung**
 
-##### a) Kompletter Datensatz
-
-<details>
-
-<summary><a>▼ Ein paar sehr nützliche Befehle, um sich einen Überblick
-über den Datensatz als ganzes zu verschaffen **(mit Aufgabe)**
-</a></summary>
-
--   `data`: Zeigt den Datensatz in der Konsole. Je mehr Variablen und
-    Beobachtungseinheiten dieser Datensatz hat, desto unübersichtlicher
-    wird die Geschichte. Zudem haben wir das gleiche Problem, wie im
-    reinen R: sobald wir was neues rechnen rutschen die Infos für uns
-    nach oben und wir scrollen uns dumm und dusselig. Viel praktischer
-    wäre doch:
--   `View(data)`: Öffnet den kompletten Datensatz als klassische Tabelle
-    in einem neuen Tab im Skript-Fenster. Das eignet sich am besten um
-    ein gutes Gespür für den Datensatz zu bekommen und immer wieder
-    darauf schauen zu können. Dann gibt es noch:
--   `head(data)`: Zeigt die ersten paar Zeilen eines Datensatzes
--   `car::some(data)`: Zeigt ein paar zufällige Zeilen des Datensatzes.
--   `names(data)`: Variablennamen
--   `ncol(data)`: Gibt die Anzahl der Spalten des Datensatzes an (=
-    Anzahl der Variablen)
--   `nrow(data)`: Gibt die Anzahl der Zeilen des Datensatzes an (=
-    Anzahl der Beobachtungseinheiten). Diese beiden eignen sich auch
-    gut, um heraus zu finden, ob alles mit dem einlesen so geklappt hat,
-    wie gewünscht.
-
-::: aufgaberstudio
-**Aufgabe:**
-
-1.  Öffne `publictr` in einem neuen Fenster und mach dich mit der
-    Tabelle vertraut.
-2.  Wie heißen die Variablen?
-3.  Finde heraus, wie viele Zeilen und Spalten `publictr` hat.
-:::
-
-<\details\>
-
-##### b) Einzelne Variablen
-
-<details>
-
-<summary><a>▼ Aber auch inhaltlich interessieren uns die einzelnen
-Variablen. **(mit Aufgabe)** </a></summary>
+**a) kompletter Datensatz**
 
 ::: gelb
-**Achtung**
+Nützliche Befehle, um sich einen Überblick über den Datensatz zu verschaffen:
 
-**1.**\
-Die Funktionen, welche sich mit NAs auseinandersetzen werden z.T. auch
-schon für das cleaning gebraucht. Und viele der Funktionen lernt ihr in
-ihren Einzelheiten auch in anderen Tutorials kennen, deswegen gehen wir
-hier nicht ins Detail drauf ein. Und sonst gibt es ja auch immer die
-Möglichkeit das Manual mittels `?funktion()` aufzurufen.
+    
+| Funktion               | Beschreibung                                                                      |
+|------------------------|-----------------------------------------------------------------------------------|
+| `data`                 | Zeigt den Datensatz in der Konsole. Bietet eine Übersicht über den gesamten Datensatz, kann jedoch unübersichtlich werden.            |
+| `View(data)`           | Öffnet den kompletten Datensatz als klassische Tabelle in einem neuen Tab im Skript-Fenster. Gut geeignet, um den Datensatz detailliert zu erkunden.  |
+| `head(data)`           | Zeigt die ersten paar Zeilen des Datensatzes an. Nützlich, um einen schnellen Überblick zu erhalten.                                     |
+| `car::some(data)`      | Zeigt einige zufällige Zeilen des Datensatzes. Hilfreich, um eine Stichprobe der Daten anzuzeigen.                                        |
+| `names(data)`          | Gibt die Variablennamen des Datensatzes zurück.                                                                                            |
+| `ncol(data)`           | Gibt die Anzahl der Spalten (Variablen) im Datensatz an.                                                                                     |
+| `nrow(data)`           | Gibt die Anzahl der Zeilen (Beobachtungseinheiten) im Datensatz an.                                                                         |
+:::
 
-**2.**\
-Viele der unten aufgeführten funktionen funktionieren nur, wenn keine
-Daten fehlen. Wenn ihr euch bereits mit den Missings auseinandergesetzt
-habt oder nur einen ersten Eindruck bekommen wollt, könnt ihr in vielen
-der jeweiligen funktionen das argument `na.rm = T` setzen (na = NA/ not
-available; rm = remove; T = TRUE/ ja, genau das will ich). Das könnte
+</br>
+
+**b) Einzelne Variablen**
+
+::: gelb
+Aber auch inhaltlich interessieren uns die einzelnen
+Variablen.
+
+Viele der unten aufgeführten Funktionen funktionieren nur, wenn keine
+Daten fehlen. Wenn du dich bereits mit den fehlenden Werten auseinandergesetzt
+hast oder du nur einen ersten Eindruck bekommen wollt, kannst du in vielen
+der jeweiligen Funktionen das Argument `na.rm = T` setzen (`na` = NA/ not
+available; `rm` = remove; `T` = TRUE/ ja, genau das will ich). Das könnte
 dann so aussehen: `mean(data$variable, na.rm = T)`.
+
+
+| Funktion                       | Beschreibung                                                                                               |
+|--------------------------------|-----------------------------------------------------------------------------------------------------------|
+| `sum(is.na(data$variable))`    | Zählt, wie viele fehlende Werte in einer bestimmten Variable vorhanden sind.                                 |
+| `sum(is.na(data))`             | Zählt, wie viele fehlende Werte im gesamten Datensatz vorhanden sind.                                        |
+| `mean(data$variable)`          | Berechnet den Mittelwert (Durchschnitt) einer bestimmten Variable.                                           |
+| `sd(data$variable)`            | Berechnet die Standardabweichung einer Variable.                                                           |
+| `range(data$variable)`         | Ermittelt die Spannweite (Differenz zwischen Maximum und Minimum) einer Variable.                           |
+| `min(data$variable)`           | Gibt den kleinsten Wert in einer Variable an.                                                               |
+| `max(data$variable)`           | Gibt den größten Wert in einer Variable an.                                                                |
+| `table(data$variable)`         | Zeigt alle eindeutigen Werte in einer Variable und ihre absolute Häufigkeit an. Besonders nützlich für nominale oder ordinal skalierte Daten. |
+| `psych::describe(data)`        | Wendet viele der oben genannten Funktionen auf den gesamten Datensatz an und bietet eine umfassende Übersicht.                                           |
+| `summary(data)`                | Ähnlich wie `describe()`, zeigt jedoch zusätzlich fehlende Werte und einige andere Verteilungsparameter wie Schiefe und Kurtosis.                        |
+| `class(data$variable)`         | Gibt die Klasse oder den Datentyp einer bestimmten Variable an.                                                |
+| `typeof(data$variable)`        | Gibt den internen Datentyp einer Variable an.                                                                |
+
 :::
 
--   `$`: Eine Variable in einem Datensatz wird mit einem `$`
-    angesprochen. Das sieht dann so aus: `data$variable`
--   `sum(is.na(data$variable))`: Wie viele Werte fehlen in dieser
-    Variable?
--   `sum(is.na(data))`: Wie viele Werte fehlen im Datensatz insgesamt?
--   `mice::md.pattern(data)`: Eine ganz zauberhafte Funktion, die etwas
-    über die Struktur von fehlenden Daten aussagt. Wenn wir um die
-    Systematik der Wissen gibt es unterschieldich komplexe
-    Herangehensweisen. Wir brauchen erstmal nur die leichteste: Schau in
-    deiner Tabelle (`View()`), ob du das Muster erkennst.
--   `mean(data$variable)`: Gibt den Mittelwert der Variable aus.
--   `sd(data$variable)`: Standardabweichung
--   `range(data$variable)`: Spannweite
--   `min(data$variable)`: Minimaler eingetragener Wert
--   `max(data$variable)`: Maximaler eingetragener Wert
--   `table(data$variable)`: Alle Werte des Vektors inklusive deren
-    absolute Häufigkeit. Eignet sich besonders für nominal und ordinal
-    (inkl. [Likert](https://de.wikipedia.org/wiki/Likert-Skala)
-    skalierten Daten)
--   `psych::describe(data)`: Wendet die meisten der og. Funktionen und
-    noch mehr für den kompletten Datensatz an. Feine Funktion, um eine
-    schnelle Übersicht zu erhalten. (Variablen, die mit einem Sternchen
-    versehen sind, interpretiert R als nominal.)
--   `summary(data)`: Ähnlich wie `describe()`, gibt zusätzlich noch die
-    NAs mit an und dafür ein paar andere Verteilungsparameter (Schiefe
-    und Wölbung) nicht.
--   `class(data$variable)`: Gibt die Klasse oder den Datentyp des
-    R-Objekts an.
--   `typeof(data$variable)`: Gibt den internen Datentyp des Objekts an.
-    -   Unterscheidung: `class()` sagt etwas darüber aus, wie R das
-        Objekt speichert und liest. `typeof()` sagt etwas darüber, wie
-        der Rechner das Objekt speichert und liest, also auf einer
-        grundlegenderen Ebene. Darum zu wissen kann essentiell sein, da
-        es manchmal der Grund ist, warum Funktionen nicht funktionieren.
-        (Für alle, die es gerne ausführlicher und gleichzeitig noch
-        verständlich lesen wollen gehts
-        [hier](https://r-intro.tadaa-data.de/datentypen.html) entlang)
+</br>
 
-::: aufgabe
-**Aufgabe**\
-Schau dir den oben gesäuberten Datensatz `filtered_data` an und
-beantworte folgende Fragen:
-
-1.  Wie viele Werte fehlen in dem Datensatz insgesamt?
-2.  Haben die fehlenden Werte ein Muster?
-3.  Wenn ja, welches? Wie lässt sich das erklären?
-4.  Wie viele Personen wurden im Durchschnitt transportiert?
-5.  Mit welcher Standardabweichung?
-6.  Was ist die minimale Anzahl an Personenkilometern?
-7.  Was die maximale?
-8.  Welche verschiedenen Typen von Transportmitteln wurden untersucht?
-9.  In welchem Zeitraum wurden die Daten erhoben?
-10. Welche Variablen sind für R nominal, welche numerisch?
-:::
-
-```{r IV1-solution}
-sum(is.na(filtered_data))
-
-?mice::md.pattern()
-mice::md.pattern(filtered_data, rotate.names = T)
-
-filtered_data
-# In R Studio nehmt ihr hier bitte View(), das ist übersichtlicher und schöner
-
-mean(filtered_data$Personen, na.rm = T)
-
-sd(filtered_data$Personen, na.rm = T)
-
-min(filtered_data$Personenkilometer, na.rm = T)
-
-max(filtered_data$Personenkilometer, na.rm = T)
-
-table(filtered_data$Typ)
-
-table(filtered_data$Jahr)
-
-psych::describe(filtered_data)
-```
-
-```{r IV1, exercise = TRUE}
-
-```
-
-<\details\>
-
-Jetzt wo wir (über `View()`) die Ahnung haben, dass die NAs einem bestimmten Muster folgen, wollen wir uns das nochmal etwas genauer ansehen
-
-```{r IV1_NAs}
-# filtered_data zeigt einfach unseren Datensatz an
-# durch die eckigen Klammern direkt dahinter sagen wir R, welche Daten wir genau aus dem Datensatz sehen wollen
-# Das ansteuern geht so: daten[Zeilen, Spalten]
-# wir sagen also: Nimm von unseren filtered_data folgende Zeilen mit allen Spalten (deswegen steht hinter dem Komma nichts mehr)
-# cmplete.cases zeigt alle kompletten Fälle an, also alle Zeilen, die KEINE NAs beinhalten
-# ! (Ausrufezeichen) ist eine VERNEINUNG, also werden uns alle NICHT VOLLSTÄNDIGEN Zeilen angezeigt
-# das filtered_date IN dem complete.cases() Argument brauchen wir, weil R manchmal mehr Input braucht, als unser logischer Verstand das nachvollziehen kann.
-filtered_data[!complete.cases(filtered_data), ]
-```
-
-Wir sehen, dass es zwei Gründe für die NAs gibt:
-  
-  1. Alle `Linienfernverkehr mit Omnibussen` Einträge in den Jahren 2013-2015 fehlen. Das kann ganz unterschiedliche Gründe haben. Hier gibt es verschiedene und valide Möglichkeiten, mit umzugehen. Wichtig ist nur, wie immer, die Entscheidung gut zu dokumentieren und begründen.
-  2. ALLE Daten ab Quartal 2022/2 fehlen. Das deutet darauf hin, dass diese Zeilen schon erstellt aber noch nicht ausgefüllt wurden bzw. der Datensatz veröffentlicht wurde, bevor die bereits erstellten Zeilen ausgefüllt wurden. Das können wir getrost einfach rauslöschen.
-  
-In unserem Fall nutzen wir den Holzhammer: wir löschen alle Zeilen, in denen ein NA vorhanden ist. Das geht in diesem Fall, weil wir genau nachvollziehen können, warum welche Daten fehlen und wir verlieren dadurch auch keine Daten, weil ja alle interessanten Variablen leer sind. Wenn das NA Muster komplexer ist, bedarf es begründete Entscheidungen. 
-
-```{r IV1_cleaning}
-# wir speichern unsere Daten im selben Objekt wie vorher, bedeutet wir überschreiben die bereits vorhandenen Daten
-# na.omit() schmeißt alle Zeilen raus, in denen ein einziges NA ist. Das ist nicht immer wünschenswert!
-filtered_data <- na.omit(filtered_data)
-```
-
-
-#### 2. Grafisch (quick & dirty)
+**2. Grafische Orientierung**
 
 Die Breitbandverbindung in unser Gehirn sind und bleiben unsere Augen.
 Deswegen ist an diesem Punkt des Prozesses eine grafische
-Auseinandersetzung mit den Daten zwar nicht notwendig, 
+Auseinandersetzung mit den Daten zwar nicht notwendig, aber doch sinnvoll. 
+Dafür kannst du die simplen Standardfunktionen von R verwenden oder auch ein ggplot
+erstellen.
 
-<details>
+**Base R Funktionen:**
 
-<summary><a>▼ aber sehr hilfreich. **(mit ausführlichem Beispiel)**</a></summary>
+| Code                   | Beschreibung       |
+|------------------------|--------------------|
+| `bar()`                | Balkendiagramm     |
+| `hist()`               | Histogramm         |
+| `boxplot()`            | Boxplot            |
+| `plot()`               | Punktdiagramm      |
+| `plot()`               | Linienplot         |
 
+Beachte `plot()` reagiert dabei spezifisch auf das, was du als Argument eingibst. 
+Es ist auch in der Lage Vorannahmen für dein Modell zu visualisieren, wenn du 
+entsprechend das Modell als Input verwendest. Ziemlich beeindruckend.
 
-Dafür, wie für alle Grafiken, brauchen wir `ggplot2`
+**GGplot:**
 
-::: gelb
-**Disclaimer:** `%>%` kommt aus dem Paket `dplyr`, heißt ausgesprochen "Pipe" und gibt einen vorher benannten Datensatz innerhalb einer Funktion weiter. Das macht es häufig schöner und übersichtlicher
-:::
-
-<\br>
-
-```{r IV2, message=FALSE, include=TRUE, echo=TRUE}
-library(ggplot2)
-library(dplyr)
-
-# ZB. der Zusammenhang zwischen Quartal und beförderten Personen könnte uns interessieren
-# dafür brauchen wir eine neue Variable, die Quartal als Zahl enthält. Ich erspare euch die Einzelheiten, führt die untenstehende Zeile einfach aus
-filtered_data$quartal_dbl <- as.integer(substr(filtered_data$Quartal, start = nchar(filtered_data$Quartal), stop = nchar(filtered_data$Quartal)))
-
-filtered_data %>% ggplot(aes(x = as.character(quartal_dbl), y = Personen)) +
-  geom_boxplot()
-# Es wird deutlich, dass die Menschen im 3. Quartal weniger Öffis fahren, als in den anderen Quartalen. Das ergibt total Sinn: Wahrscheinlich sind viele im Urlaub bzw. nutzen das Rad. Da wäre doch mal spannend zu schauen, ob sich das innerhalb der Beförderungsmitel unterscheidet:
-filtered_data %>% ggplot(aes(x = as.character(quartal_dbl), y = Personen, color = Typ)) +
-  geom_boxplot()
-
-# Und tadaa: der Fernverkehr wird im dritten Quartal als einziges mehr.
-# Das können wir noch deutlicher machen, indem wir einen neuen Vektor erstellen, der nur noch zwischen Nah- und Fernverkehr unterscheidet:
-filtered_data$nah_fern <- ifelse(grepl("nahverkehr", filtered_data$Typ), "nah", "fern")
-filtered_data %>% ggplot(aes(x = as.character(quartal_dbl), y = Personen, color = nah_fern)) +
-  geom_boxplot()
-# Das ist was, was später in der Analyse spannend und wichtig sein könnte
-
-# Des weiteren könnte uns der Verlauf über die Jahre interessieren
-filtered_data %>%
-  group_by(Jahr) %>%
-  summarise(Summe_Personenkilometer = sum(Personenkilometer)) %>% 
-  ggplot(aes(x = Jahr, y = Summe_Personenkilometer)) +
-  geom_col()
-
-# Huch? Was ist denn 2020 passiert??! Achja, Corona!
-# Und dann noch mal nach Fortbewegungsmittel
-filtered_data %>%
-  group_by(Jahr, Typ) %>%
-  summarise(Summe_Personenkilometer = sum(Personenkilometer)) %>% 
-  ggplot(aes(x = Jahr, y = Summe_Personenkilometer, fill = Typ)) +
-  geom_col(position = "dodge") +
-  scale_fill_discrete()
-# Hier sind sehr schön die fehlenden Werte bei den Omnisbussen 2013-2015 zu sehen. Das könnte auch eine Erklärung sein für den Sprunghaften Anstieg an Gesamtkilometern zwischen 2015 und 2016 - der Sprung sieht sehr viel größer aus, als in den anderen Jahren
-
-# was uns noch interessieren könnte wäre der Zusammenhang zwischen der Anzahl der ausgewerteten Unternehmen und der Typ der Fortbewegung
-filtered_data %>% 
-  ggplot(aes(x = Typ, y = ausgewertete_Unternehmen)) +
-  geom_boxplot() +
-  scale_x_discrete(labels = function(x) gsub(" ", "\n", x))
-# sehr schön zu sehen: für den nahverkehr mit omnibussen wurden es mit abstand die meisten Unternehmen erhoben
-
-```
-<\details\>
+| Code                                         | Beschreibung                                          |
+|------------------------|-----------------------------------------------|
+| `ggplot()`                                   | Erstellt die Grundebene für einen Plot                |
+| `geom_bar()`                                 | Balkendiagramm                                        |
+| `geom_histogram()`                           | Histogramm                                            |
+| `geom_boxplot()`                             | Boxplot                                               |
+| `geom_point()`                               | Punktdiagramm                                         |
+| `geom_line()`                                | Linienplot                                            |
+| `aes(x, y, color, fill, shape, size, alpha)` | Ästhetisches Mapping von Variablen                    |
+| `facet_grid()` und `facet_wrap()`            | Aufteilung von Diagrammen in Raster                   |
+| `labs(title, subtitle, x, y, caption)`       | Anpassung von Diagrammtiteln und Achsenbeschriftungen |
+| `scale_color_viridis()`                      | Anpassung der Farbskala mit Viridis-Farben            |
 
 
-#### 3. Voraussetzungen prüfen (bisschen langweilig & absolut unerlässlich)
+### 3. Voraussetzungen prüfen (bisschen langweilig & absolut unerlässlich)
 
-Alle Statistiken, die wir später berechnen wollen haben irgendwelche Voraussetzungen, die sie erfüllen müssen. Diese lassen sich selbstverständlich auch statistisch testen.
+Alle Statistiken, die wir später berechnen wollen haben spezifische Voraussetzungen, 
+die deine Daten erfüllen müssen. Diese lassen sich selbstverständlich auch statistisch testen.
 
-@Marie: Was? Welche?
+| Funktion                     | Nutzen/Beschreibung |
+|------------------------------|---------------------|
+| `boxplot(variable1)`         | Erstellt ein Boxplot zur Überprüfung der Variable auf **Ausreißer**.|
+| `hist(variable)`             | Erzeugt ein Histogramm, das zur Überprüfung der **Normalverteilung einer Variable** genutzt wird. |
+| `shapiro.test(variable1)`    | Führt den Shapiro-Wilk-Test zur Überprüfung der **Normalverteilung der Variablen** durch. |
+| `car::leveneTest()`          | Durchführung des Levene-Tests zur Überprüfung der **Varianzhomogenität** |
+| `plot(variable1, variable2)` | Erstellt ein Streudiagramm zur Überprüfung der **Linearität** und der Beziehung zwischen zwei Variablen. |
+| `qqnorm(residuen); qqline(residuen, col="red")` | Erstellt einen **Q-Q-Plot** zur Überprüfung der Normalverteilung von Residuen in einem Regressionsmodell. |
+| `plot(model, which = 2)`     | Erzeugt einen **Q-Q-Plot** der Residuen zur Überprüfung der Normalverteilung in einem Regressionsmodell. |
+| `var.test(variable1, variable2)` | Führt einen F-Test auf Gleichheit der Varianzen durch, nützlich zur Überprüfung der **Varianzhomogenität**, beispielsweise vor einem T-Test. |
+| `plot(model, which = 1)`     | Zeigt einen Plot der Residuen gegen die gefitteten Werte, nützlich zur Überprüfung der **Homoskedastizität.** |
+| `lmtest::bptest(model)`      | Führt den Breusch-Pagan-Test zur Überprüfung der **Homoskedastizität** der Residuen in einem Regressionsmodell durch. |
+| `car::durbinWatsonTest(model)` | Verwendet den Durbin-Watson-Test zur Überprüfung der **Autokorrelation** der Residuen in einem Regressionsmodell. |
+| `shapiro.test(resid(model))` | Führt den Shapiro-Wilk-Test zur Überprüfung der **Normalverteilung der Residuen** in einem Regressionsmodell durch. |
 
-### V) Auswertung / Statistik
+
+## V) Auswertung / Statistik
 
 Hier kommt das Herzstück. Die Analyse, auf die du dich später beziehen wirst.
-@Marie: Was? Welche?
+
+Um einen Überblick der möglichen statistischen Analysen zu bekommen kannst du dich 
+durch diesen Entscheidungsbaum klicken.
+
+@Lukas - wie war nochmal die Internetseite?
+
+Für einen **$t$-Test** sind folgende Funktionen relevant:
+
++--------------------+-----------------------------------------------------------------+
+| Funktion in R      | Beschreibung                                                    |
++====================+=================================================================+
+| `t.test()`         | Durchführung eines *t*-Tests, einschließlich aller Varianten    |
++--------------------+-----------------------------------------------------------------+
+
+**Korrelation:**
+
++---------------------------------------------+-----------------------------------------------------------------+
+| Funktion in R                               | Beschreibung                                                    |
++=============================================+=================================================================+
+| `correlation::correlation()`                | zur Berchenung von Korrelationen                                |
++---------------------------------------------+-----------------------------------------------------------------+
+| `GGally::ggscatmat(data, colums = "x","y")` | Erstellt eine Zusammenhangsvisualisierung für metrische Daten   |
++---------------------------------------------+-----------------------------------------------------------------+
+
+**Regression:**
+
++---------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------+
+| Funktion in R                               | Beschreibung                                                                                                                        |
++=============================================+=====================================================================================================================================+
+| `lm(outcome ~ predictor, data)`             | Berechnet ein lineares Regressionsmodell.                                                                                           |
+| `summary(model)`                            | Gibt eine detaillierte Zusammenfassung des Regressionsmodells aus, einschließlich Koeffizienten, Signifikanzniveaus und Modellgüte. |
++---------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------+
+
+Und zur Berechnung der **Effektstärke**:
+
++---------------------------------------------+-----------------------------------------------------------------+
+| Funktion in R                               | Beschreibung                                                    |
++=============================================+=================================================================+
+| `effectsize::cohens_d()`                    | Berechnung der **Effektstärke** (Cohens *d*).                   |
++---------------------------------------------+-----------------------------------------------------------------+
+
+## VI) Schöne Visualisierungen
+
+Erstelle ansprechende und übersichtliche Grafiken, um deine Ergebnisse zu 
+visualisieren, die kommen später auch ins Paper.
+
+Siehe hierfür das [ggplot Cheat Sheet](https://rstudio.github.io/cheatsheets/data-visualization.pdf) 
+sowie die [R Graph Gallery](https://r-graph-gallery.com/), um deine eigenen 
+Plots zu erstellen.🚀 Möchtest du die Grundlagen zuvor erst wiederholen
+klicke dich durch das Tutorial `4b_vis`.
+
+## VII) Report
+
+Jetzt will das ganze noch in eine schöne Form gebracht werden. Hier werden die 
+Forschungsergebnisse dokumentiert und ein Bericht je nach Anforderungen 
+(Paper, Bachelorarbeit, Studienleistung etc. erstellt). 
 
 
-### VI) Schöne Visualisierungen
+## Credit
 
-Erstelle ansprechende und übersichtliche Grafiken, um deine Ergebnisse zu visualisieren, die kommen später auch ins Paper.
+Dieses Tutorial wurde von Gesa Graf, Lukas Bruelheide sowie Marie Klosterkamp geschrieben. 
 
-S. hierfür Unterkapitel `Visualisierung`.
-
-### VII) Report
-
-Jetzt will das ganze noch in eine schöne Form gebracht werden. Hier werden die Forschungsergebnisse dokumentiert und ein Bericht je nach Anforderungen (Paper, Bachelorarbeit, Studienleistung etc. erstellt). 
-
-## Abschlussquiz
-
-@Marie: bin bisschen ratlos, was ich hier quizzen könnte
-
-```{r abschlussquiz_01}
-question_checkbox("Hier ist eine typische Frage für ein Abschlussquiz",
-         answer("mit einer Antwort"),
-         answer("und noch einer Antwort"),
-         answer("und einer korrekten Antwort", correct = T), 
-         answer("und einer weiteren korrekten Antwort", correct = T), 
-         answer("und noch einer falschen Antwort"),
-         allow_retry = TRUE
-         )
-```
-
-## Learnings
-
-@Marie: und hier?
