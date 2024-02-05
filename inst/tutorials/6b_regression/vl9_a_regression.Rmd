@@ -8,7 +8,7 @@ output:
 runtime: shiny_prerendered
 bibliography: ref.json
 link-citations: TRUE
-description: Einführung in die einfache lineare Regression.
+description: "Einführung in die einfache lineare Regression und die Überprüfung der Voraussetzungen. Interpretation des Outputs und darüber hinaus viele interessante Nebeninformationen und Exkurse. Wiederholung Signifikanztests. Beachte: Das Laden dieses Tutorials bei der ersten Ausführung dauert lange (ca. 60 Sekunden) und das ist normal."
 resource_files:
 - css/boxes.css
 ---
@@ -752,7 +752,7 @@ in R geprüft werden können. Disclaimer: Das Thema füllt ganze Bücher, das hi
 
 : Nach dem Modellieren
 
-Einige Annahmen beziehen sich auf die Residuen und können erst nach dem Modellieren überprüft werden. Die Residuen sollten:
+Einige Annahmen beziehen sich auf die **Residuen** und können erst nach dem Modellieren überprüft werden.
 
 
 ### 1. Metrische Variablen
@@ -885,7 +885,7 @@ plot(x = rep(20, 100), y = rnorm(100), yaxt = "n", xaxt = "n", xlab = "x", ylab 
 
 Diese Betrachtungen kann man ohne Modell bereits vor der Analyse durchführen. 
 
-Für die letzten Voraussetzungen (5-8) brauchen wir unser bestehendes Modell.
+Für die letzten Voraussetzungen (5-8) brauchen wir unser bestehendes Modell. 
 
 ### 5. Homoskedastizität und Unabhängigkeit der Residuen
 
@@ -893,17 +893,17 @@ Für die letzten Voraussetzungen (5-8) brauchen wir unser bestehendes Modell.
 
 Wieder mal ein langes und kompliziertes Wort, das dir da begegnet. Aber
 nicht verzagen, es meint lediglich: **konstante Varianz**. Das bedeutet, dass die Streuung der
-Residuen um die Regressionslinie für alle Werte der unabhängigen
+Residuen um die Regressionsgerade für alle Werte der unabhängigen
 Variablen gleich bleibt. Wenn diese Bedingung erfüllt ist, spricht man
 von Homoskedastizität. Ist sie nicht erfüllt, also wenn die Varianz der
 Residuen mit den Werten der unabhängigen Variablen variiert, spricht man
 von Heteroskedastizität.
 
 Die Einhaltung der Homoskedastizität der Residuen ist wichtig, da viele statistische
-Tests, insbesondere bei der linearen Regression, auf dieser Annahme bauen. Das Gegenteil von Homoskedastizität heißt Heteroskedastizität. also ungleich verteilte Varianz, und kann zu
+Tests, insbesondere bei der linearen Regression, auf dieser Annahme bauen. Heteroskedastizität. also ungleich verteilte Varianz, kann zu
 ungenauen Schätzungen und zu irreführenden Testergebnissen führen.
 
-Was ist hier gemeint? Schau dir die Grafiken an und versuche zu
+Schau dir die Grafiken an und versuche zu
 verstehen, welche der Variablen keine gleichverteilten Residuen hat.
 
 ```{r homoskedasis_grafiken, message=FALSE, warning=FALSE}
@@ -975,15 +975,9 @@ question_checkbox("Welche der Grafiken zeigen eine **homoskedastische** Verteilu
 
 **Prüfung mit `plot(fit, which = 1)`**
 
-Die Fehlerterme (Residuen) sollen rein zufälliger Natur sein, und keine systematischen Einflüssen enthalten. Das lässt sich ebenfalls gut mit `plot(fit, which = 1)` visuell betrachten. Generell ist alles schlecht, was die Fehler systematisch beeinflusst. Mit dem Plot der Residuen vs. vorhergesagten Werte kannst du also noch mal nachträglich prüfen, ob die Residuen:
+Die Fehlerterme (Residuen) sollen rein zufälliger Natur sein, und keine systematischen Einflüssen enthalten. Das lässt sich gut mit `plot(fit, which = 1)` visuell betrachten. Dieser Plot zeigt die Residuen in Beziehung zu den vorhergesagten Werten. Also grob gesagt, um wie viel das Modell sich verschätzt, je nach dem ob es um die Vorhersage 1 m³ Holz geht oder um 30 m³. Idealerweise wäre die Vorhersage gleich ungenau für alle Werte. Ein Aspekt davon ist *Homoskedastizität der Residuen*. Die Fehler in der Vorhersage sollen rein zufällig ein, und nicht systematisch zu groß oder zu klein für bestimmte Werte. Wünschenswert ist ein Modell, dass über den gesamten Wertebereich gleichmäßig gute Vorhersagen liefert, und dass alle Abweichungen von den Vorhersagen als Zufall betrachtet werden können. Zumindest ist genau das die Grundannahme der linearen Regression.  
 
-- **linear**
-- **unabhängig**
-- **homoskedastisch**
-
-sind. 
-
-Hier mal zwei Plots, wobei der erste unabhängige, homoskedastische, lineare Residuen darstellt, während beim zweiten Plot die Residuen systematisch beeinflusst sind 
+Hier mal zwei Plots, wobei der erste unabhängige, homoskedastische, lineare Residuen darstellt, während beim zweiten Plot systematische Fehler in der  Vorhersage auftreten. 
 
 ```{r grafiken_homosked, echo=T, message=FALSE, warning=FALSE, setup = "homoskedasis_grafiken"}
 fit1 <- lm(y ~ x, data = df1)
@@ -993,13 +987,11 @@ fit4 <- lm(y ~ x, data = df4)
 plot(fit4, which = 1)
 ```
 
-Der erste Plot zeigt die gewünschte gleichmäßige Verteilung. Bei einigen weit außen liegenden Werten wurde eine Beschriftung angefügt, um sich diese Datenpunkte eventuell genauer anzusehen. Idealerweise sollte die (schwer zu erkennende) rote Linie horizontal auf der Höhe von 0 verlaufen.
+Der erste Plot zeigt die gewünschte gleichmäßige Verteilung. Bei einigen weit außen liegenden Werten wurde eine Beschriftung angefügt, um sich diese Datenpunkte eventuell genauer anzusehen. Idealerweise sollte die (schwer zu erkennende) rote Linie horizontal auf der Höhe von 0 verlaufen. Die rote Linie ist ein Mittelwert der umliegenden Residuen. Wenn der Mittelwert der Residuen 0 lautet, dann weichen sie gleich stark nach unten und nach oben ab, und im Mittel trifft die Vorhersage dann die Realität. Wenn die Residuen größer als 0 sind, ist die Vorhersage niedriger als die Realität. Und umgekehrt, wenn die Residuen kleiner als 0 sind, überschätzt das Modell den realen Wert. Beides ist nicht wünschenswert.
 
-Beim zweiten Plot ist gut zu erkennen, dass Residuen (Abstand zwischen Vorhersage und tatsächlichem Wert) systematisch zu groß oder zu klein sind. Beispielsweise sind für den vorhergesagten Wert 0.10 alle Residuen zu hoch, während für 0.20 alle Residuen zu niedrig sind. Das ist ein schlechtes Zeichen, was z.B. auf einen **nicht-linearen** Zusammenhang hindeuten kann, oder dass es zusätzliche Einflüsse gibt, die nicht im Modell enthalten sind, das heißt die Residuen sind nicht **unabhängig**.
+Beim zweiten Plot ist gut zu erkennen, dass Residuen (Abstand zwischen Vorhersage und tatsächlichem Wert) systematisch zu groß oder zu klein sind. Beispielsweise sind für den vorhergesagten Wert 0.10 alle Residuen zu hoch, während für 0.20 alle Residuen zu niedrig sind. Das ist ein schlechtes Zeichen, was z.B. auf einen **nicht-linearen** Zusammenhang hindeuten kann, was in diesem Fall auch die Erklärung ist, da die Originaldaten einer Sinuskurve folgen und nicht geeignet sind mit einem linearen Modell beschrieben zu werden... Eine andere Erklärung ist, dass es zusätzliche Einflüsse gibt, die nicht im Modell enthalten sind, das heißt die Residuen sind nicht **unabhängig**.
 
 ### 6. keine Auto-Korrelation der Residuen
-
-Das ist einfach noch ein weiterer Weg um die Unabhängigkeit der Residuen zu überprüfen. 
 
 Was bedeutet Auto-Korrelation?
 
@@ -1009,9 +1001,11 @@ geht also um Korrelation der Werte mit sich selbst.
 Dabei wissen wir ja eigentlich, dass die Korrelation jeder Variable mit
 sich selbst perfekt ist, also 1 beträgt. Darum geht es also nicht.
 
+::: gelb
 Die Frage hier ist, ob die Höhe eines Residuums die Höhe der
 benachbarten Residuen beeinflusst. Wenn das übermäßig der Fall ist, sind
 die Residuen nicht zufällig.
+:::
 
 Warum ist das wichtig? Das Modell baut darauf, dass ein linearer
 Zusammenhang zugrunde liegt, und dass jegliche Streuung in den Daten um
@@ -1021,8 +1015,10 @@ steht.
 #### Überprüfung in R
 
 Die Auto-Korrelation kann in R berechnet und ausgegeben werden mitsamt
-eines Hypothesentests, der die Nullhypothese *rho* = 0 testet („Die
-Auto-Korrelation beträgt in Wahrheit 0“).
+eines Hypothesentests, der die Nullhypothese *rho* = 0 testet. 
+
+**„$H_0:$ Die
+Auto-Korrelation beträgt in Wahrheit 0“**
 
 ```{r autocor-question}
 question_checkbox("Wie müsste der *p*-Wert aussehen, wenn unsere Daten vermutlich aus einer Population ohne Autokorrelation stammen?",
@@ -1037,7 +1033,7 @@ eine Funktion dafür bereit:
 
 Testen wir das zunächst an einem extremen Beispiel, was ich simuliert
 habe und definitiv Auto-Korrelation enthalten sollte: Plot 4 aus dem
-Homoskedastizität-Abschnitt, die Residuen variieren systematisch!
+Homoskedastizitäts-Beispielen, die Residuen variieren systematisch!
 
 Wenn Auto-Korrelation besteht, dann variieren benachbarte Residuen
 gemeinsam.
@@ -1065,7 +1061,7 @@ question_radio("Was ist deine Hypothesenentscheidung, wenn du den $p$-Wert des T
                incorrect = random_encouragement("de"))
 ```
 
-<!-- Zur Frage oben: In Character Strings wird backslash als Escape-Character geparst und muss daher von einem weiteren backslash escaped werden, um in $$ an LaTex übergeben werden zu können. -->
+<!-- Zur Frage oben: Warum da \\alpha steht statt \alpha: In Character Strings wird backslash als Escape-Character geparst und muss daher von einem weiteren backslash escaped werden, um in $$ an LaTex übergeben werden zu können. -->
 
 ```{r autocor_question2}
 question_radio("Was bedeutet eine Entscheidung gegen die $H_0$ inhaltlich?",
@@ -1081,10 +1077,9 @@ question_radio("Was bedeutet eine Entscheidung gegen die $H_0$ inhaltlich?",
 
 ### 7. Normalverteilung der Residuen
 
-Eine letzte und zentrale Annahme ist, dass die Residuen normalverteilt
-sein müssen. Sie entsteht aus der Annahme, dass die Residuen rein zufällig zustande kommen.
+Ein idealer, rein zufälliger Messfehler ist normalverteilt, und genau das sollen die Residuen auch sein. Sind die Residuen nicht normalverteilt, deutet das wieder darauf hin, dass sie noch von anderen Dingen außer dem Zufall abhängen.
 
-Eine Möglichkeit, das grob visuell zu überprüfen, ist ein Histogramm der 
+Eine Möglichkeit, die Normalverteilung grob visuell zu überprüfen, ist ein Histogramm der 
 standardisierten Residuen zu erstellen.
 
 Dafür berechnen wir die Residuen des Models *fit* `resid(fit)` geben dies in eine
@@ -1236,7 +1231,26 @@ verteilungen <- c("Normal", "Uniform", "Bimodal")
     data.frame(richtig = counter$richtig, falsch = counter$falsch)
   }, digits = 0)
 ```
+<br>
+**QQ-Plot**
+Natürlich kannst du die Normalverteilung auch mit einem Quantil-Quantil-Plot visuell prüfen. Dabei werden die Quantile der Daten mit den theoretischen Quantilen der Normalverteilung abgeglichen. Liegen die Datenpunkte auf der diagonalen Linie, stimmen die Quantile der Daten mit den Quantilen einer Normalverteilung überein. Den QQ-Plot von Residuen eines Modells erreichst du auch über die `plot()`-Funktion, mit:
 
+```{r qqplot, echo = T}
+plot(fit, which = 2)
+```
+
+```{r qqplot-question}
+question_radio(
+  "Würdest du die Daten als annähernd normalverteilt bezeichnen?",
+  answer("Ja", correct = T),
+  answer("Nein"),
+  message = "Die meisten Punkte liegen entlang der eingezeichneten Diagonalen.",
+  correct = random_praise("de"),
+  incorrect = random_encouragement("de"),
+  allow_retry = T,
+  random_answer_order = T
+)
+```
 
 
 ## Regression berechnen
@@ -1249,7 +1263,7 @@ im nächsten Schritt an.
 
 ### Funktion
 
-``` r
+```r
 # Modell erstellen und abspeichern 
 fit <- lm(outcome ~ predictor, data = datensatz)
 
@@ -1841,6 +1855,7 @@ des Volumens dieser Bäume $R^2 =.935,\ F(1, 29) = 419.4,\ p < .001)$." Für jed
 Baumdurchmesser steigt das Volumen um .056 m³ $t(29)=20.48,\ p<.001$*.
 ::: 
 <br>
+
 ::: gelb
 **Hinweis**: Bei einem **Intercept mit natürlichem Nullpunkt** würden wir bei 
 einer einfachen Regression auch dies hier in die Interpretation und den Bericht 
@@ -1849,6 +1864,7 @@ einfließen lassen und analog zum $b_1$ mit der entsprechenden Statistik versehe
 „Für Bäume deren Durchmesser 0 cm beträgt, ist das
 vorhergesagte Holzvolumen -1.05 m³ $t(29)=-10.98, p<.001$."
 :::
+
 <br>
 
 Du hast jetzt erfolgreich verstanden:
@@ -1928,7 +1944,10 @@ question_radio("Gib einen Tipp ab: Welche Steigung wird die Regressionsgerade ve
                answer("negativ", 
                       correct = T, 
                       message = "Sinnvoll, da höhere Windgeschwindigkeit eher zu niedrigeren Temperaturen führt -> negativer Zusammenhang"),
-              random_answer_order = T
+              random_answer_order = T,
+              allow_retry = T,
+              correct = random_praise("de"),
+              incorrect = random_encouragement("de")
                )
 ```
 
@@ -2117,11 +2136,10 @@ question_checkbox("Welche der Vorannahmen würdest du nun als gegeben ansehen?",
 )
 ```
 
-Super! 
-
 ### Modell berechnen
-Jetzt können wir testen, ob das Gewicht als Prädiktor einen signifikanten Teil der
-Varianz in der Reichweite erklären kann:
+
+Jetzt können wir testen, ob das Gewicht als Prädiktor einen Teil der
+Varianz in der Reichweite erklären kann. Anders formuliert: ob die Reichweite als lineare Funktion des Gewichts modelliert werden kann. 
 
 ::: aufgabe
 **Aufgabe 2: Modell aufstellen**
@@ -2151,6 +2169,29 @@ car_fit <- lm(outcome ~ predictor, data = mtcars)
 car_fit <- lm(mpg ~ wt, data = mtcars)  
 summary(car_fit)
 ```
+
+```{r coef-find-question}
+quiz(
+  caption = "Koeffizienten finden",
+  question_numeric(
+    allow_retry = T,
+    correct = random_praise("de"),
+    incorrect = random_encouragement("de"),
+    text = "Wie lautet $b_0$ (Achsenabschnitt)?",
+    answer(37.21, correct = T),
+    tolerance = 0.3
+    ),
+  question_numeric(
+    allow_retry = T,
+    correct = random_praise("de"),
+    incorrect = random_encouragement("de"),
+    text = "Wie lautet $b_1$ (Regressionsgewicht d. Prädiktors)?",
+    answer(-5.3445, correct = T),
+    tolerance = 0.1
+    )
+  )
+```
+
 
 Bevor wir zur Interpretation kommen, sollten wir anhand des Outputs überprüfen,
 ob unser Modell siginikant zur Erklärung der Varianz der abhängigen Variable beiträgt.
@@ -2224,23 +2265,22 @@ question_radio("Was bedeutet der Steigungskoeffizient (b1 = -5.34) in unserem Re
 
 Wow! Das klappt doch schon richtig gut! 👏
 
-### Vorannahmen 2
+### Überprüfung der Residuen
 
 Es gibt noch einige Voraussetzungen der Regression, die erst nach dem Erstellen des Modells geprüft werden können. Das tun wir jetzt:
 
 +----------------------------------+-----------------------------------+
 | Vorannahme                       | Überprüfung                       |
 +==================================+===================================+
-| 5.  Homoskedastizität            | `plot(fit)`                       |
-+----------------------------------+-----------------------------------+
-| 6.  Unkorreliertheit der         | `plot(fit)`                       |
-|     Residuen mit der UV          |                                   |
-+----------------------------------+-----------------------------------+
-| 7.  keine Autokorrelation der    | `car::durbinWatsonTest(fit)`      |
+| 5.  Homoskedastizität            | `plot(fit, which = 1)`            |
+|     und Unabhängigkeit der       |                                   |
 |     Residuen                     |                                   |
 +----------------------------------+-----------------------------------+
-| 8.  Normalverteilung der         | Q-Q-Plot: der zweite Plot bei     |
-|     Residuen                     | `plot(fit)`                       |
+| 6.  keine Autokorrelation der    | `car::durbinWatsonTest(fit)`      |
+|     Residuen                     |                                   |
++----------------------------------+-----------------------------------+
+| 7.  Normalverteilung der         | Q-Q-Plot: der zweite Plot bei     |
+|     Residuen                     | `plot(fit, which = 2)`            |
 |                                  |                                   |
 |                                  | Histogramm der                    |
 |                                  | standardisierten Residuen         |
@@ -2250,8 +2290,9 @@ Es gibt noch einige Voraussetzungen der Regression, die erst nach dem Erstellen 
 |                                  |                                   |
 +----------------------------------+-----------------------------------+
 
-Plotten wir doch zuest unser erstelltes Modell, um die **Homoskedastizität** und **die 
-Unkorreliertheit der Residuen mit der unabhängigen Variable** zu überprüfen. Dafür kannst du in der *Base R* Funktion `plot()` einfach den Modellnamen `fit` eingeben und das Modell wird visualisiert. (Mit dem zusätzlichen Argument `which` lassen wir uns nur die ersten beiden Plots ausgeben).
+: Nach dem Modellieren
+
+Plotten wir doch zuest unser erstelltes Modell, um die **Homoskedastizität** und die **Ünabhängigkeit** der Residuen zu überprüfen. Dafür kannst du in der *Base R* Funktion `plot()` einfach den Modellnamen `fit` eingeben und das Modell wird visualisiert. (Mit dem zusätzlichen Argument `which` lassen wir uns nur die ersten beiden Plots ausgeben).
 
 ```{r car_fit_setup}
 car_fit <- lm(mpg ~ wt, data = mtcars)
@@ -2271,7 +2312,7 @@ plot(car_fit, which = 2)
 ```
 
 **Plot 1: Residuals vs. Fitted**
-Hier siehst du die Residuen abgetragen gegen unsere vorhergesagten Werte (*Fitted*) für die abhängige Variable. 
+Hier siehst du die Residuen (Vorhersagefehler) abgetragen gegen die vom Modell vorhergesagten Werte (*Fitted*) für die Reichweite. 
 
 ```{r car_fit_globalsetup}
 # This chunk is not used by any exercise, therefore car_fit appears in global environment
@@ -2288,12 +2329,16 @@ Im obigen Plot wird z.B. die Reichweite des Chrysler Imperial unterschätzt, wes
 
 Willst du auf Nummer sicher gehen kannst du auch **analytisch ermitteln**, ob Homoskedastizität vorliegt. Dafür kannst du das Modell in die Funktion `bptest()` aus dem Paket `lmtest` geben. Der `bptest()` (Breusch-Pagan-Test) prüft die Nullhypothese, dass Homoskedastizität vorliegt. Ein signifikanter p-Wert sagt dir also auch hier, dass unsere Vorannahme *nicht* gegeben ist.
 
+**$H_0:$ Es liegt Homoskedastizität vor.**
+
 ```{r breusch_pagan, message = FALSE, echo = TRUE, warning = FALSE}
 # Breusch-Pagan-Test H0: Homoskedastizität
 lmtest::bptest(car_fit)
 ```
+<br>
 
-**Plot 2:**
+**Plot 2: Normalverteilung prüfen mit QQ-Plot**
+
 Hier siehst du die Verteilung der Residuen anhand des QQ-Plots und kannst sie 
 hinsichtlich der Einhaltung der **Normalverteilung** überprüfen. Je mehr die 
 Residuen auf der Linie liegen, desto eher solltest du davon ausgehen, dass 
@@ -2327,13 +2372,13 @@ car::durbinWatsonTest(car_fit)
 ```
 
 ```{r vorannahmendrei_questions}
-question_radio("Ist die Vorannahme erfüllt, dass die Residuen keine Autokorrelation vorweisen? ($\\alpha = .05$)",
+question_radio("Ist die Vorannahme erfüllt, dass die Residuen keine Autokorrelation vorweisen? Es gilt: $\\alpha = .05$",
                   answer("Ja.", 
                          correct = F, 
-                         message = "Der $p$-Wert des Durbin-Watson-Tests ist kleiner als .05 und somit signifikant"),
+                         message = "Der $p$-Wert des Durbin-Watson-Tests ist kleiner als .05 und somit nicht signifikant"),
                   answer("Nein.", 
                         correct = T, 
-                        message = "Genau, da $p = .018 < \\alpha = .05$ können wir die Nullhypthese verwerfen, dass es keine Autokorrelation gibt."),
+                        message = "Da $p = .014 < \\alpha = .05$ müssen wir die Nullhypthese verwerfen, dass es keine Autokorrelation gibt."),
                   allow_retry = T,
                correct = random_praise("de"),
                incorrect = random_encouragement("de")
@@ -2348,7 +2393,7 @@ resid(car_fit) |>
 ```
 
 ```{r vorannahmenvier_questions}
-question_radio("Ist die Vorannahme erfüllt, dass die Residuen normalverteilt sind?",
+question_radio("Ist die Vorannahme erfüllt, dass die Residuen (annähernd) normalverteilt sind?",
                   answer("Ja!", 
                          correct = T, 
                          message = "Ja, das Histogramm sieht annähernd normalverteilt aus."),
@@ -2454,7 +2499,7 @@ question_radio("Ist der Modellvergleichs-Test signifikant? $(\\alpha = .05)$",
 ```
 
 ```{r signific_interpret_quest}
-question_radio("Würdest du sagen, das Hinzufügen des Prädiktors „Holz” hat die Anpassungsgüte $R^2$ des Modells signifikant verbessert?",
+question_radio("Würdest du sagen, das Hinzufügen des Prädiktors „Höhe” hat die Anpassungsgüte $R^2$ des Modells signifikant verbessert?",
                answer("Ja.", correct = TRUE, message = "Ja, da der Test signifikant war, sollte die $H_0$, dass die Modelle das gleiche $R^2$ haben, verworfen werden."),
                answer("Nein.", message = "Schau noch mal, was die Nullhypothese bedeutet beim Modellvergleich. $H_0$: $R^2$ ist in Wahrheit gleich, es gibt keinen Unterschied. Bei Signifikanz muss die $H_0$ verworfen werden."),
                allow_retry = T,
@@ -3060,13 +3105,13 @@ R^2 &= \frac{0}{\text{Gesamtvarianz in y}} = 0
 quiz(caption = "Hypothesen der Modelltests:",
      
      question_radio("2. Was ist die Nullhypothese des Lokaltests?",
-                    answer("Das Regressionsgewicht ($b_1$) beträgt in Wahrheit 0", correct = T),
+                    answer("Das Regressionsgewicht $(b_1)$ beträgt in Wahrheit 0", correct = T),
                     answer("Das Regressionsgewicht ist größer als 1"),
     random_answer_order = T,
     allow_retry = T
 ),
 
-question_radio("3. Was wird im Gesamtmodelltest getestet und wie lautet deine Entscheidung basierend auf einem p-Wert < 0.05?",
+question_radio("3. Was wird im Gesamtmodelltest getestet?",
     answer("Die Nullhypothese besagt, dass das der Prädiktor Varianzaufklärung bietet.",
         message = "Die H0 geht immer von keinem Effekt aus. Zudem wird beim Gesamtmodell nur im Falle einer einfachen Regression der einzelne Prädiktor getestet. Die H0 geht also davon aus, dass das Model zu keiner Varianzaufklärung beiträgt."),
     answer("Die Nullhypothese besagt, dass das Modell Varianzaufklärung bietet.",
@@ -3079,7 +3124,17 @@ question_radio("3. Was wird im Gesamtmodelltest getestet und wie lautet deine En
     random_answer_order = T,
     allow_retry = T,
     correct = random_praise("de"),
-    incorrect = random_encouragement("de"))
+    incorrect = random_encouragement("de")),
+question_radio(
+  "4.\* Wann entspricht der Lokaltest dem Geamtmodelltest?",
+  answer("Nur bei der einfachen linearen Regression", correct = T),
+  answer("Nur bei der multiplen linearen Regression"),
+  message = "Da es bei der einfachen Regression nur einen Prädiktor gibt, entspricht der Test für diesen einen Prädiktor dem Test für das gesamte Modell",
+  allow_retry = T,
+  random_answer_order = T,
+  correct = random_praise("de"),
+  incorrect = random_encouragement("de")
+)
 )
 ```
 
