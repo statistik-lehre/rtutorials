@@ -2354,7 +2354,7 @@ question_radio("Ist die Vorannahme erfüllt, dass die Residuen normalverteilt si
                          correct = T, 
                          message = "Ja, das Histogramm sieht annähernd normalverteilt aus."),
                   answer("Nein!", 
-                        message = "Es reicht eine annähernde Normalverteilung. Schau dir das Histogramm so lange an, bis du mir glaubst dass das als annähernde Normalverteilung gilt."),
+                        message = "Es reicht eine annähernde Normalverteilung. Schau dir das Histogramm so lange an, bis du mir glaubst, dass das als annähernde Normalverteilung gilt."),
                   allow_retry = T,
                correct = random_praise("de"),
                incorrect = random_encouragement("de")
@@ -2426,7 +2426,7 @@ question_radio("Ist das mehr als das $R^2$ für das Modell mit nur einem Prädik
 
 Es besteht natürlich die Möglichkeit, dass die unterschiedlichen $R^2$ für die verschiedenen Modelle einfach durch zufällige Schwankung zustandekommen, was bei einer so geringen Stichprobengröße von $n = 31$ gut sein kann. 
 
-Das heißt, es ist wieder ein Signifikanztest gefragt, um die Modelle zu vergleichen. Dort geht nämlich die Stichprobengröße mit ins Ergebnis ein. Hier wird die Nullhypothese getestet, dass beide Modelle in Wahrheit das gleiche $R^2$ haben. Ist der Test signifikant, ist das ein Indiz dass der Unterschied in $R^2$, der durch das Hinzufügen des Prädiktors "Höhe" zustandekommt, nicht wahrscheinlich ist unter der Annahme dass eigentlich beide $R^2$ gleich sind.
+Das heißt, es ist wieder ein Signifikanztest gefragt, um die Modelle zu vergleichen. Dort geht nämlich die Stichprobengröße mit ins Ergebnis ein. Hier wird die Nullhypothese getestet, dass beide Modelle in Wahrheit das gleiche $R^2$ haben. Ist der Test signifikant, ist das ein Indiz, dass der Unterschied in $R^2$, der durch das Hinzufügen des Prädiktors "Höhe" zustandekommt, nicht wahrscheinlich ist unter der Annahme, dass eigentlich beide $R^2$ gleich sind.
 
 
 ```{r sigtest_anova, echo = TRUE}
