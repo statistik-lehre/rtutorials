@@ -2334,7 +2334,7 @@ question_radio("Ist die Vorannahme erfüllt, dass die Residuen keine Autokorrela
                          message = "Der $p$-Wert des Durbin-Watson-Tests ist kleiner als .05 und somit signifikant"),
                   answer("Nein.", 
                         correct = T, 
-                        message = "Genau, da $p = .03 < \\alpha = .05$ können wir die Nullhypthese verwerfen, dass es keine Autokorrelation gibt."),
+                        message = "Genau, da $p = .018 < \\alpha = .05$ können wir die Nullhypthese verwerfen, dass es keine Autokorrelation gibt."),
                   allow_retry = T,
                correct = random_praise("de"),
                incorrect = random_encouragement("de")
@@ -3075,7 +3075,7 @@ question_radio("3. Was wird im Gesamtmodelltest getestet und wie lautet deine En
     answer("Die Nullhypothese besagt, dass das Modell in der Population in Wahrheit keine Varianzaufklärung bietet.",
         correct = T,
         message = "Die Nullhypothese besagt, dass das Modell in der Population in Wahrheit **keine** Varianzaufklärung bietet. Wenn der $p$-Wert kleiner als 0.05 ist, verwerfe ich die Nullhypothese und nehme an, dass das Modell eine Varianzaufklärung verschieden von 0 hat."),
-    answer("Die Nullhypothese besagt, dass das Modell eine **hohe** Varianzaufklärung bietet. Da der p-Wert kleiner als 0.05 ist, verwerfen wir die Nullhypothese.",
+    answer("Die Nullhypothese besagt, dass das Modell eine hohe Varianzaufklärung bietet. Da der p-Wert kleiner als 0.05 ist, verwerfen wir die Nullhypothese.",
         message = "Die H0 geht immer von keinem Effekt aus - hier also keiner Varianzaufklärung."),
     random_answer_order = T,
     allow_retry = T,
