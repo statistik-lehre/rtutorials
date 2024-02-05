@@ -136,7 +136,7 @@ Variable `Girth` enthält.
 ```
 
 ```{r girth-solution}
-trees$Diameter <- trees$Girth
+trees$diameter <- trees$Girth
 ```
 
 ::: aufgabe
@@ -145,7 +145,7 @@ trees$Diameter <- trees$Girth
 Die Variablen sind (typisch USA) alle in nicht-metrischen Einheiten
 angegeben.
 
-Rechne `Diameter` und `Volume` in metrische Einheiten um, damit das
+Rechne `diameter` und `Volume` in metrische Einheiten um, damit das
 Beispiel intuitiver verständlich ist. Benenne die neuen Variablen dabei
 mit kleinen Anfangsbuchstaben.
 
@@ -710,7 +710,7 @@ wichtige Frage wird sein: Wo finde ich die relevanten Ergebnisse, und wie interp
 ## Vorraussetzungen prüfen
 
 Hier ein kleiner Überblick, darüber, wie die Voraussetzungen einer Regression
-in R geprüft werden können:
+in R geprüft werden können. Disclaimer: Das Thema füllt ganze Bücher, das hier ist nur das Wichtigste. 
 
 +-------------------------------------+--------------------------------+
 | Vorannahme                          | Überprüfung                    |
@@ -732,16 +732,15 @@ in R geprüft werden können:
 +----------------------------------+-----------------------------------+
 | Vorannahme                       | Überprüfung                       |
 +==================================+===================================+
-| 5.  Homoskedastizität            | `plot(fit)`                       |
-+----------------------------------+-----------------------------------+
-| 6.  Unkorreliertheit der         | `plot(fit)`                       |
-|     Residuen mit der UV          |                                   |
-+----------------------------------+-----------------------------------+
-| 7.  keine Autokorrelation der    | `car::durbinWatsonTest(fit)`      |
+| 5.  Homoskedastizität            | `plot(fit, which = 1)`            |
+|     und Unabhängigkeit der       |                                   |
 |     Residuen                     |                                   |
 +----------------------------------+-----------------------------------+
-| 8.  Normalverteilung der         | Q-Q-Plot: der zweite Plot bei     |
-|     Residuen                     | `plot(fit)`                       |
+| 6.  keine Autokorrelation der    | `car::durbinWatsonTest(fit)`      |
+|     Residuen                     |                                   |
++----------------------------------+-----------------------------------+
+| 7.  Normalverteilung der         | Q-Q-Plot: der zweite Plot bei     |
+|     Residuen                     | `plot(fit, which = 2)`            |
 |                                  |                                   |
 |                                  | Histogramm der                    |
 |                                  | standardisierten Residuen         |
@@ -753,10 +752,8 @@ in R geprüft werden können:
 
 : Nach dem Modellieren
 
-Wir können einige unserer Annahmen also erst nach der Berechnung des Modells 
-überprüfen. Das ist für uns neu! Hier stellen wir dir zunächst alle Voraussetzungen
-und Tests vor und später im Übungskapitel wenden wir diese auf unseren 
-heutiges Beispiel an.
+Einige Annahmen beziehen sich auf die Residuen und können erst nach dem Modellieren überprüft werden. Die Residuen sollten:
+
 
 ### 1. Metrische Variablen
 
@@ -890,20 +887,20 @@ Diese Betrachtungen kann man ohne Modell bereits vor der Analyse durchführen.
 
 Für die letzten Voraussetzungen (5-8) brauchen wir unser bestehendes Modell.
 
-### 5. Homoskedastizität
+### 5. Homoskedastizität und Unabhängigkeit der Residuen
+
+**Homoskedastizität**
 
 Wieder mal ein langes und kompliziertes Wort, das dir da begegnet. Aber
-nicht verzagen, es meint lediglich: **die Varianz der Daten sind über
-die Variable gleich verteilt**. Das bedeutet, dass die Streuung der
+nicht verzagen, es meint lediglich: **konstante Varianz**. Das bedeutet, dass die Streuung der
 Residuen um die Regressionslinie für alle Werte der unabhängigen
 Variablen gleich bleibt. Wenn diese Bedingung erfüllt ist, spricht man
 von Homoskedastizität. Ist sie nicht erfüllt, also wenn die Varianz der
 Residuen mit den Werten der unabhängigen Variablen variiert, spricht man
 von Heteroskedastizität.
 
-Die Einhaltung der Homoskedastizität ist wichtig, da viele statistische
-Tests, insbesondere in der linearen Regression, auf der Annahme
-basieren, dass diese Bedingung gegeben ist. Heteroskedastizität kann zu
+Die Einhaltung der Homoskedastizität der Residuen ist wichtig, da viele statistische
+Tests, insbesondere bei der linearen Regression, auf dieser Annahme bauen. Das Gegenteil von Homoskedastizität heißt Heteroskedastizität. also ungleich verteilte Varianz, und kann zu
 ungenauen Schätzungen und zu irreführenden Testergebnissen führen.
 
 Was ist hier gemeint? Schau dir die Grafiken an und versuche zu
@@ -966,7 +963,7 @@ gridExtra::grid.arrange(h1, h2, h3, h4, h5, h6)
 ```
 
 ```{r homoskedasis_question}
-question_checkbox("Welche der Grafiken zeigen eine homoskedastische Verteilung?",
+question_checkbox("Welche der Grafiken zeigen eine **homoskedastische** Verteilung?",
                   answer(1, correct = T, message = "(1) Hier ist es offensichtlich"),
                   answer(2, message = "(2) Das klassische Beispiel für Heteroskedastizität - die Trompetenform"),
                   answer(3), message = "(3) könnte ein Beispiel für saisonale Schwankungen sein - heteroskedastisch",
@@ -976,17 +973,17 @@ question_checkbox("Welche der Grafiken zeigen eine homoskedastische Verteilung?"
                   allow_retry = T)
 ```
 
-### 6. Unkorreliertheit der Residuen mit Kriterium
+**Prüfung mit `plot(fit, which = 1)`**
 
-Wir wollen also auch untersuchen, ob die standardisierten Residuen mit unserer 
-abhängigen Variable (Kriterium) korrelieren. Auch dafür schauen wir uns ein Scatterplot
-diese beiden Größen an.
-Verlaufen die Residuen in einer erkennbaren Form mit dem Kriterium, dann ist das ein Hinweis auf einen nicht-linearen (quadratischen/ logarithmischen) Zusammenhang der Variablen. 
-Vergleichen wir dafür noch einmal zwei Plots:
+Die Fehlerterme (Residuen) sollen rein zufälliger Natur sein, und keine systematischen Einflüssen enthalten. Das lässt sich ebenfalls gut mit `plot(fit, which = 1)` visuell betrachten. Generell ist alles schlecht, was die Fehler systematisch beeinflusst. Mit dem Plot der Residuen vs. vorhergesagten Werte kannst du also noch mal nachträglich prüfen, ob die Residuen:
 
-<!-- not needed (double): -->
-<!-- h1 + geom_smooth(method = "lm", se = F) -->
-<!-- h4 + geom_smooth(method = "lm", se = F) -->
+- **linear**
+- **unabhängig**
+- **homoskedastisch**
+
+sind. 
+
+Hier mal zwei Plots, wobei der erste unabhängige, homoskedastische, lineare Residuen darstellt, während beim zweiten Plot die Residuen systematisch beeinflusst sind 
 
 ```{r grafiken_homosked, echo=T, message=FALSE, warning=FALSE, setup = "homoskedasis_grafiken"}
 fit1 <- lm(y ~ x, data = df1)
@@ -996,11 +993,13 @@ fit4 <- lm(y ~ x, data = df4)
 plot(fit4, which = 1)
 ```
 
-Der erste Plot zeigt die gewünschte gleichmäßige Verteilung, der zweite einen deutlichen 
-quadratischen Zusammenhang, der darauf hinweißt, dass die Annahme der Unkorreliertheit 
-hier verletzt ist.
+Der erste Plot zeigt die gewünschte gleichmäßige Verteilung. Bei einigen weit außen liegenden Werten wurde eine Beschriftung angefügt, um sich diese Datenpunkte eventuell genauer anzusehen. Idealerweise sollte die (schwer zu erkennende) rote Linie horizontal auf der Höhe von 0 verlaufen.
 
-### 7. keine Auto-Korrelation der Residuen
+Beim zweiten Plot ist gut zu erkennen, dass Residuen (Abstand zwischen Vorhersage und tatsächlichem Wert) systematisch zu groß oder zu klein sind. Beispielsweise sind für den vorhergesagten Wert 0.10 alle Residuen zu hoch, während für 0.20 alle Residuen zu niedrig sind. Das ist ein schlechtes Zeichen, was z.B. auf einen **nicht-linearen** Zusammenhang hindeuten kann, oder dass es zusätzliche Einflüsse gibt, die nicht im Modell enthalten sind, das heißt die Residuen sind nicht **unabhängig**.
+
+### 6. keine Auto-Korrelation der Residuen
+
+Das ist einfach noch ein weiterer Weg um die Unabhängigkeit der Residuen zu überprüfen. 
 
 Was bedeutet Auto-Korrelation?
 
@@ -1080,10 +1079,10 @@ question_radio("Was bedeutet eine Entscheidung gegen die $H_0$ inhaltlich?",
 ```
 
 
-### 8. Normalverteilung der Residuen
+### 7. Normalverteilung der Residuen
 
 Eine letzte und zentrale Annahme ist, dass die Residuen normalverteilt
-sein müssen.
+sein müssen. Sie entsteht aus der Annahme, dass die Residuen rein zufällig zustande kommen.
 
 Eine Möglichkeit, das grob visuell zu überprüfen, ist ein Histogramm der 
 standardisierten Residuen zu erstellen.
@@ -1099,7 +1098,7 @@ resid(fit) |> scale() |> hist()
 Wir erinnern uns: Ein Histogramm ermöglicht, die Verteilung einer
 metrischen Variable zu visualisieren.
 
-```{r residuenhist, exercise = T}
+```{r residuenhist, exercise = T, exercise.setup = "silentsetup"}
 resid(fit) |> scale() |> hist()
 ```
 
