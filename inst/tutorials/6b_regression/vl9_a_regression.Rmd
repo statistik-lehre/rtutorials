@@ -3129,7 +3129,7 @@ question_radio("3. Was wird im Gesamtmodelltest getestet?",
     correct = random_praise("de"),
     incorrect = random_encouragement("de")),
 question_radio(
-  "4.\* Wann entspricht der Lokaltest dem Geamtmodelltest?",
+  "4.* Wann entspricht der Lokaltest dem Geamtmodelltest?",
   answer("Nur bei der einfachen linearen Regression", correct = T),
   answer("Nur bei der multiplen linearen Regression"),
   message = "Da es bei der einfachen Regression nur einen Prädiktor gibt, entspricht der Test für diesen einen Prädiktor dem Test für das gesamte Modell",
