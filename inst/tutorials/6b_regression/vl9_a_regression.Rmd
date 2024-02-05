@@ -11,6 +11,9 @@ link-citations: TRUE
 description: "Einführung in die einfache lineare Regression und die Überprüfung der Voraussetzungen. Interpretation des Outputs und darüber hinaus viele interessante Nebeninformationen und Exkurse. Wiederholung Signifikanztests. Beachte: Das Laden dieses Tutorials bei der ersten Ausführung dauert lange (ca. 60 Sekunden) und das ist normal."
 resource_files:
 - css/boxes.css
+tutorial:
+  id: reg
+  version: 1.1
 ---
 
 ```{r setup, include=FALSE}
