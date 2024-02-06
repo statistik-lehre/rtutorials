@@ -37,9 +37,7 @@ filter_man <-  c("0" = "Nicht herausgefiltert", "1" = "Herausgefiltert")
 
 ## Inhalt
 
-kurze Beschreibung des Inhalts
-
-Verortung auf der Roadmap
+Hier nur ein kleiner Exkurs darüber, dass du mit *R* **Programmieren kannst**.
 
 ## Lernziele
 
@@ -53,13 +51,15 @@ Verortung auf der Roadmap
 
 Mittlerweile wissen wir: R macht Spaß. R ist mächtig. R ist [Turing complete](https://en.wikipedia.org/wiki/Turing_completeness) (kann also alles, was eine Programmiersprache können muss). Und R wächst:
 
-![](images/r_stackoverflow.png) [*Gefunden auf Stackoverflow*](https://stackoverflow.blog/2017/10/10/impressive-growth-r/)
+![](images/r_stackoverflow.png){width="70%"} 
 
-Neben den Basics, die wir bisher gelernt haben kann R noch ganz schön viele andere, coole Sachen: Diese Tutorials sind in R geschrieben, es lassen sich aber auch ganze Bücher (z.B. [hier](https://r4ds.had.co.nz/), [hier](https://adv-r.hadley.nz/) und [hier](https://r-graphics.org/)), Webseiten/ Blogs (z.B. [hier](https://www.tidymodels.org/), [hier](https://www.shirin-glander.de/)) und Web-Apps (z.B. [hier](https://demo.prod.appsilon.ai/content/55e17566-c4e9-472d-a78e-91caa476d415/), [hier](https://connect.appsilon.com/pixelator/) und [hier](https://connect.appsilon.com/fresh-water-resources/)) damit schreiben.
+[*Source: Stackoverflow*](https://stackoverflow.blog/2017/10/10/impressive-growth-r/)
 
-Im Folgenden werden wir euch die ganz grundlegenden Basics erklären, die eigenltich immer gebraucht werden und in jeder Programmiersprache (fast) identisch funktionieren. Das heißt: Wir öffnen jetzt gemeinsam das Tor in die Welt von (\@Gesa: hier fehlt noch das Satzende,...ich denke "Programmieren"?)
+Neben den Basics, die wir bisher gelernt haben kann *R* noch ganz schön viele andere, coole Sachen: Diese Tutorials sind in *R* geschrieben, es lassen sich aber auch ganze Bücher (z.B. [hier](https://r4ds.had.co.nz/), [hier](https://adv-r.hadley.nz/) und [hier](https://r-graphics.org/)), Webseiten/ Blogs (z.B. [hier](https://www.tidymodels.org/), [hier](https://www.shirin-glander.de/)) und Web-Apps (z.B. [hier](https://demo.prod.appsilon.ai/content/55e17566-c4e9-472d-a78e-91caa476d415/), [hier](https://connect.appsilon.com/pixelator/) und [hier](https://connect.appsilon.com/fresh-water-resources/)) damit schreiben.
 
-### Statement: if
+Im Folgenden werden wir euch die ganz grundlegenden Basics erklären, die eigenltich immer gebraucht werden und in jeder Programmiersprache (fast) identisch funktionieren. Das heißt: Wir öffnen jetzt gemeinsam das Tor in die Welt des Programmierens.
+
+## Statement: if
 
 `if () {}` ist ein Statement, dass genau das beinhaltet. Es sagt dem Rechner: `wenn ... dann ...`.\
 
@@ -391,7 +391,7 @@ if (grepl("do", satz)) {
 
 ```
 
-### Loops
+## Loops
 
 Wir können jetzt sowohl einzelne Werte testen als auch logische Operatoren auf Vektoren oder Datensätze anwenden. Allerdings wollen wir häufiger Daten **zeilenweise** bearbeiten. Hier kommen Schleifen (oder auf englisch: Loops) ins Spiel.
 
@@ -399,7 +399,7 @@ Wir können jetzt sowohl einzelne Werte testen als auch logische Operatoren auf 
 
 Die beiden prominentesten Vertreter stellen wir euch hier vor: `for` und `while`.
 
-#### for
+### for
 
 Beginnen wir mit `for (Element in Vektor) {}`. Auch diese Schleife tut genau das, was sie sagt und folgt dankenswerter Weise genau der gleichen Struktur wie weiter oben das `if`-Statement. Sie sagt: `für ...das und das... mache ...das und das...`:\
 
@@ -411,7 +411,7 @@ Beginnen wir mit `for (Element in Vektor) {}`. Auch diese Schleife tut genau das
 **Hinweis:** Hier wird das richtige indizieren sehr wichtig!
 :::
 
-\<\br\>
+</br>
 
 ::: aufgabe
 **Aufgabe:**\
@@ -512,7 +512,7 @@ data$nah_fern
 
 ```
 
-#### R Extrawurst ifelse()
+### ifelse()
 
 Weil die letzte Aufgabe ein häufiges Problem beim Programmieren ist und es relativ viele Zeilen sind dafür gibt es in R eine Möglichkeit das ganze Abzukürzen: `ifelse(test, yes, no)`:
 
@@ -539,7 +539,7 @@ sum(data$nah_fern != data$nf)
 
 ```
 
-#### while
+### while
 
 Die andere prominente Art der Loops sind `while () {}` Loops. Auch sie tun das, was draufsteht. Allerdings ist das hier mit dem Indizieren am Anfang etwas komplizierter.
 
@@ -590,7 +590,7 @@ while (index <= 5) {
 
 ```
 
-### This is the beginning
+## This is only the beginning
 
 So, nun habt ihr das Handwerkszeug, richtig gute Programmierer\*innen zu werden und damit seid ihr noch nichtmal auf R festgelegt. Logik und Schleifen funktionieren in fast allen Programmiersprachen gleich bzw. weisen wirklich nur geringfügige Abweichungen auf. Viel Spaß!
 
