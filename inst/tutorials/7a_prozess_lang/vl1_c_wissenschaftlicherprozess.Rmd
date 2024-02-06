@@ -354,7 +354,7 @@ Nützliche Befehle, um sich einen Überblick über den Datensatz zu verschaffen:
 | Funktion               | Beschreibung                                                                      |
 |------------------------|-----------------------------------------------------------------------------------|
 | `data`                 | Zeigt den Datensatz in der Konsole. Bietet eine Übersicht über den gesamten Datensatz, kann jedoch unübersichtlich werden.            |
-| `View(data)`           | Öffnet den kompletten Datensatz als klassische Tabelle in einem neuen Tab im Skript-Fenster. Gut geeignet, um den Datensatz detailliert zu erkunden.  |
+| `view(data)`           | Öffnet den kompletten Datensatz als klassische Tabelle in einem neuen Tab im Skript-Fenster. Gut geeignet, um den Datensatz detailliert zu erkunden.  |
 | `head(data)`           | Zeigt die ersten paar Zeilen des Datensatzes an. Nützlich, um einen schnellen Überblick zu erhalten.                                     |
 | `car::some(data)`      | Zeigt einige zufällige Zeilen des Datensatzes. Hilfreich, um eine Stichprobe der Daten anzuzeigen.                                        |
 | `names(data)`          | Gibt die Variablennamen des Datensatzes zurück.                                                                                            |
