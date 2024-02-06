@@ -903,7 +903,7 @@ Residuen mit den Werten der unabhängigen Variablen variiert, spricht man
 von Heteroskedastizität.
 
 Die Einhaltung der Homoskedastizität der Residuen ist wichtig, da viele statistische
-Tests, insbesondere bei der linearen Regression, auf dieser Annahme bauen. Heteroskedastizität. also ungleich verteilte Varianz, kann zu
+Tests, insbesondere bei der linearen Regression, auf dieser Annahme bauen. Heteroskedastizität, also ungleich verteilte Varianz, kann zu
 ungenauen Schätzungen und zu irreführenden Testergebnissen führen.
 
 Schau dir die Grafiken an und versuche zu
@@ -980,7 +980,9 @@ question_checkbox("Welche der Grafiken zeigen eine **homoskedastische** Verteilu
 
 Die Fehlerterme (Residuen) sollen rein zufälliger Natur sein, und keine systematischen Einflüssen enthalten. Das lässt sich gut mit `plot(fit, which = 1)` visuell betrachten. Dieser Plot zeigt die Residuen in Beziehung zu den vorhergesagten Werten. Also grob gesagt, um wie viel das Modell sich verschätzt, je nach dem ob es um die Vorhersage 1 m³ Holz geht oder um 30 m³. Idealerweise wäre die Vorhersage gleich ungenau für alle Werte. Ein Aspekt davon ist *Homoskedastizität der Residuen*. Die Fehler in der Vorhersage sollen rein zufällig ein, und nicht systematisch zu groß oder zu klein für bestimmte Werte. Wünschenswert ist ein Modell, dass über den gesamten Wertebereich gleichmäßig gute Vorhersagen liefert, und dass alle Abweichungen von den Vorhersagen als Zufall betrachtet werden können. Zumindest ist genau das die Grundannahme der linearen Regression.  
 
-Hier mal zwei Plots, wobei der erste unabhängige, homoskedastische, lineare Residuen darstellt, während beim zweiten Plot systematische Fehler in der  Vorhersage auftreten. 
+**Unabhängigkeit der Residuen**
+
+Hier mal zwei Plots, wobei der erste unabhängige, homoskedastische, lineare Residuen darstellt, während beim zweiten Plot **systematische Fehler** in der  Vorhersage auftreten. 
 
 ```{r grafiken_homosked, echo=T, message=FALSE, warning=FALSE, setup = "homoskedasis_grafiken"}
 fit1 <- lm(y ~ x, data = df1)
@@ -990,9 +992,9 @@ fit4 <- lm(y ~ x, data = df4)
 plot(fit4, which = 1)
 ```
 
-Der erste Plot zeigt die gewünschte gleichmäßige Verteilung. Bei einigen weit außen liegenden Werten wurde eine Beschriftung angefügt, um sich diese Datenpunkte eventuell genauer anzusehen. Idealerweise sollte die (schwer zu erkennende) rote Linie horizontal auf der Höhe von 0 verlaufen. Die rote Linie ist ein Mittelwert der umliegenden Residuen. Wenn der Mittelwert der Residuen 0 lautet, dann weichen sie gleich stark nach unten und nach oben ab, und im Mittel trifft die Vorhersage dann die Realität. Wenn die Residuen größer als 0 sind, ist die Vorhersage niedriger als die Realität. Und umgekehrt, wenn die Residuen kleiner als 0 sind, überschätzt das Modell den realen Wert. Beides ist nicht wünschenswert.
+Der erste Plot zeigt die gewünschte **gleichmäßige Verteilung**. Bei einigen weit außen liegenden Werten wurde eine Beschriftung angefügt, um sich diese Datenpunkte eventuell genauer anzusehen. **Idealerweise** sollte die (schwer zu erkennende) **rote Linie horizontal** auf der Höhe von 0 verlaufen. Die rote Linie ist ein Mittelwert der umliegenden Residuen. Wenn der Mittelwert der Residuen 0 lautet, dann weichen sie gleich stark nach unten und nach oben ab, und im Mittel trifft die Vorhersage dann die Realität. Wenn die Residuen größer als 0 sind, ist die Vorhersage niedriger als die Realität. Und umgekehrt, wenn die Residuen kleiner als 0 sind, überschätzt das Modell den realen Wert. Beides ist nicht wünschenswert.
 
-Beim zweiten Plot ist gut zu erkennen, dass Residuen (Abstand zwischen Vorhersage und tatsächlichem Wert) systematisch zu groß oder zu klein sind. Beispielsweise sind für den vorhergesagten Wert 0.10 alle Residuen zu hoch, während für 0.20 alle Residuen zu niedrig sind. Das ist ein schlechtes Zeichen, was z.B. auf einen **nicht-linearen** Zusammenhang hindeuten kann, was in diesem Fall auch die Erklärung ist, da die Originaldaten einer Sinuskurve folgen und nicht geeignet sind mit einem linearen Modell beschrieben zu werden... Eine andere Erklärung ist, dass es zusätzliche Einflüsse gibt, die nicht im Modell enthalten sind, das heißt die Residuen sind nicht **unabhängig**.
+Beim zweiten Plot ist gut zu erkennen, dass Residuen (Abstand zwischen Vorhersage und tatsächlichem Wert) **systematisch zu groß oder zu klein sind**. Beispielsweise sind für den vorhergesagten Wert 0.10 alle Residuen zu hoch, während für 0.20 alle Residuen zu niedrig sind. Das ist ein schlechtes Zeichen, was z.B. auf einen **nicht-linearen** Zusammenhang hindeuten kann, was in diesem Fall auch die Erklärung ist, da die Originaldaten einer Sinuskurve folgen und nicht geeignet sind mit einem linearen Modell beschrieben zu werden. In der Praxis können solche Muster entstehen, wenn es zusätzliche Einflüsse gibt, die nicht im Modell enthalten sind, das heißt die Residuen sind nicht **unabhängig**.
 
 ### 6. keine Auto-Korrelation der Residuen
 
