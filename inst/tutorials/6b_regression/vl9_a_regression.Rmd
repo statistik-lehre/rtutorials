@@ -2439,7 +2439,7 @@ summary(multifit)
 
 Der Output sieht nicht groß anders aus, außer dass `height` nun in der Liste der Prädiktoren auftaucht. 
 
-```{anova_quest}
+```{r anova_quest}
 question_radio("Was denkst du, wie verändert sich die Modellgüte $R^2$ (auch Anpassungsgüte genannt) durch das Hinzufügen eines weiteren Prädiktors?",
                answer("Die Anpassung des Modells an die Daten bleibt gleich"),
                answer("Die Anpassung des Modells an die Daten steigt", correct = T,
