@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# rtutorials <a href="https://github.com/statisti-lehre/rtutorials"><img src="man/figures/hex-rtutorials.png" align="right" height="138" /></a>
+# rtutorials <a href="https://github.com/statisti-lehre/rtutorials"><img src="man/figures/hex-rtutorials.png" align="right" height="138"/></a>
 
 <!-- badges: start -->
 
@@ -12,9 +12,7 @@ Check](https://github.com/statistik-lehre/rtutorials/actions/workflows/tutorial_
 
 <!-- badges: end -->
 
-*This R package is currently under active development.*
-
-By installing this package, you add 15 handcrafted lessons to your
+By installing this package, you add 17 handcrafted lessons to your
 RStudio Tutorials Pane. Get to know basic statistics and R interactively
 and self paced.
 
@@ -66,6 +64,7 @@ Solution: Try to connect to the internet. If you are connected, wait a
 few minutes and try again. Likely, this error occurs because you hit the
 download rate limit of the GitHub API, e.g. installed too many large
 packages from GitHub in a short period of time.
+
 </details>
 
 ## Contents
@@ -78,29 +77,25 @@ list below includes planned tutorials as well. Look at `inst/tutorials`
 in the main branch, it is the most up to date way of finding out what is
 published at the moment.
 
-| Block | Tutorial Subject                      | Tutorial name        |
-|-------|---------------------------------------|----------------------|
-| 1     | **Introduction**                      | `1a_intro`           |
-| 1     | **Exploring Functions and Arguments** | `1b_funktionen`      |
-| 1     | **Scientific Process**                | `1c_prozess`         |
-| 2     | **Vectors**                           | `2a_vektoren`        |
-| 2     | **Indexing**                          | `2b_indizierung`     |
-| 2     | **Data Frames**                       | `2c_dataframes`      |
-| 3     | **Data Import**                       | `3a_import`          |
-| 3     | **Scales and Factors**                | `3b_skalen`          |
-| 3     | **Measures of Central Tendency**      | `3c_zentraletendenz` |
-| 4     | Measures of Spread                    |                      |
-| 4     | Visualization Basics                  |                      |
-| 4     | Visualization with ggplot2            |                      |
-| 5     | Sampling                              |                      |
-| 5     | t-Tests                               |                      |
-| 5     | Levene-Test                           |                      |
-| 6     | Chi Squared                           |                      |
-| 6     | Power Analysis                        |                      |
-| 6     | Correlations                          |                      |
-| 7     | Simple Linear Regression              |                      |
-| 7     | Scientific Process Long               |                      |
-| 7     | Programming Basics                    |                      |
+| Tutorial Subject                  | Tutorial name        |
+|-----------------------------------|----------------------|
+| Introduction                      | `1a_intro`           |
+| Exploring Functions and Arguments | `1b_funktionen`      |
+| Scientific Process                | `1c_prozess`         |
+| Vectors                           | `2a_vektoren`        |
+| Indexing                          | `2b_indizierung`     |
+| Data Frames                       | `2c_dataframes`      |
+| Data Import                       | `3a_import`          |
+| Scales and Factors                | `3b_skalen`          |
+| Measures of Central Tendency      | `3c_zentraletendenz` |
+| Measures of Spread                | `4a_dispersion`      |
+| Visualization using `ggplot2`     | `4b_vis`             |
+| The Pipe Operator                 | `4c_pipe`            |
+| Data Wrangling                    | `4d_datawrangling`   |
+| Sampling                          | `5a_sampling`        |
+| t-tests                           | `5b_ttest`           |
+| Correlations                      | `6a_korrelationen`   |
+| Simple Linear Regression          | `6b_regression`      |
 
 ## Accessing the tutorials
 
@@ -124,6 +119,7 @@ click- and scrollable menu surface.
 **The command way**
 
 To list all available tutorials from `rtutorials`:
+<!--Note that devtools::build_readme falsely includes the template tutorial, so just use the Knit buttton to build this and have the most recent official rtutorials package version installed on your machine. -->
 
 ``` r
 learnr::available_tutorials(package = "rtutorials")
@@ -144,6 +140,8 @@ learnr::available_tutorials(package = "rtutorials")
 #>   - 4d_datawrangling   : "Data Wrangling"
 #>   - 5a_sampling        : "Stichprobenkennwerteverteilung"
 #>   - 5b_ttest           : "t-Tests"
+#>   - 6a_korrelationen   : "Korrelationen"
+#>   - 6b_regression      : "Regression"
 ```
 
 And to run the individual tutorials, run:
