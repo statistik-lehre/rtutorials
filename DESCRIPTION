@@ -23,6 +23,7 @@ Imports:
     markdown,
     rmarkdown,
     ggbrace (>= 0.1.0),
+    learnrhash (>= 0.2.0),
     shinyFeedback,
     ggplot2,
     dplyr,
@@ -32,5 +33,6 @@ Depends:
 LazyData: true
 Remotes: 
     NicolasH2/ggbrace
+    rundel/learnrhash
 
 
