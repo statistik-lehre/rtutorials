@@ -32,7 +32,7 @@ Depends:
     R (>= 3.5)
 LazyData: true
 Remotes: 
-    NicolasH2/ggbrace
+    NicolasH2/ggbrace,
     rundel/learnrhash
 
 
