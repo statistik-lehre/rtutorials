@@ -91,12 +91,6 @@ Entwickle eine klare und konkrete Forschungsfrage.
 Formuliere testbare Hypothesen, mit der du deine Forschungsfrage im
 wissenschaftlichen Verständnis überprüfen kannst.
 
-#### (5. Ethikantrag)
-
-#### (6. Aquirierung von Geldern)
-
-#### (7. Präregistrierung)
-
 ### II) Messen / Generieren von Daten
 
 #### 1. Vorbereitung
@@ -158,6 +152,16 @@ Dokumentiere deine Forschungsergebnisse und erstelle einen Bericht.
 
 ## Abschlussquiz
 
+```{r quiz}
+question_checkbox(text = "Wann werden die statistischen Auswertungsmethoden festgelegt?",
+                  answer("Nach der Datenerhebung"),
+                  answer("Während der Datenerhebung"),
+                  answer("Vor der Datenerhebung", correct = TRUE),
+                  allow_retry = T
+)
+```
+
+
 "Hast du das Gefühl, den Ablauf des wissenschaftlichen Prozesses
 verstanden zu haben?"
 
@@ -181,3 +185,17 @@ Zusammenhang steht.
     spezifischen Prozess
 
 -   Statistik ist die Grundlage des wissenschaftlichen Prozesses
+
+## Hash generieren
+
+Wenn du mit deinen Antworten im Tutorial zufrieden bist, generiere dir deinen Hash-Code, kopiere ihn und lade ihn bei der entsprechenden Abgabe auf Moodle hoch!
+
+```{r context="server"}
+learnrhash::encoder_logic()
+```
+
+```{r encode, echo=FALSE}
+learnrhash::encoder_ui(ui_before = NULL)
+```
+
+### [**Moodle-Kurs öffnen**](https://moodle.uni-kassel.de/course/view.php?id=15349)
