@@ -36,10 +36,11 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Pakete
 
-Was R so mächtig macht, sind die von der Community veröffentlichten und gepflegten Erweiterungen drum herum. Stand 2023 gibt es knapp 20.000 offiziell veröffentlichte Pakete auf CRAN.
-Dieses Akronym steht für *Comprehensive R Archive Network* und ist die offizielle Adresse für geprüfte Erweiterungen. Es sei aber erwähnt, dass es auch noch andere Orte gibt, wo Pakete veröffentlicht werden können, zum Beispiel Bioconductor, GitHub und andere. Deswegen ist die Gesamtzahl aktiv gepflegter Pakete wohl noch höher als 20.000.
+Was R so mächtig macht, sind die von der Community veröffentlichten und gepflegten Erweiterungen drum herum. Davon gibt es sehr viele, die aktuelle Zahl (über 20.000) sieht du unten in der Grafik. Sie zeigt das Veröffentlichungsdatum aller aktuellen Pakte auf CRAN. Was ist CRAN?
 
-Pakete von CRAN reichen für unsere Anwendungszwecke vollkommen aus und können über den einfachen Befehl `install.packages("Paketname")` installiert werden - das ist unkompliziert, du musst keine Internetseiten besuchen, keine Dateien irgendwo hinschieben oder ausführen, das wird alles intern von dieser Funktion erledigt.
+Dieses Akronym steht für *Comprehensive R Archive Network* und ist die offizielle Adresse für geprüfte Erweiterungen. (Es sei aber erwähnt, dass es auch noch andere Orte gibt, wo Pakete veröffentlicht werden können, zum Beispiel Bioconductor, GitHub und andere.) Der Vorteil dieser zentralen Instanz **CRAN** ist, dass Regeln durchgesetzt werden und damit die Pakete untereinander alle erstaunlich kompatibel und konfliktfrei funktionieren. Wer andere Programmiersprachen kennt (wie z.B. Python) weiß, dass das überhaupt nicht selbstverständlich ist. Das ist mit R sehr komfortabel!
+
+Pakete von CRAN können über den einfachen Befehl `install.packages("Paketname")` installiert werden - das ist unkompliziert, du musst keine Internetseiten besuchen, keine Dateien irgendwo hinschieben oder ausführen, das wird alles intern von dieser Funktion erledigt.
 
 ```{r cran_packages_reading}
 # Für den Fall keiner Internetverbindung
@@ -95,6 +96,12 @@ install.packages("cowsay")
 ```
 
 Ersetze `cowsay` durch den Namen des gewünschten Pakets.
+
+::: infobox
+Übrigens, Pakete muss man nur einmal zu Beginn installieren und dann hat man sie! Deswegen lohnt es sich den Code direkt in die Konsole zu tippen und gar nicht erst ins Skript aufzunehmen. 
+:::
+
+<br>
 
 ::: gelb
 
@@ -643,6 +650,15 @@ Manche Computer zeigen standardmäßig gar keine Endungen an. Innerhalb des Date
 ## Abschlussquiz
 
 ```{r quiz}
+
+# define evaluation function
+craneval <- function(x){
+  s <- tolower(x)
+  ifelse(s == "comprehensive r archive network",
+         return(correct()),
+         return(incorrect()))
+  }
+
 learnr::quiz(caption = "Teste dein Verständnis",
              learnr::question_radio("Welches Zeichen wird verwendet, um Kommentare für R von ausführbarem Code zu unterscheiden?",
                random_answer_order = TRUE,
@@ -708,8 +724,7 @@ learnr::quiz(caption = "Teste dein Verständnis",
                                allow_retry = TRUE,
                                random_answer_order = TRUE),
              question_text("Wofür steht das Akronym CRAN?",
-                           answer("comprehensive r archive network", correct = TRUE),
-                           answer("Comprehensive R Archive Network", correct = TRUE),
+                           answer_fn(fn = craneval),
                            allow_retry = TRUE),
              question_radio("Was ist der Standardprozess, um ein Paket von CRAN zu installieren?",
                            answer("Die Webseite von CRAN aufrufen und von dort das Paket herunterladen, entpacken, dann an den Ort deiner Bibliothek legen und installieren, in dem du den Befehl `install.packages()` verwendest.", 
@@ -729,6 +744,19 @@ Skripte sind wie ein Drehbuch, was Code enthält. Ein Grundprinzip ist, dass der
 Um Analyseergebnisse zusammen mit dem Quellcode weiterzugeben, eignet sich das Format “R Notebook“ gut. Das ist sinnvoll, um Code und Output beieinander zu behalten. R Notebooks verwenden die Auszeichnungssprache Markdown, um Text zu formatieren, und enthalten ausführbaren R-Code innerhalb von Codeblöcken. Diese Tutorials sind auch mit Markdown geschrieben. R Notebooks werden gespeichert als ein HTML-Dokument, was mit jedem Webbrowser angezeigt werden kann. Der Quellcode wird in einer `.Rmd`-Datei gespeichert, was *R Markdown* bedeutet. Das HTML-Dokument wird als `.nb.html`-Datei gespeichert und enthält eingebettet aber auch den Quellcode, ist also ein super Weg, um Forschungsergebnisse und Analyseprozesse replizierbar weiterzugeben.
 Dateiendungen wie `.R` oder `.Rmd` sagen dem Betriebssystem, dass die Datei besser mit RStudio geöffnet werden sollte, während `.html` dazu führt, dass automatisch ein Webbrowser zum Öffnen der Datei verwendet wird.
 
+## Hash generieren
+
+Wenn du mit deinen Antworten im Tutorial zufrieden bist, generiere dir deinen Hash-Code, kopiere ihn und lade ihn bei der entsprechenden Abgabe auf Moodle hoch!
+
+```{r context="server"}
+learnrhash::encoder_logic()
+```
+
+```{r encode, echo=FALSE}
+learnrhash::encoder_ui(ui_before = NULL)
+```
+
+### [**Moodle-Kurs öffnen**](https://moodle.uni-kassel.de/course/view.php?id=15349)
 
 
 
