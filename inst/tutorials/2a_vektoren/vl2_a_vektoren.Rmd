@@ -25,10 +25,10 @@ library(modeest)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## Was Sie in diesem Tutorial lernen:
+## Lernziele
 
 Im letzten Tutorial hast du dich spielerisch mit der allgemeinen
-Syntax von Funktionen in R beschäftigt. Dieses Tutorial baut darauf auf:
+Syntax von Funktionen in R beschäftigt. Dieses Tutorial baut darauf auf und beantwortet folgende Fragen:
 
 -   Wie erstelle ich ein Objekt in R? (Assignment)
 
@@ -313,7 +313,7 @@ auf diese Werte! Dadurch wird das Environment mit dem Beenden von
 RStudio automatisch gelöscht und nicht zwischen Sitzungen gespeichert.
 :::
 <br>
-Das soll dazu animieren, alle Objekte die benutzen werden auch
+Das soll dazu animieren, alle Objekte die benutzt werden auch
 tatsächlich selbst zu definieren.
 
 Das dient der Replizierbarkeit - Stell dir vor, du hast `x` gar
@@ -474,7 +474,7 @@ Letztlich geschieht dieser Mechanismus auch bei unserem ersten Beispiel
 von Rechnen mit Vektor + Zahl (`vec + 1`), weil die Zahl eigentlich auch
 nur ein Vektor der Länge 1 ist.
 
-### Fehlermeldung
+### Warnmeldung
 
 Entsteht beim Recycling ein "Überstand", weil die beiden Vektoren keine
 Vielfachen voneinander sind, wird die Berechnung trotzdem durchgeführt,
@@ -665,15 +665,9 @@ id + 1
 
 ## Typen 
 
-Als nächstes schauen wir uns die Typen und Klasse von Daten etwas genauer an.
+Als nächstes schauen wir uns die Typen und Klassen von Daten etwas genauer an.
 
-![](images/class.png){width="40%"}
-
-Wie es im Fantasy RPG (Role Play Game) deiner Wahl in der Regel die Auswahl aus verschiedenen Klassen (Ritter\*in, Heiler\*in, Zauber\*in etc.) und Rassen (Mensch, Elfe, Zwerg etc.) gibt haben auch in der Informatik verschiedene Klassen und Typen. **Achtung: zwar gibt es auch in anderen Programmiersprachen Klassen und Typen, doch unterscheiden diese sich ggf. von denen in R.** Das Bild von Klasse und Rasse ist rein methaphorisch für eine grundlegende Idee der Zusammenhänge zu verstehen.
-
-Die *Datentypen* sind sowas wie die "Rasse". Also wie sieht ein Chracter aus (Zwerg, Elfe, Mensch) bzw. ein Dateneintrag aus: Zahlenart, Buchstabe, binär etc. Die *Objektklassen* entsprechen grob den "Rassen" in RPGs. Also wie sind die Charaktere organisiert: in Heiler\*innengilden, Ritter\*innenorden, Hofzauber*in etc. bzw. in Objekten: Vektor, Dataframe, Matrix etc.
-
-Auf dem Level, auf dem wir R nutzen ist die ganz genaue Unterscheidung zwischen Typen und Klassen nicht notwendig. Nur gut, es einfach schonal gehört zu haben, da hier manchmal Probleme auftauchen die sich dann meist relativ einfach lösen lasse.
+Auf dem Level, auf dem wir R nutzen ist die ganz genaue Unterscheidung zwischen Typen und Klassen nicht notwendig. Nur gut, es einfach schonal gehört zu haben, da hier manchmal Probleme auftauchen die sich dann meist relativ einfach lösen lassen.
 
 
 ### Typen
@@ -697,7 +691,7 @@ Sowohl `double` als auch `integer` beinhalten Zahlen. Wo ist nun der Unterschied
 
 **Double** sind Fließkommazahlen bzw. Dezimalzahlen, auch *floating point numbers*.
 
-**Integer** sind postive und negative ganze Zahlen sowie Null. 
+**Integer** sind positive und negative ganze Zahlen sowie Null. 
 
 
 Das ist wichtig zu erwähnen, denn das ist krass: Computer merken sich Zahlen anders als Menschen. Die meisten Menschen denken *dezimal* (also in Zehnerschritten) und Computer *binär* (die klassischen 1 und 0). 
@@ -708,13 +702,18 @@ Für einen Rechner sieht eine `0.1` so aus: $0.0 \overline{0011}$.
 
 Rechner können je nach Programmeinstellung und in sehr hardcore Fällen auch aufgrund der Hardware pro Zahl nur  [23](https://de.wikipedia.org/wiki/Einfache_Genauigkeit) bzw. [52](https://de.wikipedia.org/wiki/Doppelte_Genauigkeit) binäre [signifikante Stellen](https://de.wikipedia.org/wiki/Signifikante_Stellen) berechnen. Das entspricht ca 8 bzw. 16 dezimalen Ziffern (*Siehe dazu auch dieses wunderbare [Video](https://www.youtube.com/watch?v=PZRI1IfStY0)). Danach wird die Zahl einfach abgeschnitten - mit fatalen Folgen.
 
+::: infobox
+R kann erst mal "nur" 16 Dezimalstellen nach dem Komma genau berechnen (vorausgesetzt, du befindest dich nicht auf uralter Hardware mit 32-Bit, dann wären es 8). Wenn mehr Präzision benötigt wird, können dafür aber problemlos spezielle Pakete verwendet werden. 
+:::
+
+<br>
 <details>
 <summary><a>▼ \* Rumgenerde bzgl. des Datentyps double.
 </a></summary>
 
-Ob 23 oder 52 binäre signifikante Stellen hat was mit einen Programmeinstellungen zu tun. Du wurdest beim Runterladen gefragt, ob du eine 32 oder 64 bit Version von R möchtest und du wirst 64 gewählt haben. Im grunde hast du da ausgewählt, wie Präzise R Zahlen abbilden kann. Falls du das gegenchecken möchtest, tippe `sessionInfo()` in deine Konsole. In der zweiten Reihe steht hinter `Platform:` dein Betriebssystem sowie die Zahl der Bits, für die du dich entschieden hast.
+Ob 23 oder 52 binäre signifikante Stellen hat was mit einen Programmeinstellungen zu tun. Du wurdest beim Runterladen gefragt, ob du eine 32 oder 64 bit Version von R möchtest und du wirst 64 gewählt haben. Im grunde hast du da ausgewählt, wie präzise R Zahlen abbilden kann. Falls du das gegenchecken möchtest, tippe `sessionInfo()` in deine Konsole. In der zweiten Reihe steht hinter `Platform:` dein Betriebssystem sowie die Zahl der Bits, für die du dich entschieden hast.
 
-Das Format von Zahlen, die mit 32 Bit gespeichert sind heißt auch *"Single-precision floating-point format"*. Das wird dir in der freien Wilbahn eher nicht begegnen. Das Format von mit 64 Bit gespeicherte Daten heißt *"Double-precision floating-point format"*. Hier schließt sich der Kreis, dennn exakt das sagt der Datentyp **double`**.
+Das Format von Zahlen, die mit 32 Bit gespeichert sind heißt auch *"Single-precision floating-point format"*. Das wird dir in der freien Wildbahn eher nicht begegnen. Das Format von mit 64 Bit gespeicherte Daten heißt *"Double-precision floating-point format"*. Hier schließt sich der Kreis, dennn exakt das sagt der Datentyp **double`**.
 
 Für den Alltag reicht zu merken: **double** bedeutet Kommazahl (mit einer bestimmten Präziszion).
 
@@ -873,15 +872,11 @@ Beide Typen sind mir in meiner kompletten R Laufbahn noch nie in der Praxis übe
 
 #### Zusammenfassung Typen
 
-Nochmal zusammengefasst: Es gibt 6 Datentypen (2 numerische: `double` (mit Komma), `integer` (ohne Komma), Buchstaben (`character`), logische Werte (`logical`), Zahlen, die genau genommen keine richtigen Zahlen sind (`complex`) und irgendwie komisch dargestellte binärcodes (`raw`)). Welchen Typ die Daten haben kann mit der Funktio `typeof()` in Erfahrung gebracht werden und unter bestimmten Voraussetzungen lassen sich die Typen auch ineinander übersetzen `as.neuertyp()`. Ob ein bestimmter Typ vorliegt, findest du mit `is.datentyp()` heraus.
+Nochmal zusammengefasst: Es gibt 6 Datentypen (2 numerische: `double` (mit Komma), `integer` (ohne Komma), Buchstaben (`character`), logische Werte (`logical`), Zahlen, die genau genommen keine richtigen Zahlen sind (`complex`) und irgendwie komisch dargestellte binärcodes (`raw`)). Welchen Typ die Daten haben kann mit der Funktion `typeof()` in Erfahrung gebracht werden und unter bestimmten Voraussetzungen lassen sich die Typen auch ineinander übersetzen `as.neuertyp()`. Ob ein bestimmter Typ vorliegt, findest du mit `is.datentyp()` heraus.
 
 ## Klassen
 
-Nun sind die Typen der der Daten ("Rasse" im RPG) dir bereits ein Begriff. Fehlt noch die Klasse.
-
-Hier fängt das Beispiel mit den RPGs an, etwas zu hinken. Denn nicht *Daten* haben eine Klasse, sondern *Objekte*. Daten sind allerdings **in** Objekten gespeichert.
-
-Es gibt sehr viele Klassen in R und manche Funktionen funktionieren oder funktionieren nicht oder werfen andere Ergebnisse aus, abhängig davon, in welcher Klasse von Objekt die Daten stecken. Häufig werden Klassen explizit festgelegt. Wenn das nicht der Fall ist, haben die Objekte ein implizites Klassenattribut und manchmal einfach den Datentyp.
+Es gibt sehr viele Klassen in R. Und manche Funktionen funktionieren oder funktionieren nicht oder werfen andere Ergebnisse aus, abhängig davon, in welcher Klasse von Objekt die Daten stecken. Häufig werden Klassen explizit festgelegt. Wenn das nicht der Fall ist, haben die Objekte ein implizites Klassenattribut und manchmal einfach den Datentyp.
 
 Klingt kompliziert? Ist es auch. Und das ist total okay. Wir bringen gemeinsam Schritt für Schritt etwas Licht ins Dunkel.
 
