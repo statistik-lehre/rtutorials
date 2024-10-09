@@ -81,10 +81,11 @@ Die Tutorials sind alle gleich aufgebaut:
 -   **Inhalte**: Die eigentlichen Inhalte
 -   **Abschlussquiz**: Was von dem, was wir wichtig finden ist hängen geblieben?
 -   **Learnings**: Knappe Zusammenfassung des Kapitels
+-   **Hash generieren** Den Lernfortschritt im Tutorial kopieren um ihn auf Moodle vorweisen zu können.
 
 ### interaktive Codeblöcke
 
-Der Grund, warum wir diese Tutorials interaktiv nennen: Sie enthalten ausführbare Code-Blöcke, deren Inhalt Sie bearbeiten können.
+Der Grund, warum wir diese Tutorials interaktiv nennen: R Code kann direkt in bestimmten Feldern ausgeführt werden, die wir "interaktive Codeblöcke" nennen. 
 
 Schreib Deinen Code hinein und führe ihn aus mit `Strg + Enter` oder dem Knopf `▶ Code ausführen`.\
 Es gibt zu jeder Aufgabe auch Tipps oder Lösungen. Klicke dafür auf den Button 💡`Tipp` oder `Lösung`.
@@ -120,7 +121,7 @@ Nun kommen wir zur Magie:
 Bevor wir weiter etwas über R erzählen, möchten wir euch einfach zeigen was alles möglich ist. Eine klassische Aufgabe ist das Sortieren, Zusammenfassen und Visualisieren von großen Datenmengen.
 
 ::: gelb
-Das hier ist nur eine Demo der Fähigkeiten, deswegen erklären wir an dieser Stelle nichts. Wie genau alles funktioniert und zusammenhängt, werden Sie im Laufe des Semesters lernen. Keine Sorge, wir bringen Ihnen R von Grund auf bei.
+Das hier ist nur eine Demo der Fähigkeiten, deswegen wird hier nichts weiter erklärt. Wie genau alles funktioniert und zusammenhängt, wird im Laufe des Semesters klarer. Keine Sorge, die Tutorials bringen dir R noch früh genug von Grund auf bei.
 :::
 
 <br>
@@ -131,7 +132,7 @@ Wir nutzen Daten vom statistischen Bundesamt, welche die Nutzung verschiedener A
 
 ### Überblick über die Daten
 
-Lassen wir uns zunächst den Datensatz anzeigen, um einen Überblick zu bekommen. Folgen Sie der Analyse, in dem Sie die interaktiven Codeblöcke ausführen!
+Lassen wir uns zunächst den Datensatz anzeigen, um einen Überblick zu bekommen. Folge der Analyse, in dem du die interaktiven Codeblöcke ausführst!
 
 ```{r data, exercise = T, exercise.cap = "Gibt die ersten 25 Zeilen des Datensatzes aus"}
 publictr |> print(n = 25)
@@ -577,6 +578,8 @@ learnrhash::encoder_logic()
 ```{r encode, echo=FALSE}
 learnrhash::encoder_ui(ui_before = NULL)
 ```
+
+Wenn du mit deinen Antworten im Tutorial zufrieden bist, generiere dir deinen Hash-Code, kopiere ihn und lade ihn bei der entsprechenden Abgabe auf Moodle hoch! So können wir sehen, ob du dieses Tutorial bearbeitet hast, und wie detailliert das war. Es wird niemals erwartet, dass bei den Quizfragen alles richtig war. Woher solltet ihr es auch wissen? Es muss ja erst mal gelernt werden. Allerdings erwarten wir ein gewissenhaftes Ausfüllen der Fragen und Codeblöcke. 
 
 ### [**Moodle-Kurs öffnen**](https://moodle.uni-kassel.de/course/view.php?id=15349)
 
