@@ -565,3 +565,19 @@ question_checkbox("Als guter Stil gilt:",
 -   <input type="checkbox" unchecked> Ich habe das Projekt `statistik-bachelor` erstellt </input>
 -   <input type="checkbox" unchecked> In diesem Projekt liegt ein Skript namens `01_einfuehrung.R` </input>
 -   <input type="checkbox" unchecked> Ebenfalls in diesem Projekt liegt ein kompiliertes Skript namens `01_einfuehrung.docx` </input>
+
+## Hash generieren
+
+Am Ende des Tutorials hast du die Möglichkeit, einen Hash zu generieren. Das ist ein lange Abfolge aus Textzeichen, die codiert den Inhalt der Antworten und den Fortschritt in diesem Tutorial speichern. Dieser Hash kann z.B. über Moodle zur Bewertung abgegeben werden und enthält deinen Fortschritt im Tutorial zu dem Zeitpunkt, zu dem der Hash generiert wurde. 
+
+```{r context="server"}
+learnrhash::encoder_logic()
+```
+
+```{r encode, echo=FALSE}
+learnrhash::encoder_ui(ui_before = NULL)
+```
+
+### [**Moodle-Kurs öffnen**](https://moodle.uni-kassel.de/course/view.php?id=15349)
+
+
