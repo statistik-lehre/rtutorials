@@ -751,6 +751,20 @@ Du hast gelernt:
 | `liste$name[Zeile]`    | Auswahl von Elementen in einer Liste durch Index oder Namen.                   |
 | `matrix[Spalte,Zeile]` | Auswahl von Elementen in einer Matrix durch Zeilen und Spaltenindex.           |
 
+## Hash generieren
+
+Wenn du mit deinen Antworten im Tutorial zufrieden bist, generiere dir deinen Hash-Code, kopiere ihn und lade ihn bei der entsprechenden Abgabe auf Moodle hoch!
+
+```{r context="server"}
+learnrhash::encoder_logic()
+```
+
+```{r encode, echo=FALSE}
+learnrhash::encoder_ui(ui_before = NULL)
+```
+
+### [**Moodle-Kurs öffnen**](https://moodle.uni-kassel.de/course/view.php?id=15349)
+
 ## Credit
 
 Dieses Tutorial wurde (größtenteils) von Marie Klosterkamp sowie in Teilen von Lukas Bruelheide geschrieben. Bei der Erstellung (u.a. der Bilder, Beispielen, Aufgaben und Zusammenfassung) wurde teilweise von ChatGPT und Bing AI gebrauch gemacht.
