@@ -663,14 +663,26 @@ id + 1
 # ohne die Anführungszeichen kann der Text als Zahl erkannt werden.
 ```
 
-## Typen 
+## Datentypen 
 
-Als nächstes schauen wir uns die Typen und Klassen von Daten etwas genauer an.
+### Unterscheidung Typ und Klasse
+
+Als nächstes schauen wir uns die Typen und Klassen von Objekten in R etwas genauer an. 
+
+::: infobox
+
+**Kurzzusammenfassung**
+
+Der **Datentyp** kategorisiert die Objekte nach der Art und Weise, wie sie im Computer gespeichert werden. Also z.B. ob es Text ist, Dezimalzahlen, oder ganze Zahlen. Ein Vektor kann immer nur Daten des gleichen Typs enthalten.
+
+Die **Klasse** eines Objekts hingegen sagt R, wie es damit umgehen soll. Also welche Operationen erlaubt sind. Beispielsweise, dass auf ein Objekt der Klasse "Text" die Methode "Multiplikation" nicht angewandt werden kann, die Methode "zähle die Wörter" aber schon. Teilweise überschneiden sich Datentyp und Klasse. Aber: Es gibt unbegrenzt viele Klassen, jedoch nur eine kleine, feste Anzahl an Datentypen (6 Stück). 
+Ein Objekt kann auch mehrere Klassen haben, während es nur ein einziger Datentyp gleichzeitig sein kann. Es gibt unbegrenzt viele Klassen, weil Programmierer\*innen jederzeit neue Klassen erfinden können. 
 
 Auf dem Level, auf dem wir R nutzen ist die ganz genaue Unterscheidung zwischen Typen und Klassen nicht notwendig. Nur gut, es einfach schonal gehört zu haben, da hier manchmal Probleme auftauchen die sich dann meist relativ einfach lösen lassen.
 
+:::
 
-### Typen
+### Die verschiedenen Datentypen
 
 
 Es gibt *atomic vectors* in insgesamt sechs Datentypen, von denen wir aber nur vier wirklich verwenden. Aber damit du es einmal gesehen hast, werden der Vollständigkeit halber einmal alle gezeigt. 
@@ -682,9 +694,9 @@ Es gibt *atomic vectors* in insgesamt sechs Datentypen, von denen wir aber nur v
 5. (complex)
 6. (raw)
 
-R sagt dir, mit welchem Datentyp du es zu tun hast wenn du `typeof(x)` eingibst (siehe unten).
+R sagt dir, welchen **Datentyp** ein Objekt `x` hat, wenn du `typeof(x)` eingibst (siehe unten).
 
-#### Zahlen: Unterschied `double` und `integer`
+### Zahlen: Unterschied `double` und `integer`
 
 Sowohl `double` als auch `integer` beinhalten Zahlen. Wo ist nun der Unterschied und warum gibt es ihn?
 
@@ -692,8 +704,6 @@ Sowohl `double` als auch `integer` beinhalten Zahlen. Wo ist nun der Unterschied
 **Double** sind Fließkommazahlen bzw. Dezimalzahlen, auch *floating point numbers*.
 
 **Integer** sind positive und negative ganze Zahlen sowie Null. 
-
-
 Das ist wichtig zu erwähnen, denn das ist krass: Computer merken sich Zahlen anders als Menschen. Die meisten Menschen denken *dezimal* (also in Zehnerschritten) und Computer *binär* (die klassischen 1 und 0). 
 
 Für den Menschen sieht eine `0.1` so aus: $0.1$ bzw. $\frac{1}{10}$.
@@ -1297,6 +1307,20 @@ Darüber hinaus hast du nun ein Bild davon, welche wichtigen Datentypen (`double
 | `as.list()`   | Umwandlung in Liste |
 | `as.array()` | Umwandlung in Array |
 |`is.double()` | Logische Abfrage, analog zu den anderen Typen und Klassen abwandelbar |
+
+## Hash generieren
+
+Wenn du mit deinen Antworten im Tutorial zufrieden bist, generiere dir deinen Hash-Code, kopiere ihn und lade ihn bei der entsprechenden Abgabe auf Moodle hoch!
+
+```{r context="server"}
+learnrhash::encoder_logic()
+```
+
+```{r encode, echo=FALSE}
+learnrhash::encoder_ui(ui_before = NULL)
+```
+
+### [**Moodle-Kurs öffnen**](https://moodle.uni-kassel.de/course/view.php?id=15349)
 
 ## Credit
 Dieses Tutorial wurde von Lukas Bruelheide sowie Gesa Graf geschrieben. \
