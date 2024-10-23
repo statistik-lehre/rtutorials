@@ -343,7 +343,7 @@ R bietet hauseigene Datenformate an, um Daten in unterschiedlichen Skalenniveaus
 
 Nehmen wir folgenden Beispieldatensatz (`einkaufen`):
 
-Diese Daten wurden von Studierenden im Rahmen dieser Vorlesung im WiSe 2022-23 erhoben. Dabei fokussieren wir uns auf verschiedene Fälle:
+Diese Daten wurden von Studierenden im Rahmen dieser Vorlesung im WiSe 2022-23 erhoben. Dabei fokussieren wir uns auf vier Variablen:
 
 -   Das *lieblingsessen* von Bioladenbesucher\*innen (*nominal*)
 -   Das *verkehrsmittel*, mit dem sie zum Laden gekommen sind (*nominal*)
@@ -388,7 +388,7 @@ quiz(caption = "Wofür könnten die Abkürzungen stehen?",
 )
 ```
 
-| Abkürzung | Datenformat                            | geeignet für       |
+| Abkürzung | Klasse                                 | geeignet für       |
 |-----------|----------------------------------------|--------------------|
 | \<chr\>   | character                              | Text               |
 | \<fctr\>  | factor                                 | nominale Daten     |
@@ -398,16 +398,18 @@ quiz(caption = "Wofür könnten die Abkürzungen stehen?",
 *Bei `character`-Variablen werden die Inhalte als reiner Text gespeichert.
 
 ::: blau-nb
-Merke: für *nominale* und *ordinale*, also *kategoriale* Variablen, bietet sich das Datenformat `factor` bzw. ein `ordered Factor` an. 
+Merke: für *nominale* und *ordinale*, also *kategoriale* Variablen, bietet sich die Klasse `factor` bzw. ein `ordered Factor` an. 
 
 Bei *metrischen* Variablen können wir mit den gewohnten *doubles* rechnen.
 :::
 </br>
 
-Schauen wir uns also an, welche Datenformate für die Variablen in dem Beispieldatensatz genutzt wurden:
+Schauen wir uns also an, welche Klasse für die Variablen in dem Beispieldatensatz genutzt wurden:
 
 ::: aufgabe
-Untersuche mit der Funktion `class()` welche Datenformate für die verschiedenen Variablen genutzt wurden:
+Untersuche mit der Funktion `class()` welche Klasse für die verschiedenen Variablen genutzt wurden:
+
+Der Datensatz heißt `einkaufen`, die Variablen heißen:
 
 1)  `essen` (Lieblingsessen)
 2)  `verkehrsmittel` (Welches Verkehrsmittel wird zum Einkauf verwendet)
@@ -421,9 +423,6 @@ einkaufen <-  data.frame(rtutorials::einkaufen)
 ```
 
 ```{r class, exercise = TRUE, exercise.setup = "einkaufen"}
-class()
-class()
-class()
 class()
 ```
 
@@ -451,9 +450,20 @@ learnr::question_checkbox("Was kannst du erkennen??",
 ```
 
 
-Was es genau mit dem Datenformat `factor` auf sich hat erfährst du im nächsten Kapitel.
+Was es genau mit der Klasse `factor` auf sich hat erfährst du im nächsten Kapitel.
 
-## Kategoriale Variablen
+## Kategoriale Variablen in R
+
+Denken wir uns einen numerischen Vektor `1 2 3 2 3 3`. R weiß zunächst erst mal nicht, welches Skalenniveau dahinter steht und was mit den Zahlen sinnvoll zu rechnen ist, und was keinen Sinn macht. 
+
+Beispielsweise, wenn die Zahlen Codierungen für verschiedene Kategorien wären, also Nominalskala oder Ordinalskala vorliegen würde, dann wäre es falsch hier einen Mittelwert auszurechnen. R würde das dennoch klaglos für euch tun. 
+
+Wenn die 1 z.B. bedeutet "Brillenträger, die 2 bedeutet "Kontaktlinsen" und die 3 bedeutet "keine Sehhilfen". Dann könnte man zwar den Mittelwert ausrechnen mit `mean()` (2.3333). Aber das würde rein gar keine Information bringen. Da die Abstände und Reihenfolge der Zahlen hier keine Rollen spielen würden, lediglich dass ob sie unterschiedlich oder gleich sind ist die Relation, die ausgewertet wird. 
+
+Das ist wichtig,
+
+
+**Codierung und Codebook**
 
 In der Forschung werden kategoriale Variablen meist in sogenannte *Codes* übersetzt. So werden die Kategorien nicht mehr als Text, sondern als Zahlen repräsentiert. Dies ist v.a. beim händischen Erfassen oder Digitalisieren der Daten unablässlich, denn niemand möchte "zu Fuß" mehr als 25 Mal aufschreiben oder abtippen müssen. Stattdessen wird ein sog. *Codebook* erstellt, in dem die jeweiligen Codes aufgeschlüsselt werden.
 
@@ -482,7 +492,7 @@ Da diese Verwendung von Codes gängige Praxis sind, gibt es in R einen Befehl, d
 
 Warum brauchen wir die `factor()`-Funktion?
 
-1. **Interpretation von Kategorien:** Kategoriale Variablen können eine begrenzte Anzahl von Kategorien haben, z. B. Farben, Geschlecht oder Verkehrsmitteltypen. Der Befehl `factor()` weist diesen Kategorien Beschriftungen zu, um die Daten in einer für uns leicht verständlichen Form darzustellen.
+1. **Interpretation von Kategorien:** Kategoriale Variablen können eine begrenzte Anzahl von Kategorien haben, z. B. Farben, Geschlechter, Messzeitpunkte, Verkehrsmitteltypen... Der Befehl `factor()` weist diesen Kategorien Beschriftungen zu, um die Daten in einer für uns leicht verständlichen Form darzustellen.
 
 2. **Ordinalität beachten:** Bei ordinalen kategorialen Variablen, bei denen die Reihenfolge der Kategorien wichtig ist (z. B. Bildungsniveau - Grundschule, Mittelschule, Hochschule), ermöglicht `factor()` die korrekte Berücksichtigung dieser Ordnung.
 
