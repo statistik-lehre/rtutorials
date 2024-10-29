@@ -1527,6 +1527,21 @@ robuste Analysen durchzuführen.
 | `summarise()` | Zusammenfassung von Daten |
 | `arrange()`   | Sortieren von Datensätzen |
 
+## Hash generieren
+
+Wenn du mit deinen Antworten im Tutorial zufrieden bist, generiere dir deinen Hash-Code, kopiere ihn und lade ihn bei der entsprechenden Abgabe auf Moodle hoch!
+
+```{r context="server"}
+learnrhash::encoder_logic()
+```
+
+```{r encode, echo=FALSE}
+learnrhash::encoder_ui(ui_before = NULL)
+```
+
+### [**Moodle-Kurs öffnen**](https://moodle.uni-kassel.de/course/view.php?id=15349)
+
+
 ## Credit
 
 Dieses Tutorial wurde von Marie Klosterkamp sowie in Teilen von Lukas

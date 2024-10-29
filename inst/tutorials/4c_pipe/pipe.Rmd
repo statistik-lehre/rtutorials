@@ -442,6 +442,20 @@ eine Tabelle mit den wichtigesten Codes des Tutorials
 | `filter(data, condition)` | Filtert Daten nach einer bestimmten Bedingung.|
 | `count(x)`                | Zählt die Werte in `x`.|
 
+## Hash generieren
+
+Wenn du mit deinen Antworten im Tutorial zufrieden bist, generiere dir deinen Hash-Code, kopiere ihn und lade ihn bei der entsprechenden Abgabe auf Moodle hoch!
+
+```{r context="server"}
+learnrhash::encoder_logic()
+```
+
+```{r encode, echo=FALSE}
+learnrhash::encoder_ui(ui_before = NULL)
+```
+
+### [**Moodle-Kurs öffnen**](https://moodle.uni-kassel.de/course/view.php?id=15349)
+
 
 ## Credit
 

@@ -827,6 +827,21 @@ shiny::br()
 Heute hast du gelernt, wie der wahre Wert, die Stichprobengröße und die Stichprobenkennwertverteilung in Zusammenhang stehen.
 Mit diesem Grundlagenwissen wird es dir leichter fallen die inferenzstatistischen Tests, wie den *t-Test*, den *Chi-Test* und auch *Regressionen*, zu verstehen.
 
+## Hash generieren
+
+Wenn du mit deinen Antworten im Tutorial zufrieden bist, generiere dir deinen Hash-Code, kopiere ihn und lade ihn bei der entsprechenden Abgabe auf Moodle hoch!
+
+```{r context="server"}
+learnrhash::encoder_logic()
+```
+
+```{r encode, echo=FALSE}
+learnrhash::encoder_ui(ui_before = NULL)
+```
+
+### [**Moodle-Kurs öffnen**](https://moodle.uni-kassel.de/course/view.php?id=15349)
+
+
 ## Credit
 
 Dieses Tutorial wurde von Lukas Bruelheide geschrieben und von Marie Klosterkamp reviewed.

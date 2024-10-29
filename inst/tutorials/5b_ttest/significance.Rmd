@@ -1131,6 +1131,22 @@ shiny::br()
 | `leveneTest()`             | Durchführung des Levene-Tests zur Überprüfung der **Varianzhomogenität** |
 | `effectsize::cohens_d()`                | Berechnung der **Effektstärke** (Cohens *d*) für *t*-Tests.         |
 
+
+## Hash generieren
+
+Wenn du mit deinen Antworten im Tutorial zufrieden bist, generiere dir deinen Hash-Code, kopiere ihn und lade ihn bei der entsprechenden Abgabe auf Moodle hoch!
+
+```{r context="server"}
+learnrhash::encoder_logic()
+```
+
+```{r encode, echo=FALSE}
+learnrhash::encoder_ui(ui_before = NULL)
+```
+
+### [**Moodle-Kurs öffnen**](https://moodle.uni-kassel.de/course/view.php?id=15349)
+
+
 ## Credit
 
 Dieses Tutorial wurde von Marie Klosterkamp geschrieben, sowie von Lukas Bruelheide reviewt.
