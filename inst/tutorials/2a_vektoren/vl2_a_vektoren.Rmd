@@ -164,7 +164,7 @@ Speichere nun `x * 2` in einem neuen Objekt `y`!
 
 ```
 
-```{r y_saving-solution}
+```{r y_saving-solution, exercise.setup = "y_saving"}
 y <- x * 2
 ```
 
@@ -191,13 +191,11 @@ Ersteres heißt: "Ist `x` kleiner als `-2 + 3`?", letzteres bedeutet:
 ::: aufgabe
 Lasse dir nun `y` ausgeben!
 :::
+
 ```{r y_print, exercise = TRUE, exercise.setup = "y_saving-solution"}
 
 ```
 
-```{r y_print-setup}
-y <- 10
-```
 
 ::: grau-nb
 Übrigens:
