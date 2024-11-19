@@ -51,7 +51,7 @@ Im laufe des Tutorials wirst du...
 
 ## Einführung in Data Frames
 
-Im Tutorial "Vektoren" hast du bereits gelernt, dass Vektoren Variablen darstellen und mehrere Werte enthalten können. Im folgenden lernst du, wie du mehrere Vektoren in einer Tabelle (einem Data Frame) zusammenbringen kannst.
+Im Tutorial "Vektoren" hast du bereits gelernt, dass Vektoren Variablen darstellen und mehrere Werte enthalten können. Im Folgenden lernst du, wie du mehrere Vektoren in einer Tabelle (einem Data Frame) zusammenbringen kannst.
 
 Einmal vorweg ein Beispiel für dich, wie ein Data Frame erstellt wird:
 
@@ -80,13 +80,13 @@ Neue Funktion: `data.frame()` Erstellt aus einzelnen *gleichlangen* Vektoren ein
 
 In der Praxis wirst du zur Dateneingabe ein grafisches Programm wie Excel verwenden, und die fertige Tabelle dann für die Verwendung mit R importieren. Das wirst du im nächsten Tutorial "Datenimport" lernen.
 
-Wenn im Folgenden immer wieder kleine Data Frames aus Vektoren erstellt werden, dient das nur dazu, Beispiele zu konstruieren um den Umgang zu erlernen, aber nicht weil das die übliche Methode ist, wie Daten in R eingegeben werden.
+Wenn im Folgenden immer wieder kleine Data Frames aus Vektoren erstellt werden, dient das nur dazu, Beispiele zu konstruieren, um den Umgang zu erlernen, aber nicht weil das die übliche Methode ist, wie Daten in R eingegeben werden.
 :::
 
 ### Prinzip
 
 ::: blau-nb
-Die Idee eines Data Frames ist es, einen Haufen Vektoren gleicher Länge zu nehmen und damit eine Tabelle zu bauen. Dabei ist **jede Spalte ein Vektor**. Anders ausgedrückt: jede Spalte ist eine Variable.
+Die Idee eines Data Frames ist es, einen Haufen Vektoren gleicher Länge zu nehmen und damit eine Tabelle zu bauen. Dabei ist **jede Spalte ein Vektor**. Anders ausgedrückt: Jede Spalte ist eine Variable.
 :::
 
 </br>
@@ -148,7 +148,7 @@ Eine Konvention für Data Frames ist es diesen als `df` abzukürzen. Da wir jedo
 
 Hast du im Tutorial "Vektoren" gut aufgepasst?
 
-Eigentlich hast du eben gelernt, alle Vektoren müssen gleich lang sein um einen Data Frame zu erstellen. Warum funktioniert es oben trotzdem, obwohl Vektor `z` nur Länge 1 hat und nicht ebenfalls 4?
+Eigentlich hast du eben gelernt, alle Vektoren müssen gleich lang sein, um einen Data Frame zu erstellen. Warum funktioniert es oben trotzdem, obwohl Vektor `z` nur Länge 1 hat und nicht ebenfalls 4?
 
 ```{r recyc-quiz, echo = FALSE}
 learnr::question_radio(
@@ -181,7 +181,7 @@ Fangen wir mit dem Prinzip von Matrizen an.
 
 ### Die Matrix
 
-Die Matrix ist dir vielleicht noch ein Begriff aus der Filmwelt und hoffentlich auch aus dem Matheunterricht. Simple gesprochen ist sie eine zweidimensionale Datenstruktur mit Spalten und Zeilen. Sie kann Zahlen oder Text enthalten. Aber keine Angst, wir werden hier keine Matrizen multiplizieren oder Gleichungen nach X aufgelösen.
+Die Matrix ist dir vielleicht noch ein Begriff aus der Filmwelt und hoffentlich auch aus dem Matheunterricht. Simpel gesprochen ist sie eine zweidimensionale Datenstruktur mit Spalten und Zeilen. Sie kann Zahlen oder Text enthalten. Aber keine Angst, wir werden hier keine Matrizen multiplizieren oder Gleichungen nach X auflösen.
 
 ![](images/matrix.png){width="80%"}
 
@@ -202,7 +202,7 @@ wg_matrix <- matrix(c(x,y,z), nrow = length(x))
 wg_matrix
 ```
 
-Zur Veranschaulichung bleiben wir bei dem WG Beispiel. Als Matrix dargestellt bekommen wir den obrigen Output. Vielleicht kommen dir die eckigen Klammern bekannt vor, was meinst du können wir damit machen?
+Zur Veranschaulichung bleiben wir bei dem WG Beispiel. Als Matrix dargestellt, bekommen wir den obrigen Output. Vielleicht kommen dir die eckigen Klammern bekannt vor, was meinst du können wir damit machen?
 
 ```{r matrix-quiz, echo = FALSE}
 learnr::question_checkbox(
@@ -309,16 +309,16 @@ wg_list <- list(x,y,z)
 wg_list # unsere Liste
 ```
 
-Du siehst die Variablen (Spalten) bekommen doppelte eckige Klammern und die Einträge (Zeilen) einfache eckige Klammern. Wenn wir so auf eine Variable zugreifen wollen wird es schnell unübersichtlich. Wollen wir z.B. auf den Jahrgang von Amadou zugreifen wäre das `wg_list[[2]][1]`.
+Du siehst die Variablen (Spalten) bekommen doppelte eckige Klammern und die Einträge (Zeilen) einfache eckige Klammern. Wenn wir so auf eine Variable zugreifen wollen, wird es schnell unübersichtlich. Wollen wir z.B. auf den Jahrgang von Amadou zugreifen wäre das `wg_list[[2]][1]`.
 
-Probiere es gerne mal aus:
+Probiere es gerne einmal aus:
 
 ```{r liste2, exercise = TRUE, exercise.setup="liste1", exercise.caption = "Beispiel: Erstellen einer Matrix"}
 # ersetze die "Spalte" und "Zeile", um das Prinzip zu verstehen
 wg_list[[Spalte]][Zeile]
 ```
 
-Wie gesagt, ist dies etwas mühsam. Listen können jedoch viel mehr! Sie erlauben die Benutzung eines speziellen Operators zur Indizierung: Der `$`- Operator. Er ist speziell für das Indizieren bei benannten Listen gedacht. Hat eine Tabelle überschriften so können diese übernommen werden, für unsere Vektoren müssen wir jedoch erneut auf die explizite Namensgebung zurückgreifen.
+Wie gesagt: Dies ist etwas mühsam. Listen können jedoch viel mehr! Sie erlauben die Benutzung eines speziellen Operators zur Indizierung: Der `$`- Operator. Er ist speziell für das Indizieren bei benannten Listen gedacht. Hat eine Tabelle Überschriften so können diese übernommen werden. Für unsere Vektoren müssen wir jedoch erneut auf die explizite Namensgebung zurückgreifen.
 
 Jetzt bist du dran! Erinnerst du dich noch wie die Namensgebung in R funktioniert?
 
@@ -358,7 +358,7 @@ wg_liste
 
 In der Ausgabe solltest du jetzt also sehen, dass sich die `[[1]]`,`[[2]]` und `[[3]]` respektive in `$name`, `$jahrgang` und `$grundpreis` gewandelt haben.
 
-Wollen wir jetzt auf einen Eintrag in der Liste zugreifen können wir dies ganz bequem über den `$`- Operator, ganz ohne eckige Klammern. Es verhält sich dann wieder so als wäre es nur ein einzelner Vektor
+Wollen wir jetzt auf einen Eintrag in der Liste zugreifen, können wir dies ganz bequem über den `$`- Operator, ganz ohne eckige Klammern. Es verhält sich dann wieder so, als wäre es nur ein einzelner Vektor.
 
 ```{r dollarsign1, exercise = TRUE, exercise.setup = "listennamen-solution"}
 wg_liste$name
@@ -475,7 +475,7 @@ wg_df[,4] # qm ist das vierte Element der Zeilen
 wg_df[2,4] # Mira ist das zweite Element der Spalten
 ```
 
-Das sollte geklappt haben. Aber was wenn unser Data Frame noch viel mehr Elemente hat? Dann wird es schwieriger nachzuvollziehen, an welcher Stelle das Element unserer Wahl liegt. Dafür eignet sich daher das List Subsetting besser.
+Das sollte geklappt haben. Aber was, wenn unser Data Frame noch viel mehr Elemente hat? Dann wird es schwieriger nachzuvollziehen, an welcher Stelle das Element unserer Wahl liegt. Dafür eignet sich daher das List Subsetting besser.
 
 ##### List Subsetting
 
@@ -524,7 +524,7 @@ learnr::question_checkbox(
 
 ##### Subsetting Zusammenfassung
 
-Fassen wir nochmal graphisch zusammen, um die Stärken und Schwächen der beiden Subsetting Arten zu verstehen:
+Fassen wir nochmal grafisch zusammen, um die Stärken und Schwächen der beiden Subsetting Arten zu verstehen:
 
 ![](images/matrix_subsetting.PNG){width="25%"}
 
@@ -576,7 +576,7 @@ nrow(wg_df)
 
 Wenn alles geklappt hat, hast du jetzt rausgefunden: 1) wie viele **Zeilen** der Data Frame hat 2) wie viele **Spalten** der Data Frame hat 3) hast dir in einem Vektor **Zeilen** und **Spaltenzahl** ausgeben lassen
 
-"Wofür brauchen wir das?" - Wenn wir später mit unseren eigenen Daten arbeiten können wir so schnell sehen, wie viele Versuchspersonen oder Beobachtungen wir erhoben haben und wie viele Variablen wir haben. Wenn du gut aufgepasst hast, kannst du im Quizz dein Wissen testen:
+"Wofür brauchen wir das?" - Wenn wir später mit unseren eigenen Daten arbeiten, können wir so schnell sehen, wie viele Versuchspersonen oder Beobachtungen wir erhoben haben und wie viele Variablen wir haben. Wenn du gut aufgepasst hast, kannst du im Quiz dein Wissen testen:
 
 ```{r dimension-quiz, echo = FALSE}
 learnr::question_checkbox(
@@ -601,7 +601,7 @@ Merke: mit `dim()` kannst du dir die Dimensionen deines Data Frames anzeigen las
 
 Manchmal möchtest du weitere Variablen (Spalten) oder auch Beobachtungen (Zeilen) zu einem bestehenden Data Frame hinzufügen. Dafür gibt es die zwei nützlichen Befehle `cbind()`n und `rbind()`.
 
-Was diese tun kannst du aus dieser Abbildung schließen:
+Was diese tun, kannst du aus dieser Abbildung schließen:
 
 ![](images/cbind.PNG){width="40%"}
 
@@ -628,9 +628,9 @@ Vorsicht! Denk dran, dass Data Frames nur Variablen gleicher Länge aufnehmen k�
 Du bist dran!
 
 ::: aufgabe
-Die Wg wurde renoviert und hat ein Zimmer mehr zur Verfügung. Bei dem heutigen Mietmarkt dauert es auch nicht lang und ein neues WG Mitglied zieht ein. Von der Bewerbung und mittels eurer Unterlagen hast du folgende Daten die hinzugefügt werden müssen: - `Fin`, wurde `1992` geboren, hat `kein Haustier` - das Zimmer ist `13qm` groß und `hat einen Balkon` - die Grundmiete ist weiterhin `5.23`
+Die Wg wurde renoviert und hat ein Zimmer mehr zur Verfügung. Bei dem heutigen Mietmarkt dauert es auch nicht lang und ein neues WG Mitglied zieht ein. Von der Bewerbung und mittels eurer Unterlagen hast du folgende Daten, die hinzugefügt werden müssen: - `Fin`, wurde `1992` geboren, hat `kein Haustier` - das Zimmer ist `13qm` groß und `hat einen Balkon` - die Grundmiete ist weiterhin `5.23`
 
-Lasse dir `wg_df` danach anzeigen, um zu überprüfen ob das neue WG Mitglied da ist.
+Lasse dir `wg_df` danach anzeigen, um zu überprüfen, ob das neue WG Mitglied da ist.
 :::
 
 ```{r rbind, exercise = TRUE, exercise.setup = "cbind", exercise.caption = "Neues Mitglied"}
