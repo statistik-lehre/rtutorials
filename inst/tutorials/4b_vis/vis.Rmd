@@ -1803,7 +1803,7 @@ learnrhash::encoder_logic()
 learnrhash::encoder_ui(ui_before = NULL)
 ```
 
-### [**Moodle-Kurs öffnen**](https://moodle.uni-kassel.de/course/view.php?id=15349)
+### [**Moodle-Kurs öffnen**](https://moodle.uni-kassel.de/course/view.php?id=19918)
 
 
 ## Credit

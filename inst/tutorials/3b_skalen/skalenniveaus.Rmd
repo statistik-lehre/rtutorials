@@ -809,7 +809,7 @@ learnrhash::encoder_logic()
 learnrhash::encoder_ui(ui_before = NULL)
 ```
 
-### [**Moodle-Kurs öffnen**](https://moodle.uni-kassel.de/course/view.php?id=15349)
+### [**Moodle-Kurs öffnen**](https://moodle.uni-kassel.de/course/view.php?id=19918)
 
 ## Credit
 Dieses Tutorial wurde größtenteils von Gesa Graf und Marie Klosterkamp sowie in Teilen von Lukas Bruelheide geschrieben. Bei der Erstellung (u.a. der Beispiele, Aufgaben und Zusammenfassung) wurde in Teilen von ChatGPT gebrauch gemacht.

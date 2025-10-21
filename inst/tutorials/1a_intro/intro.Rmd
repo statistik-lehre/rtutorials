@@ -581,6 +581,6 @@ learnrhash::encoder_ui(ui_before = NULL)
 
 Wenn du mit deinen Antworten im Tutorial zufrieden bist, generiere dir deinen Hash-Code, kopiere ihn und lade ihn bei der entsprechenden Abgabe auf Moodle hoch! So können wir sehen, ob du dieses Tutorial bearbeitet hast, und wie detailliert das war. Es wird niemals erwartet, dass bei den Quizfragen alles richtig war. Woher solltet ihr es auch wissen? Es muss ja erst mal gelernt werden. Allerdings erwarten wir ein gewissenhaftes Ausfüllen der Fragen und Codeblöcke. 
 
-### [**Moodle-Kurs öffnen**](https://moodle.uni-kassel.de/course/view.php?id=15349)
+### [**Moodle-Kurs öffnen**](https://moodle.uni-kassel.de/course/view.php?id=19918)
 
 
